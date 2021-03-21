@@ -94,6 +94,13 @@ export default {
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함 
             socket.on('settingsUpdate_Req', (music_name) => new Room(io, socket).updateSettings(music_name));
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
+
+            // in-game 이벤트
+            socket.on('buy_Req', (reqJson) => await new Game(io, socket).buy(reqJson));
+            socket.on('sell_Req', (reqJson) => await new Game(io, socket).sell(reqJson));
+            socket.on('bidCancle_Req', (reqJson) => await new Game(io, socket).bidCancle(reqJson));
+            socket.on('askCancle_Req', (reqJson) => await new Game(io, socket).askCancle(reqJson));
+
             // socket.on('-');
         });
     }

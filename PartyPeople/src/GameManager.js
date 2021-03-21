@@ -15,7 +15,7 @@ class GameManager extends React.Component {
             socketId: null,
             //@ 아래와 같이 할 때, 
             // chatRoom: {
-            //     author: '',
+            //     author: '',ssss
             //     message: '',
             //     messages: []
             // },
@@ -91,6 +91,13 @@ class GameManager extends React.Component {
                 comment: '연결 테스트 메시지 입니다. 클라이언트와 서버가 연결되어 있습니다.'
             }
         );
+
+        this.socket.on(
+            'test', (test_room)=>
+            {
+                console.log(test_room);
+            }
+        )
     }
     TestEmitButton = (props) => {
         return (
