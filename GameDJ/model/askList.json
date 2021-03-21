@@ -1,0 +1,9 @@
+{
+    "askList" :
+    {
+        "askPrice" :
+        {
+            "playerID" : "roomID"
+        }
+    }
+}

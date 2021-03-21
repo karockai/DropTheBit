@@ -1,0 +1,6 @@
+{
+    "roomID" : "String",
+    "playerID" : "String",
+    "reqPrice" : "Number",
+    "reqVol" : "Number"
+}
