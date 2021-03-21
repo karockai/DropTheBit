@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
-import { Button, Fab, Grid, Paper, makeStyles } from '@material-ui/core';
-// import Lobby from 'Lobby';
+import { Button, Fab, Grid, Paper, makeStyles, TextField } from '@material-ui/core';
+import {withRouter} from 'react-router-dom';
+import SetPlayerName from './setPlayerName';
+import Lobby from './Lobby';
 
-export default function MakeRoom() {
-
-    let buttonMsg ='Create Private Room';
+export default function EnterRoom({history}) {
+    const [name, setName] = React.useState('');
+    const handleOnSave = (textInput) => {
+        setName(textInput);
+    }
+    const isName = (name === '');
     return(
-        <Button color="primary">
-            {buttonMsg}
-        </Button>
+        <>
+        {isName&&
+        <SetPlayerName onSave={handleOnSave} name={name} setName={setName} history={history}/>}
+        {!isName&&
+        <Lobby name={name} history={history}/>}
+
+      </>
     );
 }

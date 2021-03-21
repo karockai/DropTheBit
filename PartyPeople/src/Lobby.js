@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
+import { Button, Fab, Grid, Paper, makeStyles } from '@material-ui/core';
+import {withRouter} from 'react-router-dom';
 
-export default function Lobby() {
+function Lobby(props) {
 
     return(
-        <div>lobby</div>
+        <> 
+        <Button variant="contained" color="primary" onClick={()=>props.history.push('/game')}> StartGame </Button> 
+        <Paper>{props.name}</Paper>
+        </>
     );
 }
+
+export default withRouter(Lobby);

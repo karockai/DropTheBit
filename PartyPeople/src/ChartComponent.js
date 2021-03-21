@@ -35,7 +35,7 @@ class ChartComponent extends React.Component {
                     "dividend": "",
                     "absoluteChange": "",
                     "percentChange": ""
-				}
+				},
 				{
                     "date": new Date(2010, 1, 1,10,23,34), //@ 분 초 단위로.
                     "open": 25.436282332605284,
@@ -47,7 +47,7 @@ class ChartComponent extends React.Component {
                     "dividend": "",
                     "absoluteChange": "",
                     "percentChange": ""
-				}
+				},
 				{
                     "date": new Date(2010, 1, 1,10,23,35), //@ 분 초 단위로.
                     "open": 25.436282332605284,

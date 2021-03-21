@@ -77,7 +77,7 @@ export default function SimpleContainer(props) {
                                     </Grid>
                                     <Grid style={{ height: "40%" }} item>
                                     <Paper style={{ height: "100%"}} className={classes.paper}>
-                                        <ChatRoom socket={props.socket} getMessage={props.getMessage} sendMessage={props.sendMessage} chat={props.chat}/>
+                                        <ChatRoom socket={props.socket} chat={props.chat}/>
                                     </Paper>
                                     </Grid>
                                 </Grid>

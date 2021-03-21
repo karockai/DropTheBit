@@ -18,7 +18,7 @@ module.exports.init = (server) => {
         let day = 0;
         const chart = () => {
             socket.emit('chart', stockData.datas[day++])
-            console.log(socket.id,'님에게 [', day, '] 인덱스의 정보가 보내졌습니다.')
+            // console.log(socket.id,'님에게 [', day, '] 인덱스의 정보가 보내졌습니다.')
         }
         setInterval(chart, 500);
         /////////////////////////////////////////
@@ -32,6 +32,18 @@ module.exports.init = (server) => {
         socket.on('joinRoom_Req', async (joinData) => { await new Room(io, socket).joinRoom(joinData) });
         socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
 
+
+        // * 채팅 메시지 소켓 * //
+        socket.on('message', function (data) {
+            // data.author = socket.name;
+            console.log(data);
+            /* io.sockets.emit() = 모든 유저(본인 포함)
+            socket.broadcast.emit() = 본인을 제외한 나머지 모두 */
+            io.emit('update', data);
+        });
+        
+
+    
     });
 };
 

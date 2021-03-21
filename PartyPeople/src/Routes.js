@@ -1,17 +1,23 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Route } from './react-router-dom';
-// import LayoutGrid from './LayoutGrid';
-// import EnterRoom from './EnterRoom';
 
-// export default() => (
-//     <Router>
-//         <div>
-//             <this.TestEmitButton/>
-//             <Route path="/enter" component={EnterRoom}/>
-//             <Route path="/lobby" component={Lobby}/>
-//             <Route path="/game" component={LayoutGrid} socket= {socket} requestSocket={this.RequestSocket}/>
-//             {/* <LayoutGrid socket= {socket} requestSocket={this.RequestSocket}/> */}
-//             <EnterRoom/>
-//         </div>
-//     <Router/>
-// )
+import React, {Component} from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import LayoutGrid from './LayoutGrid';
+import EnterRoom from './EnterRoom';
+import Lobby from './Lobby';
+
+export default function Routes(props) {
+    
+    return (
+        <>
+            <Router>
+                <Switch>
+                    <Route exact path="/" render={() => <EnterRoom socket={props.socket} requestSocket={props.requestSocket}/>}/>
+                    <Route path="/lobby" component={Lobby}/>
+                    <Route path="/game" render={() => <LayoutGrid socket={props.socket} requestSocket={props.requestSocket}/>}/>
+                </Switch>
+            </Router>
+        </>
+    );
+
+}
+

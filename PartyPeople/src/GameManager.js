@@ -5,8 +5,7 @@ import { Button } from '@material-ui/core';
 import ChartComponent from './ChartComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LayoutGrid from './LayoutGrid';
-import EnterRoom from './EnterRoom';
-import Lobby from './Lobby';
+import Routes from './Routes';
 
 class GameManager extends React.Component {
     constructor(props) {
@@ -53,9 +52,7 @@ class GameManager extends React.Component {
             setSocket(this.socket);
         });
 
-        this.socket.on('update', function (data) {
-            addMessage(data);
-        });
+
         this.socket.on('get_chart_data', function (data) {
             console.log(data);
         });
@@ -63,9 +60,7 @@ class GameManager extends React.Component {
             this.setState({socketId: socket});
         }
 
-        const addMessage = data => {
-            this.setState({ messages: [...this.state.messages, data] });
-        };
+
         this.socket.on('update_users', function (data, user_count) {
             console.log(data);
             user_cnt = user_count;
@@ -114,16 +109,11 @@ class GameManager extends React.Component {
         const socket = this.state.socketId;
         return (
             <>
-                <Router>
-                        <this.TestEmitButton/>
-                        <Route path="/enter" component={EnterRoom}/>
-                        <Route path="/lobby" component={Lobby}/>
-                        <Route path="/game" component={LayoutGrid} socket={socket} requestSocket={this.RequestSocket}/>
-                        <EnterRoom/>
-                </Router>
+                <this.TestEmitButton/>
+                <Routes socket={socket} requestSocket={this.RequestSocket}/>
+                {/* <LayoutGrid socket={socket} requestSocket={this.RequestSocket}/> */}
             </>
         );
-        {/* <LayoutGrid socket={socket} requestSocket={this.RequestSocket}/> */}
     }
 }
 export default GameManager;

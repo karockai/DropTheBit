@@ -6,6 +6,7 @@ import GameManager from './GameManager';
 import SimpleContainer from './SimpleContainer';
 import ViewportLayout from './ViewportLayout';
 
+
 ReactDOM.render(
   <React.StrictMode>
     <GameManager/>
