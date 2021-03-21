@@ -86,14 +86,7 @@ export default {
                 socket.emit('test', get_test_room);
             });
 
-                    // * 채팅 메시지 소켓 * //
-            socket.on('message', function (data) {
-                // data.author = socket.name;
-                console.log(data);
-                /* io.sockets.emit() = 모든 유저(본인 포함)
-                socket.broadcast.emit() = 본인을 제외한 나머지 모두 */
-                io.emit('update', data);
-            });
+
             /////////////////////////////////////////
             console.log('connected user');
             socket.on('createPrivateRoom_Req', (profile) => new Room(io, socket).createPrivateRoom(profile));
@@ -103,12 +96,14 @@ export default {
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
 
             // in-game 이벤트
-            socket.on('buy_Req', (reqJson) => await new Game(io, socket).buy(reqJson));
-            socket.on('sell_Req', (reqJson) => await new Game(io, socket).sell(reqJson));
-            socket.on('bidCancle_Req', (reqJson) => await new Game(io, socket).bidCancle(reqJson));
-            socket.on('askCancle_Req', (reqJson) => await new Game(io, socket).askCancle(reqJson));
+            socket.on('buy_Req', async (reqJson) => await new Game(io, socket).buy(reqJson));
+            socket.on('sell_Req', async (reqJson) => await new Game(io, socket).sell(reqJson));
+            socket.on('bidCancle_Req', async (reqJson) => await new Game(io, socket).bidCancle(reqJson));
+            socket.on('askCancle_Req', async (reqJson) => await new Game(io, socket).askCancle(reqJson));
 
             // socket.on('-');
         });
     }
 }
+
+>>>>>>> 3eed8fe9947c6315da0a8fc7dc858f99c678ca55
