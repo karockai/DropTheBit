@@ -30,6 +30,8 @@ export default function LayoutGrid(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
+    console.log(props.socket);
+    console.log(props.requestSocket);
     return (
         <React.Fragment>
             <CssBaseline />
@@ -75,7 +77,7 @@ export default function LayoutGrid(props) {
                                     </Grid>
                                     <Grid style={{ height: "40%" }} item>
                                     <Paper style={{ height: "100%"}} className={classes.paper}>
-                                        <ChatRoom socket={props.socket} getMessage={props.getMessage} sendMessage={props.sendMessage} chat={props.chat}/>
+                                        <ChatRoom socket={props.socket} chat={props.chat}/>
                                     </Paper>
                                     </Grid>
                                 </Grid>
