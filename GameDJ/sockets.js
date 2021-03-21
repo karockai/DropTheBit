@@ -20,7 +20,7 @@ export default {
                 socket.emit('chart', stockData[
                     day++
                 ]);
-                console.log(socket.id, '님에게 [', day, '] 인덱스의 정보가 보내졌습니다.')
+                console.log(socket.id, '님에게 [', day, '] 인덱스의 정보가 보내졌습니다.');
             }
             setInterval(chart, 2000);
             /////////////////////////////////////////
@@ -34,7 +34,7 @@ export default {
             socket.on('createPrivateRoom_Req', (profile) => new Room(io, socket).createPrivateRoom(profile));
             socket.on('joinRoom_Req', async (joinData) => { await new Room(io, socket).joinRoom(joinData) });
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
-
+            socket.on('');
         });
     }
 }

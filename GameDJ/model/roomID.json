@@ -1,0 +1,21 @@
+{
+    "roomID" :
+    {
+        "socketID" :
+        {
+            "playerID" : "String",
+            "cash" : "Number",
+            "coinVol" : "Number",
+            "bidList" :
+            {
+                "price" : "Vol"
+            },
+            "askList" :
+            {
+                "price" : "Vol"
+            }
+        },
+        "timeCount" : "Number",
+        "music" : "Link?"
+    }
+}
