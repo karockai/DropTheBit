@@ -1,8 +1,13 @@
-const {
-    dbget,
-    dbset
-} = require('./redis');
+// const {
+//     dbget,
+//     dbset
+// } = require('./js');
+import {
+    dbset,
+    dbget
+} from "./redis.js";
 
+// const = require('./);
 class Game {
     constructor(io, socket) {
         this.io = io;
@@ -141,8 +146,6 @@ class Game {
             dbset("bidList", String(curPrice), bidList);
         }
     }
-
-
-
-
 }
+
+export default Game;

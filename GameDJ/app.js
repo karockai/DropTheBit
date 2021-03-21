@@ -1,4 +1,6 @@
-const express = require('express');
+// const express = require('express');
+import express from 'express'
+
 // const cors = require('cors');
 
 const app = express();
@@ -11,10 +13,10 @@ app.use(express.static('public'));
 //     res.render('index', { roomID });
 // });
 
-module.exports = app;
+// module.exports = app;
 
 
-
+export default app;
 
 
 

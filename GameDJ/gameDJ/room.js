@@ -1,9 +1,11 @@
 // const { nanoid } = require('nanoid');
 
-const {
-    dbget,
-    dbset
-} = require('./redis');
+// const {
+//     dbget,
+//     dbset
+// } = require('./redis');
+
+
 
 class Room {
     constructor (io, socket) {
@@ -60,3 +62,5 @@ class Room {
         // players.forEach((player) => putPlayer(player));
     }
 }
+
+export default Room;
