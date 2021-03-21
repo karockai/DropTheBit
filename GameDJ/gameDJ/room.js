@@ -1,11 +1,5 @@
-// const { nanoid } = require('nanoid');
-
-// const {
-//     dbget,
-//     dbset
-// } = require('./redis');
-
-
+import { dbset, dbget } from "./redis.js";
+import nanoid from 'nanoid';
 
 class Room {
     constructor(io, socket) {
@@ -15,8 +9,7 @@ class Room {
 
     createPrivateRoom(profile) {
         const { socket } = this;
-        // const roomID = nanoid(15);
-        const roomID = 'dskljfjsjfsofisjfiojsdf';
+        const roomID = nanoid(15);
         games[roomID] = {
             gameTime: 60 * 1000, // 게임 시간
             music: ''
