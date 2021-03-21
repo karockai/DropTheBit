@@ -1,4 +1,4 @@
-import React,{useState, makeStyle} from 'react';
+import React,{useState, useRef, useEffect, makeStyle} from 'react';
 import {IconButton ,Button, Box, TextField, Grid, Paper, makeStyles } from '@material-ui/core';
 import Message from './Message';
 
@@ -29,28 +29,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChatRoom(props) {    
-    console.log(props.socket);
+    // console.log(props.socket);
     let testXs = 12;
     const classes =useStyles();
+    let [message,setMessage] = useState('');
+    let [messages, setMessages] = useState({
+        messages: [
+          new Message({
+            // id: 1,
+            message: "I'm the recipient! (The person you're talking to)",
+          }), // Gray bubble
+          new Message({ message: "I'm you -- the blue bubble!" }), // Blue bubble
+        ],
+      });
+    let textInput = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            props.socket.on('update', function (data) {
+                console.log(data);
+                if (data){
+                    addMessage(data);
+                }
+            });
+        };
+    }, []);
+
+    const handleOnChange = (event) => {
+        setMessage({ message: event.target.value });
+        // { message: ev.target.value }
+    }
 
     const sendMessage = (ev) => {
         ev.preventDefault();
-        this.socket.emit('message', {
-            author: this.state.author,
-            message: ev.target.value,
-        })
-        this.setState({ message: '' });
+        console.log(message);
+        textInput.current.value = '';
+        
+         // author: this.state.author,
+        props.socket.emit('message', message);
+        setMessage({ message: '' });
     }
-    const getInputMessage = ev => {
-        ev.preventDefault();
-        this.setState({ message: ev.target.value });
-    }
+    // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 
+    const addMessage = data => {
+        // console.log('ddddddddd');
+        setMessages({ messages: [...messages, data]});
+    };
 
     return(
         <Grid container className={classes.button} justify="center" display="flex" alignItems="flex-end" style={{ height: '100%' }}>
-            <Message getMessage={getInputMessage} sendMessage={sendMessage}/>
-            <TextField id="standard-basic" label="메세지 보내기" variant="outlined" size="small"/>
+            {/* <Message getMessage={getInputMessage} sendMessage={sendMessage}/> */}
+            <TextField id="standard-basic" inputRef={textInput} label="메세지 보내기" onChange={handleOnChange} variant="outlined" size="small"/>
+            <Button variant="contained" color="primary" onClick={sendMessage}> 전송 </Button>
         </Grid>
     );
 }

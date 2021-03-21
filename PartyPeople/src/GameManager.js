@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 import io from "socket.io-client";
 import CanvasManager from './CanvasManager'
 import { Button } from '@material-ui/core';
 import ChartComponent from './ChartComponent';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LayoutGrid from './LayoutGrid';
+import Routes from './Routes';
+
 class GameManager extends React.Component {
     constructor(props) {
         super(props);
@@ -50,9 +53,7 @@ class GameManager extends React.Component {
             setSocket(this.socket);
         });
 
-        this.socket.on('update', function (data) {
-            addMessage(data);
-        });
+
         this.socket.on('get_chart_data', function (data) {
             console.log(data);
         });
@@ -60,9 +61,7 @@ class GameManager extends React.Component {
             this.setState({socketId: socket});
         }
 
-        const addMessage = data => {
-            this.setState({ messages: [...this.state.messages, data] });
-        };
+
         this.socket.on('update_users', function (data, user_count) {
             console.log(data);
             user_cnt = user_count;
@@ -119,7 +118,8 @@ class GameManager extends React.Component {
         return (
             <>
                 <this.TestEmitButton/>
-                <LayoutGrid socket= {socket} requestSocket={this.RequestSocket}/>
+                <Routes socket={socket} requestSocket={this.RequestSocket}/>
+                {/* <LayoutGrid socket={socket} requestSocket={this.RequestSocket}/> */}
             </>
         );
     }
