@@ -12,17 +12,43 @@ function ChartTitle(props) {
     const subtit = '전일대비';
     const unit = 'KRW';
     const isBullMarket = true;
-    const textColor = {
+    const [textColor, setBullColor] = useState({
         color: isBullMarket ? red[600] : blue[600],
-    };
-    const isBullIcon = isBullMarket ? '▲' : '▼';
-    const currentYield = '+1.33%';
-    const [currentWon, SetWon] = useState(68099000);
+    });
+    const [isBullIcon, SetBullIcon] = useState('▲')
+    const [wonYield, SetYield] = useState('+'+1.33 +'%');
+    const [beforeWon, SetWonBefore] = useState()
+    const [currentWon, SetWonCurrent] = useState(68099000);
     const [upDown, SetUpDown] = useState(957000);
 
     useEffect(() => {
-
-    });
+        return () => {
+            const datas = props.data;
+            const length = props.data.length;
+            const before = parseInt(datas[length - 2].high * 10000);
+            const current = parseInt(datas[length - 1].high * 10000);
+            const sub = current - before;
+            const yid = (sub >=0? '+' : '') + (sub / current * 100).toFixed(2) + '%';
+            const icon = sub >= 0 ? '▲' : '▼';
+            const color = sub >= 0 ? red[600] : blue[600];
+            SetWonBefore(before);
+            SetWonCurrent(current);
+            SetUpDown(sub);
+            SetYield(yid);
+            SetBullIcon(icon)
+            setBullColor({color: color});
+            console.log({ 
+                before : beforeWon,
+                current : currentWon,
+                updown : upDown,
+                icon : isBullIcon,
+                textColor : textColor,
+            });
+            console.log(isBullIcon);
+            // console.log(props);
+            // console.log(props.data.length);
+        };
+    }, [props.data]);
     
     function SplitByThree(value) {
         if(value.length <= 3) return value;
@@ -33,6 +59,7 @@ function ChartTitle(props) {
         if(typeof(won) == "number") won = won.toString();
         return SplitByThree(won);
     }
+    console.log(props);
     
     return (
         <>
@@ -48,7 +75,7 @@ function ChartTitle(props) {
                         {subtit}
                     </p>
                     <strong>
-                        {'   '+currentYield+'  '}
+                        {'   '+ wonYield +'  '}
                     </strong>
                     <strong style={{display:'inline'}}>
                         {' '+ isBullIcon+' '+parseWonToStr(upDown)}

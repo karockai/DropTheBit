@@ -2,18 +2,9 @@ import datas from './gameDJ/dummyDatas.js';
 const stockData = datas;
 
 import socketio from 'socket.io';
-// const socketio = socketio;
 
-// const Room = require('./gameDJ/room');
-// const Game = require('./gameDJ/game');
 import Room from './gameDJ/room.js';
 import Game from './gameDJ/game.js';
-
-
-// const Disconnect = require('./gameDJ/disconnect');
-// const Redis = require('./gameDJ/redis');
-
-
 
 
 export default {
