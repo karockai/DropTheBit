@@ -47,7 +47,7 @@ class StockChart extends React.Component {
 				displayXAccessor={displayXAccessor}
 				xExtents={xExtents}
 			>
-				<Chart id={1} yExtents={[d => [d.high, d.low]]}>
+				<Chart id={1} yExtents={[d => [d.high+0.5, d.low-0.5]]}>
 					<XAxis axisAt="bottom" orient="bottom" />
 					<YAxis axisAt="right" orient="right" ticks={5} />
 					<MouseCoordinateY

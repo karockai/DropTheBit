@@ -1,0 +1,36 @@
+{
+    "roomID" :
+    {
+        "playerID" :
+        {
+            "socketID" : "String",
+            "cash" : "Number",
+            "asset" : "Number",
+            "coinVol" : "Number",
+            "bid" :
+            {
+                "price" : "vol"
+            }
+        },
+        "timeCount" : "Number",
+        "music" : "Link?"
+    }
+},
+
+{
+    "test_room" :
+    {
+        "aman" :
+        {
+            "socketID" : "String",
+            "cash" : "100000",
+            "asset" : "100000",
+            "coinVol" : "0",
+            "bid" :
+            {
+            }
+        },
+        "timeCount" : "Number",
+        "music" : "Link?"
+    }
+}

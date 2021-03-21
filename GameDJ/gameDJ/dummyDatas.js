@@ -17379,6 +17379,6 @@ const datas = [
       "split": "",
       "dividend": ""
     }
-  ]
+  ];
 
-exports.datas = datas;
+export default datas;

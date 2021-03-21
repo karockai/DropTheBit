@@ -18,12 +18,13 @@ class GameManager extends React.Component {
             socketId: null,
             //@ 아래와 같이 할 때, 
             // chatRoom: {
-            //     author: '',
+            //     author: '',ssss
             //     message: '',
             //     messages: []
             // },
         };
-        this.socket = io('localhost:5000'); //_ http://15.165.129.19:5000/
+        this.socket = io('15.165.129.19:5000'); //_ http://15.165.129.19:5000/
+        // this.socket = io('localhost:5000');
         this.socket.on('connect', () => {
             console.log('connnected',this.socket);
             this.socket.emit('join');
@@ -89,6 +90,13 @@ class GameManager extends React.Component {
                 comment: '연결 테스트 메시지 입니다. 클라이언트와 서버가 연결되어 있습니다.'
             }
         );
+
+        this.socket.on(
+            'test', (test_room)=>
+            {
+                console.log(test_room);
+            }
+        )
     }
     TestEmitButton = (props) => {
         return (

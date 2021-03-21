@@ -12,54 +12,6 @@ class ChartComponent extends React.Component {
         super(props);
         this.state = {
             data : [
-                {
-                    "date": new Date(2010, 1, 1, 10,23,32),
-                    "open": 25.436282332605284,
-                    "high": 25.835021381744056,
-                    "low": 25.411360259406774,
-                    "close": 25.71041,
-                    "volume": 8370500,
-                    "split": "",
-                    "dividend": "",
-                    "absoluteChange": "",
-                    "percentChange": ""
-                },                
-                {
-                    "date": new Date(2010, 1, 1,10,23,33), //@ 분 초 단위로.
-                    "open": 25.436282332605284,
-                    "high": 25.835021381744056,
-                    "low": 25.411360259406774,
-                    "close": 25.71041,
-                    "volume": 8370500,
-                    "split": "",
-                    "dividend": "",
-                    "absoluteChange": "",
-                    "percentChange": ""
-				},
-				{
-                    "date": new Date(2010, 1, 1,10,23,34), //@ 분 초 단위로.
-                    "open": 25.436282332605284,
-                    "high": 25.835021381744056,
-                    "low": 25.411360259406774,
-                    "close": 25.71041,
-                    "volume": 8370500,
-                    "split": "",
-                    "dividend": "",
-                    "absoluteChange": "",
-                    "percentChange": ""
-				},
-				{
-                    "date": new Date(2010, 1, 1,10,23,35), //@ 분 초 단위로.
-                    "open": 25.436282332605284,
-                    "high": 25.835021381744056,
-                    "low": 25.411360259406774,
-                    "close": 25.71041,
-                    "volume": 8370500,
-                    "split": "",
-                    "dividend": "",
-                    "absoluteChange": "",
-                    "percentChange": ""
-                }
             ]
         };
     }
@@ -86,8 +38,9 @@ class ChartComponent extends React.Component {
 				// })
         }
         render() {
-            if(this.setup){
-                console.log('setup print');
+			const dataLength = this.state.data.length;
+			
+			if(this.setup){
                 //@ candle data callback
                 if(this.props.socket == null) {
                     this.props.requestSocket('ChartComponent');
@@ -111,16 +64,16 @@ class ChartComponent extends React.Component {
                 }
             }
 
-        if (this.props.socket == null) {
-            return <div>Loading...</div>
+			if (this.props.socket == null || dataLength < 2) {
+				return <div>Loading...</div>
+			}
+			return (
+				<>
+					<ChartTitle data={this.state.data}/>
+					<StockChart type={'hybrid'} data={this.state.data} />
+				</>
+			)
 		}
-		return (
-            <>
-                <ChartTitle data={this.state.data}/>
-                <StockChart type={'hybrid'} data={this.state.data} />
-            </>
-		)
-	}
 }
 
 export default ChartComponent;
