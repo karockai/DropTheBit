@@ -1,4 +1,6 @@
-import datas from './gameDJ/dummyDatas.js';
+// import datas from './gameDJ/dummy/dummyDatas.js';
+// import datas from './gameDJ/dummy/dummyDatas1.js';
+import datas from './gameDJ/dummy/dummyDatas4.js';
 const stockData = datas;
 
 import socketio from 'socket.io';
@@ -22,7 +24,7 @@ export default {
                 ]);
                 console.log(socket.id, '님에게 [', day, '] 인덱스의 정보가 보내졌습니다.')
             }
-            setInterval(chart, 2000);
+            setInterval(chart, 1500);
             /////////////////////////////////////////
 
             //@ socket 연결 확인용 버튼 socket event.

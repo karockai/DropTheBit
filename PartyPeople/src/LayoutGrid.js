@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SimpleContainer(props) {
+export default function LayoutGrid(props) {
     const classes = useStyles();
     let testXs = 12;
     let leftSm = 2;
@@ -34,7 +34,7 @@ export default function SimpleContainer(props) {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth='lg' >
-                <Typography component="div" style={{ backgroundColor: '#cfe8fc',  margin: '2vh 0 0 0' }}>
+                <Typography component="div" style={{  margin: '2vh 0 0 0' }}>
                     <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
                         <Grid className="playerListGrid" item xs={leftSm} >
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
@@ -54,12 +54,12 @@ export default function SimpleContainer(props) {
                                         <Grid style={{ height: "100%", }} wrap="wrap" alignItems="stretch" container direction="row" justify="space-around">
                                             <Grid style={{ width: "45%", height: "100%"}} item >
                                                 {/* <Paper style={{ height: "100%" }} > */}
-                                                    <MyAsset/>
+                                                    <MyAsset socket ={props.socket}/>
                                                {/* </Paper> */}
                                             </Grid>
-                                            <Grid style={{ width: "52.5%", height: "100%", margin: '0 0 0 2vh'}} item > 
+                                            <Grid style={{ width: "50%", height: "100%", margin: '0 0 0 2vh'}} item > 
                                                 <Paper style={{ height: "100%" }} className={classes.paper}>
-                                                    <TradeStock/>
+                                                    <TradeStock socket ={props.socket}/>
                                                 </Paper>
                                             </Grid>
                                         </Grid>

@@ -18,15 +18,15 @@ function ChartTitle(props) {
     const [isBullIcon, SetBullIcon] = useState('▲')
     const [wonYield, SetYield] = useState('+'+1.33 +'%');
     const [beforeWon, SetWonBefore] = useState()
-    const [currentWon, SetWonCurrent] = useState(68099000);
-    const [upDown, SetUpDown] = useState(957000);
+    const [currentWon, SetWonCurrent] = useState(0);
+    const [upDown, SetUpDown] = useState(0);
 
     useEffect(() => {
         return () => {
             const datas = props.data;
             const length = props.data.length;
-            const before = parseInt(datas[length - 2].high * 10000);
-            const current = parseInt(datas[length - 1].high * 10000);
+            const before = datas[length - 2].curPrice;
+            const current = datas[length - 1].curPrice;
             const sub = current - before;
             const yid = (sub >=0? '+' : '') + (sub / current * 100).toFixed(2) + '%';
             const icon = sub >= 0 ? '▲' : '▼';
@@ -57,7 +57,7 @@ function ChartTitle(props) {
 
     const parseWonToStr = (won) => {
         if(typeof(won) == "number") won = won.toString();
-        return SplitByThree(won);
+        return won;
     }
     console.log(props);
     
