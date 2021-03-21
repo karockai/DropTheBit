@@ -1,6 +1,4 @@
-// import datas from './gameDJ/dummy/dummyDatas.js';
-// import datas from './gameDJ/dummy/dummyDatas1.js';
-import datas from './gameDJ/dummy/dummyDatas4.js';
+import datas from './gameDJ/dummyDatas.js';
 const stockData = datas;
 
 import socketio from 'socket.io';
@@ -9,9 +7,11 @@ import Room from './gameDJ/room.js';
 import Game from './gameDJ/game.js';
 
 
+
+let gameTime = 10000;
 export default {
-    
-    init (server) {
+
+    init(server) {
         const io = socketio(server);
 
         io.on('connection', (socket) => {
@@ -24,7 +24,7 @@ export default {
                 ]);
                 console.log(socket.id, '님에게 [', day, '] 인덱스의 정보가 보내졌습니다.');
             }
-            setInterval(chart, 1500);
+            setInterval(chart, 2000);
             /////////////////////////////////////////
 
             //@ socket 연결 확인용 버튼 socket event.
@@ -36,7 +36,22 @@ export default {
             socket.on('createPrivateRoom_Req', (profile) => new Room(io, socket).createPrivateRoom(profile));
             socket.on('joinRoom_Req', async (joinData) => { await new Room(io, socket).joinRoom(joinData) });
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
-            socket.on('');
+
+
+            let schedule = setInterval( async () => {
+                await new Game(io, socket).renewalCurCoin();
+            }, 250);
+            // gameTime만큼 멈췄다가, 끝나면 endGame 실행
+
+
+            setTimeout(() => {
+                clearInterval(schedule);
+
+                console.log('Game Over');
+            }, gameTime);
+
+
+
         });
     }
 }

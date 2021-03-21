@@ -24,7 +24,7 @@ class Game {
 
         let schedule = setInterval(() => {
             renewalCurCoin();
-        }, 250);
+        }, 1000);
         // gameTime만큼 멈췄다가, 끝나면 endGame 실행
 
 
@@ -32,7 +32,7 @@ class Game {
             clearInterval(schedule);
 
             console.log('Game Over');
-        }, gameTime)
+        }, gameTime);
     }
 
     async renewalCurCoin() {
@@ -42,6 +42,7 @@ class Game {
         
         // 1. bidList 불러옴
         let curCoin = await dbget("curCoin");
+        console.log(curCoin);
         socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
         curPrice = Number(curCoin["curPrice"]);
         
@@ -104,48 +105,53 @@ class Game {
             dbset("bidList", bidList);
         }
     
-        if (curPrice === prePrice) {
-            let askList = await dbget("askList", String(curPrice));
-            // 낮다면 거래를 체결한다.
-            for (let playerID in askList) {
-                let roomID = askList[playerID];
-                let playerInfo = await dbget(roomID, playerID);
-                let cash = Number(playerInfo["cash"]);
-                let askVol = Number(playerInfo["bidList"][askPrice]);
-                let socketID = playerInfo["socketID"];
-                cash += askVol * intAskPrice;
-                playerInfo["cash"] = String(cash);
+        // if (curPrice === prePrice) {
+        //     let askList = await dbget("askList", String(curPrice));
+        //     // 낮다면 거래를 체결한다.
+        //     for (let playerID in askList) {
+        //         let roomID = askList[playerID];
+        //         let playerInfo = await dbget(roomID, playerID);
+        //         let cash = Number(playerInfo["cash"]);
+        //         let askVol = Number(playerInfo["bidList"][askPrice]);
+        //         let socketID = playerInfo["socketID"];
+        //         cash += askVol * intAskPrice;
+        //         playerInfo["cash"] = String(cash);
     
-                dbset(roomID, playerID, playerInfo);
-                socket.to(socketID).emit("askDone");
+        //         dbset(roomID, playerID, playerInfo);
+        //         socket.to(socketID).emit("askDone");
     
-                delete playerID["askList"][askPrice];
-                delete askList[playerID];
-            }
-            dbset("askList", String(curPrice), askList);
+        //         delete playerID["askList"][askPrice];
+        //         delete askList[playerID];
+        //     }
+        //     dbset("askList", String(curPrice), askList);
     
-            let bidList = await dbget("bidList", String(curPrice));
-            // bidPrice가 curPrice보다 높은지 확인
+        //     let bidList = await dbget("bidList", String(curPrice));
+        //     // bidPrice가 curPrice보다 높은지 확인
     
-            // 높다면 거래를 체결한다.
-            for (let playerID in bidList) {
-                let roomID = bidList[playerID];
-                let playerInfo = await dbget(roomID, playerID);
-                let coinVol = Number(playerInfo["coinVol"]);
-                let bidVol = Number(playerInfo["bidList"][bidPrice]);
-                let socketID = playerInfo["socketID"];
-                coinVol += bidVol;
-                playerInfo["coinVol"] = String(coinVol);
+        //     // 높다면 거래를 체결한다.
+        //     for (let playerID in bidList) {
+        //         let roomID = bidList[playerID];
+        //         let playerInfo = await dbget(roomID, playerID);
+        //         let coinVol = Number(playerInfo["coinVol"]);
+        //         let bidVol = Number(playerInfo["bidList"][bidPrice]);
+        //         let socketID = playerInfo["socketID"];
+        //         coinVol += bidVol;
+        //         playerInfo["coinVol"] = String(coinVol);
     
-                dbset(roomID, playerID, playerInfo);
-                socket.to(socketID).emit("bidDone");
+        //         dbset(roomID, playerID, playerInfo);
+        //         socket.to(socketID).emit("bidDone");
     
-                delete playerID["bidList"][bidPrice];
-                delete bidList[playerID];
-            }
-            dbset("bidList", String(curPrice), bidList);
-        }
+        //         delete playerID["bidList"][bidPrice];
+        //         delete bidList[playerID];
+        //     }
+        //     dbset("bidList", String(curPrice), bidList);
+        // }
     }
+
+
+    
+
+
 }
 
 export default Game;
