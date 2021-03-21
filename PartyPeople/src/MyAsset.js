@@ -41,7 +41,7 @@ export default function MyAsset(props) {
                 props.requestSocket('MyAsset')
             }
             else {
-                props.socket.on('asset', (data)=> {
+                props.socket.on('asset', (data)=> { //@ buyreq
                     console.log('자산을 갱신합니다.', data);
                     const currentCash = data.cash;
                     const currentAsset = data.asset;
@@ -50,7 +50,7 @@ export default function MyAsset(props) {
                 });
             }   
         }
-    });
+    },[]);
 
     return(
         <Grid wrap="wrap" container direction="row" style={{ height: "100%" , }}  >

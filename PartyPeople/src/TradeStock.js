@@ -78,7 +78,9 @@ export default function TradeStock(props) {
     function Buy() {
         //@ Buy Emit
         console.log('[ 가격', currentBid,', 갯수', currentVolume ,'] 매수 주문이 체결되었습니다.')
-        props.socket.emit('buy', {
+        props.socket.emit('buy', { //@ reqJson.json 형식확인
+            roomID : 0,
+            playerID : 0,
             currentBid : currentBid,
             currentVolume: currentVolume,
         });
@@ -91,6 +93,8 @@ export default function TradeStock(props) {
         //@ Sell Emit
         console.log('[ 가격', currentBid,', 갯수', currentVolume ,'] 매도 주문이 체결되었습니다.');
         props.socket.emit('sell', {
+            roomID : 0,
+            playerID : 0,
             currentBid : currentBid,
             currentVolume: currentVolume,
         });
@@ -100,6 +104,28 @@ export default function TradeStock(props) {
         });
     }
 
+    function HandleKeyPress(e) {
+        if(e.keyCode == 123) return; //_ 'F12' 개발자도구 ㅋ
+        e.preventDefault();
+        if(e.keyCode == 37){ //_ LEFT ARROW
+            console.log(props);
+            console.log('KeyCode > LEFT.');
+            if( props.socket == null ) return;
+            Buy()
+        }
+        else if(e.keyCode == 39) { //_ RIGHT ARROW
+            console.log(props);
+            console.log('KeyCode > RIGHT.')
+            if( props.socket == null ) return;
+            Sell();
+        }
+    };
+    useEffect(() => {
+        document.addEventListener("keydown", HandleKeyPress);
+        return () => {
+            document.removeEventListener("keydown", HandleKeyPress);
+        }
+    },[])
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
         const responseBid = newBid;
@@ -119,10 +145,10 @@ export default function TradeStock(props) {
                 <ArrowButton upEvent = {VolumeUp} downEvent = {VolumeDown}/>
             </Grid>
             <Grid className={classes.button} style={{width: "80%",}}>
-                <Button variant="contained" color="primary" onClick={Buy}>
+                <Button variant="contained" color="primary" onClick={Buy} >
                     매수
                 </Button>
-                <Button variant="contained" color="secondary" onClick={Sell}>
+                <Button variant="contained" color="secondary" onClick={Sell} >
                     매도
                 </Button>
             </Grid>
