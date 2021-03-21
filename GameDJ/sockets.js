@@ -15,6 +15,9 @@ export default {
         const io = socketio(server);
 
         io.on('connection', (socket) => {
+
+            console.log("connected");
+
             ///////////////////////////////////////
             //@ dummydata 날리는 socket event.
             let day = 0;
@@ -38,22 +41,6 @@ export default {
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함 
             socket.on('settingsUpdate_Req', (music_name) => new Room(io, socket).updateSettings(music_name));
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
-
-
-            let schedule = setInterval(async () => {
-                await new Game(io, socket).renewalCurCoin();
-            }, 250);
-            // gameTime만큼 멈췄다가, 끝나면 endGame 실행
-
-
-            setTimeout(() => {
-                clearInterval(schedule);
-
-                console.log('Game Over');
-            }, gameTime);
-
-
-
         });
     }
 }
