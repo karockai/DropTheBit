@@ -60,7 +60,7 @@ class ChartComponent extends React.Component {
                 }
             }
 
-			if (this.props.socket == null || dataLength < 3) {
+			if (this.props.socket == null || dataLength < 2) {
 				return <div>Loading...</div>
 			}
 			return (

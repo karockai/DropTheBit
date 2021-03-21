@@ -37,16 +37,13 @@ function ChartTitle(props) {
             SetYield(yid);
             SetBullIcon(icon)
             setBullColor({color: color});
-            console.log({ 
-                before : beforeWon,
-                current : currentWon,
-                updown : upDown,
-                icon : isBullIcon,
-                textColor : textColor,
-            });
-            console.log(isBullIcon);
-            // console.log(props);
-            // console.log(props.data.length);
+            // console.log({ 
+            //     before : beforeWon,
+            //     current : currentWon,
+            //     updown : upDown,
+            //     icon : isBullIcon,
+            //     textColor : textColor,
+            // });
         };
     }, [props.data]);
     
@@ -59,7 +56,6 @@ function ChartTitle(props) {
         if(typeof(won) == "number") won = won.toString();
         return won;
     }
-    console.log(props);
     
     return (
         <>

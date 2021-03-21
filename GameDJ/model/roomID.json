@@ -6,6 +6,7 @@
             "playerID" : "String",
             "cash" : "Number",
             "coinVol" : "Number",
+            "asset" : "Number",
             "bidList" :
             {
                 "price" : "Vol"
