@@ -25,6 +25,7 @@ class Room {
         games[roomID][socket.id] = {};
         games[roomID][socket.id][playerID] = profile[playerID];
         games[roomID][socket.id][cash] = 100000000;
+        games[roomID][socket.id][asset] = 100000000;
         games[roomID][socket.id][coinVol] = 0;
 
         console.log("Room Created");

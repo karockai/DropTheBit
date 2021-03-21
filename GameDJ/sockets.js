@@ -1,10 +1,14 @@
-import datas from './gameDJ/dummyDatas.js';
+import datas from './gameDJ/dummy/dummyDatas4.js';
 const stockData = datas;
 
 import socketio from 'socket.io';
 
 import Room from './gameDJ/room.js';
 import Game from './gameDJ/game.js';
+
+
+import { dbset, dbget } from "./gameDJ/redis.js";
+
 
 
 
@@ -59,7 +63,30 @@ export default {
                     cash: myCash + data.currentBid * data.currentVolume,
                     asset: myCash,
                 })
-            })
+            });
+
+            socket.on('test', async () => {
+                let test_room =     {
+                    "aman" :
+                    {
+                        "socketID" : "String",
+                        "cash" : "100000",
+                        "asset" : "100000",
+                        "coinVol" : "0",
+                        "bid" :
+                        {
+                        }
+                    },
+                    "timeCount" : "Number",
+                    "music" : "Link?"
+                };
+
+                dbset("test_room", test_room);
+                let get_test_room = await dbget("test_room");
+                socket.emit('test', get_test_room);
+            });
+
+
             /////////////////////////////////////////
             console.log('connected user');
             socket.on('createPrivateRoom_Req', (profile) => new Room(io, socket).createPrivateRoom(profile));
@@ -67,10 +94,7 @@ export default {
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함 
             socket.on('settingsUpdate_Req', (music_name) => new Room(io, socket).updateSettings(music_name));
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
-<<<<<<< HEAD
             // socket.on('-');
-=======
->>>>>>> e868db3e098535d86d11f96d99a72958d9a782e5
         });
     }
 }
