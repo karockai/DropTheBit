@@ -1,0 +1,45 @@
+[
+    {
+        "id": "sunio00000",
+        "cash" : 300,
+        "point" : 3,
+        "stock" : [1, 30, 3, 0,0,0,0,0,0,0],
+        "yield" : 20
+    },
+    {
+        "id": "yeny",
+        "cash" : 322,
+        "point" : 3,
+        "stock" : [1, 30, 3, 0,0,0,0,0,0,0],
+        "yield" : 20
+    },
+    {
+        "id": "karockai",
+        "cash" : 333,
+        "point" : 3,
+        "stock" : [1, 30, 3, 0,0,0,0,0,0,0],
+        "yield" : 20
+    },
+    {
+        "id": "Dockerman",
+        "cash" : 5000,
+        "point" : 3,
+        "stock" : [1, 30, 3, 0,0,0,0,0,0,0],
+        "yield" : 20
+    },
+    {
+        "id": "sujung",
+        "cash" : 355,
+        "point" : 3,
+        "stock" : [1, 30, 3, 0,0,0,0,0,0,0],
+        "yield" : 20
+    },
+    {
+        "id": "LeeSanghun",
+        "cash" : 300,
+        "point" : 3,
+        "stock" : [1, 30, 3, 0,0,0,0,0,0,0],
+        "yield" : 20
+    }
+
+]

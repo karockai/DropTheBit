@@ -1,0 +1,72 @@
+[
+	{
+		"id" : 5207,
+		"upDownRate" : "KOSPI",
+		"aver_price" : "000020",
+		"stock_name" : "동화약품",
+		"curr_price" : 15400
+	},
+	{
+		"id" : 6281,
+		"stock_name" : "엘브이엠씨홀딩스",
+		"prevYear" : "900140",
+		"curr_price" : 4075,
+		"upDownRate" : "KOSPI"
+	},
+	{
+		"id" : 8314,
+		"upDownRate" : "KOSPI",
+		"prevYear" : "095570",
+		"stock_name" : "AJ네트웍스",
+		"curr_price" : 3995
+	},
+	{
+		"id" : 8315,
+		"upDownRate" : "dd",
+		"prevYear" : "006840",
+		"stock_name" : "용기식품",
+		"currYear" : 32700
+	},
+	{
+		"id" : 832222256,
+		"upDownRate" : "d",
+		"prevYear" : "02710",
+		"stock_name" : "BGF",
+		"curr_price" : 6350000
+	},
+	{
+		"id" : 8357,
+		"upDownRate" : "KOSPI",
+		"prevYear" : "282330",
+		"stock_name" : "BGF리테일",
+		"curr_price" : 163000
+	},
+	{
+		"id" : 8358,
+		"upDownRate" : "KOSPI",
+		"prevYear" : "138930",
+		"stock_name" : "BNK금융지주",
+		"curr_price" : 5810
+	},
+	{
+		"id" : 8359,
+		"upDownRate" : "KOSPI",
+		"prevYear" : "001460",
+		"stock_name" : "BYC",
+		"curr_price" : 312000
+	},
+	{
+		"id" : 8360,
+		"upDownRate" : "KOSPI",
+		"prevYear" : "001465",
+		"stock_name" : "BYC우",
+		"curr_price" : 148000
+	},
+	{
+		"id" : 8361,
+		"upDownRate" : "KOSPI",
+		"prevYear" : "001040",
+		"stock_name" : "CJ",
+		"curr_price" : 100000
+	}
+]

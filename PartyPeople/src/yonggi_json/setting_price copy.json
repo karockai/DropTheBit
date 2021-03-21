@@ -1,0 +1,39 @@
+[
+    {
+        "room_id" : "32dmb141zvvd",
+        "year" : [
+            {
+                "year" : 2010,
+                "stock" : 
+                [{
+                    "stock" :"LG전자",
+                    "price" : 10000
+                },
+                {
+                    "stock" :"오뚜기",
+                    "price" : 20000
+                },
+                {
+                    "stock" :"아모레퍼시픽",
+                    "price" : 30000
+                }]
+            },
+            {
+                "year" : 2011,
+                "stock" : [
+                {
+                    "stock" :"LG전자",
+                    "price" : 30000
+                },
+                {
+                    "stock" :"오뚜기",
+                    "price" : 20000
+                },
+                {
+                    "stock" :"아모레퍼시픽",
+                    "price" : 10000
+                }]
+            }
+        ]
+    }
+]

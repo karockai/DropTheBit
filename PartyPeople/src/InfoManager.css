@@ -1,0 +1,11 @@
+
+
+#info .MakeInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 25px;
+    font-weight: lighter;
+    color: #3b3a3a;
+    background-color: #64bc7f;
+    font-size: 20px;
+}

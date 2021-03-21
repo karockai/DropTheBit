@@ -1,0 +1,49 @@
+[
+    {   "user_id": "karockai",
+        "socket_id": "aaaaaa",
+        "room_link": "32dmb141zvvd", 
+        "cash": 30000, 
+        "asset": 40000,
+        "info_pt": 10,
+        "stock" : [{
+            "stock_name" : "LG전자",
+            "stock_EA" : 0,
+            "stock_avg_price" : 0
+        },
+        {
+            "stock_name" : "오뚜기",
+            "stock_EA" : 20,
+            "stock_avg_price" : 500000
+        },
+        {
+            "stock_name" : "아모레퍼시픽",
+            "stock_EA" : 50,
+            "stock_avg_price" : 200000
+        }],
+        "info": ["용기의 첫번째 정보", "용기의 두번째 정보"]
+    },
+    {
+        "user_id": "sunio00000",
+        "socket_id": "bbbbb",
+        "room_link": "32dmb141zvvd",
+        "cash": 50000,
+        "asset": 40000,
+        "info_pt": 20,
+        "stock" : [{
+            "stock_name" : "LG전자",
+            "stock_EA" : 0,
+            "stock_avg_price" : 0
+        },
+        {
+            "stock_name" : "오뚜기",
+            "stock_EA" : 20,
+            "stock_avg_price" : 500000
+        },
+        {
+            "stock_name" : "아모레퍼시픽",
+            "stock_EA" : 50,
+            "stock_avg_price" : 200000
+        }],
+        "info": ["태양의 첫번째 정보", "태양의 두번째 정보"]
+    }
+]
