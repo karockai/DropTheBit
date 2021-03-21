@@ -3,6 +3,11 @@ import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import TradeStock from './TradeStock'; 
+import MyAsset from './MyAsset'; 
+import BidTab from './bidTab'; 
+import ChatRoom from './ChatRoom'; 
+import PlayerList from './PlayerList'; 
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 
@@ -11,81 +16,69 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
+        // padding: theme.spacing(2),
+        textAlign: 'center',
         padding: theme.spacing(2),
         textAlign: 'left',
         color: theme.palette.text.secondary,
     },
 }));
 
-export default function LayoutGrid(props) {
-    console.log(props);
+export default function SimpleContainer(props) {
     const classes = useStyles();
     let testXs = 12;
     let leftSm = 2;
-    let middleSm = 6;
-    let rightSm = 4;
+    let middleSm = 7;
+    let rightSm = 3;
     return (
         <React.Fragment>
             <CssBaseline />
-                <Paper style={{backgroundColor: '(0, 0, 0, 0.5)', padding:'15px 0 15px 0', margin: '0 0 2vh 0' }} className={classes.paper}>
-                    navigation Bar
-                </Paper>
             <Container maxWidth='lg' >
-                <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '90vh' }}>
-                    <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={3} >
-                        <Grid style={{ height: "100%" }} className="playerListGrid" item xs={leftSm} >
-                            <Paper style={{ height: "100%" }} className={classes.paper}>
-                                <Grid wrap="wrap" container direction="column" justify="center" alignItems="stretch" spacing={3}>
-                                    <Grid item xs={testXs}>
-                                        <Paper className={classes.paper}>
-                                            content
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={testXs}>
-                                        <Paper className={classes.paper}>
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={testXs}>
-                                        <Paper className={classes.paper}>
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={testXs}>
-                                        <Paper className={classes.paper}>
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
+                <Typography component="div" style={{ backgroundColor: '#cfe8fc',  margin: '2vh 0 0 0' }}>
+                    <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
+                        <Grid className="playerListGrid" item xs={leftSm} >
+                            {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
+                              <PlayerList/>
+                              <PlayerList/>
+                              <PlayerList/>
+                            {/* </Paper> */}
                         </Grid>
                         <Grid className="stockTradeGrid" item xs={middleSm}>
-                            <Paper style={{ height: "100%" }} className={classes.paper}>
-                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center"spacing={3}>
-                                    <Grid className="chartComponent" style={{ height: "15%" }} item >
-                                        <ChartTitle/>
-                                    </Grid>
-                                    <Grid className="chartComponent" style={{ height: "55%" }} item >
-                                        <ChartComponent socket={props.socket}/>
-                                    </Grid>
-                                    <Grid style={{ height: "30%" }} item>
-                                        <Paper style={{ height: "100%" }} className={classes.paper}>xs={testXs}
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-
-                        </Grid>
-                        <Grid className="bidChatGrid" item xs={rightSm}>
-                            <Paper style={{ height: "100%" }} className={classes.paper}>
-                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center"spacing={3}>
-                                    <Grid style={{ height: "60%" }} item >
-                                        <Paper style={{ height: "100%" }} className={classes.paper}>xs={testXs}
-                                        </Paper>
+                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center" spacing={2}>
+                                    <Grid style={{ height: "60%"}} item>
+                                     <Paper style={{ height: "100%" }} className={classes.paper}>
+                                        <ChartComponent socket={props.socket} requestSocket={props.requestSocket}/>
+                                     </Paper>
                                     </Grid>
                                     <Grid style={{ height: "40%" }} item>
-                                        <Paper style={{ height: "100%" }} className={classes.paper}>xs={testXs}
-                                        </Paper>
+                                        <Grid style={{ height: "100%", }} wrap="wrap" alignItems="stretch" container direction="row" justify="space-around">
+                                            <Grid style={{ width: "45%", height: "100%"}} item >
+                                                {/* <Paper style={{ height: "100%" }} > */}
+                                                    <MyAsset/>
+                                               {/* </Paper> */}
+                                            </Grid>
+                                            <Grid style={{ width: "52.5%", height: "100%", margin: '0 0 0 2vh'}} item > 
+                                                <Paper style={{ height: "100%" }} className={classes.paper}>
+                                                    <TradeStock/>
+                                                </Paper>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                            </Paper>
+                        </Grid>
+                        <Grid className="bidChatGrid" item xs={rightSm}>
+                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center"spacing={2}>
+                                    <Grid style={{ height: "60%" }} item >
+                                    <Paper style={{ height: "100%"}} className={classes.paper}>
+                                        <BidTab/>
+                                    </Paper>
+                                    </Grid>
+                                    <Grid style={{ height: "40%" }} item>
+                                    <Paper style={{ height: "100%"}} className={classes.paper}>
+                                        <ChatRoom socket={props.socket} getMessage={props.getMessage} sendMessage={props.sendMessage} chat={props.chat}/>
+                                    </Paper>
+                                    </Grid>
+                                </Grid>
                         </Grid>
                     </Grid>
                 </Typography>

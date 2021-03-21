@@ -4,8 +4,6 @@ import CanvasManager from './CanvasManager'
 import { Button } from '@material-ui/core';
 import ChartComponent from './ChartComponent';
 import LayoutGrid from './LayoutGrid';
-import SimpleContainer from './SimpleContainer';
-
 class GameManager extends React.Component {
     constructor(props) {
         super(props);
@@ -22,18 +20,21 @@ class GameManager extends React.Component {
             //     messages: []
             // },
         };
-    }
-    componentWillUnmount() {
-        console.log('?');
-    }
-    componentDidMount() {
-        let socketCopy = null;
-        let user_cnt = 0;
         this.socket = io('localhost:5000'); //_ http://15.165.129.19:5000/
-        this.socket.on('connect', async () => {
+        this.socket.on('connect', () => {
             console.log('connnected',this.socket);
             this.socket.emit('join');
-        });
+        })
+    }
+
+    componentWillMount() {
+        console.log('[ componentWillMount ]');
+    }
+
+    componentDidMount() {
+        console.log('[ componentDidMount ]');
+        let user_cnt = 0;
+
         this.socket.on('curCoin', (data)=> {
             console.log(data);
             let today = new Date();
@@ -42,10 +43,12 @@ class GameManager extends React.Component {
             let milliseconds = today.getMilliseconds(); // 밀리초
             console.log("cli:", minutes, ":", seconds, ":", milliseconds);
         });
+
         this.socket.on('socket', (socket) => {
             console.log(socket);
-            setSocket();
+            setSocket(this.socket);
         });
+
         this.socket.on('update', function (data) {
             addMessage(data);
         });
@@ -54,13 +57,8 @@ class GameManager extends React.Component {
         });
         const setSocket = socket => {
             this.setState({socketId: socket});
-            console.log(this.state);
         }
-        const addSocket = () => {
-            if(this.socketId === null) {
-                this.setState({socketId: this.socket});
-            }
-        }
+
         const addMessage = data => {
             this.setState({ messages: [...this.state.messages, data] });
         };
@@ -72,15 +70,18 @@ class GameManager extends React.Component {
             // room, start 버튼 도입하면 해결될 문제 ! 
         });
     }
-
-    TestEmitButton = (props) => {
-        return (
-            <>
-                <Button variant="contained" color="secondary" onClick={this.sendComment}>소켓 연결 확인용 버튼(action::'test')</Button>
-            </>
-        );
+    sendMessage = (ev) => {
+        ev.preventDefault();
+        this.socket.emit('message', {
+            author: this.state.author,
+            message: ev.target.value,
+        })
+        this.setState({ message: '' });
     }
-    
+    getInputMessage = ev => {
+        ev.preventDefault();
+        this.setState({ message: ev.target.value });
+    }
     sendComment = ev => {
         ev.preventDefault();
         this.socket.emit(
@@ -90,14 +91,27 @@ class GameManager extends React.Component {
             }
         );
     }
+    TestEmitButton = (props) => {
+        return (
+            <>
+                <Button variant="contained" color="secondary" onClick={this.sendComment}>소켓 연결 확인용 버튼(action::'test')</Button>
+            </>
+        );
+    }
+
+    RequestSocket = (component, socket) => {
+        if(socket != null) return;
+        console.log(component + ' 에서 socket을 요청했습니다. 랜더링을 다시 합니다.');
+        this.setState({socketId: this.socket});
+    }
+
     render() {
-        console.log(this.socket);
+        console.log('[ render() ]')
+        const socket = this.state.socketId;
         return (
             <>
                 <this.TestEmitButton/>
-                {/* <LayoutGrid socket= {this.socket}/>
-                 */}
-                 <SimpleContainer socket= {this.socket}/>
+                <LayoutGrid socket= {socket} requestSocket={this.RequestSocket}/>
             </>
         );
     }

@@ -1,5 +1,5 @@
 import { blue, red } from '@material-ui/core/colors';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { render } from 'react-dom';
 
 //@ won -> string (4자리 단위로 ',' 끊어주기)
@@ -8,7 +8,7 @@ import { render } from 'react-dom';
 //@ 수익률 계산후 문자열 파싱 -> ('+1.33%')
 //@ useEffect socket 통신
 
-function ChartTitle() {
+function ChartTitle(props) {
     const subtit = '전일대비';
     const unit = 'KRW';
     const isBullMarket = true;
@@ -20,9 +20,11 @@ function ChartTitle() {
     const [currentWon, SetWon] = useState(68099000);
     const [upDown, SetUpDown] = useState(957000);
 
+    useEffect(() => {
+
+    });
     
     function SplitByThree(value) {
-        console.log(value);
         if(value.length <= 3) return value;
         return SplitByThree(value.substring(0,value.length - 3)) + ',' + value.substring(value.length - 3, value.length); 
     }
@@ -31,10 +33,9 @@ function ChartTitle() {
         if(typeof(won) == "number") won = won.toString();
         return SplitByThree(won);
     }
- 
+    
     return (
         <>
-            {console.log(textColor)}
             <div className ="ChartTitle" style={textColor}>
                 <span style={{display:'block'}}>
                     <strong style={{fontSize: '40px'}}>
