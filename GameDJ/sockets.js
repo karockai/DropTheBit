@@ -20,9 +20,8 @@ module.exports.init = (server) => {
             socket.emit('chart', stockData.datas[day++])
             console.log(socket.id,'님에게 [', day, '] 인덱스의 정보가 보내졌습니다.')
         }
-        setInterval(chart, 2000);
+        setInterval(chart, 500);
         /////////////////////////////////////////
-
         //@ socket 연결 확인용 버튼 socket event.
         socket.on('test',(comment)=>{
             console.log(comment);
