@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import io from "socket.io-client";
 import CanvasManager from './CanvasManager'
 import { Button } from '@material-ui/core';
 import ChartComponent from './ChartComponent';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LayoutGrid from './LayoutGrid';
+import EnterRoom from './EnterRoom';
+import Lobby from './Lobby';
+
 class GameManager extends React.Component {
     constructor(props) {
         super(props);
@@ -110,10 +114,16 @@ class GameManager extends React.Component {
         const socket = this.state.socketId;
         return (
             <>
-                <this.TestEmitButton/>
-                <LayoutGrid socket= {socket} requestSocket={this.RequestSocket}/>
+                <Router>
+                        <this.TestEmitButton/>
+                        <Route path="/enter" component={EnterRoom}/>
+                        <Route path="/lobby" component={Lobby}/>
+                        <Route path="/game" component={LayoutGrid} socket={socket} requestSocket={this.RequestSocket}/>
+                        <EnterRoom/>
+                </Router>
             </>
         );
+        {/* <LayoutGrid socket={socket} requestSocket={this.RequestSocket}/> */}
     }
 }
 export default GameManager;

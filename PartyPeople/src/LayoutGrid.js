@@ -30,6 +30,8 @@ export default function SimpleContainer(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
+    console.log(props.socket);
+    console.log(props.requestSocket);
     return (
         <React.Fragment>
             <CssBaseline />
