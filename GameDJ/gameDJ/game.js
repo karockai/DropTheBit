@@ -2,7 +2,7 @@
 //     dbget,
 //     dbset
 // } = require('./js');
-import { dbset, dbget, dbhset, dbhget } from './redis.js';
+import { dbset, dbget, dbhset, dbhget, dbhexi } from './redis.js';
 
 // const = require('./);
 class Game {
@@ -127,24 +127,6 @@ class Game {
         let strReqVol = reqJson['currentVolume'];
         let intReqVol = Number(strReqVol);
 
-        // // Test Data Set
-        // test_room = {};
-        // test_room["socketID"] = {};
-        // test_room["socketID"]["playerID"] = "karockai";
-        // test_room["socketID"]["cash"] = "100000000";
-        // test_room["socketID"]["coinVol"] = "0";
-        // test_room["socketID"]["asset"] = "100000000";
-        // test_room["socketID"]["bidList"] = {};
-        // test_room["socketID"]["askList"] = {};
-        // test_room["timeCount"] = "5000";
-        // test_room["Music"] = "Don't Look back in Anger";
-
-        // bidList = {};
-        // await dbset(roomID, test_room);
-        // await dbset("bidList", bidList);
-
-        // Test Data Set End
-
         // 2. player_info 가져오기
         console.log('** BUY REQUEST :', roomID, socketID);
         let playerInfo = await dbhget(roomID, socketID);
@@ -201,12 +183,16 @@ class Game {
                     );
                 } else {
                     playerInfo['bidList'][strReqPrice] = strReqVol;
-                    let bidPriceList = await dbget('buyList', strReqPrice);
+                    let dbexi = await dbhexi('bidList', strReqPrice);
+                    let bidPriceList = {};
+                    if (dbhexi) {
+                        bidPriceList = await dbhget('buyList', strReqPrice);
+                    }
                     bidPriceList[socketID] = roomID;
-                    dbset('buyList', strReqPrice, bidPriceList, redis.print);
+                    dbhset('buyList', strReqPrice, bidPriceList, redis.print);
                 }
             }
-            dbset(roomID, socketID, playerInfo);
+            dbhset(roomID, socketID, playerInfo);
         } else {
             //보유 현금이 부족한 경우 : asset_res["result"] = False를 emit
             asset_res['result'] = 'false';
