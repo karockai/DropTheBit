@@ -1,5 +1,5 @@
 import { dbset, dbget } from "./redis.js";
-import {nanoid} from 'nanoid';
+import { nanoid } from 'nanoid';
 
 class Room {
     constructor(io, socket) {
@@ -74,6 +74,8 @@ class Room {
         games[roomID][socket.id][coinVol] = 0;
 
         socket.playerID = joinData[profile];
+
+
         socket.join(roomID);
         socket.roomID = roomID;
         socket.to(roomID).emit('joinRoom_Res', joinData[profile]);
