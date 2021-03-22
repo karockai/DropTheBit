@@ -14,10 +14,7 @@ class Game {
     async startGame() {
         let music_time = 5000;
         const { io, socket } = this;
-        games[socket.roomID][gameTime] = music_time;
-        const { gameTime } = games[socket.roomID];
-        const players = Array.from(await io.in(socket.roomID).allSockets());
-        socket.to(socket.roomID).emit('startGame_Res', gameTime);
+        socket.to(socket.roomID).emit('startGame', gameTime);
 
         const gameOver = function () {
             return Promise(function (resolve, reject) {

@@ -44,7 +44,7 @@ export default {
                 new Room(io, socket).createPrivateRoom(playerID);
             });
 
-             // data : {roomID : roomID, playerID : name}
+            // data : {roomID : roomID, playerID : name}
             socket.on('joinRoom_Req', async (data) => {
                 await new Room(io, socket).joinRoom(data);
             });
