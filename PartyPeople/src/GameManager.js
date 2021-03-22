@@ -12,11 +12,11 @@ class GameManager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // hash: '',
-            // author: '',
-            // message: '',
-            // messages: [],
-            // socketId: null,
+            hash: '',
+            author: '',
+            message: '',
+            messages: [],
+            socketId: null,
             // //@ 아래와 같이 할 때, 
             // // chatRoom: {
             // //     author: '',ssss
@@ -111,7 +111,7 @@ class GameManager extends React.Component {
         return (
             <>
                 <this.TestEmitButton/>
-                <Routes socket= {socket} requestSocket={this.RequestSocket}/>
+                <Routes socket= {socket} requestSocket={this.RequestSocket} setSocket={this.setSocket}/>
             </>
         );
     }

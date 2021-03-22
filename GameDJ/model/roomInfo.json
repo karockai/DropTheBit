@@ -1,9 +1,9 @@
 {
     "roomID" :
     {
-        "playerID" :
+        "socketID" :
         {
-            "socketID" : "String",
+            "playerID" : "String",
             "cash" : "Number",
             "asset" : "Number",
             "coinVol" : "Number",
@@ -12,8 +12,8 @@
                 "price" : "vol"
             }
         },
-        "timeCount" : "Number",
-        "music" : "Link?"
+        "gameTime" : "Number",
+        "music" : "String"
     }
 },
 
