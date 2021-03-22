@@ -29,7 +29,7 @@ export default {
                 socket.emit('chart', stockData[
                     day++
                 ]);
-                console.log(socket.id, '님에게 [', day, '] 인덱스의 정보가 보내졌습니다.');
+                // console.log(socket.id, '님에게 [', day, '] 인덱스의 정보가 보내졌습니다.');
             }
             setInterval(chart, 2000);
             /////////////////////////////////////////
@@ -37,6 +37,15 @@ export default {
             //@ socket 연결 확인용 버튼 socket event.
             socket.on('test', (comment) => {
                 console.log(comment);
+            });
+
+            //@ socket 연결 확인용 버튼 socket event.
+            socket.on('message', (comment) => {
+                console.log(comment);
+                io.to(socket.roomID).emit('update',{
+                    author : comment.author,
+                    message : comment.message,
+                })
             });
             /////////////////////////////////////////
             //@ buy / sell interaction
@@ -105,5 +114,3 @@ export default {
         });
     }
 }
-
->>>>>>> 3eed8fe9947c6315da0a8fc7dc858f99c678ca55

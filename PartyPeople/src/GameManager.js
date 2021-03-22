@@ -11,19 +11,21 @@ class GameManager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hash: '',
-            author: '',
-            message: '',
-            messages: [],
-            socketId: null,
-            //@ 아래와 같이 할 때, 
-            // chatRoom: {
-            //     author: '',ssss
-            //     message: '',
-            //     messages: []
-            // },
+            
+            // hash: '',
+            // author: '',
+            // message: '',
+            // messages: [],
+            // socketId: null,
+            // //@ 아래와 같이 할 때, 
+            // // chatRoom: {
+            // //     author: '',ssss
+            // //     message: '',
+            // //     messages: []
+            // // },
+            
         };
-        this.socket = io('15.165.129.19:5000'); //_ http://15.165.129.19:5000/
+        this.socket = io('localhost:5000'); //_ http://15.165.129.19:5000/
         // this.socket = io('localhost:5000');
         this.socket.on('connect', () => {
             console.log('connnected',this.socket);
