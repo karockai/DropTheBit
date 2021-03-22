@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar'
-
+import Snackbar from '@material-ui/core/Snackbar';
 
 export default function SimpleSnackbar() {
     const [open, setOpen] = React.useState(false);
@@ -18,15 +17,14 @@ export default function SimpleSnackbar() {
         setOpen(false);
     };
 
-
     function SuccessAlert(props) {
         return (
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     This is a success message!
-            </Alert>
+                </Alert>
             </Snackbar>
-        )
+        );
     }
 
     function FailAlert(props) {
@@ -34,9 +32,8 @@ export default function SimpleSnackbar() {
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     This is a success message!
-            </Alert>
+                </Alert>
             </Snackbar>
-        )
+        );
     }
 }
-
