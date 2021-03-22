@@ -11,7 +11,7 @@ import { dbset, dbget } from "./gameDJ/redis.js";
 
 let gameTime = 10000;
 export default {
-    init(server) {
+  init(server) {
     const io = socketio(server);
     let day = 0;
         
@@ -30,18 +30,22 @@ export default {
     
   
       socket.on("testBuy", async (data) => {
-        await new Test(io, socket).testBuy(data);
+          await new Test(io, socket).testBuy(data);
+          console.log(data)
       });
     
       socket.on("testSell", async (data) => {
         await new Test(io, socket).testSell(data);
+        console.log(data)
       });
       // test event << ------------------------------------------   
 
-      // room event ------------------------------------------ >>
-      socket.on("createPrivateRoom_Req", (profile) =>
+      /////////////////////////////////////////
+      console.log("connected user");
+      socket.on("createPrivateRoom_Req", (profile) =>{
+        console.log('profile : '+profile);
         new Room(io, socket).createPrivateRoom(profile)
-      );
+      });
       socket.on("joinRoom_Req", async (profile) => {
         await new Room(io, socket).joinRoom(profile);
       });

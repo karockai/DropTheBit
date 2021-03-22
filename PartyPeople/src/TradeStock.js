@@ -79,13 +79,13 @@ export default function TradeStock(props) {
     function Buy(bid, volume) {
         //@ Buy Emit
         console.log('[ 가격', bid,', 갯수', volume ,'] 매수 주문이 체결되었습니다.')
-        props.socket.emit('buy', { //@ reqJson.json 형식확인
-            roomID : 0,
-            playerID : 0,
+        props.socket.emit('testBuy', { //@ reqJson.json 형식확인
+            roomID : 'roomidisnone',
+            socketID : props.socket.id,
             currentBid : bid,
             currentVolume: volume,
         });
-        props.socket.on('buy',(bbid) =>{
+        props.socket.on('testBuy',(bbid) =>{
             SetNewBid(bbid)
             console.log('구매하고 매매 호가', bbid)
         });
@@ -93,14 +93,14 @@ export default function TradeStock(props) {
     function Sell(bid, volume) {
         //@ Sell Emit
         console.log('[ 가격', bid,', 갯수', volume ,'] 매도 주문이 체결되었습니다.');
-        props.socket.emit('sell', {
-            roomID : 0,
-            playerID : 0,
+        props.socket.emit('testSell', {
+            roomID : 'roomidisnone',
+            socketID : props.socket.id,
             currentBid : bid,
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
-        props.socket.on('sell',(sbid) =>{
+        props.socket.on('testSell',(sbid) =>{
             SetNewBid(sbid)
             console.log('판매하고 호가 갱신',sbid)
         });

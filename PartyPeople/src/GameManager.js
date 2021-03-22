@@ -17,13 +17,22 @@ class GameManager extends React.Component {
             message: '',
             messages: [],
             socketId: null,
-            //@ 아래와 같이 할 때, 
-            // chatRoom: {
-            //     author: '',
-            //     message: '',
-            //     messages: []
-            // },
+            // //@ 아래와 같이 할 때, 
+            // // chatRoom: {
+            // //     author: '',ssss
+            // //     message: '',
+            // //     messages: []
+            // // },
+            roomId: null,
+            roomInfo: null,
+            
         };
+        this.socket = io('localhost:5000'); //_ http://15.165.129.19:5000/
+        // this.socket = io('localhost:5000');
+        this.socket.on('connect', () => {
+            console.log('connnected',this.socket);
+            this.socket.emit('join');
+        })
     }
     componentWillUnmount() {
         console.log('?');
@@ -98,13 +107,23 @@ class GameManager extends React.Component {
         this.setState({socketId: this.socket});
     }
 
+    SetRoomIdAndInfo = (data) => {
+        console.log(data.roomID);
+        console.log(data.roomInfo);
+        this.setState({
+            roomId: data.roomID,
+            roomInfo: data.roomInfo,
+        });
+    }
+
     
     render() {
         const socket = this.state.socketId;
         return (
             <>
                 <this.TestEmitButton/>
-                <LayoutGrid socket= {socket} requestSocket={this.RequestSocket}/>
+                <Routes socket= {socket} requestSocket={this.RequestSocket} SetRoomIdAndInfo={this.SetRoomIdAndInfo}/>
+
             </>
         );
     }

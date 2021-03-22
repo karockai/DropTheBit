@@ -41,9 +41,9 @@ class Test {
       "] 매수 주문이 체결되었습니다."
     );
     socket.emit("testBuy", 3000);
-    refresh({
-      cash: myCash - data.currentBid * data.currentVolume,
-      asset: myCash,
+    this.refresh({
+      cash: data.currentBid * data.currentVolume,
+      asset: data.currentBid,
     });
   }
 
@@ -58,9 +58,9 @@ class Test {
       "] 매도 주문이 체결되었습니다."
     );
     socket.emit("testSell", 1000000);
-    refresh({
-      cash: myCash + data.currentBid * data.currentVolume,
-      asset: myCash,
+    this.refresh({
+      cash: data.currentBid * data.currentVolume,
+      asset: data.currentBid,
     });
   }
 }

@@ -30,14 +30,14 @@ class Room {
 
     socket.roomID = roomID;
     socket.join(roomID);
-    socket.emit("createPrivateRoom_Res", roomID, roomInfo);
+    socket.emit("createPrivateRoom_Res", { roomID: roomID, roomInfo: roomInfo });
+    console.log({ roomID: roomID, roomInfo: roomInfo });
     // 'front'
     // createPrivateRoom_res 구현
 
     console.log("room_created");
     console.log("roomID : ", roomID);
     console.log("roomBoss :", profile["playerID"]);
-    console.log;
   }
 
   async joinRoom(profile) {
