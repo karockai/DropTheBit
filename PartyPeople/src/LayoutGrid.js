@@ -3,11 +3,11 @@ import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import TradeStock from './TradeStock'; 
-import MyAsset from './MyAsset'; 
-import BidTab from './bidTab'; 
-import ChatRoom from './ChatRoom'; 
-import PlayerList from './PlayerList'; 
+import TradeStock from './TradeStock';
+import MyAsset from './MyAsset';
+import BidTab from './bidTab';
+import ChatRoom from './ChatRoom';
+import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 
@@ -33,10 +33,18 @@ export default function LayoutGrid(props) {
     return (
         <React.Fragment>
             <CssBaseline />
-            <Container maxWidth='lg' >
-                <Typography component="div" style={{  margin: '2vh 0 0 0' }}>
-                    <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
-                        <Grid className="playerListGrid" item xs={leftSm} >
+            <Container maxWidth="lg">
+                <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
+                    <Grid
+                        style={{ height: '100%' }}
+                        wrap="wrap"
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="stretch"
+                        spacing={2}
+                    >
+                        <Grid className="playerListGrid" item xs={leftSm}>
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
                               <PlayerList roomID={props.roomID} roomInfo={props.roomInfo}/>
                             {/* </Paper> */}
@@ -63,20 +71,37 @@ export default function LayoutGrid(props) {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                        </Grid>
+                            </Grid>
                         <Grid className="bidChatGrid" item xs={rightSm}>
-                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center"spacing={2}>
-                                    <Grid style={{ height: "60%" }} item >
-                                    <Paper style={{ height: "100%"}} className={classes.paper}>
-                                        <BidTab/>
+                            <Grid
+                                style={{ height: '100%' }}
+                                wrap="wrap"
+                                alignItems="stretch"
+                                container
+                                direction="column"
+                                justify="center"
+                                spacing={2}
+                            >
+                                <Grid style={{ height: '60%' }} item>
+                                    <Paper
+                                        style={{ height: '100%' }}
+                                        className={classes.paper}
+                                    >
+                                        <BidTab />
                                     </Paper>
-                                    </Grid>
-                                    <Grid style={{ height: "40%" }} item>
-                                    <Paper style={{ height: "100%"}} className={classes.paper}>
-                                        <ChatRoom socket={props.socket} chat={props.chat}/>
-                                    </Paper>
-                                    </Grid>
                                 </Grid>
+                                <Grid style={{ height: '40%' }} item>
+                                    <Paper
+                                        style={{ height: '100%' }}
+                                        className={classes.paper}
+                                    >
+                                        <ChatRoom
+                                            socket={props.socket}
+                                            chat={props.chat}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Typography>

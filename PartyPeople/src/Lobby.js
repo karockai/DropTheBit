@@ -1,17 +1,24 @@
-import React, {Component} from 'react';
-import { Button, TextField, Fab, Grid, Paper, makeStyles } from '@material-ui/core';
-import {withRouter} from 'react-router-dom';
+import React, { Component } from 'react';
+import {
+    Button,
+    TextField,
+    Fab,
+    Grid,
+    Paper,
+    makeStyles,
+} from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 
 function Lobby(props) {
     const putPlayer = (player) => {
-        return(
+        return (
             <Paper>
                 {player.playerID}
                 {player.cash}
                 {player.asset}
             </Paper>
         );
-    }
+    };
     // const MakeURL = (props) => {
         if (props.roomID) {
         console.log(window.location.protocol);
@@ -21,10 +28,10 @@ function Lobby(props) {
         putPlayer(props.player); // playerInfo
     }
     // }
-    function CopyURL(){
+    function CopyURL() {
         var copyText = document.getElementById('gameLink');
         copyText.select();
-        document.execCommand("Copy");
+        document.execCommand('Copy');
         alert('복사되었습니다.');
     }
 

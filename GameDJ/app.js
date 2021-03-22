@@ -1,5 +1,5 @@
 // const express = require('express');
-import express from 'express'
+import express from 'express';
 
 // const cors = require('cors');
 
@@ -15,22 +15,7 @@ app.use(express.static('public'));
 
 // module.exports = app;
 
-
 export default app;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // var createError = require('http-errors');
 // var express = require('express');

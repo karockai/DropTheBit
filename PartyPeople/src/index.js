@@ -6,12 +6,11 @@ import GameManager from './GameManager';
 import SimpleContainer from './SimpleContainer';
 import ViewportLayout from './ViewportLayout';
 
-
 ReactDOM.render(
-  <React.StrictMode>
-    <GameManager/>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <GameManager />
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

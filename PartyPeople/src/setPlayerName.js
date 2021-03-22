@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Fab, Grid, Paper, makeStyles, TextField } from '@material-ui/core';
-import {withRouter} from 'react-router-dom';
+import {
+    Button,
+    Fab,
+    Grid,
+    Paper,
+    makeStyles,
+    TextField,
+} from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
-
 
 function SetPlayerName(props) {
     // const socket = io();
@@ -12,11 +18,12 @@ function SetPlayerName(props) {
     const [tmp, setTemp] = React.useState('');
     const handleChange = (event) => {
         setTemp(event.target.value);
-    }
+    };
 
-    const handleOnSave =(event) => {
+    const handleOnSave = (event) => {
         event.preventDefault();
         props.onSave(tmp);
+
     }
     let buttonMsg ='Create Private Room';
     if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
@@ -27,12 +34,27 @@ function SetPlayerName(props) {
         buttonMsg = 'Create Private Room';
     }
     return(
+
         <>
-            <Grid >
-                <TextField id="standard-basic" label="Name" inputRef={props.textInput} onChange={handleChange} variant="outlined" size="large"/>
+            <Grid>
+                <TextField
+                    id="standard-basic"
+                    label="Name"
+                    inputRef={props.textInput}
+                    onChange={handleChange}
+                    variant="outlined"
+                    size="large"
+                />
             </Grid>
             <Grid>
-              <Button variant="contained" color="primary" onClick={handleOnSave}> {buttonMsg} </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleOnSave}
+                >
+                    {' '}
+                    {props.buttonMsg}{' '}
+                </Button>
             </Grid>
         </>
     );

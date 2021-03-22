@@ -3,7 +3,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card, Container, Col, Row } from 'react-bootstrap';
 import './PlayerManager.css';
-import user_list from './user.json'
+import user_list from './user.json';
 
 class PlayerProfileCard extends React.Component {
     render() {
@@ -11,14 +11,17 @@ class PlayerProfileCard extends React.Component {
             <div id="card">
                 <div className="personal">
                     <Avatar image="https://raw.githubusercontent.com/JustMonk/codepen-resource-project/master/img/pixel%20avatar.png" />
-                    <NameHolder name={this.props.name}/>
+                    <NameHolder name={this.props.name} />
                 </div>
-                <Info point={this.props.point} money={this.props.money} gain={this.props.gain} />
-                <InfoButton buy="매매목록" info="대화요청"/>
+                <Info
+                    point={this.props.point}
+                    money={this.props.money}
+                    gain={this.props.gain}
+                />
+                <InfoButton buy="매매목록" info="대화요청" />
             </div>
         );
     }
-
 }
 
 function InfoButton(props) {
@@ -27,7 +30,7 @@ function InfoButton(props) {
             <Button variant="info">{props.buy}</Button>
             <Button variant="danger">{props.info}</Button>
         </div>
-    )
+    );
 }
 
 function Info(props) {
@@ -40,8 +43,6 @@ function Info(props) {
     );
 }
 
-
-
 function Avatar(props) {
     return (
         <div className="avatar">
@@ -52,14 +53,13 @@ function Avatar(props) {
 
 function NameHolder(props) {
     return (
-        <div className="nameHolder" style={{margin: "auto"}}>
+        <div className="nameHolder" style={{ margin: 'auto' }}>
             <h1>{props.name}</h1>
         </div>
     );
 }
 
 class PlayerManager extends React.Component {
-
     renderUser(userIdx) {
         return (
             <Card style={{ width: '18rem' }}>
@@ -73,9 +73,7 @@ class PlayerManager extends React.Component {
         );
     }
 
-    yonggi(){
-
-    }
+    yonggi() {}
 
     render() {
         // const users = this.state.users;
@@ -83,37 +81,45 @@ class PlayerManager extends React.Component {
         const isLeft = this.props.isLeft;
         let userProfile = Array(6).fill(null);
         users.map((user, idx) => {
-            userProfile[idx] = (<Row>
-                <PlayerProfileCard onClick={this.yonggi} name={user.id} winRate={user.yield} point={user.point} money={user.cash} gain={user.yield} />
-            </Row>)
-        })
+            userProfile[idx] = (
+                <Row>
+                    <PlayerProfileCard
+                        onClick={this.yonggi}
+                        name={user.id}
+                        winRate={user.yield}
+                        point={user.point}
+                        money={user.cash}
+                        gain={user.yield}
+                    />
+                </Row>
+            );
+        });
 
         return (
             //@ 6명의 유저를 모두 출력 해주도록 함수를 호출
             //@ template 찾기
             <div>
                 <Container>
-                    {isLeft ?
-                    <Col>
-                        {userProfile[0]}
-                        {userProfile[1]}
-                        {userProfile[2]}
-                    </Col> :
-                    <Col>
-                        {userProfile[3]}
-                        {userProfile[4]}
-                        {userProfile[5]}
-                    </Col>
-                }
+                    {isLeft ? (
+                        <Col>
+                            {userProfile[0]}
+                            {userProfile[1]}
+                            {userProfile[2]}
+                        </Col>
+                    ) : (
+                        <Col>
+                            {userProfile[3]}
+                            {userProfile[4]}
+                            {userProfile[5]}
+                        </Col>
+                    )}
                 </Container>
             </div>
         );
-
     }
 }
 
 export default PlayerManager;
-
 
 // class ProfileCard extends React.Component {
 //     render() {

@@ -1,21 +1,28 @@
 import React, { useState, useRef } from 'react';
-import { Button, Fab, Grid, Paper, makeStyles, TextField } from '@material-ui/core';
-import {withRouter} from 'react-router-dom';
+import {
+    Button,
+    Fab,
+    Grid,
+    Paper,
+    makeStyles,
+    TextField,
+} from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 
-export default function EnterRoom(props, {history}) {
+export default function EnterRoom(props, { history }) {
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState('');
     let textInput = useRef(null);
-    
+
     const handleOnSave = (textInput) => {
         setName(textInput);
         sendName(textInput);
-    }
+    };
 
-    if(props.socket == null) {
+    if (props.socket == null) {
         props.requestSocket('createPrivateRoom');
     }
 
@@ -24,7 +31,9 @@ export default function EnterRoom(props, {history}) {
         // ev.preventDefault();
         // console.log(name);
         // console.log(props.socket);
-        const params = window.location.toString().substring(window.location.toString().indexOf('?'));
+        const params = window.location
+            .toString()
+            .substring(window.location.toString().indexOf('?'));
         const searchParams = new URLSearchParams(params);
         if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
             props.socket.emit('joinRoom_Req', {"playerID" : name , "roomID": searchParams.get('id')});

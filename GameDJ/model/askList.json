@@ -1,9 +1,7 @@
 {
-    "askList" :
-    {
-        "askPrice" :
-        {
-            "playerID" : "roomID"
+    "askList": {
+        "askPrice": {
+            "playerID": "roomID"
         }
     }
 }
