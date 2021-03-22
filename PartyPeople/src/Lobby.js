@@ -3,7 +3,6 @@ import { Button, TextField, Fab, Grid, Paper, makeStyles } from '@material-ui/co
 import {withRouter} from 'react-router-dom';
 
 function Lobby(props) {
-
     const putPlayer = (player) => {
         return(
             <Paper>
@@ -18,10 +17,16 @@ function Lobby(props) {
         console.log(window.location.protocol);
         console.log(window.location.host);
         console.log(props.roomId);
-        document.querySelector('#gameLink').value = `${window.location.protocol}//${window.location.host}/?id=${props.roomId}`;
+        // document.querySelector('#gameLink').value = `${window.location.protocol}//${window.location.host}/?id=${props.roomId}`;
         putPlayer(props.player); // playerInfo
     }
     // }
+    function CopyURL(){
+        var copyText = document.getElementById('gameLink');
+        copyText.select();
+        document.execCommand("Copy");
+        alert('복사되었습니다.');
+    }
 
     return(
         <> 
@@ -29,8 +34,8 @@ function Lobby(props) {
         <Paper>{props.name}</Paper>
         <Grid>
             <input type="text" id="gameLink" class="form-control text-center fw-bold bg-white"
-                    value="" readonly />
-            <Button class="btn btn-warning" type="button" id="copy">Copy Link</Button>
+                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomId}`} readonly />
+            <Button class="btn btn-warning" type="button" onClick={CopyURL} id="copy">Copy Link</Button>
             <putPlayer/>
         </Grid>
         </>
