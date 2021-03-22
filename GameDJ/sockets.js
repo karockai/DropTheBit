@@ -1,5 +1,4 @@
-import datas from "./gameDJ/dummy/dummyDatas4.js";
-const stockData = datas;
+
 
 import socketio from "socket.io";
 
@@ -12,16 +11,16 @@ import { dbset, dbget } from "./gameDJ/redis.js";
 
 let gameTime = 10000;
 export default {
-
   init(server) {
     const io = socketio(server);
-
+    let day = 0;
+        
     io.on("connection", (socket) => {
       console.log("connected");
 
       // test event ------------------------------------------ >>
       const chart = async () => {
-        await new Test.testSendChart();
+        await new Test(io,socket).testSendChart(day++);
       }
       setInterval(chart, 2000);
         

@@ -62,6 +62,7 @@ export default function TradeStock(props) {
     const [newBid, SetNewBid] = useState(0);
     const [currentVolume, SetVolume] = useState(1);
     const [ratioBid, SetRatio] = useState(100);
+    const [isBind, SetBind] = useState(false);
 
     function VolumeUp() {
         SetVolume(currentVolume + 1);
@@ -75,32 +76,33 @@ export default function TradeStock(props) {
     function BidDown() {
         SetBid(currentBid - ratioBid);
     }
-    function Buy() {
+    function Buy(bid, volume) {
         //@ Buy Emit
-        console.log('[ 가격', currentBid,', 갯수', currentVolume ,'] 매수 주문이 체결되었습니다.')
+        console.log('[ 가격', bid,', 갯수', volume ,'] 매수 주문이 체결되었습니다.')
         props.socket.emit('buy', { //@ reqJson.json 형식확인
             roomID : 0,
             playerID : 0,
-            currentBid : currentBid,
-            currentVolume: currentVolume,
+            currentBid : bid,
+            currentVolume: volume,
         });
-        props.socket.on('buy',(bid) =>{
-            SetNewBid(bid)
-            console.log('구매하고 매매 호가', bid)
+        props.socket.on('buy',(bbid) =>{
+            SetNewBid(bbid)
+            console.log('구매하고 매매 호가', bbid)
         });
     }
-    function Sell() {
+    function Sell(bid, volume) {
         //@ Sell Emit
-        console.log('[ 가격', currentBid,', 갯수', currentVolume ,'] 매도 주문이 체결되었습니다.');
+        console.log('[ 가격', bid,', 갯수', volume ,'] 매도 주문이 체결되었습니다.');
         props.socket.emit('sell', {
             roomID : 0,
             playerID : 0,
-            currentBid : currentBid,
-            currentVolume: currentVolume,
+            currentBid : bid,
+            currentVolume: volume,
         });
-        props.socket.on('sell',(bid) =>{
-            SetNewBid(bid)
-            console.log('판매하고 호가 갱신',bid)
+        //@ 중복 문제가 발생한다.
+        props.socket.on('sell',(sbid) =>{
+            SetNewBid(sbid)
+            console.log('판매하고 호가 갱신',sbid)
         });
     }
 
@@ -110,22 +112,39 @@ export default function TradeStock(props) {
         if(e.keyCode == 37){ //_ LEFT ARROW
             console.log(props);
             console.log('KeyCode > LEFT.');
-            if( props.socket == null ) return;
-            Buy()
+            if( props.socket == null || isBind == false) {
+                props.requestSocket('TradeStock', props.socket);
+                SetBind(true);
+                return;
+            }
+            Buy(currentBid, currentVolume);
         }
         else if(e.keyCode == 39) { //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.')
-            if( props.socket == null ) return;
-            Sell();
+            if( props.socket == null || isBind == false) {
+                props.requestSocket();
+                SetBind(true);
+                return;
+            }
+            Sell(currentBid, currentVolume);
+        }
+
+        if(e.keyCode == 38) { //_ UP ARROW
+            console.log('KeyCode > UP.')
+        }
+        else if(e.keyCode == 40) { //_ DOWN ARROW
+            console.log('KeyCode > DOWN.')
         }
     };
+
     useEffect(() => {
         document.addEventListener("keydown", HandleKeyPress);
         return () => {
             document.removeEventListener("keydown", HandleKeyPress);
         }
-    },[])
+    },[isBind])
+
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
         const responseBid = newBid;
@@ -145,10 +164,10 @@ export default function TradeStock(props) {
                 <ArrowButton upEvent = {VolumeUp} downEvent = {VolumeDown}/>
             </Grid>
             <Grid className={classes.button} style={{width: "80%",}}>
-                <Button variant="contained" color="primary" onClick={Buy} >
+                <Button variant="contained" color="primary" onClick={()=>Buy(currentBid, currentVolume)} >
                     매수
                 </Button>
-                <Button variant="contained" color="secondary" onClick={Sell} >
+                <Button variant="contained" color="secondary" onClick={()=>Sell(currentBid, currentVolume)} >
                     매도
                 </Button>
             </Grid>
