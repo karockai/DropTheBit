@@ -1,8 +1,7 @@
 {
-    "curCoin" :
-    {
-        "time" : "String",
-        "curPrice" : "Number",
-        "accVolume" : "Number"
+    "curCoin": {
+        "time": "String",
+        "curPrice": "Number",
+        "accVolume": "Number"
     }
 }

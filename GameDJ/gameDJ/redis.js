@@ -3,8 +3,8 @@
 import redis from 'redis';
 import jsonify from 'redis-jsonify';
 // let jsonify = require('redis-jsonify');
-let client = redis.createClient({ host: "13.209.69.195" });
-client.on("error", function (error) {
+let client = redis.createClient({ host: '13.209.69.195' });
+client.on('error', function (error) {
     console.error(error);
 });
 
@@ -21,16 +21,10 @@ const dbhget = util.promisify(client.hget).bind(client);
 
 // DB function ----------------------------<<
 
-
 // module.exports = {
 //     dbset,
 //     dbget
 // };
 
-export {
-    dbset,
-    dbget,
-    dbhset,
-    dbhget
-}
+export { dbset, dbget, dbhset, dbhget };
 // ///////////////////////////////////////////////////////////////
