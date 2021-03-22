@@ -38,9 +38,7 @@ export default function LayoutGrid(props) {
                     <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
                         <Grid className="playerListGrid" item xs={leftSm} >
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
-                              <PlayerList/>
-                              <PlayerList/>
-                              <PlayerList/>
+                              <PlayerList roomId={props.roomId} roomInfo={props.roomInfo}/>
                             {/* </Paper> */}
                         </Grid>
                         <Grid className="stockTradeGrid" item xs={middleSm}>

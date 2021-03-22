@@ -6,6 +6,8 @@ import Lobby from './Lobby';
 
 export default function EnterRoom(props, {history}) {
     const [name, setName] = React.useState('');
+    const [player, setPlayer] = React.useState('');
+    const [roomId, setRoomId] = React.useState('');
     let textInput = useRef(null);
     
     const handleOnSave = (textInput) => {
@@ -15,7 +17,6 @@ export default function EnterRoom(props, {history}) {
 
     if(props.socket == null) {
         props.requestSocket('createPrivateRoom');
-
     }
 
     const sendName = (name) => {
@@ -24,11 +25,16 @@ export default function EnterRoom(props, {history}) {
         // console.log(props.socket);
         props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
         props.socket.on('createPrivateRoom_Res', (data)=>{
-            console.log(data);
+            console.log(data); 
         props.SetRoomIdAndInfo(data);
+        setPlayer(data.roomInfo[props.socket.id]);
+        setRoomId(data.roomId);
+        // const MakeURL = (props, data) => {
+        //     document.querySelector('#gameLink').value = `${window.location.protocol}//${window.location.host}/?id=${data.gameID}`;
+        //     putPlayer(data.roomInfo[props.socket.id]); // playerInfo
+        // }
         });
     }
-    
 
 
     const isName = (name === '');
@@ -37,7 +43,7 @@ export default function EnterRoom(props, {history}) {
         {isName&&
         <SetPlayerName onSave={handleOnSave} name={name} setName={setName} history={history}/>}
         {!isName&&
-        <Lobby name={name} history={history}/>}
+        <Lobby name={name} history={history} roomId={roomId} player={player}/>}
       </>
     );
 }
