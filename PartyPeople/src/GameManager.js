@@ -5,13 +5,13 @@ import { Button } from '@material-ui/core';
 import ChartComponent from './ChartComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LayoutGrid from './LayoutGrid';
+import SimpleContainer from './SimpleContainer';
 import Routes from './Routes';
 
 class GameManager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
             // hash: '',
             // author: '',
             // message: '',
@@ -32,15 +32,17 @@ class GameManager extends React.Component {
             this.socket.emit('join');
         })
     }
-
-    componentWillMount() {
-        console.log('[ componentWillMount ]');
+    componentWillUnmount() {
+        console.log('?');
     }
-
     componentDidMount() {
-        console.log('[ componentDidMount ]');
+        let socketCopy = null;
         let user_cnt = 0;
-
+        this.socket = io('localhost:5000'); //_ http://15.165.129.19:5000/
+        this.socket.on('connect', async () => {
+            console.log('connnected',this.socket);
+            this.socket.emit('join');
+        });
         this.socket.on('curCoin', (data)=> {
             console.log(data);
             let today = new Date();
@@ -49,21 +51,28 @@ class GameManager extends React.Component {
             let milliseconds = today.getMilliseconds(); // 밀리초
             console.log("cli:", minutes, ":", seconds, ":", milliseconds);
         });
-
         this.socket.on('socket', (socket) => {
             console.log(socket);
-            setSocket(this.socket);
+            setSocket();
         });
-
-
+        this.socket.on('update', function (data) {
+            addMessage(data);
+        });
         this.socket.on('get_chart_data', function (data) {
             console.log(data);
         });
         const setSocket = socket => {
             this.setState({socketId: socket});
+            console.log(this.state);
         }
-
-
+        const addSocket = () => {
+            if(this.socketId === null) {
+                this.setState({socketId: this.socket});
+            }
+        }
+        const addMessage = data => {
+            this.setState({ messages: [...this.state.messages, data] });
+        };
         this.socket.on('update_users', function (data, user_count) {
             console.log(data);
             user_cnt = user_count;
@@ -72,18 +81,15 @@ class GameManager extends React.Component {
             // room, start 버튼 도입하면 해결될 문제 ! 
         });
     }
-    sendMessage = (ev) => {
-        ev.preventDefault();
-        this.socket.emit('message', {
-            author: this.state.author,
-            message: ev.target.value,
-        })
-        this.setState({ message: '' });
+
+    TestEmitButton = (props) => {
+        return (
+            <>
+                <Button variant="contained" color="secondary" onClick={this.sendComment}>소켓 연결 확인용 버튼(action::'test')</Button>
+            </>
+        );
     }
-    getInputMessage = ev => {
-        ev.preventDefault();
-        this.setState({ message: ev.target.value });
-    }
+    
     sendComment = ev => {
         ev.preventDefault();
         this.socket.emit(
@@ -92,38 +98,17 @@ class GameManager extends React.Component {
                 comment: '연결 테스트 메시지 입니다. 클라이언트와 서버가 연결되어 있습니다.'
             }
         );
-
-        this.socket.on(
-            'test', (test_room)=>
-            {
-                console.log(test_room);
-            }
-        )
     }
-    TestEmitButton = (props) => {
-        return (
-            <>
-                <Button variant="contained" color="secondary" onClick={this.sendComment}>소켓 연결 확인용 버튼(action::'test')</Button>
-            </>
-        );
-    }
-
-    RequestSocket = (component, socket) => {
-        if(socket != null) return;
-        console.log(component + ' 에서 socket을 요청했습니다. 랜더링을 다시 합니다.');
-        this.setState({socketId: this.socket});
-    }
-
     render() {
-        console.log('[ render() ]')
-        const socket = this.state.socketId;
+        console.log(this.socket);
         return (
             <>
                 <this.TestEmitButton/>
-                <Routes socket={socket} requestSocket={this.RequestSocket}/>
-                {/* <LayoutGrid socket={socket} requestSocket={this.RequestSocket}/> */}
+                {/* <LayoutGrid socket= {this.socket}/>
+                 */}
+                 <SimpleContainer socket= {this.socket}/>
             </>
         );
     }
 }
-export default GameManager;
+export default GameManager; 

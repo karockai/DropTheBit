@@ -5,6 +5,7 @@ import socketio from 'socket.io';
 
 import Room from './gameDJ/room.js';
 import Game from './gameDJ/game.js';
+import Disconnect from './gameDJ/disconnect.js';
 
 
 import { dbset, dbget } from "./gameDJ/redis.js";
@@ -58,7 +59,7 @@ export default {
                 })
             }
             socket.on('buy', (data) => {
-                console.log(socket.id, '님의 [ 가격', data.currentBid,', 갯수', data.currentVolume ,'] 매수 주문이 체결되었습니다.')
+                console.log(socket.id, '님의 [ 가격', data.currentBid, ', 갯수', data.currentVolume, '] 매수 주문이 체결되었습니다.')
                 socket.emit('buy', 3000);
                 refresh({
                     cash: myCash - data.currentBid * data.currentVolume,
@@ -66,7 +67,7 @@ export default {
                 })
             });
             socket.on('sell', (data) => {
-                console.log(socket.id, '님의 [ 가격', data.currentBid,', 갯수', data.currentVolume ,'] 매도 주문이 체결되었습니다.');
+                console.log(socket.id, '님의 [ 가격', data.currentBid, ', 갯수', data.currentVolume, '] 매도 주문이 체결되었습니다.');
                 socket.emit('sell', 1000000);
                 refresh({
                     cash: myCash + data.currentBid * data.currentVolume,
@@ -75,19 +76,19 @@ export default {
             });
 
             socket.on('test', async () => {
-                let test_room =     {
-                    "aman" :
+                let test_room = {
+                    "aman":
                     {
-                        "socketID" : "String",
-                        "cash" : "100000",
-                        "asset" : "100000",
-                        "coinVol" : "0",
-                        "bid" :
+                        "socketID": "String",
+                        "cash": "100000",
+                        "asset": "100000",
+                        "coinVol": "0",
+                        "bid":
                         {
                         }
                     },
-                    "timeCount" : "Number",
-                    "music" : "Link?"
+                    "timeCount": "Number",
+                    "music": "Link?"
                 };
 
                 dbset("test_room", test_room);
@@ -103,6 +104,7 @@ export default {
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함 
             socket.on('settingsUpdate_Req', (music_name) => new Room(io, socket).updateSettings(music_name));
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
+            socket.on('disconnect', () => new Disconnect(io, socket).onDisconnect());
 
             // in-game 이벤트
             socket.on('buy_Req', async (reqJson) => await new Game(io, socket).buy(reqJson));
