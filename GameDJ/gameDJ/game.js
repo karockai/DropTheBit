@@ -2,7 +2,11 @@
 //     dbget,
 //     dbset
 // } = require('./js');
-import { dbset, dbget } from "./redis.js";
+import {
+  dbset,
+  dbget,
+  dbhset,
+  dbhget } from "./redis.js";
 
 // const = require('./);
 class Game {
@@ -109,55 +113,115 @@ class Game {
   }
 
   // 매수 요청 등록
-  async buy(reqJson) {
-    // 1. reqJson setting
-    let roomID = reqJson["roomID"];
-    let playerID = reqJson["playerID"];
-    let strReqPrice = reqJson["reqPrice"];
-    let intReqPrice = Number(strReqPrice);
-    let strReqVol = reqJson["reqVol"];
-    let intReqVol = Number(strReqVol);
+  /*reqJson{
+      roomID
+      playerID
+      reqPrice
+      reqVol
+  }
+  **/
 
+  async buy(reqJson) {
+      
+    // 1. reqJson setting
+    console.log("** BUY REQUEST :", reqJson);
+    let roomID = reqJson["roomID"];
+    let socketID = reqJson["socketID"];
+    let strReqPrice = reqJson["currentBid"];
+    let intReqPrice = Number(strReqPrice);
+    let strReqVol = reqJson["currentVolume"];
+    let intReqVol = Number(strReqVol);
+    
+    // // Test Data Set
+    // test_room = {};
+    // test_room["socketID"] = {};
+    // test_room["socketID"]["playerID"] = "karockai";
+    // test_room["socketID"]["cash"] = "100000000";
+    // test_room["socketID"]["coinVol"] = "0";
+    // test_room["socketID"]["asset"] = "100000000";
+    // test_room["socketID"]["bidList"] = {};
+    // test_room["socketID"]["askList"] = {};
+    // test_room["timeCount"] = "5000";
+    // test_room["Music"] = "Don't Look back in Anger";
+    
+    // bidList = {};
+    // await dbset(roomID, test_room);
+    // await dbset("bidList", bidList);
+
+    // Test Data Set End
+    
     // 2. player_info 가져오기
-    let playerInfo = await dbget(roomID, playerID);
+    console.log("** BUY REQUEST :", roomID, socketID);
+    let playerInfo = await dbhget(roomID, socketID);
+    console.log("** BUY REQUEST :", playerInfo);
+    console.log("** BUY REQUEST :", playerInfo["HHGYLUsUhF8Jj9hPAAAE"]);
     let cash = Number(playerInfo["cash"]);
     let coinVol = Number(playerInfo["coinVol"]);
-
+    let asset = playerInfo["asset"];// asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
+    
     // 3. curPrice 가져오기
     let curPrice = Number(await dbget("curCoin", "curPrice"));
+    
+    let asset_res = {};
+    let buy_res = {};
 
-    // 4. 구매 처리
-    cash -= intReqPrice * intReqVol;
-    playerInfo["cash"] = String(cash);
+    // 4. 구매 가능 여부 확인 후 "asset" emit
+    if (cash >= intReqPrice * intReqVol){
 
-    // 4. reqPrice > curPrice?
-    if (intReqPrice >= curPrice) {
-      // 4-1. coin 갯수 갱신
-      coinVol += intReqVol;
-      playerInfo["coinVol"] = String(coinVol);
-    } else {
-      // 4-2. buyList 등록
-      let bidPriceList = await dbget("buyList", strReqPrice);
-      bidPriceList[playerID] = roomID;
-      dbset("buyList", strReqPrice, bidPriceList, redis.print);
+        // 5. 구매 처리 및 asset 정보 emit
+        asset_res["result"] = "success";
+        asset_res["asset"] = asset;
+                
+        // 6. 현재가 >= 요청가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
+        if (intReqPrice >= curPrice) {
+            
+            // 6-1. cash, coin 갯수 갱신
+            cash -= curPrice * intReqVol;
+            coinVol += intReqVol;
+            
+            // 6-2. buy_res update
+            buy_res["type"] = "체결";
+            asset_res["coinVol"] = String(coinVol);
+            asset_res["cash"] = String(cash);
+            this.socket.emit("asset", asset_res);
+            this.socket.emit("buy_Res", buy_res);
+            
+            // 6-3. playerInfo Update
+            playerInfo["cash"] = String(cash);
+            playerInfo["coinVol"] = String(coinVol);
+            
+            // 7. 현재가 < 요청가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
+        } else {
+            // 7-1. cash 갱신
+            cash -= intReqPrice * intReqPrice;
+            buy_res["type"] = "호가";
+            asset_res["coinVol"] = String(coinVol);
+            asset_res["cash"] = String(cash);
+            this.socket.emit("asset", asset_res);
+            this.socket.emit("buy_Res", buy_res);
+            
+            playerInfo["cash"] = String(cash);
 
-      // 4-3. player 호가 목록 등록
-      let vol = 0;
-      if (playerInfo["bidList"][strReqPrice]) {
-        vol += Number(playerInfo["bidList"][strReqPrice]);
-      }
-      vol += intReqVol;
-      playerInfo["bidList"][strReqPrice] = String(vol);
+            // 4-3. player 호가 목록 등록
+            if (playerInfo["bidList"].hasOwnProperty(strReqPrice)) {
+                playerInfo["bidList"][strReqPrice] = String(Number(playerInfo["bidList"][strReqPrice]) + intReqVol);
+            }
+            else{
+                playerInfo["bidList"][strReqPrice] = strReqVol;
+                let bidPriceList = await dbget("buyList", strReqPrice);
+                bidPriceList[socketID] = roomID;
+                dbset("buyList", strReqPrice, bidPriceList, redis.print);
+            }   
+        }
+        dbset(roomID, socketID, playerInfo);
+    }   
+    else{
+        //보유 현금이 부족한 경우 : asset_res["result"] = False를 emit
+        asset_res["result"] = "false";
+        this.socket.emit("asset", asset_res);
     }
-
-    // 5. playerInfo 갱신
-    dbset(roomID, playerID, playerInfo);
-
-    // 6. success 보내기
-    let resJson = {};
-    resJson[result] = true;
-    socket.emit("buy_Res", (resJson, playerInfo));
   }
+    
 
   // 매도 요청 등록
   async sell(reqJson) {
