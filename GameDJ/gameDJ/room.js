@@ -30,7 +30,7 @@ class Room {
 
     socket.roomID = roomID;
     socket.join(roomID);
-    socket.emit("createPrivateRoom_Res", {roomID : roomID, roomInfo : roomInfo});
+    socket.emit("createPrivateRoom_Res", roomInfo);
     // let ddd = await dbget(roomID);
     // console.log(ddd);
     // console.log(ddd["playerID"]);
