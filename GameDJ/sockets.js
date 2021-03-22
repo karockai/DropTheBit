@@ -30,11 +30,13 @@ export default {
     
   
       socket.on("testBuy", async (data) => {
-        await new Test(io, socket).testBuy(data);
+          await new Test(io, socket).testBuy(data);
+          console.log(data)
       });
     
       socket.on("testSell", async (data) => {
         await new Test(io, socket).testSell(data);
+        console.log(data)
       });
       // test event << ------------------------------------------   
 
