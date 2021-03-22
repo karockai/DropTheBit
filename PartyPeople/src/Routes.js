@@ -13,7 +13,7 @@ export default function Routes(props) {
                 <Switch>
                     <Route exact path="/" render={() => <EnterRoom socket={props.socket} requestSocket={props.requestSocket} SetRoomIdAndInfo={props.SetRoomIdAndInfo}/>}/>
                     <Route path="/lobby" render={() => <Lobby socket={props.socket} requestSocket={props.requestSocket}/>}/>
-                    <Route path="/game" render={() => <LayoutGrid socket={props.socket} requestSocket={props.requestSocket}/>}/>
+                    <Route path="/game" render={() => <LayoutGrid socket={props.socket} requestSocket={props.requestSocket} roomId = {props.roomId}/>}/>
                 </Switch>
             </Router>
         </>
