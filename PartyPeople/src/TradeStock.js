@@ -131,9 +131,9 @@ export default function TradeStock(props) {
             '] 매도 주문이 체결되었습니다.'
         );
         props.socket.emit('testSell', {
-            roomID : props.roomID,
-            socketID : props.socket.id,
-            currentBid : bid,
+            roomID: props.roomID,
+            socketID: props.socket.id,
+            currentBid: bid,
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
@@ -144,16 +144,10 @@ export default function TradeStock(props) {
     }
 
     function HandleKeyPress(e) {
-<<<<<<< HEAD
-        if(e.keyCode === 123) return; //_ 'F12' 개발자도구 ㅋ
-        e.preventDefault();
-        if(e.keyCode === 37){ //_ LEFT ARROW
-=======
         if (e.keyCode == 123) return; //_ 'F12' 개발자도구 ㅋ
         e.preventDefault();
         if (e.keyCode == 37) {
             //_ LEFT ARROW
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
             console.log(props);
             console.log('KeyCode > LEFT.');
             if (props.socket == null || isBind == false) {
@@ -162,19 +156,11 @@ export default function TradeStock(props) {
                 return;
             }
             Buy(currentBid, currentVolume);
-<<<<<<< HEAD
-        }
-        else if(e.keyCode === 39) { //_ RIGHT ARROW
-            console.log(props);
-            console.log('KeyCode > RIGHT.')
-            if( props.socket == null || isBind === false) {
-=======
         } else if (e.keyCode == 39) {
             //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.');
             if (props.socket == null || isBind == false) {
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
                 props.requestSocket();
                 SetBind(true);
                 return;
@@ -182,47 +168,33 @@ export default function TradeStock(props) {
             Sell(currentBid, currentVolume);
         }
 
-<<<<<<< HEAD
-        if(e.keyCode === 38) { //_ UP ARROW
-            console.log('KeyCode > UP.')
-            if( props.socket == null || isBind === false) {
+        if (e.keyCode === 38) {
+            //_ UP ARROW
+            console.log('KeyCode > UP.');
+            if (props.socket == null || isBind === false) {
                 props.requestSocket();
                 SetBind(true);
                 return;
             }
             VolumeUp(currentVolume);
-        }
-        else if(e.keyCode === 40) { //_ DOWN ARROW
-            console.log('KeyCode > DOWN.')
-            if( props.socket == null || isBind === false) {
+        } else if (e.keyCode === 40) {
+            //_ DOWN ARROW
+            console.log('KeyCode > DOWN.');
+            if (props.socket == null || isBind === false) {
                 props.requestSocket();
                 SetBind(true);
                 return;
             }
             VolumeDown(currentVolume);
-=======
-        if (e.keyCode == 38) {
-            //_ UP ARROW
-            console.log('KeyCode > UP.');
-        } else if (e.keyCode == 40) {
-            //_ DOWN ARROW
-            console.log('KeyCode > DOWN.');
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
         }
     }
 
     useEffect(() => {
         document.addEventListener('keydown', HandleKeyPress);
         return () => {
-<<<<<<< HEAD
-            document.removeEventListener("keydown", HandleKeyPress);
-        }
-    },[currentVolume,currentBid])
-=======
             document.removeEventListener('keydown', HandleKeyPress);
         };
     }, [isBind]);
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -235,29 +207,10 @@ export default function TradeStock(props) {
         const responseVolume = newVolume;
         console.log('responseVolume', responseVolume);
         SetVolume(responseVolume);
-        return () =>{
-        };
-    },[newVolume]);
+        return () => {};
+    }, [newVolume]);
 
     let testXs = 12;
-<<<<<<< HEAD
-    return(
-        <Grid wrap="wrap" className={classes.paper} alignItems="stretch" container direction="column" justify="center" alignItems="center" style={{ height: "100%" }}>
-            <Grid container direction="row"  justify="center">
-              <TextField TextField  id="outlined-required" label="매매 호가" size="small" style={{width: "80%"}} value ={currentBid}/>
-              <ArrowButton upEvent = {()=>BidUp(currentBid)} downEvent = {()=>BidDown(currentBid)}/>
-            </Grid>
-            <Grid container direction="row" justify="center">
-                <TextField  id="outlined-required" label="수량" size="small" style={{width: "80%"}} value ={currentVolume}/>
-                <ArrowButton upEvent = {()=>VolumeUp(currentVolume)} downEvent = {()=>VolumeDown(currentVolume)}/>
-            </Grid>
-            <Grid className={classes.button} style={{width: "80%",}}>
-                <Button variant="contained" color="primary" onClick={()=>Buy(currentBid, currentVolume)} >
-                    <KeyboardArrowLeftIcon/>매수
-                </Button>
-                <Button variant="contained" color="secondary" onClick={()=>Sell(currentBid, currentVolume)} >
-                    <KeyboardArrowRightIcon/>매도
-=======
     return (
         <Grid
             wrap="wrap"
@@ -278,7 +231,10 @@ export default function TradeStock(props) {
                     style={{ width: '80%' }}
                     value={currentBid}
                 />
-                <ArrowButton upEvent={BidUp} downEvent={BidDown} />
+                <ArrowButton
+                    upEvent={() => BidUp(currentBid)}
+                    downEvent={() => BidDown(currentBid)}
+                />
             </Grid>
             <Grid container direction="row" justify="center">
                 <TextField
@@ -288,7 +244,10 @@ export default function TradeStock(props) {
                     style={{ width: '80%' }}
                     value={currentVolume}
                 />
-                <ArrowButton upEvent={VolumeUp} downEvent={VolumeDown} />
+                <ArrowButton
+                    upEvent={() => VolumeUp(currentVolume)}
+                    downEvent={() => VolumeDown(currentVolume)}
+                />
             </Grid>
             <Grid className={classes.button} style={{ width: '80%' }}>
                 <Button
@@ -296,6 +255,7 @@ export default function TradeStock(props) {
                     color="primary"
                     onClick={() => Buy(currentBid, currentVolume)}
                 >
+                    <KeyboardArrowLeftIcon />
                     매수
                 </Button>
                 <Button
@@ -303,8 +263,8 @@ export default function TradeStock(props) {
                     color="secondary"
                     onClick={() => Sell(currentBid, currentVolume)}
                 >
+                    <KeyboardArrowRightIcon />
                     매도
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
                 </Button>
             </Grid>
         </Grid>

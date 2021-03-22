@@ -3,16 +3,10 @@ import { render } from 'react-dom';
 import { socket } from 'socket.io-client';
 import StockChart from './StockChart';
 import ChartTitle from './ChartTitle';
-<<<<<<< HEAD
-import { getData } from "./utils"
-import { tsvParse, csvParse } from  "d3-dsv";
-import { timeParse } from "d3-time-format";
-import CircularProgress from '@material-ui/core/CircularProgress';
-=======
 import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ChartComponent extends React.Component {
     constructor(props) {
@@ -65,25 +59,27 @@ class ChartComponent extends React.Component {
             }
         }
 
-			if (this.props.socket == null || dataLength < 2) {
-				return (
-                    <div     style={{
+        if (this.props.socket == null || dataLength < 2) {
+            return (
+                <div
+                    style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: '30vh',
-                    }}>
-                        <CircularProgress/>
-                    </div>
-                );
-			}
-			return (
-				<>
-					<ChartTitle data={this.state.data}/>
-					<StockChart type={'hybrid'} data={this.state.data} />
-				</>
-			)
-		}
+                    }}
+                >
+                    <CircularProgress />
+                </div>
+            );
+        }
+        return (
+            <>
+                <ChartTitle data={this.state.data} />
+                <StockChart type={'hybrid'} data={this.state.data} />
+            </>
+        );
+    }
 }
 
 export default ChartComponent;

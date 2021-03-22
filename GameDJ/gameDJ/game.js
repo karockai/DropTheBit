@@ -43,7 +43,8 @@ class Game {
         let curCoin = JSON.parse(await dbget('curCoin'));
         console.log('curCoin : ', curCoin);
         console.log('curCoinType : ', typeof curCoin);
-        socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
+        // socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
+        socket.to(socket.roomID).emit('chart', curCoin);
         let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
 

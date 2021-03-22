@@ -26,7 +26,6 @@ export default function EnterRoom(props, { history }) {
         props.requestSocket('createPrivateRoom');
     }
 
-    
     const sendName = (name) => {
         // ev.preventDefault();
         // console.log(name);
@@ -35,30 +34,46 @@ export default function EnterRoom(props, { history }) {
             .toString()
             .substring(window.location.toString().indexOf('?'));
         const searchParams = new URLSearchParams(params);
-        if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
-            props.socket.emit('joinRoom_Req', {"playerID" : name , "roomID": searchParams.get('id')});
-        }
-        else {                           // 방장
-            props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
-            props.socket.on('createPrivateRoom_Res', (data)=>{
-                console.log(data); 
+        if (searchParams.has('id')) {
+            // 초대링크 받아서 온 사람
+            props.socket.emit('joinRoom_Req', {
+                playerID: name,
+                roomID: searchParams.get('id'),
+            });
+        } else {
+            // 방장
+            props.socket.emit('createPrivateRoom_Req', { playerID: name });
+            props.socket.on('createPrivateRoom_Res', (data) => {
+                console.log(data);
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);
                 setRoomID(data.roomID);
             });
         }
+    };
 
-    }
-
-    const isName = (name === '');
+    const isName = name === '';
     console.log(roomID);
     console.log(props.socket);
-    return(
+    return (
         <>
-        {isName&&
-        <SetPlayerName onSave={handleOnSave} name={name} setName={setName} history={history}/>}
-        {!isName&&
-        <Lobby name={name} socket={props.socket} history={history} roomID={roomID} player={player}/>}
-      </>
+            {isName && (
+                <SetPlayerName
+                    onSave={handleOnSave}
+                    name={name}
+                    setName={setName}
+                    history={history}
+                />
+            )}
+            {!isName && (
+                <Lobby
+                    name={name}
+                    socket={props.socket}
+                    history={history}
+                    roomID={roomID}
+                    player={player}
+                />
+            )}
+        </>
     );
 }
