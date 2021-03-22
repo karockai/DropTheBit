@@ -1,7 +1,13 @@
 {
     "curCoin": {
-        "time": "String",
-        "curPrice": "Number",
-        "accVolume": "Number"
+        "date": "Date",
+        "open": "Number",
+        "close": "Number",
+        "low" : "Number",
+        "high" : "Number",
+        "volume" : "Number",
+        "split" : "Number",
+        "dividend" : "Number",
+        "curPrice" : "Number"
     }
 }

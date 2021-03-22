@@ -41,11 +41,10 @@ class Game {
 
     async renewalCurCoin() {
         const { io, socket } = this;
-        const { gameTime } = games[socket.roomID];
 
         // 1. bidList 불러옴
         let curCoin = await dbget('curCoin');
-        console.log(curCoin);
+        console.log('curCoin : ', curCoin);
         socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
         curPrice = Number(curCoin['curPrice']);
 
@@ -177,22 +176,23 @@ class Game {
                 playerInfo['cash'] = String(cash);
 
                 // 4-3. player 호가 목록 등록
-                if (playerInfo['bidList'].hasOwnProperty(strReqPrice)) {
-                    playerInfo['bidList'][strReqPrice] = String(
-                        Number(playerInfo['bidList'][strReqPrice]) + intReqVol
+                if (playerInfo['bidInPlayer'].hasOwnProperty(strReqPrice)) {
+                    playerInfo['bidInPlayer'][strReqPrice] = String(
+                        Number(playerInfo['bidInPlayer'][strReqPrice]) +
+                            intReqVol
                     );
                 } else {
-                    playerInfo['bidList'][strReqPrice] = strReqVol;
+                    playerInfo['bidInPlayer'][strReqPrice] = strReqVol;
                     let dbexi = await dbhexi('bidList', strReqPrice);
                     let bidPriceList = {};
                     if (dbhexi) {
                         bidPriceList = await dbhget('buyList', strReqPrice);
                     }
                     bidPriceList[socketID] = roomID;
-                    dbhset('buyList', strReqPrice, bidPriceList, redis.print);
+                    dbhset('buyList', strReqPrice, JSON.stringfy(bidPriceList));
                 }
             }
-            dbhset(roomID, socketID, playerInfo);
+            dbhset(roomID, socketID, JSON.stringfy(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : asset_res["result"] = False를 emit
             asset_res['result'] = 'false';
@@ -254,22 +254,22 @@ class Game {
     // 매수 요청 취소
     async cancelBid(reqJson) {
         let roomID = reqJson['roomID'];
-        let playerID = reqJson['playerID'];
-        let BidPrice = reqJson['reqPrice'];
+        let socketID = reqJson['socketID'];
+        let bidPrice = reqJson['reqPrice'];
 
-        let bidList = await dbget('bidList', BidPrice);
-        let playerInfo = await dbget(roomID, playerID);
+        let bidList = JSON.parse(await dbhget('bidList', bidPrice));
+        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
 
         let cash = Number(playerInfo['cash']);
-        let bidVol = Number(playerInfo['bidList'][BidPrice]);
+        let bidVol = Number(playerInfo['bidInPlayer'][bidPrice]);
 
-        cash += bidVol * Number(BidPrice);
+        cash += bidVol * Number(bidPrice);
         playerInfo['cash'] = String(cash);
-        delete playerInfo['bidList'][BidPrice];
-        dbset(roomID, playerID, playerInfo);
+        delete playerInfo['bidInPlayer'][bidPrice];
+        dbhset(roomID, socketID, JSON.stringify(playerInfo));
 
-        delete bidList[playerID];
-        dbset('bidList', BidPrice, bidList);
+        delete bidList[socketID];
+        dbhset('bidList', bidPrice, JSON.stringify(bidList));
     }
 
     // 매도 요청 취소
