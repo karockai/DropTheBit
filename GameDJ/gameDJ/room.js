@@ -1,5 +1,5 @@
 import { dbset, dbget } from "./redis.js";
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 
 class Room {
     constructor(io, socket) {

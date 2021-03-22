@@ -92,14 +92,19 @@ class GameManager extends React.Component {
             }
         );
     }
+    RequestSocket = (component, socket) => {
+        if(socket != null) return;
+        console.log(component + ' 에서 socket을 요청했습니다. 랜더링을 다시 합니다.');
+        this.setState({socketId: this.socket});
+    }
+
+    
     render() {
         console.log(this.socket);
         return (
             <>
                 <this.TestEmitButton/>
-                {/* <LayoutGrid socket= {this.socket}/>
-                 */}
-                 <SimpleContainer socket= {this.socket}/>
+                <LayoutGrid socket= {this.socket} requestSocket={this.RequestSocket}/>
             </>
         );
     }

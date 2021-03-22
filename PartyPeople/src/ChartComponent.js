@@ -47,7 +47,6 @@ class ChartComponent extends React.Component {
                 }
                 if(this.props.requestSocket == null) {
                     console.log("requestSocket is null")
-                    this.props.requestSocket('ChartComponent');
                 }
                 else if(this.props.socket != null) {
                     // console.log('EMIT');
