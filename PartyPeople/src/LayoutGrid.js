@@ -52,12 +52,12 @@ export default function LayoutGrid(props) {
                                         <Grid style={{ height: "100%", }} wrap="wrap" alignItems="stretch" container direction="row" justify="space-around">
                                             <Grid style={{ width: "45%", height: "100%"}} item >
                                                 {/* <Paper style={{ height: "100%" }} > */}
-                                                    <MyAsset socket ={props.socket} requestSocket={props.requestSocket}/>
+                                                    <MyAsset roomId = {props.roomId} socket ={props.socket} requestSocket={props.requestSocket}/>
                                                {/* </Paper> */}
                                             </Grid>
                                             <Grid style={{ width: "50%", height: "100%", margin: '0 0 0 2vh'}} item > 
                                                 <Paper style={{ height: "100%" }} className={classes.paper}>
-                                                    <TradeStock socket ={props.socket}  requestSocket={props.requestSocket}/>
+                                                    <TradeStock roomId = {props.roomId} socket ={props.socket}  requestSocket={props.requestSocket}/>
                                                 </Paper>
                                             </Grid>
                                         </Grid>

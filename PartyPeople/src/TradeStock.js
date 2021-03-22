@@ -79,13 +79,13 @@ export default function TradeStock(props) {
     function Buy(bid, volume) {
         //@ Buy Emit
         console.log('[ 가격', bid,', 갯수', volume ,'] 매수 주문이 체결되었습니다.')
-        props.socket.emit('testBuy', { //@ reqJson.json 형식확인
-            roomID : 'roomidisnone',
+        props.socket.emit('buy_Req', { //@ reqJson.json 형식확인
+            roomID : props.roomId,
             socketID : props.socket.id,
             currentBid : bid,
             currentVolume: volume,
         });
-        props.socket.on('testBuy',(bbid) =>{
+        props.socket.on('buy_Req',(bbid) =>{
             SetNewBid(bbid)
             console.log('구매하고 매매 호가', bbid)
         });
@@ -94,7 +94,7 @@ export default function TradeStock(props) {
         //@ Sell Emit
         console.log('[ 가격', bid,', 갯수', volume ,'] 매도 주문이 체결되었습니다.');
         props.socket.emit('testSell', {
-            roomID : 'roomidisnone',
+            roomID : props.roomId,
             socketID : props.socket.id,
             currentBid : bid,
             currentVolume: volume,

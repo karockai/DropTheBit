@@ -15,6 +15,9 @@ client = jsonify(client);
 import util from 'util';
 const dbset = util.promisify(client.set).bind(client);
 const dbget = util.promisify(client.get).bind(client);
+const dbhset = util.promisify(client.hset).bind(client);
+const dbhget = util.promisify(client.hget).bind(client);
+
 // DB function ----------------------------<<
 
 
@@ -25,6 +28,8 @@ const dbget = util.promisify(client.get).bind(client);
 
 export {
     dbset,
-    dbget
+    dbget,
+    dbhset,
+    dbhget
 }
 // ///////////////////////////////////////////////////////////////

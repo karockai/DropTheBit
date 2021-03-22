@@ -28,7 +28,7 @@ export default function EnterRoom(props, {history}) {
             console.log(data); 
         props.SetRoomIdAndInfo(data);
         setPlayer(data.roomInfo[props.socket.id]);
-        setRoomId(data.roomId);
+        setRoomId(data.roomID);
         // const MakeURL = (props, data) => {
         //     document.querySelector('#gameLink').value = `${window.location.protocol}//${window.location.host}/?id=${data.gameID}`;
         //     putPlayer(data.roomInfo[props.socket.id]); // playerInfo
@@ -38,6 +38,7 @@ export default function EnterRoom(props, {history}) {
 
 
     const isName = (name === '');
+    console.log(roomId);
     return(
         <>
         {isName&&
