@@ -42,9 +42,9 @@ export default {
 
       /////////////////////////////////////////
       console.log("connected user");
-      socket.on("createPrivateRoom_Req", (profile) =>{
-        console.log('profile : '+profile);
-        new Room(io, socket).createPrivateRoom(profile)
+      socket.on("createPrivateRoom_Req", (playerName) =>{
+        console.log('playerName : '+ playerName);
+        new Room(io, socket).createPrivateRoom(playerName)
       });
       socket.on("joinRoom_Req", async (profile) => {
         console.log('join profile : '+profile);

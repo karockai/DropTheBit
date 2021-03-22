@@ -1,4 +1,4 @@
-import { dbset, dbget } from "./redis.js";
+import { dbset, dbget, dbhset, dbhget } from "./redis.js";
 import { nanoid } from "nanoid";
 
 class Room {
@@ -7,13 +7,13 @@ class Room {
     this.socket = socket;
   }
 
-  createPrivateRoom(profile) {
+  async createPrivateRoom(playerName) {
     const { socket } = this;
     const roomID = nanoid(15);
 
     const socketID = socket.id;
     let playerInfo = {
-      playerID: profile["playerID"],
+      playerID: playerName,
       cash: "100000000",
       asset: "100000000",
       coinVol: "0",
@@ -26,28 +26,33 @@ class Room {
     };
 
     roomInfo[socketID] = playerInfo;
-    dbset(roomID, roomInfo);
+    dbhset(roomID, socketID, playerInfo);
 
     socket.roomID = roomID;
     socket.join(roomID);
-    socket.emit("createPrivateRoom_Res", { roomID: roomID, roomInfo: roomInfo });
-    console.log({ roomID: roomID, roomInfo: roomInfo });
-    // 'front'
-    // createPrivateRoom_res 구현
+    socket.emit("createPrivateRoom_Res", roomInfo);
+    // let ddd = await dbget(roomID);
+    // console.log(ddd);
+    // console.log(ddd["playerID"]);
 
-    console.log("room_created");
-    console.log("roomID : ", roomID);
-    console.log("roomBoss :", profile["playerID"]);
+    // // 'front'
+    // // createPrivateRoom_res 구현
+
+    // console.log("room_created");
+    // console.log("roomID : ", roomID);
+    // console.log("roomBoss :", profile["playerID"]);
+
   }
 
-  async joinRoom(profile) {
+  // data : { id: roomID, playerName: playerName }
+  async joinRoom(data) {
     const { io, socket } = this;
-    const roomID = socket["roomID"];
+    const roomID = data.id;
     let roomInfo = await dbget(roomID);
     let socketID = socket.id;
 
     let playerInfo = {
-      playerID: profile["playerID"],
+      playerID: data.playerName,
       cash: "100000000",
       asset: "100000000",
       coinVol: "0",
@@ -55,7 +60,7 @@ class Room {
     };
 
     roomInfo[socketID] = playerInfo;
-    dbset(roomID, roomInfo);
+    dbhset(roomID, socketID, playerInfo);
 
     socket.join(roomID);
     socket.roomID = roomID;
@@ -66,7 +71,7 @@ class Room {
 
     console.log("someone joined a room");
     console.log("roomID : ", roomID);
-    console.log("newbie :", profile["playerID"]);
+    console.log("newbie :", data.playerName);
 
     // 'front'
     // socket.on('loadOhterPlayer', players);
@@ -80,14 +85,10 @@ class Room {
     // games[socket.roomID][gameTime] = 음악 길이 ;
     // 음악길이는 여기서 세팅하지말고, 클라에서 music.duration 으로 길이 구해서 보내주고
     // start game 버튼 누르면 그때 games[roomID][time] 을 세팅해주는 것으로 하자
-    const roomID = socket["roomID"];
-    let roomInfo = await dbget(roomID);
+    const roomID = socket.roomID;
 
-    roomInfo[music] = music_name;
-    dbset(roomID, roomInfo);
-
+    dbhset(roomID, music, music_name);
     socket.to(socket.roomID).emit("settingsUpdate_Res", music_name);
-    console.log(games[socket.roomID]);
   }
 }
 

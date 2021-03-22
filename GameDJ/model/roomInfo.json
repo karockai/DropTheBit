@@ -10,11 +10,15 @@
             "bid" :
             {
                 "price" : "vol"
+            },
+            "ask" :
+            {
+                "price" : "vol"
             }
         },
         "gameTime" : "Number",
         "music" : "String"
-    }
+    
 },
 
 {
