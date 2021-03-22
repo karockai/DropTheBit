@@ -20,16 +20,12 @@ class Room {
         };
 
         let roomInfo = {
-            gameInfo: '0',
+            gameTime: '0',
             music: '',
         };
 
     roomInfo[socketID] = playerInfo;
     let strplayerInfo = JSON.stringify(playerInfo);
-<<<<<<< HEAD
-    roomInfo[socketID] = playerInfo;
-=======
->>>>>>> 655863fca8e8d8c36aac2d4d607a0596c0ac7b4f
     await dbhset(roomID, socketID, strplayerInfo);
     console.log(roomID);
     socket.roomID = roomID;
@@ -72,17 +68,18 @@ class Room {
         // socket.on('loadOhterPlayer', players);
         // players.forEach((player) => putPlayer(player));
     }
-
-    // data : 클라에서 선택한 음악명 (select 창)
-    // 해당 음악의 길이만큼 게임의 time 설정
-    async updateSettings(music_name) {
+    
+    // front : selet창에서 변할때마다 프론트단 updateSettings 함수를 실행한다
+    // front - updateSettings : music_name, gameTime (music.duration으로 구함) 을 서버로 넘겨준다
+    // sockets.js 에서 back - updateSettings를 호출한다 
+    // data : {music_name : 클라에서 선택한 음악명 (select 창), gameTime : gameTime}
+    async updateSettings(data) {
         const { socket } = this;
-        // games[socket.roomID][gameTime] = 음악 길이 ;
-        // 음악길이는 여기서 세팅하지말고, 클라에서 music.duration 으로 길이 구해서 보내주고
-        // start game 버튼 누르면 그때 games[roomID][time] 을 세팅해주는 것으로 하자
         const roomID = socket.roomID;
-        dbhset(roomID, music, music_name);
-        socket.to(socket.roomID).emit('settingsUpdate_Res', music_name);
+        dbhset(roomID, music, data.music_name);
+        dbhset(roomID, gameTime, data.gameTime);
+        // front - 넘겨준 데이터를 받아 화면에 표시한다 
+        socket.to(socket.roomID).emit('settingsUpdate_Res', {music_name : music_name, gameTime : gameTime});
     }
 }
 
