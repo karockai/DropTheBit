@@ -44,7 +44,7 @@ export default function EnterRoom(props, { history }) {
                 console.log(data); 
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);
-                setRoomId(data.roomID);
+                setRoomID(data.roomID);
             });
         }
 
