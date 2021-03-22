@@ -24,15 +24,13 @@ class Room {
       music: "",
     };
 
+    roomInfo[socketID] = playerInfo;
     let strplayerInfo = JSON.stringify(playerInfo);
-    roomInfo[socketID] = strplayerInfo;
     await dbhset(roomID, socketID, strplayerInfo);
     console.log(roomID);
     socket.roomID = roomID;
     console.log(socket);
-    
     socket.join(roomID);
-
     socket.emit("createPrivateRoom_Res", {roomInfo : roomInfo, roomID : roomID});
   }
 
@@ -56,10 +54,13 @@ class Room {
     dbhset(roomID, socketID, strplayerInfo);
     socket.roomID = roomID;
     socket.join(roomID);
+    // 본인 외 다른사람 
     socket.to(roomID).emit("NewbieInRoom", roomInfo);
 
     // players.push(socket);
-    socket.emit("loadOhterPlayer", roomInfo);
+    // 본인
+    const players = Array.from(await io.in(socket.roomID).allSockets());
+    socket.emit("loadOhterPlayer", players);
 
     console.log("someone joined a room");
     console.log("roomID : ", roomID);
