@@ -24,19 +24,18 @@ class Room {
             music: '',
         };
 
-    roomInfo[socketID] = playerInfo;
-    let strplayerInfo = JSON.stringify(playerInfo);
-<<<<<<< HEAD
-    roomInfo[socketID] = playerInfo;
-=======
->>>>>>> 655863fca8e8d8c36aac2d4d607a0596c0ac7b4f
-    await dbhset(roomID, socketID, strplayerInfo);
-    console.log(roomID);
-    socket.roomID = roomID;
-    console.log(socket);
-    socket.join(roomID);
-    socket.emit("createPrivateRoom_Res", {roomInfo : roomInfo, roomID : roomID});
-  }
+        roomInfo[socketID] = playerInfo;
+        let strplayerInfo = JSON.stringify(playerInfo);
+        await dbhset(roomID, socketID, strplayerInfo);
+        console.log(roomID);
+        socket.roomID = roomID;
+        console.log(socket);
+        socket.join(roomID);
+        socket.emit('createPrivateRoom_Res', {
+            roomInfo: roomInfo,
+            roomID: roomID,
+        });
+    }
 
     // data : {roomID : roomID, playerID : name}
     async joinRoom(data) {
