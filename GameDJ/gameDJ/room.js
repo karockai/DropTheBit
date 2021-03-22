@@ -24,10 +24,10 @@ class Room {
       gameInfo: "0",
       music: "",
     };
-
-    roomInfo[socketID] = playerInfo;
-    dbhset(roomID, socketID, playerInfo);
-
+    let strplayerInfo = JSON.stringify(playerInfo);
+    roomInfo[socketID] = strplayerInfo;
+    await dbhset(roomID, socketID, strplayerInfo);
+    console.log(roomID);
     socket.roomID = roomID;
     socket.join(roomID);
     socket.emit("createPrivateRoom_Res", roomInfo);
@@ -48,7 +48,7 @@ class Room {
   async joinRoom(data) {
     const { io, socket } = this;
     const roomID = data.id;
-    let roomInfo = await dbget(roomID);
+    let roomInfo = await dbhgetall(roomID);
     let socketID = socket.id;
 
     let playerInfo = {
@@ -60,7 +60,8 @@ class Room {
     };
 
     roomInfo[socketID] = playerInfo;
-    dbhset(roomID, socketID, playerInfo);
+    let strplayerInfo = JSON.stringify(playerInfo);
+    dbhset(roomID, socketID, strplayerInfo);
 
     socket.join(roomID);
     socket.roomID = roomID;

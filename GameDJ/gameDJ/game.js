@@ -154,7 +154,6 @@ class Game {
     console.log("** BUY REQUEST :", roomID, socketID);
     let playerInfo = await dbhget(roomID, socketID);
     console.log("** BUY REQUEST :", playerInfo);
-    console.log("** BUY REQUEST :", playerInfo["HHGYLUsUhF8Jj9hPAAAE"]);
     let cash = Number(playerInfo["cash"]);
     let coinVol = Number(playerInfo["coinVol"]);
     let asset = playerInfo["asset"];// asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
