@@ -56,7 +56,9 @@ export default function ChatRoom(props) {
     }, []);
 
     const handleOnChange = (event) => {
-        setMessage({ message: event.target.value });
+        setMessage({ 
+            author: props.playerID,
+            message: event.target.value });
         // { message: ev.target.value }
     }
 

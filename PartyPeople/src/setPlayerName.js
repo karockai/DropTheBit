@@ -29,7 +29,7 @@ function SetPlayerName(props) {
     return(
         <>
             <Grid >
-                <TextField id="standard-basic" label="Name" onChange={handleChange} variant="outlined" size="large"/>
+                <TextField id="standard-basic" label="Name" inputRef={props.textInput} onChange={handleChange} variant="outlined" size="large"/>
             </Grid>
             <Grid>
               <Button variant="contained" color="primary" onClick={handleOnSave}> {buttonMsg} </Button>
