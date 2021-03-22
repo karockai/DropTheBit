@@ -62,10 +62,7 @@ export default function PlayerList(props) {
             alignItems="stretch"
         >
             <Grid item xs={testXs}>
-                <MakePlayerPaper
-                    roomId={props.roomId}
-                    roomInfo={props.roomInfo}
-                />
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
             </Grid>
         </Grid>
     );

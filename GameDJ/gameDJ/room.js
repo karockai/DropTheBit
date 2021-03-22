@@ -26,6 +26,10 @@ class Room {
 
     roomInfo[socketID] = playerInfo;
     let strplayerInfo = JSON.stringify(playerInfo);
+<<<<<<< HEAD
+    roomInfo[socketID] = playerInfo;
+=======
+>>>>>>> 655863fca8e8d8c36aac2d4d607a0596c0ac7b4f
     await dbhset(roomID, socketID, strplayerInfo);
     console.log(roomID);
     socket.roomID = roomID;

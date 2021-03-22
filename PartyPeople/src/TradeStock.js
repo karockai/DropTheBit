@@ -128,9 +128,9 @@ export default function TradeStock(props) {
             '] 매도 주문이 체결되었습니다.'
         );
         props.socket.emit('testSell', {
-            roomID: props.roomId,
-            socketID: props.socket.id,
-            currentBid: bid,
+            roomID : props.roomID,
+            socketID : props.socket.id,
+            currentBid : bid,
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.

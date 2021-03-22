@@ -46,84 +46,32 @@ export default function LayoutGrid(props) {
                     >
                         <Grid className="playerListGrid" item xs={leftSm}>
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
-                            <PlayerList
-                                roomId={props.roomId}
-                                roomInfo={props.roomInfo}
-                            />
+                              <PlayerList roomID={props.roomID} roomInfo={props.roomInfo}/>
                             {/* </Paper> */}
                         </Grid>
                         <Grid className="stockTradeGrid" item xs={middleSm}>
-                            <Grid
-                                style={{ height: '100%' }}
-                                wrap="wrap"
-                                alignItems="stretch"
-                                container
-                                direction="column"
-                                justify="center"
-                                spacing={2}
-                            >
-                                <Grid style={{ height: '60%' }} item>
-                                    <Paper
-                                        style={{ height: '100%' }}
-                                        className={classes.paper}
-                                    >
-                                        <ChartComponent
-                                            socket={props.socket}
-                                            requestSocket={props.requestSocket}
-                                        />
-                                    </Paper>
-                                </Grid>
-                                <Grid style={{ height: '40%' }} item>
-                                    <Grid
-                                        style={{ height: '100%' }}
-                                        wrap="wrap"
-                                        alignItems="stretch"
-                                        container
-                                        direction="row"
-                                        justify="space-around"
-                                    >
-                                        <Grid
-                                            style={{
-                                                width: '45%',
-                                                height: '100%',
-                                            }}
-                                            item
-                                        >
-                                            {/* <Paper style={{ height: "100%" }} > */}
-                                            <MyAsset
-                                                roomId={props.roomId}
-                                                socket={props.socket}
-                                                requestSocket={
-                                                    props.requestSocket
-                                                }
-                                            />
-                                            {/* </Paper> */}
-                                        </Grid>
-                                        <Grid
-                                            style={{
-                                                width: '50%',
-                                                height: '100%',
-                                                margin: '0 0 0 2vh',
-                                            }}
-                                            item
-                                        >
-                                            <Paper
-                                                style={{ height: '100%' }}
-                                                className={classes.paper}
-                                            >
-                                                <TradeStock
-                                                    roomId={props.roomId}
-                                                    socket={props.socket}
-                                                    requestSocket={
-                                                        props.requestSocket
-                                                    }
-                                                />
-                                            </Paper>
+                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center" spacing={2}>
+                                    <Grid style={{ height: "60%"}} item>
+                                     <Paper style={{ height: "100%" }} className={classes.paper}>
+                                        <ChartComponent socket={props.socket} requestSocket={props.requestSocket}/>
+                                     </Paper>
+                                    </Grid>
+                                    <Grid style={{ height: "40%" }} item>
+                                        <Grid style={{ height: "100%", }} wrap="wrap" alignItems="stretch" container direction="row" justify="space-around">
+                                            <Grid style={{ width: "45%", height: "100%"}} item >
+                                                {/* <Paper style={{ height: "100%" }} > */}
+                                                    <MyAsset roomID = {props.roomID} socket ={props.socket} requestSocket={props.requestSocket}/>
+                                               {/* </Paper> */}
+                                            </Grid>
+                                            <Grid style={{ width: "50%", height: "100%", margin: '0 0 0 2vh'}} item > 
+                                                <Paper style={{ height: "100%" }} className={classes.paper}>
+                                                    <TradeStock roomID = {props.roomID} socket ={props.socket}  requestSocket={props.requestSocket}/>
+                                                </Paper>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
                         <Grid className="bidChatGrid" item xs={rightSm}>
                             <Grid
                                 style={{ height: '100%' }}
