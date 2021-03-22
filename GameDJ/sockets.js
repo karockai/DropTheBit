@@ -47,6 +47,7 @@ export default {
         new Room(io, socket).createPrivateRoom(profile)
       });
       socket.on("joinRoom_Req", async (profile) => {
+        console.log('join profile : '+profile);
         await new Room(io, socket).joinRoom(profile);
       });
       // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
