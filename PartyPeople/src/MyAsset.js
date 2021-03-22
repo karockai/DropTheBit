@@ -37,7 +37,7 @@ export default function MyAsset(props) {
     //@ 가정 => props에 socket이 전달되었어야함.
     useEffect(() => {
         return () => {
-            if (props.socket === null) {
+            if (props.socket == null) {
                 props.requestSocket('MyAsset')
             }
             else {
@@ -50,7 +50,7 @@ export default function MyAsset(props) {
                 });
             }   
         }
-    },[]);
+    });
 
     return(
         <Grid wrap="wrap" container direction="row" style={{ height: "100%" , }}  >
