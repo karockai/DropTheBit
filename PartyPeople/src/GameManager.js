@@ -23,6 +23,8 @@ class GameManager extends React.Component {
             // //     message: '',
             // //     messages: []
             // // },
+            roomId: null,
+            roomInfo: null,
             
         };
         this.socket = io('localhost:5000'); //_ http://15.165.129.19:5000/
@@ -105,13 +107,22 @@ class GameManager extends React.Component {
         this.setState({socketId: this.socket});
     }
 
+    SetRoomIdAndInfo = (data) => {
+        console.log(data.roomID);
+        console.log(data.roomInfo);
+        this.setState({
+            roomId: data.roomID,
+            roomInfo: data.roomInfo,
+        });
+    }
+
     
     render() {
         const socket = this.state.socketId;
         return (
             <>
                 <this.TestEmitButton/>
-                <Routes socket= {socket} requestSocket={this.RequestSocket} setSocket={this.setSocket}/>
+                <Routes socket= {socket} requestSocket={this.RequestSocket} SetRoomIdAndInfo={this.SetRoomIdAndInfo}/>
             </>
         );
     }

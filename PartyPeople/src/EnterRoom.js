@@ -15,23 +15,20 @@ export default function EnterRoom(props, {history}) {
 
     if(props.socket == null) {
         props.requestSocket('createPrivateRoom');
+
     }
-    // const sendName = (ev) => {
-    //     ev.preventDefault();
-    //     // console.log(message);
-    //     textInput.current.value = '';
-        
-    //      // author: this.state.author,
-    //     // props.socket.emit('message', message);
-    //     // setMessage({ message: '' });
-    // }
 
     const sendName = (name) => {
         // ev.preventDefault();
         // console.log(name);
         // console.log(props.socket);
         props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
+        props.socket.on('createPrivateRoom_Res', (data)=>{
+            console.log(data);
+        props.SetRoomIdAndInfo(data);
+        });
     }
+    
 
 
     const isName = (name === '');
