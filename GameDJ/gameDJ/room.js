@@ -75,7 +75,7 @@ class Room {
 
   // data : 클라에서 선택한 음악명 (select 창)
   // 해당 음악의 길이만큼 게임의 time 설정
-  updateSettings(music_name) {
+  async updateSettings(music_name) {
     const { socket } = this;
     // games[socket.roomID][gameTime] = 음악 길이 ;
     // 음악길이는 여기서 세팅하지말고, 클라에서 music.duration 으로 길이 구해서 보내주고

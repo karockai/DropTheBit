@@ -6,6 +6,7 @@ import socketio from "socket.io";
 import Room from "./gameDJ/room.js";
 import Game from "./gameDJ/game.js";
 import Disconnect from "./gameDJ/disconnect.js";
+import Test from "./gameDJ/testfile.js";
 
 import { dbset, dbget } from "./gameDJ/redis.js";
 
@@ -17,86 +18,27 @@ export default {
     io.on("connection", (socket) => {
       console.log("connected");
 
-      ///////////////////////////////////////
-      //@ dummydata 날리는 socket event.
-      let day = 0;
-      const chart = () => {
-        socket.emit("chart", stockData[day++]);
-        console.log(
-          socket.id,
-          "님에게 [",
-          day,
-          "] 인덱스의 정보가 보내졌습니다."
-        );
-      };
+      // test event ------------------------------------------ >>
+      const chart = async () => {
+        await new Test.testSendChart();
+      }
       setInterval(chart, 2000);
-      /////////////////////////////////////////
-
-      //@ socket 연결 확인용 버튼 socket event.
-      socket.on("test", (comment) => {
-        console.log(comment);
+        
+      socket.on("testComment", (comment) => {
+        new Test(io, socket).testComment(comment);
       });
-      /////////////////////////////////////////
-      //@ buy / sell interaction
-      let myCash = 100000;
-      const refresh = (data) => {
-        console.log(socket.id, "님의 자산이 갱신되었습니다.");
-        socket.emit("asset", {
-          cash: data.cash,
-          asset: data.asset,
-        });
-      };
-      socket.on("buy", (data) => {
-        console.log(
-          socket.id,
-          "님의 [ 가격",
-          data.currentBid,
-          ", 갯수",
-          data.currentVolume,
-          "] 매수 주문이 체결되었습니다."
-        );
-        socket.emit("buy", 3000);
-        refresh({
-          cash: myCash - data.currentBid * data.currentVolume,
-          asset: myCash,
-        });
+    
+  
+      socket.on("testBuy", async (data) => {
+        await new Test(io, socket).testBuy(data);
       });
-      socket.on("sell", (data) => {
-        console.log(
-          socket.id,
-          "님의 [ 가격",
-          data.currentBid,
-          ", 갯수",
-          data.currentVolume,
-          "] 매도 주문이 체결되었습니다."
-        );
-        socket.emit("sell", 1000000);
-        refresh({
-          cash: myCash + data.currentBid * data.currentVolume,
-          asset: myCash,
-        });
+    
+      socket.on("testSell", async (data) => {
+        await new Test(io, socket).testSell(data);
       });
+      // test event << ------------------------------------------   
 
-      socket.on("test", async () => {
-        let test_room = {
-          aman: {
-            socketID: "String",
-            cash: "100000",
-            asset: "100000",
-            coinVol: "0",
-            bid: {},
-          },
-          timeCount: "Number",
-          music: "Link?",
-        };
-
-        dbset("test_room", test_room);
-        let get_test_room = await dbget("test_room");
-        socket.emit("test", get_test_room);
-      });
-
-      /////////////////////////////////////////
-      console.log("connected user");
+      // room event ------------------------------------------ >>
       socket.on("createPrivateRoom_Req", (profile) =>
         new Room(io, socket).createPrivateRoom(profile)
       );
@@ -112,8 +54,10 @@ export default {
         async () => await new Game(io, socket).startGame()
       );
       socket.on("disconnect", () => new Disconnect(io, socket).onDisconnect());
+      // room event << -----------------------------------------
 
-      // in-game 이벤트
+
+      // In-game event ------------------------------------------ >>
       socket.on(
         "buy_Req",
         async (reqJson) => await new Game(io, socket).buy(reqJson)
@@ -130,8 +74,7 @@ export default {
         "askCancle_Req",
         async (reqJson) => await new Game(io, socket).askCancle(reqJson)
       );
-
-      // socket.on('-');
+      // In-game event << -----------------------------------------
     });
-  },
+  }
 };

@@ -21,4 +21,4 @@ class Disconnect {
     }
 }
 
-module.exports = Disconnect;
+export default Disconnect;
