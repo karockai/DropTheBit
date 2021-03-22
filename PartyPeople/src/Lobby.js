@@ -31,10 +31,12 @@ function Lobby(props) {
     return(
         <> 
         <Button variant="contained" color="primary" onClick={()=>props.history.push('/game')}> StartGame </Button> 
-        <Paper>{props.name}</Paper>
-        <Grid>
+        <Grid style= {{height: '50vh'}}>
+            <Paper>{props.name}</Paper>
+        </Grid>
+        <Grid container justify='center'>
             <input type="text" id="gameLink" class="form-control text-center fw-bold bg-white"
-                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomId}`} readonly />
+                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomId}`} style={{width: "80%"}} readonly />
             <Button class="btn btn-warning" type="button" onClick={CopyURL} id="copy">Copy Link</Button>
             <putPlayer/>
         </Grid>

@@ -10,7 +10,6 @@ class Room {
   async createPrivateRoom(playerName) {
     const { socket } = this;
     const roomID = nanoid(15);
-
     const socketID = socket.id;
     let playerInfo = {
       playerID: playerName,
@@ -26,10 +25,16 @@ class Room {
     };
 
     roomInfo[socketID] = playerInfo;
+    console.log(roomID);
+
     dbhset(roomID, socketID, playerInfo);
+    console.log(roomID);
 
     socket.roomID = roomID;
+    console.log(socket);
+    
     socket.join(roomID);
+    console.log(socket.roomID);
     socket.emit("createPrivateRoom_Res", roomInfo);
     // let ddd = await dbget(roomID);
     // console.log(ddd);

@@ -28,16 +28,17 @@ export default function EnterRoom(props, {history}) {
         const searchParams = new URLSearchParams(params);
         if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
             buttonMsg = 'Join Room'
-            props.socket.emit('joinRoom_Req', {"playerID" : name});
+            
+            props.socket.emit('joinRoom_Req', {"playerID" : name , "roomID": searchParams.get('id')});
         }
         else {                           // 방장
             buttonMsg = 'Create Private Room'
             props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
-            props.socket.on('createPrivateRoom_Res', (roomInfo)=>{
+            props.socket.on('createPrivateRoom_Res', (data)=>{
                 console.log(props.socket); 
-                props.SetRoomIdAndInfo(roomInfo);
-                setPlayer(roomInfo[props.socket.id]);
-                setRoomId(props.socket.roomID);
+                props.SetRoomIdAndInfo(data);
+                setPlayer(data.roomInfo[props.socket.id]);
+                setRoomId(data.roomID);
             });
         }
     }
