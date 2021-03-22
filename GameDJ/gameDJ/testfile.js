@@ -9,14 +9,11 @@ class Test {
     // Basic Setting --------------- <<
   }
 
-
-
-
   async testComment(comment) {
-      console.log(comment);
+    console.log(comment);
   }
 
-  async refresh (data)  {
+  async refresh(data) {
     console.log(socket.id, "님의 자산이 갱신되었습니다.");
     socket.emit("testAsset", {
       cash: data.cash,
@@ -48,23 +45,19 @@ class Test {
 
   async testSell(data) {
     console.log(
-        socket.id,
-        "님의 [ 가격",
-        data.currentBid,
-        ", 갯수",
-        data.currentVolume,
-        "] 매도 주문이 체결되었습니다."
-      );
-      socket.emit("testSell", 1000000);
-      refresh({
-        cash: myCash + data.currentBid * data.currentVolume,
-        asset: myCash,
-      });
+      socket.id,
+      "님의 [ 가격",
+      data.currentBid,
+      ", 갯수",
+      data.currentVolume,
+      "] 매도 주문이 체결되었습니다."
+    );
+    socket.emit("testSell", 1000000);
+    refresh({
+      cash: myCash + data.currentBid * data.currentVolume,
+      asset: myCash,
+    });
   }
-
-
-
-
 }
 
 export default Test;
