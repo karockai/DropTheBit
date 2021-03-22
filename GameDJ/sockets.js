@@ -39,9 +39,9 @@ export default {
 
             /////////////////////////////////////////
             console.log('connected user');
-            socket.on('createPrivateRoom_Req', (playerId) => {
-                console.log('playerId : ' + playerId);
-                new Room(io, socket).createPrivateRoom(playerId);
+            socket.on('createPrivateRoom_Req', (playerID) => {
+                console.log('playerId : ' + playerID);
+                new Room(io, socket).createPrivateRoom(playerID);
             });
 
              // data : {roomID : roomID, playerID : name}

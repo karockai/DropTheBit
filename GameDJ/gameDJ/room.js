@@ -7,12 +7,12 @@ class Room {
         this.socket = socket;
     }
 
-    async createPrivateRoom(playerId) {
+    async createPrivateRoom(playerID) {
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
         let playerInfo = {
-            playerID: playerId,
+            playerID: playerID,
             cash: '100000000',
             asset: '100000000',
             coinVol: '0',
