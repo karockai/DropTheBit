@@ -31,29 +31,6 @@ export default {
                 console.log(data);
             });
 
-<<<<<<< HEAD
-      /////////////////////////////////////////
-      console.log("connected user");
-      socket.on("createPrivateRoom_Req", (playerId) =>{
-        console.log('playerId : '+ playerId);
-        new Room(io, socket).createPrivateRoom(playerId)
-      });
-
-      // data : {roomID : roomID, playerID : name}
-      socket.on("joinRoom_Req", async (data) => {
-        await new Room(io, socket).joinRoom(data);
-      });
-      // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
-      socket.on("settingsUpdate_Req", (music_name) =>
-        new Room(io, socket).updateSettings(music_name)
-      );
-      socket.on(
-        "startGame_Req",
-        async () => await new Game(io, socket).startGame()
-      );
-      socket.on("disconnect", () => new Disconnect(io, socket).onDisconnect());
-      // room event << -----------------------------------------
-=======
             socket.on('testSell', async (data) => {
                 await new Test(io, socket).testSell(data);
                 console.log(data);
@@ -66,9 +43,8 @@ export default {
                 console.log('playerId : ' + playerID);
                 new Room(io, socket).createPrivateRoom(playerID);
             });
->>>>>>> 655863fca8e8d8c36aac2d4d607a0596c0ac7b4f
 
-             // data : {roomID : roomID, playerID : name}
+            // data : {roomID : roomID, playerID : name}
             socket.on('joinRoom_Req', async (data) => {
                 await new Room(io, socket).joinRoom(data);
             });
