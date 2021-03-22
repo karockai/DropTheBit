@@ -6,6 +6,7 @@ import ChartTitle from './ChartTitle';
 import { getData } from "./utils"
 import { tsvParse, csvParse } from  "d3-dsv";
 import { timeParse } from "d3-time-format";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ChartComponent extends React.Component {
     constructor(props) {
@@ -64,7 +65,16 @@ class ChartComponent extends React.Component {
             }
 
 			if (this.props.socket == null || dataLength < 2) {
-				return <div>Loading...</div>
+				return (
+                    <div     style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '30vh',
+                    }}>
+                        <CircularProgress/>
+                    </div>
+                );
 			}
 			return (
 				<>

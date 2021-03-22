@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
+import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -31,11 +32,12 @@ export default function LayoutGrid(props) {
     let middleSm = 7;
     let rightSm = 3;
     return (
-        <React.Fragment>
+        <React.Fragment >
             <CssBaseline />
             <Container maxWidth='lg' >
+            {/* <Container style = {{margin : '10 0 10 0'}} > */}
                 <Typography component="div" style={{  margin: '2vh 0 0 0' }}>
-                    <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
+                    <Grid style={{ height: "100vh" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
                         <Grid className="playerListGrid" item xs={leftSm} >
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
                               <PlayerList/>
@@ -43,22 +45,22 @@ export default function LayoutGrid(props) {
                               <PlayerList/>
                             {/* </Paper> */}
                         </Grid>
-                        <Grid className="stockTradeGrid" item xs={middleSm}>
-                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center" spacing={2}>
-                                    <Grid style={{ height: "60%"}} item>
-                                     <Paper style={{ height: "100%" }} className={classes.paper}>
-                                        <ChartComponent socket={props.socket} requestSocket={props.requestSocket}/>
+                        <Grid className="stockTradeGrid" container item xs={middleSm} wrap="wrap" alignContents="stretch">
+                                <Grid style={{ height: "90vh" }} item wrap="wrap" alignContents="stretch" alignItems="stretch" container direction="column" justify="center" spacing={2}>
+                                    <Grid style={{ height: "50vh"}} item alignItems="stretch">
+                                     <Paper style={{ height: "45vh" }} className={classes.paper}>
+                                        <ChartComponent socket={props.socket} requestSocket={props.requestSocket} display='flex' justify-content= 'center' align-items= 'center'/>
                                      </Paper>
                                     </Grid>
-                                    <Grid style={{ height: "40%" }} item>
+                                    <Grid style={{ height: "40vh" }} item>
                                         <Grid style={{ height: "100%", }} wrap="wrap" alignItems="stretch" container direction="row" justify="space-around">
-                                            <Grid style={{ width: "45%", height: "100%"}} item >
+                                            <Grid style={{ width: "45%", height: "40vh"}} item >
                                                 {/* <Paper style={{ height: "100%" }} > */}
                                                     <MyAsset roomId = {props.roomId} socket ={props.socket} requestSocket={props.requestSocket}/>
                                                {/* </Paper> */}
                                             </Grid>
-                                            <Grid style={{ width: "50%", height: "100%", margin: '0 0 0 2vh'}} item > 
-                                                <Paper style={{ height: "100%" }} className={classes.paper}>
+                                            <Grid style={{ width: "50%", height: "40vh", margin: '0 0 0 2vh'}} item > 
+                                                <Paper style={{ height: "40vh" }} className={classes.paper}>
                                                     <TradeStock roomId = {props.roomId} socket ={props.socket}  requestSocket={props.requestSocket}/>
                                                 </Paper>
                                             </Grid>
@@ -67,16 +69,16 @@ export default function LayoutGrid(props) {
                                 </Grid>
                         </Grid>
                         <Grid className="bidChatGrid" item xs={rightSm}>
-                                <Grid style={{ height: "100%" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center"spacing={2}>
-                                    <Grid style={{ height: "60%" }} item >
-                                    <Paper style={{ height: "100%"}} className={classes.paper}>
+                                <Grid style={{ height: "90vh" }} wrap="wrap" alignItems="stretch" container direction="column" justify="center"spacing={2}>
+                                    <Grid style={{ height: "50vh" }} item  alignItems="stretch">
+                                    <Paper style={{ height: "45vh"}} className={classes.paper}>
                                         <BidTab/>
                                     </Paper>
                                     </Grid>
-                                    <Grid style={{ height: "40%" }} item>
-                                    <Paper style={{ height: "100%"}} className={classes.paper}>
-                                        <ChatRoom socket={props.socket} chat={props.chat}/>
-                                    </Paper>
+                                    <Grid style={{ height: "40vh" }} item>
+                                        <Paper style={{ height: "40vh"}} className={classes.paper}>
+                                            <ChatRoom socket={props.socket} chat={props.chat}/>
+                                        </Paper>
                                     </Grid>
                                 </Grid>
                         </Grid>
