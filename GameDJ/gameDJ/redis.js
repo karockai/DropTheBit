@@ -8,7 +8,8 @@ client.on("error", function (error) {
     console.error(error);
 });
 
-client = jsonify(client);
+// Fuck jsonify
+// client = jsonify(client);
 
 // DB function ---------------------------->>
 // const util = require('util');

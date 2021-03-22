@@ -42,12 +42,14 @@ export default {
 
       /////////////////////////////////////////
       console.log("connected user");
-      socket.on("createPrivateRoom_Req", (profile) =>{
-        console.log('profile : '+profile);
-        new Room(io, socket).createPrivateRoom(profile)
+      socket.on("createPrivateRoom_Req", (playerId) =>{
+        console.log('playerId : '+ playerId);
+        new Room(io, socket).createPrivateRoom(playerId)
       });
-      socket.on("joinRoom_Req", async (profile) => {
-        await new Room(io, socket).joinRoom(profile);
+
+      // data : {roomID : roomID, playerID : name}
+      socket.on("joinRoom_Req", async (data) => {
+        await new Room(io, socket).joinRoom(data);
       });
       // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
       socket.on("settingsUpdate_Req", (music_name) =>
