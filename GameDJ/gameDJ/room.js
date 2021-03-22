@@ -10,33 +10,63 @@ class Room {
     createPrivateRoom(profile) {
         const { socket } = this;
         const roomID = nanoid(15);
-        games[roomID] = {
-            gameTime: 60 * 1000, // 게임 시간
-            music: ''
+        // games[roomID] = {
+        //     gameTime: 60 * 1000, // 게임 시간
+        //     music: ''
+        // };
+
+        // games[roomID][socket.id] = {};
+        // games[roomID][socket.id][playerID] = profile[playerID];
+        // games[roomID][socket.id][cash] = 100000000;
+        // games[roomID][socket.id][asset] = 100000000;
+        // games[roomID][socket.id][coinVol] = 0;
+
+        // {
+        //     "roomID" : 
+        //     {
+        //         "socket.id" :
+        //         {
+        //             "playerID" : 
+        //             "cash" : 
+
+        //         }
+        //     }
+        // }
+        // dbset(roomID)
+        let socketID = socket.id;
+        let playerInfo = {
+            "playerID" : profile["playerID"],
+            "cash" : "100000000",
+            "asset" : "100000000",
+            "coinVol" : "0",
+            "bid" : 
+            {
+            }
         };
 
-        games[roomID][socket.id] = {};
-        games[roomID][socket.id][playerID] = profile[playerID];
-        games[roomID][socket.id][cash] = 100000000;
-        games[roomID][socket.id][asset] = 100000000;
-        games[roomID][socket.id][coinVol] = 0;
+        let roomInfo = {
+            socketID : playerInfo,
+            "gameInfo" : "0",
+            "music" : ""
+        };
+
+        dbset(roomID, roomInfo);
 
         console.log("Room Created");
         console.log("games : ", games[roomID]);
 
-        socket.playerID = profile;
         socket.roomID = roomID;
         socket.join(roomID);
-        socket.emit('createPrivateRoom_Res', roomID);
+        socket.emit('createPrivateRoom_Res', roomID, roomInfo);
         // 'front'
         // createPrivateRoom_res 구현
     }
 
-    async joinroom(joinData) {
+    async joinRoom(joinData) {
         const { io, socket } = this;
-        const roomID = joindata[roomID];
-        const plyers = Array.from(await io.in(roomID).allSockets());
-
+        await dbget();
+        const roomID = joinData["roomID"];
+        const players = Array.from(await io.in(roomID).allSockets());
 
         games[roomID][socket.id] = {};
         games[roomID][socket.id][playerID] = joinRoom[profile][playerID];
@@ -44,6 +74,8 @@ class Room {
         games[roomID][socket.id][coinVol] = 0;
 
         socket.playerID = joinData[profile];
+
+
         socket.join(roomID);
         socket.roomID = roomID;
         socket.to(roomID).emit('joinRoom_Res', joinData[profile]);
