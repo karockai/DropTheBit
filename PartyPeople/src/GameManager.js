@@ -107,11 +107,11 @@ class GameManager extends React.Component {
 
     
     render() {
-        console.log(this.socket);
+        const socket = this.state.socketId;
         return (
             <>
                 <this.TestEmitButton/>
-                <LayoutGrid socket= {this.socket} requestSocket={this.RequestSocket}/>
+                <Routes socket= {socket} requestSocket={this.RequestSocket}/>
             </>
         );
     }
