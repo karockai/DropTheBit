@@ -52,8 +52,7 @@ function SetPlayerName(props) {
                     color="primary"
                     onClick={handleOnSave}
                 >
-                    {' '}
-                    {props.buttonMsg}{' '}
+                    {buttonMsg}
                 </Button>
             </Grid>
         </>
