@@ -11,6 +11,8 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import {useSound, playSound} from './useSound';
+import Drum from './audios/drum.wav';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -150,16 +152,22 @@ export default function TradeStock(props) {
             //_ LEFT ARROW
             console.log(props);
             console.log('KeyCode > LEFT.');
+            playSound(Drum, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
                 SetBind(true);
                 return;
             }
             Buy(currentBid, currentVolume);
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 9ff2adfd94713262a4a6fd3cd58120def1df9fed
         } else if (e.keyCode == 39) {
             //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.');
+            playSound(Drum, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket();
                 SetBind(true);
@@ -168,19 +176,34 @@ export default function TradeStock(props) {
             Sell(currentBid, currentVolume);
         }
 
+<<<<<<< HEAD
         if (e.keyCode === 38) {
             //_ UP ARROW
             console.log('KeyCode > UP.');
             if (props.socket == null || isBind === false) {
+=======
+        if(e.keyCode === 38) { //_ UP ARROW
+            console.log('KeyCode > UP.')
+            playSound(Drum, 1).play();
+            if( props.socket == null || isBind === false) {
+>>>>>>> 9ff2adfd94713262a4a6fd3cd58120def1df9fed
                 props.requestSocket();
                 SetBind(true);
                 return;
             }
             VolumeUp(currentVolume);
+<<<<<<< HEAD
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             console.log('KeyCode > DOWN.');
             if (props.socket == null || isBind === false) {
+=======
+        }
+        else if(e.keyCode === 40) { //_ DOWN ARROW
+            console.log('KeyCode > DOWN.')
+            playSound(Drum, 1).play();
+            if( props.socket == null || isBind === false) {
+>>>>>>> 9ff2adfd94713262a4a6fd3cd58120def1df9fed
                 props.requestSocket();
                 SetBind(true);
                 return;

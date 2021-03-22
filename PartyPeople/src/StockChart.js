@@ -17,6 +17,7 @@ import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
 import { OHLCTooltip } from 'react-stockcharts/lib/tooltip';
 import { fitWidth } from 'react-stockcharts/lib/helper';
 import { last } from 'react-stockcharts/lib/utils';
+<<<<<<< HEAD
 import { blue, red } from '@material-ui/core/colors';
 
 const candlesAppearance = {
@@ -29,6 +30,8 @@ const candlesAppearance = {
     widthRatio: 0.6,
     opacity: 0.6,
 };
+=======
+>>>>>>> 9ff2adfd94713262a4a6fd3cd58120def1df9fed
 
 class StockChart extends React.Component {
     render() {
