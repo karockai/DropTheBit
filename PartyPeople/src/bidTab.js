@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { render } from "react-dom";
 import MuiThemeProvider from "@material-ui/styles/ThemeProvider";
@@ -11,6 +12,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { red } from "@material-ui/core/colors";
+=======
+import React, { useState } from 'react';
+import { render } from 'react-dom';
+import MuiThemeProvider from '@material-ui/styles/ThemeProvider';
+import { Tabs, Tab, Button } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+>>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
 
 const useStyles = makeStyles({
   table: {
@@ -25,12 +34,12 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const useTabStyles = makeStyles({
-  root: {
-    justifyContent: "center"
-  },
-  scroller: {
-    flexGrow: "0"
-  }
+    root: {
+        justifyContent: 'center',
+    },
+    scroller: {
+        flexGrow: '0',
+    },
 });
 
 const rows = [
@@ -47,6 +56,7 @@ const rows = [
 
 const AntTab = withStyles((theme) => ({
     root: {
+<<<<<<< HEAD
       textTransform: 'none',
       minWidth: 72,
       fontWeight: theme.typography.fontWeightRegular,
@@ -74,41 +84,75 @@ const AntTab = withStyles((theme) => ({
       '&:focus': {
         color: '#40a9ff',
       },
+=======
+        textTransform: 'none',
+        minWidth: 72,
+        fontWeight: theme.typography.fontWeightRegular,
+        marginRight: theme.spacing(3),
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        '&:hover': {
+            color: '#40a9ff',
+            opacity: 1,
+        },
+        '&$selected': {
+            color: '#1890ff',
+            fontWeight: theme.typography.fontWeightMedium,
+        },
+        '&:focus': {
+            color: '#40a9ff',
+        },
+>>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
     },
     selected: {},
-  }))((props) => <Tab disableRipple {...props} />);
+}))((props) => <Tab disableRipple {...props} />);
 
 const TabsContainer = () => {
-  const classes = useTabStyles();
+    const classes = useTabStyles();
 
+<<<<<<< HEAD
   const cities = [
     "전체 호가",
     "OPT1",
     "OPT2",
   ];
+=======
+    const cities = ['전체 호가', '방 호가', '나의 호가'];
+>>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
 
-  const [active, setActive] = useState(cities[0]);
+    const [active, setActive] = useState(cities[0]);
 
-  return (
-    <Tabs
-      classes={{ root: classes.root, scroller: classes.scroller }}
-      value={active}
-      onChange={(event, newValue) => {
-        setActive(newValue);
-      }}
-      indicatorColor="primary"
-      textColor="primary"
-      // variant={"scrollable"}
-    //   scrollButtons={"on"}
-    >
-      {cities.map((city, index) => (
-        <AntTab key={index} label={city} value={city} />
-      ))}
-    </Tabs>
-  );
+    return (
+        <Tabs
+            classes={{ root: classes.root, scroller: classes.scroller }}
+            value={active}
+            onChange={(event, newValue) => {
+                setActive(newValue);
+            }}
+            indicatorColor="primary"
+            textColor="primary"
+            // variant={"scrollable"}
+            //   scrollButtons={"on"}
+        >
+            {cities.map((city, index) => (
+                <AntTab key={index} label={city} value={city} />
+            ))}
+        </Tabs>
+    );
 };
 
 export default function BidTab() {
+<<<<<<< HEAD
   const testObj = {
       "date" : "date",
       "total_ask_size" : "total_ask_size",
@@ -164,5 +208,13 @@ export default function BidTab() {
     </MuiThemeProvider>
   );
 };
+=======
+    return (
+        <MuiThemeProvider>
+            <TabsContainer />
+        </MuiThemeProvider>
+    );
+}
+>>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
 
 // render(<App />, document.getElementById("root"));

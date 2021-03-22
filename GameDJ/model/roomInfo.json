@@ -7,30 +7,16 @@
             "cash" : "Number",
             "asset" : "Number",
             "coinVol" : "Number",
-            "bid" :
+            "bidInPlayer" :
+            {
+                "price" : "vol"
+            },
+            "askInPlayer" :
             {
                 "price" : "vol"
             }
         },
         "gameTime" : "Number",
         "music" : "String"
-    }
-},
-
-{
-    "test_room" :
-    {
-        "aman" :
-        {
-            "socketID" : "String",
-            "cash" : "100000",
-            "asset" : "100000",
-            "coinVol" : "0",
-            "bid" :
-            {
-            }
-        },
-        "timeCount" : "Number",
-        "music" : "Link?"
-    }
+    
 }

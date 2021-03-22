@@ -1,6 +1,6 @@
 {
-    "roomID" : "String",
-    "playerID" : "String",
-    "reqPrice" : "Number",
-    "reqVol" : "Number"
+    "roomID": "String",
+    "playerID": "String",
+    "reqPrice": "Number",
+    "reqVol": "Number"
 }

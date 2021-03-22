@@ -1,9 +1,7 @@
 {
-    "bidList" : 
-    {
-        "bidPrice" :
-        {
-            "playerID" : "roomID"
+    "bidList": {
+        "bidPrice": {
+            "socketID": "roomID"
         }
     }
 }

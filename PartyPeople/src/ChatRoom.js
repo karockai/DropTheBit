@@ -1,5 +1,13 @@
-import React,{useState, useRef, useEffect, makeStyle} from 'react';
-import {IconButton ,Button, Box, TextField, Grid, Paper, makeStyles } from '@material-ui/core';
+import React, { useState, useRef, useEffect, makeStyle } from 'react';
+import {
+    IconButton,
+    Button,
+    Box,
+    TextField,
+    Grid,
+    Paper,
+    makeStyles,
+} from '@material-ui/core';
 import Message from './Message';
 
 const useStyles = makeStyles((theme) => ({
@@ -7,48 +15,48 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     button: {
-        '& > *':{
+        '& > *': {
             margin: theme.spacing(1),
-            width: "100%",
+            width: '100%',
             // float: 'auto',
             // height: "50%"
-        }
+        },
     },
     button2: {
-        '& > *':{
-            width: "45%",
+        '& > *': {
+            width: '45%',
             // margin: theme.spacing(1),
             justify: 'space-between',
-        }
+        },
     },
     paper: {
         padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-    }
+    },
 }));
 
-export default function ChatRoom(props) {    
+export default function ChatRoom(props) {
     // console.log(props.socket);
     let testXs = 12;
-    const classes =useStyles();
-    let [message,setMessage] = useState('');
+    const classes = useStyles();
+    let [message, setMessage] = useState('');
     let [messages, setMessages] = useState({
         messages: [
-          new Message({
-            // id: 1,
-            message: "I'm the recipient! (The person you're talking to)",
-          }), // Gray bubble
-          new Message({ message: "I'm you -- the blue bubble!" }), // Blue bubble
+            new Message({
+                // id: 1,
+                message: "I'm the recipient! (The person you're talking to)",
+            }), // Gray bubble
+            new Message({ message: "I'm you -- the blue bubble!" }), // Blue bubble
         ],
-      });
+    });
     let textInput = useRef(null);
 
     useEffect(() => {
         return () => {
             props.socket.on('update', function (data) {
                 console.log(data);
-                if (data){
+                if (data) {
                     addMessage(data);
                 }
             });
@@ -56,28 +64,30 @@ export default function ChatRoom(props) {
     }, []);
 
     const handleOnChange = (event) => {
-        setMessage({ 
+        setMessage({
             author: props.playerID,
-            message: event.target.value });
+            message: event.target.value,
+        });
         // { message: ev.target.value }
-    }
+    };
 
     const sendMessage = (ev) => {
         ev.preventDefault();
         console.log(message);
         textInput.current.value = '';
-        
-         // author: this.state.author,
+
+        // author: this.state.author,
         props.socket.emit('message', message);
         setMessage({ message: '' });
-    }
+    };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 
-    const addMessage = data => {
+    const addMessage = (data) => {
         // console.log('ddddddddd');
-        setMessages({ messages: [...messages, data]});
+        setMessages({ messages: [...messages, data] });
     };
 
+<<<<<<< HEAD
     return(
         <Grid container className={classes.button} display="flex" alignItems="flex-end" style={{ height: '100%' }}>
             <Grid item style={{height: '80%'}}>
@@ -92,6 +102,30 @@ export default function ChatRoom(props) {
                 </Grid>
             </Grid>
             {/* <Message getMessage={getInputMessage} sendMessage={sendMessage}/> */}
+=======
+    return (
+        <Grid
+            container
+            className={classes.button}
+            justify="center"
+            display="flex"
+            alignItems="flex-end"
+            style={{ height: '100%' }}
+        >
+            {/* <Message getMessage={getInputMessage} sendMessage={sendMessage}/> */}
+            <TextField
+                id="standard-basic"
+                inputRef={textInput}
+                label="메세지 보내기"
+                onChange={handleOnChange}
+                variant="outlined"
+                size="small"
+            />
+            <Button variant="contained" color="primary" onClick={sendMessage}>
+                {' '}
+                전송{' '}
+            </Button>
+>>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
         </Grid>
     );
 }
