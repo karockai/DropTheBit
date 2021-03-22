@@ -1,6 +1,9 @@
+// dbget/set 사용
 {
-    "askList": {
-        "askPrice": {
+    "askList": 
+    {
+        "askPrice":
+        {
             "playerID": "roomID"
         }
     }
