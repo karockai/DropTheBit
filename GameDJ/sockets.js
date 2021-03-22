@@ -91,7 +91,7 @@ export default {
             /////////////////////////////////////////
             console.log('connected user');
             socket.on('createPrivateRoom_Req', (profile) => new Room(io, socket).createPrivateRoom(profile));
-            socket.on('joinRoom_Req', async (joinData) => { await new Room(io, socket).joinRoom(joinData) });
+            socket.on('joinRoom_Req', async (profile) => { await new Room(io, socket).joinRoom(profile) });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함 
             socket.on('settingsUpdate_Req', (music_name) => new Room(io, socket).updateSettings(music_name));
             socket.on('startGame_Req', async () => await new Game(io, socket).startGame());
