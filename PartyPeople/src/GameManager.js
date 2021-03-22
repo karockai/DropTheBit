@@ -119,11 +119,12 @@ class GameManager extends React.Component {
     
     render() {
         const socket = this.state.socketId;
+        const roomId = this.state.roomId;
+        const roomInfo = this.state.roomInfo;
         return (
             <>
                 <this.TestEmitButton/>
-                <Routes socket= {socket} requestSocket={this.RequestSocket} SetRoomIdAndInfo={this.SetRoomIdAndInfo} roomId = {this.state.roomId}/>
-
+                <Routes socket= {socket} requestSocket={this.RequestSocket} SetRoomIdAndInfo={this.SetRoomIdAndInfo} roomId={roomId} roomInfo={roomInfo}/>
             </>
         );
     }

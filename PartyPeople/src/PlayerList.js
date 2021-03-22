@@ -15,47 +15,47 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function PlayerList(data) {
+function MakePlayerPaper(props){
     const classes = useStyles();
-    const testXs = 12;
-    const value = data;
-    
-    function PlayerScore(){
 
-        return(
-            <Paper className={classes.paper}>
-                <Grid container direction="row" alignItems="center">
-                    <Grid style={{ width: "20%" }} className="score">
-                        1
+    return(
+        <Paper className={classes.paper}>
+            <Grid container direction="row" alignItems="center">
+                <Grid style={{ width: "20%" }} className="score">
+                    1
+                </Grid>
+                <Grid>
+                    <Grid container direction="col" className="score">
+                        <Grid >
+                        sunio
+                        </Grid>
+                        {/* <Grid>
+                        22
+                        </Grid> */}
                     </Grid>
-                    <Grid>
-                        <Grid container direction="col" className="score">
-                            <Grid >
-                            karockai
-                            </Grid>
-                            {/* <Grid>
-                            22
-                            </Grid> */}
+                    <Grid container direction="col" className="score">
+                        <Grid>
+                        100,283
                         </Grid>
-                        <Grid container direction="col" className="score">
-                            <Grid>
-                            100,283
-                            </Grid>
-                            {/* <Grid>
-                            283
-                            </Grid> */}
-                        </Grid>
+                        {/* <Grid>
+                        283
+                        </Grid> */}
                     </Grid>
                 </Grid>
-            </Paper>
-        );
-    }
+            </Grid>
+        </Paper>
+    );
+}
 
+export default function PlayerList(props) {
+    const testXs = 12;
+    // const value = data;
+    
 
     return(
         <Grid wrap="wrap" container direction="column" justify="center" alignItems="stretch">
             <Grid item xs={testXs}>
-                <PlayerScore/>
+                <MakePlayerPaper roomId={props.roomId} roomInfo={props.roomInfo}/>
             </Grid>
         </Grid>
     );
