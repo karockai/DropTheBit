@@ -46,16 +46,10 @@ export default {
         console.log('playerId : '+ playerId);
         new Room(io, socket).createPrivateRoom(playerId)
       });
-<<<<<<< HEAD
-      socket.on("joinRoom_Req", async (profile) => {
-        console.log('join profile : '+profile);
-        await new Room(io, socket).joinRoom(profile);
-=======
 
       // data : {roomID : roomID, playerID : name}
       socket.on("joinRoom_Req", async (data) => {
         await new Room(io, socket).joinRoom(data);
->>>>>>> 1b725ca0be8676aeff3b0ffe1fc99af6b768713d
       });
       // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
       socket.on("settingsUpdate_Req", (music_name) =>

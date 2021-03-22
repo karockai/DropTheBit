@@ -38,7 +38,7 @@ export default function LayoutGrid(props) {
                     <Grid style={{ height: "100%" }} wrap="wrap" container direction="row" justify="center" alignItems="stretch" spacing={2} >
                         <Grid className="playerListGrid" item xs={leftSm} >
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
-                              <PlayerList roomId={props.roomId} roomInfo={props.roomInfo}/>
+                              <PlayerList roomID={props.roomID} roomInfo={props.roomInfo}/>
                             {/* </Paper> */}
                         </Grid>
                         <Grid className="stockTradeGrid" item xs={middleSm}>
@@ -52,12 +52,12 @@ export default function LayoutGrid(props) {
                                         <Grid style={{ height: "100%", }} wrap="wrap" alignItems="stretch" container direction="row" justify="space-around">
                                             <Grid style={{ width: "45%", height: "100%"}} item >
                                                 {/* <Paper style={{ height: "100%" }} > */}
-                                                    <MyAsset roomId = {props.roomId} socket ={props.socket} requestSocket={props.requestSocket}/>
+                                                    <MyAsset roomID = {props.roomID} socket ={props.socket} requestSocket={props.requestSocket}/>
                                                {/* </Paper> */}
                                             </Grid>
                                             <Grid style={{ width: "50%", height: "100%", margin: '0 0 0 2vh'}} item > 
                                                 <Paper style={{ height: "100%" }} className={classes.paper}>
-                                                    <TradeStock roomId = {props.roomId} socket ={props.socket}  requestSocket={props.requestSocket}/>
+                                                    <TradeStock roomID = {props.roomID} socket ={props.socket}  requestSocket={props.requestSocket}/>
                                                 </Paper>
                                             </Grid>
                                         </Grid>

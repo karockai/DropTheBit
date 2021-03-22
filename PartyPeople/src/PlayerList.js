@@ -55,7 +55,7 @@ export default function PlayerList(props) {
     return(
         <Grid wrap="wrap" container direction="column" justify="center" alignItems="stretch">
             <Grid item xs={testXs}>
-                <MakePlayerPaper roomId={props.roomId} roomInfo={props.roomInfo}/>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
             </Grid>
         </Grid>
     );

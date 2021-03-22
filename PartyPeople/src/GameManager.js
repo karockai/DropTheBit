@@ -23,7 +23,7 @@ class GameManager extends React.Component {
             // //     message: '',
             // //     messages: []
             // // },
-            roomId: null,
+            roomID: null,
             roomInfo: null,
             
         };
@@ -111,7 +111,7 @@ class GameManager extends React.Component {
         console.log(data.roomID);
         console.log(data.roomInfo);
         this.setState({
-            roomId: data.roomID,
+            roomID: data.roomID,
             roomInfo: data.roomInfo,
         });
     }
@@ -119,12 +119,12 @@ class GameManager extends React.Component {
     
     render() {
         const socket = this.state.socketId;
-        const roomId = this.state.roomId;
+        const roomID = this.state.roomID;
         const roomInfo = this.state.roomInfo;
         return (
             <>
                 <this.TestEmitButton/>
-                <Routes socket= {socket} requestSocket={this.RequestSocket} SetRoomIdAndInfo={this.SetRoomIdAndInfo} roomId={roomId} roomInfo={roomInfo}/>
+                <Routes socket= {socket} requestSocket={this.RequestSocket} SetRoomIdAndInfo={this.SetRoomIdAndInfo} roomID={roomID} roomInfo={roomInfo}/>
             </>
         );
     }
