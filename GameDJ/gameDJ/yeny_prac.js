@@ -24,24 +24,35 @@ class Room {
       gameInfo: "0",
       music: "",
     };
-    let strplayerInfo = JSON.stringify(playerInfo);
-    roomInfo[socketID] = strplayerInfo;
-    await dbhset(roomID, socketID, strplayerInfo);
-    console.log(roomID);
+
+    roomInfo[socketID] = playerInfo;
+    dbhset(roomID, socketID, playerInfo);
+
     socket.roomID = roomID;
     socket.join(roomID);
-    socket.emit("createPrivateRoom_Res", {roomInfo : roomInfo, roomID : roomID});
+    socket.emit("createPrivateRoom_Res", roomInfo);
+    // let ddd = await dbget(roomID);
+    // console.log(ddd);
+    // console.log(ddd["playerID"]);
+
+    // // 'front'
+    // // createPrivateRoom_res 구현
+
+    // console.log("room_created");
+    // console.log("roomID : ", roomID);
+    // console.log("roomBoss :", profile["playerID"]);
+
   }
 
-  // data : {roomID : roomID, playerID : name}
-  async joinRoom(data) {
+  
+  async joinRoom(playerId) {
     const { io, socket } = this;
-    const roomID = data.roomID;
-    let roomInfo = await dbhgetall(roomID);
+    const roomID = socket.roomID;
+    let roomInfo = await dbget(roomID);
     let socketID = socket.id;
 
     let playerInfo = {
-      playerID: data.playerID,
+      playerID: playerId,
       cash: "100000000",
       asset: "100000000",
       coinVol: "0",
@@ -49,10 +60,10 @@ class Room {
     };
 
     roomInfo[socketID] = playerInfo;
-    let strplayerInfo = JSON.stringify(playerInfo);
-    dbhset(roomID, socketID, strplayerInfo);
-    socket.roomID = roomID;
+    dbhset(roomID, socketID, playerInfo);
+
     socket.join(roomID);
+    socket.roomID = roomID;
     socket.to(roomID).emit("NewbieInRoom", roomInfo);
 
     // players.push(socket);
@@ -60,7 +71,7 @@ class Room {
 
     console.log("someone joined a room");
     console.log("roomID : ", roomID);
-    console.log("newbie :", data.playerID);
+    console.log("newbie :", playerId);
 
     // 'front'
     // socket.on('loadOhterPlayer', players);
@@ -75,6 +86,7 @@ class Room {
     // 음악길이는 여기서 세팅하지말고, 클라에서 music.duration 으로 길이 구해서 보내주고
     // start game 버튼 누르면 그때 games[roomID][time] 을 세팅해주는 것으로 하자
     const roomID = socket.roomID;
+
     dbhset(roomID, music, music_name);
     socket.to(socket.roomID).emit("settingsUpdate_Res", music_name);
   }
