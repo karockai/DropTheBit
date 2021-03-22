@@ -5,26 +5,26 @@ import SimpleContainer from './SimpleContainer';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
-      backgroundColor: '#263747',
+        flexGrow: 1,
+        backgroundColor: '#263747',
     },
     paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      backgroundColor: '#263747',
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        backgroundColor: '#263747',
     },
-  }));
-  //#263747
-function ViewportLayout() { 
+}));
+//#263747
+function ViewportLayout() {
     const classes = useStyles();
     let testXs = 12;
     let leftSm = 2;
     let middleSm = 6;
     let rightSm = 4;
     return (
-      <div className={classes.root}>
-        <SimpleContainer/>
-      </div>
+        <div className={classes.root}>
+            <SimpleContainer />
+        </div>
     );
 }
 

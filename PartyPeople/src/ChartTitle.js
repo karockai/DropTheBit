@@ -15,9 +15,9 @@ function ChartTitle(props) {
     const [textColor, setBullColor] = useState({
         color: isBullMarket ? red[600] : blue[600],
     });
-    const [isBullIcon, SetBullIcon] = useState('▲')
-    const [wonYield, SetYield] = useState('+'+1.33 +'%');
-    const [beforeWon, SetWonBefore] = useState()
+    const [isBullIcon, SetBullIcon] = useState('▲');
+    const [wonYield, SetYield] = useState('+' + 1.33 + '%');
+    const [beforeWon, SetWonBefore] = useState();
     const [currentWon, SetWonCurrent] = useState(0);
     const [upDown, SetUpDown] = useState(0);
 
@@ -28,16 +28,19 @@ function ChartTitle(props) {
             const before = datas[length - 2].curPrice;
             const current = datas[length - 1].curPrice;
             const sub = current - before;
-            const yid = (sub >=0? '+' : '') + (sub / current * 100).toFixed(2) + '%';
+            const yid =
+                (sub >= 0 ? '+' : '') +
+                ((sub / current) * 100).toFixed(2) +
+                '%';
             const icon = sub >= 0 ? '▲' : '▼';
             const color = sub >= 0 ? red[600] : blue[600];
             SetWonBefore(before);
             SetWonCurrent(current);
             SetUpDown(sub);
             SetYield(yid);
-            SetBullIcon(icon)
-            setBullColor({color: color});
-            // console.log({ 
+            SetBullIcon(icon);
+            setBullColor({ color: color });
+            // console.log({
             //     before : beforeWon,
             //     current : currentWon,
             //     updown : upDown,
@@ -46,35 +49,43 @@ function ChartTitle(props) {
             // });
         };
     }, [props.data]);
-    
+
     function SplitByThree(value) {
-        if(value.length <= 3) return value;
-        return SplitByThree(value.substring(0,value.length - 3)) + ',' + value.substring(value.length - 3, value.length); 
+        if (value.length <= 3) return value;
+        return (
+            SplitByThree(value.substring(0, value.length - 3)) +
+            ',' +
+            value.substring(value.length - 3, value.length)
+        );
     }
 
     const parseWonToStr = (won) => {
-        if(typeof(won) == "number") won = won.toString();
+        if (typeof won == 'number') won = won.toString();
         return won;
-    }
-    
+    };
+
     return (
         <>
-            <div className ="ChartTitle" style={textColor}>
-                <span style={{display:'block'}}>
-                    <strong style={{fontSize: '40px'}}>
+            <div className="ChartTitle" style={textColor}>
+                <span style={{ display: 'block' }}>
+                    <strong style={{ fontSize: '40px' }}>
                         {parseWonToStr(currentWon)}
                     </strong>
-                    {' '+unit}
+                    {' ' + unit}
                 </span>
                 <span>
-                    <p style={{fontSize: '12px', color:'#000000', display:'inline-block'}}>
+                    <p
+                        style={{
+                            fontSize: '12px',
+                            color: '#000000',
+                            display: 'inline-block',
+                        }}
+                    >
                         {subtit}
                     </p>
-                    <strong>
-                        {'   '+ wonYield +'  '}
-                    </strong>
-                    <strong style={{display:'inline'}}>
-                        {' '+ isBullIcon+' '+parseWonToStr(upDown)}
+                    <strong>{'   ' + wonYield + '  '}</strong>
+                    <strong style={{ display: 'inline' }}>
+                        {' ' + isBullIcon + ' ' + parseWonToStr(upDown)}
                     </strong>
                 </span>
             </div>

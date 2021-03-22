@@ -4,4 +4,3 @@ import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is requir
 import Modal from '@material-ui/core/Modal';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
-

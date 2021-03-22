@@ -9,27 +9,21 @@ class PortfolioManager extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name : null,
+            name: null,
             evalMoney: 0,
             lastMoney: 0,
-            stockList : Array(5).fill({
-                name : null,
-                purchase : 0,
-                amount : 0,
-                yield : 0,
-            })
-        }
-
-
+            stockList: Array(5).fill({
+                name: null,
+                purchase: 0,
+                amount: 0,
+                yield: 0,
+            }),
+        };
     }
 
-    initData() {
-        
-    }
+    initData() {}
 
     render() {
-        return (
-            <p></p>
-        );
+        return <p></p>;
     }
 }
