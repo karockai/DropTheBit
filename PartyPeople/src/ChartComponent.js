@@ -3,16 +3,10 @@ import { render } from 'react-dom';
 import { socket } from 'socket.io-client';
 import StockChart from './StockChart';
 import ChartTitle from './ChartTitle';
-<<<<<<< HEAD
-import { getData } from "./utils"
-import { tsvParse, csvParse } from  "d3-dsv";
-import { timeParse } from "d3-time-format";
-import CircularProgress from '@material-ui/core/CircularProgress';
-=======
 import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
->>>>>>> a976a85e856c2a492bdfd8e250f85fb40d53539e
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ChartComponent extends React.Component {
     constructor(props) {
