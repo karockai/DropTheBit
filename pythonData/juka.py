@@ -171,12 +171,12 @@ def on_close(ws):
     end = time.time()
     print('running time : ', (end - start))
     print ("Reconnect...")
-    time.sleep(10)
+    time.sleep(5)
     connect_websocket() # retry per 10 seconds
 
 def on_open(ws):
     def run(*args):
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-XRP"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
 
         ws.send(request1)
