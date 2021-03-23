@@ -19,9 +19,9 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        console.log(
-            '----------------------renewalCurCoin------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalCurCoin------------------------'
+        // );
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
 
@@ -89,18 +89,18 @@ class Refresh {
             await dbset('bidList', JSON.stringify(bidList));
         }
 
-        console.log(
-            '----------------------renewalCurCoin End------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalCurCoin End------------------------'
+        // );
         await this.renewalInfo(curPrice);
     }
 
     async renewalInfo(curPrice) {
         const { io } = this;
         console.log(curPrice);
-        console.log(
-            '----------------------renewalInfo End------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalInfo End------------------------'
+        // );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
@@ -153,9 +153,9 @@ class Refresh {
                 // this.socket.emit('refreshWallet', refreshWallet);
                 // console.log("renewalInfo :", playerInfo);
                 await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                console.log(
-                    '----------------------renewalCurInfo End------------------------'
-                );
+                // console.log(
+                //     '----------------------renewalCurInfo End------------------------'
+                // );
             }
         }
     }
