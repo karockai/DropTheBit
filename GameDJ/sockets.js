@@ -39,7 +39,6 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(() => {
             new Refresh(io).renewalCurCoin();
-            new Refresh(io).renewalInfo();
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
