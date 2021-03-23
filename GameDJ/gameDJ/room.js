@@ -79,8 +79,7 @@ class Room {
         socket.roomID = roomID;
         socket.join(roomID);
         console.log('playerInfo', playerInfo);
-        socket.broadcast.to(roomID).emit('NewbieInRoom', playerInfo);
-        socket.emit('loadOtherPlayer', roomInfo);
+        io.to(roomID).emit('joinRoom_Res', roomInfo);
         console.log('someone joined a room');
         console.log('roomID : ', roomID);
         console.log('newbie :', data.playerID);

@@ -39,6 +39,7 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(() => {
             new Refresh(io).renewalCurCoin();
+            new Refresh(io).renewalInfo();
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
@@ -53,6 +54,23 @@ export default {
             // };
             // setInterval(chart, 2000);
 
+            // Initialize Components : For Frontend
+            // 
+            socket.on('initAsset', (comment) => {
+              new Test(io, socket).testComment(comment);
+            });
+            //
+            socket.on('initBid', (comment) => {
+              new Test(io, socket).testComment(comment);
+            });
+            //
+            socket.on('initBid', (comment) => {
+              new Test(io, socket).testComment(comment);
+            });
+            // Initialize Components : For Frontend
+            
+            
+            
             socket.on('testComment', (comment) => {
                 new Test(io, socket).testComment(comment);
             });

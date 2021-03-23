@@ -52,7 +52,7 @@ class Game {
             return Promise(async function (resolve, reject) {
                 // 점수 통계
                 //
-                let roomInfo = await dbget(roomID);
+                let roomInfo = await dbhgetall(roomID);
                 let readerBoard = [];
                 for (let socketID in roomInfo) {
                     if (socketID.length < 15) continue;
@@ -136,7 +136,7 @@ class Game {
                 //! 이 아래 중복되는 부분 줄이기
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
-                this.socket.emit('refreshAsset', refreshWallet);
+                this.socket.emit('refreshWallet', refreshWallet);
                 this.socket.emit('buy_Res', buy_res);
 
                 // 6-3. playerInfo Update
@@ -150,7 +150,7 @@ class Game {
                 buy_res['type'] = '호가';
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
-                this.socket.emit('refreshAsset', refreshWallet);
+                this.socket.emit('refreshWallet', refreshWallet);
                 this.socket.emit('buy_Res', buy_res);
 
                 playerInfo['cash'] = String(cash);
@@ -176,7 +176,7 @@ class Game {
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
             refreshWallet['result'] = 'false';
-            this.socket.emit('refreshAsset', refreshWallet);
+            this.socket.emit('refreshWallet', refreshWallet);
         }
     }
 
@@ -228,7 +228,7 @@ class Game {
                 //! 이 아래 중복되는 부분 줄이기
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
-                this.socket.emit('refreshAsset', refreshWallet);
+                this.socket.emit('refreshWallet', refreshWallet);
                 this.socket.emit('sell_Res', sell_res);
 
                 // 6-3. playerInfo Update
@@ -241,7 +241,7 @@ class Game {
                 sell_res['type'] = '호가';
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
-                this.socket.emit('refreshAsset', refreshWallet);
+                this.socket.emit('refreshWallet', refreshWallet);
                 this.socket.emit('sell_Res', sell_res);
 
                 playerInfo['cash'] = String(cash);
@@ -267,7 +267,7 @@ class Game {
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
             refreshWallet['result'] = 'false';
-            this.socket.emit('refreshAsset', refreshWallet);
+            this.socket.emit('refreshWallet', refreshWallet);
         }
     }
 

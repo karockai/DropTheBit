@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { render } from 'react-dom';
 import MuiThemeProvider from '@material-ui/styles/ThemeProvider';
 import { Tabs, Tab, Button, Grid } from '@material-ui/core';
@@ -43,6 +43,7 @@ const rows = [
     createData(0, 47, 3),
     createData(0, 46, 11),
     createData(16, 45, 9),
+    createData(16, 45, 9),
 ];
 
 const AntTab = withStyles((theme) => ({
@@ -84,7 +85,6 @@ const TabsContainer = () => {
     const cities = ['전체 호가', '방 호가', '나의 호가'];
 
     const [active, setActive] = useState(cities[0]);
-
     return (
         <Tabs
             classes={{ root: classes.root, scroller: classes.scroller }}
@@ -104,8 +104,9 @@ const TabsContainer = () => {
     );
 };
 
-export default function BidTab() {
-    const testObj = {
+export default function BidTab(props) {
+    const [isInit, setInit] = useState(false);
+    const [currentBid, SetBid] = useState({
         date: 'date',
         total_ask_size: 'total_ask_size',
         total_bid_size: 'total_bid_size',
@@ -129,7 +130,19 @@ export default function BidTab() {
         bid_price_4: 'bid_price_4',
         ask_size_4: 'ask_size_4',
         bid_size_4: 'bid_size_4',
-    };
+    })
+    if(!isInit) setInit(true);
+    
+    useLayoutEffect(() => {
+            if (props.socket == null) {
+                props.requestSocket('BidTab', props.socket);
+            } else { 
+                props.socket.on('refreshBid', (bidObject) => {
+                    console.log('bidTab refreshBid OK.')
+                    SetBid(bidObject)
+                });
+            }
+        },[isInit]);
 
     const classes = useStyles();
 
