@@ -6,6 +6,8 @@ import {
     dbhgetall,
     dbrpush,
     dblrem,
+    dblrange, 
+    dbllen 
 } from './redis.js';
 import { nanoid } from 'nanoid';
 
@@ -50,7 +52,7 @@ class Room {
     async joinRoom(data) {
         const { io, socket } = this;
         const roomID = data.roomID;
-        let roomInfo = await dbhgetall(roomID);
+        let roomInfo = {};
         let socketID = socket.id;
 
         let playerInfo = {
@@ -61,26 +63,20 @@ class Room {
             bid: {},
         };
         console.log('joinRoom', data.playerID);
-        roomInfo[socketID] = playerInfo;
+        // roomInfo[socketID] = playerInfo;
         let strplayerInfo = JSON.stringify(playerInfo);
-        dbhset(roomID, socketID, strplayerInfo);
+        await dbhset(roomID, socketID, strplayerInfo);
 
         let rawRoom = await dbhgetall(roomID);
         for (const [key, value] of Object.entries(rawRoom)) {
             roomInfo[key] = JSON.parse(value);
         }
-        console.log('joinRoom', rawRoom);
         console.log('joinRoom', roomInfo);
         socket.roomID = roomID;
         socket.join(roomID);
-        io.to(roomID).emit('NewbieInRoom', roomInfo);
-
-        // players.push(socket);
-        const temp = io.of('/').clients(roomID);
-        print('joinRoom', temp);
-        // const players = Array.from(temp);
-        socket.emit('loadOhterPlayer', roomInfo);
-
+        console.log('playerInfo', playerInfo);
+        socket.broadcast.to(roomID).emit('NewbieInRoom', playerInfo);
+        socket.emit('loadOtherPlayer', roomInfo);
         console.log('someone joined a room');
         console.log('roomID : ', roomID);
         console.log('newbie :', data.playerID);
