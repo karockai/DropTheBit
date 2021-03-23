@@ -1,0 +1,6 @@
+{
+    "type" : "Bitmask : cash / coinVol / asset",
+    "cash" : "Number",
+    "coinVol" : "Number",
+    "asset" : "Number"
+}

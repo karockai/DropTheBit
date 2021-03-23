@@ -18,6 +18,6 @@
         },
         "gameTime" : "Number",
         "music" : "String",
-        "player"
-    
+        "playerNum" : "Number"
+    }
 }

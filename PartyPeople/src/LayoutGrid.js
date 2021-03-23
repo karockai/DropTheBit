@@ -172,6 +172,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <ChatRoom
+                                            roomID = {props.roomID}
                                             socket={props.socket}
                                             chat={props.chat}
                                         />
