@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, makeStyle } from 'react';
+import React, { useState, useRef, useEffect, makeStyle, useLayoutEffect } from 'react';
 import {
     IconButton,
     Button,
@@ -49,12 +49,11 @@ export default function ChatRoom(props) {
     let textInput = useRef(null);
 
     useEffect(() => {
-
-            props.socket.on('update', (data) => {
-                if (data) {
-                    addMessage(data);
-                }
-            });
+        props.socket.on('update', (data) => {
+            if (data) {
+                addMessage(data);
+            }
+        });
     }, []);
 
     const handleOnChange = (event) => {
@@ -75,23 +74,16 @@ export default function ChatRoom(props) {
 
     const addMessage = (data) => {
         // setMessages({ messages: [...messages, data['message']] });
-        let new_messages = [...messages, data];
+        console.log(messages, data);
+        const new_messages = [...messages, data];
+        console.log(new_messages);
         setMessages(new_messages);
+        console.log(messages);
     };
 
     function PrintMessage ()  {
         return (
-            <>
-            {messages.map((message) => {
-                    console.log(message.message);
-                return (
-                (<Paper>
-                    {message.author}
-                    {message.message}
-                </Paper>)
-                );
-            })}
-            </>
+           <></>
         );
     }
 
@@ -103,7 +95,16 @@ export default function ChatRoom(props) {
             justify={'space-between'}
         >
             <Grid item style={{ height: '29vh' }}>
-                <PrintMessage/>
+            <>
+            {messages.map((message) => {
+                return (
+                (<Paper>
+                    {message.author}
+                    {message.message}
+                </Paper>)
+                );
+            })}
+            </>
             </Grid>
             <Grid item >
             <Grid
