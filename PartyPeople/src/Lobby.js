@@ -10,13 +10,14 @@ import {
 import { withRouter } from 'react-router-dom';
 
 function Lobby(props) {
-    const putPlayer = (props) => {
+    const PutPlayer = (props) => {
+        console.log(props.player.playerID);
         return (
             <>
                 <Paper>
-                    {props.playerID}
-                    {props.cash}
-                    {props.asset}
+                    {props.player.playerID}
+                    {props.player.cash}
+                    {props.player.asset}
                 </Paper>
             </>
         );
@@ -36,7 +37,7 @@ function Lobby(props) {
         document.execCommand('Copy');
         alert('복사되었습니다.');
     }
-    console.log(props.socket);
+    // console.log(props.socket);
     let [accept, setAccept] = useState(false);
     let [roomInfo, setRoomInfo] = useState('');
     let [players, setPlayers] = useState('');
@@ -47,13 +48,14 @@ function Lobby(props) {
         let soc = props.socket;
         // console.log(roomID);
         if (soc) {
-            soc.on('NewbieInRoom', (roomInfo) =>{
+            soc.on('NewbieInRoom', (roomInfo) =>{       // 이미 들어간 사람에게 뉴비정보 보내줌
                 console.log('NewbieInRoom');
+                console.log(roomInfo);
                 setAccept(true);
                 setRoomInfo(roomInfo);
                 // ret = <putPlayer player={roomInfo[soc.id]}/>;
             });
-            soc.on('loadOtherPlayer', (players) => {
+            soc.on('loadOtherPlayer', (players) => {    // 뉴비가 자기 포함 모든 사람 정보 받음
                 console.log('loadOtherPlayer');
                 setAccept(true);
                 setPlayers(players);
@@ -61,30 +63,33 @@ function Lobby(props) {
             });
         }
     }, []); 
-    const test = () => {
+    const Card = () => {
         console.log(accept);
         if (accept == true) {
             return (<PutNewCard roomInfo={roomInfo} players={players} socket={props.socket}/>);
         }
         return (<> aaa </>);
     }
+    
 
     function PutNewCard (props) {
-        if (props.roomInfo != null) {
+        if (props.roomInfo != '') {
+            console.log(props);
             return(
-                <putPlayer player={props.roomInfo[props.socket.id]}/>
+                <PutPlayer player={props.roomInfo[props.socket.id]}/>
             );
         }
-        else if (props.players != null) {
+        else if (props.players != '') {
+            console.log(props);
             return (
-                props.players.map((player) => (
-                    <Paper>
-                        {player.playerID}
-                        {player.cash}
-                        {player.asset}
-                    </Paper>
-                // players.forEach((player) => putPlayer(player));
-                )));
+            props.players.map((player) => (
+                <Paper>
+                    {player.playerID}
+                    {player.cash}
+                    {player.asset}
+                </Paper>
+            // players.forEach((player) => putPlayer(player));
+            )));
         }
     }
 
@@ -102,7 +107,7 @@ function Lobby(props) {
         </Grid>
         <Grid id="playerList">
             {/* <PutNewCard socket={props.socket}/> */}
-            {test()}
+            {Card()}
         </Grid>
             
         </>

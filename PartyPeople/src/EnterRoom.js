@@ -52,7 +52,7 @@ export default function EnterRoom(props, { history }) {
 
     const isName = name === '';
     console.log(roomID);
-    console.log(props.socket);
+    console.log(player);
     return (
         <>
             {isName && (
