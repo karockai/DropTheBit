@@ -50,7 +50,6 @@ export default function ChatRoom(props) {
     useEffect(() => {
 
             props.socket.on('update', (data) => {
-                console.log(data);
                 if (data) {
                     addMessage(data);
                 }
@@ -74,8 +73,8 @@ export default function ChatRoom(props) {
 
     const addMessage = (data) => {
         // console.log('ddddddddd');
-        console.log(data);
-        setMessages({ messages: [...messages, data['message']] });
+        // setMessages({ messages: [...messages, data['message']] });
+        setMessages(data);
     };
 
     return (

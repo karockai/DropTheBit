@@ -19,7 +19,7 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        console.log("----------------------renewalCurCoin------------------------")
+        // console.log("----------------------renewalCurCoin------------------------")
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
         
