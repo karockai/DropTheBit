@@ -8,29 +8,26 @@ import {
     makeStyles,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
+import LobbyPlayerCard from './LobbyPlayerCard';
 
 function Lobby(props) {
     const PutPlayer = (props) => {
         console.log(props);
         return (
             <>
-                <Paper>
+                {/* <Paper style= {{width: '40%'}} >
                     {props.player.playerID}
                     {props.player.cash}
                     {props.player.asset}
-                </Paper>
+                </Paper> */}
+                <LobbyPlayerCard 
+                playerID ={props.player.playerID}
+                cash ={props.player.cash}
+                asset ={props.player.asset}
+                />
             </>
         );
     };
-    // const MakeURL = (props) => {
-    // if (props.roomID) {
-    //     console.log(window.location.protocol);
-    //     console.log(window.location.host);
-    //     console.log(props.roomID);
-    //     // document.querySelector('#gameLink').value = `${window.location.protocol}//${window.location.host}/?id=${props.roomID}`;
-    //     putPlayer(props.player); // playerInfo
-    // }
-    // }
     function CopyURL() {
         var copyText = document.getElementById('gameLink');
         copyText.select();
@@ -95,11 +92,12 @@ function Lobby(props) {
                 <div>
                 {tmparr.map((player) => {
                     return (     
-                        <Paper>
+                        {/* <Paper>
                             {player.playerID}
                             {player.cash}
                             {player.asset}
-                        </Paper>
+                        </Paper> */}
+                        (<PutPlayer player={player}/>)
                     );
                 })}
                 </div>
@@ -111,18 +109,21 @@ function Lobby(props) {
 
     return(
         <> 
-        <Button variant="contained" color="primary" onClick={()=>props.history.push('/game')}> StartGame </Button> 
-        <Grid style= {{height: '50vh'}}>
-            <Paper>{props.name}</Paper>
-        </Grid>
-        <Grid container justify='center'>
-            <input type="text" id="gameLink" class="form-control text-center fw-bold bg-white"
-                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`} style={{width: "80%"}} readonly />
-            <Button class="btn btn-warning" type="button" onClick={CopyURL} id="copy">Copy Link</Button>
-        </Grid>
-        <Grid id="playerList">
-            {/* <PutNewCard socket={props.socket}/> */}
-            {Card()}
+        <Grid container justify='center' style= {{height: '80vh', margin: '5vh 5vh 5vh 5vh'}}>
+            <Grid style= {{width: '50%'}} >
+                <Paper style={{width: '30%'}}>{props.name}</Paper>
+                <Button variant="contained" color="primary" onClick={()=>props.history.push('/game')}> StartGame </Button> 
+            </Grid>
+            <Grid style= {{width: '50%'}}>
+                <Grid style={{height: '80vh'}}>
+                    {Card()}
+                </Grid>
+                <Grid container justify='center'>
+                    <input type="text" id="gameLink" class="form-control text-center fw-bold bg-white"
+                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`} style={{width: "70%"}} readonly />
+                    <Button class="btn btn-warning" type="button" onClick={CopyURL} id="copy">Copy Link</Button>
+                </Grid>
+            </Grid>
         </Grid>
         </>
     );

@@ -63,13 +63,13 @@ export default function ChatRoom(props) {
         };
     }, []);
 
-    const handleOnChange = (event) => {
-        setMessage({
-            author: props.playerID,
-            message: event.target.value,
-        });
-        // { message: ev.target.value }
-    };
+    // const handleOnChange = (event) => {
+    //     setMessage({
+    //         author: props.playerID,
+    //         message: event.target.value,
+    //     });
+    //     // { message: ev.target.value }
+    // };
 
     const sendMessage = (ev) => {
         ev.preventDefault();
@@ -77,7 +77,7 @@ export default function ChatRoom(props) {
         textInput.current.value = '';
 
         // author: this.state.author,
-        props.socket.emit('message', message);
+        props.socket.emit('message', {message : message, roomID : props.roomID});
         setMessage({ message: '' });
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
@@ -110,7 +110,7 @@ export default function ChatRoom(props) {
                         id="standard-basic"
                         inputRef={textInput}
                         label="메세지 보내기"
-                        onChange={handleOnChange}
+                        // onChange={handleOnChange}
                         variant="outlined"
                         size="small"
                     />
@@ -122,8 +122,8 @@ export default function ChatRoom(props) {
                         color="primary"
                         onClick={sendMessage}
                     >
-                        {' '}
-                        전송{' '}
+                        {/* {' '}
+                        전송{' '} */}
                     </Button>
                 </Grid>
             </Grid>
