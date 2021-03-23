@@ -1,4 +1,4 @@
-import React, { useEffect, useState, makeStyle } from 'react';
+import React, { useEffect, useState, makeStyle, useLayoutEffect } from 'react';
 import {
     IconButton,
     Button,
@@ -89,7 +89,7 @@ export default function TradeStock(props) {
     const [newVolume, SetNewVolume] = useState(1);
     const [ratioBid, SetRatio] = useState(100);
     const [isBind, SetBind] = useState(false);
-
+    if(!isBind) SetBind(true);
     function VolumeUp(volume) {
         SetNewVolume(volume + 1);
     }
@@ -157,7 +157,6 @@ export default function TradeStock(props) {
             playSound(Drum, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
-                SetBind(true);
                 return;
             }
             Buy(currentBid, currentVolume);
@@ -167,8 +166,7 @@ export default function TradeStock(props) {
             console.log('KeyCode > RIGHT.');
             playSound(Drum, 1).play();
             if (props.socket == null || isBind == false) {
-                props.requestSocket();
-                SetBind(true);
+                props.requestSocket('TradeStock', props.socket);
                 return;
             }
             Sell(currentBid, currentVolume);
@@ -179,8 +177,7 @@ export default function TradeStock(props) {
             console.log('KeyCode > UP.');
             playSound(Drum, 1).play();
             if (props.socket == null || isBind === false) {
-                props.requestSocket();
-                SetBind(true);
+                props.requestSocket('TradeStock', props.socket);
                 return;
             }
             VolumeUp(currentVolume);
@@ -189,20 +186,19 @@ export default function TradeStock(props) {
             console.log('KeyCode > DOWN.');
             playSound(Drum, 1).play();
             if (props.socket == null || isBind === false) {
-                props.requestSocket();
-                SetBind(true);
+                props.requestSocket('TradeStock', props.socket);
                 return;
             }
             VolumeDown(currentVolume);
         }
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         document.addEventListener('keydown', HandleKeyPress);
         return () => {
             document.removeEventListener('keydown', HandleKeyPress);
         };
-    }, [currentVolume, currentBid]);
+    }, [currentVolume, currentBid, isBind]);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {

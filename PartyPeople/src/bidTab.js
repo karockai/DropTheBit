@@ -20,8 +20,8 @@ const useStyles = makeStyles({
     },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+function createData(sell, price, buy) {
+    return { sell, price, buy };
 }
 
 const useTabStyles = makeStyles({
@@ -34,15 +34,15 @@ const useTabStyles = makeStyles({
 });
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 53, 0),
-    createData('Ice cream sandwich', 237, 9.0, 52, 0),
-    createData('Eclair', 262, 16.0, 51, 0),
-    createData('Cupcake', 305, 3, 50, 0),
-    createData('Gingerbread', 356, 14, 49, 39),
-    createData('Gingerbread', 356, 0, 48, 9),
-    createData('Gingerbread', 356, 0, 47, 3),
-    createData('Gingerbread', 356, 0, 46, 11),
-    createData('Gingerbread', 356, 16, 45, 9),
+    createData(6.0, 53, 0),
+    createData(237, 9.0, 52, 0),
+    createData(16.0, 51, 0),
+    createData(3, 50, 0),
+    createData(14, 49, 39),
+    createData(0, 48, 9),
+    createData(0, 47, 3),
+    createData(0, 46, 11),
+    createData(16, 45, 9),
 ];
 
 const AntTab = withStyles((theme) => ({
@@ -169,13 +169,13 @@ export default function BidTab() {
                                     key={row.name}
                                 >
                                     <TableCell align="center">
-                                        {row.fat}
+                                        {row.sell}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {row.carbs}
+                                        {row.price}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {row.protein}
+                                        {row.buy}
                                     </TableCell>
                                 </TableRow>
                             ))}

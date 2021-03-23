@@ -33,9 +33,9 @@ function MakePlayerPaper(props) {
     const classes = useStyles(greenTheme);
 
     return (
-        <Paper className={classes.paper}>
+        <Paper style={{ height: '9.8vh' }} className={classes.paper}>
             <Grid container direction="row" alignItems="center">
-                <Grid style={{ width: '20%' }} className="score">
+                <Grid style={{ width: '20%', height: '5vh' }} className="score">
                     1
                 </Grid>
                 <Grid>
@@ -68,6 +68,7 @@ export default function PlayerList(props) {
             direction="column"
             justify="center"
             alignItems="stretch"
+            spacing ={2}
         >
             <Grid item xs={testXs}>
                 <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
@@ -90,6 +91,10 @@ export default function PlayerList(props) {
             <Grid item xs={testXs}>
                 <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
             </Grid>
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
+
         </Grid>
     );
 }
