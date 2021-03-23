@@ -27,7 +27,7 @@ class Test {
     async testSendChart(day) {
         const { socket } = this;
 
-        socket.emit('chart', stockData[day]);
+        socket.to(socket.roomID).emit('chart', stockData[day]);
         // console.log(socket.id, "님에게 [", day, "] 인덱스의 정보가 보내졌습니다.");
     }
 

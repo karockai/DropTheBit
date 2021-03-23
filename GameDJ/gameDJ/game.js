@@ -12,26 +12,34 @@ class Game {
     }
 
     async startGame() {
-        let music_time = 5000;
         const { io, socket } = this;
-        socket.to(socket.roomID).emit('startGame', gameTime);
+        let roomID = socket.roomID;
+        let musicTime = Number(await dbhget(roomID, gameTime));
 
-        const gameOver = function () {
+        await socket.to(roomID).emit('startGame', gameTime);
+        let ReadyPlayer = socket.on('allReady', () => {
+            // 모두가 준비되면 게임 시작
+        });
+
+        const gamePlay = function () {
             return Promise(function (resolve, reject) {
                 let schedule = setInterval(() => {
-                    renewalCurCoin();
+                    renewalCurCoin(roomID);
+                    sendRoomInfo(roomID);
                 }, 1000);
                 // gameTime만큼 멈췄다가, 끝나면 endGame 실행
 
-                setTimeout(() => {
-                    clearInterval(schedule);
+                // setTimeout(() => {
+                //     clearInterval(schedule);
 
-                    resolve();
-                }, music_time);
+                //     resolve();
+                // }, musicTime);
             });
         };
 
-        gameOver().then(() => {
+        gamePlay().then(() => {
+            // game 종료 함수 만들 것
+            socket.to(roomID).emit('endGame');
             console.log('Game Over');
         });
     }

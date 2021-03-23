@@ -7,7 +7,6 @@ import Test from './gameDJ/testfile.js';
 
 import { dbset, dbget } from './gameDJ/redis.js';
 
-let gameTime = 10000;
 export default {
     init(server) {
         const io = socketio(server);
@@ -26,6 +25,22 @@ export default {
         };
         dbset('bidList', JSON.stringify(bidDummy));
         dbset('askList', JSON.stringify(askDummy));
+
+        const gamePlay = function () {
+            return Promise(function (resolve, reject) {
+                let schedule = setInterval(() => {
+                    renewalCurCoin();
+                    // sendRoomInfo(roomID);
+                }, 1000);
+
+                // setTimeout(() => {
+                //     clearInterval(schedule);
+                //     resolve();
+                // }, musicTime);
+            });
+        };
+        gamePlay();
+
         // db setting  ------------------------------------ <<
 
         io.on('connection', (socket) => {
