@@ -76,10 +76,10 @@ class Room {
         io.to(roomID).emit('NewbieInRoom', roomInfo);
 
         // players.push(socket);
-        const temp = io.of('/').clients(roomID);
-        print('joinRoom', temp);
+        // const temp = io.of('/').clients(roomID);
+        // print('joinRoom', temp);
         // const players = Array.from(temp);
-        socket.emit('loadOhterPlayer', roomInfo);
+        socket.emit('loadOtherPlayer', roomInfo);
 
         console.log('someone joined a room');
         console.log('roomID : ', roomID);
