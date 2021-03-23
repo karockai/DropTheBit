@@ -91,24 +91,42 @@ export default function ChatRoom(props) {
         <Grid
             container
             className={classes.button}
-            justify="center"
             display="flex"
             alignItems="flex-end"
             style={{ height: '100%' }}
         >
-            {/* <Message getMessage={getInputMessage} sendMessage={sendMessage}/> */}
-            <TextField
-                id="standard-basic"
-                inputRef={textInput}
-                label="메세지 보내기"
-                onChange={handleOnChange}
-                variant="outlined"
-                size="small"
-            />
-            <Button variant="contained" color="primary" onClick={sendMessage}>
-                {' '}
-                전송{' '}
-            </Button>
+            <Grid item style={{ height: '80%' }}></Grid>
+            <Grid
+                item
+                container
+                wrap="wrap"
+                dirction="column"
+                style={{ height: '5vh' }}
+                spacing={1}
+            >
+                <Grid item style={{ margin: '0 0 0 -10', width: '80%' }}>
+                    <TextField
+                        style={{ height: '100%' }}
+                        id="standard-basic"
+                        inputRef={textInput}
+                        label="메세지 보내기"
+                        onChange={handleOnChange}
+                        variant="outlined"
+                        size="small"
+                    />
+                </Grid>
+                <Grid item style={{ width: '20%' }}>
+                    <Button
+                        style={{ height: '100%' }}
+                        variant="contained"
+                        color="primary"
+                        onClick={sendMessage}
+                    >
+                        {' '}
+                        전송{' '}
+                    </Button>
+                </Grid>
+            </Grid>
         </Grid>
     );
 }

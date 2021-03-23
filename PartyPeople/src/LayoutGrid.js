@@ -11,6 +11,8 @@ import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
+import { useSound, playSound } from './useSound';
+import Bit from './audios/Mausoleum_Mash.mp3';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,13 +33,14 @@ export default function LayoutGrid(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
+    useSound(Bit, 0.7, 2000);
     return (
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
                 <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
                     <Grid
-                        style={{ height: '100%' }}
+                        style={{ height: '100vh' }}
                         wrap="wrap"
                         container
                         direction="row"
@@ -119,13 +122,13 @@ export default function LayoutGrid(props) {
                                         <Grid
                                             style={{
                                                 width: '50%',
-                                                height: '100%',
+                                                height: '40vh',
                                                 margin: '0 0 0 2vh',
                                             }}
                                             item
                                         >
                                             <Paper
-                                                style={{ height: '100%' }}
+                                                style={{ height: '40vh' }}
                                                 className={classes.paper}
                                             >
                                                 <TradeStock
@@ -143,7 +146,7 @@ export default function LayoutGrid(props) {
                         </Grid>
                         <Grid className="bidChatGrid" item xs={rightSm}>
                             <Grid
-                                style={{ height: '100%' }}
+                                style={{ height: '90vh' }}
                                 wrap="wrap"
                                 alignItems="stretch"
                                 container
@@ -151,17 +154,21 @@ export default function LayoutGrid(props) {
                                 justify="center"
                                 spacing={2}
                             >
-                                <Grid style={{ height: '60%' }} item>
+                                <Grid
+                                    style={{ height: '50vh' }}
+                                    item
+                                    alignItems="stretch"
+                                >
                                     <Paper
-                                        style={{ height: '100%' }}
+                                        style={{ height: '45vh' }}
                                         className={classes.paper}
                                     >
                                         <BidTab />
                                     </Paper>
                                 </Grid>
-                                <Grid style={{ height: '40%' }} item>
+                                <Grid style={{ height: '40vh' }} item>
                                     <Paper
-                                        style={{ height: '100%' }}
+                                        style={{ height: '40vh' }}
                                         className={classes.paper}
                                     >
                                         <ChatRoom
