@@ -42,7 +42,8 @@ export default function ChatRoom(props) {
     const classes = useStyles();
     let [message, setMessage] = useState('');       // 보낼 때의 메시지자체만 저장
     let [messages, setMessages] = useState({        // author와 쌍으로 저장된 메시지
-        messages: [ 
+        messages: [
+            {message: '메시지 테스트', author: 'playerID', roomID : props.roomID},
         ],
     });
     let textInput = useRef(null);
@@ -66,15 +67,18 @@ export default function ChatRoom(props) {
         ev.preventDefault();
         textInput.current.value = '';
         // author: this.state.author,
+        console.log(message);
         props.socket.emit('message', {message: message, author: 'playerID', roomID : props.roomID});
-        setMessage({message: ''});
+        setMessage('');
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 
     const addMessage = (data) => {
         // console.log('ddddddddd');
         // setMessages({ messages: [...messages, data['message']] });
-        setMessages(data);
+        let new_messages = [...messages, data];
+        setMessages(new_messages);
+        console.log(messages);
     };
 
     return (
