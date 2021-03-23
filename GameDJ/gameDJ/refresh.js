@@ -19,12 +19,14 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
+        console.log("----------------------renewalCurCoin------------------------")
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
-
+        
         io.emit('chart', curCoin);
         let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
+        console.log("pre", prePrice,"cur", curPrice)
 
         // 2. prePrice랑 curPrice를 비교
         // 2-1. curPrice === prePrice면 아무것도 하지않는다.
