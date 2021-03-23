@@ -12,7 +12,10 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { useSound, playSound } from './useSound';
-import Drum from './audios/drum.wav';
+import DrumUp from './audios/effect/drumUp.wav';
+import DrumDown from './audios/effect/drumDown.wav';
+import HatUp from './audios/effect/hatUp.wav';
+import HatDown from './audios/effect/hatDown.wav';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -156,7 +159,7 @@ export default function TradeStock(props) {
             //_ LEFT ARROW
             console.log(props);
             console.log('KeyCode > LEFT.');
-            playSound(Drum, 1).play();
+            playSound(DrumUp, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
@@ -166,7 +169,7 @@ export default function TradeStock(props) {
             //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.');
-            playSound(Drum, 1).play();
+            playSound(DrumUp, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
@@ -177,7 +180,7 @@ export default function TradeStock(props) {
         if (e.keyCode === 38) {
             //_ UP ARROW
             console.log('KeyCode > UP.');
-            playSound(Drum, 1).play();
+            playSound(DrumUp, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
@@ -186,7 +189,7 @@ export default function TradeStock(props) {
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             console.log('KeyCode > DOWN.');
-            playSound(Drum, 1).play();
+            playSound(DrumUp, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
