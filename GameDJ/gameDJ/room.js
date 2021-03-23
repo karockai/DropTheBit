@@ -1,12 +1,4 @@
-import {
-    dbset,
-    dbget,
-    dbhset,
-    dbhget,
-    dbhgetall,
-    dbrpush,
-    dblrem,
-} from './redis.js';
+import { dbset, dbget, dbhset, dbhget, dbhgetall, dbrpush, dblrem } from './redis.js';
 import { nanoid } from 'nanoid';
 
 class Room {
@@ -36,7 +28,7 @@ class Room {
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
         await dbrpush(roomList, roomID);
-        // console.log(dbget(roomList));
+        console.log(dbget(roomList);
         socket.roomID = roomID;
         console.log(socket);
         socket.join(roomID);
