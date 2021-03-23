@@ -83,8 +83,8 @@ function ArrowButton(props) {
 export default function TradeStock(props) {
     const classes = useStyles();
 
-    const [currentBid, SetBid] = useState(0);
-    const [newBid, SetNewBid] = useState(0);
+    const [currentBid, SetBid] = useState(46000);
+    const [newBid, SetNewBid] = useState(46000);
     const [currentVolume, SetVolume] = useState(1);
     const [newVolume, SetNewVolume] = useState(1);
     const [ratioBid, SetRatio] = useState(100);
@@ -119,8 +119,9 @@ export default function TradeStock(props) {
             currentBid: bid,
             currentVolume: volume,
         });
-        props.socket.on('buy_Req', (bbid) => {
-            SetNewBid(bbid);
+        props.socket.on('buy_Res', (bbid) => {
+            console.log(bbid.curPrice);
+            SetNewBid(bbid.curPrice);
             console.log('구매하고 매매 호가', bbid);
         });
     }
