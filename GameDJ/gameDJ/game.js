@@ -36,7 +36,7 @@ class Game {
         async function gameOver() {
             let roomID = socket.roomID;
             let roomInfo = await dbhgetall(roomID);
-            let readerBoard = [];
+            let leaderBoard = [];
             for (let socketID in roomInfo) {
                 if (socketID.length < 15) continue;
                 let playerInfo = JSON.parse(roomInfo[socketID]);
@@ -45,14 +45,14 @@ class Game {
                 temp['playerID'] = playerInfo['playerID'];
                 temp['asset'] = playerInfo['asset'];
 
-                readerBoard.push(temp);
+                leaderBoard.push(temp);
             }
 
-            readerBoard.sort(function (a, b) {
+            leaderBoard.sort(function (a, b) {
                 return b['asset'] - a['asset'];
             });
 
-            socket.to(roomID).emit('gameOver', readerBoard);
+            socket.to(roomID).emit('gameOver', leaderBoard);
         }
 
         let gameSchedule = setTimeout(gameOver, musicTime);
