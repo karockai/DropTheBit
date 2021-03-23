@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
+import SelectMusic from './SelectMusic';
+
 
 function Lobby(props) {
     const PutPlayer = (props) => {
@@ -96,12 +98,13 @@ function Lobby(props) {
         props.history.push('/game');
     });
     const MusicList = () => {
-        return(
+        return(//props.musicList
             <Grid container>
-            <Grid>
-                
-            </Grid>
-
+                <SelectMusic 
+                musicList={props.musicList} 
+                roomID={props.roomID}
+                setTime={props.setTime}
+                />
             </Grid>
         );
 

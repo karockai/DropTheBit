@@ -73,6 +73,7 @@ export default function EnterRoom(props, { history }) {
                     player={player}
                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                     musicList = {musicList}
+                    setTime={props.setTime}
                 />
             )}
         </>

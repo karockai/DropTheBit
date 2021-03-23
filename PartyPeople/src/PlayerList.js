@@ -41,15 +41,9 @@ function MakePlayerPaper(props) {
                 <Grid>
                     <Grid container direction="col" className="score">
                         <Grid>sunio</Grid>
-                        {/* <Grid>
-                        22
-                        </Grid> */}
                     </Grid>
                     <Grid container direction="col" className="score">
                         <Grid>100,283</Grid>
-                        {/* <Grid>
-                        283
-                        </Grid> */}
                     </Grid>
                 </Grid>
             </Grid>
