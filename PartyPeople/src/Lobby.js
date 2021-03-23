@@ -95,6 +95,17 @@ function Lobby(props) {
         props.socket.emit('startGame_Req', props.roomID);
         props.history.push('/game');
     });
+    const MusicList = () => {
+        return(
+            <Grid container>
+            <Grid>
+                
+            </Grid>
+
+            </Grid>
+        );
+
+    }
 
 
     return(
@@ -102,6 +113,7 @@ function Lobby(props) {
         <Grid container justify='center' style= {{height: '80vh', margin: '5vh 5vh 5vh 5vh'}}>
             <Grid style= {{width: '50%'}} >
                 <Paper style={{width: '30%'}}>{props.name}</Paper>
+                <MusicList/>
                 <Button variant="contained" color="primary" onClick={StartGame}> StartGame </Button> 
             </Grid>
             <Grid style= {{width: '50%'}}>

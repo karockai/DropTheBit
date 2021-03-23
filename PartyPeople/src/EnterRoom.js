@@ -16,12 +16,12 @@ export default function EnterRoom(props, { history }) {
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState('');
     let textInput = useRef(null);
+    let musicList = [];
 
     const handleOnSave = (textInput) => {
         setName(textInput);
         sendName(textInput);
     };
-
     if (props.socket == null) {
         props.requestSocket('createPrivateRoom');
     }
@@ -42,10 +42,11 @@ export default function EnterRoom(props, { history }) {
         else {                           // 방장
             props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
             props.socket.on('createPrivateRoom_Res', (data)=>{
-                console.log(data); 
+                // console.log(data); 
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);
                 setRoomID(data.roomID);
+                musicList = data.musicList;
             });
         }
     };
@@ -71,6 +72,7 @@ export default function EnterRoom(props, { history }) {
                     roomID={roomID}
                     player={player}
                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                    musicList = {musicList}
                 />
             )}
         </>
