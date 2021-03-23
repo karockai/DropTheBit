@@ -11,6 +11,8 @@ import {
     dbllen 
 } from './redis.js';
 import { nanoid } from 'nanoid';
+import fs from 'fs';
+
 
 class Room {
     constructor(io, socket) {
@@ -45,10 +47,15 @@ class Room {
         // console.log('roomList : ', await dblrange('roomList', 0, -1));
         socket.roomID = roomID;
         socket.join(roomID);
-        socket.emit('createPrivateRoom_Res', {
+        let musicList = fs.readdir('../PartyPeople/src/audios', (err, filelist)=> {
+            console.log(filelist);
+            socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-        });
+            musicList: filelist
+        })
+    });
+
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -96,6 +103,7 @@ class Room {
         // 클라에서 music.duration 으로 길이 구해서 보내주면 게임타임 세팅
         // console.log(getDuration(Bit)['PromiseResult']);
         // 위와 같이 하면 구할 수 있음 
+
         const roomID = data.roomID;
         dbhset(roomID, music, data.musicName);
         dbhset(roomID, gameTime, data.musicTime);
