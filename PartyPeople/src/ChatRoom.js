@@ -77,7 +77,7 @@ export default function ChatRoom(props) {
         textInput.current.value = '';
 
         // author: this.state.author,
-        props.socket.emit('message', message);
+        props.socket.emit('message', {message : message, roomID : props.roomID});
         setMessage({ message: '' });
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
