@@ -19,9 +19,9 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        console.log(
-            '----------------------renewalCurCoin------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalCurCoin------------------------'
+        // );
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
 
@@ -89,18 +89,18 @@ class Refresh {
             await dbset('bidList', JSON.stringify(bidList));
         }
 
-        console.log(
-            '----------------------renewalCurCoin End------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalCurCoin End------------------------'
+        // );
         await this.renewalInfo(curPrice);
     }
 
     async renewalInfo(curPrice) {
         const { io } = this;
         console.log(curPrice);
-        console.log(
-            '----------------------renewalInfo End------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalInfo End------------------------'
+        // );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
@@ -113,6 +113,7 @@ class Refresh {
             let roomInfo = await dbhgetall(roomID);
 
             // room 호가 수집
+            let rankList = [];
 
             // roomInfo 순회하면서 playerInfo 가져옴
             // console.log(roomInfo);
@@ -147,20 +148,110 @@ class Refresh {
                     asset: asset,
                 };
 
+                // rankObj 삽입
+                let rankObj = {
+                    playerID: playerInfo['playerID'],
+                    asset: asset,
+                };
+                rankList.push(rankObj);
+
                 // await dbhset(roomID, socketID, playerInfo);
                 // roomInfo[socketID] = JSON.stringify(playerInfo);
                 io.to(socketID).emit('refreshWallet', refreshWallet);
                 // this.socket.emit('refreshWallet', refreshWallet);
                 // console.log("renewalInfo :", playerInfo);
                 await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                console.log(
-                    '----------------------renewalCurInfo End------------------------'
-                );
+                // console.log(
+                //     '----------------------renewalCurInfo End------------------------'
+                // );
             }
+
+            rankList.sort(function (a, b) {
+                return b['asset'] - a['asset'];
+            });
+
+            io.to(roomID).emit('roomRank', rankList);
         }
     }
 
     // refreshBid 갱신
-    async refreshBid() {}
+    async refreshBid() {
+        const { io } = this;
+        let bidTable = JSON.parse(await dbget('bidTable'));
+        let bidList = [];
+
+        let bidObject4 = {
+            sell: bidTable.bid_size4,
+            price: bidTable.bid_price4,
+            buy: 0,
+        };
+
+        let bidObject3 = {
+            sell: bidTable.bid_size3,
+            price: bidTable.bid_price3,
+            buy: 0,
+        };
+
+        let bidObject2 = {
+            sell: bidTable.bid_size2,
+            price: bidTable.bid_price2,
+            buy: 0,
+        };
+
+        let bidObject1 = {
+            sell: bidTable.bid_size1,
+            price: bidTable.bid_price1,
+            buy: 0,
+        };
+
+        let bidObject0 = {
+            sell: bidTable.bid_size0,
+            price: bidTable.bid_price0,
+            buy: 0,
+        };
+
+        let askObject0 = {
+            sell: 0,
+            price: bidTable.ask_price0,
+            buy: bidTable.ask_size0,
+        };
+
+        let askObject1 = {
+            sell: 0,
+            price: bidTable.ask_price1,
+            buy: bidTable.ask_size1,
+        };
+
+        let askObject2 = {
+            sell: 0,
+            price: bidTable.ask_price2,
+            buy: bidTable.ask_size2,
+        };
+
+        let askObject3 = {
+            sell: 0,
+            price: bidTable.ask_price3,
+            buy: bidTable.ask_size3,
+        };
+
+        let askObject4 = {
+            sell: 0,
+            price: bidTable.ask_price4,
+            buy: bidTable.ask_size4,
+        };
+
+        bidList.push(askObject4);
+        bidList.push(askObject3);
+        bidList.push(askObject2);
+        bidList.push(askObject1);
+        bidList.push(askObject0);
+        bidList.push(bidObject0);
+        bidList.push(bidObject1);
+        bidList.push(bidObject2);
+        bidList.push(bidObject3);
+        bidList.push(bidObject4);
+
+        io.emit('refreshBid', bidList);
+    }
 }
 export default Refresh;
