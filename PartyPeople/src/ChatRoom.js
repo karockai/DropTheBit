@@ -73,7 +73,6 @@ export default function ChatRoom(props) {
 
     const sendMessage = (ev) => {
         ev.preventDefault();
-        console.log(message);
         textInput.current.value = '';
 
         // author: this.state.author,
@@ -85,6 +84,7 @@ export default function ChatRoom(props) {
     const addMessage = (data) => {
         // console.log('ddddddddd');
         setMessages({ messages: [...messages, data] });
+        // console.log(data);
     };
 
     return (
@@ -122,8 +122,7 @@ export default function ChatRoom(props) {
                         color="primary"
                         onClick={sendMessage}
                     >
-                        {/* {' '}
-                        전송{' '} */}
+                        전송
                     </Button>
                 </Grid>
             </Grid>

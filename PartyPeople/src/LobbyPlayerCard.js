@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
   root: {   
     maxWidth: '30vh',
+    margin: '0 2vh 2vh 2vh',
   },
   bullet: {
     display: 'inline-block',
@@ -28,7 +29,7 @@ export default function LobbyPlayerCard(props) {
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} >
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           방장
