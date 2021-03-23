@@ -12,7 +12,7 @@ import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 import { useSound, playSound, getDuration } from './useSound';
-import Bit from './audios/Mausoleum_Mash.mp3';
+import Bit from './audios/music/King_Conga.mp3';
 
 
 const useStyles = makeStyles((theme) => ({
