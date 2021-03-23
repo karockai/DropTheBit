@@ -55,6 +55,7 @@ export default function ChatRoom(props) {
     useEffect(() => {
         return () => {
             props.socket.on('update', function (data) {
+                console.log(props.socket.id);
                 console.log(data);
                 if (data) {
                     addMessage(data);
@@ -63,13 +64,12 @@ export default function ChatRoom(props) {
         };
     }, []);
 
-    // const handleOnChange = (event) => {
-    //     setMessage({
-    //         author: props.playerID,
-    //         message: event.target.value,
-    //     });
-    //     // { message: ev.target.value }
-    // };
+    const handleOnChange = (event) => {
+        setMessage({
+            author: props.playerID,
+            message: event.target.value,
+        });
+    };
 
     const sendMessage = (ev) => {
         ev.preventDefault();
@@ -77,14 +77,14 @@ export default function ChatRoom(props) {
 
         // author: this.state.author,
         props.socket.emit('message', {message : message, roomID : props.roomID});
-        setMessage({ message: '' });
+        setMessage({ author: '', message: ''});
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 
     const addMessage = (data) => {
         // console.log('ddddddddd');
-        setMessages({ messages: [...messages, data] });
-        // console.log(data);
+        console.log(data);
+        setMessages({ messages: [...messages, data['message']] });
     };
 
     return (
@@ -110,7 +110,7 @@ export default function ChatRoom(props) {
                         id="standard-basic"
                         inputRef={textInput}
                         label="메세지 보내기"
-                        // onChange={handleOnChange}
+                        onChange={handleOnChange}
                         variant="outlined"
                         size="small"
                     />

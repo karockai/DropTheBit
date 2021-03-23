@@ -70,6 +70,7 @@ export default function EnterRoom(props, { history }) {
                     history={history}
                     roomID={roomID}
                     player={player}
+                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                 />
             )}
         </>
