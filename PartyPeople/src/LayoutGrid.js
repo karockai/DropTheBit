@@ -163,7 +163,10 @@ export default function LayoutGrid(props) {
                                         style={{ height: '45vh' }}
                                         className={classes.paper}
                                     >
-                                        <BidTab socket = {props.socket}/>
+                                        <BidTab
+                                            socket={props.socket}
+                                            requestSocket={props.requestSocket}
+                                        />
                                     </Paper>
                                 </Grid>
                                 <Grid style={{ height: '40vh' }} item>
@@ -172,7 +175,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <ChatRoom
-                                            roomID = {props.roomID}
+                                            roomID={props.roomID}
                                             socket={props.socket}
                                             chat={props.chat}
                                         />
