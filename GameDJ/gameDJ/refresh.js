@@ -108,7 +108,6 @@ class Refresh {
             for (let socketID in roomInfo) {
                 if (socketID.length != 20) continue;
                 let playerInfo = JSON.parse(roomInfo[socketID]);
-                console.log('여기까지 ', socketID);
 
                 let asset = 0;
                 let cash = Number(playerInfo['cash']);
@@ -140,9 +139,8 @@ class Refresh {
                 // roomInfo[socketID] = JSON.stringify(playerInfo);
                 io.to(socketID).emit('refreshWallet', refreshWallet);
                 // this.socket.emit('refreshWallet', refreshWallet);
+                await dbhset(roomID, socketID, JSON.stringify(playerInfo));
             }
-
-            await dbhset(roomID, socketID, playerInfo);
         }
     }
 
