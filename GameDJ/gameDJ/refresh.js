@@ -24,6 +24,7 @@ class Refresh {
         if (curPrice > prePrice) {
             let askList = JSON.parse(await dbget('askList'));
             // askPrice가 curPrice보다 낮은지 확인
+            console.log('-------------------------------- 1');
             for (let strAskPrice in askList) {
                 let intAskPrice = Number(strAskPrice);
                 if (intAskPrice > curPrice) continue;
@@ -50,6 +51,8 @@ class Refresh {
         // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
         else if (curPrice < prePrice) {
             let bidList = JSON.parse(await dbget('bidList'));
+
+            console.log('-------------------------------- 2');
             // bidPrice가 curPrice보다 높은지 확인
             for (let strBidPrice in bidList) {
                 let intBidPrice = Number(strBidPrice);
@@ -79,6 +82,7 @@ class Refresh {
 
     async renewalInfo(curPrice) {
         const { io } = this;
+
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dbget('roomList');
 
@@ -122,5 +126,8 @@ class Refresh {
             dbset(roomID);
         }
     }
+
+    // refreshBid 갱신
+    async refreshBid() {}
 }
 export default Refresh;
