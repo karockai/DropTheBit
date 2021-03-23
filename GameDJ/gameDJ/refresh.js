@@ -30,11 +30,11 @@ class Refresh {
                     let roomID = askList[strAskPrice][socketID];
                     let playerInfo = JSON.parse(await dbhget(roomID, socketID));
                     let cash = Number(playerInfo['cash']);
-                    let askVol = Number(playerInfo['askInPlayer'][strAskPrice]);
+                    let askVol = Number(playerInfo['ask'][strAskPrice]);
                     cash += askVol * intAskPrice;
                     playerInfo['cash'] = String(cash);
 
-                    delete playerInfo['askInPlayer'][strAskPrice];
+                    delete playerInfo['ask'][strAskPrice];
                     dbhset(roomID, socketID, JSON.stringfy(playerInfo));
                     socket.to(socketID).emit('askDone');
 
@@ -58,11 +58,11 @@ class Refresh {
                     let roomID = bidList[strBidPrice][socketID];
                     let playerInfo = JSON.parse(await dbhget(roomID, socketID));
                     let coinVol = Number(playerInfo['coinVol']);
-                    let askVol = Number(playerInfo['bidInPlayer'][strBidPrice]);
+                    let askVol = Number(playerInfo['bid'][strBidPrice]);
                     coinVol += askVol;
                     playerInfo['coinVol'] = String(coinVol);
 
-                    delete playerInfo['bidInPlayer'][strBidPrice];
+                    delete playerInfo['bid'][strBidPrice];
                     dbhset(roomID, socketID, JSON.stringfy(playerInfo));
                     socket.to(socketID).emit('bidDone');
 
@@ -85,6 +85,8 @@ class Refresh {
         for (let roomID in roomList) {
             if (roomID < 15) continue;
             let roomInfo = await dbget(roomID);
+
+            // room 호가 수집
 
             // roomInfo 순회하면서 playerInfo 가져옴
             for (let socketID in roomInfo) {
