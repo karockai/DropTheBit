@@ -11,7 +11,7 @@ import {
     dbllen 
 } from './redis.js';
 import { nanoid } from 'nanoid';
-import { getDuration } from '../../PartyPeople/src/useSound';
+import { getDuration } from './usesound.js';
 import fs from 'fs';
 
 
