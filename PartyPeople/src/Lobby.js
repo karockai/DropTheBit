@@ -41,15 +41,11 @@ function Lobby(props) {
     useEffect(()=>{
         let soc = props.socket;
         if (soc) {
-            // ! 주석풀고 확인
             soc.on('joinRoom_Res', (roomInfo) => {    // 사람이 들어올 때마다 roomInfo 갱신
-                console.log('joinRoom_Res');
                 setAccept(true);
                 setRoomInfo(roomInfo);
-                // console.log(roomInfo);
-                // players.forEach((player) => putPlayer(player)));
+                props.SetRoomIdAndInfo({roomID:props.roomID, roomInfo:roomInfo});
             });
-            // ! 
         }
     }, []); 
     const Card = () => {
@@ -73,7 +69,6 @@ function Lobby(props) {
     }  
 
     function PutNewCard (props) {
-        // ! 주석 풀고 확인
         if (props.roomInfo != '') {
             let PlayerList = getPlayersList(props.roomInfo);
 
@@ -95,7 +90,6 @@ function Lobby(props) {
                 </div>
             );
         }
-        // ! 
     }
 
 
