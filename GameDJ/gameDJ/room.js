@@ -11,6 +11,7 @@ import {
     dbllen 
 } from './redis.js';
 import { nanoid } from 'nanoid';
+import { getDuration } from '../../PartyPeople/src/useSound';
 import fs from 'fs';
 
 
@@ -55,7 +56,6 @@ class Room {
             musicList: filelist
         })
     });
-
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -90,24 +90,19 @@ class Room {
         console.log('someone joined a room');
         console.log('roomID : ', roomID);
         console.log('newbie :', data.playerID);
-
-        // 'front'
-        // socket.on('loadOhterPlayer', players);
-        // players.forEach((player) => putPlayer(player));
     }
 
-    // data : {roomID : roomID, musicName : 클라에서 선택한 음악명 (select 창), musicTime : musicTime}
+    // data : {roomID : roomID, musicName : 클라에서 선택한 음악명 (select 창)}
     // 해당 음악의 길이만큼 게임의 time 설정
     async updateSettings(data) {
         const { socket } = this;
-        // 클라에서 music.duration 으로 길이 구해서 보내주면 게임타임 세팅
-        // console.log(getDuration(Bit)['PromiseResult']);
-        // 위와 같이 하면 구할 수 있음 
 
         const roomID = data.roomID;
+        let musciPath = '../PartyPeople/src/audios/' + data.musicName;
+        let musicTime = Math.round(getDuration(musicPath)['PromiseResult']) + 3; // 초 단위로 저장됨 (클라에서 파싱해서 사용)
         dbhset(roomID, music, data.musicName);
-        dbhset(roomID, gameTime, data.musicTime);
-        socket.to(data.roomID).emit('settingsUpdate_Res', data);
+        dbhset(roomID, gameTime, musicTime);
+        io.to(data.roomID).emit('settingsUpdate_Res', data);
     }
 }
 
