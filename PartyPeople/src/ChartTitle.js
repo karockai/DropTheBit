@@ -9,7 +9,7 @@ import { render } from 'react-dom';
 //@ useEffect socket 통신
 
 function ChartTitle(props) {
-    const subtit = '전일대비';
+    const subtit = '이전대비';
     const unit = 'KRW';
     const isBullMarket = true;
     const [textColor, setBullColor] = useState({

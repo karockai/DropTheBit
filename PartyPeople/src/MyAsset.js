@@ -40,6 +40,7 @@ export default function MyAsset(props) {
     const classes = useStyles();
     const [myCash, setCash] = useState(0);
     const [myAsset, setAsset] = useState(0);
+    const [myCoin, setCoin] = useState(0);
 
     //@ 가정 => props에 socket이 전달되었어야함.
     useEffect(() => {
@@ -47,13 +48,15 @@ export default function MyAsset(props) {
             if (props.socket == null) {
                 props.requestSocket('MyAsset');
             } else {
-                props.socket.on('testAsset', (data) => {
+                props.socket.on('refreshAsset', (data) => {
                     //@ buyreq
                     console.log('자산을 갱신합니다.', data);
                     const currentCash = data.cash;
                     const currentAsset = data.asset;
+                    const currentCoin = data.coinVol;
                     setCash(currentCash);
                     setAsset(currentAsset);
+                    setCoin(currentCoin);
                 });
             }
         };
@@ -83,7 +86,12 @@ export default function MyAsset(props) {
                 <Grid
                     style={{ width: '48%', height: '95%', margin: '0 0 1vh 0' }}
                 >
-                    <Paper style={{ height: '100%' }}>Point</Paper>
+                    <Paper style={{ height: '100%' }}>
+                        Point
+                        <h2>
+                            {myCoin}
+                        </h2>
+                    </Paper>
                 </Grid>
             </Grid>
             <Grid

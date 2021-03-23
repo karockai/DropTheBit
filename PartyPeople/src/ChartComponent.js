@@ -28,7 +28,10 @@ class ChartComponent extends React.Component {
     setup = true;
     day = 0;
     addCandleData = (data) => {
-        console.log(data);
+        if (data === null) {
+            console.log('알수 없는 데이터가 서버로부터 받아짐..하늘소..');
+            return;
+        }
         data.date = new Date(data.date);
 
         this.setState({ data: [...this.state.data, data] });
