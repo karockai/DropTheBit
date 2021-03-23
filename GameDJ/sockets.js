@@ -39,7 +39,6 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(() => {
             new Refresh(io).renewalCurCoin();
-            new Refresh(io).renewalInfo();
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
@@ -55,22 +54,20 @@ export default {
             // setInterval(chart, 2000);
 
             // Initialize Components : For Frontend
-            // 
+            //
             socket.on('initAsset', (comment) => {
-              new Test(io, socket).testComment(comment);
+                new Test(io, socket).testComment(comment);
             });
             //
             socket.on('initBid', (comment) => {
-              new Test(io, socket).testComment(comment);
+                new Test(io, socket).testComment(comment);
             });
             //
             socket.on('initBid', (comment) => {
-              new Test(io, socket).testComment(comment);
+                new Test(io, socket).testComment(comment);
             });
             // Initialize Components : For Frontend
-            
-            
-            
+
             socket.on('testComment', (comment) => {
                 new Test(io, socket).testComment(comment);
             });
@@ -100,9 +97,8 @@ export default {
             socket.on('settingsUpdate_Req', (data) =>
                 new Room(io, socket).updateSettings(data)
             );
-            socket.on(
-                'startGame_Req',
-                async () => await new Game(io, socket).startGame()
+            socket.on('startGame_Req', (roomID) =>
+                new Game(io, socket).startGame(roomID)
             );
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()

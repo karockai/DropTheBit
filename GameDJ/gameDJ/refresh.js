@@ -19,14 +19,15 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        // console.log("----------------------renewalCurCoin------------------------")
+        console.log(
+            '----------------------renewalCurCoin------------------------'
+        );
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
-        
+
         io.emit('chart', curCoin);
         let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
-        console.log("pre", prePrice,"cur", curPrice)
 
         // 2. prePrice랑 curPrice를 비교
         // 2-1. curPrice === prePrice면 아무것도 하지않는다.
@@ -49,8 +50,9 @@ class Refresh {
                     playerInfo['cash'] = String(cash);
 
                     delete playerInfo['ask'][strAskPrice];
+                    console.log(playerInfo);
                     dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                    socket.to(socketID).emit('askDone');
+                    io.to(socketID).emit('askDone');
 
                     delete askList[strAskPrice][socketID];
                 }
@@ -72,8 +74,8 @@ class Refresh {
                     let roomID = bidList[strBidPrice][socketID];
                     let playerInfo = JSON.parse(await dbhget(roomID, socketID));
                     let coinVol = Number(playerInfo['coinVol']);
-                    let askVol = Number(playerInfo['bid'][strBidPrice]);
-                    coinVol += askVol;
+                    let bidVol = Number(playerInfo['bid'][strBidPrice]);
+                    coinVol += bidVol;
                     playerInfo['coinVol'] = String(coinVol);
 
                     delete playerInfo['bid'][strBidPrice];
@@ -87,12 +89,18 @@ class Refresh {
             await dbset('bidList', JSON.stringify(bidList));
         }
 
+        console.log(
+            '----------------------renewalCurCoin End------------------------'
+        );
         await this.renewalInfo(curPrice);
     }
 
     async renewalInfo(curPrice) {
         const { io } = this;
-
+        console.log(curPrice);
+        console.log(
+            '----------------------renewalInfo End------------------------'
+        );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
@@ -126,8 +134,9 @@ class Refresh {
                     asset +=
                         Number(askPrice) * Number(playerInfo['ask'][askPrice]);
                 }
-
-                playerInfo['asset'] = String(asset);
+                if (asset) {
+                    playerInfo['asset'] = String(asset);
+                }
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
 
@@ -142,7 +151,11 @@ class Refresh {
                 // roomInfo[socketID] = JSON.stringify(playerInfo);
                 io.to(socketID).emit('refreshWallet', refreshWallet);
                 // this.socket.emit('refreshWallet', refreshWallet);
+                // console.log("renewalInfo :", playerInfo);
                 await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+                console.log(
+                    '----------------------renewalCurInfo End------------------------'
+                );
             }
         }
     }
