@@ -13,12 +13,28 @@ export default {
         const io = socketio(server);
         let day = 0;
 
+        // db setting ------------------------------------- >>
+        let bidDummy = {
+            0: {
+                dummyID: 'dummyRoom',
+            },
+        };
+        let askDummy = {
+            10000000000: {
+                dummyID: 'dummyRoom',
+            },
+        };
+        dbset('bidList', JSON.stringify(bidDummy));
+        dbset('askList', JSON.stringify(askDummy));
+        // db setting  ------------------------------------ <<
+
         io.on('connection', (socket) => {
             console.log('connected');
 
             // test event ------------------------------------------ >>
             const chart = async () => {
-                await new Test(io, socket).testSendChart(day++);
+                // await new Test(io, socket).testSendChart(day++);
+                await new Game(io, socket).renewalCurCoin();
             };
             setInterval(chart, 2000);
 

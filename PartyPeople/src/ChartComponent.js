@@ -6,6 +6,7 @@ import ChartTitle from './ChartTitle';
 import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ChartComponent extends React.Component {
     constructor(props) {
@@ -27,7 +28,9 @@ class ChartComponent extends React.Component {
     setup = true;
     day = 0;
     addCandleData = (data) => {
+        console.log(data);
         data.date = new Date(data.date);
+
         this.setState({ data: [...this.state.data, data] });
         // console.log(this.state.datas);
         // getData(this.state.datas).then(data => {
@@ -52,6 +55,7 @@ class ChartComponent extends React.Component {
                 // setInterval(chart, 200);
 
                 this.props.socket.on('chart', (data) => {
+                    console.log(data);
                     this.addCandleData(data);
                 });
                 this.setup = false;
@@ -59,7 +63,18 @@ class ChartComponent extends React.Component {
         }
 
         if (this.props.socket == null || dataLength < 2) {
-            return <div>Loading...</div>;
+            return (
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '30vh',
+                    }}
+                >
+                    <CircularProgress />
+                </div>
+            );
         }
         return (
             <>

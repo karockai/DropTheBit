@@ -9,6 +9,10 @@ import {
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import { useSound, playSound } from './useSound';
+import Drum from './audios/drum.wav';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -82,14 +86,15 @@ export default function TradeStock(props) {
     const [currentBid, SetBid] = useState(0);
     const [newBid, SetNewBid] = useState(0);
     const [currentVolume, SetVolume] = useState(1);
+    const [newVolume, SetNewVolume] = useState(1);
     const [ratioBid, SetRatio] = useState(100);
     const [isBind, SetBind] = useState(false);
 
-    function VolumeUp() {
-        SetVolume(currentVolume + 1);
+    function VolumeUp(volume) {
+        SetNewVolume(volume + 1);
     }
-    function VolumeDown() {
-        SetVolume(currentVolume - 1);
+    function VolumeDown(volume) {
+        SetNewVolume(volume - 1);
     }
     function BidUp() {
         SetBid(currentBid + ratioBid);
@@ -128,9 +133,9 @@ export default function TradeStock(props) {
             '] 매도 주문이 체결되었습니다.'
         );
         props.socket.emit('testSell', {
-            roomID : props.roomID,
-            socketID : props.socket.id,
-            currentBid : bid,
+            roomID: props.roomID,
+            socketID: props.socket.id,
+            currentBid: bid,
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
@@ -147,6 +152,7 @@ export default function TradeStock(props) {
             //_ LEFT ARROW
             console.log(props);
             console.log('KeyCode > LEFT.');
+            playSound(Drum, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
                 SetBind(true);
@@ -157,6 +163,7 @@ export default function TradeStock(props) {
             //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.');
+            playSound(Drum, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket();
                 SetBind(true);
@@ -165,12 +172,26 @@ export default function TradeStock(props) {
             Sell(currentBid, currentVolume);
         }
 
-        if (e.keyCode == 38) {
+        if (e.keyCode === 38) {
             //_ UP ARROW
             console.log('KeyCode > UP.');
-        } else if (e.keyCode == 40) {
+            playSound(Drum, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket();
+                SetBind(true);
+                return;
+            }
+            VolumeUp(currentVolume);
+        } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             console.log('KeyCode > DOWN.');
+            playSound(Drum, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket();
+                SetBind(true);
+                return;
+            }
+            VolumeDown(currentVolume);
         }
     }
 
@@ -187,6 +208,13 @@ export default function TradeStock(props) {
         console.log('responseBid', responseBid);
         SetBid(responseBid);
     }, [newBid]); //@ 호가가 변할때이다.
+
+    useEffect(() => {
+        const responseVolume = newVolume;
+        console.log('responseVolume', responseVolume);
+        SetVolume(responseVolume);
+        return () => {};
+    }, [newVolume]);
 
     let testXs = 12;
     return (
@@ -209,7 +237,10 @@ export default function TradeStock(props) {
                     style={{ width: '80%' }}
                     value={currentBid}
                 />
-                <ArrowButton upEvent={BidUp} downEvent={BidDown} />
+                <ArrowButton
+                    upEvent={() => BidUp(currentBid)}
+                    downEvent={() => BidDown(currentBid)}
+                />
             </Grid>
             <Grid container direction="row" justify="center">
                 <TextField
@@ -219,7 +250,10 @@ export default function TradeStock(props) {
                     style={{ width: '80%' }}
                     value={currentVolume}
                 />
-                <ArrowButton upEvent={VolumeUp} downEvent={VolumeDown} />
+                <ArrowButton
+                    upEvent={() => VolumeUp(currentVolume)}
+                    downEvent={() => VolumeDown(currentVolume)}
+                />
             </Grid>
             <Grid className={classes.button} style={{ width: '80%' }}>
                 <Button
@@ -227,6 +261,7 @@ export default function TradeStock(props) {
                     color="primary"
                     onClick={() => Buy(currentBid, currentVolume)}
                 >
+                    <KeyboardArrowLeftIcon />
                     매수
                 </Button>
                 <Button
@@ -234,6 +269,7 @@ export default function TradeStock(props) {
                     color="secondary"
                     onClick={() => Sell(currentBid, currentVolume)}
                 >
+                    <KeyboardArrowRightIcon />
                     매도
                 </Button>
             </Grid>

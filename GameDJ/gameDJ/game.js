@@ -40,74 +40,75 @@ class Game {
         const { io, socket } = this;
 
         // 1. bidList 불러옴
-        let curCoin = await dbget('curCoin');
+        let curCoin = JSON.parse(await dbget('curCoin'));
         console.log('curCoin : ', curCoin);
-        socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
-        curPrice = Number(curCoin['curPrice']);
+        console.log('curCoinType : ', typeof curCoin);
+        // socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
+        socket.emit('chart', curCoin);
+        let prePrice = curCoin['prePrice'];
+        let curPrice = curCoin['curPrice'];
 
         // 2. prePrice랑 curPrice를 비교
         // 2-1. curPrice === prePrice면 아무것도 하지않는다.
         // 2-2. curPrice >= prePrice면, askPrice에서 curPrice보다 낮은 호가를 처리한다.
         if (curPrice > prePrice) {
-            let askList = await dbget('askList');
+            let askList = JSON.parse(await dbget('askList'));
             // askPrice가 curPrice보다 낮은지 확인
-            for (let askPrice in askList) {
-                let intAskPrice = Number(askPrice);
+            for (let strAskPrice in askList) {
+                let intAskPrice = Number(strAskPrice);
                 if (intAskPrice > curPrice) continue;
 
                 // 낮다면 거래를 체결한다.
-                for (let playerID in askList[askPrice]) {
-                    let roomID = askList[askPrice][playerID];
-                    let playerInfo = await dbget(roomID, playerID);
+                for (let socketID in askList[strAskPrice]) {
+                    let roomID = askList[strAskPrice][socketID];
+                    let playerInfo = JSON.parse(await dbhget(roomID, socketID));
                     let cash = Number(playerInfo['cash']);
-                    let askVol = Number(playerInfo['bidList'][askPrice]);
-                    let socketID = playerInfo['socketID'];
+                    let askVol = Number(playerInfo['askInPlayer'][strAskPrice]);
                     cash += askVol * intAskPrice;
                     playerInfo['cash'] = String(cash);
 
-                    dbset(roomID, playerID, playerInfo);
+                    delete playerInfo['askInPlayer'][strAskPrice];
+                    dbhset(roomID, socketID, JSON.stringfy(playerInfo));
                     socket.to(socketID).emit('askDone');
 
-                    delete playerID['askList'][askPrice];
-                    delete askList[askPrice][playerID];
+                    delete askList[strAskPrice][socketID];
                 }
             }
-            dbset('askList', askList);
+            dbset('askList', JSON.stringify(askList));
         }
 
         // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
-        if (curPrice < prePrice) {
-            let bidList = await dbget('bidList');
+        else if (curPrice < prePrice) {
+            let bidList = JSON.parse(await dbget('bidList'));
             // bidPrice가 curPrice보다 높은지 확인
-            for (let bidPrice in bidList) {
-                let intBidPrice = Number(bidPrice);
+            for (let strBidPrice in bidList) {
+                let intBidPrice = Number(strBidPrice);
                 if (intBidPrice < curPrice) continue;
 
                 // 높다면 거래를 체결한다.
-                for (let playerID in bidList[bidPrice]) {
-                    let roomID = bidList[bidPrice][playerID];
-                    let playerInfo = await dbget(roomID, playerID);
+                for (let socketID in bidList[strBidPrice]) {
+                    let roomID = bidList[strBidPrice][socketID];
+                    let playerInfo = JSON.parse(await dbhget(roomID, socketID));
                     let coinVol = Number(playerInfo['coinVol']);
-                    let vol = Number(playerInfo['bidList'][bidPrice]);
-                    let socketID = playerInfo['socketID'];
-                    coinVol += vol;
+                    let askVol = Number(playerInfo['bidInPlayer'][strBidPrice]);
+                    coinVol += askVol;
                     playerInfo['coinVol'] = String(coinVol);
 
-                    dbset(roomID, playerID, playerInfo);
+                    delete playerInfo['bidInPlayer'][strBidPrice];
+                    dbhset(roomID, socketID, JSON.stringfy(playerInfo));
                     socket.to(socketID).emit('bidDone');
 
-                    delete playerID['bidList'][bidPrice];
-                    delete bidList[bidPrice][playerID];
+                    delete bidList[strBidPrice][socketID];
                 }
             }
-            dbset('bidList', bidList);
+            dbset('bidList', JSON.stringify(bidList));
         }
     }
 
     // 매수 요청 등록
     /*reqJson{
       roomID
-      playerID
+      socketID
       reqPrice
       reqVol
   }
@@ -180,13 +181,9 @@ class Game {
                     );
                 } else {
                     playerInfo['bidInPlayer'][strReqPrice] = strReqVol;
-                    let dbexi = await dbhexi('bidList', strReqPrice);
-                    let bidPriceList = {};
-                    if (dbhexi) {
-                        bidPriceList = await dbhget('buyList', strReqPrice);
-                    }
-                    bidPriceList[socketID] = roomID;
-                    dbhset('buyList', strReqPrice, JSON.stringfy(bidPriceList));
+                    let bidList = JSON.parse(await dbget('bidList'));
+                    bidList[strReqPrice][socketID] = roomID;
+                    dbset('bidList', JSON.stringfy(bidList));
                 }
             }
             dbhset(roomID, socketID, JSON.stringfy(playerInfo));
@@ -201,14 +198,14 @@ class Game {
     async sell(reqJson) {
         // 1. reqJson setting
         let roomID = reqJson['roomID'];
-        let playerID = reqJson['playerID'];
+        let socketID = reqJson['socketID'];
         let strReqPrice = reqJson['reqPrice'];
         let intReqPrice = Number(strReqPrice);
         let strReqVol = reqJson['reqVol'];
         let intReqVol = Number(strReqVol);
 
         // 2. player_info 가져오기
-        let playerInfo = await dbget(roomID, playerID);
+        let playerInfo = await dbget(roomID, socketID);
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
 
@@ -227,7 +224,7 @@ class Game {
         } else {
             // 4-2. bidList 등록
             let askPriceList = await dbget('askList', strReqPrice);
-            askPriceList[playerID] = roomID;
+            askPriceList[socketID] = roomID;
             dbset(askList, strReqPrice, askPriceList, redis.print);
 
             // 4-3. player 호가 목록 등록
@@ -240,7 +237,7 @@ class Game {
         }
 
         // 5. playerInfo 갱신
-        dbset(roomID, playerID, playerInfo);
+        dbset(roomID, socketID, playerInfo);
 
         // 6. success 보내기
         let resJson = {};
@@ -272,11 +269,11 @@ class Game {
     // 매도 요청 취소
     async cancelAsk(reqJson) {
         let roomID = reqJson['roomID'];
-        let playerID = reqJson['playerID'];
+        let socketID = reqJson['socketID'];
         let AskPrice = reqJson['reqPrice'];
 
         let askList = await dbget('askList', AskPrice);
-        let playerInfo = await dbget(roomID, playerID);
+        let playerInfo = await dbget(roomID, socketID);
 
         let coinVol = Number(playerInfo['coinVol']);
         let askVol = Number(playerInfo['askList'][AskPrice]);
@@ -285,9 +282,9 @@ class Game {
         playerInfo['coinVol'] = String(coinVol);
 
         delete playerInfo[AskPrice];
-        dbset(roomID, playerID, playerInfo);
+        dbset(roomID, socketID, playerInfo);
 
-        delete askList[playerID];
+        delete askList[socketID];
         dbset('askList', AskPrice, askList);
     }
 }
