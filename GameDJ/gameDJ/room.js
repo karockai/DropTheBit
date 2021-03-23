@@ -5,6 +5,7 @@ import {
     dbhget,
     dbhgetall,
     dbrpush,
+    dblpush, 
     dblrem,
     dblrange, 
     dbllen 
@@ -39,7 +40,8 @@ class Room {
         console.log('create', roomInfo);
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
-        // await dbrpush(roomList, roomID);
+        dblpush('roomList', roomID);
+        // console.log('roomList : ', await dblrange('roomList', 0, -1));
         socket.roomID = roomID;
         socket.join(roomID);
         socket.emit('createPrivateRoom_Res', {
