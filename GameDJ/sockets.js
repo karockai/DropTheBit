@@ -6,7 +6,7 @@ import Disconnect from './gameDJ/disconnect.js';
 import Test from './gameDJ/testfile.js';
 import Refresh from './gameDJ/refresh.js';
 
-import { dbset, dbget } from './gameDJ/redis.js';
+import { dbset, dbget, dblpush } from './gameDJ/redis.js';
 
 export default {
     async init(server) {
@@ -38,7 +38,6 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(() => {
             new Refresh(io).renewalCurCoin();
-            // sendRoomInfo(roomID);
         }, 1000);
 
         // curPrice refresh --------------------------------- <<

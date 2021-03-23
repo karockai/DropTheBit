@@ -1,5 +1,4 @@
-import { dbset, dbget, dbhset, dbhget, dbhexi } from './redis.js';
-import socketio from 'socket.io';
+import { dbset, dbget, dbhset, dbhget, dblrange } from './redis.js';
 
 class Refresh {
     constructor(io) {
@@ -8,13 +7,9 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        // console.log('--------------  renewal  -----------------------');
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
-        // console.log('curCoin : ', curCoin);
-        // console.log('curCoinType : ', typeof curCoin);
-        // console.log('--------------  renewal  -----------------------');
-        // socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
+
         io.emit('chart', curCoin);
         let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
@@ -25,6 +20,7 @@ class Refresh {
         if (curPrice > prePrice) {
             let askList = JSON.parse(await dbget('askList'));
             // askPrice가 curPrice보다 낮은지 확인
+
             for (let strAskPrice in askList) {
                 let intAskPrice = Number(strAskPrice);
                 if (intAskPrice > curPrice) continue;
@@ -45,12 +41,13 @@ class Refresh {
                     delete askList[strAskPrice][socketID];
                 }
             }
-            dbset('askList', JSON.stringify(askList));
+            await dbset('askList', JSON.stringify(askList));
         }
 
         // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
         else if (curPrice < prePrice) {
             let bidList = JSON.parse(await dbget('bidList'));
+
             // bidPrice가 curPrice보다 높은지 확인
             for (let strBidPrice in bidList) {
                 let intBidPrice = Number(strBidPrice);
@@ -72,9 +69,62 @@ class Refresh {
                     delete bidList[strBidPrice][socketID];
                 }
             }
-            dbset('bidList', JSON.stringify(bidList));
+            await dbset('bidList', JSON.stringify(bidList));
+        }
+
+        await this.renewalInfo(curPrice);
+    }
+
+    async renewalInfo(curPrice) {
+        const { io } = this;
+
+        // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
+        let roomList = await dblrange('roomList', 0, -1);
+        // let roomList = [];
+        // redis 순회하면서 roomInfo 가져옴
+        for (let roomID in roomList) {
+            console.log('roomID:', roomID);
+            if (roomID < 15) continue;
+            let roomInfo = await dbget(roomID);
+
+            // roomInfo 순회하면서 playerInfo 가져옴
+            for (let socketID in roomInfo) {
+                if (socketID.length != 15) continue;
+                let playerInfo = JSON.parse(roomInfo[socketID]);
+
+                let asset = 0;
+                let cash = Number(playerInfo['cash']);
+                let coinVol = Number(playerInfo['coinVol']);
+                asset = cash + coinVol * curPrice;
+
+                for (let bidPrice in playerInfo['bid']) {
+                    asset +=
+                        Number(bidPrice) * Number(playerInfo['bid'][bidPrice]);
+                }
+
+                for (let askPrice in playerInfo['ask']) {
+                    asset +=
+                        Number(askPrice) * Number(playerInfo['ask'][askPrice]);
+                }
+
+                playerInfo['asset'] = String(coinVol);
+
+                let refreshWallet = {
+                    type: 1,
+                    cash: cash,
+                    coinVol: coinVol,
+                    asset: asset,
+                };
+
+                roomInfo[socketID] = JSON.stringify(playerInfo);
+                io.to(socketID).emit('refreshWallet', refreshWallet);
+            }
+
+            await dbset(roomID);
         }
     }
-}
 
+    // refreshBid 갱신
+    async refreshBid() {}
+}
 export default Refresh;

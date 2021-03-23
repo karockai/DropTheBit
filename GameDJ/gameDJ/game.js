@@ -90,18 +90,17 @@ class Game {
             // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
             if (intReqPrice >= curPrice) {
                 // 6-1. cash, coin 갯수 갱신
-                console.log(cash);
+                // console.log(cash);
                 cash -= curPrice * intReqVol;
-                console.log(cash, curPrice, intReqVol);
                 coinVol += intReqVol;
-
+                
                 // 6-2. buy_res update
                 buy_res['type'] = '체결';
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
                 this.socket.emit('buy_Res', buy_res);
-
+                
                 // 6-3. playerInfo Update
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
@@ -118,23 +117,24 @@ class Game {
                 
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-
+                
                 // 4-3. player 호가 목록 등록
-                console.log(playerInfo['bid']);
+                // console.log(playerInfo['bid']);
                 if ((playerInfo['bid']).hasOwnProperty(strReqPrice)) {
                     playerInfo['bid'][strReqPrice] = String(
                         Number(playerInfo['bid'][strReqPrice]) +
-                            intReqVol
-                    );
-                } else {
-                    playerInfo['bid'][strReqPrice] = strReqVol;
-                    let bidList = JSON.parse(await dbget('bidList'));
-                    bidList[strReqPrice] = {};
-                    bidList[strReqPrice][socketID] = roomID;
-                    console.log(bidList);
-                    dbset('bidList', JSON.stringify(bidList));
+                        intReqVol
+                        );
+                    } else {
+                        playerInfo['bid'][strReqPrice] = strReqVol;
+                        let bidList = JSON.parse(await dbget('bidList'));
+                        bidList[strReqPrice] = {};
+                        bidList[strReqPrice][socketID] = roomID;
+                        console.log(bidList);
+                        dbset('bidList', JSON.stringify(bidList));
+                    }
                 }
-            }
+            console.log("BUY", playerInfo);
             dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
@@ -146,7 +146,7 @@ class Game {
     // 매도 요청 등록
     async sell(reqJson) {
         // 1. reqJson setting
-        console.log('** BUY REQUEST :', reqJson);
+        // console.log('** Sell REQUEST :', reqJson);
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let strReqPrice = reqJson['currentBid'];
@@ -155,9 +155,9 @@ class Game {
         let intReqVol = Number(strReqVol);
 
         // 2. player_info 가져오기
-        console.log('** Sell REQUEST :', roomID, socketID);
+        // console.log('** Sell REQUEST :', roomID, socketID);
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-        console.log('** Sell REQUEST :', playerInfo);
+        // console.log('** Sell REQUEST :', playerInfo);
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
@@ -182,18 +182,17 @@ class Game {
             // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
             if (intReqPrice <= curPrice) {
                 // 6-1. cash, coin 갯수 갱신
-                console.log(cash);
+                // console.log(cash);
                 cash += curPrice * intReqVol;
-                console.log(cash, curPrice, intReqVol);
                 coinVol -= intReqVol;
-
+                
                 // 6-2. sell_res update
                 sell_res['type'] = '체결';
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
                 this.socket.emit('sell_Res', sell_res);
-
+                
                 // 6-3. playerInfo Update
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
@@ -209,23 +208,24 @@ class Game {
                 
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-
+                
                 // 4-3. player 호가 목록 등록
-                console.log(playerInfo['ask']);
+                // console.log(playerInfo['ask']);
                 if ((playerInfo['ask']).hasOwnProperty(strReqPrice)) {
                     playerInfo['ask'][strReqPrice] = String(
                         Number(playerInfo['ask'][strReqPrice]) +
-                            intReqVol
-                    );
-                } else {
-                    playerInfo['ask'][strReqPrice] = strReqVol;
-                    let askList = JSON.parse(await dbget('askList'));
-                    askList[strReqPrice] = {};
-                    askList[strReqPrice][socketID] = roomID;
-                    console.log(askList);
-                    dbset('askList', JSON.stringify(askList));
+                        intReqVol
+                        );
+                    } else {
+                        playerInfo['ask'][strReqPrice] = strReqVol;
+                        let askList = JSON.parse(await dbget('askList'));
+                        askList[strReqPrice] = {};
+                        askList[strReqPrice][socketID] = roomID;
+                        console.log(askList);
+                        dbset('askList', JSON.stringify(askList));
+                    }
                 }
-            }
+            console.log("SELL", playerInfo);
             dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
