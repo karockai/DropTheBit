@@ -5,6 +5,7 @@ import Game from './gameDJ/game.js';
 import Disconnect from './gameDJ/disconnect.js';
 import Test from './gameDJ/testfile.js';
 import Refresh from './gameDJ/refresh.js';
+import Chat from './gameDJ/chat.js';
 
 import { dbset, dbget, dblpush } from './gameDJ/redis.js';
 
@@ -106,6 +107,11 @@ export default {
             socket.on(
                 'askCancle_Req',
                 async (reqJson) => await new Game(io, socket).askCancle(reqJson)
+            );
+            // In-game event << -----------------------------------------
+            // Chat event ------------------------------------------ >>
+            socket.on('message', (data) =>
+                new Chat(io, socket).messageReq(data)
             );
             // In-game event << -----------------------------------------
         });
