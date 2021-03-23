@@ -79,7 +79,7 @@ export default function MyAsset(props) {
                     }}
                 >
                     <Paper style={{ height: '100%' }}>
-                        Cash
+                        보유 현금
                         <h2>{myCash}</h2>
                     </Paper>
                 </Grid>
@@ -87,7 +87,7 @@ export default function MyAsset(props) {
                     style={{ width: '48%', height: '95%', margin: '0 0 1vh 0' }}
                 >
                     <Paper style={{ height: '100%' }}>
-                        Point
+                        보유 화폐수
                         <h2>
                             {myCoin}
                         </h2>
@@ -102,7 +102,7 @@ export default function MyAsset(props) {
             >
                 <Grid style={{ width: '100%', height: '100%' }}>
                     <Paper style={{ height: '100%' }}>
-                        Asset
+                        총 자산
                         <h2>{myAsset}</h2>
                     </Paper>
                 </Grid>
