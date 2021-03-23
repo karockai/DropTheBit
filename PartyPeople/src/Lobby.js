@@ -14,18 +14,15 @@ function Lobby(props) {
     const PutPlayer = (props) => {
         console.log(props);
         return (
-            <>
-                {/* <Paper style= {{width: '40%'}} >
-                    {props.player.playerID}
-                    {props.player.cash}
-                    {props.player.asset}
-                </Paper> */}
+
+            <Grid container justify='space-between'>
                 <LobbyPlayerCard 
                 playerID ={props.player.playerID}
                 cash ={props.player.cash}
                 asset ={props.player.asset}
                 />
-            </>
+            </Grid>
+
         );
     };
     function CopyURL() {
@@ -92,11 +89,6 @@ function Lobby(props) {
                 <div>
                 {tmparr.map((player) => {
                     return (     
-                        {/* <Paper>
-                            {player.playerID}
-                            {player.cash}
-                            {player.asset}
-                        </Paper> */}
                         (<PutPlayer player={player}/>)
                     );
                 })}

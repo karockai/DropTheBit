@@ -9,6 +9,7 @@ class Chat {
     messageReq(data) {
         /* io.sockets.emit() = 모든 유저(본인 포함)
         socket.broadcast.emit() = 본인을 제외한 나머지 모두 */
+        console.log(data);
         io.to(data.roomID).emit('update', data.message);
     };
 
