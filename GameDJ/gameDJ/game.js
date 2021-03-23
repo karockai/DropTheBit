@@ -2,7 +2,19 @@
 //     dbget,
 //     dbset
 // } = require('./js');
-import { dbset, dbget, dbhset, dbhget, dbhexi } from './redis.js';
+import {
+    dbset,
+    dbget,
+    dbhset,
+    dbhget,
+    dbhexi,
+    dbhgetall,
+    dbrpush,
+    dblpush,
+    dblrem,
+    dblrange,
+    dbllen,
+} from './redis.js';
 
 // const = require('./);
 class Game {
@@ -29,17 +41,42 @@ class Game {
                 }, 1000);
                 // gameTime만큼 멈췄다가, 끝나면 endGame 실행
 
-                // setTimeout(() => {
-                //     clearInterval(schedule);
-
-                //     resolve();
-                // }, musicTime);
+                setTimeout(() => {
+                    clearInterval(schedule);
+                    resolve();
+                }, musicTime);
             });
         };
 
-        gamePlay().then(() => {
+        async function gameOver(roomID) {
+            return Promise(async function (resolve, reject) {
+                // 점수 통계
+                //
+                let roomInfo = await dbget(roomID);
+                let readerBoard = [];
+                for (let socketID in roomInfo) {
+                    if (socketID.length < 15) continue;
+                    let playerInfo = JSON.parse(roomInfo[socketID]);
+                    let temp = {};
+
+                    temp['playerID'] = playerInfo['playerID'];
+                    temp['asset'] = playerInfo['asset'];
+
+                    playerList.push(temp);
+                }
+
+                readerBoard.sort(function (a, b) {
+                    return b['asset'] - a['asset'];
+                });
+
+                socket.to(roomID).emit('gameOver', readerBoard);
+                resolve();
+            });
+        }
+
+        gamePlay(roomID).then((roomID) => {
             // game 종료 함수 만들 것
-            socket.to(roomID).emit('endGame');
+            gameOver(roomID);
             console.log('Game Over');
         });
     }
@@ -70,7 +107,7 @@ class Game {
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
-        
+
         // 3. curPrice 가져오기
         let curCoin = JSON.parse(await dbget('curCoin'));
         let curPrice = curCoin['curPrice'];
@@ -79,7 +116,7 @@ class Game {
 
         let refreshWallet = {};
         let buy_res = {};
-        buy_res["curPrice"] = curPrice;
+        buy_res['curPrice'] = curPrice;
         // 4. 구매 가능 여부 확인 후 "asset" emit
         if (cash >= intReqPrice * intReqVol) {
             // 5. 구매 처리 및 asset 정보 emit
@@ -93,7 +130,7 @@ class Game {
                 // console.log(cash);
                 cash -= curPrice * intReqVol;
                 coinVol += intReqVol;
-                
+
                 // 6-2. buy_res update
                 buy_res['type'] = '체결';
                 //! 이 아래 중복되는 부분 줄이기
@@ -101,11 +138,11 @@ class Game {
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
                 this.socket.emit('buy_Res', buy_res);
-                
+
                 // 6-3. playerInfo Update
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                
+
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
                 // 7-1. cash 갱신
@@ -115,27 +152,26 @@ class Game {
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
                 this.socket.emit('buy_Res', buy_res);
-                
+
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                
+
                 // 4-3. player 호가 목록 등록
                 // console.log(playerInfo['bid']);
-                if ((playerInfo['bid']).hasOwnProperty(strReqPrice)) {
+                if (playerInfo['bid'].hasOwnProperty(strReqPrice)) {
                     playerInfo['bid'][strReqPrice] = String(
-                        Number(playerInfo['bid'][strReqPrice]) +
-                        intReqVol
-                        );
-                    } else {
-                        playerInfo['bid'][strReqPrice] = strReqVol;
-                        let bidList = JSON.parse(await dbget('bidList'));
-                        bidList[strReqPrice] = {};
-                        bidList[strReqPrice][socketID] = roomID;
-                        console.log(bidList);
-                        dbset('bidList', JSON.stringify(bidList));
-                    }
+                        Number(playerInfo['bid'][strReqPrice]) + intReqVol
+                    );
+                } else {
+                    playerInfo['bid'][strReqPrice] = strReqVol;
+                    let bidList = JSON.parse(await dbget('bidList'));
+                    bidList[strReqPrice] = {};
+                    bidList[strReqPrice][socketID] = roomID;
+                    console.log(bidList);
+                    dbset('bidList', JSON.stringify(bidList));
                 }
-            console.log("BUY", playerInfo);
+            }
+            console.log('BUY', playerInfo);
             dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
@@ -162,7 +198,7 @@ class Game {
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
-        
+
         // 3. curPrice 가져오기
         let curCoin = JSON.parse(await dbget('curCoin'));
         let curPrice = curCoin['curPrice'];
@@ -171,7 +207,7 @@ class Game {
 
         let refreshWallet = {};
         let sell_res = {};
-        sell_res["curPrice"] = curPrice;
+        sell_res['curPrice'] = curPrice;
         // 4. 구매 가능 여부 확인 : 보유 coinVol > 요청 coinVol 후 "asset" emit
         // * 이미 호가 올려놓은 것들은 어떡하지?
         if (coinVol >= intReqVol) {
@@ -186,7 +222,7 @@ class Game {
                 // console.log(cash);
                 cash += curPrice * intReqVol;
                 coinVol -= intReqVol;
-                
+
                 // 6-2. sell_res update
                 sell_res['type'] = '체결';
                 //! 이 아래 중복되는 부분 줄이기
@@ -194,11 +230,11 @@ class Game {
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
                 this.socket.emit('sell_Res', sell_res);
-                
+
                 // 6-3. playerInfo Update
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                
+
                 // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
             } else {
                 coinVol -= intReqVol;
@@ -207,27 +243,26 @@ class Game {
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
                 this.socket.emit('sell_Res', sell_res);
-                
+
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                
+
                 // 4-3. player 호가 목록 등록
                 // console.log(playerInfo['ask']);
-                if ((playerInfo['ask']).hasOwnProperty(strReqPrice)) {
+                if (playerInfo['ask'].hasOwnProperty(strReqPrice)) {
                     playerInfo['ask'][strReqPrice] = String(
-                        Number(playerInfo['ask'][strReqPrice]) +
-                        intReqVol
-                        );
-                    } else {
-                        playerInfo['ask'][strReqPrice] = strReqVol;
-                        let askList = JSON.parse(await dbget('askList'));
-                        askList[strReqPrice] = {};
-                        askList[strReqPrice][socketID] = roomID;
-                        console.log(askList);
-                        dbset('askList', JSON.stringify(askList));
-                    }
+                        Number(playerInfo['ask'][strReqPrice]) + intReqVol
+                    );
+                } else {
+                    playerInfo['ask'][strReqPrice] = strReqVol;
+                    let askList = JSON.parse(await dbget('askList'));
+                    askList[strReqPrice] = {};
+                    askList[strReqPrice][socketID] = roomID;
+                    console.log(askList);
+                    dbset('askList', JSON.stringify(askList));
                 }
-            console.log("SELL", playerInfo);
+            }
+            console.log('SELL', playerInfo);
             dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
@@ -246,11 +281,11 @@ class Game {
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
 
         let cash = Number(playerInfo['cash']);
-        let bidVol = Number(playerInfo['bidInPlayer'][bidPrice]);
+        let bidVol = Number(playerInfo['bid'][bidPrice]);
 
         cash += bidVol * Number(bidPrice);
         playerInfo['cash'] = String(cash);
-        delete playerInfo['bidInPlayer'][bidPrice];
+        delete playerInfo['bid'][bidPrice];
         dbhset(roomID, socketID, JSON.stringify(playerInfo));
 
         delete bidList[socketID];
