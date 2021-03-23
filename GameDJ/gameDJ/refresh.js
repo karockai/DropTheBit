@@ -113,6 +113,7 @@ class Refresh {
             let roomInfo = await dbhgetall(roomID);
 
             // room 호가 수집
+            let rankList = [];
 
             // roomInfo 순회하면서 playerInfo 가져옴
             // console.log(roomInfo);
@@ -147,6 +148,13 @@ class Refresh {
                     asset: asset,
                 };
 
+                // rankObj 삽입
+                let rankObj = {
+                    playerID: playerInfo['playerID'],
+                    asset: asset,
+                };
+                rankList.push(rankObj);
+
                 // await dbhset(roomID, socketID, playerInfo);
                 // roomInfo[socketID] = JSON.stringify(playerInfo);
                 io.to(socketID).emit('refreshWallet', refreshWallet);
@@ -157,13 +165,14 @@ class Refresh {
                 //     '----------------------renewalCurInfo End------------------------'
                 // );
             }
+
+            rankList.sort(function (a, b) {
+                return b['asset'] - a['asset'];
+            });
+            console.log(rankList);
+
+            socket.to(roomID).emit('roomRank', rankList);
         }
-    }
-
-    async roomRank() {
-        const { io } = this;
-
-        let roonRankList = [];
     }
 
     // refreshBid 갱신
