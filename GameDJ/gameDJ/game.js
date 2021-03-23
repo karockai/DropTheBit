@@ -41,8 +41,8 @@ class Game {
 
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
-        console.log('curCoin : ', curCoin);
-        console.log('curCoinType : ', typeof curCoin);
+        // console.log('curCoin : ', curCoin);
+        // console.log('curCoinType : ', typeof curCoin);
         // socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
         socket.emit('chart', curCoin);
         let prePrice = curCoin['prePrice'];

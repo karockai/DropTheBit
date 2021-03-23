@@ -6,13 +6,14 @@ class Room {
         this.io = io;
         this.socket = socket;
     }
-
-    async createPrivateRoom(playerID) {
+    
+    // data : {playerID : name}
+    async createPrivateRoom(data) {
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
         let playerInfo = {
-            playerID: playerID,
+            playerID: data.playerID,
             cash: '100000000',
             asset: '100000000',
             coinVol: '0',
@@ -25,12 +26,12 @@ class Room {
         };
 
         roomInfo[socketID] = playerInfo;
+        console.log('create', roomInfo);
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
         // await dbrpush(roomList, roomID);
-        // console.log(await dblrange(roomList, 0, 100));
+        // console.log(await dblrange(roomList, 0, -1));
         socket.roomID = roomID;
-        console.log(socket);
         socket.join(roomID);
         socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
@@ -46,22 +47,31 @@ class Room {
         let socketID = socket.id;
 
         let playerInfo = {
-            playerID: data.playerID,
+            playerID: data["playerID"],
             cash: '100000000',
             asset: '100000000',
             coinVol: '0',
             bid: {},
         };
-
+        console.log('joinRoom', data.playerID);
         roomInfo[socketID] = playerInfo;
         let strplayerInfo = JSON.stringify(playerInfo);
         dbhset(roomID, socketID, strplayerInfo);
+
+        let rawRoom = await dbhgetall(roomID);
+        for (const [key, value] of Object.entries(rawRoom)) {
+            roomInfo[key] = JSON.parse(value);
+        }
+        console.log('joinRoom', rawRoom);
+        console.log('joinRoom', roomInfo);
         socket.roomID = roomID;
         socket.join(roomID);
         io.to(roomID).emit('NewbieInRoom', roomInfo);
 
         // players.push(socket);
-        const players = Array.from(await io.in(socket.roomID).allSockets());
+        const temp = io.of('/').clients(roomID);
+        print('joinRoom', temp);
+        // const players = Array.from(temp);
         socket.emit('loadOhterPlayer', roomInfo);
 
         console.log('someone joined a room');
