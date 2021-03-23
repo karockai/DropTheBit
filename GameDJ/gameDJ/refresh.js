@@ -142,7 +142,7 @@ class Refresh {
                 // this.socket.emit('refreshWallet', refreshWallet);
             }
 
-            await dbhset(roomID, roomInfo);
+            await dbhset(roomID, socketID, playerInfo);
         }
     }
 
