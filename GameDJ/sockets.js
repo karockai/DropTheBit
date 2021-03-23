@@ -9,9 +9,16 @@ import Refresh from './gameDJ/refresh.js';
 import { dbset, dbget } from './gameDJ/redis.js';
 
 export default {
-    init(server) {
-        const io = socketio(server);
-        let day = 0;
+    async init(server) {
+        let io;
+        function serverSetting(server) {
+            return new Promise(function (resolve, reject) {
+                io = socketio(server);
+
+                resolve();
+            });
+        }
+        await serverSetting(server);
 
         // db setting ------------------------------------- >>
         let bidDummy = {
@@ -29,32 +36,29 @@ export default {
         // db setting  ------------------------------------ <<
 
         // curPrice refresh --------------------------------- >>
-        const gamePlay = function () {
-            return Promise(function (resolve, reject) {
-                let schedule = setInterval(() => {
-                    new Refresh.renewalCurCoin();
-                    // sendRoomInfo(roomID);
-                }, 1000);
-            });
-        };
-        gamePlay();
+        setInterval(() => {
+            new Refresh(io).renewalCurCoin();
+            // sendRoomInfo(roomID);
+        }, 1000);
+
         // curPrice refresh --------------------------------- <<
 
         io.on('connection', (socket) => {
-            console.log('connected');
+            console.log('USER Connected : ', socket.id);
 
             // test event ------------------------------------------ >>
-            const chart = async () => {
-                // await new Test(io, socket).testSendChart(day++);
-                await new Game(io, socket).renewalCurCoin();
-            };
-            setInterval(chart, 2000);
+            // const chart = async () => {
+            //     // await new Test(io, socket).testSendChart(day++);
+            //     await new Game(io, socket).renewalCurCoin();
+            // };
+            // setInterval(chart, 2000);
 
             socket.on('testComment', (comment) => {
                 new Test(io, socket).testComment(comment);
             });
 
             socket.on('testBuy', async (data) => {
+                console.log('testBuy');
                 await new Test(io, socket).testBuy(data);
                 console.log(data);
             });
@@ -65,8 +69,6 @@ export default {
             });
             // test event << ------------------------------------------
 
-            /////////////////////////////////////////
-            console.log('connected user');
             socket.on('createPrivateRoom_Req', (playerID) => {
                 console.log('playerId : ' + playerID);
                 new Room(io, socket).createPrivateRoom(playerID);
@@ -90,10 +92,10 @@ export default {
             // room event << -----------------------------------------
 
             // In-game event ------------------------------------------ >>
-            socket.on(
-                'buy_Req',
-                async (reqJson) => await new Game(io, socket).buy(reqJson)
-            );
+            socket.on('buy_Req', async (reqJson) => {
+                console.log('buy_Req');
+                await new Game(io, socket).buy(reqJson);
+            });
             socket.on(
                 'sell_Req',
                 async (reqJson) => await new Game(io, socket).sell(reqJson)

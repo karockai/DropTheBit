@@ -1,12 +1,21 @@
 import { dbset, dbget, dbhset, dbhget, dbhexi } from './redis.js';
+import socketio from 'socket.io';
+
 class Refresh {
+    constructor(io) {
+        this.io = io;
+    }
+
     async renewalCurCoin() {
+        const { io } = this;
+        // console.log('--------------  renewal  -----------------------');
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
-        console.log('curCoin : ', curCoin);
-        console.log('curCoinType : ', typeof curCoin);
+        // console.log('curCoin : ', curCoin);
+        // console.log('curCoinType : ', typeof curCoin);
+        // console.log('--------------  renewal  -----------------------');
         // socket.to(socket.roomID).emit('renewalCurCoin', curCoin);
-        socket.of('/').emit('chart', curCoin);
+        io.emit('chart', curCoin);
         let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
 
