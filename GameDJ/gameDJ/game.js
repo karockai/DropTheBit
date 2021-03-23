@@ -24,44 +24,37 @@ class Game {
     }
 
     async startGame() {
-        console.log(
-            '---------------------------START---------------------------'
-        );
         const { io, socket } = this;
-        let roomID = socket.roomID;
         // let musicTime = Number(await dbhget(roomID, gameTime));
-        let musicTime = 3000;
+        let musicTime = 10000;
 
-        await socket.to(roomID).emit('startGame', gameTime);
+        // await socket.to(roomID).emit('startGame', gameTime);
         let ReadyPlayer = socket.on('allReady', () => {
             // 모두가 준비되면 게임 시작
         });
 
-        async function gameOver(roomID) {
-            return Promise(async function (resolve, reject) {
-                // 점수 통계
-                //
-                let roomInfo = await dbhgetall(roomID);
-                let readerBoard = [];
-                for (let socketID in roomInfo) {
-                    if (socketID.length < 15) continue;
-                    let playerInfo = JSON.parse(roomInfo[socketID]);
-                    let temp = {};
+        async function gameOver() {
+            let roomID = socket.roomID;
+            let roomInfo = await dbhgetall(roomID);
+            let readerBoard = [];
+            for (let socketID in roomInfo) {
+                if (socketID.length < 15) continue;
+                let playerInfo = JSON.parse(roomInfo[socketID]);
+                let temp = {};
 
-                    temp['playerID'] = playerInfo['playerID'];
-                    temp['asset'] = playerInfo['asset'];
+                temp['playerID'] = playerInfo['playerID'];
+                temp['asset'] = playerInfo['asset'];
 
-                    playerList.push(temp);
-                }
+                readerBoard.push(temp);
+            }
 
-                readerBoard.sort(function (a, b) {
-                    return b['asset'] - a['asset'];
-                });
-
-                socket.to(roomID).emit('gameOver', readerBoard);
-                console.log('-------------- GAME END --------------------');
-                resolve();
+            readerBoard.sort(function (a, b) {
+                return b['asset'] - a['asset'];
             });
+
+            console.log('-------------- GAME END --------------------');
+            console.log(readerBoard);
+            socket.to(roomID).emit('gameOver', readerBoard);
         }
 
         let gameSchedule = setTimeout(gameOver, musicTime);
