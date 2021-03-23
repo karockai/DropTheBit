@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,6 +35,20 @@ export default function LayoutGrid(props) {
     let middleSm = 7;
     let rightSm = 3;
     useSound(Bit, 0.7, 2000);
+
+
+    useEffect(() => {
+        props.socket.on('gameOver', (readerBoard) => {
+            if (readerBoard) {
+                // GameOver(readerBoard);
+            }
+        });
+    }, []);
+
+    // const GameOver(readerBoard) => {
+    //     // modal 띄울 함수 호출
+    // }
+
     return (
         <React.Fragment>
             <CssBaseline />
