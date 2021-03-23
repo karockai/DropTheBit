@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
 import { Howl } from 'howler';
+import util from 'util';
+
+// const dddd = util.promisify(client.set).bind(client);
 
 function useSound(src, volume = 1, fadeoutTime = 0) {
     let sound;
@@ -30,4 +33,11 @@ function playSound(src, volume = 1) {
     return sound;
   }
 
-  export { useSound, playSound };
+  function musicDuration(src) {
+    let sound;
+    sound = new Howl({ src });
+    let duration = sound.duration();
+    return duration;
+  }
+
+  export { useSound, playSound, musicDuration };
