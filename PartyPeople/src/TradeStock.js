@@ -134,14 +134,14 @@ export default function TradeStock(props) {
             volume,
             '] 매도 주문이 체결되었습니다.'
         );
-        props.socket.emit('testSell', {
+        props.socket.emit('sell_Req', {
             roomID: props.roomID,
             socketID: props.socket.id,
             currentBid: bid,
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
-        props.socket.on('testSell', (sbid) => {
+        props.socket.on('sell_Req', (sbid) => {
             SetNewBid(sbid);
             console.log('판매하고 호가 갱신', sbid);
         });

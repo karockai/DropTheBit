@@ -63,6 +63,7 @@ class Room {
             asset: '100000000',
             coinVol: '0',
             bid: {},
+            add: {}
         };
         console.log('joinRoom', data.playerID);
         // roomInfo[socketID] = playerInfo;
