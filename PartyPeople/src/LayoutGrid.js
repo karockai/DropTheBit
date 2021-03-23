@@ -66,6 +66,8 @@ export default function LayoutGrid(props) {
                         <Grid className="playerListGrid" item xs={leftSm}>
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
                             <PlayerList
+                                socket={props.socket}
+                                requestSocket={props.requestSocket}
                                 roomID={props.roomID}
                                 roomInfo={props.roomInfo}
                             />

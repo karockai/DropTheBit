@@ -250,7 +250,6 @@ class Refresh {
         bidList.push(bidObject2);
         bidList.push(bidObject3);
         bidList.push(bidObject4);
-
         io.emit('refreshBid', bidList);
     }
 }

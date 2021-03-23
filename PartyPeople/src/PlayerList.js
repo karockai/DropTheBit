@@ -1,4 +1,4 @@
-import React, { useState, makeStyle } from 'react';
+import React, { useState, makeStyle, useLayoutEffect } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import {
@@ -13,9 +13,9 @@ import {
 
 const greenTheme = createMuiTheme({
     palette: {
-      primary: green,
+        primary: green,
     },
-  });
+});
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,14 +36,14 @@ function MakePlayerPaper(props) {
         <Paper style={{ height: '9.8vh' }} className={classes.paper}>
             <Grid container direction="row" alignItems="center">
                 <Grid style={{ width: '20%', height: '5vh' }} className="score">
-                    1
+                    {props.index}
                 </Grid>
                 <Grid>
                     <Grid container direction="col" className="score">
-                        <Grid>sunio</Grid>
+                        <Grid>{props.player.playerID}</Grid>
                     </Grid>
                     <Grid container direction="col" className="score">
-                        <Grid>100,283</Grid>
+                        <Grid>{props.player.asset}</Grid>
                     </Grid>
                 </Grid>
             </Grid>
@@ -52,8 +52,28 @@ function MakePlayerPaper(props) {
 }
 
 export default function PlayerList(props) {
+
+    const classes = useStyles(greenTheme);
     const testXs = 12;
-    // const value = data;
+    const [players, setPlayers] = useState([
+        {
+            playerID: 'playerID',
+            asset: 'asset',
+        },
+    ]);
+    const [isInit, setInit] = useState(false);
+    if (!isInit) setInit(true);
+
+    useLayoutEffect(() => {
+        if (props.socket == null) {
+            props.requestSocket('MakePlayerPaper', props.socket);
+            setInit(true);
+        } else {
+            props.socket.on('roomRank', (playerArray) => {
+                setPlayers(playerArray);
+            });
+        }
+    }, [isInit]);
 
     return (
         <Grid
@@ -62,33 +82,41 @@ export default function PlayerList(props) {
             direction="column"
             justify="center"
             alignItems="stretch"
-            spacing ={2}
+            spacing={2}
         >
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-            <Grid item xs={testXs}>
-                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
-            </Grid>
-
+            {players.map((player, index) => {
+                return (<Grid item xs={testXs}>
+                    <Paper
+                        style={{ height: '9.8vh' }}
+                        className={classes.paper}
+                    >
+                        <Grid container direction="row" alignItems="center">
+                            <Grid
+                                style={{ width: '20%', height: '5vh' }}
+                                className="score"
+                            >
+                                {'No.'}{index + 1}
+                            </Grid>
+                            <Grid >
+                                <Grid
+                                    container
+                                    direction="col"
+                                    className="score"
+                                >
+                                    <Grid alignItems="right">{player.playerID}</Grid>
+                                </Grid>
+                                <Grid
+                                    container
+                                    direction="col"
+                                    className="score"
+                                >
+                                    <Grid alignItems="right">{player.asset}</Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                </Grid>);
+            })}
         </Grid>
     );
 }

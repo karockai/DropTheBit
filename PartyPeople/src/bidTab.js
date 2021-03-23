@@ -106,46 +106,32 @@ const TabsContainer = () => {
 
 export default function BidTab(props) {
     const [isInit, setInit] = useState(false);
-    const [currentBid, SetBid] = useState({
-        date: 'date',
-        total_ask_size: 'total_ask_size',
-        total_bid_size: 'total_bid_size',
-        ask_price_0: 'ask_price_0',
-        bid_price_0: 'bid_price_0',
-        ask_size_0: 'ask_size_0',
-        bid_size_0: 'bid_size_0',
-        ask_price_1: 'ask_price_1',
-        bid_price_1: 'bid_price_1',
-        ask_size_1: 'ask_size_1',
-        bid_size_1: 'bid_size_1',
-        ask_price_2: 'ask_price_2',
-        bid_price_2: 'bid_price_2',
-        ask_size_2: 'ask_size_2',
-        bid_size_2: 'bid_size_2',
-        ask_price_3: 'ask_price_3',
-        bid_price_3: 'bid_price_3',
-        ask_size_3: 'ask_size_3',
-        bid_size_3: 'bid_size_3',
-        ask_price_4: 'ask_price_4',
-        bid_price_4: 'bid_price_4',
-        ask_size_4: 'ask_size_4',
-        bid_size_4: 'bid_size_4',
-    })
+    const [currentBids, SetBid] = useState([{
+        buy:'',
+        price:'',
+        sell:''
+    }])
     if(!isInit) setInit(true);
     
     useLayoutEffect(() => {
             if (props.socket == null) {
                 props.requestSocket('BidTab', props.socket);
+                setInit(true);
             } else { 
                 props.socket.on('refreshBid', (bidObject) => {
-                    console.log('bidTab refreshBid OK.')
                     SetBid(bidObject)
+                    console.log(bidObject)
                 });
             }
         },[isInit]);
 
     const classes = useStyles();
 
+    const bidTag = () => {
+        return (
+            <></>
+        );
+    }
     return (
         <MuiThemeProvider>
             <Grid
@@ -172,26 +158,34 @@ export default function BidTab(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row, index) => (
+                            { currentBids.map((row, index) => {
+                                return (
                                 <TableRow
                                     style={{
                                         backgroundColor:
                                             index === 4 ? red[100] : '#FFFFFF',
                                         opacity: 0.9,
+
                                     }}
                                     key={row.name}
                                 >
-                                    <TableCell align="center">
-                                        {row.sell}
+                                    <TableCell style={{
+                                        backgroundColor:
+                                            index === 4 ? red[100] : '#FFFFFF',
+                                        opacity: 0.9,
+                                        }}
+                                        align="center"
+                                    >
+                                        {row.buy}
                                     </TableCell>
                                     <TableCell align="center">
                                         {row.price}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {row.buy}
+                                        {row.sell}
                                     </TableCell>
                                 </TableRow>
-                            ))}
+                            )})}
                         </TableBody>
                     </Table>
                 </TableContainer>

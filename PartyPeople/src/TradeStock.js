@@ -92,6 +92,8 @@ export default function TradeStock(props) {
     const [newVolume, SetNewVolume] = useState(1);
     const [ratioBid, SetRatio] = useState(100);
     const [isBind, SetBind] = useState(false);
+    const [isFocus, SetFocus] = useState(false);
+
     if(!isBind) SetBind(true);
     function VolumeUp(volume) {
         SetNewVolume(volume + 1);
@@ -153,9 +155,9 @@ export default function TradeStock(props) {
     }
 
     function HandleKeyPress(e) {
-        if (e.keyCode == 123) return; //_ 'F12' 개발자도구 ㅋ
+        if (e.keyCode === 123) return; //_ 'F12' 개발자도구 ㅋ
         e.preventDefault();
-        if (e.keyCode == 37) {
+        if (e.keyCode === 37) {
             //_ LEFT ARROW
             console.log(props);
             console.log('KeyCode > LEFT.');
@@ -165,7 +167,7 @@ export default function TradeStock(props) {
                 return;
             }
             Buy(currentBid, currentVolume);
-        } else if (e.keyCode == 39) {
+        } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.');
@@ -199,11 +201,15 @@ export default function TradeStock(props) {
     }
 
     useLayoutEffect(() => {
+        if(isFocus === true) {
+            console.log('keydown event not working now!')
+            return ;
+        }
         document.addEventListener('keydown', HandleKeyPress);
         return () => {
             document.removeEventListener('keydown', HandleKeyPress);
         };
-    }, [currentVolume, currentBid, isBind]);
+    }, [currentVolume, currentBid, isBind, isFocus]);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useLayoutEffect(() => {
@@ -219,7 +225,19 @@ export default function TradeStock(props) {
         return () => {};
     }, [newVolume]);
 
-    let testXs = 12;
+    function handleVolumeChange (e) {
+        if(e.target.id === "outlined-required") {
+            SetVolume(e.target.value);
+            SetFocus(true);
+        }
+    }
+    function handleBidChange (e) {
+        if(e.target.id === "outlined-required"){
+            SetBid(e.target.value);
+            SetFocus(true);
+        }
+    }
+
     return (
         <Grid
             wrap="wrap"
@@ -233,12 +251,14 @@ export default function TradeStock(props) {
         >
             <Grid container direction="row" justify="center">
                 <TextField
-                    TextField
+                    className="buysell"
                     id="outlined-required"
                     label="매매 호가"
                     size="small"
+                    type="number"
                     style={{ width: '80%' }}
                     value={currentBid}
+                    onChange={handleBidChange}
                 />
                 <ArrowButton
                     upEvent={() => BidUp(currentBid)}
@@ -246,13 +266,18 @@ export default function TradeStock(props) {
                 />
             </Grid>
             <Grid container direction="row" justify="center">
-                <TextField
-                    id="outlined-required"
-                    label="수량"
-                    size="small"
-                    style={{ width: '80%' }}
-                    value={currentVolume}
-                />
+                <form noValidate autoComplete="off">
+                    <TextField
+                        className="count"
+                        id="outlined-required"
+                        label="수량"
+                        type="number"
+                        size="small"
+                        style={{ width: '80%' }}
+                        value={currentVolume}
+                        onChange={handleVolumeChange}
+                    />
+                </form>
                 <ArrowButton
                     upEvent={() => VolumeUp(currentVolume)}
                     downEvent={() => VolumeDown(currentVolume)}
