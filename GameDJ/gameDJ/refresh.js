@@ -121,7 +121,7 @@ class Refresh {
                 io.to(socketID).emit('refreshWallet', refreshWallet);
             }
 
-            await dbset(roomID);
+            await dbset(roomID, JSON.stringify(roomInfo));
         }
     }
 
