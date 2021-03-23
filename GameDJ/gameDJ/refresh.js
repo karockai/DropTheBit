@@ -169,9 +169,8 @@ class Refresh {
             rankList.sort(function (a, b) {
                 return b['asset'] - a['asset'];
             });
-            console.log(rankList);
 
-            socket.to(roomID).emit('roomRank', rankList);
+            io.to(roomID).emit('roomRank', rankList);
         }
     }
 
