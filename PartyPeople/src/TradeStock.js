@@ -103,6 +103,7 @@ export default function TradeStock(props) {
         SetBid(currentBid - ratioBid);
     }
     function Buy(bid, volume) {
+        console.log(props);
         //@ Buy Emit
         console.log(
             '[ 가격',
@@ -113,7 +114,7 @@ export default function TradeStock(props) {
         );
         props.socket.emit('buy_Req', {
             //@ reqJson.json 형식확인
-            roomID: props.roomId,
+            roomID: props.roomID,
             socketID: props.socket.id,
             currentBid: bid,
             currentVolume: volume,
@@ -125,6 +126,7 @@ export default function TradeStock(props) {
     }
     function Sell(bid, volume) {
         //@ Sell Emit
+        console.log(props);
         console.log(
             '[ 가격',
             bid,
@@ -200,7 +202,7 @@ export default function TradeStock(props) {
         return () => {
             document.removeEventListener('keydown', HandleKeyPress);
         };
-    }, [isBind]);
+    }, [currentVolume, currentBid]);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {

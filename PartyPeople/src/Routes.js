@@ -27,6 +27,7 @@ export default function Routes(props) {
                             <LayoutGrid
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
+                                roomID={props.roomID}
                             />
                         )}
                         roomID={props.roomID}

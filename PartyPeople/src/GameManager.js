@@ -127,7 +127,6 @@ class GameManager extends React.Component {
         const roomInfo = this.state.roomInfo;
         return (
             <>
-                <this.TestEmitButton />
                 <Routes
                     socket={socket}
                     requestSocket={this.RequestSocket}
