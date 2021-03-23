@@ -106,7 +106,7 @@ class Refresh {
             // roomInfo 순회하면서 playerInfo 가져옴
             // console.log(roomInfo);
             for (let socketID in roomInfo) {
-                if (socketID.length != 15) continue;
+                if (socketID.length != 20) continue;
                 let playerInfo = JSON.parse(roomInfo[socketID]);
                 console.log('여기까지 ', socketID);
 
@@ -125,7 +125,9 @@ class Refresh {
                         Number(askPrice) * Number(playerInfo['ask'][askPrice]);
                 }
 
-                playerInfo['asset'] = String(coinVol);
+                playerInfo['asset'] = String(asset);
+                playerInfo['cash'] = String(cash);
+                playerInfo['coinVol'] = String(coinVol);
 
                 let refreshWallet = {
                     type: 1,
@@ -137,6 +139,7 @@ class Refresh {
                 // await dbhset(roomID, socketID, playerInfo);
                 // roomInfo[socketID] = JSON.stringify(playerInfo);
                 io.to(socketID).emit('refreshWallet', refreshWallet);
+                // this.socket.emit('refreshWallet', refreshWallet);
             }
 
             await dbhset(roomID, roomInfo);
