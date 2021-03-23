@@ -43,6 +43,7 @@ class Game {
 
                 setTimeout(() => {
                     clearInterval(schedule);
+                    console.log('clearInterval ----------------------');
                     resolve();
                 }, musicTime);
             });

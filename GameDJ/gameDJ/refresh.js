@@ -47,7 +47,7 @@ class Refresh {
                     playerInfo['cash'] = String(cash);
 
                     delete playerInfo['ask'][strAskPrice];
-                    dbhset(roomID, socketID, JSON.stringfy(playerInfo));
+                    dbhset(roomID, socketID, JSON.stringify(playerInfo));
                     socket.to(socketID).emit('askDone');
 
                     delete askList[strAskPrice][socketID];
