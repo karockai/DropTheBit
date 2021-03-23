@@ -37,6 +37,8 @@ export default function EnterRoom(props, { history }) {
         const searchParams = new URLSearchParams(params);
         if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
             props.socket.emit('joinRoom_Req', {"playerID" : name , "roomID": searchParams.get('id')});
+            setRoomID(searchParams.get('id'));
+
         }
         else {                           // 방장
             props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
