@@ -52,13 +52,10 @@ class Game {
                 return b['asset'] - a['asset'];
             });
 
-            console.log('-------------- GAME END --------------------');
-            console.log(readerBoard);
             socket.to(roomID).emit('gameOver', readerBoard);
         }
 
         let gameSchedule = setTimeout(gameOver, musicTime);
-        console.log('-------------- GAME END? --------------------');
     }
 
     // 매수 요청 등록
