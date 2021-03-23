@@ -11,7 +11,7 @@ import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
-import { useSound, playSound, getDuration } from './useSound';
+import { useSound, playSound } from './useSound';
 import Bit from './audios/music/King_Conga.mp3';
 
 

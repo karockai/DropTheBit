@@ -171,7 +171,7 @@ export default function TradeStock(props) {
             //_ RIGHT ARROW
             console.log(props);
             console.log('KeyCode > RIGHT.');
-            playSound(DrumUp, 1).play();
+            playSound(DrumDown, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
@@ -182,7 +182,7 @@ export default function TradeStock(props) {
         if (e.keyCode === 38) {
             //_ UP ARROW
             console.log('KeyCode > UP.');
-            playSound(DrumUp, 1).play();
+            playSound(HatUp, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
@@ -191,7 +191,7 @@ export default function TradeStock(props) {
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             console.log('KeyCode > DOWN.');
-            playSound(DrumUp, 1).play();
+            playSound(HatDown, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
