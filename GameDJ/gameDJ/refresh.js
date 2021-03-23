@@ -1,5 +1,4 @@
 import { dbset, dbget, dbhset, dbhget, dbhexi } from './redis.js';
-import socketio from 'socket.io';
 
 class Refresh {
     constructor(io) {
@@ -74,7 +73,54 @@ class Refresh {
             }
             dbset('bidList', JSON.stringify(bidList));
         }
+
+        this.renewalInfo(curPrice);
+    }
+
+    async renewalInfo(curPrice) {
+        const { io } = this;
+        // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
+        let roomList = await dbget('roomList');
+
+        // redis 순회하면서 roomInfo 가져옴
+        for (let roomID in roomList) {
+            let roomInfo = await dbget(roomID);
+
+            // roomInfo 순회하면서 playerInfo 가져옴
+            for (let socketID in roomInfo) {
+                if (socketID.length != 15) continue;
+                let playerInfo = JSON.parse(roomInfo[socketID]);
+
+                let asset = 0;
+                let cash = Number(playerInfo['cash']);
+                let coinVol = Number(playerInfo['coinVol']);
+                asset = cash + coinVol * curPrice;
+
+                for (let bidPrice in playerInfo['bid']) {
+                    asset +=
+                        Number(bidPrice) * Number(playerInfo['bid'][bidPrice]);
+                }
+
+                for (let askPrice in playerInfo['ask']) {
+                    asset +=
+                        Number(askPrice) * Number(playerInfo['ask'][askPrice]);
+                }
+
+                playerInfo['asset'] = String(coinVol);
+
+                let refreshWallet = {
+                    type: 1,
+                    cash: cash,
+                    coinVol: coinVol,
+                    asset: asset,
+                };
+
+                roomInfo[socketID] = JSON.stringify(playerInfo);
+                io.to(socketID).emit('refreshWallet', refreshWallet);
+            }
+
+            dbset(roomID);
+        }
     }
 }
-
 export default Refresh;

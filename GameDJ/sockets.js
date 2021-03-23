@@ -38,7 +38,6 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(() => {
             new Refresh(io).renewalCurCoin();
-            // sendRoomInfo(roomID);
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
