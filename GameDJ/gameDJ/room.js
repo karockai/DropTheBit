@@ -94,6 +94,8 @@ class Room {
     async updateSettings(data) {
         const { socket } = this;
         // 클라에서 music.duration 으로 길이 구해서 보내주면 게임타임 세팅
+        // console.log(getDuration(Bit)['PromiseResult']);
+        // 위와 같이 하면 구할 수 있음 
         const roomID = data.roomID;
         dbhset(roomID, music, data.musicName);
         dbhset(roomID, gameTime, data.musicTime);
