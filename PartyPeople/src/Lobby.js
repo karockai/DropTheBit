@@ -14,7 +14,7 @@ function Lobby(props) {
     const PutPlayer = (props) => {
         console.log(props);
         return (
-
+                
             <Grid container justify='space-between'>
                 <LobbyPlayerCard 
                 playerID ={props.player.playerID}

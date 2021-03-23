@@ -40,33 +40,25 @@ export default function ChatRoom(props) {
     // console.log(props.socket);
     let testXs = 12;
     const classes = useStyles();
-    let [message, setMessage] = useState('');
-    let [messages, setMessages] = useState({
-        messages: [
-            new Message({
-                // id: 1,
-                message: "I'm the recipient! (The person you're talking to)",
-            }), // Gray bubble
-            new Message({ message: "I'm you -- the blue bubble!" }), // Blue bubble
+    let [message, setMessage] = useState('');       // 보낼 때의 메시지자체만 저장
+    let [messages, setMessages] = useState({        // author와 쌍으로 저장된 메시지
+        messages: [ 
         ],
     });
     let textInput = useRef(null);
 
     useEffect(() => {
-        return () => {
-            props.socket.on('update', function (data) {
-                console.log(props.socket.id);
+
+            props.socket.on('update', (data) => {
                 console.log(data);
                 if (data) {
                     addMessage(data);
                 }
             });
-        };
     }, []);
 
     const handleOnChange = (event) => {
         setMessage({
-            author: props.playerID,
             message: event.target.value,
         });
     };
@@ -74,10 +66,9 @@ export default function ChatRoom(props) {
     const sendMessage = (ev) => {
         ev.preventDefault();
         textInput.current.value = '';
-
         // author: this.state.author,
-        props.socket.emit('message', {message : message, roomID : props.roomID});
-        setMessage({ author: '', message: ''});
+        props.socket.emit('message', {message: message, author: 'playerID', roomID : props.roomID});
+        setMessage({message: ''});
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 

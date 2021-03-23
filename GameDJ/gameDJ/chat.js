@@ -13,7 +13,7 @@ class Chat {
         console.log(data.roomID);
         console.log(data.message);
         console.log(data.author);
-        io.to(data.roomID).emit('update', data);
+        io.to(data.roomID).emit('update', {message : data.message, author : data.author});
     };
 
 
