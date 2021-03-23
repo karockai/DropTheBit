@@ -46,22 +46,13 @@ function Lobby(props) {
     // let ret = (<div> aaa </div>);
     useEffect(()=>{
         let soc = props.socket;
-        // console.log(roomID);
         if (soc) {
-            // soc.on('NewbieInRoom', (playerInfo) =>{       // 이미 들어간 사람에게 뉴비정보 보내줌
-            //     console.log('NewbieInRoom');
-            //     console.log(playerInfo);
-            //     setAccept(true);
-            //     setRoomInfo(playerInfo);
-            //     // ret = <putPlayer player={roomInfo[soc.id]}/>;
-            // });
             // ! 주석풀고 확인
-            soc.on('loadOtherPlayer', (roomInfo) => {    // 뉴비가 자기 포함 모든 사람 정보 받음
-                console.log('loadOtherPlayer');
+            soc.on('joinRoom_Res', (roomInfo) => {    // 사람이 들어올 때마다 roomInfo 갱신
+                console.log('joinRoom_Res');
                 setAccept(true);
                 setRoomInfo(roomInfo);
-                console.log(roomInfo);
-                console.log(this.roomInfo);
+                // console.log(roomInfo);
                 // players.forEach((player) => putPlayer(player)));
             });
             // ! 
@@ -88,17 +79,10 @@ function Lobby(props) {
     }  
 
     function PutNewCard (props) {
-        console.log(props);
-        // if (props.playerInfo != '') {
-        //     console.log(props);
-        //     return(
-        //         <PutPlayer player={props.playerInfo}/>
-        //     );
-        // }
         // ! 주석 풀고 확인
         if (props.roomInfo != '') {
             let PlayerList = getPlayersList(props.roomInfo);
-            console.log(PlayerList);
+
             // ? PlayerList.forEach(player => console.log(player));
             let tmparr = [];
             for(let key in PlayerList) {
@@ -108,12 +92,17 @@ function Lobby(props) {
             return (
                 // PlayerList.forEach((player) => putPlayer(player))
                 // ? PlayerList.forEach((player) => (<putPlayer player = {player}/>))
-                tmparr.forEach((player) => (           
-                <Paper>
-                    {player.playerID}
-                    {player.cash}
-                    {player.asset}
-                </Paper>))
+                <div>
+                {tmparr.map((player) => {
+                    return (     
+                        <Paper>
+                            {player.playerID}
+                            {player.cash}
+                            {player.asset}
+                        </Paper>
+                    );
+                })}
+                </div>
             );
         }
         // ! 
@@ -135,7 +124,6 @@ function Lobby(props) {
             {/* <PutNewCard socket={props.socket}/> */}
             {Card()}
         </Grid>
-            
         </>
     );
 }

@@ -83,7 +83,7 @@ class Refresh {
         // let roomList = [];
         // redis 순회하면서 roomInfo 가져옴
         for (let roomID in roomList) {
-            console.log('roomID:', roomID);
+            // console.log('roomID:', roomID);
             if (roomID < 15) continue;
             let roomInfo = await dbget(roomID);
 
