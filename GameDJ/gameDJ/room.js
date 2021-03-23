@@ -1,4 +1,4 @@
-import { dbset, dbget, dbhset, dbhget } from './redis.js';
+import { dbset, dbget, dbhset, dbhget, dbhgetall, dbrpush, dblrem } from './redis.js';
 import { nanoid } from 'nanoid';
 
 class Room {
@@ -27,7 +27,8 @@ class Room {
         roomInfo[socketID] = playerInfo;
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
-        console.log(roomID);
+        await dbrpush(roomList, roomID);
+        console.log(dbget(roomList);
         socket.roomID = roomID;
         console.log(socket);
         socket.join(roomID);
@@ -57,7 +58,7 @@ class Room {
         dbhset(roomID, socketID, strplayerInfo);
         socket.roomID = roomID;
         socket.join(roomID);
-        socket.to(roomID).emit('NewbieInRoom', roomInfo);
+        io.to(roomID).emit('NewbieInRoom', roomInfo);
 
         // players.push(socket);
         const players = Array.from(await io.in(socket.roomID).allSockets());
