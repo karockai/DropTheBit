@@ -163,7 +163,7 @@ export default function LayoutGrid(props) {
                                         style={{ height: '45vh' }}
                                         className={classes.paper}
                                     >
-                                        <BidTab />
+                                        <BidTab socket = {props.socket}/>
                                     </Paper>
                                 </Grid>
                                 <Grid style={{ height: '40vh' }} item>

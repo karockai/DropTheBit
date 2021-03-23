@@ -79,7 +79,7 @@ class Game {
 
         let refreshWallet = {};
         let buy_res = {};
-
+        buy_res["curPrice"] = curPrice;
         // 4. 구매 가능 여부 확인 후 "asset" emit
         if (cash >= intReqPrice * intReqVol) {
             // 5. 구매 처리 및 asset 정보 emit
@@ -96,6 +96,7 @@ class Game {
                 
                 // 6-2. buy_res update
                 buy_res['type'] = '체결';
+                //! 이 아래 중복되는 부분 줄이기
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
@@ -170,7 +171,7 @@ class Game {
 
         let refreshWallet = {};
         let sell_res = {};
-
+        sell_res["curPrice"] = curPrice;
         // 4. 구매 가능 여부 확인 : 보유 coinVol > 요청 coinVol 후 "asset" emit
         // * 이미 호가 올려놓은 것들은 어떡하지?
         if (coinVol >= intReqVol) {
@@ -188,6 +189,7 @@ class Game {
                 
                 // 6-2. sell_res update
                 sell_res['type'] = '체결';
+                //! 이 아래 중복되는 부분 줄이기
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
                 this.socket.emit('refreshAsset', refreshWallet);
