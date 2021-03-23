@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         '& > *': {
-            margin: theme.spacing(1),
+            // margin: theme.spacing(1),
             width: '100%',
             // float: 'auto',
             // height: "50%"
@@ -41,11 +41,11 @@ export default function ChatRoom(props) {
     let testXs = 12;
     const classes = useStyles();
     let [message, setMessage] = useState('');       // 보낼 때의 메시지자체만 저장
-    let [messages, setMessages] = useState({        // author와 쌍으로 저장된 메시지
-        messages: [
-            {message: '메시지 테스트', author: 'playerID', roomID : props.roomID},
-        ],
-    });
+    let [messages, setMessages] = useState(        // author와 쌍으로 저장된 메시지
+        [
+            {message: '메시지 테스트', author: 'playerID'},
+        ]
+    );
     let textInput = useRef(null);
 
     useEffect(() => {
@@ -58,38 +58,54 @@ export default function ChatRoom(props) {
     }, []);
 
     const handleOnChange = (event) => {
-        setMessage({
-            message: event.target.value,
-        });
+        setMessage(
+            event.target.value
+        );
     };
 
     const sendMessage = (ev) => {
         ev.preventDefault();
         textInput.current.value = '';
         // author: this.state.author,
-        console.log(message);
+        // console.log(message);
         props.socket.emit('message', {message: message, author: 'playerID', roomID : props.roomID});
         setMessage('');
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 
     const addMessage = (data) => {
-        // console.log('ddddddddd');
         // setMessages({ messages: [...messages, data['message']] });
         let new_messages = [...messages, data];
         setMessages(new_messages);
-        console.log(messages);
     };
+
+    function PrintMessage ()  {
+        return (
+            <>
+            {messages.map((message) => {
+                    console.log(message.message);
+                return (
+                (<Paper>
+                    {message.author}
+                    {message.message}
+                </Paper>)
+                );
+            })}
+            </>
+        );
+    }
 
     return (
         <Grid
             container
             className={classes.button}
-            display="flex"
-            alignItems="flex-end"
             style={{ height: '100%' }}
+            justify={'space-between'}
         >
-            <Grid item style={{ height: '80%' }}></Grid>
+            <Grid item style={{ height: '29vh' }}>
+                <PrintMessage/>
+            </Grid>
+            <Grid item >
             <Grid
                 item
                 container
@@ -97,8 +113,9 @@ export default function ChatRoom(props) {
                 dirction="column"
                 style={{ height: '5vh' }}
                 spacing={1}
+                alignItems="flex-end"
             >
-                <Grid item style={{ margin: '0 0 0 -10', width: '80%' }}>
+                <Grid item style={{ margin: '0 0 0 -10', width: '70%' }}>
                     <TextField
                         style={{ height: '100%' }}
                         id="standard-basic"
@@ -118,6 +135,7 @@ export default function ChatRoom(props) {
                     >
                         전송
                     </Button>
+                </Grid>
                 </Grid>
             </Grid>
         </Grid>
