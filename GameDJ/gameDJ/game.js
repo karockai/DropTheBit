@@ -24,6 +24,9 @@ class Game {
     }
 
     async startGame() {
+        console.log(
+            '---------------------------START---------------------------'
+        );
         const { io, socket } = this;
         let roomID = socket.roomID;
         // let musicTime = Number(await dbhget(roomID, gameTime));
@@ -33,21 +36,6 @@ class Game {
         let ReadyPlayer = socket.on('allReady', () => {
             // 모두가 준비되면 게임 시작
         });
-
-        const gamePlay = function () {
-            return Promise(function (resolve, reject) {
-                let schedule = setInterval(() => {
-                    renewalCurCoin(roomID);
-                }, 1000);
-                // gameTime만큼 멈췄다가, 끝나면 endGame 실행
-
-                setTimeout(() => {
-                    clearInterval(schedule);
-                    console.log('clearInterval ----------------------');
-                    resolve();
-                }, musicTime);
-            });
-        };
 
         async function gameOver(roomID) {
             return Promise(async function (resolve, reject) {
@@ -71,15 +59,13 @@ class Game {
                 });
 
                 socket.to(roomID).emit('gameOver', readerBoard);
+                console.log('-------------- GAME END --------------------');
                 resolve();
             });
         }
 
-        gamePlay(roomID).then((roomID) => {
-            // game 종료 함수 만들 것
-            gameOver(roomID);
-            console.log('Game Over');
-        });
+        let gameSchedule = setTimeout(gameOver, musicTime);
+        console.log('-------------- GAME END? --------------------');
     }
 
     // 매수 요청 등록
@@ -99,7 +85,7 @@ class Game {
         let intReqPrice = Number(strReqPrice);
         let strReqVol = reqJson['currentVolume'];
         let intReqVol = Number(strReqVol);
-        
+
         // 2. player_info 가져오기
         // console.log('** BUY REQUEST :', roomID, socketID);
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
@@ -144,7 +130,7 @@ class Game {
                 // 6-3. playerInfo Update
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                console.log("현재가로 구매 완료 :", playerInfo);
+                console.log('현재가로 구매 완료 :', playerInfo);
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
                 // 7-1. cash 갱신
@@ -169,11 +155,11 @@ class Game {
                     let bidList = JSON.parse(await dbget('bidList'));
                     bidList[strReqPrice] = {};
                     bidList[strReqPrice][socketID] = roomID;
-                    console.log("호가 등록 완료", bidList);
+                    console.log('호가 등록 완료', bidList);
                     dbset('bidList', JSON.stringify(bidList));
                 }
             }
-            console.log("BUY End");
+            console.log('BUY End');
             dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
