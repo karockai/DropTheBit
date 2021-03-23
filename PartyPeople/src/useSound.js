@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Howl } from 'howler';
 
+
 function useSound(src, volume = 1, fadeoutTime = 0) {
     let sound;
     const soundStop = () => sound.stop();
@@ -30,4 +31,16 @@ function playSound(src, volume = 1) {
     return sound;
   }
 
-  export { useSound, playSound };
+
+  var getDuration = function(src) {
+    var howl = new Howl({ src });
+    return new Promise(function(resolve, reject) {
+      howl.on('load', function() {
+        let time = howl.duration();
+        resolve(time);
+      });
+    });
+  }
+
+
+  export { useSound, playSound, getDuration };

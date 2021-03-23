@@ -51,7 +51,7 @@ export default function MyAsset(props) {
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
-                console.log('자산을 갱신합니다.', data);
+                // console.log('자산을 갱신합니다.', data);
                 const currentCash = data.cash;
                 const currentAsset = data.asset;
                 const currentCoin = data.coinVol;

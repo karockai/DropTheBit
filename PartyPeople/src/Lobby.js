@@ -14,7 +14,7 @@ function Lobby(props) {
     const PutPlayer = (props) => {
         console.log(props);
         return (
-
+                
             <Grid container justify='space-between'>
                 <LobbyPlayerCard 
                 playerID ={props.player.playerID}
@@ -41,15 +41,11 @@ function Lobby(props) {
     useEffect(()=>{
         let soc = props.socket;
         if (soc) {
-            // ! 주석풀고 확인
             soc.on('joinRoom_Res', (roomInfo) => {    // 사람이 들어올 때마다 roomInfo 갱신
-                console.log('joinRoom_Res');
                 setAccept(true);
                 setRoomInfo(roomInfo);
-                // console.log(roomInfo);
-                // players.forEach((player) => putPlayer(player)));
+                props.SetRoomIdAndInfo({roomID:props.roomID, roomInfo:roomInfo});
             });
-            // ! 
         }
     }, []); 
     const Card = () => {
@@ -73,7 +69,6 @@ function Lobby(props) {
     }  
 
     function PutNewCard (props) {
-        // ! 주석 풀고 확인
         if (props.roomInfo != '') {
             let PlayerList = getPlayersList(props.roomInfo);
 
@@ -95,8 +90,11 @@ function Lobby(props) {
                 </div>
             );
         }
-        // ! 
     }
+    const StartGame = (() => {
+        props.socket.emit('startGame_Req', props.roomID);
+        props.history.push('/game');
+    });
 
 
     return(
@@ -104,7 +102,7 @@ function Lobby(props) {
         <Grid container justify='center' style= {{height: '80vh', margin: '5vh 5vh 5vh 5vh'}}>
             <Grid style= {{width: '50%'}} >
                 <Paper style={{width: '30%'}}>{props.name}</Paper>
-                <Button variant="contained" color="primary" onClick={()=>props.history.push('/game')}> StartGame </Button> 
+                <Button variant="contained" color="primary" onClick={StartGame}> StartGame </Button> 
             </Grid>
             <Grid style= {{width: '50%'}}>
                 <Grid style={{height: '80vh'}}>

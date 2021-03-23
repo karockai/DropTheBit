@@ -1,4 +1,16 @@
-import { dbset, dbget, dbhset, dbhget, dbhexi, dbhgetall, dbrpush, dblpush, dblrem, dblrange, dbllen } from './redis.js';
+import {
+    dbset,
+    dbget,
+    dbhset,
+    dbhget,
+    dbhexi,
+    dbhgetall,
+    dbrpush,
+    dblpush,
+    dblrem,
+    dblrange,
+    dbllen,
+} from './redis.js';
 
 class Refresh {
     constructor(io) {
@@ -7,6 +19,9 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
+        console.log(
+            '----------------------renewalCurCoin------------------------'
+        );
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
 
@@ -35,8 +50,9 @@ class Refresh {
                     playerInfo['cash'] = String(cash);
 
                     delete playerInfo['ask'][strAskPrice];
-                    dbhset(roomID, socketID, JSON.stringfy(playerInfo));
-                    socket.to(socketID).emit('askDone');
+                    console.log(playerInfo);
+                    dbhset(roomID, socketID, JSON.stringify(playerInfo));
+                    io.to(socketID).emit('askDone');
 
                     delete askList[strAskPrice][socketID];
                 }
@@ -58,13 +74,14 @@ class Refresh {
                     let roomID = bidList[strBidPrice][socketID];
                     let playerInfo = JSON.parse(await dbhget(roomID, socketID));
                     let coinVol = Number(playerInfo['coinVol']);
-                    let askVol = Number(playerInfo['bid'][strBidPrice]);
-                    coinVol += askVol;
+                    let bidVol = Number(playerInfo['bid'][strBidPrice]);
+                    coinVol += bidVol;
                     playerInfo['coinVol'] = String(coinVol);
 
                     delete playerInfo['bid'][strBidPrice];
                     dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                    socket.to(socketID).emit('bidDone');
+
+                    io.to(socketID).emit('bidDone');
 
                     delete bidList[strBidPrice][socketID];
                 }
@@ -72,12 +89,18 @@ class Refresh {
             await dbset('bidList', JSON.stringify(bidList));
         }
 
+        console.log(
+            '----------------------renewalCurCoin End------------------------'
+        );
         await this.renewalInfo(curPrice);
     }
 
     async renewalInfo(curPrice) {
         const { io } = this;
-
+        console.log(curPrice);
+        console.log(
+            '----------------------renewalInfo End------------------------'
+        );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
@@ -85,18 +108,17 @@ class Refresh {
         // console.log(roomList);
         for (let idx in roomList) {
             let roomID = roomList[idx];
-            if (roomID.length <15) continue;
+            if (roomID.length < 15) continue;
             // console.log(roomID);
             let roomInfo = await dbhgetall(roomID);
-            
+
             // room 호가 수집
-            
+
             // roomInfo 순회하면서 playerInfo 가져옴
             // console.log(roomInfo);
             for (let socketID in roomInfo) {
                 if (socketID.length != 20) continue;
                 let playerInfo = JSON.parse(roomInfo[socketID]);
-                console.log("여기까지 ", socketID);
 
                 let asset = 0;
                 let cash = Number(playerInfo['cash']);
@@ -112,11 +134,12 @@ class Refresh {
                     asset +=
                         Number(askPrice) * Number(playerInfo['ask'][askPrice]);
                 }
-
-                playerInfo['asset'] = String(asset);
+                if (asset) {
+                    playerInfo['asset'] = String(asset);
+                }
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                
+
                 let refreshWallet = {
                     type: 1,
                     cash: cash,
@@ -124,12 +147,16 @@ class Refresh {
                     asset: asset,
                 };
 
-                await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+                // await dbhset(roomID, socketID, playerInfo);
                 // roomInfo[socketID] = JSON.stringify(playerInfo);
                 io.to(socketID).emit('refreshWallet', refreshWallet);
                 // this.socket.emit('refreshWallet', refreshWallet);
+                // console.log("renewalInfo :", playerInfo);
+                await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+                console.log(
+                    '----------------------renewalCurInfo End------------------------'
+                );
             }
-
         }
     }
 
