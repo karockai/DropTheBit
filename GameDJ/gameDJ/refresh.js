@@ -82,17 +82,17 @@ class Refresh {
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
         // redis 순회하면서 roomInfo 가져옴
-        console.log(roomList);
+        // console.log(roomList);
         for (let idx in roomList) {
             let roomID = roomList[idx];
             if (roomID.length <15) continue;
-            console.log(roomID);
+            // console.log(roomID);
             let roomInfo = await dbhgetall(roomID);
             
             // room 호가 수집
             
             // roomInfo 순회하면서 playerInfo 가져옴
-            console.log(roomInfo);
+            // console.log(roomInfo);
             for (let socketID in roomInfo) {
                 if (socketID.length != 15) continue;
                 let playerInfo = JSON.parse(roomInfo[socketID]);

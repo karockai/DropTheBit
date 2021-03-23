@@ -94,6 +94,7 @@ export default function TradeStock(props) {
         SetNewVolume(volume + 1);
     }
     function VolumeDown(volume) {
+        if (volume === 0) return;
         SetNewVolume(volume - 1);
     }
     function BidUp() {
@@ -202,13 +203,13 @@ export default function TradeStock(props) {
     }, [currentVolume, currentBid, isBind]);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
-    useEffect(() => {
+    useLayoutEffect(() => {
         const responseBid = newBid;
         console.log('responseBid', responseBid);
         SetBid(responseBid);
     }, [newBid]); //@ 호가가 변할때이다.
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const responseVolume = newVolume;
         console.log('responseVolume', responseVolume);
         SetVolume(responseVolume);

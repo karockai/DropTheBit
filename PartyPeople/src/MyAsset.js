@@ -1,4 +1,4 @@
-import React, { useEffect, useState, makeStyle } from 'react';
+import React, { useEffect, useState, makeStyle, useLayoutEffect } from 'react';
 import {
     Button,
     TextField,
@@ -41,26 +41,26 @@ export default function MyAsset(props) {
     const [myCash, setCash] = useState(0);
     const [myAsset, setAsset] = useState(0);
     const [myCoin, setCoin] = useState(0);
-
+    const [isInit, setInit] = useState(false);
+    if(!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
-    useEffect(() => {
-        return () => {
-            if (props.socket == null) {
-                props.requestSocket('MyAsset');
-            } else {
-                props.socket.on('refreshAsset', (data) => {
-                    //@ buyreq
-                    console.log('자산을 갱신합니다.', data);
-                    const currentCash = data.cash;
-                    const currentAsset = data.asset;
-                    const currentCoin = data.coinVol;
-                    setCash(currentCash);
-                    setAsset(currentAsset);
-                    setCoin(currentCoin);
-                });
-            }
-        };
-    });
+    useLayoutEffect(() => {
+        if (props.socket == null) {
+            props.requestSocket('MyAsset',props.socket);
+            setInit(true);
+        } else {
+            props.socket.on('refreshWallet', (data) => {
+                //@ buyreq
+                console.log('자산을 갱신합니다.', data);
+                const currentCash = data.cash;
+                const currentAsset = data.asset;
+                const currentCoin = data.coinVol;
+                setCash(currentCash);
+                setAsset(currentAsset);
+                setCoin(currentCoin);
+            });
+        }
+    },[isInit]);
 
     return (
         <Grid wrap="wrap" container direction="row" style={{ height: '100%' }}>
