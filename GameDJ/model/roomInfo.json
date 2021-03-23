@@ -17,6 +17,7 @@
             }
         },
         "gameTime" : "Number",
-        "music" : "String"
+        "music" : "String",
+        "player"
     
 }

@@ -26,8 +26,8 @@ class GameManager extends React.Component {
             roomID: null,
             roomInfo: null,
         };
-        // this.socket = io("15.165.129.19:5000"); //_ http://15.165.129.19:5000/
-        this.socket = io('localhost:5000');
+        this.socket = io('15.165.129.19:5000'); //_ http://15.165.129.19:5000/
+        // this.socket = io('localhost:5000');
         this.socket.on('connect', () => {
             console.log('connnected', this.socket);
             this.socket.emit('join');
