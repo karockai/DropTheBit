@@ -26,10 +26,20 @@ const useStyles = makeStyles((theme) => ({
 function MusicInput(props) {
     const classes = useStyles();
     const [music, setMusic] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+
     const handleChange = (event) => {
         setMusic(event.target.value);
         props.socket.emit('settingsUpdate_Req',
         {roomID : props.roomID, musicName : music});
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
     };
 
     function MusicMenu() {
@@ -47,21 +57,30 @@ function MusicInput(props) {
         );
     }
     return (
-      <div>
+        <div>
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-helper-label">Music</InputLabel>
+          <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
           <Select
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
+            labelId="demo-controlled-open-select-label"
+            id="demo-controlled-open-select"
+            open={open}
+            onClose={handleClose}
+            onOpen={handleOpen}
             value={music}
             onChange={handleChange}
           >
-            <MusicMenu/>
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
           </Select>
-          <FormHelperText>Some important helper text</FormHelperText>
         </FormControl>
-      </div>
-    );
+  
+        </div>
+      );
+    
 }
   
   
@@ -99,7 +118,7 @@ function ShowMusic(props) {
 
 export default function SelectMusic(props) {
   const classes = useStyles();
-
+  
   return(
     <Grid>
         <Grid>
