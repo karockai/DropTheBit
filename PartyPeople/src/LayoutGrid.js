@@ -11,8 +11,9 @@ import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
-import { useSound, playSound } from './useSound';
+import { useSound, playSound, musicDuration } from './useSound';
 import Bit from './audios/Mausoleum_Mash.mp3';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,6 +34,8 @@ export default function LayoutGrid(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
+    console.log('musicDuration');
+    console.log(musicDuration(Bit));
     useSound(Bit, 0.7, 2000);
     return (
         <React.Fragment>

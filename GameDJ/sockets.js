@@ -39,7 +39,6 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(() => {
             new Refresh(io).renewalCurCoin();
-            new Refresh(io).renewalInfo();
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
@@ -95,13 +94,10 @@ export default {
                 await new Room(io, socket).joinRoom(data);
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
-            socket.on('settingsUpdate_Req', (music_name) =>
-                new Room(io, socket).updateSettings(music_name)
+            socket.on('settingsUpdate_Req', (data) =>
+                new Room(io, socket).updateSettings(data)
             );
-            socket.on(
-                'startGame_Req',
-                async () => await new Game(io, socket).startGame()
-            );
+            socket.on('startGame_Req', () => new Game(io, socket).startGame());
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()
             );
