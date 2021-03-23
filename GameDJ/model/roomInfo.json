@@ -7,11 +7,11 @@
             "cash" : "Number",
             "asset" : "Number",
             "coinVol" : "Number",
-            "bidInPlayer" :
+            "bid" :
             {
                 "price" : "vol"
             },
-            "askInPlayer" :
+            "ask" :
             {
                 "price" : "vol"
             }

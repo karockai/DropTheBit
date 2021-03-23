@@ -65,14 +65,18 @@ class Game {
 
         // 2. player_info 가져오기
         console.log('** BUY REQUEST :', roomID, socketID);
-        let playerInfo = await dbhget(roomID, socketID);
+        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
         console.log('** BUY REQUEST :', playerInfo);
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
-
+        
         // 3. curPrice 가져오기
-        let curPrice = Number(await dbget('curCoin', 'curPrice'));
+        let curPriceData = JSON.parse(await dbget('curCoin'));
+        let curPrice = curPriceData['curPrice'];
+        // let curPrice = await dbget('curCoin');
+        console.log(curPrice);
+        console.log("어디까지 진행되나요");
 
         let asset_res = {};
         let buy_res = {};
@@ -86,7 +90,9 @@ class Game {
             // 6. 현재가 >= 요청가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
             if (intReqPrice >= curPrice) {
                 // 6-1. cash, coin 갯수 갱신
+                console.log(cash);
                 cash -= curPrice * intReqVol;
+                console.log(cash, curPrice, intReqVol);
                 coinVol += intReqVol;
 
                 // 6-2. buy_res update
@@ -103,7 +109,7 @@ class Game {
                 // 7. 현재가 < 요청가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
                 // 7-1. cash 갱신
-                cash -= intReqPrice * intReqPrice;
+                cash -= intReqPrice * intReqVol;
                 buy_res['type'] = '호가';
                 asset_res['coinVol'] = String(coinVol);
                 asset_res['cash'] = String(cash);
@@ -113,19 +119,22 @@ class Game {
                 playerInfo['cash'] = String(cash);
 
                 // 4-3. player 호가 목록 등록
-                if (playerInfo['bidInPlayer'].hasOwnProperty(strReqPrice)) {
-                    playerInfo['bidInPlayer'][strReqPrice] = String(
-                        Number(playerInfo['bidInPlayer'][strReqPrice]) +
+                console.log(playerInfo['bid']);
+                if ((playerInfo['bid']).hasOwnProperty(strReqPrice)) {
+                    playerInfo['bid'][strReqPrice] = String(
+                        Number(playerInfo['bid'][strReqPrice]) +
                             intReqVol
                     );
                 } else {
-                    playerInfo['bidInPlayer'][strReqPrice] = strReqVol;
+                    playerInfo['bid'][strReqPrice] = strReqVol;
                     let bidList = JSON.parse(await dbget('bidList'));
+                    bidList[strReqPrice] = {};
                     bidList[strReqPrice][socketID] = roomID;
-                    dbset('bidList', JSON.stringfy(bidList));
+                    console.log(bidList);
+                    dbset('bidList', JSON.stringify(bidList));
                 }
             }
-            dbhset(roomID, socketID, JSON.stringfy(playerInfo));
+            dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : asset_res["result"] = False를 emit
             asset_res['result'] = 'false';
