@@ -29,6 +29,7 @@ class Room {
             asset: '100000000',
             coinVol: '0',
             bid: {},
+            ask: {}
         };
 
         let roomInfo = {
