@@ -76,7 +76,8 @@ class Refresh {
 
                     delete playerInfo['bid'][strBidPrice];
                     dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                    socket.to(socketID).emit('bidDone');
+
+                    io.to(socketID).emit('bidDone');
 
                     delete bidList[strBidPrice][socketID];
                 }

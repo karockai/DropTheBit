@@ -26,7 +26,8 @@ class Game {
     async startGame() {
         const { io, socket } = this;
         let roomID = socket.roomID;
-        let musicTime = Number(await dbhget(roomID, gameTime));
+        // let musicTime = Number(await dbhget(roomID, gameTime));
+        let musicTime = 3000;
 
         await socket.to(roomID).emit('startGame', gameTime);
         let ReadyPlayer = socket.on('allReady', () => {
@@ -37,7 +38,6 @@ class Game {
             return Promise(function (resolve, reject) {
                 let schedule = setInterval(() => {
                     renewalCurCoin(roomID);
-                    sendRoomInfo(roomID);
                 }, 1000);
                 // gameTime만큼 멈췄다가, 끝나면 endGame 실행
 
