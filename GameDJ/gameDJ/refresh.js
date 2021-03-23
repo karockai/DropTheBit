@@ -160,6 +160,12 @@ class Refresh {
         }
     }
 
+    async roomRank() {
+        const { io } = this;
+
+        let roonRankList = [];
+    }
+
     // refreshBid 갱신
     async refreshBid() {
         const { io } = this;
