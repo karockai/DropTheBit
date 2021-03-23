@@ -47,7 +47,7 @@ def on_message(ws, msg):
         hoka_result[f'ask_price{i}'] = msg['obu'][i]['ap']
         hoka_result[f'bid_price{i}'] = msg['obu'][i]['bp']
         hoka_result[f'ask_size{i}'] = msg['obu'][i]['as']
-        hoka_result[f'ask_size{i}'] = msg['obu'][i]['bs']
+        hoka_result[f'bid_size{i}'] = msg['obu'][i]['bs']
 
     hoka_result = json.dumps(hoka_result)
     # time.sleep(1)
@@ -72,7 +72,7 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BTC"]},{"format":"SIMPLE"}]'
-        request2 = '[{"ticket": "dantanamoo"},{"type": "orderbook", "codes": ["KRW-AQT.5"]},{"format":"SIMPLE"}]'
+        request2 = '[{"ticket": "dantanamoo"},{"type": "orderbook", "codes": ["KRW-BCHA.5"]},{"format":"SIMPLE"}]'
 #
         # ws.send(request1)
         ws.send(request2)

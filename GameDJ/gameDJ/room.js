@@ -11,7 +11,7 @@ import {
     dbllen 
 } from './redis.js';
 import { nanoid } from 'nanoid';
-import { getDuration } from '../../PartyPeople/src/useSound';
+import { getDuration } from './usesound.js';
 import fs from 'fs';
 
 
@@ -48,7 +48,7 @@ class Room {
         // console.log('roomList : ', await dblrange('roomList', 0, -1));
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = fs.readdir('../PartyPeople/src/audios', (err, filelist)=> {
+        let musicList = fs.readdir('../PartyPeople/src/audios/music', (err, filelist)=> {
             console.log(filelist);
             socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
@@ -98,11 +98,11 @@ class Room {
         const { socket } = this;
 
         const roomID = data.roomID;
-        let musciPath = '../PartyPeople/src/audios/' + data.musicName;
+        let musciPath = '../PartyPeople/src/audios/music/' + data.musicName;
         let musicTime = Math.round(getDuration(musicPath)['PromiseResult']) + 3; // 초 단위로 저장됨 (클라에서 파싱해서 사용)
         dbhset(roomID, music, data.musicName);
         dbhset(roomID, gameTime, musicTime);
-        io.to(data.roomID).emit('settingsUpdate_Res', data);
+        io.to(data.roomID).emit('settingsUpdate_Res', musicTime);
     }
 }
 
