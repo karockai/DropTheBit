@@ -67,7 +67,7 @@ class StockChart extends React.Component {
                         orient="right"
                         displayFormat={format('.2f')}
                     />
-                    <CandlestickSeries />
+                    <CandlestickSeries {...candlesAppearance} />
                     <OHLCTooltip forChart={1} origin={[-40, 0]} />
                 </Chart>
                 <CrossHairCursor />

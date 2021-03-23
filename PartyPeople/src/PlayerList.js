@@ -1,4 +1,6 @@
 import React, { useState, makeStyle } from 'react';
+import { createMuiTheme } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
 import {
     IconButton,
     Button,
@@ -9,6 +11,12 @@ import {
     makeStyles,
 } from '@material-ui/core';
 
+const greenTheme = createMuiTheme({
+    palette: {
+      primary: green,
+    },
+  });
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -16,13 +24,13 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
-        color: theme.palette.text.secondary,
+        color: theme.palette.primary,
     },
     score: {},
 }));
 
 function MakePlayerPaper(props) {
-    const classes = useStyles();
+    const classes = useStyles(greenTheme);
 
     return (
         <Paper className={classes.paper}>
@@ -61,6 +69,24 @@ export default function PlayerList(props) {
             justify="center"
             alignItems="stretch"
         >
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
+            <Grid item xs={testXs}>
+                <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
+            </Grid>
             <Grid item xs={testXs}>
                 <MakePlayerPaper roomID={props.roomID} roomInfo={props.roomInfo}/>
             </Grid>

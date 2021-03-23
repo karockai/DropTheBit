@@ -1,4 +1,12 @@
-import { dbset, dbget, dbhset, dbhget, dbhgetall, dbrpush, dblrem, dblrange, dbllen } from './redis.js';
+import {
+    dbset,
+    dbget,
+    dbhset,
+    dbhget,
+    dbhgetall,
+    dbrpush,
+    dblrem,
+} from './redis.js';
 import { nanoid } from 'nanoid';
 
 class Room {
@@ -30,7 +38,6 @@ class Room {
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
         // await dbrpush(roomList, roomID);
-        // console.log(await dblrange(roomList, 0, -1));
         socket.roomID = roomID;
         socket.join(roomID);
         socket.emit('createPrivateRoom_Res', {
