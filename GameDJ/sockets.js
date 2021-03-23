@@ -4,6 +4,7 @@ import Room from './gameDJ/room.js';
 import Game from './gameDJ/game.js';
 import Disconnect from './gameDJ/disconnect.js';
 import Test from './gameDJ/testfile.js';
+import Refresh from './gameDJ/refresh.js';
 
 import { dbset, dbget } from './gameDJ/redis.js';
 
@@ -25,23 +26,19 @@ export default {
         };
         dbset('bidList', JSON.stringify(bidDummy));
         dbset('askList', JSON.stringify(askDummy));
+        // db setting  ------------------------------------ <<
 
+        // curPrice refresh --------------------------------- >>
         const gamePlay = function () {
             return Promise(function (resolve, reject) {
                 let schedule = setInterval(() => {
-                    renewalCurCoin();
+                    new Refresh.renewalCurCoin();
                     // sendRoomInfo(roomID);
                 }, 1000);
-
-                // setTimeout(() => {
-                //     clearInterval(schedule);
-                //     resolve();
-                // }, musicTime);
             });
         };
         gamePlay();
-
-        // db setting  ------------------------------------ <<
+        // curPrice refresh --------------------------------- <<
 
         io.on('connection', (socket) => {
             console.log('connected');
