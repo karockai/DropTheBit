@@ -22,6 +22,8 @@ const dbhexi = util.promisify(client.hexists).bind(client);
 const dbhgetall = util.promisify(client.hgetall).bind(client);
 const dbrpush = util.promisify(client.rpush).bind(client);
 const dblrem = util.promisify(client.lrem).bind(client);
+const dblrange = util.promisify(client.lrange).bind(client);
+const dbllen = util.promisify(client.llen).bind(client);
 
 // DB function ----------------------------<<
 
@@ -30,5 +32,5 @@ const dblrem = util.promisify(client.lrem).bind(client);
 //     dbget
 // };
 
-export { dbset, dbget, dbhset, dbhget, dbhexi, dbhgetall, dbrpush, dblrem };
+export { dbset, dbget, dbhset, dbhget, dbhexi, dbhgetall, dbrpush, dblrem, dblrange, dbllen };
 // ///////////////////////////////////////////////////////////////
