@@ -35,7 +35,7 @@ class Room {
         roomInfo[socketID] = playerInfo;
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
-        await dbrpush(roomList, roomID);
+        // await dbrpush(roomList, roomID);
 
         socket.roomID = roomID;
         console.log(socket);
