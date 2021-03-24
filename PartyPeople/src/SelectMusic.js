@@ -38,7 +38,7 @@ export default function SelectMusic(props) {
 
       const handleChange = (event) => {
         console.log(event.target.value);
-        //   setMusic(event.target.value);
+          setMusic(event.target.value);
         //   console.log(music);
           props.socket.emit('settingsUpdate_Req',
           {roomID : props.roomID, musicName : event.target.value});
@@ -95,12 +95,17 @@ export default function SelectMusic(props) {
   
       useEffect(() => {
           props.socket.on('settingsUpdate_Res', (data) => {
-              if (data) {
-                  props.setTime(data);
-                  let minute  = data / 60;
-                  let second = data - minute;
-                  strSetTime(String(minute)+' : '+String(second));
-              }
+            // let time = data;
+            var time = 300;
+            // if (data) {
+            props.setTime(time);
+            console.log(time);
+            var minute  = time / 60;
+            var second = time - minute;
+            console.log(minute);
+            console.log(second);
+            strSetTime(String(time)+' : '+String(second));
+              // }
           });
       }, []);
 
