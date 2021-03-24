@@ -71,7 +71,6 @@ function ChartTitle(props) {
         var time = props.time;
         time = time -1;
         var minute  = parseInt(time / 60);
-        console.log(minute);
         var second = time - minute * 60;
         minute = minute >= 10 ? String(minute) : '0'+String(minute)
         second = second >= 10 ? String(second) : '0'+String(second)
