@@ -1,4 +1,5 @@
-import { blue, red } from '@material-ui/core/colors';
+import { blue, red, grey } from '@material-ui/core/colors';
+import { Grid } from '@material-ui/core';
 import { React, useState, useEffect } from 'react';
 import { render } from 'react-dom';
 
@@ -50,6 +51,39 @@ function ChartTitle(props) {
         };
     }, [props.data]);
 
+    function getTime() {
+        var time = props.time;
+        time = time -1;
+        var minute  = time / 60;
+        var second = time - minute * 60;
+        minute = minute >= 10 ? String(minute) : '0'+String(minute)
+        second = second >= 10 ? String(second) : '0'+String(second)
+        // props.setTime(time);
+        return (
+            <>
+                {minute+' : '+second}    
+            </>
+        );
+    }
+    
+    const ShowTime = ()=> {
+        // getTime();
+        var time = props.time;
+        time = time -1;
+        var minute  = parseInt(time / 60);
+        console.log(minute);
+        var second = time - minute * 60;
+        minute = minute >= 10 ? String(minute) : '0'+String(minute)
+        second = second >= 10 ? String(second) : '0'+String(second)
+        // props.setTime(time);
+        setInterval(1000);      
+        return (
+            <>
+                {minute+' : '+second}    
+            </>
+        );
+    }
+
     function SplitByThree(value) {
         if (value.length <= 3) return value;
         return (
@@ -83,10 +117,20 @@ function ChartTitle(props) {
         <>
             <div className="ChartTitle" style={textColor}>
                 <span style={{ display: 'block' }}>
-                    <strong style={{ fontSize: '40px' }}>
-                        {SplitByThree(parseWonToStr(currentWon))}
-                    </strong>
-                    {' ' + unit}
+                <Grid container justify='space-between'>
+                    <Grid>
+                        <strong style={{ fontSize: '40px' }}>
+                            {SplitByThree(parseWonToStr(currentWon))}
+                            
+                        </strong>
+                        {' ' + unit}
+                    </Grid>
+                    <Grid>
+                        <span style={{ color: grey[900] ,}}>
+                            <ShowTime/>
+                        </span>
+                    </Grid>
+                </Grid>
                 </span>
                 <span>
                     <p
@@ -102,6 +146,7 @@ function ChartTitle(props) {
                     <strong style={{ display: 'inline' }}>
                         {' ' + isBullIcon + ' ' + parseWonToStr(upDown)}
                     </strong>
+
                 </span>
             </div>
         </>

@@ -113,12 +113,12 @@ class GameManager extends React.Component {
     };
 
     SetRoomIdAndInfo = (data) => {
-        console.log(data.roomID);
-        console.log(data.roomInfo);
         this.setState({
             roomID: data.roomID,
             roomInfo: data.roomInfo,
         });
+        console.log(data.roomID);
+        console.log(data.roomInfo);
     };
 
     render() {
