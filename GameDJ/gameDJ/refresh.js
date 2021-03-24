@@ -16,79 +16,101 @@ class Refresh {
     constructor(io) {
         this.io = io;
     }
-
+    
     async renewalCurCoin() {
         const { io } = this;
         // console.log(
         //     '----------------------renewalCurCoin------------------------'
-        // );
-        // 1. bidList 불러옴
-        let curCoin = JSON.parse(await dbget('curCoin'));
-
-        io.emit('chart', curCoin);
-        let prePrice = curCoin['prePrice'];
-        let curPrice = curCoin['curPrice'];
-
-        // 2. prePrice랑 curPrice를 비교
-        // 2-1. curPrice === prePrice면 아무것도 하지않는다.
-        // 2-2. curPrice >= prePrice면, askPrice에서 curPrice보다 낮은 호가를 처리한다.
-        if (curPrice > prePrice) {
-            let askList = JSON.parse(await dbget('askList'));
-            // askPrice가 curPrice보다 낮은지 확인
-
-            for (let strAskPrice in askList) {
-                let intAskPrice = Number(strAskPrice);
-                if (intAskPrice > curPrice) continue;
-
-                // 낮다면 거래를 체결한다.
-                for (let socketID in askList[strAskPrice]) {
-                    let roomID = askList[strAskPrice][socketID];
-                    let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-                    let cash = Number(playerInfo['cash']);
-                    let askVol = Number(playerInfo['ask'][strAskPrice]);
-                    cash += askVol * intAskPrice;
-                    playerInfo['cash'] = String(cash);
-
-                    delete playerInfo['ask'][strAskPrice];
-                    console.log(playerInfo);
-                    dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                    io.to(socketID).emit('askDone');
-
-                    delete askList[strAskPrice][socketID];
+        //     );
+            // 1. bidList 불러옴
+            let curCoin = JSON.parse(await dbget('curCoin'));
+            
+            io.emit('chart', curCoin);
+            // console.log(curCoin);
+            let prePrice = curCoin['prePrice'];
+            let curPrice = curCoin['curPrice'];
+            let updateCount = 0;
+            // console.log("현재가", curPrice, "이전가", prePrice);
+            // 2. prePrice랑 curPrice를 비교
+            // 2-1. curPrice === prePrice면 아무것도 하지않는다.
+            // 2-2. curPrice >= prePrice면, askPrice에서 curPrice보다 낮은 호가를 처리한다.
+            if (curPrice > prePrice) {
+                let askList = JSON.parse(await dbget('askList'));
+                // askPrice가 curPrice보다 낮은지 확인
+                
+                for (let strAskPrice in askList) {
+                    let intAskPrice = Number(strAskPrice);
+                    if (intAskPrice > curPrice) continue;
+                    
+                    // 낮다면 거래를 체결한다.
+                    for (let socketID in askList[strAskPrice]) {
+                        let roomID = askList[strAskPrice][socketID];
+                        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
+                        let cash = Number(playerInfo['cash']);
+                        let askVol = Number(playerInfo['ask'][strAskPrice]);
+                        cash += askVol * intAskPrice;
+                        playerInfo['cash'] = String(cash);
+                        
+                        delete playerInfo['ask'][strAskPrice];
+                        // console.log("판매 중 player info 저장", playerInfo);
+                        await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+                        io.to(socketID).emit('askDone');
+                        
+                        delete askList[strAskPrice][socketID];
+                        updateCount += 1;
+                    }
+                    if(Object.keys(askList[strAskPrice]).length === 0){
+                        // console.log("삭제해버립니다 : 판매", strAskPrice);
+                        delete askList[strAskPrice];
+                    }
+                }
+                if(updateCount !== 0){
+                    // console.log("호가 체결 결과 : 판매");
+                    // console.log(askList);
+                    await dbset('askList', JSON.stringify(askList));
                 }
             }
-            await dbset('askList', JSON.stringify(askList));
-        }
-
-        // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
-        else if (curPrice < prePrice) {
-            let bidList = JSON.parse(await dbget('bidList'));
-
-            // bidPrice가 curPrice보다 높은지 확인
-            for (let strBidPrice in bidList) {
-                let intBidPrice = Number(strBidPrice);
-                if (intBidPrice < curPrice) continue;
-
-                // 높다면 거래를 체결한다.
-                for (let socketID in bidList[strBidPrice]) {
-                    let roomID = bidList[strBidPrice][socketID];
-                    let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-                    let coinVol = Number(playerInfo['coinVol']);
-                    let bidVol = Number(playerInfo['bid'][strBidPrice]);
-                    coinVol += bidVol;
-                    playerInfo['coinVol'] = String(coinVol);
-
-                    delete playerInfo['bid'][strBidPrice];
-                    dbhset(roomID, socketID, JSON.stringify(playerInfo));
-
-                    io.to(socketID).emit('bidDone');
-
-                    delete bidList[strBidPrice][socketID];
+            
+            // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
+            else if (curPrice < prePrice) {
+                let bidList = JSON.parse(await dbget('bidList'));
+                
+                // bidPrice가 curPrice보다 높은지 확인
+                for (let strBidPrice in bidList) {
+                    let intBidPrice = Number(strBidPrice);
+                    // console.log("얘는 통과할까요?",intBidPrice);
+                    if (intBidPrice < curPrice) continue;
+                    
+                    // 높다면 거래를 체결한다.
+                    for (let socketID in bidList[strBidPrice]) {
+                        let roomID = bidList[strBidPrice][socketID];
+                        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
+                        let coinVol = Number(playerInfo['coinVol']);
+                        let bidVol = Number(playerInfo['bid'][strBidPrice]);
+                        coinVol += bidVol;
+                        playerInfo['coinVol'] = String(coinVol);
+                        
+                        delete playerInfo['bid'][strBidPrice];
+                        // console.log("구매 중 PlayerInfo 저장", playerInfo);
+                        await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+                        
+                        io.to(socketID).emit('bidDone');
+                        
+                        delete bidList[strBidPrice][socketID];
+                        updateCount += 1;
+                    }
+                    if(Object.keys(bidList[strBidPrice]).length === 0){
+                        // console.log("삭제해버립니다 : 구매", strBidPrice);
+                        delete bidList[strBidPrice];
+                    }
                 }
-            }
-            await dbset('bidList', JSON.stringify(bidList));
+                if(updateCount !== 0){
+                    // console.log("호가 체결 결과 : 구매");
+                    console.log(bidList);
+                    await dbset('bidList', JSON.stringify(bidList));
+                }
         }
-
+        
         // console.log(
         //     '----------------------renewalCurCoin End------------------------'
         // );
@@ -98,9 +120,9 @@ class Refresh {
     async renewalInfo(curPrice) {
         const { io } = this;
         console.log(curPrice);
-        // console.log(
-        //     '----------------------renewalInfo End------------------------'
-        // );
+        console.log(
+            '----------------------renewalInfo Start------------------------'
+        );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
@@ -250,6 +272,7 @@ class Refresh {
         bidList.push(bidObject2);
         bidList.push(bidObject3);
         bidList.push(bidObject4);
+
         io.emit('refreshBid', bidList);
     }
 }

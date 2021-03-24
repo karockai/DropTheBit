@@ -79,8 +79,8 @@ class Game {
         // 2. player_info 가져오기
         // console.log('** BUY REQUEST :', roomID, socketID);
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-        console.log('** BUY REQUEST 요청내용', reqJson);
-        console.log('** BUY REQUEST 기존 Data', playerInfo);
+        // console.log('** BUY REQUEST 요청내용', reqJson);
+        // console.log('** BUY REQUEST 기존 Data', playerInfo);
         // console.log('** BUY REQUEST :', playerInfo);
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
@@ -90,7 +90,7 @@ class Game {
         let curCoin = JSON.parse(await dbget('curCoin'));
         let curPrice = curCoin['curPrice'];
         // let curPrice = await dbget('curCoin');
-        console.log(curPrice);
+        // console.log(curPrice);
 
         let refreshWallet = {};
         let buy_res = {};
@@ -120,7 +120,7 @@ class Game {
                 // 6-3. playerInfo Update
                 playerInfo['cash'] = String(cash);
                 playerInfo['coinVol'] = String(coinVol);
-                console.log('현재가로 구매 완료 :', playerInfo);
+                // console.log('현재가로 구매 완료 :', playerInfo);
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
                 // 7-1. cash 갱신
@@ -145,12 +145,12 @@ class Game {
                     let bidList = JSON.parse(await dbget('bidList'));
                     bidList[strReqPrice] = {};
                     bidList[strReqPrice][socketID] = roomID;
-                    console.log('호가 등록 완료', bidList);
+                    // console.log('호가 등록 완료', bidList);
                     dbset('bidList', JSON.stringify(bidList));
                 }
             }
-            console.log('BUY End');
-            dbhset(roomID, socketID, JSON.stringify(playerInfo));
+            // console.log('BUY End', playerInfo);
+            await dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
             refreshWallet['result'] = 'false';
@@ -181,7 +181,7 @@ class Game {
         let curCoin = JSON.parse(await dbget('curCoin'));
         let curPrice = curCoin['curPrice'];
         // let curPrice = await dbget('curCoin');
-        console.log(curPrice);
+        // console.log(curPrice);
 
         let refreshWallet = {};
         let sell_res = {};
@@ -236,12 +236,10 @@ class Game {
                     let askList = JSON.parse(await dbget('askList'));
                     askList[strReqPrice] = {};
                     askList[strReqPrice][socketID] = roomID;
-                    console.log(askList);
                     dbset('askList', JSON.stringify(askList));
                 }
             }
-            console.log('SELL', playerInfo);
-            dbhset(roomID, socketID, JSON.stringify(playerInfo));
+            await dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
             refreshWallet['result'] = 'false';
@@ -264,10 +262,10 @@ class Game {
         cash += bidVol * Number(bidPrice);
         playerInfo['cash'] = String(cash);
         delete playerInfo['bid'][bidPrice];
-        dbhset(roomID, socketID, JSON.stringify(playerInfo));
+        await dbhset(roomID, socketID, JSON.stringify(playerInfo));
 
         delete bidList[socketID];
-        dbhset('bidList', bidPrice, JSON.stringify(bidList));
+        await dbhset('bidList', bidPrice, JSON.stringify(bidList));
     }
 
     // 매도 요청 취소
