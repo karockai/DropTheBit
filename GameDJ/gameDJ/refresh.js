@@ -32,7 +32,7 @@ class Refresh {
         let updateCount = 0;
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
-        chartData.push(curPrice);
+        chartData.push(curCoin);
         if (chartData.length > 50) {
             chartData.shift();
         }
