@@ -27,7 +27,9 @@ class Game {
         const { io, socket } = this;
         // let musicTime = Number(await dbhget(roomID, gameTime));
         let musicTime = 10000;
-
+        let roomID = socket.roomID;
+        io.to(roomID).emit('chartData', chartData);
+        console.log(chartData);
         // await socket.to(roomID).emit('startGame', gameTime);
         let ReadyPlayer = socket.on('allReady', () => {
             // 모두가 준비되면 게임 시작
@@ -52,7 +54,7 @@ class Game {
                 return b['asset'] - a['asset'];
             });
 
-            socket.to(roomID).emit('gameOver', leaderBoard);
+            io.to(roomID).emit('gameOver', leaderBoard);
         }
 
         let gameSchedule = setTimeout(gameOver, musicTime);
