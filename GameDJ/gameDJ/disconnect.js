@@ -27,7 +27,7 @@ class Disconnect {
         // 근데 lobby인지, game중인지 다르게 줘야하나?
         if (roomID) {
             await dbhdel(roomID, socket.id);
-            console.log('disconnect roomID 있음');
+            // console.log('disconnect roomID 있음');
             let playerCnt = 0;
             let roomInfo = await dbhgetall(roomID);
             for(const [key, value] of Object.entries(roomInfo)) {
@@ -35,17 +35,17 @@ class Disconnect {
                     playerCnt++;
                 }
             };
-            console.log('disconnect 사람수 ', playerCnt);
+            // console.log('disconnect 사람수 ', playerCnt);
             // 방에 사람이 0명이 되면 방을 지운다 
             if (playerCnt === 0){
-                console.log('disconnect 방을 지워요 ', playerCnt);
+                // console.log('disconnect 방을 지워요 ', playerCnt);
                 dbdel(roomID);
             }
             else{
-                console.log('disconnect 방을 지우지 않아요 ', playerCnt);
+                // console.log('disconnect 방을 지우지 않아요 ', playerCnt);
                 io.to(roomID).emit('disconnection', socket.id);
             }
-            console.log('disconnect 방 존재 여부 확인 ', await dbhgetall(roomID));
+            // console.log('disconnect 방 존재 여부 확인 ', await dbhgetall(roomID));
         }
     }
 }
