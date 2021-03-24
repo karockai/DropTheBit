@@ -11,7 +11,7 @@ import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
-import { useSound, playSound } from './useSound';
+import { useSound, playSound, getDuration } from './useSound';
 import Bit from './audios/music/King_Conga.mp3';
 import GameOverModal from './GameOverModal';
 
@@ -35,6 +35,13 @@ export default function LayoutGrid(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
+    // getDuration(Bit).then(function(time){
+    //     console.log('duration ', time);
+    //     let musicTime = Math.round(time);
+    //     console.log('musicTime ', musicTime);
+    //     //   props.socket.emit('settingsUpdate_Req',
+    //     //   {roomID : props.roomID, musicName : musicName, musicTime : musicTime});
+    // });
     useSound(Bit, 0.7, 2000);
 
     useEffect(() => {
