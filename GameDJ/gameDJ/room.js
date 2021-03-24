@@ -100,7 +100,9 @@ class Room {
         let musicPath = '../PartyPeople/src/audios/music/' + data.musicName;
         console.log(musicPath);
         // console.log(data.musicName);
+        console.log(await getDuration(musicPath)['PromiseResult']);
         let musicTime = Math.round(getDuration(musicPath)['PromiseResult']) + 3; // 초 단위로 저장됨 (클라에서 파싱해서 사용)
+        console.log('musicTime ', musicTime);
         dbhset(roomID, 'music', data.musicName);
         dbhset(roomID, 'gameTime', musicTime);
         console.log(await dbhget(roomID, 'music'));
