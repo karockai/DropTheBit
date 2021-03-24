@@ -129,9 +129,9 @@ class Refresh {
     async renewalInfo(curPrice) {
         const { io } = this;
         console.log(curPrice);
-        console.log(
-            '----------------------renewalInfo Start------------------------'
-        );
+        // console.log(
+        //     '----------------------renewalInfo Start------------------------'
+        // );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];

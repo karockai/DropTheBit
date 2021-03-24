@@ -99,7 +99,7 @@ class Room {
 
         const roomID = data.roomID;
         let musciPath = '../PartyPeople/src/audios/music/' + data.musicName;
-        let musicTime = Math.round(getDuration(musicPath)['PromiseResult']) + 3; // 초 단위로 저장됨 (클라에서 파싱해서 사용)
+        let musicTime = Math.round(getDuration(musicPath)['PromiseResult']); // 초 단위로 저장됨 (클라에서 파싱해서 사용)
         dbhset(roomID, music, data.musicName);
         dbhset(roomID, gameTime, musicTime);
         io.to(data.roomID).emit('settingsUpdate_Res', musicTime);

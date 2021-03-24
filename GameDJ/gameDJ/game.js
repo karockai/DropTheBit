@@ -25,15 +25,22 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-        // let musicTime = Number(await dbhget(roomID, gameTime));
-        let musicTime = 10000;
+        // let gameTime = Number(await dbhget(roomID, gameTime)) + 2;
+        let gameTime = 10000;
         let roomID = socket.roomID;
-        io.to(roomID).emit('chartData', chartData);
+        io.to(roomID).emit('chartData', { chartData : chartData, gameTime : gameTime });
         console.log(chartData);
         // await socket.to(roomID).emit('startGame', gameTime);
         let ReadyPlayer = socket.on('allReady', () => {
             // 모두가 준비되면 게임 시작
         });
+
+        async function realStart() {
+            const { io, socket } = this;
+            let roomID = socket.roomID;
+            let musicName = await dbhget(roomID, music);
+            io.to(roomID).emit('startGame_Real', musicName);
+        }
 
         async function gameOver() {
             let roomID = socket.roomID;
@@ -57,7 +64,8 @@ class Game {
             io.to(roomID).emit('gameOver', leaderBoard);
         }
 
-        let gameSchedule = setTimeout(gameOver, musicTime);
+        let gameSchedule1 = setTimeout(realStart, 3000);
+        let gameSchedule2 = setTimeout(gameOver, (gameTime + 3) * 1000);
     }
 
     // 매수 요청 등록
