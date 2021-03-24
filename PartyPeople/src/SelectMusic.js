@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
 export default function SelectMusic(props) {
   const classes = useStyles();
   const [music, setMusic] = React.useState('');
+  const [strTime, strSetTime] = React.useState('00 : 00');
 
   function MusicInput() {
-
       const handleChange = (event) => {
         console.log(event.target.value);
           setMusic(event.target.value);
@@ -91,21 +91,18 @@ export default function SelectMusic(props) {
     
     
   function ShowMusic() {
-      const [strTime, strSetTime] = React.useState('00 : 00');
+
   
       useEffect(() => {
           props.socket.on('settingsUpdate_Res', (data) => {
             // let time = data;
             var time = 300;
-            // if (data) {
             props.setTime(time);
-            console.log(time);
             var minute  = time / 60;
-            var second = time - minute;
-            console.log(minute);
-            console.log(second);
-            strSetTime(String(time)+' : '+String(second));
-              // }
+            var second = time - minute*60;
+            minute = minute >= 10 ? String(minute) : '0'+String(minute)
+            second = second >= 10 ? String(second) : '0'+String(second)
+            strSetTime(minute+' : '+second);
           });
       }, []);
 
