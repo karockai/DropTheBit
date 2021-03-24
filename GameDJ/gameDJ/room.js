@@ -45,13 +45,13 @@ class Room {
         await dbhset(roomID, socketID, strplayerInfo);
         await dbhset(roomID, 'gameTime', 0);
         await dbhset(roomID, 'music', '');
-        await dbhset('bgmList', 'Deja-Vu.mp3', 265);
+        await dbhset('bgmList', 'Deja_Vu.mp3', 265);
         await dbhset('bgmList', 'King_Conga.mp3', 145);
         await dbhset('bgmList', 'Mausoleum_Mash.mp3', 176);
         dblpush('roomList', roomID);
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = ['Deja-Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
+        let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
         socket.emit('createPrivateRoom_Res', {
         roomInfo: roomInfo,
         roomID: roomID,
