@@ -37,13 +37,13 @@ export default function LayoutGrid(props) {
     useSound(Bit, 0.7, 2000);
 
 
-    useEffect(() => {
-        props.socket.on('gameOver', (readerBoard) => {
-            if (readerBoard) {
-                // GameOver(readerBoard);
-            }
-        });
-    }, []);
+    // useEffect(() => {
+    //     props.socket.on('gameOver', (readerBoard) => {
+    //         if (readerBoard) {
+    //             // GameOver(readerBoard);
+    //         }
+    //     });
+    // }, []);
 
     // const GameOver(readerBoard) => {
     //     // modal 띄울 함수 호출

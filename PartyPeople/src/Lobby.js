@@ -10,6 +10,8 @@ import {
 import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
 import SelectMusic from './SelectMusic';
+import Test from './Test';
+
 
 
 function Lobby(props) {
@@ -100,11 +102,12 @@ function Lobby(props) {
     const MusicList = () => {
         return(//props.musicList
             <Grid container>
-                <SelectMusic 
+                {/* <SelectMusic 
                 musicList={props.musicList} 
                 roomID={props.roomID}
                 setTime={props.setTime}
-                />
+                /> */}
+                {/* <Test/> */}
             </Grid>
         );
 

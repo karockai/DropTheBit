@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import GameManager from './GameManager';
 import SimpleContainer from './SimpleContainer';
 import ViewportLayout from './ViewportLayout';
-import Test from './Test';
 
 ReactDOM.render(
     <React.StrictMode>
