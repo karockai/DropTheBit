@@ -62,6 +62,35 @@ export default function MyAsset(props) {
         }
     },[isInit]);
 
+    function SplitByThree(value) {
+        if (value.length <= 3) return value;
+        return (
+            SplitByThree(value.substring(0, value.length - 3)) +
+            ',' +
+            value.substring(value.length - 3, value.length)
+        );
+    }
+
+    const parseWonToStr = (won) => {
+        if (typeof won == 'number') won = won.toString();
+        return won;
+    };
+
+    function ExpBySymbol(value) {
+        let ret = '';
+        if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
+            ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
+            value = value.substring(value.length - 9 + 1);
+        }
+        if (value.length >= 5) { // value 99489230
+            ret += ( value.substring(0, value.length - 5 + 1)  + '만 ' )  // 9948만
+            value = value.substring(value.length - 5 + 1);
+        }
+        ret += value;
+        return ret;
+    }
+
+
     return (
         <Grid wrap="wrap" container direction="row" style={{ height: '100%' }}>
             <Grid
@@ -79,8 +108,9 @@ export default function MyAsset(props) {
                     }}
                 >
                     <Paper style={{ height: '100%' }}>
-                        보유 현금
-                        <h2>{myCash}</h2>
+                        보유 현금 (KRW)
+                        <h4>{SplitByThree(parseWonToStr(myCash))}</h4>
+                        <h6>{ExpBySymbol(parseWonToStr(myCash))}</h6>
                     </Paper>
                 </Grid>
                 <Grid
@@ -88,9 +118,9 @@ export default function MyAsset(props) {
                 >
                     <Paper style={{ height: '100%' }}>
                         보유 화폐수
-                        <h2>
+                        <h3>
                             {myCoin}
-                        </h2>
+                        </h3>
                     </Paper>
                 </Grid>
             </Grid>
@@ -102,8 +132,9 @@ export default function MyAsset(props) {
             >
                 <Grid style={{ width: '100%', height: '100%' }}>
                     <Paper style={{ height: '100%' }}>
-                        총 자산
-                        <h2>{myAsset}</h2>
+                        총 평가 자산 (KRW)
+                        <h2 style={{fontStyle:'italic', fontWeight:'bold'}}>{SplitByThree(parseWonToStr(myAsset))}</h2>
+                        <h6>{ExpBySymbol(parseWonToStr(myAsset))}</h6>
                     </Paper>
                 </Grid>
             </Grid>
