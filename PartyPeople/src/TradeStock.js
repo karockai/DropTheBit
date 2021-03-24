@@ -148,7 +148,7 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
-        props.socket.on('sell_Req', (sbid) => {
+        props.socket.on('sell_Res', (sbid) => {
             SetNewBid(sbid);
             console.log('판매하고 호가 갱신', sbid);
         });
@@ -266,18 +266,16 @@ export default function TradeStock(props) {
                 />
             </Grid>
             <Grid container direction="row" justify="center">
-                <form noValidate autoComplete="off">
-                    <TextField
-                        className="count"
-                        id="outlined-required"
-                        label="수량"
-                        type="number"
-                        size="small"
-                        style={{ width: '80%' }}
-                        value={currentVolume}
-                        onChange={handleVolumeChange}
-                    />
-                </form>
+                <TextField
+                    className="count"
+                    id="outlined-required"
+                    label="수량"
+                    type="number"
+                    size="small"
+                    style={{ width: '80%' }}
+                    value={currentVolume}
+                    onChange={handleVolumeChange}
+                />
                 <ArrowButton
                     upEvent={() => VolumeUp(currentVolume)}
                     downEvent={() => VolumeDown(currentVolume)}
