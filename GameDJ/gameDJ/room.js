@@ -11,7 +11,6 @@ import {
     dbllen 
 } from './redis.js';
 import { nanoid } from 'nanoid';
-import { getDuration } from './usesound.js';
 import fs from 'fs';
 
 
@@ -36,7 +35,7 @@ class Room {
         };
 
         let roomInfo = {
-            gameInfo: '0',
+            gameTime: '0',
             music: '',
         };
 
@@ -44,18 +43,20 @@ class Room {
         console.log('create', roomInfo);
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
+        await dbhset(roomID, 'gameTime', 0);
+        await dbhset(roomID, 'music', '');
+        await dbhset('bgmList', 'Deja-Vu.mp3', 265);
+        await dbhset('bgmList', 'King_Conga.mp3', 145);
+        await dbhset('bgmList', 'Mausoleum_Mash.mp3', 176);
         dblpush('roomList', roomID);
-        // console.log('roomList : ', await dblrange('roomList', 0, -1));
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = fs.readdir('../PartyPeople/src/audios/music', (err, filelist)=> {
-            console.log(filelist);
-            socket.emit('createPrivateRoom_Res', {
-            roomInfo: roomInfo,
-            roomID: roomID,
-            musicList: filelist
-        })
-    });
+        let musicList = ['Deja-Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
+        socket.emit('createPrivateRoom_Res', {
+        roomInfo: roomInfo,
+        roomID: roomID,
+        musicList: musicList
+    })
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -97,14 +98,14 @@ class Room {
     async updateSettings(data) {
         const { io, socket } = this;
         const roomID = data.roomID;
-        let musicPath = '../PartyPeople/src/audios/music/' + data.musicName;
-        console.log(musicPath);
-        // console.log(data.musicName);
-        let musicTime = Math.round(getDuration(musicPath)['PromiseResult']) + 3; // 초 단위로 저장됨 (클라에서 파싱해서 사용)
-        dbhset(roomID, 'music', data.musicName);
-        dbhset(roomID, 'gameTime', musicTime);
-        console.log(await dbhget(roomID, 'music'));
-        console.log(await dbhget(roomID, 'gameTime'));
+        const musicName = data.musicName;
+        const musicTime = Number(await dbhget('bgmList', musicName));
+        console.log('update ', musicName, musicTime);
+        console.log(await dbhgetall(roomID));
+        await dbhset(roomID, 'gameTime', musicTime);
+        await dbhset(roomID, 'music', musicName);
+        console.log('update ',await dbhget(roomID, 'music'));
+        console.log('update ',await dbhget(roomID, 'gameTime'));
         io.to(data.roomID).emit('settingsUpdate_Res', musicTime);
     }
 }

@@ -36,9 +36,8 @@ class Game {
         });
 
         async function realStart() {
-            const { io, socket } = this;
             let roomID = socket.roomID;
-            let musicName = await dbhget(roomID, music);
+            let musicName = await dbhget(roomID, 'music');
             io.to(roomID).emit('startGame_Real', musicName);
         }
 
