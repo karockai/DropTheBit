@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +14,7 @@ import ChartTitle from './ChartTitle';
 import { useSound, playSound, getDuration } from './useSound';
 import Bit from './audios/music/King_Conga.mp3';
 import GameOverModal from './GameOverModal';
-
+import StockDoneList from './StockDoneList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         // padding: theme.spacing(2),
         textAlign: 'center',
-        padding: theme.spacing(2),
+        padding: theme.spacing(1),
         textAlign: 'left',
         color: theme.palette.text.secondary,
     },
@@ -55,17 +55,16 @@ export default function LayoutGrid(props) {
 
     const GameOver = (readerBoard) => {
         // modal 띄울 함수 호출
-        
+
         console.log(readerBoard);
-        return(
+        return (
             <>
-                <GameOverModal/>
+                <GameOverModal />
             </>
         );
-    }
+    };
 
     return (
-        
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
@@ -77,7 +76,7 @@ export default function LayoutGrid(props) {
                         direction="row"
                         justify="center"
                         alignItems="stretch"
-                        spacing={2}
+                        spacing={1}
                     >
                         <Grid className="playerListGrid" item xs={leftSm}>
                             {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
@@ -106,15 +105,15 @@ export default function LayoutGrid(props) {
                                 container
                                 direction="column"
                                 justify="center"
-                                spacing={2}
+                                spacing={1}
                             >
                                 <Grid
-                                    style={{ height: '50vh' }}
+                                    style={{ height: '45vh' }}
                                     item
                                     alignItems="stretch"
                                 >
                                     <Paper
-                                        style={{ height: '45vh' }}
+                                        style={{ height: '44vh' }}
                                         className={classes.paper}
                                     >
                                         <ChartComponent
@@ -127,7 +126,46 @@ export default function LayoutGrid(props) {
                                         />
                                     </Paper>
                                 </Grid>
-                                <Grid style={{ height: '40vh' }} item>
+                                <Grid style={{ height: '18vh' }}>
+                                    <Grid
+                                        style={{ height: '100%' }}
+                                        wrap="wrap"
+                                        alignItems="stretch"
+                                        container
+                                        direction="row"
+                                        justify="space-around"
+                                    >
+                                        <Grid
+                                            style={{
+                                                width: '50%',
+                                                height: '22vh',
+                                            }}
+                                            item
+                                        >
+                                            <Paper
+                                                style={{ height: '17vh' }}
+                                                className={classes.paper}
+                                            >
+                                                <StockDoneList socket={props.socket} requestSocket = {props.requestSocket} isMine = {true}/>
+                                            </Paper>
+                                        </Grid>
+                                        <Grid
+                                            style={{
+                                                width: '45%',
+                                                height: '22vh',
+                                            }}
+                                            item
+                                        >
+                                            <Paper
+                                                style={{ height: '17vh' }}
+                                                className={classes.paper}
+                                            >
+                                                <StockDoneList socket={props.socket} requestSocket = {props.requestSocket} isMine = {false}/>
+                                            </Paper>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid style={{ height: '27vh' }} item>
                                     <Grid
                                         style={{ height: '100%' }}
                                         wrap="wrap"
@@ -139,7 +177,7 @@ export default function LayoutGrid(props) {
                                         <Grid
                                             style={{
                                                 width: '45%',
-                                                height: '40vh',
+                                                height: '22vh',
                                             }}
                                             item
                                         >
@@ -156,13 +194,13 @@ export default function LayoutGrid(props) {
                                         <Grid
                                             style={{
                                                 width: '50%',
-                                                height: '40vh',
-                                                margin: '0 0 0 2vh',
+                                                height: '22vh',
+                                                margin: '0 0 0 0',
                                             }}
                                             item
                                         >
                                             <Paper
-                                                style={{ height: '40vh' }}
+                                                style={{ height: '100%' }}
                                                 className={classes.paper}
                                             >
                                                 <TradeStock
@@ -189,12 +227,12 @@ export default function LayoutGrid(props) {
                                 spacing={2}
                             >
                                 <Grid
-                                    style={{ height: '50vh' }}
+                                    style={{ height: '45vh' }}
                                     item
                                     alignItems="stretch"
                                 >
                                     <Paper
-                                        style={{ height: '45vh' }}
+                                        style={{ height: '44vh' }}
                                         className={classes.paper}
                                     >
                                         <BidTab
@@ -203,7 +241,7 @@ export default function LayoutGrid(props) {
                                         />
                                     </Paper>
                                 </Grid>
-                                <Grid style={{ height: '40vh' }} item>
+                                <Grid style={{ height: '45vh' }} item>
                                     <Paper
                                         style={{ height: '40vh' }}
                                         className={classes.paper}
