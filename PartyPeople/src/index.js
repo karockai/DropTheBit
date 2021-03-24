@@ -5,10 +5,12 @@ import reportWebVitals from './reportWebVitals';
 import GameManager from './GameManager';
 import SimpleContainer from './SimpleContainer';
 import ViewportLayout from './ViewportLayout';
+import GameOverModal from './GameOverModal';
 
 ReactDOM.render(
     <React.StrictMode>
         <GameManager/>
+        {/* <GameOverModal/> */}
     </React.StrictMode>,
     document.getElementById('root')
 );

@@ -95,13 +95,16 @@ class Room {
     // data : {roomID : roomID, musicName : 클라에서 선택한 음악명 (select 창)}
     // 해당 음악의 길이만큼 게임의 time 설정
     async updateSettings(data) {
-        const { socket } = this;
-
+        const { io, socket } = this;
         const roomID = data.roomID;
         let musicPath = '../PartyPeople/src/audios/music/' + data.musicName;
-        let musicTime = Math.round(getDuration(musicPath)['PromiseResult']); // 초 단위로 저장됨 (클라에서 파싱해서 사용)
-        dbhset(roomID, music, data.musicName);
-        dbhset(roomID, gameTime, musicTime);
+        console.log(musicPath);
+        // console.log(data.musicName);
+        let musicTime = Math.round(getDuration(musicPath)['PromiseResult']) + 3; // 초 단위로 저장됨 (클라에서 파싱해서 사용)
+        dbhset(roomID, 'music', data.musicName);
+        dbhset(roomID, 'gameTime', musicTime);
+        console.log(await dbhget(roomID, 'music'));
+        console.log(await dbhget(roomID, 'gameTime'));
         io.to(data.roomID).emit('settingsUpdate_Res', musicTime);
     }
 }

@@ -16,7 +16,7 @@ export default function EnterRoom(props, { history }) {
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState('');
     let textInput = useRef(null);
-    let musicList = [];
+    let [musicList, setMusicList] = React.useState([]);
 
     const handleOnSave = (textInput) => {
         setName(textInput);
@@ -46,7 +46,7 @@ export default function EnterRoom(props, { history }) {
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);
                 setRoomID(data.roomID);
-                musicList = data.musicList;
+                setMusicList(data.musicList);
             });
         }
     };

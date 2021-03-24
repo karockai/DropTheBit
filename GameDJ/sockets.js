@@ -80,8 +80,10 @@ export default {
                 await new Room(io, socket).joinRoom(data);
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
-            socket.on('settingsUpdate_Req', (data) =>
+            socket.on('settingsUpdate_Req', (data) => {
+                console.log('data : ' + data);
                 new Room(io, socket).updateSettings(data)
+            }
             );
             socket.on('startGame_Req', (roomID) =>
                 new Game(io, socket).startGame(roomID)
