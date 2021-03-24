@@ -59,6 +59,21 @@ function ChartTitle(props) {
         );
     }
 
+
+    function ExpBySymbol(value) {
+        let ret = '';
+        if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
+            ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
+            value = value.substring(value.length - 9 + 1);
+        }
+        if (value.length >= 5) { // value 99489230
+            ret += ( value.substring(0, value.length - 5 + 1)  + '만 ' )  // 9948만
+            value = value.substring(value.length - 5 + 1);
+        }
+        ret += value;
+        return ret;
+    }
+
     const parseWonToStr = (won) => {
         if (typeof won == 'number') won = won.toString();
         return won;
@@ -69,7 +84,7 @@ function ChartTitle(props) {
             <div className="ChartTitle" style={textColor}>
                 <span style={{ display: 'block' }}>
                     <strong style={{ fontSize: '40px' }}>
-                        {parseWonToStr(currentWon)}
+                        {SplitByThree(parseWonToStr(currentWon))}
                     </strong>
                     {' ' + unit}
                 </span>

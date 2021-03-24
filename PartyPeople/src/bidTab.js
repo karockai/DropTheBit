@@ -120,7 +120,6 @@ export default function BidTab(props) {
             } else { 
                 props.socket.on('refreshBid', (bidObject) => {
                     SetBid(bidObject)
-                    console.log(bidObject)
                 });
             }
         },[isInit]);
