@@ -90,7 +90,7 @@ export default function MyAsset(props) {
             value = value.substring(value.length - 5 + 1);
         }
         ret += value;
-        return ret;
+        return ret + '원';
     }
 
 
@@ -105,19 +105,19 @@ export default function MyAsset(props) {
             >
                 <Grid
                     style={{
-                        width: '48%',
+                        width: '55%',
                         height: '95%',
                         margin: '0 4px 1vh 0',
                     }}
                 >
                     <Paper style={{ height: '100%' }}>
                         보유 현금 (KRW)
-                        <h4>{SplitByThree(parseWonToStr(myCash))}</h4>
+                        <h4>{SplitByThree(parseWonToStr(myCash)) + ' 원'}</h4>
                         <h6>{ExpBySymbol(parseWonToStr(myCash))}</h6>
                     </Paper>
                 </Grid>
                 <Grid
-                    style={{ width: '48%', height: '95%', margin: '0 0 1vh 0' }}
+                    style={{ width: '40%', height: '95%', margin: '0 0 1vh 0' }}
                 >
                     <Paper style={{ height: '100%' }}>
                         보유 화폐수
@@ -136,7 +136,7 @@ export default function MyAsset(props) {
                 <Grid style={{ width: '100%', height: '100%' }}>
                     <Paper style={{ height: '100%' }}>
                         총 평가 자산 (KRW)
-                        <h2 style={{fontStyle:'italic', fontWeight:'bold'}}>{SplitByThree(parseWonToStr(myAsset))}</h2>
+                        <h2 style={{fontStyle:'italic', fontWeight:'bold'}}>{SplitByThree(parseWonToStr(myAsset)) + ' 원'}</h2>
                         <h6>{ExpBySymbol(parseWonToStr(myAsset))}</h6>
                     </Paper>
                 </Grid>
