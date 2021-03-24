@@ -9,7 +9,8 @@ import {
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
-import SelectMusic from './SelectMusic';
+import MusicLeader from './MusicLeader';
+import MusicMember from './MusicMember';
 import Test from './Test';
 
 
@@ -93,10 +94,7 @@ function Lobby(props) {
             );
         }
     }
-    const StartGame = (() => {
-        props.socket.emit('startGame_Req', props.roomID);
-        props.history.push('/game');
-    });
+
     // const MusicList = () => {
     //     return(//props.musicList
     //         <Grid >
@@ -109,23 +107,45 @@ function Lobby(props) {
     //     );
 
     // }
-
-
+    console.log(props.roomInfo);
+    var isLeader = true;
+    if(props.roomInfo){
+        isLeader = props.roomInfo['roomLeader'] === props.socket.id;
+    }
+    // const isLeader = true;
     return(
         <> 
         <Grid container justify='center' style= {{height: '80vh', margin: '5vh 5vh 5vh 5vh'}}>
             <Grid style= {{width: '50%'}} >
                 <Paper style={{width: '30%'}}>{props.name}</Paper>
-                <SelectMusic 
-                musicList={props.musicList} 
-                roomID={props.roomID}
-                setTime={props.setTime}
-                socket={props.socket}
-                />
+                {(isLeader &&
+                    <MusicLeader 
+                    musicList={props.musicList} 
+                    roomID={props.roomID}
+                    roomInfo={props.roomInfo}
+                    time={props.time}
+                    setTime={props.setTime}
+                    socket={props.socket}
+                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                    history={props.history}
+                    />
+                )}
+                {(!isLeader &&
+                    <MusicMember
+                    musicList={props.musicList} 
+                    roomID={props.roomID}
+                    roomInfo={props.roomInfo}
+                    time={props.time}
+                    setTime={props.setTime}
+                    socket={props.socket}
+                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                    history={props.history}
+                    />
+                )}
                 {/* <Test musicList={props.musicList} 
                 roomID={props.roomID}
                 setTime={props.setTime}/> */}
-                <Button variant="contained" color="primary" onClick={StartGame}> StartGame </Button> 
+                
             </Grid>
             <Grid style= {{width: '50%'}}>
                 <Grid style={{height: '80vh'}}>
