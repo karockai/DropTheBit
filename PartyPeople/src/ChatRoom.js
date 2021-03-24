@@ -48,11 +48,11 @@ export default function ChatRoom(props) {
     );
     let textInput = useRef(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         props.socket.on('update', (data) => {
             if (data) {
                 addMessage(data);
-                console.log(messages);
+                console.log('update', messages, data);
             }
         });
     }, []);
