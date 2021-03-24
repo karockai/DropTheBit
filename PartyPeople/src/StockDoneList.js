@@ -10,25 +10,41 @@ export default function StockDoneList(props) {
         type: 'buy'
     }]);
 
+
     if(!isInit) setInit(true);
 
-    useLayoutEffect(() => {
-        console.log('stockdoneList opened!')
+    useEffect(() => {
         if(props.socket == null) {
             props.requestSocket('StockDoneList', props.socket);
             setInit(true);
         }
         else {
-            if(props.isMine){
-                props.socket.on('buyDone', (done) => {
-                    setList([...doneList, done]);
-                })
-            }
-            else {
+            if(!props.isMine){
                 props.socket.on('buyDone_Room', (done) => {
                     setList([...doneList, done]);
                 })
+                props.socket.on('sellDone_Room', (done) => {
+                    setList([...doneList, done]);
+                })
+                props.socket.on('bidDone_Room', (done) => {
+                    setList([...doneList, done]);
+                })
+                props.socket.on('askDone_Room', (done => {
+                    setList([...doneList, done]);
+                }))
             }
+            props.socket.on('buyDone', (done) => {
+                setList([...doneList, done]);
+            })
+            props.socket.on('sellDone', (done) => {
+                setList([...doneList, done]);
+            })
+            props.socket.on('bidDone', (done) => {
+                setList([...doneList, done]);
+            })
+            props.socket.on('askDone', (done => {
+                setList([...doneList, done]);
+            }))
         }
     },[isInit])
 
@@ -39,7 +55,7 @@ export default function StockDoneList(props) {
             {
                 doneList.map((done, idx)=>{ return (
                 <p>
-                        {props.isMine? "내" : done.playerID}가 {done.price}에 {done.vol}개를 {done.type === 'buy'? "구매": "판매"}하셨습니다.
+                        {props.isMine? "내" : done.playerID}가 {done.price}에 {done.vol}개를 {done.type}하셨습니다.
                 </p>
                 )})
             }

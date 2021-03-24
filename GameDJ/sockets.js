@@ -15,7 +15,6 @@ export default {
         function serverSetting(server) {
             return new Promise(function (resolve, reject) {
                 io = socketio(server);
-
                 resolve();
             });
         }
@@ -81,13 +80,11 @@ export default {
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
             socket.on('settingsUpdate_Req', (data) => {
-                new Room(io, socket).updateSettings(data)
-            }
-            );
+                new Room(io, socket).updateSettings(data);
+            });
             socket.on('startGame_Req', (roomID) => {
-                new Game(io, socket).startGame(roomID)
-            }
-            );
+                new Game(io, socket).startGame(roomID);
+            });
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()
             );

@@ -1,0 +1,6 @@
+{
+    "type" : "매수/매도/매수 주문/메도 주문",
+    "playerID" : "String",
+    "vol" : "Number",
+    "price" : "Number"
+}
