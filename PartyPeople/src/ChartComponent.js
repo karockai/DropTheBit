@@ -86,7 +86,7 @@ class ChartComponent extends React.Component {
         }
         return (
             <>
-                <ChartTitle data={this.state.data} />
+                <ChartTitle data={this.state.data} time={this.props.time} />
                 <StockChart type={'hybrid'} data={this.state.data} />
             </>
         );
