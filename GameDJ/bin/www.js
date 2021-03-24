@@ -7,6 +7,8 @@ import app from '../app.js';
 import sockets from '../sockets.js';
 
 global.games = {};
+global.chartData = [];
+// 차트를 바로 그리기 위한 curCoin 50개 리스트
 
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
