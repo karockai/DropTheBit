@@ -90,7 +90,6 @@ export default function SelectMusic(props) {
               </> */}
             </Select>
           </FormControl>
-    
           </div>
         );
       
@@ -130,7 +129,10 @@ export default function SelectMusic(props) {
           </form>
       );
   }
-
+  const StartGame = (() => {
+    props.socket.emit('startGame_Req', props.roomID);
+    props.history.push('/game');
+});
 
   
   return(
@@ -142,6 +144,8 @@ export default function SelectMusic(props) {
         <Grid>
             <ShowMusic/>
         </Grid>
+        <Button variant="contained" color="primary" onClick={StartGame}> StartGame </Button> 
+
         </>
   );
 
