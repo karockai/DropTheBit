@@ -3,7 +3,7 @@
 import redis from 'redis';
 import jsonify from 'redis-jsonify';
 // let jsonify = require('redis-jsonify');
-let client = redis.createClient({ host: '13.209.69.195' });
+let client = redis.createClient({ host: '3.34.156.16' });
 client.on('error', function (error) {
     console.error(error);
 });
