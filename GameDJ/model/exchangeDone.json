@@ -1,0 +1,6 @@
+{
+    "type" : "buy/sell",
+    "playerID" : "String",
+    "vol" : "Number",
+    "price" : "Number"
+}
