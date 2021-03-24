@@ -56,7 +56,12 @@ class ChartComponent extends React.Component {
                 //     console.log(('request Data from CLIENT.'))
                 // }
                 // setInterval(chart, 200);
-
+                this.props.socket.on('chartData', (datas) =>{
+                    console.log(datas)
+                    datas.chartData.map((data) => {
+                        this.addCandleData(data);
+                    })
+                });
                 this.props.socket.on('chart', (data) => {
                     // console.log(data);
                     this.addCandleData(data);

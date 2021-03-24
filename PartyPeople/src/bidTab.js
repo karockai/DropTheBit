@@ -10,7 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { red } from '@material-ui/core/colors';
+import { blue, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
     table: {
@@ -162,18 +162,13 @@ export default function BidTab(props) {
                                 <TableRow
                                     style={{
                                         backgroundColor:
-                                            index === 4 ? red[100] : '#FFFFFF',
+                                            index <= 4 ? red[100] : blue[100],
                                         opacity: 0.9,
 
                                     }}
                                     key={row.name}
                                 >
-                                    <TableCell style={{
-                                        backgroundColor:
-                                            index === 4 ? red[100] : '#FFFFFF',
-                                        opacity: 0.9,
-                                        }}
-                                        align="center"
+                                    <TableCell 
                                     >
                                         {row.buy}
                                     </TableCell>

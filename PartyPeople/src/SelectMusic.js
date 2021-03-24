@@ -37,7 +37,6 @@ export default function SelectMusic(props) {
   const [strTime, strSetTime] = React.useState('00 : 00');
 
   function MusicInput() {
-<<<<<<< HEAD
 
     const handleChange = (event) => {
       console.log(event.target.value);
@@ -47,15 +46,6 @@ export default function SelectMusic(props) {
       {roomID : props.roomID, musicName : musicName});
     };
 
-=======
-      const handleChange = (event) => {
-        console.log(event.target.value);
-          setMusic(event.target.value);
-        //   console.log(music);
-          props.socket.emit('settingsUpdate_Req',
-          {roomID : props.roomID, musicName : event.target.value});
-      };
->>>>>>> 5dd0ba1c747855e01d5d7572dc0e7fae0ec4305c
 
       function MusicMenu() {
           return (

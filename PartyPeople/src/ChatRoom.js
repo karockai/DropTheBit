@@ -51,6 +51,7 @@ export default function ChatRoom(props) {
     useEffect(() => {
         props.socket.on('update', (data) => {
             if (data) {
+                console.log(messages);
                 addMessage(data);
                 console.log('update', messages, data);
             }
@@ -68,6 +69,7 @@ export default function ChatRoom(props) {
         textInput.current.value = '';
         // author: this.state.author,
         // console.log(message);
+        console.log('sendMessage', messages);
         props.socket.emit('message', {message: message, author: 'playerID', roomID : props.roomID});
         setMessage('');
     };
@@ -77,9 +79,10 @@ export default function ChatRoom(props) {
         // setMessages({ messages: [...messages, data['message']] });
         console.log(messages, data);
         const new_messages = [...messages, data];
+        console.log('addMessage', messages);
         console.log(new_messages);
         setMessages(new_messages);
-        console.log(messages);
+        console.log('addddMessage', messages);
     };
 
     function PrintMessage ()  {
@@ -98,6 +101,7 @@ export default function ChatRoom(props) {
             <Grid item style={{ height: '29vh' }}>
             <>
             {messages.map((message) => {
+                console.log(messages);
                 return (
                 (<Paper>
                     {message.author}
