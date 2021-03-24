@@ -36,15 +36,15 @@ export default function EnterRoom(props, { history }) {
         const searchParams = new URLSearchParams(params);
         if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
             props.socket.emit('joinRoom_Req', {"playerID" : name , "roomID": searchParams.get('id')});
-            console.log(searchParams.get('id'));
+            // console.log(searchParams.get('id'));
             setRoomID(searchParams.get('id'));
             setPlayer(name);
         }
         else {                           // 방장
             props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
             props.socket.on('createPrivateRoom_Res', (data)=>{
-                console.log(data); 
-                console.log(data.roomInfo[props.socket.id]);
+                // console.log(data); 
+                // console.log(data.roomInfo[props.socket.id]);
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);
                 setRoomID(data.roomID);
@@ -74,7 +74,9 @@ export default function EnterRoom(props, { history }) {
                     roomID={roomID}
                     player={player}
                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                    roomInfo={props.roomInfo}
                     musicList = {musicList}
+                    time={props.time}
                     setTime={props.setTime}
                 />
             )}

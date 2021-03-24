@@ -33,20 +33,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectMusic(props) {
   const classes = useStyles();
+  // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
+  /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
   const [music, setMusic] = React.useState('');
   const [strTime, strSetTime] = React.useState('00 : 00');
-
   function MusicInput() {
 
     const handleChange = (event) => {
-      console.log(event.target.value);
-        setMusic(event.target.value);
-      let musicName = event.target.value;
+      const musicName = event.target.value;
+      setMusic(musicName);
+      var tmp_roomInfo = props.roomInfo; 
+      tmp_roomInfo['music'] = musicName;
+      
+      props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
       props.socket.emit('settingsUpdate_Req',
       {roomID : props.roomID, musicName : musicName});
     };
 
-
+/*  music select 현재 하드코딩 상태에서 동적으로 구현할 함수..!
       function MusicMenu() {
           return (
               <>
@@ -61,11 +65,11 @@ export default function SelectMusic(props) {
               </>
           );
       }
-
+*/
       return (
           <div>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Music Select</InputLabel>
+            <InputLabel id="demo-simple-select-label">Select Music</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -94,7 +98,6 @@ export default function SelectMusic(props) {
     
     
   function ShowMusic() {
-
   
       useEffect(() => {
           props.socket.on('settingsUpdate_Res', (data) => {

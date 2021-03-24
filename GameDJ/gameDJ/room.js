@@ -44,7 +44,7 @@ class Room {
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
         await dbhset(roomID, 'gameTime', 0);
-        await dbhset(roomID, 'music', '');
+        await dbhset(roomID, 'music', 'Select Music');
         await dbhset('bgmList', 'Deja_Vu.mp3', 265);
         await dbhset('bgmList', 'King_Conga.mp3', 145);
         await dbhset('bgmList', 'Mausoleum_Mash.mp3', 176);
