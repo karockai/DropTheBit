@@ -32,23 +32,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectMusic(props) {
   const classes = useStyles();
+  const [music, setMusic] = React.useState('');
 
-  function MusicInput(props) {
-      const [music, setMusic] = React.useState('');
-      const [open, setOpen] = React.useState(false);
+  function MusicInput() {
 
       const handleChange = (event) => {
-          setMusic(event.target.value);
+        console.log(event.target.value);
+        //   setMusic(event.target.value);
+        //   console.log(music);
           props.socket.emit('settingsUpdate_Req',
-          {roomID : props.roomID, musicName : music});
-      };
-
-      const handleClose = () => {
-          setOpen(false);
-      };
-
-      const handleOpen = () => {
-          setOpen(true);
+          {roomID : props.roomID, musicName : event.target.value});
       };
 
       function MusicMenu() {
@@ -69,23 +62,25 @@ export default function SelectMusic(props) {
       return (
           <div>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
+            <InputLabel id="demo-simple-select-label">Music Select</InputLabel>
             <Select
-              labelId="demo-controlled-open-select-label"
-              id="demo-controlled-open-select"
-              open={open}
-              onClose={handleClose}
-              onOpen={handleOpen}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={music}
               onChange={handleChange}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MusicMenu/>
+              <MenuItem value={'King_Conga.mp3'}>King_Conga.mp3</MenuItem>
+              <MenuItem value={'Mausoleum_Mash.mp3'}>Mausoleum_Mash.mp3</MenuItem>
+              <MenuItem value={'Deja_Vu.mp3'}>Deja_Vu.mp3</MenuItem>
+              {/* <>
+              {props.musicList.map((music) => {
+                  return (
+                  (<MenuItem
+                      value={music}>{music}
+                  </MenuItem>)
+                  );
+              })}
+              </> */}
             </Select>
           </FormControl>
     
@@ -95,7 +90,7 @@ export default function SelectMusic(props) {
   }
     
     
-  function ShowMusic(props) {
+  function ShowMusic() {
       const [strTime, strSetTime] = React.useState('00 : 00');
   
       useEffect(() => {
@@ -114,7 +109,7 @@ export default function SelectMusic(props) {
           <div>
               <TextField
               id="standard-read-only-input"
-              label="Read Only"
+              label="Play Time"
               defaultValue={strTime}
               // value={time}
               InputProps={{
@@ -131,18 +126,11 @@ export default function SelectMusic(props) {
   return(
     <>
         <Grid>
-            <MusicInput 
-            socket={props.socket} 
-            roomID={props.roomID} 
-            musicList={props.musicList} 
-        />
+            <MusicInput />
         </Grid>
         {/* <Test/> */}
         <Grid>
-            <ShowMusic
-                socket={props.socket}
-                setTime={props.setTime}
-            />
+            <ShowMusic/>
         </Grid>
         </>
   );

@@ -20,42 +20,28 @@ const useStyles = makeStyles((theme) => ({
 export default function Test() {
   const classes = useStyles();
   const [age, setAge] = React.useState('');
-  const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
+    console.log(event.target.value);
     setAge(event.target.value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
   };
 
   return (
     <div>
-      <Button className={classes.button} onClick={handleOpen}>
-        Open the select
-      </Button>
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
-          open={open}
-          onClose={handleClose}
-          onOpen={handleOpen}
           value={age}
           onChange={handleChange}
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={'Ten'}>Ten</MenuItem>
+          <MenuItem value={'Twenty'}>Twenty</MenuItem>
+          <MenuItem value={'Thirty'}>Thirty</MenuItem>
         </Select>
       </FormControl>
     </div>

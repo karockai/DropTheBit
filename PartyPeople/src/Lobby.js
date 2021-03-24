@@ -119,9 +119,10 @@ function Lobby(props) {
             <Grid style= {{width: '50%'}} >
                 <Paper style={{width: '30%'}}>{props.name}</Paper>
                 <SelectMusic 
-                // musicList={props.musicList} 
-                // roomID={props.roomID}
-                // setTime={props.setTime}
+                musicList={props.musicList} 
+                roomID={props.roomID}
+                setTime={props.setTime}
+                socket={props.socket}
                 />
                 {/* <Test musicList={props.musicList} 
                 roomID={props.roomID}

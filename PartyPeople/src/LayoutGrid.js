@@ -13,6 +13,7 @@ import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 import { useSound, playSound } from './useSound';
 import Bit from './audios/music/King_Conga.mp3';
+import GameOverModal from './GameOverModal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +37,6 @@ export default function LayoutGrid(props) {
     let rightSm = 3;
     useSound(Bit, 0.7, 2000);
 
-
     useEffect(() => {
         props.socket.on('gameOver', (readerBoard) => {
             if (readerBoard) {
@@ -47,7 +47,13 @@ export default function LayoutGrid(props) {
 
     const GameOver = (readerBoard) => {
         // modal 띄울 함수 호출
+        
         console.log(readerBoard);
+        return(
+            <>
+                <GameOverModal/>
+            </>
+        );
     }
 
     return (
