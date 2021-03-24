@@ -63,6 +63,7 @@ export default function MyAsset(props) {
     },[isInit]);
 
     function SplitByThree(value) {
+        if (value === null) return 'Not a Number.';
         if (value.length <= 3) return value;
         return (
             SplitByThree(value.substring(0, value.length - 3)) +
@@ -77,6 +78,7 @@ export default function MyAsset(props) {
     };
 
     function ExpBySymbol(value) {
+        if (value === null) return 'Not a Number.';
         let ret = '';
         if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
             ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
