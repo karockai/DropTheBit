@@ -63,20 +63,20 @@ class Refresh {
                     delete playerInfo['ask'][strAskPrice];
                     // console.log("판매 중 player info 저장", playerInfo);
                     await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-=
+
                     delete askList[strAskPrice][socketID];
                     updateCount += 1;
 
                     // buyDone
                     let playerID = playerInfo['playerID'];
                     let buyDone = {
-                        type : buy,
+                        type: '매도',
                         playerID: playerID,
                         vol: askVol,
                         price: intAskPrice,
                     };
-                    socketID.emit('buyDone', buyDone);
-                    io.to(socketID).broadcast.to(roomID).emit('buyDone_Room', buyDone);
+                    io.to(socketID).emit('buyDone', buyDone);
+                    io.to(roomID).emit('buyDone_Room', buyDone);
                 }
                 if (Object.keys(askList[strAskPrice]).length === 0) {
                     // console.log("삭제해버립니다 : 판매", strAskPrice);
@@ -119,13 +119,13 @@ class Refresh {
                     // sellDone
                     let playerID = playerInfo['playerID'];
                     let sellDone = {
-                        type : sell,
+                        type: 'sell',
                         playerID: playerID,
                         vol: askVol,
                         price: intAskPrice,
                     };
-                    socketID.emit('sellDone', sellDone);
-                    io.to(socketID).broadcast.to(roomID).emit('sellDone_Room', sellDone);
+                    io.to(socketID).emit('sellDone', sellDone);
+                    io.to(roomID).emit('sellDone_Room', sellDone);
                 }
                 if (Object.keys(bidList[strBidPrice]).length === 0) {
                     // console.log("삭제해버립니다 : 구매", strBidPrice);

@@ -136,13 +136,13 @@ class Game {
 
                 // 6-4. buyDone
                 let buyDone = {
-                    type: buy,
+                    type: '매수',
                     playerID: playerID,
                     vol: intReqVol,
                     price: intReqPrice,
                 };
-                socketID.emit('buyDone', buyDone);
-                socketID.broadcast.to(roomID).emit('buyDone_Room', buyDone);
+                socket.emit('buyDone', buyDone);
+                socket.to(roomID).emit('buyDone_Room', buyDone);
 
                 // console.log('현재가로 구매 완료 :', playerInfo);
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
@@ -171,6 +171,14 @@ class Game {
                     // console.log('호가 등록 완료', bidList);
                     dbset('bidList', JSON.stringify(bidList));
                 }
+                let bidDone = {
+                    type: '매수 주문',
+                    playerID: playerID,
+                    vol: intReqVol,
+                    price: intReqPrice,
+                };
+                socket.emit('bidDone', bidDone);
+                socket.to(roomID).emit('bidDone_Room', bidDone);
             }
             await dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
@@ -202,6 +210,7 @@ class Game {
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
+        let playerID = playerInfo['playerID'];
 
         // 3. curPrice 가져오기
         let curCoin = JSON.parse(await dbget('curCoin'));
@@ -237,13 +246,13 @@ class Game {
 
                 // 6-4. sellDone
                 let sellDone = {
-                    type: sell,
+                    type: '매도 주문',
                     playerID: playerID,
                     vol: intReqVol,
                     price: intReqPrice,
                 };
-                io.to(socketID).emit('sellDone', sellDone);
-                socketID.broadcast.to(roomID).emit('sellDone_Room', sellDone);
+                socket.emit('sellDone', sellDone);
+                socket.to(roomID).emit('sellDone_Room', sellDone);
 
                 // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
             } else {
@@ -269,6 +278,14 @@ class Game {
                     askList[strReqPrice][socketID] = roomID;
                     dbset('askList', JSON.stringify(askList));
                 }
+                let askDone = {
+                    type: '매도',
+                    playerID: playerID,
+                    vol: intReqVol,
+                    price: intReqPrice,
+                };
+                socket.emit('askDone', askDone);
+                socket.to(roomID).emit('askDone_Room', askDone);
             }
             await dbhset(roomID, socketID, JSON.stringify(playerInfo));
         } else {
