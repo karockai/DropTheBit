@@ -81,7 +81,15 @@ class Room {
 
         let rawRoom = await dbhgetall(roomID);
         for (const [key, value] of Object.entries(rawRoom)) {
-            roomInfo[key] = JSON.parse(value);
+            console.log('joinRoom key: ', key);
+            console.log('joinRoom value : ', value);
+
+            if (key.length === 20){
+                roomInfo[key] = JSON.parse(value);
+            }
+            else{
+                roomInfo[key] = value;
+            }
         }
         console.log('joinRoom', roomInfo);
         socket.roomID = roomID;
