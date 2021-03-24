@@ -78,16 +78,12 @@ class Room {
             bid: {},
             add: {}
         };
-        console.log('joinRoom', data.playerID);
         // roomInfo[socketID] = playerInfo;
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
 
         let rawRoom = await dbhgetall(roomID);
         for (const [key, value] of Object.entries(rawRoom)) {
-            console.log('joinRoom key: ', key);
-            console.log('joinRoom value : ', value);
-
             if (key.length === 20){
                 roomInfo[key] = JSON.parse(value);
             }
@@ -98,7 +94,6 @@ class Room {
         console.log('joinRoom', roomInfo);
         socket.roomID = roomID;
         socket.join(roomID);
-        console.log('playerInfo', playerInfo);
         io.to(roomID).emit('joinRoom_Res', {roomID:roomID, roomInfo: roomInfo});
         console.log('someone joined a room');
         console.log('roomID : ', roomID);
@@ -118,7 +113,7 @@ class Room {
         await dbhset(roomID, 'music', musicName);
         console.log('update ',await dbhget(roomID, 'music'));
         console.log('update ',await dbhget(roomID, 'gameTime'));
-        io.to(data.roomID).emit('settingsUpdate_Res', musicTime);
+        io.to(roomID).emit('settingsUpdate_Res', musicTime);
     }
 }
 
