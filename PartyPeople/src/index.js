@@ -9,7 +9,7 @@ import Test from './Test';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Test />
+        <GameManager/>
     </React.StrictMode>,
     document.getElementById('root')
 );
