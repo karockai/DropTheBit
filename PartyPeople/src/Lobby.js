@@ -37,7 +37,6 @@ function Lobby(props) {
     }
     // console.log(props.socket);
     let [accept, setAccept] = useState(false);
-    let [playerInfo, setplayerInfo] = useState('');
     let [roomInfo, setRoomInfo] = useState('');
 
     // 기존리스트에 새로운 플레이어 추가
@@ -48,21 +47,20 @@ function Lobby(props) {
             soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
                 // setAccept(true);
                 console.log(room);
+                setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
             });
         }
     }, []); 
     const Card = () => {
-        // console.log(accept);
-        // if (accept == true) {
-        if (playerInfo != '' || roomInfo != '') {
-            return (<PutNewCard playerInfo={playerInfo} roomInfo={roomInfo}  socket={props.socket}/>);
+        if (roomInfo != '') {
+            return (<PutNewCard roomInfo={roomInfo} socket={props.socket}/>);
         }
         return (<PutPlayer player={props.player}/>);
     }
     
     function getPlayersList(roomInfo) {
-        let keyList = Object.keys(roomInfo).filter((key) => key.length === 20);
+        // let keyList = Object.keys(roomInfo).filter((key) => key.length === 20);
         let playerList = [];
         for(const [key, value] of Object.entries(roomInfo)) {
             if (key.length === 20){
