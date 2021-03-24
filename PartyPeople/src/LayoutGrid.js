@@ -36,6 +36,7 @@ export default function LayoutGrid(props) {
     let middleSm = 7;
     let rightSm = 3;
     useSound(Bit, 0.7, 2000);
+    console.log(props.roomID);
 
     useEffect(() => {
         props.socket.on('gameOver', (readerBoard) => {
@@ -57,6 +58,7 @@ export default function LayoutGrid(props) {
     }
 
     return (
+        
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
@@ -114,6 +116,7 @@ export default function LayoutGrid(props) {
                                             display="flex"
                                             justify-content="center"
                                             align-items="center"
+                                            time={props.time}
                                         />
                                     </Paper>
                                 </Grid>

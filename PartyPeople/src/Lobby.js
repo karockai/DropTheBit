@@ -45,15 +45,15 @@ function Lobby(props) {
     useEffect(()=>{
         let soc = props.socket;
         if (soc) {
-            soc.on('joinRoom_Res', (roomInfo) => {    // 사람이 들어올 때마다 roomInfo 갱신
-                setAccept(true);
-                setRoomInfo(roomInfo);
-                props.SetRoomIdAndInfo({roomID:props.roomID, roomInfo:roomInfo});
+            soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
+                // setAccept(true);
+                console.log(room);
+                props.SetRoomIdAndInfo(room);
             });
         }
     }, []); 
     const Card = () => {
-        console.log(accept);
+        // console.log(accept);
         // if (accept == true) {
         if (playerInfo != '' || roomInfo != '') {
             return (<PutNewCard playerInfo={playerInfo} roomInfo={roomInfo}  socket={props.socket}/>);

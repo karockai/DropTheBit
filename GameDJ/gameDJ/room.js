@@ -86,7 +86,7 @@ class Room {
         socket.roomID = roomID;
         socket.join(roomID);
         console.log('playerInfo', playerInfo);
-        io.to(roomID).emit('joinRoom_Res', roomInfo);
+        io.to(roomID).emit('joinRoom_Res', {roomID:roomID, roomInfo: roomInfo});
         console.log('someone joined a room');
         console.log('roomID : ', roomID);
         console.log('newbie :', data.playerID);

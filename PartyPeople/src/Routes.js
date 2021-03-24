@@ -5,7 +5,6 @@ import EnterRoom from './EnterRoom';
 import Lobby from './Lobby';
 
 export default function Routes(props) {
-
     const [time, setTime] = React.useState(0);
     return (
         <>
@@ -20,7 +19,7 @@ export default function Routes(props) {
                                 requestSocket={props.requestSocket}
                                 SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                                 setTime={setTime}
-
+                                roomID={props.roomID}
                             />
                         )}
                     />
@@ -32,6 +31,7 @@ export default function Routes(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                                 roomID={props.roomID}
+                                time={time}
                             />
                         )}
                         roomID={props.roomID}
