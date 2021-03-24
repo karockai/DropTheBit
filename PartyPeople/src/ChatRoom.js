@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, makeStyle, useLayoutEffect } from 'react';
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    makeStyle,
+    useLayoutEffect,
+} from 'react';
 import {
     IconButton,
     Button,
@@ -40,10 +46,12 @@ export default function ChatRoom(props) {
     // console.log(props.socket);
     let testXs = 12;
     const classes = useStyles();
-    let [message, setMessage] = useState('');       // 보낼 때의 메시지자체만 저장
-    let [messages, setMessages] = useState(        // author와 쌍으로 저장된 메시지
+    let [message, setMessage] = useState(''); // 보낼 때의 메시지자체만 저장
+    let [messages, setMessages] = useState(
+        // author와 쌍으로 저장된 메시지
         [
-            {message: '메시지 테스트', author: 'playerID'},
+            { message: '메시지 테스트', author: 'playerID' },
+            { message: '메시지 테스트2', author: 'playerID2' },
         ]
     );
     let textInput = useRef(null);
@@ -51,16 +59,14 @@ export default function ChatRoom(props) {
     useEffect(() => {
         props.socket.on('update', (data) => {
             if (data) {
+                console.log('update:', data);
                 addMessage(data);
-                console.log('update', messages, data);
             }
         });
     }, []);
 
     const handleOnChange = (event) => {
-        setMessage(
-            event.target.value
-        );
+        setMessage(event.target.value);
     };
 
     const sendMessage = (ev) => {
@@ -68,24 +74,25 @@ export default function ChatRoom(props) {
         textInput.current.value = '';
         // author: this.state.author,
         // console.log(message);
-        props.socket.emit('message', {message: message, author: 'playerID', roomID : props.roomID});
+        props.socket.emit('message', {
+            message: message,
+            author: 'playerID',
+            roomID: props.roomID,
+        });
         setMessage('');
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
 
     const addMessage = (data) => {
         // setMessages({ messages: [...messages, data['message']] });
-        console.log(messages, data);
+        console.log('1', data);
         const new_messages = [...messages, data];
-        console.log(new_messages);
+        console.log('new_messages', new_messages);
         setMessages(new_messages);
-        console.log(messages);
     };
 
-    function PrintMessage ()  {
-        return (
-           <></>
-        );
+    function PrintMessage() {
+        return <></>;
     }
 
     return (
@@ -96,48 +103,48 @@ export default function ChatRoom(props) {
             justify={'space-between'}
         >
             <Grid item style={{ height: '29vh' }}>
-            <>
-            {messages.map((message) => {
-                return (
-                (<Paper>
-                    {message.author}
-                    {message.message}
-                </Paper>)
-                );
-            })}
-            </>
+                <>
+                    {messages.map((message) => {
+                        return (
+                            <Paper>
+                                {message.author}
+                                {message.message}
+                            </Paper>
+                        );
+                    })}
+                </>
             </Grid>
-            <Grid item >
-            <Grid
-                item
-                container
-                wrap="wrap"
-                dirction="column"
-                style={{ height: '5vh' }}
-                spacing={1}
-                alignItems="flex-end"
-            >
-                <Grid item style={{ margin: '0 0 0 -10', width: '70%' }}>
-                    <TextField
-                        style={{ height: '100%' }}
-                        id="standard-basic"
-                        inputRef={textInput}
-                        label="메세지 보내기"
-                        onChange={handleOnChange}
-                        variant="outlined"
-                        size="small"
-                    />
-                </Grid>
-                <Grid item style={{ width: '20%' }}>
-                    <Button
-                        style={{ height: '100%' }}
-                        variant="contained"
-                        color="primary"
-                        onClick={sendMessage}
-                    >
-                        전송
-                    </Button>
-                </Grid>
+            <Grid item>
+                <Grid
+                    item
+                    container
+                    wrap="wrap"
+                    dirction="column"
+                    style={{ height: '5vh' }}
+                    spacing={1}
+                    alignItems="flex-end"
+                >
+                    <Grid item style={{ margin: '0 0 0 -10', width: '70%' }}>
+                        <TextField
+                            style={{ height: '100%' }}
+                            id="standard-basic"
+                            inputRef={textInput}
+                            label="메세지 보내기"
+                            onChange={handleOnChange}
+                            variant="outlined"
+                            size="small"
+                        />
+                    </Grid>
+                    <Grid item style={{ width: '20%' }}>
+                        <Button
+                            style={{ height: '100%' }}
+                            variant="contained"
+                            color="primary"
+                            onClick={sendMessage}
+                        >
+                            전송
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

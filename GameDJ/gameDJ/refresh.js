@@ -212,31 +212,31 @@ class Refresh {
         let bidList = [];
 
         let bidObject4 = {
-            sell: bidTable.bid_size4,
+            sell: parseInt(bidTable.bid_size4),
             price: bidTable.bid_price4,
             buy: 0,
         };
 
         let bidObject3 = {
-            sell: bidTable.bid_size3,
+            sell: parseInt(bidTable.bid_size3),
             price: bidTable.bid_price3,
             buy: 0,
         };
 
         let bidObject2 = {
-            sell: bidTable.bid_size2,
+            sell: parseInt(bidTable.bid_size2),
             price: bidTable.bid_price2,
             buy: 0,
         };
 
         let bidObject1 = {
-            sell: bidTable.bid_size1,
+            sell: parseInt(bidTable.bid_size1),
             price: bidTable.bid_price1,
             buy: 0,
         };
 
         let bidObject0 = {
-            sell: bidTable.bid_size0,
+            sell: parseInt(bidTable.bid_size0),
             price: bidTable.bid_price0,
             buy: 0,
         };
@@ -244,31 +244,31 @@ class Refresh {
         let askObject0 = {
             sell: 0,
             price: bidTable.ask_price0,
-            buy: bidTable.ask_size0,
+            buy: parseInt(bidTable.ask_size0),
         };
 
         let askObject1 = {
             sell: 0,
             price: bidTable.ask_price1,
-            buy: bidTable.ask_size1,
+            buy: parseInt(bidTable.ask_size1),
         };
 
         let askObject2 = {
             sell: 0,
             price: bidTable.ask_price2,
-            buy: bidTable.ask_size2,
+            buy: parseInt(bidTable.ask_size2),
         };
 
         let askObject3 = {
             sell: 0,
             price: bidTable.ask_price3,
-            buy: bidTable.ask_size3,
+            buy: parseInt(bidTable.ask_size3),
         };
 
         let askObject4 = {
             sell: 0,
             price: bidTable.ask_price4,
-            buy: bidTable.ask_size4,
+            buy: parseInt(bidTable.ask_size4),
         };
 
         bidList.push(askObject4);
