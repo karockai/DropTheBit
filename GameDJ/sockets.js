@@ -81,12 +81,12 @@ export default {
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
             socket.on('settingsUpdate_Req', (data) => {
-                console.log('data : ' + data);
                 new Room(io, socket).updateSettings(data)
             }
             );
-            socket.on('startGame_Req', (roomID) =>
+            socket.on('startGame_Req', (roomID) => {
                 new Game(io, socket).startGame(roomID)
+            }
             );
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()

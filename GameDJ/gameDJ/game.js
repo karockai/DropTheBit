@@ -25,8 +25,10 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-        // let gameTime = Number(await dbhget(roomID, gameTime)) + 2;
-        let gameTime = 10000;
+        let gameTime = Number(await dbhget(socket.roomID, 'gameTime')) + 2;
+        // let gameTime = 10000;
+        console.log(await dbhgetall(socket.roomID));
+        console.log('gameTime : ', gameTime);
         let roomID = socket.roomID;
         io.to(roomID).emit('chartData', { chartData : chartData, gameTime : gameTime });
         console.log(chartData);
@@ -36,9 +38,8 @@ class Game {
         });
 
         async function realStart() {
-            // const { io, socket } = this;
             let roomID = socket.roomID;
-            let musicName = await dbhget(roomID, music);
+            let musicName = await dbhget(roomID, 'music');
             io.to(roomID).emit('startGame_Real', musicName);
         }
 

@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import Test from './Test';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -36,13 +37,15 @@ export default function SelectMusic(props) {
   const [strTime, strSetTime] = React.useState('00 : 00');
 
   function MusicInput() {
-      const handleChange = (event) => {
-        console.log(event.target.value);
-          setMusic(event.target.value);
-        //   console.log(music);
-          props.socket.emit('settingsUpdate_Req',
-          {roomID : props.roomID, musicName : event.target.value});
-      };
+
+    const handleChange = (event) => {
+      console.log(event.target.value);
+        setMusic(event.target.value);
+      let musicName = event.target.value;
+      props.socket.emit('settingsUpdate_Req',
+      {roomID : props.roomID, musicName : musicName});
+    };
+
 
       function MusicMenu() {
           return (
@@ -95,14 +98,16 @@ export default function SelectMusic(props) {
   
       useEffect(() => {
           props.socket.on('settingsUpdate_Res', (data) => {
-            // let time = data;
-            var time = 300;
+            let time = data;
+            if (data) {
             props.setTime(time);
-            var minute  = time / 60;
-            var second = time - minute*60;
-            minute = minute >= 10 ? String(minute) : '0'+String(minute)
-            second = second >= 10 ? String(second) : '0'+String(second)
-            strSetTime(minute+' : '+second);
+            console.log(time);
+            var minute  = parseInt(time / 60);
+            var second = time % 60;
+            console.log(minute);
+            console.log(second);
+            strSetTime(String(minute)+' : '+String(second));
+              }
           });
       }, []);
 
