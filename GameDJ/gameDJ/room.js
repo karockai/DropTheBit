@@ -36,7 +36,8 @@ class Room {
 
         let roomInfo = {
             gameTime: '0',
-            music: '',
+            music: 'Select Music',
+            roomLeader: socket.id
         };
 
         roomInfo[socketID] = playerInfo;
@@ -44,17 +45,20 @@ class Room {
         let strplayerInfo = JSON.stringify(playerInfo);
         await dbhset(roomID, socketID, strplayerInfo);
         await dbhset(roomID, 'gameTime', 0);
-        await dbhset(roomID, 'music', '');
+        await dbhset(roomID, 'music', 'Select Music');
+        await dbhset(roomID, 'roomLeader', socket.id);
         await dbhset('bgmList', 'Deja_Vu.mp3', 265);
         await dbhset('bgmList', 'King_Conga.mp3', 145);
         await dbhset('bgmList', 'Mausoleum_Mash.mp3', 176);
         dblpush('roomList', roomID);
+        // console.log(await dbhgetall(roomID));
         socket.roomID = roomID;
         socket.join(roomID);
         let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
         socket.emit('createPrivateRoom_Res', {
         roomInfo: roomInfo,
         roomID: roomID,
+        roomLeader: socket.id,
         musicList: musicList
     })
     }
