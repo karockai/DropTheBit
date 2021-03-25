@@ -78,7 +78,7 @@ class Room {
                 asset: '100000000',
                 coinVol: '0',
                 bid: {},
-                add: {}
+                ask: {}
             };
             // roomInfo[socketID] = playerInfo;
             let strplayerInfo = JSON.stringify(playerInfo);

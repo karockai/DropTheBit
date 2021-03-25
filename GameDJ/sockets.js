@@ -36,9 +36,10 @@ export default {
         // db setting  ------------------------------------ <<
 
         // curPrice refresh --------------------------------- >>
-        setInterval(() => {
-            new Refresh(io).renewalCurCoin();
-            new Refresh(io).refreshBid();
+        await setInterval(async () => {
+            await new Refresh(io).renewalCurCoin(io);
+            await new Refresh(io).renewalInfo(io);
+            new Refresh(io).refreshBid(io);
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
@@ -82,8 +83,8 @@ export default {
             socket.on('settingsUpdate_Req', (data) => {
                 new Room(io, socket).updateSettings(data);
             });
-            socket.on('startGame_Req', (roomID) => {
-                new Game(io, socket).startGame(roomID);
+            socket.on('startGame_Req', () => {
+                new Game(io, socket).startGame();
             });
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()
