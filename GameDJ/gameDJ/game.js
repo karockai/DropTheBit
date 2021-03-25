@@ -25,7 +25,9 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-        let gameTime = Number(await dbhget(socket.roomID, 'gameTime')) + 2;
+        let gameTime = Number(await dbhget(socket.roomID, 'gameTime').then((res)=>{
+            // console.log("HAHAHAHAHAHAHAHA", res);
+        })) + 2;
         // let gameTime = 10000;
         console.log(await dbhgetall(socket.roomID));
         console.log('gameTime : ', gameTime);
@@ -166,10 +168,10 @@ class Game {
                     );
                 } else {
                     playerInfo['bid'][strReqPrice] = strReqVol;
-                    let bidList = JSON.parse(await dbget('bidList'));
+                    let bidList = JSON.parse(await dbget('bidList').then(console.log).catch(console.error));
                     bidList[strReqPrice] = {};
                     bidList[strReqPrice][socketID] = roomID;
-                    dbset('bidList', JSON.stringify(bidList));
+                    await dbset('bidList', JSON.stringify(bidList)).then(console.log).catch(console.error);
                 }
                 let bidDone = {
                     type: '매수 주문',
@@ -181,7 +183,7 @@ class Game {
                 socket.emit('bidDone', bidDone);
                 socket.to(roomID).emit('bidDone_Room', bidDone);
             }
-            await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+            await dbhset(roomID, socketID, JSON.stringify(playerInfo)).then(console.log).catch(console.error);
         } else {
             //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
             refreshWallet['result'] = 'false';
@@ -281,7 +283,7 @@ sell(reqJson, socket) {
                         let askList = JSON.parse(await dbget('askList'));
                         askList[strReqPrice] = {};
                         askList[strReqPrice][socketID] = roomID;
-                        dbset('askList', JSON.stringify(askList));
+                        await dbset('askList', JSON.stringify(askList));
                     }
                     console.log('호가 등록 완료', playerInfo);
                     let askDone = {

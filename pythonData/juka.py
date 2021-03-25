@@ -151,14 +151,13 @@ def on_message(ws, msg):
     juka_result = json.dumps(juka_result)
     # time.sleep(1) # 1초 단위
     cur_price = msg['tp']
-    print(juka_result)
     if (prev_second != cur_second):
         if (juka_result):
             conn.set("curCoin", juka_result)
         pre_price = cur_price
         # print(pre_price)
         # print(cur_second)
-        print(juka_result)
+        # print(juka_result)
         data_make.clear()
 
 

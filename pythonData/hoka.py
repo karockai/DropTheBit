@@ -54,7 +54,7 @@ def on_message(ws, msg):
     if (prev_second != cur_second):
         if (hoka_result):
             conn.set("bidTable", hoka_result)
-            print(hoka_result)
+            # print(hoka_result)
         # print(timestamp)
 
 def on_error(ws, msg):

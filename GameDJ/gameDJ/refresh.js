@@ -17,8 +17,9 @@ class Refresh {
         this.io = io;
     }
 
-    async renewalCurCoin() {
-        const { io } = this;
+    renewalCurCoin(io) {
+        return new Promise(async function(resolve, reject) {
+        // const { io } = this;
         // console.log(
         //     '----------------------renewalCurCoin------------------------'
         //     );
@@ -142,11 +143,16 @@ class Refresh {
         // console.log(
         //     '----------------------renewalCurCoin End------------------------'
         // );
-        await this.renewalInfo(curPrice);
-    }
+        // await renewalInfo(curPrice);
+        resolve();
+    })
+};
 
-    async renewalInfo(curPrice) {
-        const { io } = this;
+    renewalInfo(io) {
+        return new Promise(async function(resolve, reject) {
+        // const { io } = this;
+        let curCoin = JSON.parse(await dbget('curCoin'));
+        let curPrice = curCoin['curPrice'];
         console.log(curPrice);
         // console.log(
         //     '----------------------renewalInfo Start------------------------'
@@ -222,7 +228,9 @@ class Refresh {
 
             io.to(roomID).emit('roomRank', rankList);
         }
-    }
+        resolve();
+        })
+    };
 
     // refreshBid 갱신
     async refreshBid() {
