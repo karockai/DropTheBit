@@ -31,9 +31,9 @@ export default function LobbyPlayerCard(props) {
   return (
     <Card className={classes.root} >
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
           방장
-        </Typography>
+        </Typography> */}
         <Typography variant="h5" component="h2">
           {props.playerID}
         </Typography>

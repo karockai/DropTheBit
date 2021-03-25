@@ -47,7 +47,7 @@ function Lobby(props) {
         if (soc) {
             soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
                 // setAccept(true);
-                console.log(room);
+                console.log('joinRoom_Res', room);
                 setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
             });
@@ -80,7 +80,7 @@ function Lobby(props) {
             for(let key in PlayerList) {
                 tmparr.push(PlayerList[key]);
             }
-            console.log(tmparr);
+            // console.log(tmparr);
             return (
                 // PlayerList.forEach((player) => putPlayer(player))
                 // ? PlayerList.forEach((player) => (<putPlayer player = {player}/>))

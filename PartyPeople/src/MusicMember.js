@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SelectMusic(props) {
+export default function MusicMember(props) {
   const classes = useStyles();
   // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
   /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
@@ -62,9 +62,28 @@ export default function SelectMusic(props) {
   function ShowMusic() {
       var minute  = parseInt(tmp_time / 60);
       var second = tmp_time % 60;
+      
       strSetTime(String(minute)+' : '+String(second));
-
-      return (
+      useEffect(() => {
+        props.socket.on('settingsUpdate_Res', (data) => {
+          const musicName = data.musicName;
+          const musicTime = data.musicTime;
+          if (data) {
+            props.setTime(musicTime);
+            console.log(musicTime);
+            var minute  = parseInt(musicTime / 60);
+            var second = musicTime % 60;
+            // console.log(minute);
+            // console.log(second);
+            var tmp_roomInfo = props.roomInfo; 
+            tmp_roomInfo['music'] = musicName;
+            props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
+            strSetTime(String(minute)+' : '+String(second));
+            }
+        });
+    }, []);
+      
+    return (
           <form className={classes.root} noValidate autoComplete="off">
           <div>
               <TextField

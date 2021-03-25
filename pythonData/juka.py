@@ -152,6 +152,7 @@ def on_message(ws, msg):
     # time.sleep(1) # 1초 단위
     # print(juka_result)
     cur_price = msg['tp']
+    print(juka_result)
     if (prev_second != cur_second):
 
         if (juka_result):
