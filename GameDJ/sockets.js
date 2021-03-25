@@ -93,7 +93,7 @@ export default {
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', async (reqJson) => {
                 console.log('buy_Req');
-                await new Game(io, socket).buy(reqJson);
+                await new Game(io, socket).buy(reqJson, socket);
             });
             socket.on(
                 'sell_Req',
