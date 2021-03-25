@@ -36,7 +36,7 @@ function SetPlayerName(props) {
     return(
 
         <>
-        <Grid container justify={'center'} alignItems={'center'} spacing={2} direction='column' style={{height:'100vh'}}>
+        <Grid container justify={'center'} alignItems={'center'} spacing={2} direction='column' style={{width:'100%',height:'99vh'}}>
             <Grid item>
                 <TextField
                     id="standard-basic"
