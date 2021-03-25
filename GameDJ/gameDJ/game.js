@@ -81,8 +81,9 @@ class Game {
   }
   **/
 
-    async buy(reqJson) {
-        const { io, socket } = this;
+    buy(reqJson, socket) {
+        return new Promise(async function(resolve, reject) {
+        // const { io, socket } = this;
         // console.log("-----BUY-----", reqJson);
         // 1. reqJson setting
         let roomID = reqJson['roomID'];
@@ -186,9 +187,12 @@ class Game {
             refreshWallet['result'] = 'false';
             refreshWallet['coinVol'] = String(coinVol);
             refreshWallet['cash'] = String(cash);
+            refreshWallet['asset'] = asset;
             socket.emit('refreshWallet', refreshWallet);
         }
         // console.log("-------BUY END-------------");
+        resolve();
+        });
     }
 
     // 매도 요청 등록
@@ -293,6 +297,7 @@ class Game {
             refreshWallet['result'] = 'false';
             refreshWallet['coinVol'] = String(coinVol);
             refreshWallet['cash'] = String(cash);
+            refreshWallet['asset'] = asset;
             socket.emit('refreshWallet', refreshWallet);
         }
         // console.log('-----------Sell End-----------', reqJson);
