@@ -12,7 +12,9 @@ import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 import { useSound, playSound, getDuration } from './useSound';
-import Bit from './audios/music/King_Conga.mp3';
+import King_Conga from './audios/music/King_Conga.mp3';
+import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
+import Deja_Vu from './audios/music/Deja_Vu.mp3';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 // import ThreeSecTimer from './ThreeSecTimer';
@@ -36,15 +38,15 @@ export default function LayoutGrid(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
-    // getDuration(Bit).then(function(time){
-    //     console.log('duration ', time);
-    //     let musicTime = Math.round(time);
-    //     console.log('musicTime ', musicTime);
-    //     //   props.socket.emit('settingsUpdate_Req',
-    //     //   {roomID : props.roomID, musicName : musicName, musicTime : musicTime});
-    // });
-    useSound(Bit, 0.7, 2000);
-    console.log(props.roomID);
+    
+    const musicList = {
+        Deja_Vu : Deja_Vu,
+        King_Conga: King_Conga,
+        Mausoleum_Mash :Mausoleum_Mash,
+    };
+
+    const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
+    useSound(SpecificMusic, 0.7, 2000);
 
     useEffect(() => {
         props.socket.on('gameOver', (readerBoard) => {
@@ -69,6 +71,7 @@ export default function LayoutGrid(props) {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
+            
                 <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
                     <Grid
                         style={{ height: '100vh' }}
