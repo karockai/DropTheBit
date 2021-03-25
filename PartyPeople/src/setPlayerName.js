@@ -36,7 +36,8 @@ function SetPlayerName(props) {
     return(
 
         <>
-            <Grid>
+        <Grid container justify={'center'} alignItems={'center'} spacing={2} direction='column' style={{height:'100vh'}}>
+            <Grid item>
                 <TextField
                     id="standard-basic"
                     label="Name"
@@ -46,7 +47,7 @@ function SetPlayerName(props) {
                     size="large"
                 />
             </Grid>
-            <Grid>
+            <Grid item>
                 <Button
                     variant="contained"
                     color="primary"
@@ -54,6 +55,7 @@ function SetPlayerName(props) {
                 >
                     {buttonMsg}
                 </Button>
+            </Grid>
             </Grid>
         </>
     );
