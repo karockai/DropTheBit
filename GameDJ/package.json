@@ -12,6 +12,7 @@
         "howler": "^2.2.1",
         "http-errors": "~1.6.3",
         "nanoid": "^3.1.22",
+        "node-fetch": "^2.6.1",
         "redis": "^3.0.2",
         "redis-jsonify": "^1.2.0",
         "socket.io": "^2.4.1",

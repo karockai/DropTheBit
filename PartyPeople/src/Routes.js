@@ -33,6 +33,7 @@ export default function Routes(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                                 roomID={props.roomID}
+                                roomInfo={props.roomInfo}
                                 time={time}
                             />
                         )}

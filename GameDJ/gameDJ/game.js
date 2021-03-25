@@ -23,7 +23,7 @@ class Game {
         this.socket = socket;
     }
 
-    async startGame() {
+    async startGame(roomID) {
         const { io, socket } = this;
         let gameTime = Number(await dbhget(socket.roomID, 'gameTime').then((res)=>{
             // console.log("HAHAHAHAHAHAHAHA", res);
@@ -31,16 +31,15 @@ class Game {
         // let gameTime = 10000;
         console.log(await dbhgetall(socket.roomID));
         console.log('gameTime : ', gameTime);
-        let roomID = socket.roomID;
-        io.to(roomID).emit('chartData', {
-            chartData: chartData,
-            gameTime: gameTime,
-        });
+        // let roomID = socket.roomID;
+        roomID = socket.roomID;
+        io.to(roomID).emit('chartData', {chartData: chartData,});
         console.log(chartData);
+        await io.to(roomID).emit('startGame_Res', gameTime);
         // await socket.to(roomID).emit('startGame', gameTime);
-        let ReadyPlayer = socket.on('allReady', () => {
-            // 모두가 준비되면 게임 시작
-        });
+        // let ReadyPlayer = socket.on('allReady', () => {
+        //     // 모두가 준비되면 게임 시작
+        // });
 
         async function realStart() {
             let roomID = socket.roomID;
@@ -142,7 +141,7 @@ class Game {
                     type: '매수',
                     playerID: playerID,
                     vol: intReqVol,
-                    price: intReqPrice,
+                    price: curPrice,
                 };
                 socket.emit('buyDone', buyDone);
                 socket.to(roomID).emit('buyDone_Room', buyDone);
@@ -256,7 +255,7 @@ sell(reqJson, socket) {
                     type: '매도 주문',
                     playerID: playerID,
                     vol: intReqVol,
-                    price: intReqPrice,
+                    price: curPrice,
                 };
                 socket.emit('sellDone', sellDone);
                 socket.to(roomID).emit('sellDone_Room', sellDone);

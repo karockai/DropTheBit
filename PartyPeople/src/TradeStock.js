@@ -109,7 +109,6 @@ export default function TradeStock(props) {
         SetBid(currentBid - ratioBid);
     }
     function Buy(bid, volume) {
-        console.log(props);
         //@ Buy Emit
         console.log(
             '[ 가격',
@@ -126,14 +125,11 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         props.socket.on('buy_Res', (bbid) => {
-            console.log(bbid.curPrice);
             SetNewBid(bbid.curPrice);
-            console.log('구매하고 매매 호가', bbid);
         });
     }
     function Sell(bid, volume) {
         //@ Sell Emit
-        console.log(props);
         console.log(
             '[ 가격',
             bid,
@@ -150,7 +146,6 @@ export default function TradeStock(props) {
         //@ 중복 문제가 발생한다.
         props.socket.on('sell_Res', (sbid) => {
             SetNewBid(sbid);
-            console.log('판매하고 호가 갱신', sbid);
         });
     }
 
@@ -214,13 +209,11 @@ export default function TradeStock(props) {
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useLayoutEffect(() => {
         const responseBid = newBid;
-        console.log('responseBid', responseBid);
         SetBid(responseBid);
     }, [newBid]); //@ 호가가 변할때이다.
 
     useLayoutEffect(() => {
         const responseVolume = newVolume;
-        console.log('responseVolume', responseVolume);
         SetVolume(responseVolume);
         return () => {};
     }, [newVolume]);
@@ -244,12 +237,12 @@ export default function TradeStock(props) {
             className={classes.paper}
             alignItems="stretch"
             container
-            direction="column"
+            direction="row"
             justify="center"
             alignItems="center"
             style={{ height: '100%' }}
         >
-            <Grid container direction="row" justify="center">
+            <Grid container item justify="center">
                 <TextField
                     className="buysell"
                     id="outlined-required"
@@ -265,7 +258,7 @@ export default function TradeStock(props) {
                     downEvent={() => BidDown(currentBid)}
                 />
             </Grid>
-            <Grid container direction="row" justify="center">
+            <Grid container item  justify="center">
                 <TextField
                     className="count"
                     id="outlined-required"
@@ -281,7 +274,7 @@ export default function TradeStock(props) {
                     downEvent={() => VolumeDown(currentVolume)}
                 />
             </Grid>
-            <Grid className={classes.button} style={{ width: '80%' }}>
+            <Grid item  justify="center" className={classes.button} style={{ width: '80%' }}>
                 <Button
                     variant="contained"
                     color="primary"

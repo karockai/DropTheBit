@@ -1,64 +1,71 @@
-import React, {useEffect, useState, useLayoutEffect} from 'react'
+import { Grid, GridList } from '@material-ui/core';
+import { blue, red } from '@material-ui/core/colors';
+import React, {useEffect, useState, useLayoutEffect, useRef} from 'react'
 
 export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
-    const [isInit, setInit] = useState(false);
-    const [doneList, setList] = useState([{
-        playerID: 'ID',
-        vol: 0,
-        price: 0,
-        type: 'buy'
-    }]);
+    const [doneList, setList] = useState([]);
 
+    const scroll = useRef(null);
 
-    if(!isInit) setInit(true);
+   
+    const scrollToBottom = () => {
+        const { scrollHeight, cleintHeight } = scroll.current;
+        scroll.current.scrollTop = scrollHeight - cleintHeight;
+    }
 
     useEffect(() => {
+        scrollToBottom();
         if(props.socket == null) {
             props.requestSocket('StockDoneList', props.socket);
-            setInit(true);
         }
         else {
             if(!props.isMine){
-                props.socket.on('buyDone_Room', (done) => {
+                props.socket.once('buyDone_Room', (done) => {
                     setList([...doneList, done]);
                 })
-                props.socket.on('sellDone_Room', (done) => {
+                props.socket.once('sellDone_Room', (done) => {
                     setList([...doneList, done]);
                 })
-                props.socket.on('bidDone_Room', (done) => {
+                props.socket.once('bidDone_Room', (done) => {
                     setList([...doneList, done]);
                 })
-                props.socket.on('askDone_Room', (done => {
+                props.socket.once('askDone_Room', (done => {
                     setList([...doneList, done]);
                 }))
             }
-            props.socket.on('buyDone', (done) => {
+            props.socket.once('buyDone', (done) => {
                 setList([...doneList, done]);
             })
-            props.socket.on('sellDone', (done) => {
+            props.socket.once('sellDone', (done) => {
                 setList([...doneList, done]);
             })
-            props.socket.on('bidDone', (done) => {
+            props.socket.once('bidDone', (done) => {
                 setList([...doneList, done]);
             })
-            props.socket.on('askDone', (done => {
+            props.socket.once('askDone', (done => {
                 setList([...doneList, done]);
             }))
         }
-    },[isInit])
-
-    console.log(doneList)
+    },)
+ 
 
     return (
-        <>
+        <GridList spacing={1} wrap='wrap' style={{ width: '100%' ,height: '100%' }}>
             {
-                doneList.map((done, idx)=>{ return (
-                <p>
-                        {props.isMine? "내" : done.playerID}가 {done.price}에 {done.vol}개를 {done.type}하셨습니다.
-                </p>
-                )})
+                <Grid style={{ width: '100%'}}>
+                    <div ref={scroll} >
+                    {doneList.map((done, idx)=>{ 
+                    let buySellColor = {color: done.type.substring(0,2) === '매수' ? red[300] : blue[300]}
+                    return (
+                        <pre>
+                            {props.isMine? "내" : done.playerID}가(이) <span style={{ fontWeight:'bold'}}>"{done.price}"</span> 에 [ {done.vol} ] 개를 <span style={ buySellColor }>{done.type}.</span> 
+                        </pre>
+                        )
+                    })}
+                    </div>
+                </Grid>
             }
-        </>
+        </GridList>
     );
 }
