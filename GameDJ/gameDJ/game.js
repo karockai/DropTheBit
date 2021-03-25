@@ -29,7 +29,7 @@ class Game {
         // let gameTime = 10000;
         console.log(await dbhgetall(socket.roomID));
         console.log('gameTime : ', gameTime);
-        let roomID = socket.roomID;
+        roomID = socket.roomID;
         io.to(roomID).emit('chartData', {chartData: chartData,});
         console.log(chartData);
         await io.to(roomID).emit('startGame_Res', gameTime);

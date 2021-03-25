@@ -137,8 +137,8 @@ export default function LayoutGrid(props) {
                                     >
                                         <Grid
                                             style={{
-                                                width: '50%',
-                                                height: '22vh',
+                                                width: '45%',
+                                                height: '100%',
                                             }}
                                             item
                                         >
@@ -151,8 +151,8 @@ export default function LayoutGrid(props) {
                                         </Grid>
                                         <Grid
                                             style={{
-                                                width: '45%',
-                                                height: '22vh',
+                                                width: '55%',
+                                                height: '100%',
                                             }}
                                             item
                                         >
@@ -247,6 +247,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <ChatRoom
+                                            roomInfo={props.roomInfo}
                                             roomID={props.roomID}
                                             socket={props.socket}
                                             chat={props.chat}
