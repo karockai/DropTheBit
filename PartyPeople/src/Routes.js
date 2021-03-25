@@ -18,8 +18,10 @@ export default function Routes(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                                 SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                                time ={time}
                                 setTime={setTime}
                                 roomID={props.roomID}
+                                roomInfo={props.roomInfo}
                             />
                         )}
                     />

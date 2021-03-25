@@ -3,6 +3,7 @@ import {
     dbget,
     dbhset,
     dbhget,
+    dbhmset,
     dbhgetall,
     dbrpush,
     dblpush, 
@@ -22,6 +23,9 @@ class Room {
     
     // data : {playerID : name}
     async createPrivateRoom(data) {
+        // 코인이름 구하기
+        // console.log(JSON.parse(await dbget("bidTable"))['coinName']);
+        
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
@@ -39,26 +43,20 @@ class Room {
             music: 'Select Music',
             roomLeader: socket.id
         };
-
-        roomInfo[socketID] = playerInfo;
+        
         console.log('create', roomInfo);
-        let strplayerInfo = JSON.stringify(playerInfo);
-        await dbhset(roomID, socketID, strplayerInfo);
-        await dbhset(roomID, 'gameTime', 0);
-        await dbhset(roomID, 'music', 'Select Music');
-        await dbhset(roomID, 'roomLeader', socket.id);
-        await dbhset('bgmList', 'Deja_Vu.mp3', 265);
-        await dbhset('bgmList', 'King_Conga.mp3', 145);
-        await dbhset('bgmList', 'Mausoleum_Mash.mp3', 176);
+        await dbhmset(roomID, 'gameTime', 0, 'music', 'Select Music', 'roomLeader', socket.id);
+        await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+        await dbhmset('bgmList', 'Deja_Vu.mp3', 265, 'King_Conga.mp3', 145, 'Mausoleum_Mash.mp3', 176);
         dblpush('roomList', roomID);
         // console.log(await dbhgetall(roomID));
         socket.roomID = roomID;
         socket.join(roomID);
         let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
+        roomInfo = await dbhgetall(roomID);
         socket.emit('createPrivateRoom_Res', {
         roomInfo: roomInfo,
         roomID: roomID,
-        roomLeader: socket.id,
         musicList: musicList
     })
     }
@@ -69,40 +67,37 @@ class Room {
         const roomID = data.roomID;
         let roomInfo = {};
         let socketID = socket.id;
-
-        let playerInfo = {
-            playerID: data["playerID"],
-            cash: '100000000',
-            asset: '100000000',
-            coinVol: '0',
-            bid: {},
-            add: {}
-        };
-        console.log('joinRoom', data.playerID);
-        // roomInfo[socketID] = playerInfo;
-        let strplayerInfo = JSON.stringify(playerInfo);
-        await dbhset(roomID, socketID, strplayerInfo);
-
-        let rawRoom = await dbhgetall(roomID);
-        for (const [key, value] of Object.entries(rawRoom)) {
-            console.log('joinRoom key: ', key);
-            console.log('joinRoom value : ', value);
-
-            if (key.length === 20){
-                roomInfo[key] = JSON.parse(value);
+        // 아이디 입력안하면 실행 안됨 
+        if(data.playerID){
+            let playerInfo = {
+                playerID: data["playerID"],
+                cash: '100000000',
+                asset: '100000000',
+                coinVol: '0',
+                bid: {},
+                add: {}
+            };
+            // roomInfo[socketID] = playerInfo;
+            let strplayerInfo = JSON.stringify(playerInfo);
+            await dbhset(roomID, socketID, strplayerInfo);
+    
+            let rawRoom = await dbhgetall(roomID);
+            for (const [key, value] of Object.entries(rawRoom)) {
+                if (key.length === 20){
+                    roomInfo[key] = JSON.parse(value);
+                }
+                else{
+                    roomInfo[key] = value;
+                }
             }
-            else{
-                roomInfo[key] = value;
-            }
+            console.log('joinRoom', roomInfo);
+            socket.roomID = roomID;
+            socket.join(roomID);
+            io.to(roomID).emit('joinRoom_Res', {roomID:roomID, roomInfo: roomInfo});
+            console.log('someone joined a room');
+            console.log('roomID : ', roomID);
+            console.log('newbie :', data.playerID);
         }
-        console.log('joinRoom', roomInfo);
-        socket.roomID = roomID;
-        socket.join(roomID);
-        console.log('playerInfo', playerInfo);
-        io.to(roomID).emit('joinRoom_Res', {roomID:roomID, roomInfo: roomInfo});
-        console.log('someone joined a room');
-        console.log('roomID : ', roomID);
-        console.log('newbie :', data.playerID);
     }
 
     // data : {roomID : roomID, musicName : 클라에서 선택한 음악명 (select 창)}
@@ -112,13 +107,13 @@ class Room {
         const roomID = data.roomID;
         const musicName = data.musicName;
         const musicTime = Number(await dbhget('bgmList', musicName));
-        console.log('update ', musicName, musicTime);
-        console.log(await dbhgetall(roomID));
+        // console.log('update ', musicName, musicTime);
+        // console.log(await dbhgetall(roomID));
         await dbhset(roomID, 'gameTime', musicTime);
         await dbhset(roomID, 'music', musicName);
-        console.log('update ',await dbhget(roomID, 'music'));
-        console.log('update ',await dbhget(roomID, 'gameTime'));
-        io.to(data.roomID).emit('settingsUpdate_Res', musicTime);
+        // console.log('update ',await dbhget(roomID, 'music'));
+        // console.log('update ',await dbhget(roomID, 'gameTime'));
+        io.to(roomID).emit('settingsUpdate_Res', {musicName : musicName, musicTime : musicTime});
     }
 }
 

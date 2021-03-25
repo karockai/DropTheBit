@@ -8,6 +8,8 @@
         "volume" : "Number",
         "split" : "Number",
         "dividend" : "Number",
-        "curPrice" : "Number"
+        "curPrice" : "Number",
+        "prePrice" : "Number",
+        "coinName": "String"
     }
 }

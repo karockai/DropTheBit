@@ -117,6 +117,9 @@ class GameManager extends React.Component {
             roomID: data.roomID,
             roomInfo: data.roomInfo,
         });
+        console.log(
+            'SetRoomIdAndInfo. 랜더링을 다시 합니다.'
+        );
         console.log(data.roomID);
         console.log(data.roomInfo);
     };

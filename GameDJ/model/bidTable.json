@@ -23,6 +23,7 @@
         "ask_price4": "Num",
         "bid_price4": "Num",
         "ask_size4": "Num",
-        "bid_size4": "Num"
+        "bid_size4": "Num",
+        "coinName": "String"
     }
 }
