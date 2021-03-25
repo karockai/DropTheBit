@@ -82,8 +82,8 @@ export default {
             socket.on('settingsUpdate_Req', (data) => {
                 new Room(io, socket).updateSettings(data);
             });
-            socket.on('startGame_Req', (roomID) => {
-                new Game(io, socket).startGame(roomID);
+            socket.on('startGame_Req', () => {
+                new Game(io, socket).startGame();
             });
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()

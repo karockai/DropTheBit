@@ -23,14 +23,11 @@ class Game {
         this.socket = socket;
     }
 
-    async startGame(roomID) {
+    async startGame() {
         const { io, socket } = this;
         let gameTime = Number(await dbhget(socket.roomID, 'gameTime')) + 2;
-        // let gameTime = 10000;
-        console.log(await dbhgetall(socket.roomID));
-        console.log('gameTime : ', gameTime);
         let roomID = socket.roomID;
-        io.to(roomID).emit('chartData', {chartData: chartData,});
+        io.to(roomID).emit('chartData', {chartData: chartData});
         console.log(chartData);
         await io.to(roomID).emit('startGame_Res', gameTime);
         // await socket.to(roomID).emit('startGame', gameTime);
