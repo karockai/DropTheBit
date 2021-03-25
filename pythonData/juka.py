@@ -103,7 +103,7 @@ try:
     conn = redis.StrictRedis(
         host='3.34.156.16',
         port=6379,
-        db=0)
+        db=1)
     # print("hmset", conn.set("curCoin", "hihhihihi"))
     # print("hgetall", conn.get("curCoin"))
     # print("hgetall", conn.delete("bitData"))
@@ -122,7 +122,7 @@ def on_message(ws, msg):
     global cur_price
 
     msg = json.loads(msg.decode('utf-8'))
-
+    # print(msg)
     juka_result = dict()
 
     timestamp = str(datetime.datetime.fromtimestamp(msg['tms'] / 1000))
@@ -150,8 +150,10 @@ def on_message(ws, msg):
     juka_result['prePrice'] = pre_price
     juka_result = json.dumps(juka_result)
     # time.sleep(1) # 1초 단위
+    # print(juka_result)
     cur_price = msg['tp']
     if (prev_second != cur_second):
+
         if (juka_result):
             conn.set("curCoin", juka_result)
         pre_price = cur_price
@@ -178,6 +180,7 @@ def on_open(ws):
     def run(*args):
         request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
+        # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"type": "orderbook", "codes": ["KRW-BCHA.5"]},{"format":"SIMPLE"}]'
 
         ws.send(request1)
         # ws.send(request2)
