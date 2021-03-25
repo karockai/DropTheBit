@@ -111,7 +111,7 @@ class Room {
         await dbhset(roomID, 'music', musicName);
         // console.log('update ',await dbhget(roomID, 'music'));
         // console.log('update ',await dbhget(roomID, 'gameTime'));
-        io.to(roomID).emit('settingsUpdate_Res', musicTime);
+        io.to(roomID).emit('settingsUpdate_Res', {musicName : musicName, musicTime : musicTime});
     }
 }
 
