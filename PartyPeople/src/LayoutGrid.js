@@ -15,6 +15,7 @@ import { useSound, playSound, getDuration } from './useSound';
 import Bit from './audios/music/King_Conga.mp3';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
+import { red } from '@material-ui/core/colors';
 // import ThreeSecTimer from './ThreeSecTimer';
 
 const useStyles = makeStyles((theme) => ({
@@ -66,9 +67,9 @@ export default function LayoutGrid(props) {
     };
 
     return (
-        <React.Fragment>
+        <React.Fragment >
             <CssBaseline />
-            <Container maxWidth="lg">
+            <Container  maxWidth="lg">
                 <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
                     <Grid
                         style={{ height: '100vh' }}

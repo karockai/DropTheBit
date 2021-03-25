@@ -124,8 +124,8 @@ export default function TradeStock(props) {
             currentBid: bid,
             currentVolume: volume,
         });
-        props.socket.on('buy_Res', (bbid) => {
-            SetNewBid(bbid.curPrice);
+        props.socket.on('buyDone', (bbid) => {
+            SetNewBid(bbid.price);
         });
     }
     function Sell(bid, volume) {
@@ -144,8 +144,8 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
-        props.socket.on('sell_Res', (sbid) => {
-            SetNewBid(sbid);
+        props.socket.on('sellDone', (sbid) => {
+            SetNewBid(sbid.price);
         });
     }
 
