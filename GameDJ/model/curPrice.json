@@ -9,6 +9,7 @@
         "split" : "Number",
         "dividend" : "Number",
         "curPrice" : "Number",
-        "prePrice" : "Number"
+        "prePrice" : "Number",
+        "coinName": "String"
     }
 }

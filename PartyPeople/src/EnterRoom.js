@@ -43,7 +43,7 @@ export default function EnterRoom(props, { history }) {
         else {                           // 방장
             props.socket.emit('createPrivateRoom_Req', {"playerID" : name});
             props.socket.on('createPrivateRoom_Res', (data)=>{
-                console.log('createPrivateRoom_Res'); 
+                console.log('createPrivateRoom_Res', data); 
                 // console.log(data.roomInfo[props.socket.id]);
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);

@@ -3,7 +3,7 @@ from threading import Thread
 import json
 import time, datetime
 import redis, copy
-
+import coinName
 
 start = 0
 end = 0
@@ -43,7 +43,7 @@ def on_message(ws, msg):
     global cur_price
 
     msg = json.loads(msg.decode('utf-8'))
-    # print(json.dumps(msg))
+    coin_name = msg['cd']
 
 
     if (msg['ty'] == 'ticker'):
@@ -97,8 +97,12 @@ def on_message(ws, msg):
         cur_price = juka_result['curPrice']
 
         if (prev_second != cur_second):
-            juka_result = json.dumps(juka_result)
-            hoka_result = json.dumps(hoka_result)
+            juka_result['coinName'] = coinName.coinList[coin_name]
+            hoka_result['coinName'] = coinName.coinList[coin_name]
+            juka_result = json.dumps(juka_result, ensure_ascii=False)
+            hoka_result = json.dumps(hoka_result, ensure_ascii=False)
+            # juka_result = json.dumps(juka_result)
+            # hoka_result = json.dumps(hoka_result)
             if (juka_result and hoka_result):
                 conn.set("curCoin", juka_result)
                 conn.set("bidTable", hoka_result)
@@ -128,7 +132,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"type": "orderbook", "codes": ["KRW-BCHA.5"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-XRP"]},{"type": "orderbook", "codes": ["KRW-XRP.5"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)
