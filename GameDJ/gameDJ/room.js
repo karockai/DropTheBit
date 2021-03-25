@@ -25,7 +25,7 @@ class Room {
     async createPrivateRoom(data) {
         // 코인이름 구하기
         // console.log(JSON.parse(await dbget("bidTable"))['coinName']);
-        
+
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
@@ -54,6 +54,9 @@ class Room {
         socket.join(roomID);
         let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
         roomInfo = await dbhgetall(roomID);
+        roomInfo[socket.id] = JSON.parse(roomInfo[socket.id]);
+        
+        // console.log(roomInfo);
         socket.emit('createPrivateRoom_Res', {
         roomInfo: roomInfo,
         roomID: roomID,
