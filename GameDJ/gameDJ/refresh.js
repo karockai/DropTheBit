@@ -20,9 +20,7 @@ class Refresh {
     renewalCurCoin(io) {
         return new Promise(async function(resolve, reject) {
         // const { io } = this;
-        // console.log(
-        //     '----------------------renewalCurCoin------------------------'
-        //     );
+        console.log('----------------------renewalCurCoin------------------------');
         // 1. bidList 불러옴
         let curCoin = JSON.parse(await dbget('curCoin'));
 
@@ -70,14 +68,14 @@ class Refresh {
 
                     // buyDone
                     let playerID = playerInfo['playerID'];
-                    let buyDone = {
-                        type: '매도',
+                    let sellDone = {
+                        type: '매도 주문 체결',
                         playerID: playerID,
                         vol: askVol,
                         price: intAskPrice,
                     };
-                    io.to(socketID).emit('buyDone', buyDone);
-                    io.to(roomID).emit('buyDone_Room', buyDone);
+                    io.to(socketID).emit('sellDone', sellDone);
+                    io.to(roomID).emit('sellDone_Room', sellDone);
                 }
                 if (Object.keys(askList[strAskPrice]).length === 0) {
                     // console.log("삭제해버립니다 : 판매", strAskPrice);
@@ -119,14 +117,14 @@ class Refresh {
 
                     // sellDone
                     let playerID = playerInfo['playerID'];
-                    let sellDone = {
-                        type: 'sell',
+                    let buyDone = {
+                        type: '매수 주문 체결',
                         playerID: playerID,
-                        vol: askVol,
-                        price: intAskPrice,
+                        vol: bidVol,
+                        price: intBidPrice,
                     };
-                    io.to(socketID).emit('sellDone', sellDone);
-                    io.to(roomID).emit('sellDone_Room', sellDone);
+                    io.to(socketID).emit('buyDone', buyDone);
+                    io.to(roomID).emit('buyDone_Room', buyDone);
                 }
                 if (Object.keys(bidList[strBidPrice]).length === 0) {
                     // console.log("삭제해버립니다 : 구매", strBidPrice);
@@ -140,9 +138,7 @@ class Refresh {
             }
         }
 
-        // console.log(
-        //     '----------------------renewalCurCoin End------------------------'
-        // );
+        console.log('----------------------renewalCurCoin End------------------------');
         // await renewalInfo(curPrice);
         resolve();
     })
@@ -150,13 +146,11 @@ class Refresh {
 
     renewalInfo(io) {
         return new Promise(async function(resolve, reject) {
+        console.log('----------------------renewalInfo Start------------------------');
         // const { io } = this;
         let curCoin = JSON.parse(await dbget('curCoin'));
         let curPrice = curCoin['curPrice'];
         console.log(curPrice);
-        // console.log(
-        //     '----------------------renewalInfo Start------------------------'
-        // );
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         let roomList = await dblrange('roomList', 0, -1);
         // let roomList = [];
@@ -217,17 +211,15 @@ class Refresh {
                 // this.socket.emit('refreshWallet', refreshWallet);
                 // console.log("renewalInfo :", playerInfo);
                 await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-                // console.log(
-                //     '----------------------renewalCurInfo End------------------------'
-                // );
             }
-
+            
             rankList.sort(function (a, b) {
                 return b['asset'] - a['asset'];
             });
-
+            
             io.to(roomID).emit('roomRank', rankList);
         }
+        console.log('----------------------renewalInfo End------------------------');
         resolve();
         })
     };

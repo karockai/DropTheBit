@@ -132,7 +132,7 @@ class Game {
 
                 // 6-4. buyDone
                 let buyDone = {
-                    type: '매수',
+                    type: '매수 완료',
                     playerID: playerID,
                     vol: intReqVol,
                     price: curPrice,
@@ -246,14 +246,14 @@ sell(reqJson, socket) {
                 
                 // 6-4. sellDone
                 let sellDone = {
-                    type: '매도 주문',
+                    type: '매도 완료',
                     playerID: playerID,
                     vol: intReqVol,
                     price: curPrice,
                 };
                 socket.emit('sellDone', sellDone);
                 socket.to(roomID).emit('sellDone_Room', sellDone);
-
+                console.log('현재가로 판매 완료 :', playerInfo);
                 // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
             } else {
                 coinVol -= intReqVol;
@@ -280,7 +280,7 @@ sell(reqJson, socket) {
                     }
                     console.log('호가 등록 완료', playerInfo);
                     let askDone = {
-                        type: '매도',
+                        type: '매도 주문',
                         playerID: playerID,
                         vol: intReqVol,
                         price: intReqPrice,
