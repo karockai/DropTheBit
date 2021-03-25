@@ -13,6 +13,7 @@ import {
     Grid,
     Paper,
     makeStyles,
+    GridList,
 } from '@material-ui/core';
 import Message from './Message';
 
@@ -46,74 +47,84 @@ export default function ChatRoom(props) {
     // console.log(props.socket);
     let testXs = 12;
     const classes = useStyles();
-    let [message, setMessage] = useState(''); // 보낼 때의 메시지자체만 저장
-    let [messages, setMessages] = useState(
+    const [message, setMessage] = useState(''); // 보낼 때의 메시지자체만 저장
+    const [messages, setMessages] = useState(
         // author와 쌍으로 저장된 메시지
         [
-            { message: '메시지 테스트', author: 'playerID' },
-            { message: '메시지 테스트2', author: 'playerID2' },
         ]
     );
+    const [isChanged, setChanged]  = useState(true);
     let textInput = useRef(null);
-
+    
     useEffect(() => {
-        props.socket.on('update', (data) => {
+        props.socket.once('update', (data) => {
             if (data) {
-                console.log('update:', data);
                 addMessage(data);
             }
-        });
-    }, []);
-
+        })
+    });
+    
+    // const socket_on = (async() => {
+    //     await props.socket.on('update', (data) => {
+    //         if (data) {
+    //             console.log('update 3', messages);
+    //             addMessage(data);
+    //         }
+    //     })
+    // })()
+    //
     const handleOnChange = (event) => {
         setMessage(event.target.value);
     };
-
-    const sendMessage = (ev) => {
-        ev.preventDefault();
+    
+    const sendMessage = () => {
+        // ev.preventDefault();
         textInput.current.value = '';
         // author: this.state.author,
         // console.log(message);
         props.socket.emit('message', {
             message: message,
-            author: 'playerID',
+            author: props.roomInfo[props.socket.id]['playerID'],
             roomID: props.roomID,
         });
         setMessage('');
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
-
+    
     const addMessage = (data) => {
         // setMessages({ messages: [...messages, data['message']] });
-        console.log('1', data);
         const new_messages = [...messages, data];
-        console.log('new_messages', new_messages);
         setMessages(new_messages);
     };
+
+
+
 
     function PrintMessage() {
         return <></>;
     }
 
     return (
+        <>
         <Grid
             container
             className={classes.button}
             style={{ height: '100%' }}
             justify={'space-between'}
         >
-            <Grid item style={{ height: '29vh' }}>
-                <>
+            <GridList item style={{ height: '29vh' }}>
+                <Grid style={{ width: '100%'}}>
                     {messages.map((message) => {
                         return (
-                            <Paper>
-                                {message.author}
-                                {message.message}
-                            </Paper>
-                        );
+                            <>
+                            <pre>
+                                {message.author} : {message.message}
+                            </pre>
+                            </>
+                        )
                     })}
-                </>
-            </Grid>
+                </Grid>
+            </GridList>
             <Grid item>
                 <Grid
                     item
@@ -140,7 +151,7 @@ export default function ChatRoom(props) {
                             style={{ height: '100%' }}
                             variant="contained"
                             color="primary"
-                            onClick={sendMessage}
+                            onClick={()=>{sendMessage()}}
                         >
                             전송
                         </Button>
@@ -148,6 +159,7 @@ export default function ChatRoom(props) {
                 </Grid>
             </Grid>
         </Grid>
+        </>
     );
 }
 
