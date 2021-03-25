@@ -139,7 +139,7 @@ class Game {
                     type: '매수',
                     playerID: playerID,
                     vol: intReqVol,
-                    price: intReqPrice,
+                    price: curPrice,
                 };
                 socket.emit('buyDone', buyDone);
                 socket.to(roomID).emit('buyDone_Room', buyDone);
@@ -249,7 +249,7 @@ class Game {
                     type: '매도 주문',
                     playerID: playerID,
                     vol: intReqVol,
-                    price: intReqPrice,
+                    price: curPrice,
                 };
                 socket.emit('sellDone', sellDone);
                 socket.to(roomID).emit('sellDone_Room', sellDone);
