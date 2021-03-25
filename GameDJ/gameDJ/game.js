@@ -161,7 +161,7 @@ class Game {
                     );
                 } else {
                     playerInfo['bid'][strReqPrice] = strReqVol;
-                    let bidList = JSON.parse(await dbget('bidList').then(console.log).catch(console.error));
+                    let bidList = JSON.parse(await dbget('bidList'));
                     bidList[strReqPrice] = {};
                     bidList[strReqPrice][socketID] = roomID;
                     await dbset('bidList', JSON.stringify(bidList)).then(console.log).catch(console.error);
