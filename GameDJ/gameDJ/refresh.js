@@ -212,11 +212,11 @@ class Refresh {
                 // console.log("renewalInfo :", playerInfo);
                 await dbhset(roomID, socketID, JSON.stringify(playerInfo));
             }
-            
+
             rankList.sort(function (a, b) {
                 return b['asset'] - a['asset'];
             });
-            
+
             io.to(roomID).emit('roomRank', rankList);
         }
         console.log('----------------------renewalInfo End------------------------');
