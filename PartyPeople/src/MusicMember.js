@@ -146,8 +146,14 @@ export default function MusicMember(props) {
   /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
   var tmp_music =  props.music ? 'Not Selected' : props.roomInfo['music'];
   var tmp_time =  !props.roomInfo['gameTime'] ? 0 : props.roomInfo['gameTime'];
+
+  var minute  = parseInt(tmp_time / 60);
+  var second = tmp_time % 60;
+  minute = minute >= 10 ? String(minute) : '0'+String(minute);
+  second = second >= 10 ? String(second) : '0'+String(second);
+
   const [music, setMusic] = React.useState(tmp_music);
-  const [strTime, strSetTime] = React.useState('');
+  const [strTime, strSetTime] = React.useState(minute+' : '+second);
 
   function MusicInput() {
       return (
@@ -212,7 +218,7 @@ export default function MusicMember(props) {
           <form className={classes.root} noValidate autoComplete="off">
           <div>
               <TextField
-              label="Play Time"
+              label={strTime}
               defaultValue={strTime}
               InputProps={{
                   readOnly: true,
