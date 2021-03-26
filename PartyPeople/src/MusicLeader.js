@@ -132,18 +132,16 @@ export default function MusicLeader(props) {
     // props.history.push('/game');
 });
 
-  useEffect(() => {
-    props.socket.once('startGame_Res', (gameTime) => {
-      // if (props.roomInfo) {
-        // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
-        props.history.push('/game');
-        // var minute  = parseInt(gameTime / 60);
-        // var second = gameTime % 60;
-        // var tmp_roomInfo = props.roomInfo; 
-        // tmp_roomInfo['music'] = musicName;
-        // props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
-        // strSetTime(String(minute)+' : '+String(second));
-    });
+useEffect(() => {
+  props.socket.once('startGame_Res', (gameTime) => {
+
+      // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
+      props.history.push({
+        pathname:'/game',
+        state: {gameTime: gameTime}
+      });
+
+  });
 }, []);
   return(
     <>

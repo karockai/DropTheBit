@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +18,13 @@ import Deja_Vu from './audios/music/Deja_Vu.mp3';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
-// import ThreeSecTimer from './ThreeSecTimer';
+import ThreeSecTimer from './ThreeSecTimer';
+import {
+    BrowserRouter as Router,
+    Switch,
+    useLocation,
+    useHistory,
+  } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +45,12 @@ export default function LayoutGrid(props) {
     let leftSm = 2;
     let middleSm = 7;
     let rightSm = 3;
-    
+
+    const location = useLocation();
+    console.log(location.state);
+    const gameTime = location.state.gameTime;
+    console.log(gameTime);
+
     const musicList = {
         Deja_Vu : Deja_Vu,
         King_Conga: King_Conga,
@@ -57,6 +68,26 @@ export default function LayoutGrid(props) {
         });
     }, []);
 
+    // const ModalOn = (class) => {
+        
+    // }
+    // const ModalOff = (class) => {
+        
+    // }
+
+    const GameStart = () =>{
+        useEffect(() => {
+            ModalOn();
+        }, []);
+    };
+    const ModalOn =() => {
+        return(
+            <>
+            <ThreeSecTimer/> 
+            </>
+        );
+    };
+
     const GameOver = (readerBoard) => {
         // modal 띄울 함수 호출
 
@@ -70,7 +101,8 @@ export default function LayoutGrid(props) {
 
     return (
         <React.Fragment >
-            <CssBaseline />
+            {/* {GameStart()} */}
+            <ThreeSecTimer/> 
             <Container  maxWidth="lg">
                 <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
                     <Grid
@@ -126,7 +158,8 @@ export default function LayoutGrid(props) {
                                             display="flex"
                                             justify-content="center"
                                             align-items="center"
-                                            time={props.time}
+                                            // time={props.time}
+                                            time={gameTime}
                                         />
                                     </Paper>
                                 </Grid>

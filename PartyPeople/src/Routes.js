@@ -34,7 +34,7 @@ export default function Routes(props) {
                                 requestSocket={props.requestSocket}
                                 roomID={props.roomID}
                                 roomInfo={props.roomInfo}
-                                time={time}
+                                gameTime={time}
                             />
                         )}
                         roomID={props.roomID}

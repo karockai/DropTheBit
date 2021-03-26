@@ -126,7 +126,7 @@ function ChartTitle(props) {
                     </Grid>
                     <Grid>
                         <span style={{ color: grey[900] ,}}>
-                            <ShowTime/>
+                            {/* <ShowTime/> */}
                         </span>
                     </Grid>
                 </Grid>
