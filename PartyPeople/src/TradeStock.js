@@ -16,6 +16,7 @@ import DrumUp from './audios/effect/drumUp.wav';
 import DrumDown from './audios/effect/drumDown.wav';
 import HatUp from './audios/effect/hatUp.wav';
 import HatDown from './audios/effect/hatDown.wav';
+import { grey, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -86,14 +87,41 @@ function ArrowButton(props) {
 export default function TradeStock(props) {
     const classes = useStyles();
 
-    const [currentBid, SetBid] = useState(1);
-    const [newBid, SetNewBid] = useState(1); //props.APIdata.curPrice
+    const [currentBid, SetBid] = useState(99999999);
+    const [newBid, SetNewBid] = useState(99999999); //props.APIdata.curPrice
     const [currentVolume, SetVolume] = useState(0);
     const [newVolume, SetNewVolume] = useState(0);
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
     if(!isBind) SetBind(true);
+    const [myWallet, setWallet] = useState({
+        myCash : 0,
+        myAsset : 0,
+        myCoin : 0,
+    })
+    const [isInit, setInit] = useState(false);
+    if(!isInit) setInit(true);
+    //@ 가정 => props에 socket이 전달되었어야함.
+    useLayoutEffect(() => {
+        if (props.socket == null) {
+            props.requestSocket('MyAsset',props.socket);
+            setInit(true);
+        } else {
+            props.socket.on('refreshWallet', (data) => {
+                //@ buyreq
+                const currentCash = data.cash;
+                const currentAsset = data.asset;
+                const currentCoin = data.coinVol;
+                setWallet({
+                    myCash: currentCash,
+                    myAsset: currentAsset,
+                    myCoin: currentCoin,
+                })
+            });
+        }
+    },[isInit]);
+
     function VolumeUp(volume) {
         SetNewVolume(volume + 1);
     }
@@ -111,7 +139,7 @@ export default function TradeStock(props) {
     function RefreshBid() {
         props.socket.emit('refresh_bid' , "호가랑 호가단위를 받고 싶어요.")
         props.socket.once('refresh_bid', (data)=> {
-            SetBid(data.bid)
+            SetNewBid(data.bid)
             SetUnit(data.unit)
         }); 
     }
@@ -119,6 +147,13 @@ export default function TradeStock(props) {
     function Buy(bid, volume) {
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
+            return;
+        }
+        if (bid * volume > myWallet.myCash) {
+            alert('구매 가능한 현금이 없습니다.\n' + (bid * volume).toString() + ' > ' + myWallet.myCash.toString() );
+            props.socket.once('buyDone', (bbid) => {
+                SetNewBid(bbid.price);
+            });
             return;
         }
         //@ Buy Emit
@@ -145,6 +180,7 @@ export default function TradeStock(props) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
         }
+        if (true); //_ 여기서 판매 불가능함을 제한해야한다.
         //@ Sell Emit
         console.log(
             '[ 가격',
@@ -232,11 +268,6 @@ export default function TradeStock(props) {
     }
 
     useEffect(() => {
-        // SetBid(props.APIdata.curPrice);
-        // SetRatio(props.APIdata.priceUnit);
-    }, [])
-
-    useEffect(() => {
         if(isFocus === true) {
             console.log('keydown event not working now!')
             return ;
@@ -271,6 +302,10 @@ export default function TradeStock(props) {
             SetFocus(true);
         }
     }
+
+    let costColor = {
+        color : myWallet.myCash >= currentBid * currentVolume ? grey[700] : red[200],
+    };
 
     return (
         <Grid
@@ -315,7 +350,10 @@ export default function TradeStock(props) {
                     downEvent={() => VolumeDown(currentVolume)}
                 />
             </Grid>
-            <Grid item  justify="center"  style={{ width: '80%', margin: '0 10 0 1' }}>
+            <Grid container item justify="center" alignItems="start">
+                예상소요금액 : <span style={costColor}>{currentVolume * currentBid}</span>
+            </Grid>
+            <Grid container item justify="center"  style={{ width: '80%', margin: '0 10 0 1' }}>
                 <Button
                     variant="contained"
                     color="secondary"
