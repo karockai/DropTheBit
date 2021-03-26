@@ -56,7 +56,7 @@ class ChartComponent extends React.Component {
                 console.log('연락주세요.');
                 this.props.socket.emit('chartData_Req');
                 this.props.socket.on('chartData_Res', (datas) =>{
-                    console.log('게임 시작 이전의 차트 데이터(최대 50tick)가 로드되었습니다.');
+                    console.log('게임 시작 이전의 차트 데이터(최대 100tick)가 로드되었습니다.');
                     datas.chartData.map((data) => {
                         this.addCandleData(data);
                     })

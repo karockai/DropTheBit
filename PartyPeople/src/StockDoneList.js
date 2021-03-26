@@ -1,7 +1,8 @@
 import { Grid, GridList } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import React, {useEffect, useState, useLayoutEffect, useRef} from 'react'
-
+import { useSound, playSound } from './useSound';
+import Check from './audios/effect/check.mp3';
 export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
     const [doneItem, setItem] = useState(null);
@@ -36,18 +37,22 @@ export default function StockDoneList(props) {
             }
             props.socket.on('buyDone', (done) => {
                 console.log('매수가 체결되었습니다.')
+                playSound(Check, 1).play();
                 setItem(done);
             })
             props.socket.on('sellDone', (done) => {
                 console.log('매도가 체결되었습니다.')
+                playSound(Check, 1).play();
                 setItem(done);
             })
             props.socket.on('bidDone', (done) => {
                 console.log('등록된 호가에 매수가 체결되었습니다.')
+                // playSound(Check, 1).play();
                 setItem(done);
             })
             props.socket.on('askDone', (done) => {
                 console.log('등록된 호가에 매도가 체결되었습니다.')
+                // playSound(Check, 1).play();
                 setItem(done);
             })
         }
@@ -58,7 +63,7 @@ export default function StockDoneList(props) {
     }, [doneItem])
 
     return (
-        <GridList spacing={1} wrap='wrap' style={{ width: '100%' ,height: '100%' }}>
+        <GridList spacing={0} wrap='wrap' style={{ width: '100%' ,height: '100%' }}>
             {
                 <Grid style={{ width: '100%'}}>
                     <div ref={scroll} >
