@@ -86,29 +86,41 @@ function ArrowButton(props) {
 export default function TradeStock(props) {
     const classes = useStyles();
 
-    const [currentBid, SetBid] = useState(46000);
-    const [newBid, SetNewBid] = useState(46000);
-    const [currentVolume, SetVolume] = useState(1);
-    const [newVolume, SetNewVolume] = useState(1);
-    const [ratioBid, SetRatio] = useState(100);
+    const [currentBid, SetBid] = useState(1);
+    const [newBid, SetNewBid] = useState(1); //props.APIdata.curPrice
+    const [currentVolume, SetVolume] = useState(0);
+    const [newVolume, SetNewVolume] = useState(0);
+    const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
-
     if(!isBind) SetBind(true);
     function VolumeUp(volume) {
         SetNewVolume(volume + 1);
     }
     function VolumeDown(volume) {
-        if (volume === 0) return;
+        if (volume <= 0) return;
         SetNewVolume(volume - 1);
     }
     function BidUp() {
-        SetBid(currentBid + ratioBid);
+        SetBid(currentBid + unitBid);
     }
     function BidDown() {
-        SetBid(currentBid - ratioBid);
+        SetBid(currentBid - unitBid);
     }
+
+    function RefreshBid() {
+        props.socket.emit('refresh_bid' , "호가랑 호가단위를 받고 싶어요.")
+        props.socket.once('refresh_bid', (data)=> {
+            SetBid(data.bid)
+            SetUnit(data.unit)
+        }); 
+    }
+
     function Buy(bid, volume) {
+        if (bid === 0 || volume === 0) {
+            alert('호가 및 수량이 부적절합니다. (ex. "0")');
+            return;
+        }
         //@ Buy Emit
         console.log(
             '[ 가격',
@@ -129,6 +141,10 @@ export default function TradeStock(props) {
         });
     }
     function Sell(bid, volume) {
+        if (bid === 0 || volume === 0) {
+            alert('호가 및 수량이 부적절합니다. (ex. "0")');
+            return;
+        }
         //@ Sell Emit
         console.log(
             '[ 가격',
@@ -150,34 +166,34 @@ export default function TradeStock(props) {
     }
 
     function HandleKeyPress(e) {
-        if (e.keyCode === 123) return; //_ 'F12' 개발자도구 ㅋ
+        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
         if (e.keyCode === 37) {
             //_ LEFT ARROW
-            playSound(DrumUp, 1).play();
-            if (props.socket == null || isBind == false) {
+            playSound(HatUp, 1).play();
+            if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
             }
-            Buy(currentBid, currentVolume);
+            VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
-            playSound(DrumDown, 1).play();
-            if (props.socket == null || isBind == false) {
+            playSound(HatDown, 1).play();
+            if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
             }
-            Sell(currentBid, currentVolume);
+            VolumeUp(currentVolume);
         }
 
-        if (e.keyCode === 38) {
+        else if (e.keyCode === 38) {
             //_ UP ARROW
             playSound(HatUp, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
             }
-            VolumeUp(currentVolume);
+            BidUp();
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             playSound(HatDown, 1).play();
@@ -185,9 +201,40 @@ export default function TradeStock(props) {
                 props.requestSocket('TradeStock', props.socket);
                 return;
             }
-            VolumeDown(currentVolume);
+            BidDown();
+        } else if (e.keyCode === 65) {
+            //_ 'A'
+            playSound(DrumUp, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket('TradeStock', props.socket);
+                return;
+            }
+            Buy(currentBid, currentVolume);
+        } else if (e.keyCode === 83) {
+            //_ 'S'
+            playSound(DrumDown, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket('TradeStock', props.socket);
+                return;
+            }
+            Sell(currentBid, currentVolume);
+        } else if (e.keyCode === 68) {
+            //_ 'D'
+            playSound(DrumDown, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket('TradeStock', props.socket);
+                return;
+            }
+            RefreshBid();
         }
+
+
     }
+
+    useEffect(() => {
+        // SetBid(props.APIdata.curPrice);
+        // SetRatio(props.APIdata.priceUnit);
+    }, [])
 
     useEffect(() => {
         if(isFocus === true) {
@@ -268,22 +315,32 @@ export default function TradeStock(props) {
                     downEvent={() => VolumeDown(currentVolume)}
                 />
             </Grid>
-            <Grid item  justify="center" className={classes.button} style={{ width: '80%' }}>
+            <Grid item  justify="center"  style={{ width: '80%', margin: '0 10 0 1' }}>
                 <Button
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     onClick={() => Buy(currentBid, currentVolume)}
                 >
-                    <KeyboardArrowLeftIcon />
+                    {/* <KeyboardArrowLeftIcon /> */}
+                    <>"A" </>
                     매수
                 </Button>
                 <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     onClick={() => Sell(currentBid, currentVolume)}
                 >
-                    <KeyboardArrowRightIcon />
+                    {/* <KeyboardArrowRightIcon /> */}
+                    <>"S" </>
                     매도
+                </Button>
+                <Button
+                    variant="contained"
+                    color="info"
+                    onClick={() => RefreshBid()}
+                >
+                    {/* <KeyboardArrowRightIcon /> */}
+                    <>"D" 🔄</>
                 </Button>
             </Grid>
         </Grid>

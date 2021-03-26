@@ -57,8 +57,6 @@ export default function StockDoneList(props) {
         setList([...doneList, doneItem]);
     }, [doneItem])
 
-    console.log(doneList)
-
     return (
         <GridList spacing={1} wrap='wrap' style={{ width: '100%' ,height: '100%' }}>
             {
@@ -66,7 +64,7 @@ export default function StockDoneList(props) {
                     <div ref={scroll} >
                     {doneList.map((done, idx)=>{ 
                         if(done === null) return;    
-                        let buySellColor = {color: done.type.substring(0,2) === '매수' ? red[300] : blue[300]}
+                        let buySellColor = {color: done.type.substring(0,2) === '매수' ? (done.type.substring(3,5) === '완료' ? red[500] : red[300]) : (done.type.substring(3,5) === '완료' ? blue[500] : blue[300]), fontWeight: done.type.substring(3,5) === '완료' ? 'bold' : 'normal'}
                         return (
                             <pre>
                                 {props.isMine? '' : (done.playerID +'이(가)')} <span style={{ fontWeight:'bold'}}>"{done.price}"</span> 에 [ {done.vol} ] 개를 <span style={ buySellColor }>{done.type}.</span> 

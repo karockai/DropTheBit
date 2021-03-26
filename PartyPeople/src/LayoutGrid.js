@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -72,11 +72,19 @@ export default function LayoutGrid(props) {
         );
     };
 
+    const [APIdata, setAPI] = useState(null);
+    let setCurrentAPIData = (data) => {
+        setAPI(data);
+    } 
+    let getCurrentAPIData = () => {
+        return APIdata;
+    }
+
     return (
         <React.Fragment >
             <CssBaseline />
             <Container  maxWidth="lg">
-                <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
+                <Typography component="div" style={{ padding: '0 0 0 0' }}>
                     <Grid
                         style={{ height: '100vh' }}
                         wrap="wrap"
@@ -127,6 +135,8 @@ export default function LayoutGrid(props) {
                                         <ChartComponent
                                             socket={props.socket}
                                             requestSocket={props.requestSocket}
+                                            setAPIData={setCurrentAPIData}
+                                            APIdata={APIdata}
                                             display="flex"
                                             justify-content="center"
                                             align-items="center"
@@ -213,6 +223,7 @@ export default function LayoutGrid(props) {
                                             >
                                                 <TradeStock
                                                     roomID={props.roomID}
+                                                    APIdata={APIdata}
                                                     socket={props.socket}
                                                     requestSocket={
                                                         props.requestSocket
