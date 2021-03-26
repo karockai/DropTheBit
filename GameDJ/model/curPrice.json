@@ -10,6 +10,7 @@
         "dividend" : "Number",
         "curPrice" : "Number",
         "prePrice" : "Number",
-        "coinName": "String"
+        "coinName": "String",
+        "priceUnit" : "Number"
     }
 }
