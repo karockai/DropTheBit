@@ -45,7 +45,6 @@ export default function LayoutGrid(props) {
     //     //   {roomID : props.roomID, musicName : musicName, musicTime : musicTime});
     // });
     useSound(Bit, 0.7, 2000);
-    console.log(props.roomID);
 
     useEffect(() => {
         props.socket.on('gameOver', (readerBoard) => {
@@ -58,7 +57,6 @@ export default function LayoutGrid(props) {
     const GameOver = (readerBoard) => {
         // modal 띄울 함수 호출
 
-        console.log(readerBoard);
         return (
             <>
                 <GameOverModal />

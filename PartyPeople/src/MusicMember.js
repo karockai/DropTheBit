@@ -198,10 +198,8 @@ export default function MusicMember(props) {
               setMusic(musicName);
               if (props.roomInfo) {
                 props.setTime(musicTime);
-                console.log(musicTime);
                 var minute  = parseInt(musicTime / 60);
                 var second = musicTime % 60;
-                console.log(props.roomInfo);
                 var tmp_roomInfo = props.roomInfo; 
                 tmp_roomInfo['music'] = musicName;
                 props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
