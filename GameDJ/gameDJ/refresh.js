@@ -60,7 +60,6 @@ class Refresh {
                     playerInfo['cash'] = String(cash);
 
                     delete playerInfo['ask'][strAskPrice];
-                    // console.log("판매 중 player info 저장", playerInfo);
                     await dbhset(roomID, socketID, JSON.stringify(playerInfo));
 
                     delete askList[strAskPrice][socketID];
@@ -77,14 +76,11 @@ class Refresh {
                     io.to(socketID).emit('sellDone', sellDone);
                     io.to(roomID).emit('sellDone_Room', sellDone);
                 }
-                if (Object.keys(askList[strAskPrice]).length === 0) {
-                    // console.log("삭제해버립니다 : 판매", strAskPrice);
-                    delete askList[strAskPrice];
-                }
+                delete askList[strAskPrice];
             }
             if (updateCount !== 0) {
-                // console.log("호가 체결 결과 : 판매");
-                // console.log(askList);
+                console.log("호가 체결 결과 : 판매");
+                console.log(askList);
                 await dbset('askList', JSON.stringify(askList));
             }
         }
@@ -126,13 +122,10 @@ class Refresh {
                     io.to(socketID).emit('buyDone', buyDone);
                     io.to(roomID).emit('buyDone_Room', buyDone);
                 }
-                if (Object.keys(bidList[strBidPrice]).length === 0) {
-                    // console.log("삭제해버립니다 : 구매", strBidPrice);
-                    delete bidList[strBidPrice];
-                }
+                delete bidList[strBidPrice];
             }
             if (updateCount !== 0) {
-                // console.log("호가 체결 결과 : 구매");
+                console.log("호가 체결 결과 : 구매");
                 console.log(bidList);
                 await dbset('bidList', JSON.stringify(bidList));
             }
@@ -166,7 +159,6 @@ class Refresh {
             let rankList = [];
 
             // roomInfo 순회하면서 playerInfo 가져옴
-            // console.log(roomInfo);
             for (let socketID in roomInfo) {
                 if (socketID.length != 20) continue;
                 let playerInfo = JSON.parse(roomInfo[socketID]);
@@ -183,7 +175,7 @@ class Refresh {
 
                 for (let askPrice in playerInfo['ask']) {
                     asset +=
-                        Number(askPrice) * Number(playerInfo['ask'][askPrice]);
+                        Number(curPrice) * Number(playerInfo['ask'][askPrice]);
                 }
                 if (asset) {
                     playerInfo['asset'] = String(asset);
