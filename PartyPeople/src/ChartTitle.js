@@ -124,11 +124,11 @@ function ChartTitle(props) {
                         </strong>
                         {' ' + unit}
                     </Grid>
-                    <Grid>
+                    {/* <Grid>
                         <span style={{ color: grey[900] ,}}>
                             <ShowTime/>
                         </span>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 </span>
                 <span>

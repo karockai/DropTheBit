@@ -49,6 +49,11 @@ export default function LayoutGrid(props) {
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
     useSound(SpecificMusic, 0.7, 2000);
 
+
+    useEffect(() => {
+        console.log('layoutGrid rendered....!');
+    })
+
     useEffect(() => {
         props.socket.on('gameOver', (readerBoard) => {
             if (readerBoard) {

@@ -115,7 +115,7 @@ export default function TradeStock(props) {
             bid,
             ', 갯수',
             volume,
-            '] 매수 주문이 체결되었습니다.'
+            '] 매수 주문을 요청합니다.'
         );
         props.socket.emit('buy_Req', {
             //@ reqJson.json 형식확인
@@ -124,7 +124,7 @@ export default function TradeStock(props) {
             currentBid: bid,
             currentVolume: volume,
         });
-        props.socket.on('buyDone', (bbid) => {
+        props.socket.once('buyDone', (bbid) => {
             SetNewBid(bbid.price);
         });
     }
@@ -135,7 +135,7 @@ export default function TradeStock(props) {
             bid,
             ', 갯수',
             volume,
-            '] 매도 주문이 체결되었습니다.'
+            '] 매도 주문을 요청합니다.'
         );
         props.socket.emit('sell_Req', {
             roomID: props.roomID,
@@ -144,7 +144,7 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         //@ 중복 문제가 발생한다.
-        props.socket.on('sellDone', (sbid) => {
+        props.socket.once('sellDone', (sbid) => {
             SetNewBid(sbid.price);
         });
     }
@@ -154,8 +154,6 @@ export default function TradeStock(props) {
         e.preventDefault();
         if (e.keyCode === 37) {
             //_ LEFT ARROW
-            console.log(props);
-            console.log('KeyCode > LEFT.');
             playSound(DrumUp, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
@@ -164,8 +162,6 @@ export default function TradeStock(props) {
             Buy(currentBid, currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
-            console.log(props);
-            console.log('KeyCode > RIGHT.');
             playSound(DrumDown, 1).play();
             if (props.socket == null || isBind == false) {
                 props.requestSocket('TradeStock', props.socket);
@@ -176,7 +172,6 @@ export default function TradeStock(props) {
 
         if (e.keyCode === 38) {
             //_ UP ARROW
-            console.log('KeyCode > UP.');
             playSound(HatUp, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
@@ -185,7 +180,6 @@ export default function TradeStock(props) {
             VolumeUp(currentVolume);
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
-            console.log('KeyCode > DOWN.');
             playSound(HatDown, 1).play();
             if (props.socket == null || isBind === false) {
                 props.requestSocket('TradeStock', props.socket);
@@ -195,24 +189,24 @@ export default function TradeStock(props) {
         }
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if(isFocus === true) {
             console.log('keydown event not working now!')
             return ;
         }
-        document.addEventListener('keydown', HandleKeyPress);
+        document.addEventListener('keyup', HandleKeyPress);
         return () => {
-            document.removeEventListener('keydown', HandleKeyPress);
+            document.removeEventListener('keyup', HandleKeyPress);
         };
     }, [currentVolume, currentBid, isBind, isFocus]);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
-    useLayoutEffect(() => {
+    useEffect(() => {
         const responseBid = newBid;
         SetBid(responseBid);
     }, [newBid]); //@ 호가가 변할때이다.
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const responseVolume = newVolume;
         SetVolume(responseVolume);
         return () => {};
