@@ -53,15 +53,16 @@ class ChartComponent extends React.Component {
             if (this.props.requestSocket == null) {
                 console.log('requestSocket is null');
             } else if (this.props.socket != null) {
-                this.props.socket.on('chartData', (datas) =>{
+                console.log('연락주세요.');
+                this.props.socket.emit('chartData_Req');
+                this.props.socket.on('chartData_Res', (datas) =>{
                     console.log('게임 시작 이전의 차트 데이터(최대 50tick)가 로드되었습니다.');
                     datas.chartData.map((data) => {
                         this.addCandleData(data);
                     })
-                });
-                console.log('hihihihihihiihi');
-                this.props.socket.on('chart', (data) => {
-                    this.addCandleData(data);
+                    this.props.socket.on('chart', (data) => {
+                        this.addCandleData(data);
+                    });
                 });
                 this.setup = false;
             }

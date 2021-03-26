@@ -89,6 +89,10 @@ export default {
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()
             );
+
+            socket.on('chartData_Req', () =>
+                new Room(io, socket).sendChartData()
+            );
             // room event << -----------------------------------------
 
             // In-game event ------------------------------------------ >>

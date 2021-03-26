@@ -103,6 +103,12 @@ class Room {
         }
     }
 
+    sendChartData() {
+        const { io, socket } = this;
+        let roomID = socket.roomID;
+        io.to(roomID).emit('chartData_Res', {chartData: chartData});
+    }
+
     // data : {roomID : roomID, musicName : 클라에서 선택한 음악명 (select 창)}
     // 해당 음악의 길이만큼 게임의 time 설정
     async updateSettings(data) {
