@@ -19,6 +19,7 @@ import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
+import GameMusicStart from './MusicStart'
 import {
     BrowserRouter as Router,
     Switch,
@@ -47,9 +48,8 @@ export default function LayoutGrid(props) {
     let rightSm = 3;
 
     const location = useLocation();
-    console.log(location.state);
     const gameTime = location.state.gameTime;
-    console.log(gameTime);
+    const [timerTime, setTimerTime] = useState(gameTime);
 
     const musicList = {
         Deja_Vu : Deja_Vu,
@@ -58,50 +58,36 @@ export default function LayoutGrid(props) {
     };
 
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
-    useSound(SpecificMusic, 0.7, 2000);
+    const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
+    useEffect(()=>{
+        props.socket.once('startGame_Real', (data) => {
+            // useSound(SpecificMusic, 0.7, 2000);
+            setThreeSecTimerOpen(false);
+            setTimerTime(gameTime);
+        }, [timerTime]);
+    });
+    function PlayMusic() {
+        useSound(SpecificMusic, 0.7, 2000);
+    }
 
-    useEffect(() => {
-        props.socket.on('gameOver', (readerBoard) => {
-            if (readerBoard) {
-                GameOver(readerBoard);
-            }
-        });
-    }, []);
-
-    // const ModalOn = (class) => {
-        
-    // }
-    // const ModalOff = (class) => {
-        
-    // }
-
-    const GameStart = () =>{
-        useEffect(() => {
-            ModalOn();
-        }, []);
-    };
-    const ModalOn =() => {
-        return(
-            <>
-            <ThreeSecTimer/> 
-            </>
-        );
-    };
-
-    const GameOver = (readerBoard) => {
+    const GameOver = (leaderBoard) => {
         // modal 띄울 함수 호출
+        useEffect(() => {
+            props.socket.once('gameOver', (leaderBoard) => {
+                console.log('gameover');
+                return (
+                    <>
+                        <GameOverModal leaderBoard={leaderBoard}/>
+                    </>
+                );
+            });
+        }, []);
 
-        return (
-            <>
-                <GameOverModal />
-            </>
-        );
     };
-
     return (
         <React.Fragment >
-            {/* {GameStart()} */}
-            <ThreeSecTimer/> 
+            <ThreeSecTimer SpecificMusic={SpecificMusic} open={threeSecTimerOpen}/>
+            {GameOver()}
             <Container  maxWidth="lg">
                 <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
                     <Grid
@@ -158,7 +144,8 @@ export default function LayoutGrid(props) {
                                             justify-content="center"
                                             align-items="center"
                                             // time={props.time}
-                                            time={gameTime}
+                                           
+                                            time={timerTime}
                                         />
                                     </Paper>
                                 </Grid>

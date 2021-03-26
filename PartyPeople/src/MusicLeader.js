@@ -128,7 +128,14 @@ export default function MusicLeader(props) {
       );
   }
   const StartGameReq = (() => {
-    props.socket.emit('startGame_Req', props.roomID);
+    if (music==='') {
+      return (
+        alert('음악을 선택해주세요')
+      );
+    }
+    else {
+      props.socket.emit('startGame_Req', props.roomID);
+    }
     // props.history.push('/game');
 });
 

@@ -51,37 +51,6 @@ function ChartTitle(props) {
         };
     }, [props.data]);
 
-    function getTime() {
-        var time = props.time;
-        time = time -1;
-        var minute  = time / 60;
-        var second = time - minute * 60;
-        minute = minute >= 10 ? String(minute) : '0'+String(minute)
-        second = second >= 10 ? String(second) : '0'+String(second)
-        // props.setTime(time);
-        return (
-            <>
-                {minute+' : '+second}    
-            </>
-        );
-    }
-    
-    const ShowTime = ()=> {
-        // getTime();
-        var time = props.time;
-        time = time -1;
-        var minute  = parseInt(time / 60);
-        var second = time - minute * 60;
-        minute = minute >= 10 ? String(minute) : '0'+String(minute)
-        second = second >= 10 ? String(second) : '0'+String(second)
-        // props.setTime(time);
-        setInterval(1000);      
-        return (
-            <>
-                {minute+' : '+second}    
-            </>
-        );
-    }
 
     function SplitByThree(value) {
         if (value.length <= 3) return value;

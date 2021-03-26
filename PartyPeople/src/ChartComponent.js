@@ -6,7 +6,8 @@ import ChartTitle from './ChartTitle';
 import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {CircularProgress,Grid} from '@material-ui/core';
+import Timer from './Timer';
 
 class ChartComponent extends React.Component {
     constructor(props) {
@@ -49,10 +50,6 @@ class ChartComponent extends React.Component {
             if (this.props.requestSocket == null) {
                 console.log('requestSocket is null');
             } else if (this.props.socket != null) {
-                // const chart = () => {
-                //     this.props.socket.emit('chart', null);
-                // }
-                // setInterval(chart, 200);
                 this.props.socket.on('chartData', (datas) =>{
                     datas.chartData.map((data) => {
                         this.addCandleData(data);
@@ -79,9 +76,13 @@ class ChartComponent extends React.Component {
                 </div>
             );
         }
+        // console.log(this.props.time);
         return (
             <>
-                <ChartTitle data={this.state.data} time={this.props.time} />
+                <Grid container justify={'space-between'} style={{padding:'1vh'}}>
+                    <ChartTitle data={this.state.data} time={this.props.time} />
+                    <Timer time={this.props.time}/>
+                </Grid>
                 <StockChart type={'hybrid'} data={this.state.data} />
             </>
         );
