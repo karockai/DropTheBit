@@ -82,9 +82,9 @@ class Game {
         // 1. reqJson setting
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
-        let strReqPrice = reqJson['currentBid'];
+        let strReqPrice = String(reqJson['currentBid']);
         let intReqPrice = Number(strReqPrice);
-        let strReqVol = reqJson['currentVolume'];
+        let strReqVol = String(reqJson['currentVolume']);
         let intReqVol = Number(strReqVol);
 
         // 2. player_info 가져오기
@@ -197,9 +197,9 @@ sell(reqJson, socket) {
         console.log('-----------Sell -----------', reqJson);
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
-        let strReqPrice = reqJson['currentBid'];
+        let strReqPrice = String(reqJson['currentBid']);
         let intReqPrice = Number(strReqPrice);
-        let strReqVol = reqJson['currentVolume'];
+        let strReqVol = String(reqJson['currentVolume']);
         let intReqVol = Number(strReqVol);
         
         // 2. player_info 가져오기
