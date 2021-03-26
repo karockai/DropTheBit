@@ -197,7 +197,6 @@ class Game {
         
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
-        refreshWallet['asset'] = asset;
         refreshWallet['type'] = 6;
         
         // 3. player_info 가져오기

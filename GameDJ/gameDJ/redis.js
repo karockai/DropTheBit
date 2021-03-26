@@ -38,5 +38,5 @@ const dbmulti = util.promisify(client.multi).bind(client);
 //     dbget
 // };
 
-export { dbset, dbget, dbhset, dbhmset, dbhget, dbhexi, dbhgetall, dbrpush, dblpush, dblrem, dblrange, dbllen, dbdel, dbhdel, dbwatch};
+export { dbset, dbget, dbhset, dbhmset, dbhget, dbhexi, dbhgetall, dbrpush, dblpush, dblrem, dblrange, dbllen, dbdel, dbhdel, dbwatch, dbmulti};
 // ///////////////////////////////////////////////////////////////
