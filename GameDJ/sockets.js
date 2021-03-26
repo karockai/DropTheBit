@@ -36,7 +36,7 @@ export default {
         // db setting  ------------------------------------ <<
 
         // curPrice refresh --------------------------------- >>
-        await setInterval(async () => {
+        setInterval(async () => {
             await new Refresh(io).renewalCurCoin(io);
             await new Refresh(io).renewalInfo(io);
             new Refresh(io).refreshBid(io);
