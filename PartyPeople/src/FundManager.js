@@ -53,7 +53,6 @@ function CreateLine() {
     }
 
     // setStockList(tmpTable);
-    console.log(tmpTable);
 
     return (
         <>

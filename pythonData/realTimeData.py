@@ -97,6 +97,22 @@ def on_message(ws, msg):
         cur_price = juka_result['curPrice']
 
         if (prev_second != cur_second):
+            # 호가 단위
+            if cur_price < 1000:
+                juka_result['priceUnit'] = 1
+            elif 1000 <= cur_price < 10000:
+                juka_result['priceUnit'] = 5
+            elif 10000 <= cur_price < 100000:
+                juka_result['priceUnit'] = 10
+            elif 100000 <= cur_price < 500000:
+                juka_result['priceUnit'] = 50
+            elif 500000 <= cur_price < 1000000:
+                juka_result['priceUnit'] = 100
+            elif 1000000 <= cur_price < 2000000:
+                juka_result['priceUnit'] = 500
+            else:
+                juka_result['priceUnit'] = 1000
+
             juka_result['coinName'] = coinName.coinList[coin_name]
             hoka_result['coinName'] = coinName.coinList[coin_name]
             juka_result = json.dumps(juka_result, ensure_ascii=False)

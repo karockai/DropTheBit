@@ -34,7 +34,6 @@ class GameManager extends React.Component {
         });
     }
     componentWillUnmount() {
-        console.log('?');
     }
     componentDidMount() {
         let socketCopy = null;
@@ -45,26 +44,21 @@ class GameManager extends React.Component {
         //   this.socket.emit("join");
         // });
         this.socket.on('curCoin', (data) => {
-            console.log(data);
             let today = new Date();
             let minutes = today.getMinutes(); // 분
             let seconds = today.getSeconds(); // 초
             let milliseconds = today.getMilliseconds(); // 밀리초
-            console.log('cli:', minutes, ':', seconds, ':', milliseconds);
         });
         this.socket.on('socket', (socket) => {
-            console.log(socket);
             setSocket();
         });
         this.socket.on('update', function (data) {
             addMessage(data);
         });
         this.socket.on('get_chart_data', function (data) {
-            console.log(data);
         });
         const setSocket = (socket) => {
             this.setState({ socketId: socket });
-            console.log(this.state);
         };
         const addSocket = () => {
             if (this.socketId === null) {
@@ -75,7 +69,6 @@ class GameManager extends React.Component {
             this.setState({ messages: [...this.state.messages, data] });
         };
         this.socket.on('update_users', function (data, user_count) {
-            console.log(data);
             user_cnt = user_count;
             // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
             // 이 자리에 들어가면 될거같아요
@@ -120,8 +113,6 @@ class GameManager extends React.Component {
         console.log(
             'SetRoomIdAndInfo. 랜더링을 다시 합니다.'
         );
-        console.log(data.roomID);
-        console.log(data.roomInfo);
     };
 
     render() {

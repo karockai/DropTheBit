@@ -17,7 +17,6 @@ import Test from './Test';
 
 function Lobby(props) {
     const PutPlayer = (props) => {
-        console.log(props);
         return (
                 
             <Grid container justify='space-between'>
@@ -47,7 +46,6 @@ function Lobby(props) {
         if (soc) {
             soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
                 // setAccept(true);
-                console.log('joinRoom_Res', room);
                 setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
             });
@@ -107,7 +105,6 @@ function Lobby(props) {
     //     );
 
     // }
-    console.log(props.roomInfo);
     var isLeader = true;
     if(props.roomInfo){
         isLeader = props.roomInfo['roomLeader'] === props.socket.id;
