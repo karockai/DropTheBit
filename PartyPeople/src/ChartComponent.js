@@ -59,6 +59,7 @@ class ChartComponent extends React.Component {
                         this.addCandleData(data);
                     })
                 });
+                console.log('hihihihihihiihi');
                 this.props.socket.on('chart', (data) => {
                     this.addCandleData(data);
                 });

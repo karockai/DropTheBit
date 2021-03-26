@@ -137,10 +137,10 @@ export default function TradeStock(props) {
     }
 
     function RefreshBid() {
-        props.socket.emit('refresh_bid' , "호가랑 호가단위를 받고 싶어요.")
-        props.socket.once('refresh_bid', (data)=> {
-            SetNewBid(data.bid)
-            SetUnit(data.unit)
+        console.log('현재가로 갱신되었습니다.')
+        props.socket.once('chart', (data)=> {
+            SetUnit(data.priceUnit)
+            SetBid(data.curPrice)
         }); 
     }
 
@@ -180,7 +180,13 @@ export default function TradeStock(props) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
         }
-        if (true); //_ 여기서 판매 불가능함을 제한해야한다.
+        if (myWallet.myCoin < volume) {
+            alert('보유코인이 부족합니다.\n' + (volume).toString() + ' > ' + myWallet.myCoin.toString() );
+            props.socket.once('buyDone', (bbid) => {
+                SetNewBid(bbid.price);
+            });
+            return;
+        }
         //@ Sell Emit
         console.log(
             '[ 가격',
@@ -268,6 +274,10 @@ export default function TradeStock(props) {
     }
 
     useEffect(() => {
+        RefreshBid();
+    },[])
+
+    useEffect(() => {
         if(isFocus === true) {
             console.log('keydown event not working now!')
             return ;
@@ -307,6 +317,7 @@ export default function TradeStock(props) {
         color : myWallet.myCash >= currentBid * currentVolume ? grey[700] : red[200],
     };
 
+
     return (
         <Grid
             wrap="wrap"
@@ -322,7 +333,7 @@ export default function TradeStock(props) {
                 <TextField
                     className="buysell"
                     id="outlined-required"
-                    label="매매 호가"
+                    label="매매 호가 ▲▼"
                     size="small"
                     type="number"
                     style={{ width: '80%' }}
@@ -338,7 +349,7 @@ export default function TradeStock(props) {
                 <TextField
                     className="count"
                     id="outlined-required"
-                    label="수량"
+                    label="수량 ◀▶"
                     type="number"
                     size="small"
                     style={{ width: '80%' }}
