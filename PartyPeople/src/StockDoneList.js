@@ -7,12 +7,10 @@ export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
     const [doneItem, setItem] = useState(null);
     const [doneList, setList] = useState([]);
-    const scroll = useRef(null);
-
+    const messagesEnd =  React.useRef(null);
    
     const scrollToBottom = () => {
-        const { scrollHeight, cleintHeight } = scroll.current;
-        scroll.current.scrollTop = scrollHeight - cleintHeight;
+        messagesEnd.current.scrollIntoView({ behavior: "smooth" });
     }
 
     
@@ -62,11 +60,15 @@ export default function StockDoneList(props) {
         setList([...doneList, doneItem]);
     }, [doneItem])
 
+    useEffect(() => {
+        scrollToBottom();
+    },);
+
     return (
         <GridList spacing={0} wrap='wrap' style={{ width: '100%' ,height: '100%' }}>
             {
                 <Grid style={{ width: '100%'}}>
-                    <div ref={scroll} >
+                    <div >
                     {doneList.map((done, idx)=>{ 
                         if(done === null) return;    
                         let buySellColor = {color: done.type.substring(0,2) === '매수' ? (done.type.substring(3,5) === '완료' ? red[500] : red[300]) : (done.type.substring(3,5) === '완료' ? blue[500] : blue[300]), fontWeight: done.type.substring(3,5) === '완료' ? 'bold' : 'normal'}
@@ -76,6 +78,10 @@ export default function StockDoneList(props) {
                             </pre>
                             )
                     })}
+                    </div>
+                    <div
+                        style={{ float:"left", clear: "both" }}
+                        ref={messagesEnd}>
                     </div>
                 </Grid>
             }

@@ -53,9 +53,13 @@ export default function ChatRoom(props) {
         [
         ]
     );
+    const messagesEnd =  React.useRef(null);
     const [isChanged, setChanged]  = useState(true);
     let textInput = useRef(null);
-    
+    const scrollToBottom = () => {
+        messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+    }
+
     useEffect(() => {
         props.socket.once('update', (data) => {
             if (data) {
@@ -63,6 +67,10 @@ export default function ChatRoom(props) {
             }
         })
     });
+
+    useEffect(() => {
+        scrollToBottom();
+    },);
     
     // const socket_on = (async() => {
     //     await props.socket.on('update', (data) => {
@@ -124,6 +132,10 @@ export default function ChatRoom(props) {
                         )
                     })}
                 </Grid>
+                <div
+                    style={{ float:"left", clear: "both" }}
+                    ref={messagesEnd}>
+                </div> 
             </GridList>
             <Grid item>
                 <Grid
