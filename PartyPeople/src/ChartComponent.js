@@ -17,7 +17,6 @@ class ChartComponent extends React.Component {
     }
     componentDidUpdate() {}
     componentWillMount() {
-        console.log('[ componentWillMount ]', this.props.socket);
         if (this.props.socket === null) {
             this.props.requestSocket('ChartComponent');
         }
@@ -29,7 +28,7 @@ class ChartComponent extends React.Component {
     day = 0;
     addCandleData = (data) => {
         if (data === null) {
-            console.log('알수 없는 데이터가 서버로부터 받아짐..하늘소..');
+            console.log('하늘소....하늘소.. 응답하라....');
             return;
         }
         data.date = new Date(data.date);
@@ -50,20 +49,16 @@ class ChartComponent extends React.Component {
             if (this.props.requestSocket == null) {
                 console.log('requestSocket is null');
             } else if (this.props.socket != null) {
-                // console.log('EMIT');
                 // const chart = () => {
                 //     this.props.socket.emit('chart', null);
-                //     console.log(('request Data from CLIENT.'))
                 // }
                 // setInterval(chart, 200);
                 this.props.socket.on('chartData', (datas) =>{
-                    console.log(datas)
                     datas.chartData.map((data) => {
                         this.addCandleData(data);
                     })
                 });
                 this.props.socket.on('chart', (data) => {
-                    // console.log(data);
                     this.addCandleData(data);
                 });
                 this.setup = false;

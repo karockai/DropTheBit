@@ -60,7 +60,6 @@ export default function LayoutGrid(props) {
     const GameOver = (readerBoard) => {
         // modal 띄울 함수 호출
 
-        console.log(readerBoard);
         return (
             <>
                 <GameOverModal />

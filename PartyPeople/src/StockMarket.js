@@ -227,8 +227,6 @@ function PurchaseModal(props) {
             }
         );
         props.socket.on('stock_buy_res', (response, player_info) => {
-            console.log(response);
-            console.log(player_info);
             handleClick();
             //@ pop up event,
         });
