@@ -32,8 +32,8 @@ export default function MusicLeader(props) {
   const classes = useStyles();
   // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
   /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
-  const [music, setMusic] = React.useState('');
-  const [strTime, strSetTime] = React.useState('00 : 00');
+  const [music, setMusic] = React.useState('King_Conga.mp3');
+  const [strTime, strSetTime] = React.useState('02 : 25');
   
   function MusicInput() {
     const handleChange = (event) => {

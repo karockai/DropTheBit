@@ -88,7 +88,9 @@ class ChartComponent extends React.Component {
             <>
                 <Grid container justify={'space-between'} style={{padding:'1vh'}}>
                     <ChartTitle data={this.state.data} time={this.props.time} />
-                    <Timer time={this.props.time}/>
+                    {
+                        this.props.isStart && <Timer time={this.props.time}/>
+                    }
                 </Grid>
                 <StockChart type={'hybrid'} data={this.state.data} />
             </>

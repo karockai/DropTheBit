@@ -50,7 +50,7 @@ export default function LayoutGrid(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
-
+    const [isStart, setIsStart] = useState(false);
     const musicList = {
         Deja_Vu : Deja_Vu,
         King_Conga: King_Conga,
@@ -59,18 +59,20 @@ export default function LayoutGrid(props) {
 
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
+
+
     useEffect(()=>{
         props.socket.once('startGame_Real', (data) => {
             // useSound(SpecificMusic, 0.7, 2000);
             setThreeSecTimerOpen(false);
             setTimerTime(gameTime);
-        }, [timerTime]);
-    });
-    function PlayMusic() {
-        useSound(SpecificMusic, 0.7, 2000);
-    }
-    PlayMusic();
-
+            setIsStart(true);
+        });
+    }, [timerTime]);
+    useSound(SpecificMusic, 0.7, 2000, isStart);
+    // function PlayMusic() {
+    //     useSound(SpecificMusic, 0.7, 2000);
+    // }
 
     useEffect(() => {
         console.log('layoutGrid rendered....!');
@@ -184,7 +186,7 @@ export default function LayoutGrid(props) {
                                             justify-content="center"
                                             align-items="center"
                                             // time={props.time}
-                                           
+                                            isStart={isStart}
                                             time={timerTime}
                                         />
                                     </Paper>

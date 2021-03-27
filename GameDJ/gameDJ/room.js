@@ -45,9 +45,8 @@ class Room {
         };
         
         console.log('create', roomInfo);
-        await dbhmset(roomID, 'gameTime', 0, 'music', 'Select Music', 'roomLeader', socket.id);
+        await dbhmset(roomID, 'gameTime', 145, 'music', 'King_Conga.mp3', 'roomLeader', socket.id);
         await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-        // await dbhmset('bgmList', 'Deja_Vu.mp3', 265, 'King_Conga.mp3', 145, 'Mausoleum_Mash.mp3', 176);
         await dbhmset('bgmList', 'Deja_Vu.mp3', 265, 'King_Conga.mp3', 145, 'Mausoleum_Mash.mp3', 176);
         dblpush('roomList', roomID);
         // console.log(await dbhgetall(roomID));

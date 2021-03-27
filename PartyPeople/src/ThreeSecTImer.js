@@ -72,30 +72,27 @@ export default function ThreeSecTimer(props) {
   // const sound = useSound(props.SpecificMusic, 0.7, 5000, false);
 
 const changeTime = () => {
+  if(time > 1) {
     setTimeout(function(){
         setTime(time - 1);
       }, 1000);
+    }
   };
   const handleClose = () => {
     setOpen(false);
   };
-
-    if(time > 1) {
-        changeTime();
-    }
     
-    // setTimeout(function(){
-    //   handleClose();
-    // }, 3000);
     const signal = props.open;
+
     useEffect(()=>{
       // handleClose();
       setOpen(signal);
-      return(
-        <PlayMusic/>
-      );
+      changeTime();
+      // return(
+      //   <PlayMusic/>
+      // );
       // PlayMusic();
-    },[signal]);
+    },[signal, time]);
 
     function PlayMusic() {
       // useSound(props.SpecificMusic, 0.7, 5000);
@@ -119,12 +116,12 @@ const changeTime = () => {
         aria-describedby="spring-modal-description"
         className={classes.modal}
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+        // BackdropProps={{
+        //   timeout: 500,
+        // }}
       >
         <Fade in={open}>
           <div className={classes.paper} >

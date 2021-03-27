@@ -30,19 +30,6 @@ export default function Routes(props) {
                             />
                         )}
                     />
-                    {/* <Route
-                        path="/game"
-                        render={() => (
-                            <LayoutGrid
-                                socket={props.socket}
-                                requestSocket={props.requestSocket}
-                                roomID={props.roomID}
-                                roomInfo={props.roomInfo}
-                                gameTime={time}
-                            />)}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                    /> */}
                     <Route
                         path="/game"
                         render={() => (isValid() ? 
