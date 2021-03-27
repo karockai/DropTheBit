@@ -103,13 +103,22 @@ export default {
                 await new Game(io, socket).sell(reqJson, socket)
             });
             socket.on(
-                'bidCancle_Req',
+                'cancelBid_Req',
                 async (reqJson) => await new Game(io, socket).bidCancle(reqJson)
             );
             socket.on(
-                'askCancle_Req',
+                'cancelAsk_Req',
                 async (reqJson) => await new Game(io, socket).askCancle(reqJson)
             );
+            socket.on(
+                'bidTable_Req',
+                async (reqJson) => await new Game(io, socket).sendBidTable(reqJson)
+            )
+            socket.on(
+                'askTable_Req',
+                async (reqJson) => await new Game(io, socket).sendBidTable(reqJson)
+            )
+
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>
             socket.on('message', (data) =>

@@ -207,7 +207,9 @@ export default function TradeStock(props) {
         });
     }
 
-    function HandleKeyPress(e) {
+    const interval = 0.2;
+    let cTime, pTime;
+    function HandleKeyDown(e) {
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
         if (e.keyCode === 37) {
@@ -227,7 +229,27 @@ export default function TradeStock(props) {
             }
             VolumeUp(currentVolume);
         }
-
+    }
+    function HandleKeyUp(e) {
+        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
+        e.preventDefault();
+        if (e.keyCode === 37) {
+            //_ LEFT ARROW
+            playSound(HatUp, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket('TradeStock', props.socket);
+                return;
+            }
+            VolumeDown(currentVolume);
+        } else if (e.keyCode === 39) {
+            //_ RIGHT ARROW
+            playSound(HatDown, 1).play();
+            if (props.socket == null || isBind === false) {
+                props.requestSocket('TradeStock', props.socket);
+                return;
+            }
+            VolumeUp(currentVolume);
+        }
         else if (e.keyCode === 38) {
             //_ UP ARROW
             playSound(HatUp, 1).play();
@@ -269,8 +291,6 @@ export default function TradeStock(props) {
             }
             RefreshBid();
         }
-
-
     }
 
     useEffect(() => {
@@ -282,9 +302,11 @@ export default function TradeStock(props) {
             console.log('keydown event not working now!')
             return ;
         }
-        document.addEventListener('keyup', HandleKeyPress);
+        document.addEventListener('keyup', HandleKeyUp);
+        // document.addEventListener('keydown', HandleKeyDown);
         return () => {
-            document.removeEventListener('keyup', HandleKeyPress);
+            document.removeEventListener('keyup', HandleKeyUp);
+            // document.removeEventListener('keydown', HandleKeyDown);
         };
     }, [currentVolume, currentBid, isBind, isFocus]);
 
@@ -317,6 +339,37 @@ export default function TradeStock(props) {
         color : myWallet.myCash >= currentBid * currentVolume ? grey[700] : red[200],
     };
 
+
+    function SplitByThree(value) {
+        if (!value) return 'Something wrong.';
+        if (value.length <= 3) return value;
+        return (
+            SplitByThree(value.substring(0, value.length - 3)) +
+            ',' +
+            value.substring(value.length - 3, value.length)
+        );
+    }
+
+    const parseWonToStr = (won) => {
+        if (typeof won == 'number') won = won.toString();
+        return won;
+    };
+
+    function ExpBySymbol(value) {
+        // console.log(value);
+        if (!value) return 'Something wrong.';
+        let ret = '';
+        if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
+            ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
+            value = value.substring(value.length - 9 + 1);
+        }
+        if (value.length >= 5) { // value 99489230
+            ret += ( value.substring(0, value.length - 5 + 1)  + '만 ' )  // 9948만
+            value = value.substring(value.length - 5 + 1);
+        }
+        ret += value;
+        return ret + '원';
+    }
 
     return (
         <Grid
@@ -362,7 +415,7 @@ export default function TradeStock(props) {
                 />
             </Grid>
             <Grid container item justify="center" alignItems="start">
-                예상소요금액 : <span style={costColor}>{currentVolume * currentBid}</span>
+                예상소요금액 : <span style={costColor}>{ExpBySymbol(parseWonToStr(currentVolume * currentBid))}</span>
             </Grid>
             <Grid container item justify="center"  style={{ width: '80%', margin: '0 10 0 1' }}>
                 <Button
