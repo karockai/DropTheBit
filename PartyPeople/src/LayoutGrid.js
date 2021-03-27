@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TradeStock from './TradeStock';
 import MyAsset from './MyAsset';
-import BidTab from './bidTab';
 import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
@@ -19,13 +18,14 @@ import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
-import GameMusicStart from './MusicStart'
+import GameMusicStart from './MusicStart';
 import {
     BrowserRouter as Router,
     Switch,
     useLocation,
     useHistory,
-  } from "react-router-dom"
+} from 'react-router-dom';
+import TabControl from './TabControl';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,16 +52,15 @@ export default function LayoutGrid(props) {
     const [timerTime, setTimerTime] = useState(gameTime);
     const [isStart, setIsStart] = useState(false);
     const musicList = {
-        Deja_Vu : Deja_Vu,
+        Deja_Vu: Deja_Vu,
         King_Conga: King_Conga,
-        Mausoleum_Mash :Mausoleum_Mash,
+        Mausoleum_Mash: Mausoleum_Mash,
     };
 
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
-
-    useEffect(()=>{
+    useEffect(() => {
         props.socket.once('startGame_Real', (data) => {
             // useSound(SpecificMusic, 0.7, 2000);
             setThreeSecTimerOpen(false);
@@ -76,9 +75,9 @@ export default function LayoutGrid(props) {
 
     useEffect(() => {
         console.log('layoutGrid rendered....!');
-    })
+    });
 
-    const [over,setOver] = useState(false);
+    const [over, setOver] = useState(false);
     // const [leaderBoard, setLeaderBoard]= useState('');
 
     useEffect(() => {
@@ -89,7 +88,7 @@ export default function LayoutGrid(props) {
             }
         });
     }, []);
-    
+
     // const GameOver = (leaderBoard) => {
     //     console.log('gameover');
     //     return (
@@ -117,18 +116,19 @@ export default function LayoutGrid(props) {
     const [APIdata, setAPI] = useState(null);
     let setCurrentAPIData = (data) => {
         setAPI(data);
-    } 
+    };
     let getCurrentAPIData = () => {
         return APIdata;
-    }
+    };
 
     return (
-        <React.Fragment >
-            <ThreeSecTimer SpecificMusic={SpecificMusic} open={threeSecTimerOpen}/>
-            {
-                over&&<GameOverModal leaderBoard={over}/>
-            }
-            <Container  maxWidth="lg">
+        <React.Fragment>
+            <ThreeSecTimer
+                SpecificMusic={SpecificMusic}
+                open={threeSecTimerOpen}
+            />
+            {over && <GameOverModal leaderBoard={over} />}
+            <Container maxWidth="lg">
                 <Typography component="div" style={{ padding: '0 0 0 0' }}>
                     <Grid
                         style={{ height: '100vh' }}
@@ -211,7 +211,13 @@ export default function LayoutGrid(props) {
                                                 style={{ height: '17vh' }}
                                                 className={classes.paper}
                                             >
-                                                <StockDoneList socket={props.socket} requestSocket = {props.requestSocket} isMine = {true}/>
+                                                <StockDoneList
+                                                    socket={props.socket}
+                                                    requestSocket={
+                                                        props.requestSocket
+                                                    }
+                                                    isMine={true}
+                                                />
                                             </Paper>
                                         </Grid>
                                         <Grid
@@ -225,7 +231,13 @@ export default function LayoutGrid(props) {
                                                 style={{ height: '17vh' }}
                                                 className={classes.paper}
                                             >
-                                                <StockDoneList socket={props.socket} requestSocket = {props.requestSocket} isMine = {false}/>
+                                                <StockDoneList
+                                                    socket={props.socket}
+                                                    requestSocket={
+                                                        props.requestSocket
+                                                    }
+                                                    isMine={false}
+                                                />
                                             </Paper>
                                         </Grid>
                                     </Grid>
@@ -301,7 +313,8 @@ export default function LayoutGrid(props) {
                                         style={{ height: '44vh' }}
                                         className={classes.paper}
                                     >
-                                        <BidTab
+                                        <TabControl
+                                            roomID={props.roomID}
                                             socket={props.socket}
                                             requestSocket={props.requestSocket}
                                         />
