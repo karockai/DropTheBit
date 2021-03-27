@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import GameManager from './GameManager';
-import SimpleContainer from './SimpleContainer';
-import ViewportLayout from './ViewportLayout';
 import GameOverModal from './GameOverModal';
 
 ReactDOM.render(

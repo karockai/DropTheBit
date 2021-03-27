@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 import ChartComponent from './ChartComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LayoutGrid from './LayoutGrid';
-import SimpleContainer from './SimpleContainer';
 import Routes from './Routes';
 
 class GameManager extends React.Component {
