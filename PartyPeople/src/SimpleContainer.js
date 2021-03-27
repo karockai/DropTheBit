@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TradeStock from './TradeStock';
 import MyAsset from './MyAsset';
-import BidTab from './bidTab';
+import BidTab from './BidTab';
 import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
