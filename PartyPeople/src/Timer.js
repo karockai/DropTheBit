@@ -10,11 +10,8 @@ export default function Timer(props) {
         minute = minute >= 10 ? String(minute) : '0'+String(minute);
         second = second >= 10 ? String(second) : '0'+String(second);
         if (time <= 0) {
-            return(
-                <>
-                  {'00 : 00'}  
-                </>
-            );
+            minute = '00';
+            second = '00';
         }
         else
             setTimeout(function(){

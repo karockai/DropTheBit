@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { BrowserRouter as Router, Route, Switch,Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, history, Redirect, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -11,7 +11,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -32,11 +32,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function GameOverModal(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const rows = props.leaderBoard;
   const [done, setDone] = useState(false);
+
+  const history = useHistory();
+  const BackToLobby = () => {
+    let path = '/';
+    history.push(path);
+  }
+  
   const handleOpen = () => {
     setOpen(true);
   };
@@ -45,9 +54,7 @@ export default function GameOverModal(props) {
     setOpen(false);
   };
 
-  const BackToLobby = () => {
-    setDone(true);
-  }
+
   console.log(props.leaderBoard);
   return (
     <div>
@@ -55,7 +62,7 @@ export default function GameOverModal(props) {
         disablePortal
         disableEnforceFocus
         disableAutoFocus
-        disableBackdropClick
+        disableBackdropClick  // backdrop을 클릭해도 modal을 지우지 않는 옵션
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         className={classes.modal}
@@ -63,19 +70,13 @@ export default function GameOverModal(props) {
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        // BackdropProps={{
-        //   // timeout: 500,
-        //   // 'static'
-        //   static
-        // }}
 
       >
         <Fade in={open}>
-        {
-          done && <Redirect to="/"/>
-        }
+
           <div container className={classes.paper}>
             <h2 id="transition-modal-title" style={{textAlign:'center'}}>🌠Game Finished🌠</h2>
+            <Grid container direction={'column'} alignItems={'centerd'}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
@@ -99,7 +100,8 @@ export default function GameOverModal(props) {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button onClick={BackToLobby()}> Back to Lobby </Button>
+            <Button onClick={BackToLobby}> Back to Lobby </Button>
+            </Grid>
           </div>
         </Fade>
       </Modal>
