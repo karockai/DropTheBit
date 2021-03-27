@@ -69,27 +69,65 @@ export default function LayoutGrid(props) {
     function PlayMusic() {
         useSound(SpecificMusic, 0.7, 2000);
     }
+    PlayMusic();
 
-    const GameOver = (leaderBoard) => {
-        // modal 띄울 함수 호출
-        useEffect(() => {
-            props.socket.once('gameOver', (leaderBoard) => {
-                console.log('gameover');
-                return (
-                    <>
-                        <GameOverModal leaderBoard={leaderBoard}/>
-                    </>
-                );
-            });
-        }, []);
 
-    };
+    useEffect(() => {
+        console.log('layoutGrid rendered....!');
+    })
+
+    const [over,setOver] = useState(false);
+    // const [leaderBoard, setLeaderBoard]= useState('');
+
+    useEffect(() => {
+        props.socket.on('gameOver', (leaderBoard) => {
+            if (leaderBoard) {
+                // GameOver(readerBoard);
+                setOver(leaderBoard);
+            }
+        });
+    }, []);
+    
+    // const GameOver = (leaderBoard) => {
+    //     console.log('gameover');
+    //     return (
+    //         <>
+    //             <GameOverModal leaderBoard={leaderBoard}/>
+    //         </>
+    //     );
+
+    // }
+
+    // const GameOver = (readerBoard) => {
+    //     // modal 띄울 함수 호출
+    //     useEffect(() => {
+    //         props.socket.once('gameOver', (leaderBoard) => {
+    //             console.log('gameover');
+    //             return (
+    //                 <>
+    //                     <GameOverModal leaderBoard={leaderBoard}/>
+    //                 </>
+    //             );
+    //         });
+    //     }, []);
+    // };
+
+    const [APIdata, setAPI] = useState(null);
+    let setCurrentAPIData = (data) => {
+        setAPI(data);
+    } 
+    let getCurrentAPIData = () => {
+        return APIdata;
+    }
+
     return (
         <React.Fragment >
             <ThreeSecTimer SpecificMusic={SpecificMusic} open={threeSecTimerOpen}/>
-            {GameOver()}
+            {
+                over&&<GameOverModal leaderBoard={over}/>
+            }
             <Container  maxWidth="lg">
-                <Typography component="div" style={{ margin: '2vh 0 0 0' }}>
+                <Typography component="div" style={{ padding: '0 0 0 0' }}>
                     <Grid
                         style={{ height: '100vh' }}
                         wrap="wrap"
@@ -140,6 +178,8 @@ export default function LayoutGrid(props) {
                                         <ChartComponent
                                             socket={props.socket}
                                             requestSocket={props.requestSocket}
+                                            setAPIData={setCurrentAPIData}
+                                            APIdata={APIdata}
                                             display="flex"
                                             justify-content="center"
                                             align-items="center"
@@ -228,6 +268,7 @@ export default function LayoutGrid(props) {
                                             >
                                                 <TradeStock
                                                     roomID={props.roomID}
+                                                    APIdata={APIdata}
                                                     socket={props.socket}
                                                     requestSocket={
                                                         props.requestSocket

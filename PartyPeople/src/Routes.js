@@ -7,9 +7,9 @@ import Lobby from './Lobby';
 export default function Routes(props) {
     const [time, setTime] = React.useState(0);
     const isValid = () => {
-        if (time === 0)
-            return false;
-        return true;
+        if (props.socket)
+            return true;
+        return false;
     }
     return (
         <>
@@ -30,6 +30,19 @@ export default function Routes(props) {
                             />
                         )}
                     />
+                    {/* <Route
+                        path="/game"
+                        render={() => (
+                            <LayoutGrid
+                                socket={props.socket}
+                                requestSocket={props.requestSocket}
+                                roomID={props.roomID}
+                                roomInfo={props.roomInfo}
+                                gameTime={time}
+                            />)}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                    /> */}
                     <Route
                         path="/game"
                         render={() => (isValid() ? 

@@ -14,6 +14,7 @@ import {
     dblrem,
     dblrange,
     dbllen,
+    dbwatch,
 } from './redis.js';
 
 // const = require('./);
@@ -75,92 +76,76 @@ class Game {
       reqVol
   }
   **/
-  //*
-    async buy(reqJson, socket) {
+  buy(reqJson, socket) {
         return new Promise(async function(resolve, reject) {
         // const { io, socket } = this;
         console.log("-----BUY-----", reqJson);
         // 1. reqJson setting
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
-        let strReqPrice = reqJson['currentBid'];
+        let strReqPrice = String(reqJson['currentBid']);
         let intReqPrice = Number(strReqPrice);
-        let strReqVol = reqJson['currentVolume'];
+        let strReqVol = String(reqJson['currentVolume']);
         let intReqVol = Number(strReqVol);
 
-        // 2. player_info 가져오기
-        // console.log('** BUY REQUEST :', roomID, socketID);
+        // 2. curPrice 가져오기
+        let curCoin = JSON.parse(await dbget('curCoin'));
+        let curPrice = curCoin['curPrice'];
+        
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 6;
+        
+        // 3. player_info 가져오기
+        console.log("hget PlayerINFO");
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-        // console.log('** BUY REQUEST 요청내용', reqJson);
-        // console.log('** BUY REQUEST 기존 Data', playerInfo);
-        // console.log('** BUY REQUEST :', playerInfo);
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
         let playerID = playerInfo['playerID'];
-
-        // 3. curPrice 가져오기
-        let curCoin = JSON.parse(await dbget('curCoin'));
-        let curPrice = curCoin['curPrice'];
-        // let curPrice = await dbget('curCoin');
-        // console.log(curPrice);
-
-        let refreshWallet = {};
-        // 4. 구매 가능 여부 확인 후 "asset" emit
-        if (cash >= intReqPrice * intReqVol) {
-            // 5. 구매 처리 및 asset 정보 emit
-            refreshWallet['result'] = 'success';
+        
+        // 5. 구매 처리 및 asset 정보 emit
+        
+        // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
+        if (intReqPrice >= curPrice) {
+            // 6-1. cash, coin 갯수 갱신
+            cash -= curPrice * intReqVol;
+            coinVol += intReqVol;
+            
+            // 6-2. playerInfo Update
+            playerInfo['cash'] = String(cash);
+            playerInfo['coinVol'] = String(coinVol);
+            await dbhset(roomID, socketID, JSON.stringify(playerInfo)).then(console.log).catch(console.error);
+            
+            // 6-3. refreshWallet update & emit
+            refreshWallet['coinVol'] = String(coinVol);
+            refreshWallet['cash'] = String(cash);
             refreshWallet['asset'] = asset;
-            refreshWallet['type'] = 6;
-
-            // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
-            if (intReqPrice >= curPrice) {
-                // 6-1. cash, coin 갯수 갱신
-                // console.log(cash);
-                cash -= curPrice * intReqVol;
-                coinVol += intReqVol;
-
-                // 6-2. buy_res update
-                //! 이 아래 중복되는 부분 줄이기
-                refreshWallet['coinVol'] = String(coinVol);
-                refreshWallet['cash'] = String(cash);
-                //*
-                await socket.emit('refreshWallet', refreshWallet);
-
-                // 6-3. playerInfo Update
-                playerInfo['cash'] = String(cash);
-                playerInfo['coinVol'] = String(coinVol);
-
-                // 6-4. buyDone
-                let buyDone = {
-                    type: '매수 완료',
-                    playerID: playerID,
-                    vol: intReqVol,
-                    price: curPrice,
-                };
-                //*
-                await socket.emit('buyDone', buyDone);
-                await socket.to(roomID).emit('buyDone_Room', buyDone);
-
-                console.log('현재가로 구매 완료 :', playerInfo);
-                // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
-            } else {
-                // 7-1. cash 갱신
-                cash -= intReqPrice * intReqVol;
-                refreshWallet['coinVol'] = String(coinVol);
-                refreshWallet['cash'] = String(cash);
-                //*
-                await socket.emit('refreshWallet', refreshWallet);
-
-                playerInfo['cash'] = String(cash);
-                playerInfo['coinVol'] = String(coinVol);
-
-                // 4-3. player 호가 목록 등록
-                // console.log(playerInfo);
-                // console.log(playerInfo['bid']);
-                if (playerInfo['bid'].hasOwnProperty(strReqPrice)) {
-                    playerInfo['bid'][strReqPrice] = String(
-                        Number(playerInfo['bid'][strReqPrice]) + intReqVol
+            socket.emit('refreshWallet', refreshWallet);
+            
+            // 6-4. buyDone
+            let buyDone = {
+                type: '매수 완료',
+                // 6-3. refreshWallet update & emit
+                playerID: playerID,
+                vol: intReqVol,
+                price: curPrice,
+            };
+            socket.emit('buyDone', buyDone);
+            socket.to(roomID).emit('buyDone_Room', buyDone);
+            
+            console.log('현재가로 구매 완료 :', playerInfo);
+            // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
+        } else {
+            // 7-1. cash 갱신
+            cash -= intReqPrice * intReqVol;
+            playerInfo['cash'] = String(cash);
+            playerInfo['coinVol'] = String(coinVol);
+            
+            // 4-3. player 호가 목록 등록
+            if (playerInfo['bid'].hasOwnProperty(strReqPrice)) {
+                playerInfo['bid'][strReqPrice] = String(
+                    Number(playerInfo['bid'][strReqPrice]) + intReqVol
                     );
                 } else {
                     playerInfo['bid'][strReqPrice] = strReqVol;
@@ -169,6 +154,14 @@ class Game {
                     bidList[strReqPrice][socketID] = roomID;
                     await dbset('bidList', JSON.stringify(bidList)).then(console.log).catch(console.error);
                 }
+                await dbhset(roomID, socketID, JSON.stringify(playerInfo)).then(console.log).catch(console.error);
+                
+                // 6-3. refreshWallet update & emit
+                refreshWallet['coinVol'] = String(coinVol);
+                refreshWallet['cash'] = String(cash);
+                refreshWallet['asset'] = asset;
+                socket.emit('refreshWallet', refreshWallet);
+                
                 let bidDone = {
                     type: '매수 주문',
                     playerID: playerID,
@@ -176,151 +169,121 @@ class Game {
                     price: intReqPrice,
                 };
                 console.log('호가 등록 완료', playerInfo);
-                //*
-                await socket.emit('bidDone', bidDone);
-                //*
-                await socket.to(roomID).emit('bidDone_Room', bidDone);
+                socket.emit('bidDone', bidDone);
+                socket.to(roomID).emit('bidDone_Room', bidDone);
             }
-            await dbhset(roomID, socketID, JSON.stringify(playerInfo)).then(console.log).catch(console.error);
-        } else {
-            //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
-            refreshWallet['result'] = 'false';
-            refreshWallet['coinVol'] = String(coinVol);
-            refreshWallet['cash'] = String(cash);
-            refreshWallet['asset'] = asset;
-            //*
-            await socket.emit('refreshWallet', refreshWallet);
-        }
-        console.log("-------BUY END-------------");
-        resolve();
-    });
-}
-
-// 매도 요청 등록
-async sell(reqJson, socket) {
-    return new Promise(async function(resolve, reject) {
-        // const { io, socket } = this;
-        // 1. reqJson setting
-        console.log('-----------Sell -----------', reqJson);
-        let roomID = reqJson['roomID'];
-        let socketID = reqJson['socketID'];
-        let strReqPrice = reqJson['currentBid'];
+            console.log("-------BUY END-------------");
+            resolve();
+        });
+    }
+    
+    // 매도 요청 등록
+    sell(reqJson, socket) {
+        return new Promise(async function(resolve, reject) {
+            // const { io, socket } = this;
+            // 1. reqJson setting
+            console.log('-----------Sell -----------', reqJson);
+            let roomID = reqJson['roomID'];
+            let socketID = reqJson['socketID'];
+            let strReqPrice = String(reqJson['currentBid']);
         let intReqPrice = Number(strReqPrice);
-        let strReqVol = reqJson['currentVolume'];
+        let strReqVol = String(reqJson['currentVolume']);
         let intReqVol = Number(strReqVol);
         
-        // 2. player_info 가져오기
-        // console.log('** Sell REQUEST :', roomID, socketID);
+        
+        // 2. curPrice 가져오기
+        let curCoin = JSON.parse(await dbget('curCoin'));
+        let curPrice = curCoin['curPrice'];
+        
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 6;
+        
+        // 3. player_info 가져오기
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-        // console.log('** Sell REQUEST :', playerInfo);
         let cash = Number(playerInfo['cash']);
         let coinVol = Number(playerInfo['coinVol']);
         let asset = playerInfo['asset']; // asset은 변할 일이 없으므로 그냥 String 채로 가져와서 그대로 넣는다.
         let playerID = playerInfo['playerID'];
         
-        // 3. curPrice 가져오기
-        let curCoin = JSON.parse(await dbget('curCoin'));
-        let curPrice = curCoin['curPrice'];
-        // let curPrice = await dbget('curCoin');
-        // console.log(curPrice);
-        
-        let refreshWallet = {};
-        // 4. 구매 가능 여부 확인 : 보유 coinVol > 요청 coinVol 후 "asset" emit
-        // * 이미 호가 올려놓은 것들은 어떡하지?
-        if (coinVol >= intReqVol) {
-            // 5. 구매 처리 및 asset 정보 emit
-            refreshWallet['result'] = 'success';
-            refreshWallet['asset'] = asset;
-            refreshWallet['type'] = 6;
+        // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
+        if (intReqPrice <= curPrice) {
+            // 6-1. cash, coin 갯수 갱신
+            cash += curPrice * intReqVol;
+            coinVol -= intReqVol;
             
-            // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
-            if (intReqPrice <= curPrice) {
-                // 6-1. cash, coin 갯수 갱신
-                // console.log(cash);
-                cash += curPrice * intReqVol;
-                coinVol -= intReqVol;
-                
-                // 6-2. sell_res update
-                //! 이 아래 중복되는 부분 줄이기
-                refreshWallet['coinVol'] = String(coinVol);
-                refreshWallet['cash'] = String(cash);
-                //*
-                await socket.emit('refreshWallet', refreshWallet);
-                
-                // 6-3. playerInfo Update
-                playerInfo['cash'] = String(cash);
-                playerInfo['coinVol'] = String(coinVol);
-                
-                // 6-4. sellDone
-                let sellDone = {
-                    type: '매도 완료',
-                    playerID: playerID,
-                    vol: intReqVol,
-                    price: curPrice,
-                };
-                //*
-                await socket.emit('sellDone', sellDone);
-                //*
-                await socket.to(roomID).emit('sellDone_Room', sellDone);
-                console.log('현재가로 판매 완료 :', playerInfo);
-                // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
-            } else {
-                coinVol -= intReqVol;
-                refreshWallet['coinVol'] = String(coinVol);
-                refreshWallet['cash'] = String(cash);
-                //*
-                await socket.emit('refreshWallet', refreshWallet);
-                
-                playerInfo['cash'] = String(cash);
-                playerInfo['coinVol'] = String(coinVol);
-                
-                // 4-3. player 호가 목록 등록
-                console.log(playerInfo);
-                console.log(playerInfo['ask']);
-                if (playerInfo['ask'].hasOwnProperty(strReqPrice)) {
-                    playerInfo['ask'][strReqPrice] = String(
-                        Number(playerInfo['ask'][strReqPrice]) + intReqVol
-                        );
-                    } else {
-                        playerInfo['ask'][strReqPrice] = strReqVol;
-                        let askList = JSON.parse(await dbget('askList'));
-                        askList[strReqPrice] = {};
-                        askList[strReqPrice][socketID] = roomID;
-                        await dbset('askList', JSON.stringify(askList));
-                    }
-                    console.log('호가 등록 완료', playerInfo);
-                    let askDone = {
-                        type: '매도 주문',
-                        playerID: playerID,
-                        vol: intReqVol,
-                        price: intReqPrice,
-                    };
-                    //*
-                await socket.emit('askDone', askDone);
-                    //*
-                await socket.to(roomID).emit('askDone_Room', askDone);
+            // 6-3. playerInfo Update
+            playerInfo['cash'] = String(cash);
+            playerInfo['coinVol'] = String(coinVol);
+            await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+            
+            // 6-2. sell_res update
+            refreshWallet['coinVol'] = String(coinVol);
+            refreshWallet['cash'] = String(cash);
+            refreshWallet['asset'] = asset;
+            socket.emit('refreshWallet', refreshWallet);
+            
+            // 6-4. sellDone
+            let sellDone = {
+                type: '매도 완료',
+                playerID: playerID,
+                vol: intReqVol,
+                price: curPrice,
+            };
+            
+            socket.emit('sellDone', sellDone);
+            socket.to(roomID).emit('sellDone_Room', sellDone);
+            console.log('현재가로 판매 완료 :', playerInfo);
+            // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
+        } else {
+            coinVol -= intReqVol;
+            
+            playerInfo['cash'] = String(cash);
+            playerInfo['coinVol'] = String(coinVol);
+            
+            // 4-3. player 호가 목록 등록
+            console.log(playerInfo);
+            console.log(playerInfo['ask']);
+            
+            if (playerInfo['ask'].hasOwnProperty(strReqPrice)) {
+                playerInfo['ask'][strReqPrice] = String(
+                    Number(playerInfo['ask'][strReqPrice]) + intReqVol
+                    );
+                } else {
+                    playerInfo['ask'][strReqPrice] = strReqVol;
+                    let askList = JSON.parse(await dbget('askList'));
+                    askList[strReqPrice] = {};
+                    askList[strReqPrice][socketID] = roomID;
+                    await dbset('askList', JSON.stringify(askList));
                 }
                 await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-            } else {
-                //보유 현금이 부족한 경우 : refreshWallet["result"] = False를 emit
-                refreshWallet['result'] = 'false';
+                
+                console.log('호가 등록 완료', playerInfo);
+                let askDone = {
+                    type: '매도 주문',
+                    playerID: playerID,
+                    vol: intReqVol,
+                    price: intReqPrice,
+                };
+                
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
                 refreshWallet['asset'] = asset;
-                //*
-                await socket.emit('refreshWallet', refreshWallet);
+                socket.emit('refreshWallet', refreshWallet);
+                socket.emit('askDone', askDone);
+                socket.to(roomID).emit('askDone_Room', askDone);
             }
         console.log('-----------Sell End-----------');
         resolve();
-        });
-    }
+    });
+}
 
-    // 매수 요청 취소
-    async cancelBid(reqJson) {
-        let roomID = reqJson['roomID'];
-        let socketID = reqJson['socketID'];
-        let bidPrice = reqJson['reqPrice'];
-
+// 매수 요청 취소
+async cancelBid(reqJson) {
+    let roomID = reqJson['roomID'];
+    let socketID = reqJson['socketID'];
+    let bidPrice = reqJson['reqPrice'];
+    
         let bidList = JSON.parse(await dbhget('bidList', bidPrice));
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
 

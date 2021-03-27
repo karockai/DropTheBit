@@ -47,7 +47,8 @@ class Room {
         console.log('create', roomInfo);
         await dbhmset(roomID, 'gameTime', 0, 'music', 'Select Music', 'roomLeader', socket.id);
         await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-        await dbhmset('bgmList', 'Deja_Vu.mp3', 265, 'King_Conga.mp3', 145, 'Mausoleum_Mash.mp3', 176);
+        // await dbhmset('bgmList', 'Deja_Vu.mp3', 265, 'King_Conga.mp3', 145, 'Mausoleum_Mash.mp3', 176);
+        await dbhmset('bgmList', 'Deja_Vu.mp3', 10, 'King_Conga.mp3', 145, 'Mausoleum_Mash.mp3', 176);
         dblpush('roomList', roomID);
         // console.log(await dbhgetall(roomID));
         socket.roomID = roomID;
@@ -101,6 +102,12 @@ class Room {
             console.log('roomID : ', roomID);
             console.log('newbie :', data.playerID);
         }
+    }
+
+    sendChartData() {
+        const { io, socket } = this;
+        let roomID = socket.roomID;
+        io.to(roomID).emit('chartData_Res', {chartData: chartData});
     }
 
     // data : {roomID : roomID, musicName : 클라에서 선택한 음악명 (select 창)}
