@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     },
 });
 
+
 function createData(sell, price, buy) {
     return { sell, price, buy };
 }
