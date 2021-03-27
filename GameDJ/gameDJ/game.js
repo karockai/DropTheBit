@@ -15,6 +15,7 @@ import {
     dblrange,
     dbllen,
     dbwatch,
+    dbhdel,
 } from './redis.js';
 
 // const = require('./);
@@ -152,9 +153,9 @@ class Game {
                     let bidList = JSON.parse(await dbget('bidList'));
                     bidList[strReqPrice] = {};
                     bidList[strReqPrice][socketID] = roomID;
-                    await dbset('bidList', JSON.stringify(bidList)).then(console.log).catch(console.error);
+                    await dbset('bidList', JSON.stringify(bidList));
                 }
-                await dbhset(roomID, socketID, JSON.stringify(playerInfo)).then(console.log).catch(console.error);
+                await dbhset(roomID, socketID, JSON.stringify(playerInfo));
                 
                 // 6-3. refreshWallet update & emit
                 refreshWallet['coinVol'] = String(coinVol);
@@ -265,7 +266,6 @@ class Game {
                     vol: intReqVol,
                     price: intReqPrice,
                 };
-                
                 refreshWallet['coinVol'] = String(coinVol);
                 refreshWallet['cash'] = String(cash);
                 refreshWallet['asset'] = asset;
@@ -275,51 +275,131 @@ class Game {
             }
         console.log('-----------Sell End-----------');
         resolve();
-    });
-}
+        });
+    }
 
-// 매수 요청 취소
-async cancelBid(reqJson) {
-    let roomID = reqJson['roomID'];
-    let socketID = reqJson['socketID'];
-    let bidPrice = reqJson['reqPrice'];
-    
+    // 매수 요청 취소
+    async cancelBid(reqJson) {
+        let roomID = reqJson['roomID'];
+        let socketID = reqJson['socketID'];
+        let bidPrice = reqJson['reqPrice'];
+        
+        // 취소 요청한 가격에 해당하는 목록을 불러온다
         let bidList = JSON.parse(await dbhget('bidList', bidPrice));
+        
+        // bidList의 Length가 1이면 가격 자체를 지워버린다.
+        if (Object.keys(bidList).length === 1) {
+            await dbhdel('bidList', bidPrice);   
+        }
+        else{
+            delete bidList[socketID];
+            await dbhset('bidList', bidPrice, JSON.stringify(bidList));
+        }
+        
         let playerInfo = JSON.parse(await dbhget(roomID, socketID));
-
         let cash = Number(playerInfo['cash']);
         let bidVol = Number(playerInfo['bid'][bidPrice]);
-
         cash += bidVol * Number(bidPrice);
         playerInfo['cash'] = String(cash);
         delete playerInfo['bid'][bidPrice];
         await dbhset(roomID, socketID, JSON.stringify(playerInfo));
-
-        delete bidList[socketID];
-        await dbhset('bidList', bidPrice, JSON.stringify(bidList));
+        
+        // 매수 취소 완료 Response 필요
+        
+        
+        
+        // 매수 취소 완료 Response 필요
     }
-
+    
     // 매도 요청 취소
     async cancelAsk(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
-        let AskPrice = reqJson['reqPrice'];
+        let askPrice = reqJson['reqPrice'];
+        
+        // 취소 요청한 가격에 해당하는 목록을 불러온다
+        let askList = JSON.parse(await dbhget('askList', askPrice));
 
-        let askList = await dbget('askList', AskPrice);
-        let playerInfo = await dbget(roomID, socketID);
+        // askList의 Length가 1이면 가격 자체를 지워버린다.
+        if (Object.keys(bidList).length === 1) {
+            await dbhdel('bidList', bidPrice);   
+        }
+        else{
+            delete askList[socketID];
+            await dbhset('askList', askPrice, JSON.stringify(askList));
+        }
 
+        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
         let coinVol = Number(playerInfo['coinVol']);
-        let askVol = Number(playerInfo['askList'][AskPrice]);
-
-        coinVol += bidVol;
+        let askVol = Number(playerInfo['askList'][askPrice]);
+        
+        coinVol += askVol;
         playerInfo['coinVol'] = String(coinVol);
-
         delete playerInfo[AskPrice];
-        dbset(roomID, socketID, playerInfo);
-
-        delete askList[socketID];
-        dbset('askList', AskPrice, askList);
+        await dbhset(roomID, socketID, JSON.stringify(playerInfo));
+        
+        // 매수 취소 완료 Response 필요
+        
+    
+    
+        // 매수 취소 완료 Response 필요
     }
-}
+    
+    async sendBidTable(reqJson){
+        let roomID = reqJson['roomID'];
+        let socketID = reqJson['socketID'];
+        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
+        
+        let bidTable = playerInfo['bid'];
+        let bidTableKeys = Object.keys(bidTable);
+        let bidTable_Res = [];
+        
+        for (let bidPriceIdx in bidTableKeys) {
+            
+            let temp = {};
+            let bidPrice = bidTableKeys[bidPriceIdx];
+            let bidVol = bidtable[bidPrice];
+            temp['price'] = bidPrice;
+            temp['vol'] = bidVol;
+            
+            bidTable_Res.push(temp);
+        }
+        
+        bidTable_Res.sort(function (a, b) {
+            return b['price'] - a['price'];
+        });
 
+        this.socket.emit('bitTable_Res', bidTable_Res);
+        
+    }
+    
+    async sendAskTable(reqJson){
+        let roomID = reqJson['roomID'];
+        let socketID = reqJson['socketID'];
+        let playerInfo = JSON.parse(await dbhget(roomID, socketID));
+        
+        let askTable = playerInfo['ask'];
+        let askTableKeys = Object.keys(askTable);
+        let askTable_Res = [];
+        
+        for (let askPriceIdx in askTableKeys) {
+            
+            let temp = {};
+            let askPrice = askTableKeys[askPriceIdx];
+            let askVol = asktable[askPrice];
+            temp['price'] = askPrice;
+            temp['vol'] = askVol;
+            
+            askTable_Res.push(temp);
+        }
+        
+        askTable_Res.sort(function (a, b) {
+            return b['price'] - a['price'];
+        });
+
+        this.socket.emit('askTable_Res', askTable_Res);
+
+    }
+        
+    }
 export default Game;
