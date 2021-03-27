@@ -149,8 +149,8 @@ function Lobby(props) {
                     {Card()}
                 </Grid>
                 <Grid container justify='center'>
-                    <input type="text" id="gameLink" class="form-control text-center fw-bold bg-white"
-                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`} style={{width: "70%"}} readonly />
+                    <input type="text" id="gameLink" className="form-control text-center fw-bold bg-white"
+                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`} style={{width: "70%"}} readOnly />
                     <Button class="btn btn-warning" type="button" onClick={CopyURL} id="copy">Copy Link</Button>
                 </Grid>
             </Grid>

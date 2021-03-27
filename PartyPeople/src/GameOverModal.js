@@ -16,7 +16,7 @@ import { Button, Grid } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
   paper: {
@@ -76,7 +76,7 @@ export default function GameOverModal(props) {
 
           <div container className={classes.paper}>
             <h2 id="transition-modal-title" style={{textAlign:'center'}}>🌠Game Finished🌠</h2>
-            <Grid container direction={'column'} alignItems={'centerd'}>
+            <Grid container direction={'column'} alignItems={'center'}>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>

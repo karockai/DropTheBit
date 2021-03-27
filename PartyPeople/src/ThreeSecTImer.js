@@ -4,11 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Modal, Typography} from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
-import { useSound, playSound, getDuration } from './useSound';
-// import useInterval from './useInterval'
-import King_Conga from './audios/music/King_Conga.mp3';
-import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
-import Deja_Vu from './audios/music/Deja_Vu.mp3';
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -16,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   paper: {
-    // height: '50vh',
     width: '50vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
@@ -29,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
   typo: {
     fontSize: '12rem',
     textAlign: 'center',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   }
 }));
 
@@ -69,7 +61,6 @@ export default function ThreeSecTimer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [time, setTime] = React.useState(3);
-  // const sound = useSound(props.SpecificMusic, 0.7, 5000, false);
 
 const changeTime = () => {
   if(time > 1) {
@@ -78,51 +69,34 @@ const changeTime = () => {
       }, 1000);
     }
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
     
     const signal = props.open;
 
     useEffect(()=>{
-      // handleClose();
-      setOpen(signal);
       changeTime();
-      // return(
-      //   <PlayMusic/>
-      // );
-      // PlayMusic();
-    },[signal, time]);
-
-    function PlayMusic() {
-      // useSound(props.SpecificMusic, 0.7, 5000);
-      return (
-        <>
-        {
-          useSound(props.SpecificMusic, 0.7, 5000)
-        }
-        </>
-      )
-    }
+    },[time]);
     
+    useEffect(()=>{
+      setOpen(signal);
+    },[signal]);
+
   return (
       <Modal
         disablePortal
         disableEnforceFocus
         disableAutoFocus
         disableBackdropClick
-        // open
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         className={classes.modal}
         open={open}
-        // onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         // BackdropProps={{
         //   timeout: 500,
         // }}
       >
+      {/* {changeTime} */}
         <Fade in={open}>
           <div className={classes.paper} >
             <h2 className={classes.typo} id="spring-modal-title"> {time} </h2>

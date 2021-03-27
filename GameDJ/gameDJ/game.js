@@ -27,7 +27,7 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-        let gameTime = Number(await dbhget(socket.roomID, 'gameTime')) + 2;
+        let gameTime = Number(await dbhget(socket.roomID, 'gameTime'));
         let roomID = socket.roomID;
         io.to(roomID).emit('chartData', {chartData: chartData});
         console.log(chartData);
@@ -66,7 +66,7 @@ class Game {
         }
 
         let gameSchedule1 = setTimeout(realStart, 3000);
-        let gameSchedule2 = setTimeout(gameOver, (gameTime + 3) * 1000);
+        let gameSchedule2 = setTimeout(gameOver, (gameTime) * 1000);
     }
 
     // 매수 요청 등록
