@@ -94,7 +94,7 @@ export default function StockDoneList(props) {
                                     </span>
                                     {props.isMine ? '' : '님이 '}
                                     <span style={{ fontWeight: 'bold' }}>
-                                        "{done.price}"
+                                        {done.price}
                                     </span>
                                     원에 {done.vol} 개를{' '}
                                     <span style={buySellColor}>
