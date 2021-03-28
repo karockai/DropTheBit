@@ -30,9 +30,9 @@ class Room {
         let playerID = data.playerID;
         let playerInfo = {
             playerID: playerID,
-            cash: '100000000',
-            asset: '100000000',
-            coinVol: '0',
+            cash: 100000000,
+            asset: 100000000,
+            coinVol: 0,
             bid: {},
             ask: {},
         };
@@ -67,9 +67,9 @@ class Room {
         if (data.playerID) {
             let playerInfo = {
                 playerID: data['playerID'],
-                cash: '100000000',
-                asset: '100000000',
-                coinVol: '0',
+                cash: 100000000,
+                asset: 100000000,
+                coinVol: 0,
                 bid: {},
                 ask: {},
             };

@@ -65,11 +65,14 @@ class Game {
             // 1. reqJson setting
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
-            let reqPrice = reqJson['currentBid'];
-            let reqVol = reqJson['currentVolume'];
+            let reqPrice = Number(reqJson['currentBid']);
+            let reqVol = Number(reqJson['currentVolume']);
 
             // 2. curPrice 가져오기
             let curPrice = curCoin['curPrice'];
+            console.log('---------------------------------------------------');
+            console.log(typeof curPrice);
+            console.log('---------------------------------------------------');
 
             let refreshWallet = {};
             refreshWallet['result'] = 'success';
@@ -165,8 +168,8 @@ class Game {
             console.log('-----------Sell -----------', reqJson);
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
-            let reqPrice = reqJson['currentBid'];
-            let reqVol = reqJson['currentVolume'];
+            let reqPrice = Number(reqJson['currentBid']);
+            let reqVol = Number(reqJson['currentVolume']);
 
             // 2. curPrice 가져오기
 
