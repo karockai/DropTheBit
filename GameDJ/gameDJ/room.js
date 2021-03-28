@@ -40,6 +40,7 @@ class Room {
             gameTime: 145,
             music: 'King_Conga.mp3',
             roomLeader: socket.id,
+            gaming : false,
         };
 
         roomInfo[socketID] = playerInfo;

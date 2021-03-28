@@ -1,3 +1,4 @@
+import { POINT_CONVERSION_COMPRESSED } from 'constants';
 import {
     dbset,
     dbget,
@@ -24,14 +25,13 @@ class Game {
         const { io, socket } = this;
         let roomID = socket.roomID;
         let gameTime = roomList[roomID]['gameTime'];
-        // timeList[roomID] = gameTime;
         io.to(roomID).emit('chartData', { chartData: chartData });
-
         io.to(roomID).emit('startGame_Res', gameTime);
 
         async function realStart() {
             let roomID = socket.roomID;
             let musicName = roomList[roomID]['music'];
+            roomList[roomID]['gaming'] = true;
             io.to(roomID).emit('startGame_Real', musicName);
         }
 
