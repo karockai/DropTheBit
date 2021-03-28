@@ -17,7 +17,7 @@ import Deja_Vu from './audios/music/Deja_Vu.mp3';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
-import ThreeSecTimer from './ThreeSecTimer';
+import ThreeSecTimer from './ThreeSecTImer';
 import GameMusicStart from './MusicStart';
 import {
     BrowserRouter as Router,

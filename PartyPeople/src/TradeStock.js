@@ -94,18 +94,18 @@ export default function TradeStock(props) {
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
-    if(!isBind) SetBind(true);
+    if (!isBind) SetBind(true);
     const [myWallet, setWallet] = useState({
-        myCash : 0,
-        myAsset : 0,
-        myCoin : 0,
-    })
+        myCash: 0,
+        myAsset: 0,
+        myCoin: 0,
+    });
     const [isInit, setInit] = useState(false);
-    if(!isInit) setInit(true);
+    if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
     useLayoutEffect(() => {
         if (props.socket == null) {
-            props.requestSocket('MyAsset',props.socket);
+            props.requestSocket('MyAsset', props.socket);
             setInit(true);
         } else {
             props.socket.on('refreshWallet', (data) => {
@@ -117,10 +117,10 @@ export default function TradeStock(props) {
                     myCash: currentCash,
                     myAsset: currentAsset,
                     myCoin: currentCoin,
-                })
+                });
             });
         }
-    },[isInit]);
+    }, [isInit]);
 
     function VolumeUp(volume) {
         SetNewVolume(volume + 1);
@@ -137,11 +137,11 @@ export default function TradeStock(props) {
     }
 
     function RefreshBid() {
-        console.log('현재가로 갱신되었습니다.')
-        props.socket.once('chart', (data)=> {
-            SetUnit(data.priceUnit)
-            SetBid(data.curPrice)
-        }); 
+        console.log('현재가로 갱신되었습니다.');
+        props.socket.once('chart', (data) => {
+            SetUnit(data.priceUnit);
+            SetBid(data.curPrice);
+        });
     }
 
     function Buy(bid, volume) {
@@ -150,7 +150,12 @@ export default function TradeStock(props) {
             return;
         }
         if (bid * volume > myWallet.myCash) {
-            alert('구매 가능한 현금이 없습니다.\n' + (bid * volume).toString() + ' > ' + myWallet.myCash.toString() );
+            alert(
+                '구매 가능한 현금이 없습니다.\n' +
+                    (bid * volume).toString() +
+                    ' > ' +
+                    myWallet.myCash.toString()
+            );
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
@@ -181,7 +186,12 @@ export default function TradeStock(props) {
             return;
         }
         if (myWallet.myCoin < volume) {
-            alert('보유코인이 부족합니다.\n' + (volume).toString() + ' > ' + myWallet.myCoin.toString() );
+            alert(
+                '보유코인이 부족합니다.\n' +
+                    volume.toString() +
+                    ' > ' +
+                    myWallet.myCoin.toString()
+            );
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
@@ -249,8 +259,7 @@ export default function TradeStock(props) {
                 return;
             }
             VolumeUp(currentVolume);
-        }
-        else if (e.keyCode === 38) {
+        } else if (e.keyCode === 38) {
             //_ UP ARROW
             playSound(HatUp, 1).play();
             if (props.socket == null || isBind === false) {
@@ -295,12 +304,12 @@ export default function TradeStock(props) {
 
     useEffect(() => {
         RefreshBid();
-    },[])
+    }, []);
 
     useEffect(() => {
-        if(isFocus === true) {
-            console.log('keydown event not working now!')
-            return ;
+        if (isFocus === true) {
+            console.log('keydown event not working now!');
+            return;
         }
         document.addEventListener('keyup', HandleKeyUp);
         // document.addEventListener('keydown', HandleKeyDown);
@@ -322,23 +331,25 @@ export default function TradeStock(props) {
         return () => {};
     }, [newVolume]);
 
-    function handleVolumeChange (e) {
-        if(e.target.id === "outlined-required") {
+    function handleVolumeChange(e) {
+        if (e.target.id === 'outlined-required') {
             SetVolume(e.target.value);
             SetFocus(true);
         }
     }
-    function handleBidChange (e) {
-        if(e.target.id === "outlined-required"){
+    function handleBidChange(e) {
+        if (e.target.id === 'outlined-required') {
             SetBid(e.target.value);
             SetFocus(true);
         }
     }
 
     let costColor = {
-        color : myWallet.myCash >= currentBid * currentVolume ? grey[700] : red[200],
+        color:
+            myWallet.myCash >= currentBid * currentVolume
+                ? grey[700]
+                : red[200],
     };
-
 
     function SplitByThree(value) {
         if (!value) return 'Something wrong.';
@@ -359,12 +370,14 @@ export default function TradeStock(props) {
         // console.log(value);
         if (!value) return 'Something wrong.';
         let ret = '';
-        if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
-            ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
+        if (value.length >= 9) {
+            // 199489230 -> 1억 9948만 9230
+            ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
             value = value.substring(value.length - 9 + 1);
         }
-        if (value.length >= 5) { // value 99489230
-            ret += ( value.substring(0, value.length - 5 + 1)  + '만 ' )  // 9948만
+        if (value.length >= 5) {
+            // value 99489230
+            ret += value.substring(0, value.length - 5 + 1) + '만 '; // 9948만
             value = value.substring(value.length - 5 + 1);
         }
         ret += value;
@@ -398,7 +411,7 @@ export default function TradeStock(props) {
                     downEvent={() => BidDown(currentBid)}
                 />
             </Grid>
-            <Grid container item  justify="center">
+            <Grid container item justify="center">
                 <TextField
                     className="count"
                     id="outlined-required"
@@ -415,9 +428,17 @@ export default function TradeStock(props) {
                 />
             </Grid>
             <Grid container item justify="center" alignItems="start">
-                예상소요금액 : <span style={costColor}>{ExpBySymbol(parseWonToStr(currentVolume * currentBid))}</span>
+                예상소요금액 :{' '}
+                <span style={costColor}>
+                    {ExpBySymbol(parseWonToStr(currentVolume * currentBid))}
+                </span>
             </Grid>
-            <Grid container item justify="center"  style={{ width: '80%', margin: '0 10 0 1' }}>
+            <Grid
+                container
+                item
+                justify="center"
+                style={{ width: '80%', margin: '0 10 0 1' }}
+            >
                 <Button
                     variant="contained"
                     color="secondary"
