@@ -32,10 +32,6 @@ class Disconnect {
             // let roomInfo = await dbhgetall(roomID);
             let roomInfo = roomList[roomID];
 
-            console.log('나간 놈 ', socket.id);
-            console.log(roomInfo);
-            io.to(roomID).emit('disconnect', roomInfo);
-
             for (const [key, value] of Object.entries(roomInfo)) {
                 if (key.length === 20) {
                     playerCnt++;
@@ -59,6 +55,9 @@ class Disconnect {
                     // io.to(roomID).emit('changeLeader', roomInfo);
                 }
             }
+            console.log('나간 놈 ', socket.id);
+            console.log(roomInfo);
+            io.to(roomID).emit('disconnect', roomInfo);
             // console.log('disconnect 방 존재 여부 확인 ', await dbhgetall(roomID));
         }
     }

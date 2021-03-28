@@ -42,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
     score: {},
 }));
 
+// const bidCancel = (props, price, vol) => {
+
 // function MakeTableEntity(props) {
 //     const classes = useStyles(greenTheme);
 
@@ -124,7 +126,13 @@ export default function BidTable(props) {
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <BidEntity price={bidTable.price} vol={bidTable.vol} />
+                        <BidEntity
+                            price={bidTable.price}
+                            vol={bidTable.vol}
+                            socket={props.socket}
+                            requestSocket={props.requestSocket}
+                            roomID={props.roomID}
+                        />
                     </Grid>
                 );
             })}
