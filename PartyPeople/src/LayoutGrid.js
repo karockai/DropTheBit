@@ -78,7 +78,7 @@ export default function LayoutGrid(props) {
     });
 
     const [over, setOver] = useState(false);
-    // const [leaderBoard, setLeaderBoard]= useState('');
+    const [leaderBoard, setLeaderBoard]= useState('');
 
     useEffect(() => {
         props.socket.on('gameOver', (leaderBoard) => {
@@ -211,13 +211,13 @@ export default function LayoutGrid(props) {
                                                 style={{ height: '17vh' }}
                                                 className={classes.paper}
                                             >
-                                                <StockDoneList
+                                                {/* <StockDoneList
                                                     socket={props.socket}
                                                     requestSocket={
                                                         props.requestSocket
                                                     }
                                                     isMine={true}
-                                                />
+                                                /> */}
                                             </Paper>
                                         </Grid>
                                         <Grid
@@ -231,13 +231,13 @@ export default function LayoutGrid(props) {
                                                 style={{ height: '17vh' }}
                                                 className={classes.paper}
                                             >
-                                                <StockDoneList
+                                                {/* <StockDoneList
                                                     socket={props.socket}
                                                     requestSocket={
                                                         props.requestSocket
                                                     }
                                                     isMine={false}
-                                                />
+                                                /> */}
                                             </Paper>
                                         </Grid>
                                     </Grid>
