@@ -325,7 +325,7 @@ class Game {
         let askPrice = reqJson['reqPrice'];
 
         // 취소 요청한 가격에 해당하는 목록을 불러온다
-
+        console.log(reqJson);
         // askList의 Length가 1이면 가격 자체를 지워버린다.
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
@@ -335,7 +335,7 @@ class Game {
 
         let playerInfo = roomList[roomID][socketID];
         let coinVol = playerInfo['coinVol'];
-        let askVol = playerInfo['askList'][askPrice];
+        let askVol = playerInfo['ask'][askPrice];
 
         coinVol += askVol;
         playerInfo['coinVol'] = coinVol;
