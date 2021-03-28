@@ -104,27 +104,23 @@ export default function AskTable(props) {
             alignItems="stretch"
             spacing={2}
         >
+            <TableContainer>
+                <Table
+                    className={classes.table}
+                    size="small"
+                    aria-label="a dense table"
+                >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">매수 가격</TableCell>
+                            <TableCell align="center">매수 수량</TableCell>
+                        </TableRow>
+                    </TableHead>
+                </Table>
+            </TableContainer>
             {AskTable.map((askTable) => {
                 return (
                     <Grid item xs={testXs}>
-                        <TableContainer>
-                            <Table
-                                className={classes.table}
-                                size="small"
-                                aria-label="a dense table"
-                            >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">
-                                            매수 가격
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            매수 수량
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                        </TableContainer>
                         <AskEntity
                             price={askTable.price}
                             vol={askTable.vol}
