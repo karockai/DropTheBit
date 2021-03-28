@@ -139,7 +139,7 @@ class Refresh {
         // console.log(curPrice);
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         // redis 순회하면서 roomInfo 가져옴
-        console.log("priceChange", priceChange);
+        // console.log("priceChange", priceChange);
         if (priceChange) {
             for (let roomID in roomList) {
                 let roomInfo = roomList[roomID];
