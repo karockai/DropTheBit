@@ -150,14 +150,18 @@ class Refresh {
                     if (socketID.length != 20) continue;
 
                     let playerInfo = roomInfo[socketID];
-                    let asset = playerInfo['asset'];
+                    let asset = 0;
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
+
+                    for (let bidPrice in playerInfo['bid']) {
+                        asset += playerInfo['bid'][bidPrice] * curPrice;
+                    }
 
                     for (let askPrice in playerInfo['ask']) {
                         coinVol += playerInfo['ask'][askPrice];
                     }
-                    asset += priceChange * coinVol;
+                    asset += cash + curPrice * coinVol;
                     playerInfo['asset'] = asset;
                     
                     let refreshWallet = {
