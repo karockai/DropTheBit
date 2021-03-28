@@ -90,6 +90,13 @@ class Refresh {
                     let playerInfo = roomList[roomID][socketID];
                     let coinVol = playerInfo['coinVol'];
                     let bidVol = playerInfo['bid'][bidPrice];
+
+                    if (playerInfo['avgPrice'] === 0){
+                        playerInfo['avgPrice'] = bidPrice;
+                    } else{
+                        playerInfo['avgPrice'] = Math.round(((coinVol * playerInfo['avgPrice']) + (bidVol * bidPrice)) / (coinVol + bidVol));
+                    }
+
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
 
@@ -103,6 +110,7 @@ class Refresh {
                     let buyDone = {
                         type: '매수 주문 체결',
                         playerID: playerID,
+                        avgPrice: playerInfo['avgPrice'],
                         vol: bidVol,
                         price: bidPrice,
                     };

@@ -62,6 +62,12 @@ class Game {
 
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
+            if (playerInfo['avgPrice'] === 0){
+                playerInfo['avgPrice'] = reqPrice;
+            } else{
+                playerInfo['avgPrice'] = Math.round(((coinVol * playerInfo['avgPrice']) + (reqVol * reqPrice)) / (coinVol + reqVol));
+            }
+
             // 6-1. cash, coin 갯수 갱신
             cash -= curPrice * reqVol;
             coinVol += reqVol;
@@ -76,6 +82,7 @@ class Game {
                 type: '매수 완료',
                 // 6-3. refreshWallet update & emit
                 playerID: playerID,
+                avgPrice: playerInfo['avgPrice'],
                 vol: reqVol,
                 price: curPrice,
             };
