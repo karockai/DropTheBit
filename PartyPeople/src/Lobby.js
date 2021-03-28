@@ -39,18 +39,26 @@ function Lobby(props) {
     let [accept, setAccept] = useState(false);
     let [roomInfo, setRoomInfo] = useState('');
 
-    // 기존리스트에 새로운 플레이어 추가
-    // let ret = (<div> aaa </div>);
     useEffect(()=>{
         let soc = props.socket;
         if (soc) {
             soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
-                // setAccept(true);
                 setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
             });
         }
     }, []); 
+
+    useEffect(()=> {
+        let soc = props.socket;
+        if (soc) {
+            soc.on('disconnect', (room) => {    // 사람이 나갈 때마다 roomInfo 갱신
+                setRoomInfo(room.roomInfo);
+                props.SetRoomIdAndInfo(room);
+            });
+        }
+    })
+    
     const Card = () => {
         if (roomInfo != '') {
             return (<PutNewCard roomInfo={roomInfo} socket={props.socket}/>);

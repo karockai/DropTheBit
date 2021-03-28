@@ -22,13 +22,6 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-<<<<<<< HEAD
-<<<<<<< HEAD
-        let gameTime = Number(await dbhget(socket.roomID, 'gameTime'));
-=======
->>>>>>> 8f480f085958d6c2dc780cc8d511ece634c644ab
-=======
->>>>>>> 0dce7c6e9775ed28d51481cc11acc829ae240fb4
         let roomID = socket.roomID;
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
@@ -64,15 +57,7 @@ class Game {
         }
 
         let gameSchedule1 = setTimeout(realStart, 3000);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        let gameSchedule2 = setTimeout(gameOver, (gameTime) * 1000);
-=======
         let gameSchedule2 = setTimeout(gameOver, gameTime * 1000);
->>>>>>> 8f480f085958d6c2dc780cc8d511ece634c644ab
-=======
-        let gameSchedule2 = setTimeout(gameOver, gameTime * 1000);
->>>>>>> 0dce7c6e9775ed28d51481cc11acc829ae240fb4
     }
 
     buy(reqJson, socket) {
