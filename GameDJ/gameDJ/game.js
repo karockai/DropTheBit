@@ -48,9 +48,8 @@ class Game {
 
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
-        console.log('---------------------------------------------------');
-        console.log(typeof curPrice);
-        console.log('---------------------------------------------------');
+        // console.log('---------------------------------------------------');
+        // console.log('---------------------------------------------------');
 
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
@@ -94,7 +93,7 @@ class Game {
             io.to(socketID).emit('buyDone', buyDone);
             io.to(roomID).emit('buyDone_Room', buyDone);
 
-            console.log('현재가로 구매 완료 :', playerInfo);
+            // console.log('현재가로 구매 완료 :', playerInfo);
             // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
         } else {
             // 7-1. cash 갱신
@@ -125,20 +124,20 @@ class Game {
                 vol: reqVol,
                 price: reqPrice,
             };
-            console.log('호가 등록 완료', playerInfo);
+            // console.log('호가 등록 완료', playerInfo);
             socket.emit('bidDone', bidDone);
             socket.to(roomID).emit('bidDone_Room', bidDone);
 
             this.sendBidTable(reqJson);
         }
-        console.log('-------BUY END-------------');
+        // console.log('-------BUY END-------------');
     }
 
     // 매도 요청 등록
     sell(reqJson) {
         const { io, socket } = this;
         // 1. reqJson setting
-        console.log('-----------Sell -----------', reqJson);
+        // console.log('-----------Sell -----------', reqJson);
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let reqPrice = Number(reqJson['currentBid']);
@@ -185,7 +184,7 @@ class Game {
 
             io.to(socketID).emit('sellDone', sellDone);
             io.to(roomID).emit('sellDone_Room', sellDone);
-            console.log('현재가로 판매 완료 :', playerInfo);
+            // console.log('현재가로 판매 완료 :', playerInfo);
             // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
         } else {
             coinVol -= reqVol;
@@ -194,8 +193,8 @@ class Game {
             playerInfo['coinVol'] = coinVol;
 
             // 4-3. player 호가 목록 등록
-            console.log(playerInfo);
-            console.log(playerInfo['ask']);
+            // console.log(playerInfo);
+            // console.log(playerInfo['ask']);
 
             if (playerInfo['ask'].hasOwnProperty(reqPrice)) {
                 playerInfo['ask'][reqPrice] =
@@ -207,7 +206,7 @@ class Game {
             }
             roomList[roomID][socketID] = playerInfo;
 
-            console.log('호가 등록 완료', playerInfo);
+            // console.log('호가 등록 완료', playerInfo);
             let askDone = {
                 type: '매도 주문',
                 playerID: playerID,
@@ -223,7 +222,7 @@ class Game {
 
             this.sendAskTable(reqJson);
         }
-        console.log('-----------Sell End-----------');
+        // console.log('-----------Sell End-----------');
     }
 
     // 매수 요청 취소
@@ -260,7 +259,6 @@ class Game {
         let askPrice = reqJson['reqPrice'];
 
         // 취소 요청한 가격에 해당하는 목록을 불러온다
-        console.log(reqJson);
         // askList의 Length가 1이면 가격 자체를 지워버린다.
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
