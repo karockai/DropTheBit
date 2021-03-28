@@ -15,6 +15,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import BidEntity from './BidEntity';
 
 // const dummyTable = [
 //     { price: 1000, vol: 100 },
@@ -124,25 +125,7 @@ export default function BidTable(props) {
                                 </TableHead>
                             </Table>
                         </TableContainer>
-                        <Paper
-                            style={{ height: '4vh' }}
-                            className={classes.paper}
-                        >
-                            <Grid container direction="row" alignItems="center">
-                                <Grid
-                                    style={{ width: '50%', height: '4vh' }}
-                                    className="price"
-                                >
-                                    {bidTable.price}
-                                </Grid>
-                                <Grid
-                                    style={{ width: '50%', height: '4vh' }}
-                                    className="vol"
-                                >
-                                    {bidTable.vol}
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                        <BidEntity price={bidTable.price} vol={bidTable.vol} />
                     </Grid>
                 );
             })}
