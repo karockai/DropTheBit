@@ -185,6 +185,7 @@ class Refresh {
                 // console.log(roomInfo);
                 if (roomInfo['gaming']) {
                     roomList[roomID]['gameTime']--;
+                    console.log(roomList[roomID]['gameTime']);
                 }
                 if (roomInfo['gameTime'] < 0) {
                     this.gameOver(roomID);

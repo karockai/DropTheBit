@@ -78,10 +78,11 @@ export default function LayoutGrid(props) {
     });
 
     const [over, setOver] = useState(false);
-    const [leaderBoard, setLeaderBoard]= useState('');
+    // const [leaderBoard, setLeaderBoard]= useState('');
 
     useEffect(() => {
         props.socket.on('gameOver', (leaderBoard) => {
+            console.log('gameover');
             if (leaderBoard) {
                 // GameOver(readerBoard);
                 setOver(leaderBoard);
