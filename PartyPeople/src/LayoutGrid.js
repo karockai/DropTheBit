@@ -17,7 +17,7 @@ import Deja_Vu from './audios/music/Deja_Vu.mp3';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
-import ThreeSecTimer from './ThreeSecTImer';
+import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
 import {
     BrowserRouter as Router,
@@ -78,7 +78,7 @@ export default function LayoutGrid(props) {
     });
 
     const [over, setOver] = useState(false);
-    // const [leaderBoard, setLeaderBoard]= useState('');
+    const [leaderBoard, setLeaderBoard]= useState('');
 
     useEffect(() => {
         props.socket.on('gameOver', (leaderBoard) => {

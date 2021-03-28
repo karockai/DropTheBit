@@ -48,7 +48,6 @@ export default {
             console.log('USER Connected : ', socket.id);
 
             socket.on('createPrivateRoom_Req', (playerID) => {
-                console.log('playerId : ' + playerID);
                 new Room(io, socket).createPrivateRoom(playerID);
             });
 
@@ -74,10 +73,10 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', async (reqJson) => {
-                await new Game(io, socket).buy(reqJson, socket);
+                await new Game(io, socket).buy(reqJson, socket, io);
             });
             socket.on('sell_Req', async (reqJson) => {
-                await new Game(io, socket).sell(reqJson, socket);
+                await new Game(io, socket).sell(reqJson, socket, io);
             });
             socket.on(
                 'cancelBid_Req',

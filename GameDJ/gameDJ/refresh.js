@@ -178,7 +178,7 @@ class Refresh {
                 // console.log(roomID);
                 // let roomInfo = await dbhgetall(roomID);
                 let roomInfo = roomList[roomID];
-
+                // let roomTime = timeList[roomID];
                 // room 호가 수집
                 let rankList = [];
 
@@ -230,14 +230,43 @@ class Refresh {
                     return b['asset'] - a['asset'];
                 });
 
+                if (roomInfo['gaming']){
+                    roomList[roomID]['gameTime']--;
+                }
+                if (roomInfo['gameTime'] < 0){
+                    gameOver(roomID);
+                }
                 io.to(roomID).emit('roomRank', rankList);
+                io.to(roomID).emit('restGameTime', roomList[roomID]['gameTime']);
             }
             console.log(
                 '----------------------renewalInfo End------------------------'
             );
             resolve();
         });
+
+        async function gameOver(roomID) {
+            let roomInfo = roomList[roomID];
+            let leaderBoard = [];
+            for (let socketID in roomInfo) {
+                if (socketID.length < 15) continue;
+                let playerInfo = roomInfo[socketID];
+                let temp = {};
+                temp['playerID'] = playerInfo['playerID'];
+                temp['asset'] = playerInfo['asset'];
+
+                leaderBoard.push(temp);
+            }
+
+            leaderBoard.sort(function (a, b) {
+                return b['asset'] - a['asset'];
+            });
+            // delete timeList[roomID];
+            io.to(roomID).emit('gameOver', leaderBoard);
+        }
     }
+
+    
 
     // refreshBid 갱신
     async refreshBid() {
