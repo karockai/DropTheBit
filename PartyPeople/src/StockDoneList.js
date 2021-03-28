@@ -19,38 +19,44 @@ export default function StockDoneList(props) {
         } else {
             if (!props.isMine) {
                 props.socket.on('buyDone_Room', (done) => {
+                    console.log('1 buyDone_Room');
                     setItem(done);
                 });
                 props.socket.on('sellDone_Room', (done) => {
+                    console.log('2 sellDone_Room');
                     setItem(done);
                 });
                 props.socket.on('bidDone_Room', (done) => {
+                    console.log('3 bidDone_Room');
                     setItem(done);
                 });
                 props.socket.on('askDone_Room', (done) => {
+                    console.log('4 askDone_Room');
                     setItem(done);
                 });
             }
-            props.socket.on('buyDone', (done) => {
-                console.log('매수가 체결되었습니다.');
-                playSound(Check, 1).play();
-                setItem(done);
-            });
-            props.socket.on('sellDone', (done) => {
-                console.log('매도가 체결되었습니다.');
-                playSound(Check, 1).play();
-                setItem(done);
-            });
-            props.socket.on('bidDone', (done) => {
-                console.log('등록된 호가에 매수가 체결되었습니다.');
-                // playSound(Check, 1).play();
-                setItem(done);
-            });
-            props.socket.on('askDone', (done) => {
-                console.log('등록된 호가에 매도가 체결되었습니다.');
-                // playSound(Check, 1).play();
-                setItem(done);
-            });
+            else {
+                props.socket.on('buyDone', (done) => {
+                    console.log('5 buyDone.');
+                    playSound(Check, 1).play();
+                    setItem(done);
+                });
+                props.socket.on('sellDone', (done) => {
+                    console.log('6 sellDone');
+                    playSound(Check, 1).play();
+                    setItem(done);
+                });
+                props.socket.on('bidDone', (done) => {
+                    console.log('7 bidDone');
+                    // playSound(Check, 1).play();
+                    setItem(done);
+                });
+                props.socket.on('askDone', (done) => {
+                    console.log('8 askDone.');
+                    // playSound(Check, 1).play();
+                    setItem(done);
+                });
+            }   
         }
     }, []);
 
@@ -76,14 +82,14 @@ export default function StockDoneList(props) {
                             let buySellColor = {
                                 color:
                                     done.type.substring(0, 2) === '매수'
-                                        ? done.type.substring(3, 5) === '완료'
+                                        ? done.type.substring(3, 5) === '완료' || done.type.substring(6, 8) === '체결'
                                             ? red[500]
                                             : red[300]
-                                        : done.type.substring(3, 5) === '완료'
+                                        : done.type.substring(3, 5) === '완료' || done.type.substring(6, 8) === '체결'
                                         ? blue[500]
                                         : blue[300],
                                 fontWeight:
-                                    done.type.substring(3, 5) === '완료'
+                                    done.type.substring(3, 5) === '완료' || done.type.substring(6, 8) === '체결'
                                         ? 'bold'
                                         : 'normal',
                             };
