@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     score: {},
 }));
 
-export default function BidEntity(props) {
+export default function AskEntity(props) {
     const classes = useStyles(greenTheme);
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
@@ -33,7 +33,7 @@ export default function BidEntity(props) {
     //     }
     // }, [isInit]);
 
-    const bidCancel = () => {
+    const askCancel = () => {
         let reqJson = {
             socketID: props.socket.id,
             roomID: props.roomID,
@@ -41,7 +41,7 @@ export default function BidEntity(props) {
             reqVol: props.vol,
         };
 
-        props.socket.emit('cancelBid_Req', reqJson);
+        props.socket.emit('cancelAsk_Req', reqJson);
     };
     return (
         <Grid
@@ -55,7 +55,7 @@ export default function BidEntity(props) {
             <Paper
                 style={{ height: '4vh' }}
                 className={classes.paper}
-                onClick={bidCancel}
+                onClick={askCancel}
             >
                 <Grid container direction="row" alignItems="center">
                     <Grid

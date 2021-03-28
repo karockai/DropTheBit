@@ -15,6 +15,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import AskEntity from './AskEntity';
 
 // const dummyTable = [
 //     { price: 1000, vol: 100 },
@@ -103,46 +104,30 @@ export default function AskTable(props) {
             alignItems="stretch"
             spacing={2}
         >
+            <TableContainer>
+                <Table
+                    className={classes.table}
+                    size="small"
+                    aria-label="a dense table"
+                >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">매수 가격</TableCell>
+                            <TableCell align="center">매수 수량</TableCell>
+                        </TableRow>
+                    </TableHead>
+                </Table>
+            </TableContainer>
             {AskTable.map((askTable) => {
                 return (
                     <Grid item xs={testXs}>
-                        <TableContainer>
-                            <Table
-                                className={classes.table}
-                                size="small"
-                                aria-label="a dense table"
-                            >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">
-                                            매도 가격
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            매도 수량
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                        </TableContainer>
-                        <Paper
-                            style={{ height: '4vh' }}
-                            className={classes.paper}
-                        >
-                            <Grid container direction="row" alignItems="center">
-                                <Grid
-                                    style={{ width: '50%', height: '4vh' }}
-                                    className="price"
-                                >
-                                    {askTable.price}
-                                </Grid>
-                                <Grid
-                                    style={{ width: '50%', height: '4vh' }}
-                                    className="vol"
-                                >
-                                    {askTable.vol}
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                        <AskEntity
+                            price={askTable.price}
+                            vol={askTable.vol}
+                            socket={props.socket}
+                            requestSocket={props.requestSocket}
+                            roomID={props.roomID}
+                        />
                     </Grid>
                 );
             })}

@@ -57,7 +57,6 @@ class Game {
         refreshWallet['type'] = 6;
 
         // 3. player_info 가져오기
-        // let playerInfo = JSON.parse(await dbhget(roomID, socketID));
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
         let coinVol = playerInfo['coinVol'];
@@ -92,8 +91,6 @@ class Game {
                 vol: reqVol,
                 price: curPrice,
             };
-            // socket.emit('buyDone', buyDone);
-            // socket.to(roomID).emit('buyDone_Room', buyDone);
             io.to(socketID).emit('buyDone', buyDone);
             io.to(roomID).emit('buyDone_Room', buyDone);
 
@@ -111,12 +108,9 @@ class Game {
                     playerInfo['bid'][reqPrice] + reqVol;
             } else {
                 playerInfo['bid'][reqPrice] = reqVol;
-                // let bidList = JSON.parse(await dbget('bidList'));
                 bidList[reqPrice] = {};
                 bidList[reqPrice][socketID] = roomID;
-                // await dbset('bidList', JSON.stringify(bidList));
             }
-            // await dbhset(roomID, socketID, JSON.stringify(playerInfo));
             roomList[roomID][socketID] = playerInfo;
 
             // 6-3. refreshWallet update & emit
@@ -135,28 +129,7 @@ class Game {
             socket.emit('bidDone', bidDone);
             socket.to(roomID).emit('bidDone_Room', bidDone);
 
-            //! 최적화 필요
-
-            let bidTable = playerInfo['bid'];
-            let bidTableKeys = Object.keys(bidTable);
-            let bidTable_Res = [];
-
-            for (let bidPriceIdx in bidTableKeys) {
-                let temp = {};
-                let bidPrice = bidTableKeys[bidPriceIdx];
-                let bidVol = bidTable[bidPrice];
-                temp['price'] = bidPrice;
-                temp['vol'] = bidVol;
-
-                bidTable_Res.push(temp);
-            }
-
-            bidTable_Res.sort(function (a, b) {
-                return b['price'] - a['price'];
-            });
-
-            this.socket.emit('bidTable_Res', bidTable_Res);
-            //! 최적화 필요
+            this.sendBidTable(reqJson);
         }
         console.log('-------BUY END-------------');
     }
@@ -172,7 +145,6 @@ class Game {
         let reqVol = Number(reqJson['currentVolume']);
 
         // 2. curPrice 가져오기
-
         let curPrice = curCoin['curPrice'];
 
         let refreshWallet = {};
@@ -249,26 +221,7 @@ class Game {
             socket.emit('askDone', askDone);
             socket.to(roomID).emit('askDone_Room', askDone);
 
-            // ! 최적화 필요
-            let askTable = playerInfo['ask'];
-            let askTableKeys = Object.keys(askTable);
-            let askTable_Res = [];
-
-            for (let askPriceIdx in askTableKeys) {
-                let temp = {};
-                let askPrice = askTableKeys[askPriceIdx];
-                let askVol = askTable[askPrice];
-                temp['price'] = askPrice;
-                temp['vol'] = askVol;
-
-                askTable_Res.push(temp);
-            }
-
-            askTable_Res.sort(function (a, b) {
-                return b['price'] - a['price'];
-            });
-            socket.emit('askTable_Res', askTable_Res);
-            // ! 최적화 필요
+            this.sendAskTable(reqJson);
         }
         console.log('-----------Sell End-----------');
     }
@@ -296,25 +249,7 @@ class Game {
         roomList[roomID][socketID] = playerInfo;
 
         // 매수 취소 완료 Response 필요
-        let bidTable = playerInfo['bid'];
-        let bidTableKeys = Object.keys(bidTable);
-        let bidTable_Res = [];
-
-        for (let bidPriceIdx in bidTableKeys) {
-            let temp = {};
-            let bidPrice = bidTableKeys[bidPriceIdx];
-            let bidVol = bidTable[bidPrice];
-            temp['price'] = bidPrice;
-            temp['vol'] = bidVol;
-
-            bidTable_Res.push(temp);
-        }
-
-        bidTable_Res.sort(function (a, b) {
-            return b['price'] - a['price'];
-        });
-
-        socket.emit('bidTable_Res', bidTable_Res);
+        this.sendBidTable(reqJson);
     }
 
     // 매도 요청 취소
@@ -325,7 +260,7 @@ class Game {
         let askPrice = reqJson['reqPrice'];
 
         // 취소 요청한 가격에 해당하는 목록을 불러온다
-
+        console.log(reqJson);
         // askList의 Length가 1이면 가격 자체를 지워버린다.
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
@@ -335,7 +270,7 @@ class Game {
 
         let playerInfo = roomList[roomID][socketID];
         let coinVol = playerInfo['coinVol'];
-        let askVol = playerInfo['askList'][askPrice];
+        let askVol = playerInfo['ask'][askPrice];
 
         coinVol += askVol;
         playerInfo['coinVol'] = coinVol;
@@ -343,25 +278,7 @@ class Game {
         roomList[roomID][socketID] = playerInfo;
 
         // 매수 취소 완료 Response 필요
-        let askTable = playerInfo['ask'];
-        let askTableKeys = Object.keys(askTable);
-        let askTable_Res = [];
-
-        for (let askPriceIdx in askTableKeys) {
-            let temp = {};
-            let askPrice = askTableKeys[askPriceIdx];
-            let askVol = askTable[askPrice];
-            temp['price'] = askPrice;
-            temp['vol'] = askVol;
-
-            askTable_Res.push(temp);
-        }
-
-        askTable_Res.sort(function (a, b) {
-            return b['price'] - a['price'];
-        });
-
-        socket.emit('askTable_Res', askTable_Res);
+        this.sendAskTable(reqJson);
     }
 
     async sendBidTable(reqJson) {
