@@ -74,6 +74,7 @@ class Room {
                 ask: {},
             };
             roomInfo[socketID] = playerInfo;
+            roomList[roomID] = roomInfo;
 
             socket.roomID = roomID;
             socket.join(roomID);
