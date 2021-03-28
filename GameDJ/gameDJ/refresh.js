@@ -172,12 +172,12 @@ class Refresh {
                     rankList.sort(function (a, b) {
                         return b['asset'] - a['asset'];
                     });
-
+                    console.log(roomInfo);
                     if (roomInfo['gaming']){
                         roomList[roomID]['gameTime']--;
                     }
                     if (roomInfo['gameTime'] < 0){
-                        gameOver(roomID);
+                        this.gameOver(roomID);
                     }
                     io.to(roomID).emit('roomRank', rankList);
                     io.to(roomID).emit('restGameTime', roomList[roomID]['gameTime']);
@@ -189,6 +189,7 @@ class Refresh {
         }
         
         async gameOver(roomID) {
+            const { io } = this;
             let roomInfo = roomList[roomID];
             let leaderBoard = [];
             for (let socketID in roomInfo) {
