@@ -137,6 +137,29 @@ class Game {
                 console.log('호가 등록 완료', playerInfo);
                 socket.emit('bidDone', bidDone);
                 socket.to(roomID).emit('bidDone_Room', bidDone);
+
+                //! 최적화 필요
+
+                let bidTable = playerInfo['bid'];
+                let bidTableKeys = Object.keys(bidTable);
+                let bidTable_Res = [];
+
+                for (let bidPriceIdx in bidTableKeys) {
+                    let temp = {};
+                    let bidPrice = bidTableKeys[bidPriceIdx];
+                    let bidVol = bidTable[bidPrice];
+                    temp['price'] = bidPrice;
+                    temp['vol'] = bidVol;
+
+                    bidTable_Res.push(temp);
+                }
+
+                bidTable_Res.sort(function (a, b) {
+                    return b['price'] - a['price'];
+                });
+
+                this.socket.emit('bidTable_Res', bidTable_Res);
+                //! 최적화 필요
             }
             console.log('-------BUY END-------------');
     }
@@ -228,6 +251,27 @@ class Game {
                 socket.emit('refreshWallet', refreshWallet);
                 socket.emit('askDone', askDone);
                 socket.to(roomID).emit('askDone_Room', askDone);
+
+                // ! 최적화 필요
+                let askTable = playerInfo['ask'];
+                let askTableKeys = Object.keys(askTable);
+                let askTable_Res = [];
+                
+                for (let askPriceIdx in askTableKeys) {
+                    let temp = {};
+                    let askPrice = askTableKeys[askPriceIdx];
+                    let askVol = askTable[askPrice];
+                    temp['price'] = askPrice;
+                    temp['vol'] = askVol;
+                    
+                    askTable_Res.push(temp);
+                }
+                
+                askTable_Res.sort(function (a, b) {
+                    return b['price'] - a['price'];
+                });
+                socket.emit('askTable_Res', askTable_Res);
+                // ! 최적화 필요
             }
             console.log('-----------Sell End-----------');
     }

@@ -37,8 +37,8 @@ export default {
 
         // curPrice refresh --------------------------------- >>
         setInterval(async () => {
-            await new Refresh(io).renewalCurCoin(io);
-            await new Refresh(io).renewalInfo(io);
+            new Refresh(io).renewalCurCoin(io);
+            new Refresh(io).renewalInfo(io);
             new Refresh(io).refreshBid(io);
         }, 1000);
 
