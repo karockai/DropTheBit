@@ -218,6 +218,7 @@ class Game {
         let bidPrice = reqJson['reqPrice'];
 
         // bidList의 Length가 1이면 가격 자체를 지워버린다.
+        if(!bidList[bidPrice]) return false;
         if (Object.keys(bidList[bidPrice]).length === 1) {
             delete bidList[bidPrice];
         } else {
@@ -242,9 +243,13 @@ class Game {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let askPrice = reqJson['reqPrice'];
-
+        
         // 취소 요청한 가격에 해당하는 목록을 불러온다
         // askList의 Length가 1이면 가격 자체를 지워버린다.
+        // console.log(reqJson);
+        // console.log(askList);
+        // console.log(askList[askPrice]);
+        if(!askList[askPrice]) return false;
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
         } else {

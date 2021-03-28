@@ -146,10 +146,9 @@ class Refresh {
                     for (let askPrice in playerInfo['ask']) {
                         coinVol += playerInfo['ask'][askPrice];
                     }
-
                     asset += priceChange * coinVol;
                     playerInfo['asset'] = asset;
-
+                    
                     let refreshWallet = {
                         type: 1,
                         cash: cash,
