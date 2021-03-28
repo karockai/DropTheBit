@@ -17,9 +17,8 @@ class Refresh {
         this.io = io;
     }
 
-    renewalCurCoin(io) {
-        return new Promise(async function (resolve, reject) {
-            // const { io } = this;
+    async renewalCurCoin() {
+            const { io } = this;
             console.log(
                 '----------------------renewalCurCoin------------------------'
             );
@@ -154,16 +153,14 @@ class Refresh {
                 '----------------------renewalCurCoin End------------------------'
             );
             // await renewalInfo(curPrice);
-            resolve();
-        });
+
     }
 
-    renewalInfo(io) {
-        return new Promise(async function (resolve, reject) {
+    async renewalInfo() {
             console.log(
                 '----------------------renewalInfo Start------------------------'
             );
-            // const { io } = this;
+            const { io } = this;
             // let curCoin = JSON.parse(await dbget('curCoin'));
             let curPrice = curCoin['curPrice'];
             console.log(curPrice);
@@ -242,8 +239,7 @@ class Refresh {
             console.log(
                 '----------------------renewalInfo End------------------------'
             );
-            resolve();
-        });
+
 
         async function gameOver(roomID) {
             let roomInfo = roomList[roomID];
