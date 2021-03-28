@@ -145,11 +145,11 @@ export default function TradeStock(props) {
     }
 
     function Buy(bid, volume) {
-        console.log('Buy Function', bid, volume);
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
         }
+        console.log('Buy Function', myWallet.myCoin, volume);
         if (bid * volume > myWallet.myCash) {
             alert(
                 '구매 가능한 현금이 없습니다.\n' +
@@ -180,13 +180,15 @@ export default function TradeStock(props) {
         props.socket.once('buyDone', (bbid) => {
             SetNewBid(bbid.price);
         });
+        RefreshBid()
+
     }
     function Sell(bid, volume) {
-        console.log('Sell Function', bid, volume);
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
         }
+        console.log('Sell Function', myWallet.myCoin , volume);
         if (myWallet.myCoin < volume) {
             alert(
                 '보유코인이 부족합니다.\n' +
@@ -217,6 +219,8 @@ export default function TradeStock(props) {
         props.socket.once('sellDone', (sbid) => {
             SetNewBid(sbid.price);
         });
+        RefreshBid()
+
     }
 
     const interval = 0.2;
@@ -319,7 +323,7 @@ export default function TradeStock(props) {
             document.removeEventListener('keyup', HandleKeyUp);
             // document.removeEventListener('keydown', HandleKeyDown);
         };
-    }, [currentVolume, currentBid, isBind, isFocus]);
+    },);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -444,7 +448,9 @@ export default function TradeStock(props) {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => Buy(currentBid, currentVolume)}
+                    onClick={() => {
+                        Buy(currentBid, currentVolume)
+                    }}
                 >
                     {/* <KeyboardArrowLeftIcon /> */}
                     <>"A" </>
@@ -453,7 +459,9 @@ export default function TradeStock(props) {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => Sell(currentBid, currentVolume)}
+                    onClick={() => {
+                        Sell(currentBid, currentVolume)
+                    }}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
                     <>"S" </>

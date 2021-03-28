@@ -19,40 +19,32 @@ export default function StockDoneList(props) {
         } else {
             if (!props.isMine) {
                 props.socket.on('buyDone_Room', (done) => {
-                    console.log('1 buyDone_Room');
                     setItem(done);
                 });
                 props.socket.on('sellDone_Room', (done) => {
-                    console.log('2 sellDone_Room');
                     setItem(done);
                 });
                 props.socket.on('bidDone_Room', (done) => {
-                    console.log('3 bidDone_Room');
                     setItem(done);
                 });
                 props.socket.on('askDone_Room', (done) => {
-                    console.log('4 askDone_Room');
                     setItem(done);
                 });
             }
             else {
                 props.socket.on('buyDone', (done) => {
-                    console.log('5 buyDone.');
                     playSound(Check, 1).play();
                     setItem(done);
                 });
                 props.socket.on('sellDone', (done) => {
-                    console.log('6 sellDone');
                     playSound(Check, 1).play();
                     setItem(done);
                 });
                 props.socket.on('bidDone', (done) => {
-                    console.log('7 bidDone');
                     // playSound(Check, 1).play();
                     setItem(done);
                 });
                 props.socket.on('askDone', (done) => {
-                    console.log('8 askDone.');
                     // playSound(Check, 1).play();
                     setItem(done);
                 });
@@ -103,7 +95,7 @@ export default function StockDoneList(props) {
                                     <span style={{ fontWeight: 'bold' }}>
                                         {done.price}
                                     </span>
-                                    원에
+                                    원에{' '}
                                     <span style={{ fontWeight: 'bold' }}>
                                         {done.vol}
                                     </span>
