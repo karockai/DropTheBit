@@ -230,12 +230,13 @@ class Refresh {
                     return b['asset'] - a['asset'];
                 });
 
-                console.log('-----refresh');
-                console.log(roomList[roomID]);
+
                 if (roomInfo['gaming']){
                     roomList[roomID]['gameTime']--;
+                    console.log(roomList[roomID]['gameTime']);
                 }
                 if (roomInfo['gameTime'] < 0){
+                    console.log('gameover');
                     gameOver();
                 }
                 io.to(roomID).emit('roomRank', rankList);
