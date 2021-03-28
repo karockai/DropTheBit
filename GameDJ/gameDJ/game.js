@@ -52,9 +52,7 @@ class Game {
         console.log(typeof curPrice);
         console.log('---------------------------------------------------');
 
-        let refreshWallet = {};
-        refreshWallet['result'] = 'success';
-        refreshWallet['type'] = 6;
+        
 
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
@@ -74,14 +72,7 @@ class Game {
             // 6-2. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-
             roomList[roomID][socketID] = playerInfo;
-
-            // 6-3. refreshWallet update & emit
-            refreshWallet['coinVol'] = coinVol;
-            refreshWallet['cash'] = cash;
-            refreshWallet['asset'] = asset;
-            socket.emit('refreshWallet', refreshWallet);
 
             // 6-4. buyDone
             let buyDone = {
@@ -113,12 +104,6 @@ class Game {
             }
             roomList[roomID][socketID] = playerInfo;
 
-            // 6-3. refreshWallet update & emit
-            refreshWallet['coinVol'] = coinVol;
-            refreshWallet['cash'] = cash;
-            refreshWallet['asset'] = asset;
-            socket.emit('refreshWallet', refreshWallet);
-
             let bidDone = {
                 type: '매수 주문',
                 playerID: playerID,
@@ -128,9 +113,17 @@ class Game {
             console.log('호가 등록 완료', playerInfo);
             socket.emit('bidDone', bidDone);
             socket.to(roomID).emit('bidDone_Room', bidDone);
-
+                
             this.sendBidTable(reqJson);
         }
+        // 6-3. refreshWallet update & emit
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 6;
+        refreshWallet['coinVol'] = coinVol;
+        refreshWallet['cash'] = cash;
+        refreshWallet['asset'] = asset;
+        socket.emit('refreshWallet', refreshWallet);
         console.log('-------BUY END-------------');
     }
 
@@ -146,10 +139,6 @@ class Game {
 
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
-
-        let refreshWallet = {};
-        refreshWallet['result'] = 'success';
-        refreshWallet['type'] = 6;
 
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
@@ -169,12 +158,6 @@ class Game {
             playerInfo['coinVol'] = coinVol;
             roomList[roomID][socketID] = playerInfo;
 
-            // 6-2. sell_res update
-            refreshWallet['coinVol'] = coinVol;
-            refreshWallet['cash'] = cash;
-            refreshWallet['asset'] = asset;
-            socket.emit('refreshWallet', refreshWallet);
-
             // 6-4. sellDone
             let sellDone = {
                 type: '매도 완료',
@@ -186,7 +169,7 @@ class Game {
             io.to(socketID).emit('sellDone', sellDone);
             io.to(roomID).emit('sellDone_Room', sellDone);
             console.log('현재가로 판매 완료 :', playerInfo);
-            // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
+        // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
         } else {
             coinVol -= reqVol;
 
@@ -214,15 +197,19 @@ class Game {
                 vol: reqVol,
                 price: reqPrice,
             };
-            refreshWallet['coinVol'] = coinVol;
-            refreshWallet['cash'] = cash;
-            refreshWallet['asset'] = asset;
-            socket.emit('refreshWallet', refreshWallet);
-            socket.emit('askDone', askDone);
-            socket.to(roomID).emit('askDone_Room', askDone);
 
+            socket.emit('askDone', askDone);
+            socket.to(roomID).emit('askDone_Room', askDone);    
             this.sendAskTable(reqJson);
         }
+        
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 6;
+        refreshWallet['coinVol'] = coinVol;
+        refreshWallet['cash'] = cash;
+        refreshWallet['asset'] = asset;
+        socket.emit('refreshWallet', refreshWallet);
         console.log('-----------Sell End-----------');
     }
 
