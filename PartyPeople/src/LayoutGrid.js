@@ -57,6 +57,12 @@ export default function LayoutGrid(props) {
         Mausoleum_Mash: Mausoleum_Mash,
     };
 
+    const [inputCtrl, setInputCtrl] = useState(false);
+
+    const SetInputCtrl =  (isChat) => {
+        setInputCtrl(isChat);
+    };
+
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
@@ -282,6 +288,7 @@ export default function LayoutGrid(props) {
                                                 className={classes.paper}
                                             >
                                                 <TradeStock
+                                                    inputCtrl={inputCtrl}
                                                     roomID={props.roomID}
                                                     APIdata={APIdata}
                                                     socket={props.socket}
@@ -315,6 +322,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <TabControl
+                                            inputCtrl={inputCtrl}
                                             roomID={props.roomID}
                                             socket={props.socket}
                                             requestSocket={props.requestSocket}
@@ -327,6 +335,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <ChatRoom
+                                            SetInputCtrl={SetInputCtrl}
                                             roomInfo={props.roomInfo}
                                             roomID={props.roomID}
                                             socket={props.socket}

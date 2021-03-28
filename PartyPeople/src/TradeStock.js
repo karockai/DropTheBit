@@ -246,6 +246,7 @@ export default function TradeStock(props) {
         }
     }
     function HandleKeyUp(e) {
+        if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
         if (props.socket == null || isBind === false) {

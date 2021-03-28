@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -50,21 +50,54 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 export default function TabControl(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-
+    const [value, setValue] = useState(0);
+    const [isBind, SetBind] = useState(false);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    function HandleKeyUp(e) {
+        if (props.inputCtrl) return;
+        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
+        e.preventDefault();
+        // if (props.socket == null || isBind === false) {
+        //     props.requestSocket('TradeStock', props.socket);
+        //     return;
+        // }
+        if (e.keyCode === 81) {
+            //_ Q
+            setValue(0);
+        } else if (e.keyCode === 87) {
+            //_ W
+            setValue(1);
+        } else if (e.keyCode === 69) {
+            //_ E
+            setValue(2);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keyup', HandleKeyUp);
+        // document.addEventListener('keydown', HandleKeyDown);
+        return () => {
+            document.removeEventListener('keyup', HandleKeyUp);
+            // document.removeEventListener('keydown', HandleKeyDown);
+        };
+
+    },);
+
 
     return (
         <div className={classes.demo2}>
             <AppBar position="static">
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab label="매수 주문 목록" {...a11yProps(0)} />
-                    <Tab label="매도 주문 목록" {...a11yProps(1)} />
-                    <Tab label="호가 목록" {...a11yProps(2)} />
+                    <Tab label='"Q" 매수 주문 목록' {...a11yProps(0)} />
+                    <Tab label='"W" 매도 주문 목록' {...a11yProps(1)} />
+                    <Tab label='"E" 호가 목록' {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
