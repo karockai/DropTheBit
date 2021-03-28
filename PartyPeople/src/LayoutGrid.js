@@ -211,13 +211,13 @@ export default function LayoutGrid(props) {
                                                 style={{ height: '17vh' }}
                                                 className={classes.paper}
                                             >
-                                                {/* <StockDoneList
+                                                <StockDoneList
                                                     socket={props.socket}
                                                     requestSocket={
                                                         props.requestSocket
                                                     }
                                                     isMine={true}
-                                                /> */}
+                                                />
                                             </Paper>
                                         </Grid>
                                         <Grid
@@ -231,13 +231,13 @@ export default function LayoutGrid(props) {
                                                 style={{ height: '17vh' }}
                                                 className={classes.paper}
                                             >
-                                                {/* <StockDoneList
+                                                <StockDoneList
                                                     socket={props.socket}
                                                     requestSocket={
                                                         props.requestSocket
                                                     }
                                                     isMine={false}
-                                                /> */}
+                                                />
                                             </Paper>
                                         </Grid>
                                     </Grid>
