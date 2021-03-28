@@ -19,10 +19,10 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        console
-            .log
-            // '----------------------renewalCurCoin------------------------'
-            ();
+        // console
+        //     .log
+        //     // '----------------------renewalCurCoin------------------------'
+        //     ();
         // 1. bidList 불러옴
         curCoin = JSON.parse(await dbget('curCoin'));
 
@@ -111,17 +111,17 @@ class Refresh {
             }
         }
 
-        console
-            .log
-            // '----------------------renewalCurCoin End------------------------'
-            ();
+        // console
+        //     .log
+        //     // '----------------------renewalCurCoin End------------------------'
+        //     ();
     }
 
     async renewalInfo() {
-        console
-            .log
-            // '----------------------renewalInfo Start------------------------'
-            ();
+        // console
+        //     .log
+        //     // '----------------------renewalInfo Start------------------------'
+        //     ();
         const { io } = this;
         let curPrice = curCoin['curPrice'];
         let prePrice = curCoin['prePrice'];
@@ -185,10 +185,10 @@ class Refresh {
                     roomList[roomID]['gameTime']
                 );
             }
-            console
-                .log
-                // '----------------------renewalInfo End------------------------'
-                ();
+            // console
+            //     .log
+            //     // '----------------------renewalInfo End------------------------'
+            //     ();
         }
     }
 
