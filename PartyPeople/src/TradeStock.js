@@ -89,8 +89,8 @@ export default function TradeStock(props) {
 
     const [currentBid, SetBid] = useState(99999999);
     const [newBid, SetNewBid] = useState(99999999); //props.APIdata.curPrice
-    const [currentVolume, SetVolume] = useState(0);
-    const [newVolume, SetNewVolume] = useState(0);
+    const [currentVolume, SetVolume] = useState(1);
+    const [newVolume, SetNewVolume] = useState(1);
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
@@ -145,6 +145,7 @@ export default function TradeStock(props) {
     }
 
     function Buy(bid, volume) {
+        console.log('Buy Function', bid, volume);
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
@@ -181,6 +182,7 @@ export default function TradeStock(props) {
         });
     }
     function Sell(bid, volume) {
+        console.log('Sell Function', bid, volume);
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
