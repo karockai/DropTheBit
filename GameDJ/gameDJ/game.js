@@ -212,7 +212,6 @@ class Game {
 
     // 매수 요청 취소
     async cancelBid(reqJson) {
-        const { socket } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let bidPrice = reqJson['reqPrice'];
@@ -239,16 +238,12 @@ class Game {
 
     // 매도 요청 취소
     async cancelAsk(reqJson) {
-        const { socket } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let askPrice = reqJson['reqPrice'];
         
         // 취소 요청한 가격에 해당하는 목록을 불러온다
         // askList의 Length가 1이면 가격 자체를 지워버린다.
-        // console.log(reqJson);
-        // console.log(askList);
-        // console.log(askList[askPrice]);
         if(!askList[askPrice]) return false;
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
@@ -270,6 +265,7 @@ class Game {
     }
 
     async sendBidTable(reqJson) {
+        const { io } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let playerInfo = roomList[roomID][socketID];
@@ -292,10 +288,11 @@ class Game {
             return b['price'] - a['price'];
         });
 
-        this.socket.emit('bidTable_Res', bidTable_Res);
+        io.to(socketID).emit('bidTable_Res', bidTable_Res);
     }
 
     async sendAskTable(reqJson) {
+        const { io } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let playerInfo = roomList[roomID][socketID];
@@ -318,7 +315,7 @@ class Game {
             return b['price'] - a['price'];
         });
 
-        this.socket.emit('askTable_Res', askTable_Res);
+        io.to(socketID).emit('askTable_Res', askTable_Res);
     }
 }
 export default Game;
