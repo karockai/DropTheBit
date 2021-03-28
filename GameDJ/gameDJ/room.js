@@ -32,6 +32,7 @@ class Room {
             cash: 100000000,
             asset: 100000000,
             coinVol: 0,
+            avgPrice: 0,
             bid: {},
             ask: {},
         };
@@ -70,6 +71,7 @@ class Room {
                 cash: 100000000,
                 asset: 100000000,
                 coinVol: 0,
+                avgPrice: 0,
                 bid: {},
                 ask: {},
             };

@@ -135,7 +135,7 @@ export default function ChatRoom(props) {
                     })}
                 </Grid>
                 <div
-                    style={{ float:"left", clear: "both" }}
+                    style={{ float:"left", clear: "both", height: "0%" }}
                     ref={messagesEnd}>
                 </div> 
             </GridList>

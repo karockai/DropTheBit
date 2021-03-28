@@ -3,6 +3,8 @@ import { blue, red } from '@material-ui/core/colors';
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { useSound, playSound } from './useSound';
 import Check from './audios/effect/check.mp3';
+import BidSound from './audios/effect/bidSound.wav';
+import AskSound from './audios/effect/askSound.wav';
 export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
     const [doneItem, setItem] = useState(null);
@@ -19,41 +21,41 @@ export default function StockDoneList(props) {
         } else {
             if (!props.isMine) {
                 props.socket.on('buyDone_Room', (done) => {
-                    console.log('1 buyDone_Room');
                     setItem(done);
                 });
                 props.socket.on('sellDone_Room', (done) => {
-                    console.log('2 sellDone_Room');
                     setItem(done);
                 });
                 props.socket.on('bidDone_Room', (done) => {
-                    console.log('3 bidDone_Room');
                     setItem(done);
                 });
                 props.socket.on('askDone_Room', (done) => {
-                    console.log('4 askDone_Room');
                     setItem(done);
                 });
             }
             else {
                 props.socket.on('buyDone', (done) => {
-                    console.log('5 buyDone.');
-                    playSound(Check, 1).play();
+                    if(done.type === "매수 완료") {
+                        playSound(Check, 1).play();
+                    }
+                    else if(done.type === "매수 주문 체결"){
+                        playSound(BidSound, 1).play();
+                    }
                     setItem(done);
                 });
                 props.socket.on('sellDone', (done) => {
-                    console.log('6 sellDone');
-                    playSound(Check, 1).play();
+                    if(done.type === "매도 완료") {
+                        playSound(Check, 1).play();
+                    }
+                    else if(done.type === "매도 주문 체결"){
+                        playSound(AskSound, 1).play();
+                    }
                     setItem(done);
                 });
                 props.socket.on('bidDone', (done) => {
-                    console.log('7 bidDone');
-                    // playSound(Check, 1).play();
                     setItem(done);
                 });
                 props.socket.on('askDone', (done) => {
-                    console.log('8 askDone.');
-                    // playSound(Check, 1).play();
                     setItem(done);
                 });
             }   
@@ -61,6 +63,7 @@ export default function StockDoneList(props) {
     }, []);
 
     useEffect(() => {
+        if (doneList.length >= 10) doneList.shift();
         setList([...doneList, doneItem]);
     }, [doneItem]);
 
@@ -102,7 +105,7 @@ export default function StockDoneList(props) {
                                     <span style={{ fontWeight: 'bold' }}>
                                         {done.price}
                                     </span>
-                                    원에
+                                    원에{' '}
                                     <span style={{ fontWeight: 'bold' }}>
                                         {done.vol}
                                     </span>
@@ -115,7 +118,7 @@ export default function StockDoneList(props) {
                         })}
                     </div>
                     <div
-                        style={{ float: 'left', clear: 'both' }}
+                        style={{ float: 'left', clear: 'both',  height: "0%"  }}
                         ref={messagesEnd}
                     ></div>
                 </Grid>

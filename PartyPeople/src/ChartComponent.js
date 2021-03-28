@@ -37,7 +37,7 @@ class ChartComponent extends React.Component {
             this.props.setAPIData(data);
             this.setAPI = true;
         }
-
+        if (this.state.data.length >= 150) this.state.data.shift();
         this.setState({ data: [...this.state.data, data] });
         // console.log(this.state.datas);
         // getData(this.state.datas).then(data => {

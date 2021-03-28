@@ -20,7 +20,6 @@ const useStyles = makeStyles({
     },
 });
 
-
 function createData(sell, price, buy) {
     return { sell, price, buy };
 }
@@ -107,31 +106,31 @@ const TabsContainer = () => {
 
 export default function BidTab(props) {
     const [isInit, setInit] = useState(false);
-    const [currentBids, SetBid] = useState([{
-        buy:'',
-        price:'',
-        sell:''
-    }])
-    if(!isInit) setInit(true);
-    
+    const [currentBids, SetBid] = useState([
+        {
+            buy: '',
+            price: '',
+            sell: '',
+        },
+    ]);
+    if (!isInit) setInit(true);
+
     useLayoutEffect(() => {
-            if (props.socket == null) {
-                props.requestSocket('BidTab', props.socket);
-                setInit(true);
-            } else { 
-                props.socket.on('refreshBid', (bidObject) => {
-                    SetBid(bidObject)
-                });
-            }
-        },[isInit]);
+        if (props.socket == null) {
+            props.requestSocket('BidTab', props.socket);
+            setInit(true);
+        } else {
+            props.socket.on('refreshBid', (bidObject) => {
+                SetBid(bidObject);
+            });
+        }
+    }, [isInit]);
 
     const classes = useStyles();
 
     const bidTag = () => {
-        return (
-            <></>
-        );
-    }
+        return <></>;
+    };
     return (
         <MuiThemeProvider>
             <Grid
@@ -158,29 +157,28 @@ export default function BidTab(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { currentBids.map((row, index) => {
+                            {currentBids.map((row, index) => {
                                 return (
-                                <TableRow
-                                    style={{
-                                        backgroundColor:
-                                            index <= 4 ? red[100] : blue[100],
-                                        opacity: 0.9,
-
-                                    }}
-                                    key={row.name}
-                                >
-                                    <TableCell 
+                                    <TableRow
+                                        style={{
+                                            backgroundColor:
+                                                index <= 4
+                                                    ? blue[100]
+                                                    : red[100],
+                                            opacity: 0.9,
+                                        }}
+                                        key={row.name}
                                     >
-                                        {row.buy}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.price}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {row.sell}
-                                    </TableCell>
-                                </TableRow>
-                            )})}
+                                        <TableCell>{row.buy}</TableCell>
+                                        <TableCell align="center">
+                                            {row.price}
+                                        </TableCell>
+                                        <TableCell align="center">
+                                            {row.sell}
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>

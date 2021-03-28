@@ -115,10 +115,10 @@ def on_message(ws, msg):
 
             juka_result['coinName'] = coinName.coinList[coin_name]
             hoka_result['coinName'] = coinName.coinList[coin_name]
+  
             juka_result = json.dumps(juka_result, ensure_ascii=False)
             hoka_result = json.dumps(hoka_result, ensure_ascii=False)
-            # juka_result = json.dumps(juka_result)
-            # hoka_result = json.dumps(hoka_result)
+
             if (juka_result and hoka_result):
                 conn.set("curCoin", juka_result)
                 conn.set("bidTable", hoka_result)

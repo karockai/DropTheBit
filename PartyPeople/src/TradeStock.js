@@ -123,11 +123,11 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
-        SetNewVolume(volume + 1);
+        SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function VolumeDown(volume) {
         if (volume <= 0) return;
-        SetNewVolume(volume - 1);
+        SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function BidUp() {
         SetBid(currentBid + unitBid);
@@ -137,15 +137,14 @@ export default function TradeStock(props) {
     }
 
     function RefreshBid() {
-        console.log('현재가로 갱신되었습니다.');
         props.socket.once('chart', (data) => {
             SetUnit(data.priceUnit);
             SetBid(data.curPrice);
+            SetVolume(1);
         });
     }
 
     function Buy(bid, volume) {
-        console.log('Buy Function', bid, volume);
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
@@ -180,9 +179,10 @@ export default function TradeStock(props) {
         props.socket.once('buyDone', (bbid) => {
             SetNewBid(bbid.price);
         });
+        SetBind(true);
+
     }
     function Sell(bid, volume) {
-        console.log('Sell Function', bid, volume);
         if (bid === 0 || volume === 0) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
@@ -217,6 +217,8 @@ export default function TradeStock(props) {
         props.socket.once('sellDone', (sbid) => {
             SetNewBid(sbid.price);
         });
+        SetBind(true);
+
     }
 
     const interval = 0.2;
@@ -245,62 +247,46 @@ export default function TradeStock(props) {
     function HandleKeyUp(e) {
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
+        if (props.socket == null || isBind === false) {
+            props.requestSocket('TradeStock', props.socket);
+            return;
+        }
         if (e.keyCode === 37) {
             //_ LEFT ARROW
             playSound(HatUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
             playSound(HatDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
             playSound(HatUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             BidUp();
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             playSound(HatDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             BidDown();
         } else if (e.keyCode === 65) {
             //_ 'A'
             playSound(DrumUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             Buy(currentBid, currentVolume);
         } else if (e.keyCode === 83) {
             //_ 'S'
             playSound(DrumDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             Sell(currentBid, currentVolume);
         } else if (e.keyCode === 68) {
             //_ 'D'
             playSound(DrumDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             RefreshBid();
+        }else if (e.keyCode === 90) {
+            //_ 'Z'
+            playSound(DrumDown, 1).play();
+            SetSellMaxCount();
+        }else if (e.keyCode === 88) {
+            //_ 'X'
+            playSound(DrumDown, 1).play();
+            SetBuyMaxCount();
         }
     }
 
@@ -319,7 +305,7 @@ export default function TradeStock(props) {
             document.removeEventListener('keyup', HandleKeyUp);
             // document.removeEventListener('keydown', HandleKeyDown);
         };
-    }, [currentVolume, currentBid, isBind, isFocus]);
+    },);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -352,6 +338,14 @@ export default function TradeStock(props) {
                 ? grey[700]
                 : red[200],
     };
+
+    function SetSellMaxCount() {
+        SetVolume(Math.floor(myWallet.myCash / currentBid));
+    }
+
+    function SetBuyMaxCount() {
+        SetVolume(myWallet.myCoin);
+    }
 
     function SplitByThree(value) {
         if (!value) return 'Something wrong.';
@@ -444,7 +438,9 @@ export default function TradeStock(props) {
                 <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => Buy(currentBid, currentVolume)}
+                    onClick={() => {
+                        Buy(currentBid, currentVolume)
+                    }}
                 >
                     {/* <KeyboardArrowLeftIcon /> */}
                     <>"A" </>
@@ -453,7 +449,9 @@ export default function TradeStock(props) {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => Sell(currentBid, currentVolume)}
+                    onClick={() => {
+                        Sell(currentBid, currentVolume)
+                    }}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
                     <>"S" </>
@@ -466,6 +464,22 @@ export default function TradeStock(props) {
                 >
                     {/* <KeyboardArrowRightIcon /> */}
                     <>"D" 🔄</>
+                </Button>
+                <Button
+                    variant="contained"
+                    color="info"
+                    onClick={() => SetSellMaxCount()}
+                >
+                    {/* <KeyboardArrowRightIcon /> */}
+                    <>"Z" BuyMax 📈</>
+                </Button>
+                <Button
+                    variant="contained"
+                    color="info"
+                    onClick={() => SetBuyMaxCount()}
+                >
+                    {/* <KeyboardArrowRightIcon /> */}
+                    <>"X" SellMax 📉</>
                 </Button>
             </Grid>
         </Grid>

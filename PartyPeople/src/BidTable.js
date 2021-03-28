@@ -7,6 +7,7 @@ import {
     Box,
     TextField,
     Grid,
+    GridList,
     Paper,
     makeStyles,
 } from '@material-ui/core';
@@ -105,37 +106,41 @@ export default function BidTable(props) {
             alignItems="stretch"
             spacing={2}
         >
-            {BidTable.map((bidTable) => {
-                return (
-                    <Grid item xs={testXs}>
-                        <TableContainer>
-                            <Table
-                                className={classes.table}
-                                size="small"
-                                aria-label="a dense table"
-                            >
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="center">
-                                            매수 가격
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            매수 수량
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                        </TableContainer>
-                        <BidEntity
-                            price={bidTable.price}
-                            vol={bidTable.vol}
-                            socket={props.socket}
-                            requestSocket={props.requestSocket}
-                            roomID={props.roomID}
-                        />
-                    </Grid>
-                );
-            })}
+            <TableContainer>
+                <Table
+                    className={classes.table}
+                    size="small"
+                    aria-label="a dense table"
+                >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center">매수 가격</TableCell>
+                            <TableCell align="center">매수 수량</TableCell>
+                        </TableRow>
+                    </TableHead>
+                </Table>
+            </TableContainer>
+            <GridList
+                spacing={0}
+                wrap="wrap"
+                style={{ width: '100%', height: '100%' }}
+            >
+                <div style={{ width: '98%' }}>
+                    {BidTable.map((bidTable) => {
+                        return (
+                            <Grid style={{ margin: '5px' }} item xs={testXs}>
+                                <BidEntity
+                                    price={bidTable.price}
+                                    vol={bidTable.vol}
+                                    socket={props.socket}
+                                    requestSocket={props.requestSocket}
+                                    roomID={props.roomID}
+                                />
+                            </Grid>
+                        );
+                    })}
+                </div>
+            </GridList>
         </Grid>
     );
 }
