@@ -53,7 +53,7 @@ export default function BidEntity(props) {
             spacing={2}
         >
             <Paper
-                style={{ height: '4vh' }}
+                style={{ height: '4vh', width: '100%' }}
                 className={classes.paper}
                 onClick={bidCancel}
             >

@@ -7,6 +7,7 @@ import {
     Box,
     TextField,
     Grid,
+    GridList,
     Paper,
     makeStyles,
 } from '@material-ui/core';
@@ -119,19 +120,27 @@ export default function BidTable(props) {
                     </TableHead>
                 </Table>
             </TableContainer>
-            {BidTable.map((bidTable) => {
-                return (
-                    <Grid item xs={testXs}>
-                        <BidEntity
-                            price={bidTable.price}
-                            vol={bidTable.vol}
-                            socket={props.socket}
-                            requestSocket={props.requestSocket}
-                            roomID={props.roomID}
-                        />
-                    </Grid>
-                );
-            })}
+            <GridList
+                spacing={0}
+                wrap="wrap"
+                style={{ width: '100%', height: '100%' }}
+            >
+                <div style={{ width: '98%' }}>
+                    {BidTable.map((bidTable) => {
+                        return (
+                            <Grid style={{ margin: '5px' }} item xs={testXs}>
+                                <BidEntity
+                                    price={bidTable.price}
+                                    vol={bidTable.vol}
+                                    socket={props.socket}
+                                    requestSocket={props.requestSocket}
+                                    roomID={props.roomID}
+                                />
+                            </Grid>
+                        );
+                    })}
+                </div>
+            </GridList>
         </Grid>
     );
 }

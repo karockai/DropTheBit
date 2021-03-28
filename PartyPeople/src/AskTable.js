@@ -7,6 +7,7 @@ import {
     Box,
     TextField,
     Grid,
+    GridList,
     Paper,
     makeStyles,
 } from '@material-ui/core';
@@ -43,22 +44,22 @@ const useStyles = makeStyles((theme) => ({
     score: {},
 }));
 
-function MakeTableEntity(props) {
-    const classes = useStyles(greenTheme);
+// function MakeTableEntity(props) {
+//     const classes = useStyles(greenTheme);
 
-    return (
-        <Paper style={{ height: '9.8vh' }} className={classes.paper}>
-            <Grid container direction="row" alignItems="center">
-                <Grid style={{ width: '50%', height: '5vh' }} className="price">
-                    {props.price}
-                </Grid>
-                <Grid style={{ width: '50%', height: '5vh' }} className="vol">
-                    {props.vol}
-                </Grid>
-            </Grid>
-        </Paper>
-    );
-}
+//     return (
+//         <Paper style={{ height: '9.8vh' }} className={classes.paper}>
+//             <Grid container direction="row" alignItems="center">
+//                 <Grid style={{ width: '50%', height: '5vh' }} className="price">
+//                     {props.price}
+//                 </Grid>
+//                 <Grid style={{ width: '50%', height: '5vh' }} className="vol">
+//                     {props.vol}
+//                 </Grid>
+//             </Grid>
+//         </Paper>
+//     );
+// }
 
 export default function AskTable(props) {
     const classes = useStyles(greenTheme);
@@ -118,19 +119,27 @@ export default function AskTable(props) {
                     </TableHead>
                 </Table>
             </TableContainer>
-            {AskTable.map((askTable) => {
-                return (
-                    <Grid item xs={testXs}>
-                        <AskEntity
-                            price={askTable.price}
-                            vol={askTable.vol}
-                            socket={props.socket}
-                            requestSocket={props.requestSocket}
-                            roomID={props.roomID}
-                        />
-                    </Grid>
-                );
-            })}
+            <GridList
+                spacing={0}
+                wrap="wrap"
+                style={{ width: '100%', height: '100%' }}
+            >
+                <div style={{ width: '98%' }}>
+                    {AskTable.map((askTable) => {
+                        return (
+                            <Grid style={{ margin: '5px' }} item xs={testXs}>
+                                <AskEntity
+                                    price={askTable.price}
+                                    vol={askTable.vol}
+                                    socket={props.socket}
+                                    requestSocket={props.requestSocket}
+                                    roomID={props.roomID}
+                                />
+                            </Grid>
+                        );
+                    })}
+                </div>
+            </GridList>
         </Grid>
     );
 }
