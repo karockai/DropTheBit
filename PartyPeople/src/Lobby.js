@@ -52,13 +52,12 @@ function Lobby(props) {
     useEffect(()=> {
         let soc = props.socket;
         if (soc) {
-            soc.on('disconnect', (room) => {    // 사람이 나갈 때마다 roomInfo 갱신
-                console.log('client disconnect------');
-                setRoomInfo(room.roomInfo);
-                props.SetRoomIdAndInfo(room);
+            soc.on('disconnect', (roomInfo) => {    // 사람이 나갈 때마다 roomInfo 갱신
+                setRoomInfo(roomInfo);
+                props.SetRoomIdAndInfo(roomInfo);
             });
         }
-    })
+    });
     
     const Card = () => {
         if (roomInfo != '') {
