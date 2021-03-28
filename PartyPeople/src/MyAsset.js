@@ -42,20 +42,21 @@ export default function MyAsset(props) {
     const [myAsset, setAsset] = useState(0);
     const [myCoin, setCoin] = useState(0);
     const [myWallet, setWallet] = useState({
-        myCash : 0,
-        myAsset : 0,
-        myCoin : 0,
-    })
+        myCash: 0,
+        myAsset: 0,
+        myCoin: 0,
+    });
     const [isInit, setInit] = useState(false);
-    if(!isInit) setInit(true);
+    if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
     useLayoutEffect(() => {
         if (props.socket == null) {
-            props.requestSocket('MyAsset',props.socket);
+            props.requestSocket('MyAsset', props.socket);
             setInit(true);
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
+
                 const currentCash = data.cash;
                 const currentAsset = data.asset;
                 const currentCoin = data.coinVol;
@@ -63,10 +64,10 @@ export default function MyAsset(props) {
                     myCash: currentCash,
                     myAsset: currentAsset,
                     myCoin: currentCoin,
-                })
+                });
             });
         }
-    },[isInit]);
+    }, [isInit]);
 
     function SplitByThree(value) {
         if (!value) return 'Something wrong.';
@@ -87,18 +88,19 @@ export default function MyAsset(props) {
         // console.log(value);
         if (!value) return 'Something wrong.';
         let ret = '';
-        if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
-            ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
+        if (value.length >= 9) {
+            // 199489230 -> 1억 9948만 9230
+            ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
             value = value.substring(value.length - 9 + 1);
         }
-        if (value.length >= 5) { // value 99489230
-            ret += ( value.substring(0, value.length - 5 + 1)  + '만 ' )  // 9948만
+        if (value.length >= 5) {
+            // value 99489230
+            ret += value.substring(0, value.length - 5 + 1) + '만 '; // 9948만
             value = value.substring(value.length - 5 + 1);
         }
         ret += value;
         return ret + '원';
     }
-
 
     return (
         <Grid wrap="wrap" container direction="row" style={{ height: '100%' }}>
@@ -118,7 +120,10 @@ export default function MyAsset(props) {
                 >
                     <Paper style={{ height: '100%' }}>
                         보유 현금 (KRW)
-                        <h4>{SplitByThree(parseWonToStr(myWallet.myCash)) + ' 원'}</h4>
+                        <h4>
+                            {SplitByThree(parseWonToStr(myWallet.myCash)) +
+                                ' 원'}
+                        </h4>
                         <h6>{ExpBySymbol(parseWonToStr(myWallet.myCash))}</h6>
                     </Paper>
                 </Grid>
@@ -127,9 +132,7 @@ export default function MyAsset(props) {
                 >
                     <Paper style={{ height: '100%' }}>
                         보유 화폐수
-                        <h3>
-                            {myWallet.myCoin}
-                        </h3>
+                        <h3>{myWallet.myCoin}</h3>
                     </Paper>
                 </Grid>
             </Grid>
@@ -142,7 +145,10 @@ export default function MyAsset(props) {
                 <Grid style={{ width: '100%', height: '100%' }}>
                     <Paper style={{ height: '100%' }}>
                         총 평가 자산 (KRW)
-                        <h2 style={{fontStyle:'italic', fontWeight:'bold'}}>{SplitByThree(parseWonToStr(myWallet.myAsset)) + ' 원'}</h2>
+                        <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
+                            {SplitByThree(parseWonToStr(myWallet.myAsset)) +
+                                ' 원'}
+                        </h2>
                         <h6>{ExpBySymbol(parseWonToStr(myWallet.myAsset))}</h6>
                     </Paper>
                 </Grid>

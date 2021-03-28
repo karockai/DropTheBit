@@ -21,18 +21,18 @@ export default {
         await serverSetting(server);
 
         // db setting ------------------------------------- >>
-        let bidDummy = {
-            0: {
-                dummyID: 'dummyRoom',
-            },
-        };
-        let askDummy = {
-            10000000000: {
-                dummyID: 'dummyRoom',
-            },
-        };
-        dbset('bidList', JSON.stringify(bidDummy));
-        dbset('askList', JSON.stringify(askDummy));
+        // let bidDummy = {
+        //     0: {
+        //         dummyID: 'dummyRoom',
+        //     },
+        // };
+        // let askDummy = {
+        //     10000000000: {
+        //         dummyID: 'dummyRoom',
+        //     },
+        // };
+        // dbset('bidList', JSON.stringify(bidDummy));
+        // dbset('askList', JSON.stringify(askDummy));
         // db setting  ------------------------------------ <<
 
         // curPrice refresh --------------------------------- >>
@@ -46,29 +46,6 @@ export default {
 
         io.on('connection', (socket) => {
             console.log('USER Connected : ', socket.id);
-
-            // test event ------------------------------------------ >>
-            // const chart = async () => {
-            //     // await new Test(io, socket).testSendChart(day++);
-            //     await new Game(io, socket).renewalCurCoin();
-            // };
-            // setInterval(chart, 2000);
-
-            socket.on('testComment', (comment) => {
-                new Test(io, socket).testComment(comment);
-            });
-
-            socket.on('testBuy', async (data) => {
-                console.log('testBuy');
-                await new Test(io, socket).testBuy(data);
-                console.log(data);
-            });
-
-            socket.on('testSell', async (data) => {
-                await new Test(io, socket).testSell(data);
-                console.log(data);
-            });
-            // test event << ------------------------------------------
 
             socket.on('createPrivateRoom_Req', (playerID) => {
                 console.log('playerId : ' + playerID);

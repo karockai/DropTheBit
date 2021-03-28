@@ -6,8 +6,18 @@
 import app from '../app.js';
 import sockets from '../sockets.js';
 
-global.games = {};
 global.chartData = [];
+global.bidList = {};
+global.askList = {};
+global.roomList = {};
+global.bgmList = {
+    'Deja_Vu.mp3': 265,
+    'King_Conga.mp3': 145,
+    'Mausoleum_Mash.mp3': 176,
+};
+global.curCoin = {};
+global.exTable = {};
+
 // 차트를 바로 그리기 위한 curCoin 50개 리스트
 
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
