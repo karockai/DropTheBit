@@ -37,8 +37,8 @@ export default function BidEntity(props) {
         let reqJson = {
             socketID: props.socket.id,
             roomID: props.roomID,
-            price: props.price,
-            vol: props.vol,
+            reqPrice: props.price,
+            reqVol: props.vol,
         };
 
         props.socket.emit('cancelBid_Req', reqJson);

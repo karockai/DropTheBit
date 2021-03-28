@@ -80,11 +80,11 @@ export default {
             });
             socket.on(
                 'cancelBid_Req',
-                async (reqJson) => await new Game(io, socket).bidCancle(reqJson)
+                async (reqJson) => await new Game(io, socket).cancelBid(reqJson)
             );
             socket.on(
                 'cancelAsk_Req',
-                async (reqJson) => await new Game(io, socket).askCancle(reqJson)
+                async (reqJson) => await new Game(io, socket).cancelAsk(reqJson)
             );
             socket.on(
                 'bidTable_Req',
