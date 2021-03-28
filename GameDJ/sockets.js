@@ -73,10 +73,10 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', async (reqJson) => {
-                await new Game(io, socket).buy(reqJson, socket, io);
+                await new Game(io, socket).buy(reqJson);
             });
             socket.on('sell_Req', async (reqJson) => {
-                await new Game(io, socket).sell(reqJson, socket, io);
+                await new Game(io, socket).sell(reqJson);
             });
             socket.on(
                 'cancelBid_Req',
