@@ -22,10 +22,6 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-<<<<<<< HEAD
-        let gameTime = Number(await dbhget(socket.roomID, 'gameTime'));
-=======
->>>>>>> 8f480f085958d6c2dc780cc8d511ece634c644ab
         let roomID = socket.roomID;
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
