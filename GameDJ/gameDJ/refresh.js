@@ -110,7 +110,6 @@ class Refresh {
                     let buyDone = {
                         type: '매수 주문 체결',
                         playerID: playerID,
-                        avgPrice: playerInfo['avgPrice'],
                         vol: bidVol,
                         price: bidPrice,
                     };
@@ -165,6 +164,7 @@ class Refresh {
                         cash: cash,
                         coinVol: coinVol,
                         asset: asset,
+                        avgPrice: playerInfo['avgPrice'],
                     };
 
                     // rankObj 삽입

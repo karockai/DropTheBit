@@ -82,7 +82,6 @@ class Game {
                 type: '매수 완료',
                 // 6-3. refreshWallet update & emit
                 playerID: playerID,
-                avgPrice: playerInfo['avgPrice'],
                 vol: reqVol,
                 price: curPrice,
             };
