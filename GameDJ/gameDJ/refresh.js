@@ -17,7 +17,7 @@ class Refresh {
     constructor(io) {
         this.io = io;
     }
-
+    //renewalInfo에서 refreshWallet해줄것이므로 여기선 안해줄 거임 : 성현
     async renewalCurCoin() {
         const { io } = this;
         // console
@@ -99,7 +99,7 @@ class Refresh {
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-
+                    
                     delete playerInfo['bid'][bidPrice];
                     roomList[roomID][socketID] = playerInfo;
 
@@ -139,6 +139,7 @@ class Refresh {
         // console.log(curPrice);
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
         // redis 순회하면서 roomInfo 가져옴
+        // console.log("priceChange", priceChange);
         if (priceChange) {
             for (let roomID in roomList) {
                 let roomInfo = roomList[roomID];
@@ -175,7 +176,7 @@ class Refresh {
                     rankList.push(rankObj);
 
                     io.to(socketID).emit('refreshWallet', refreshWallet);
-
+                    console.log("refresh", refreshWallet);
                     roomList[roomID][socketID] = playerInfo;
                 }
 
