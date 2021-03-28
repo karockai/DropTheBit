@@ -263,7 +263,7 @@ class Refresh {
                 return b['asset'] - a['asset'];
             });
             // delete timeList[roomID];
-            io.to(roomID).emit('', leaderBoard);
+            io.to(roomID).emit('gameOver', leaderBoard);
         }
     }
 

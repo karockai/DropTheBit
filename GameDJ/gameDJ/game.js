@@ -40,8 +40,9 @@ class Game {
         let gameSchedule1 = setTimeout(realStart, 3000);
     }
 
-    buy(reqJson, socket) {
+    buy(reqJson, socket, io) {
         return new Promise(async function (resolve, reject) {
+
             // 1. reqJson setting
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
@@ -94,8 +95,10 @@ class Game {
                     vol: reqVol,
                     price: curPrice,
                 };
-                socket.emit('buyDone', buyDone);
-                socket.to(roomID).emit('buyDone_Room', buyDone);
+                // socket.emit('buyDone', buyDone);
+                // socket.to(roomID).emit('buyDone_Room', buyDone);
+                io.to(socketID).emit('buyDone', buyDone);
+                io.to(roomID).emit('buyDone_Room', buyDone);
 
                 console.log('현재가로 구매 완료 :', playerInfo);
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
