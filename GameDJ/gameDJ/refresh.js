@@ -11,6 +11,7 @@ import {
     dblrange,
     dbllen,
 } from './redis.js';
+import Game from './game.js';
 
 class Refresh {
     constructor(io) {
@@ -71,6 +72,7 @@ class Refresh {
                     };
                     io.to(socketID).emit('sellDone', sellDone);
                     io.to(roomID).emit('sellDone_Room', sellDone);
+                    await new Game(io, socketID).sendAskTable({'roomID':roomID, 'socketID':socketID});
                 }
                 delete askList[askPrice];
             }
@@ -106,6 +108,7 @@ class Refresh {
                     };
                     io.to(socketID).emit('buyDone', buyDone);
                     io.to(roomID).emit('buyDone_Room', buyDone);
+                    await new Game(io, socketID).sendBidTable({'roomID':roomID, 'socketID':socketID});
                 }
                 delete bidList[bidPrice];
             }
