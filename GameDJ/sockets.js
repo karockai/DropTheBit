@@ -48,7 +48,6 @@ export default {
             console.log('USER Connected : ', socket.id);
 
             socket.on('createPrivateRoom_Req', (playerID) => {
-                console.log('playerId : ' + playerID);
                 new Room(io, socket).createPrivateRoom(playerID);
             });
 

@@ -37,15 +37,26 @@ class Disconnect {
                     playerCnt++;
                 }
             }
-            // console.log('disconnect 사람수 ', playerCnt);
             // 방에 사람이 0명이 되면 방을 지운다
             if (playerCnt === 0) {
-                // console.log('disconnect 방을 지워요 ', playerCnt);
-                // dbdel(roomID);
                 delete roomList[roomID];
             } else {
-                // console.log('disconnect 방을 지우지 않아요 ', playerCnt);
-                io.to(roomID).emit('disconnection', socket.id);
+                // 방에 사람이 1명 이상이면 방을 지우지 않는다
+                // 나간 사람이 방장이라면 다음 사람으로 방장을 변경한다
+                if (roomInfo['roomLeader'] == socket.id){
+                    console.log('흑흑 방장이 나갔어요');
+                    for (const [key, value] of Object.entries(roomInfo)) {
+                        if (key.length === 20) {
+                            roomInfo['roomLeader'] = key;
+                            console.log('방장을 바꿨어요', key);
+                            break;
+                        }
+                    }
+                    // io.to(roomID).emit('changeLeader', roomInfo);
+                }
+                console.log('나간 놈 ', socket.id);
+                console.log(roomInfo);
+                io.to(roomID).emit('disconnect', roomInfo);
             }
             // console.log('disconnect 방 존재 여부 확인 ', await dbhgetall(roomID));
         }

@@ -1,3 +1,4 @@
+import { POINT_CONVERSION_COMPRESSED } from 'constants';
 import {
     dbset,
     dbget,
@@ -25,39 +26,18 @@ class Game {
         let roomID = socket.roomID;
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
-
         io.to(roomID).emit('startGame_Res', gameTime);
 
         async function realStart() {
             let roomID = socket.roomID;
             let musicName = roomList[roomID]['music'];
+            roomList[roomID]['gaming'] = true;
             io.to(roomID).emit('startGame_Real', musicName);
         }
 
-        async function gameOver() {
-            let roomID = socket.roomID;
-            let roomInfo = roomList[roomID];
-            let leaderBoard = [];
-            for (let socketID in roomInfo) {
-                if (socketID.length < 15) continue;
-                let playerInfo = roomList[socketID];
-                let temp = {};
 
-                temp['playerID'] = playerInfo['playerID'];
-                temp['asset'] = playerInfo['asset'];
-
-                leaderBoard.push(temp);
-            }
-
-            leaderBoard.sort(function (a, b) {
-                return b['asset'] - a['asset'];
-            });
-
-            io.to(roomID).emit('gameOver', leaderBoard);
-        }
 
         let gameSchedule1 = setTimeout(realStart, 3000);
-        let gameSchedule2 = setTimeout(gameOver, gameTime * 1000);
     }
 
     buy(reqJson, socket, io) {

@@ -22,7 +22,6 @@ class Room {
 
     // data : {playerID : name}
     async createPrivateRoom(data) {
-        // 코인이름 구하기
 
         const { socket } = this;
         const roomID = nanoid(15);
@@ -38,9 +37,10 @@ class Room {
         };
 
         let roomInfo = {
-            gameTime: 176,
-            music: 'Mausoleum_Mash.mp3',
+            gameTime: 145,
+            music: 'King_Conga.mp3',
             roomLeader: socket.id,
+            gaming : false,
         };
 
         roomInfo[socketID] = playerInfo;
@@ -74,6 +74,7 @@ class Room {
                 ask: {},
             };
             roomInfo[socketID] = playerInfo;
+            roomList[roomID] = roomInfo;
 
             socket.roomID = roomID;
             socket.join(roomID);
