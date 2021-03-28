@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,useLayoutEffect, useState } from 'react';
 import {
     Button,
     TextField,
@@ -16,6 +16,13 @@ import Test from './Test';
 
 
 function Lobby(props) {
+    // const [IsLeader, setIsLeader] = useState(true);
+    // if (props.roomInfo) {
+    //     setIsLeader(props.roomInfo['roomLeader'] === props.socket.id);
+    // }
+    // console.log(IsLeader);
+    console.log(props);
+    var IsLeader = true;
     const PutPlayer = (props) => {
         return (
                 
@@ -35,31 +42,33 @@ function Lobby(props) {
         document.execCommand('Copy');
         alert('복사되었습니다.');
     }
-    // console.log(props.socket);
-    let [accept, setAccept] = useState(false);
     let [roomInfo, setRoomInfo] = useState('');
+    const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
+    const [socketId, setSocketId] = useState(props.socket.id);
 
-    useEffect(()=>{
         let soc = props.socket;
-        if (soc) {
-            soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
-                setRoomInfo(room.roomInfo);
-                props.SetRoomIdAndInfo(room);
-            });
-        }
-    }, []); 
-
-    useEffect(()=> {
-        let soc = props.socket;
-        if (soc) {
-            soc.on('disconnect', (roomInfo) => {    // 사람이 나갈 때마다 roomInfo 갱신
-                console.log(roomInfo);
-                setRoomInfo(roomInfo);
-
-                props.SetRoomIdAndInfo(roomInfo);
-            });
-        }
-    });
+        useLayoutEffect(()=>{
+            if (soc) {
+                soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
+                    setRoomInfo(room.roomInfo);
+                    props.SetRoomIdAndInfo(room);
+                    setRoomLeader(room.roomInfo['roomLeader']);
+                    setSocketId(soc.id);
+                });
+            }
+        }, []); 
+    
+        useLayoutEffect(()=> {
+            // let soc = props.socket;
+            if (soc) {
+                soc.on('disconnect', (roomInfo) => {    // 사람이 나갈 때마다 roomInfo 갱신
+                    setRoomInfo(roomInfo);
+                    props.SetRoomIdAndInfo({roomID : props.roomID, roomInfo : roomInfo});
+                    setRoomLeader(roomInfo['roomLeader']);
+                    setSocketId(soc.id);
+                });
+            }
+        });
     
     const Card = () => {
         if (roomInfo != '') {
@@ -88,9 +97,7 @@ function Lobby(props) {
             for(let key in PlayerList) {
                 tmparr.push(PlayerList[key]);
             }
-            // console.log(tmparr);
             return (
-                // PlayerList.forEach((player) => putPlayer(player))
                 // ? PlayerList.forEach((player) => (<putPlayer player = {player}/>))
                 <div>
                 {tmparr.map((player) => {
@@ -102,34 +109,46 @@ function Lobby(props) {
             );
         }
     }
-
-    // const MusicList = () => {
-    //     return(//props.musicList
-    //         <Grid >
-    //             {/* <SelectMusic 
-    //             musicList={props.musicList} 
-    //             roomID={props.roomID}
-    //             setTime={props.setTime}
-    //             /> */}
-    //         </Grid>
-    //     );
-
-    // }
-    var isLeader = true;
-    if(props.roomInfo){
-        console.log(props.roomInfo['roomLeader']);
-        console.log(props.socket.id);
-        isLeader = props.roomInfo['roomLeader'] === props.socket.id;
-        console.log(isLeader);
+    const CheckLeader = (props)=> {
+        if (props.roomLeader === props.socketId) {
+            return (
+                <>
+                <MusicLeader 
+                    musicList={props.musicList} 
+                    roomID={props.roomID}
+                    roomInfo={props.roomInfo}
+                    time={props.time}
+                    setTime={props.setTime}
+                    socket={props.socket}
+                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                    history={props.history}
+                    />
+                </>
+            );
+        }
+        else {
+            return(
+                <>
+                <MusicMember
+                musicList={props.musicList} 
+                roomID={props.roomID}
+                roomInfo={props.roomInfo}
+                time={props.time}
+                setTime={props.setTime}
+                socket={props.socket}
+                SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                history={props.history}
+                />
+                </>
+            );
+        }
     }
-    // const isLeader = true;
     return(
         <> 
         <Grid container justify='center' style= {{height: '80vh', margin: '5vh 5vh 5vh 5vh'}}>
             <Grid style= {{width: '50%'}} >
                 <Paper style={{width: '30%'}}>{props.name}</Paper>
-                {(isLeader &&
-                    <MusicLeader 
+                <CheckLeader roomLeader={roomLeader} socketId={socketId}
                     musicList={props.musicList} 
                     roomID={props.roomID}
                     roomInfo={props.roomInfo}
@@ -138,23 +157,7 @@ function Lobby(props) {
                     socket={props.socket}
                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                     history={props.history}
-                    />
-                )}
-                {(!isLeader &&
-                    <MusicMember
-                    musicList={props.musicList} 
-                    roomID={props.roomID}
-                    roomInfo={props.roomInfo}
-                    time={props.time}
-                    setTime={props.setTime}
-                    socket={props.socket}
-                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                    history={props.history}
-                    />
-                )}
-                {/* <Test musicList={props.musicList} 
-                roomID={props.roomID}
-                setTime={props.setTime}/> */}
+                />
                 
             </Grid>
             <Grid style= {{width: '50%'}}>

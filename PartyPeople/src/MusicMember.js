@@ -31,7 +31,7 @@ export default function MusicMember(props) {
   const classes = useStyles();
   // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
   /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
-  var tmp_music =  props.music ? 'King_Conga.mp3' : props.roomInfo['music'];
+  var tmp_music = props.roomInfo['music'];
   var tmp_time =  !props.roomInfo['gameTime'] ? 145 : props.roomInfo['gameTime'];
 
   var minute  = parseInt(tmp_time / 60);
@@ -45,6 +45,7 @@ export default function MusicMember(props) {
   console.log(music);
   console.log(strTime);
   function MusicInput() {
+    console.log('musicinpuyt');
       return (
           <div>
           <FormControl className={classes.formControl} disabled>
@@ -63,7 +64,7 @@ export default function MusicMember(props) {
   }
 
   function ShowMusic() {
-
+    console.log('showmusic');
         useEffect(() => {
             props.socket.once('settingsUpdate_Res', (data) => {
               const musicName = data.musicName;
@@ -106,6 +107,7 @@ export default function MusicMember(props) {
 
       });
   }, []);
+  console.log('여기?');
   return(
     <>
         <Grid>
