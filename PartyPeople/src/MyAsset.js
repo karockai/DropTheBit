@@ -45,6 +45,7 @@ export default function MyAsset(props) {
         myCash: 0,
         myAsset: 0,
         myCoin: 0,
+        myAvg: 0
     });
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
@@ -60,10 +61,12 @@ export default function MyAsset(props) {
                 const currentCash = data.cash;
                 const currentAsset = data.asset;
                 const currentCoin = data.coinVol;
+                const currentAvg = data.avgPrice;
                 setWallet({
                     myCash: currentCash,
                     myAsset: currentAsset,
                     myCoin: currentCoin,
+                    myAvg: currentAvg,
                 });
             });
         }
@@ -134,6 +137,7 @@ export default function MyAsset(props) {
                 >
                     <Paper style={{ height: '100%' }}>
                         보유 코인 수 (개)<h3>{myWallet.myCoin}</h3>
+                        평균매입단가<h6>{myWallet.myAvg}</h6>
                     </Paper>
                 </Grid>
             </Grid>
