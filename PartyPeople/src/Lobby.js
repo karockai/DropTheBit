@@ -39,18 +39,26 @@ function Lobby(props) {
     let [accept, setAccept] = useState(false);
     let [roomInfo, setRoomInfo] = useState('');
 
-    // 기존리스트에 새로운 플레이어 추가
-    // let ret = (<div> aaa </div>);
     useEffect(()=>{
         let soc = props.socket;
         if (soc) {
             soc.on('joinRoom_Res', (room) => {    // 사람이 들어올 때마다 roomInfo 갱신
-                // setAccept(true);
                 setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
             });
         }
     }, []); 
+
+    useEffect(()=> {
+        let soc = props.socket;
+        if (soc) {
+            soc.on('disconnect', (roomInfo) => {    // 사람이 나갈 때마다 roomInfo 갱신
+                setRoomInfo(roomInfo);
+                props.SetRoomIdAndInfo(roomInfo);
+            });
+        }
+    });
+    
     const Card = () => {
         if (roomInfo != '') {
             return (<PutNewCard roomInfo={roomInfo} socket={props.socket}/>);
@@ -149,8 +157,8 @@ function Lobby(props) {
                     {Card()}
                 </Grid>
                 <Grid container justify='center'>
-                    <input type="text" id="gameLink" class="form-control text-center fw-bold bg-white"
-                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`} style={{width: "70%"}} readonly />
+                    <input type="text" id="gameLink" className="form-control text-center fw-bold bg-white"
+                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`} style={{width: "70%"}} readOnly />
                     <Button class="btn btn-warning" type="button" onClick={CopyURL} id="copy">Copy Link</Button>
                 </Grid>
             </Grid>

@@ -1,3 +1,4 @@
+import { POINT_CONVERSION_COMPRESSED } from 'constants';
 import {
     dbset,
     dbget,
@@ -25,43 +26,23 @@ class Game {
         let roomID = socket.roomID;
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
-
         io.to(roomID).emit('startGame_Res', gameTime);
 
         async function realStart() {
             let roomID = socket.roomID;
             let musicName = roomList[roomID]['music'];
+            roomList[roomID]['gaming'] = true;
             io.to(roomID).emit('startGame_Real', musicName);
         }
 
-        async function gameOver() {
-            let roomID = socket.roomID;
-            let roomInfo = roomList[roomID];
-            let leaderBoard = [];
-            for (let socketID in roomInfo) {
-                if (socketID.length < 15) continue;
-                let playerInfo = roomList[socketID];
-                let temp = {};
 
-                temp['playerID'] = playerInfo['playerID'];
-                temp['asset'] = playerInfo['asset'];
-
-                leaderBoard.push(temp);
-            }
-
-            leaderBoard.sort(function (a, b) {
-                return b['asset'] - a['asset'];
-            });
-
-            io.to(roomID).emit('gameOver', leaderBoard);
-        }
 
         let gameSchedule1 = setTimeout(realStart, 3000);
-        let gameSchedule2 = setTimeout(gameOver, gameTime * 1000);
     }
 
-    buy(reqJson, socket) {
-        return new Promise(async function (resolve, reject) {
+    buy(reqJson) {
+
+            const { io, socket } = this;
             // 1. reqJson setting
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
@@ -114,8 +95,10 @@ class Game {
                     vol: reqVol,
                     price: curPrice,
                 };
-                socket.emit('buyDone', buyDone);
-                socket.to(roomID).emit('buyDone_Room', buyDone);
+                // socket.emit('buyDone', buyDone);
+                // socket.to(roomID).emit('buyDone_Room', buyDone);
+                io.to(socketID).emit('buyDone', buyDone);
+                io.to(roomID).emit('buyDone_Room', buyDone);
 
                 console.log('현재가로 구매 완료 :', playerInfo);
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
@@ -154,16 +137,36 @@ class Game {
                 console.log('호가 등록 완료', playerInfo);
                 socket.emit('bidDone', bidDone);
                 socket.to(roomID).emit('bidDone_Room', bidDone);
+
+                //! 최적화 필요
+
+                let bidTable = playerInfo['bid'];
+                let bidTableKeys = Object.keys(bidTable);
+                let bidTable_Res = [];
+
+                for (let bidPriceIdx in bidTableKeys) {
+                    let temp = {};
+                    let bidPrice = bidTableKeys[bidPriceIdx];
+                    let bidVol = bidTable[bidPrice];
+                    temp['price'] = bidPrice;
+                    temp['vol'] = bidVol;
+
+                    bidTable_Res.push(temp);
+                }
+
+                bidTable_Res.sort(function (a, b) {
+                    return b['price'] - a['price'];
+                });
+
+                this.socket.emit('bidTable_Res', bidTable_Res);
+                //! 최적화 필요
             }
             console.log('-------BUY END-------------');
-            resolve();
-        });
     }
 
     // 매도 요청 등록
-    sell(reqJson, socket) {
-        return new Promise(async function (resolve, reject) {
-            // const { io, socket } = this;
+    sell(reqJson) {
+            const { io, socket } = this;
             // 1. reqJson setting
             console.log('-----------Sell -----------', reqJson);
             let roomID = reqJson['roomID'];
@@ -211,8 +214,8 @@ class Game {
                     price: curPrice,
                 };
 
-                socket.emit('sellDone', sellDone);
-                socket.to(roomID).emit('sellDone_Room', sellDone);
+                io.to(socketID).emit('sellDone', sellDone);
+                io.to(roomID).emit('sellDone_Room', sellDone);
                 console.log('현재가로 판매 완료 :', playerInfo);
                 // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
             } else {
@@ -248,10 +251,29 @@ class Game {
                 socket.emit('refreshWallet', refreshWallet);
                 socket.emit('askDone', askDone);
                 socket.to(roomID).emit('askDone_Room', askDone);
+
+                // ! 최적화 필요
+                let askTable = playerInfo['ask'];
+                let askTableKeys = Object.keys(askTable);
+                let askTable_Res = [];
+                
+                for (let askPriceIdx in askTableKeys) {
+                    let temp = {};
+                    let askPrice = askTableKeys[askPriceIdx];
+                    let askVol = askTable[askPrice];
+                    temp['price'] = askPrice;
+                    temp['vol'] = askVol;
+                    
+                    askTable_Res.push(temp);
+                }
+                
+                askTable_Res.sort(function (a, b) {
+                    return b['price'] - a['price'];
+                });
+                socket.emit('askTable_Res', askTable_Res);
+                // ! 최적화 필요
             }
             console.log('-----------Sell End-----------');
-            resolve();
-        });
     }
 
     // 매수 요청 취소

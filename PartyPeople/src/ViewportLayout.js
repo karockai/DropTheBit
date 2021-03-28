@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Paper, makeStyles } from '@material-ui/core';
 import './ViewportLayout.css';
-import SimpleContainer from './SimpleContainer';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,8 +22,8 @@ function ViewportLayout() {
     let rightSm = 4;
     return (
         <div className={classes.root}>
-            <SimpleContainer />
         </div>
+        
     );
 }
 

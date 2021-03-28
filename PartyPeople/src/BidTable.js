@@ -24,7 +24,6 @@ import BidEntity from './BidEntity';
 //     { price: 1000, vol: 100 },
 //     { price: 1000, vol: 100 },
 // ];
-
 const greenTheme = createMuiTheme({
     palette: {
         primary: green,

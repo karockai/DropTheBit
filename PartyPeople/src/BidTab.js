@@ -20,6 +20,7 @@ const useStyles = makeStyles({
     },
 });
 
+
 function createData(sell, price, buy) {
     return { sell, price, buy };
 }
@@ -137,7 +138,7 @@ export default function BidTab(props) {
                 style={{ height: '110%' }}
                 container
                 wrap="wrap"
-                alignItems="stretch"
+                // alignItems="stretch"
                 justify="center"
                 direction="column"
                 spacing={2}

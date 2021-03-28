@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import {
     Button,
     Fab,
@@ -16,13 +16,27 @@ function SetPlayerName(props) {
     const params = window.location.toString().substring(window.location.toString().indexOf('?'));
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
+
+    // const nameInput = useRef();
+    // useEffect(()=>{
+    //     nameInput.current.focus();
+    // });
+
+    const onKeyPress =(e)=>{
+        if(e.key == 'Enter') {
+            handleOnSave(e);
+        }
+    }
+
     const handleChange = (event) => {
         setTemp(event.target.value);
     };
 
     const handleOnSave = (event) => {
-        event.preventDefault();
-        props.onSave(tmp);
+        if(tmp != ''){
+            event.preventDefault();
+            props.onSave(tmp);
+        }
 
     }
     let buttonMsg ='Create Private Room';
@@ -44,7 +58,10 @@ function SetPlayerName(props) {
                     inputRef={props.textInput}
                     onChange={handleChange}
                     variant="outlined"
-                    size="large"
+                    size="medium"
+                    // ref={nameInput}
+                    autoFocus
+                    onKeyPress={onKeyPress}
                 />
             </Grid>
             <Grid item>
