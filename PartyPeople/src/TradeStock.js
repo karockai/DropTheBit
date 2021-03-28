@@ -123,11 +123,11 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
-        SetNewVolume(volume + 1);
+        SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function VolumeDown(volume) {
         if (volume <= 0) return;
-        SetNewVolume(volume - 1);
+        SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function BidUp() {
         SetBid(currentBid + unitBid);
