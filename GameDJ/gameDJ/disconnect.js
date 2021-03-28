@@ -56,7 +56,7 @@ class Disconnect {
                 }
                 console.log('나간 놈 ', socket.id);
                 console.log(roomInfo);
-                io.to(roomID).emit('disconnection', roomInfo);
+                io.to(roomID).emit('disconnect', roomInfo);
             }
             // console.log('disconnect 방 존재 여부 확인 ', await dbhgetall(roomID));
         }

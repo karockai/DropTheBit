@@ -53,6 +53,7 @@ function Lobby(props) {
         let soc = props.socket;
         if (soc) {
             soc.on('disconnect', (room) => {    // 사람이 나갈 때마다 roomInfo 갱신
+                console.log('client disconnect------');
                 setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
             });

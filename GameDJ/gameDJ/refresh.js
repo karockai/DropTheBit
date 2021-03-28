@@ -230,13 +230,11 @@ class Refresh {
                     return b['asset'] - a['asset'];
                 });
 
-                console.log('-----refresh');
-                console.log(roomList[roomID]);
                 if (roomInfo['gaming']){
                     roomList[roomID]['gameTime']--;
                 }
                 if (roomInfo['gameTime'] < 0){
-                    gameOver();
+                    gameOver(roomID);
                 }
                 io.to(roomID).emit('roomRank', rankList);
                 io.to(roomID).emit('restGameTime', roomList[roomID]['gameTime']);
@@ -247,15 +245,13 @@ class Refresh {
             resolve();
         });
 
-        async function gameOver() {
-            let roomID = socket.roomID;
+        async function gameOver(roomID) {
             let roomInfo = roomList[roomID];
             let leaderBoard = [];
             for (let socketID in roomInfo) {
                 if (socketID.length < 15) continue;
-                let playerInfo = roomList[socketID];
+                let playerInfo = roomInfo[socketID];
                 let temp = {};
-
                 temp['playerID'] = playerInfo['playerID'];
                 temp['asset'] = playerInfo['asset'];
 
