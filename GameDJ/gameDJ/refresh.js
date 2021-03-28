@@ -203,12 +203,28 @@ class Refresh {
             temp['asset'] = playerInfo['asset'];
 
             leaderBoard.push(temp);
+
+            for (let bid in playerInfo['bid']){
+                for (let id  in bidList[bid]){
+                    if (socketID === id){
+                        delete bidList[bid][id]
+                    }
+                }
+            }
+
+            for (let ask in playerInfo['ask']){
+                for (let id  in askList[ask]){
+                    if (socketID === id){
+                        delete askList[ask][id]
+                    }
+                }
+            }
         }
 
         leaderBoard.sort(function (a, b) {
             return b['asset'] - a['asset'];
         });
-        // delete timeList[roomID];
+
         delete roomList[roomID];
         io.to(roomID).emit('gameOver', leaderBoard);
     }

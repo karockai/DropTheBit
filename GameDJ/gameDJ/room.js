@@ -37,7 +37,7 @@ class Room {
         };
 
         let roomInfo = {
-            gameTime: 145,
+            gameTime: 10,
             music: 'King_Conga.mp3',
             roomLeader: socket.id,
             gaming : false,

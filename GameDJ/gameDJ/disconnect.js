@@ -22,21 +22,41 @@ class Disconnect {
     async onDisconnect() {
         const { io, socket } = this;
         const { roomID } = socket;
+
         // roomID가 있으면 제대로된 소켓
         // disconnection 보내면 room에서 그 사람을 지우도록 함
-        // 근데 lobby인지, game중인지 다르게 줘야하나?
-        if (roomID) {
-            // await dbhdel(roomID, socket.id);
-            delete roomList[roomID][socket.id];
+        if (roomID && roomList[roomID]) {
             let playerCnt = 0;
             // let roomInfo = await dbhgetall(roomID);
             let roomInfo = roomList[roomID];
+            let playerInfo = roomInfo[socket.id];
+            //ask, bid 지우기
+            for (let bid in playerInfo['bid']){
+                for (let id  in bidList[bid]){
+                    if (socket.id === id){
+                        delete bidList[bid][id]
+                    }
+                }
+            }
 
+            for (let ask in playerInfo['ask']){
+                for (let id  in askList[ask]){
+                    if (socket.id === id){
+                        delete askList[ask][id]
+                    }
+                }
+            }
+
+            // await dbhdel(roomID, socket.id);  
+            console.log('----------before disconnect roominfo');
+            console.log(roomInfo);
+            delete roomList[roomID][socket.id];
             for (const [key, value] of Object.entries(roomInfo)) {
                 if (key.length === 20) {
                     playerCnt++;
                 }
             }
+
             // 방에 사람이 0명이 되면 방을 지운다
             if (playerCnt === 0) {
                 delete roomList[roomID];
@@ -52,13 +72,14 @@ class Disconnect {
                             break;
                         }
                     }
-                    // io.to(roomID).emit('changeLeader', roomInfo);
+
                 }
             }
             // console.log('나간 놈 ', socket.id);
             // console.log(roomInfo);
+            console.log('----------after disconnect roominfo');
+            console.log(roomInfo);
             io.to(roomID).emit('disconnect', roomInfo);
-            // console.log('disconnect 방 존재 여부 확인 ', await dbhgetall(roomID));
         }
     }
 }
