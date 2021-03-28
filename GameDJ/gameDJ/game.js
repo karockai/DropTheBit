@@ -22,15 +22,9 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-<<<<<<< HEAD
-<<<<<<< HEAD
-        let gameTime = Number(await dbhget(socket.roomID, 'gameTime'));
-=======
->>>>>>> 8f480f085958d6c2dc780cc8d511ece634c644ab
-=======
->>>>>>> 0dce7c6e9775ed28d51481cc11acc829ae240fb4
         let roomID = socket.roomID;
         let gameTime = roomList[roomID]['gameTime'];
+        // timeList[roomID] = gameTime;
         io.to(roomID).emit('chartData', { chartData: chartData });
 
         io.to(roomID).emit('startGame_Res', gameTime);
@@ -41,38 +35,9 @@ class Game {
             io.to(roomID).emit('startGame_Real', musicName);
         }
 
-        async function gameOver() {
-            let roomID = socket.roomID;
-            let roomInfo = roomList[roomID];
-            let leaderBoard = [];
-            for (let socketID in roomInfo) {
-                if (socketID.length < 15) continue;
-                let playerInfo = roomList[socketID];
-                let temp = {};
 
-                temp['playerID'] = playerInfo['playerID'];
-                temp['asset'] = playerInfo['asset'];
-
-                leaderBoard.push(temp);
-            }
-
-            leaderBoard.sort(function (a, b) {
-                return b['asset'] - a['asset'];
-            });
-
-            io.to(roomID).emit('gameOver', leaderBoard);
-        }
 
         let gameSchedule1 = setTimeout(realStart, 3000);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        let gameSchedule2 = setTimeout(gameOver, (gameTime) * 1000);
-=======
-        let gameSchedule2 = setTimeout(gameOver, gameTime * 1000);
->>>>>>> 8f480f085958d6c2dc780cc8d511ece634c644ab
-=======
-        let gameSchedule2 = setTimeout(gameOver, gameTime * 1000);
->>>>>>> 0dce7c6e9775ed28d51481cc11acc829ae240fb4
     }
 
     buy(reqJson, socket) {
