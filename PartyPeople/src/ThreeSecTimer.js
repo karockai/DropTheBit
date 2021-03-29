@@ -61,7 +61,7 @@ export default function ThreeSecTimer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [time, setTime] = React.useState(3);
-
+  console.log('threeSecTimer');
 const changeTime = () => {
   if(time > 1) {
     setTimeout(function(){
