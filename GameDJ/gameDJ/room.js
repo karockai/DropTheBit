@@ -63,11 +63,12 @@ class Room {
     // data : {roomID : roomID, playerID : name}
     async joinRoom(data) {
         const { io, socket } = this;
-        const roomID = data.roomID;
-        let roomInfo = roomList[roomID];
-        let socketID = socket.id;
-
         if (data.playerID) {
+            const roomID = data.roomID;
+            let roomInfo = roomList[roomID];
+            let socketID = socket.id;
+
+        
             let playerInfo = {
                 playerID: data['playerID'],
                 cash: 100000000,
