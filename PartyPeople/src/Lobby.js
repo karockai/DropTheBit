@@ -16,12 +16,7 @@ import Test from './Test';
 
 
 function Lobby(props) {
-    // const [IsLeader, setIsLeader] = useState(true);
-    // if (props.roomInfo) {
-    //     setIsLeader(props.roomInfo['roomLeader'] === props.socket.id);
-    // }
-    // console.log(IsLeader);
-    console.log(props);
+
     var IsLeader = true;
     const PutPlayer = (props) => {
         return (

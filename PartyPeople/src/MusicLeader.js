@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function MusicLeader(props) {
   const classes = useStyles();
+  console.log('MusicLeader');
   // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
   /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
   const [music, setMusic] = React.useState('King_Conga.mp3');
@@ -96,7 +97,7 @@ export default function MusicLeader(props) {
             const musicName = data.musicName;
             const musicTime = data.musicTime;
             if (props.roomInfo) {
-              props.setTime(musicTime);
+              // props.setTime(musicTime);
 
               var minute  = parseInt(musicTime / 60);
               var second = musicTime % 60;
@@ -105,7 +106,7 @@ export default function MusicLeader(props) {
           
               var tmp_roomInfo = props.roomInfo; 
               tmp_roomInfo['music'] = musicName;
-              props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
+              // props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
               strSetTime(minute+' : '+second);
               }
           });
