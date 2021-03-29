@@ -198,7 +198,7 @@ class Refresh {
                         cash + bidCash + curPrice * (askVol + coinVol);
                     let asset = playerInfo['asset'];
 
-                    new Game(io, socketID).refreshWallet(
+                    await new Game(io, socketID).refreshWallet(
                         socketID,
                         'renewalInfo',
                         playerInfo['coinVol'],
@@ -212,15 +212,14 @@ class Refresh {
                         playerID: playerInfo['playerID'],
                         asset: asset,
                     };
-                    if (rankList.length < 8) {
-                        rankList.push(rankObj);
-                    }
+                    rankList.push(rankObj);
                     roomList[roomID][socketID] = playerInfo;
                 }
                 rankList.sort(function (a, b) {
                     return b['asset'] - a['asset'];
                 });
-                io.to(roomID).emit('roomRank', rankList);
+                const rankList2 = rankList.slice(8, -1);
+                io.to(roomID).emit('roomRank', rankList2);
             }
             // console.log(roomInfo);
             if (roomInfo['gaming']) {

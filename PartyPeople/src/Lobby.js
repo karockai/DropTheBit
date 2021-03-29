@@ -5,6 +5,7 @@ import {
     Fab,
     Grid,
     Paper,
+    GridList,
     makeStyles,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
@@ -163,7 +164,9 @@ function Lobby(props) {
                 <Grid style={{ width: '50%' }}>
                     {/* <Grid style={{ height: '80vh' }}>{Card()}</Grid> */}
                     <Grid style={{ width: '50%' }}>
-                        <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                        <GridList>
+                            <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                        </GridList>
                         <Grid container justify="center">
                             <input
                                 type="text"
