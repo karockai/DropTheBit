@@ -37,10 +37,20 @@ export default function MusicLeader(props) {
     const classes = useStyles();
     // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
     /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
-    var tmp_music = props.roomInfo ? props.roomInfo['music'] : 'King_Conga.mp3';
-    var tmp_time = props.roomInfo ? props.roomInfo['gameTime'] : '02 : 25';
+    let tmp_music = props.roomInfo ? props.roomInfo['music'] : 'King_Conga.mp3';
+    let tmp_time = props.roomInfo ? props.roomInfo['gameTime'] : '02 : 25';
     const [music, setMusic] = React.useState(tmp_music);
     const [strTime, strSetTime] = React.useState(tmp_time);
+
+    if (typeof strTime === 'number') {
+        let minute = parseInt(strTime / 60);
+        let second = strTime % 60;
+        minute = minute >= 10 ? String(minute) : '0' + String(minute);
+        second = second >= 10 ? String(second) : '0' + String(second);
+
+        strSetTime(minute + ' : ' + second);
+    }
+
     if (bgm_audio.paused) {
         bgm_audio.play();
         console.log('music played');
@@ -113,6 +123,7 @@ export default function MusicLeader(props) {
             props.socket.once('settingsUpdate_Res', (data) => {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
+
                 if (props.roomInfo) {
                     // props.setTime(musicTime);
 
