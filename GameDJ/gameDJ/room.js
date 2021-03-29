@@ -67,7 +67,6 @@ class Room {
             const roomID = data.roomID;
             let roomInfo = roomList[roomID];
             let socketID = socket.id;
-
         
             let playerInfo = {
                 playerID: data['playerID'],
@@ -80,8 +79,9 @@ class Room {
                 bidCash: 0,
                 askVol: 0,
             };
+
             roomInfo[socketID] = playerInfo;
-            roomList[roomID] = roomInfo;
+            roomList[roomID] = roomInfo;   
 
             socket.roomID = roomID;
             socket.join(roomID);
