@@ -3,6 +3,8 @@ import { blue, red } from '@material-ui/core/colors';
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { useSound, playSound } from './useSound';
 import Check from './audios/effect/check.mp3';
+import BidSound from './audios/effect/bidSound.wav';
+import AskSound from './audios/effect/askSound.wav';
 export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
     const [doneItem, setItem] = useState(null);
@@ -33,19 +35,27 @@ export default function StockDoneList(props) {
             }
             else {
                 props.socket.on('buyDone', (done) => {
-                    playSound(Check, 1).play();
+                    if(done.type === "매수 완료") {
+                        playSound(Check, 1).play();
+                    }
+                    else if(done.type === "매수 주문 체결"){
+                        playSound(BidSound, 1).play();
+                    }
                     setItem(done);
                 });
                 props.socket.on('sellDone', (done) => {
-                    playSound(Check, 1).play();
+                    if(done.type === "매도 완료") {
+                        playSound(Check, 1).play();
+                    }
+                    else if(done.type === "매도 주문 체결"){
+                        playSound(AskSound, 1).play();
+                    }
                     setItem(done);
                 });
                 props.socket.on('bidDone', (done) => {
-                    // playSound(Check, 1).play();
                     setItem(done);
                 });
                 props.socket.on('askDone', (done) => {
-                    // playSound(Check, 1).play();
                     setItem(done);
                 });
             }   
@@ -108,7 +118,7 @@ export default function StockDoneList(props) {
                         })}
                     </div>
                     <div
-                        style={{ float: 'left', clear: 'both' }}
+                        style={{ float: 'left', clear: 'both',  height: "0%"  }}
                         ref={messagesEnd}
                     ></div>
                 </Grid>

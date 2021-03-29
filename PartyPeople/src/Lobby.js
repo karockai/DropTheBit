@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
     Button,
     TextField,
@@ -17,6 +17,13 @@ import MusicMember from './MusicMember';
 // 용기
 
 function Lobby(props) {
+    // const [IsLeader, setIsLeader] = useState(true);
+    // if (props.roomInfo) {
+    //     setIsLeader(props.roomInfo['roomLeader'] === props.socket.id);
+    // }
+    // console.log(IsLeader);
+    console.log(props);
+    var IsLeader = true;
     const PutPlayer = (props) => {
         return (
             <Grid container justify="space-between">
@@ -34,29 +41,35 @@ function Lobby(props) {
         document.execCommand('Copy');
         alert('복사되었습니다.');
     }
-    // console.log(props.socket);
-    let [accept, setAccept] = useState(false);
     let [roomInfo, setRoomInfo] = useState('');
+    const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
+    const [socketId, setSocketId] = useState(props.socket.id);
 
-    useEffect(() => {
-        let soc = props.socket;
+    let soc = props.socket;
+    useLayoutEffect(() => {
         if (soc) {
             soc.on('joinRoom_Res', (room) => {
                 // 사람이 들어올 때마다 roomInfo 갱신
                 setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
+                setRoomLeader(room.roomInfo['roomLeader']);
+                setSocketId(soc.id);
             });
         }
     }, []);
 
-    useEffect(() => {
-        let soc = props.socket;
+    useLayoutEffect(() => {
+        // let soc = props.socket;
         if (soc) {
             soc.on('disconnect', (roomInfo) => {
                 // 사람이 나갈 때마다 roomInfo 갱신
-                console.log(roomInfo);
                 setRoomInfo(roomInfo);
-                props.SetRoomIdAndInfo(roomInfo);
+                props.SetRoomIdAndInfo({
+                    roomID: props.roomID,
+                    roomInfo: roomInfo,
+                });
+                setRoomLeader(roomInfo['roomLeader']);
+                setSocketId(soc.id);
             });
         }
     });
@@ -88,9 +101,7 @@ function Lobby(props) {
             for (let key in PlayerList) {
                 tmparr.push(PlayerList[key]);
             }
-            // console.log(tmparr);
             return (
-                // PlayerList.forEach((player) => putPlayer(player))
                 // ? PlayerList.forEach((player) => (<putPlayer player = {player}/>))
                 <div>
                     {tmparr.map((player) => {
@@ -100,17 +111,39 @@ function Lobby(props) {
             );
         }
     }
-
-    // const backgroudStyle = {
-    //     backgroundImage: `url(${LobbyImage})`,
-    //     background-size:'cover'
-    // }
-
-    var isLeader = true;
-    if (props.roomInfo) {
-        isLeader = props.roomInfo['roomLeader'] === props.socket.id;
-    }
-    // const isLeader = true;
+    const CheckLeader = (props) => {
+        if (props.roomLeader === props.socketId) {
+            return (
+                <>
+                    <MusicLeader
+                        musicList={props.musicList}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                        time={props.time}
+                        setTime={props.setTime}
+                        socket={props.socket}
+                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                        history={props.history}
+                    />
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <MusicMember
+                        musicList={props.musicList}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                        time={props.time}
+                        setTime={props.setTime}
+                        socket={props.socket}
+                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                        history={props.history}
+                    />
+                </>
+            );
+        }
+    };
     return (
         <>
             <Grid
@@ -120,53 +153,41 @@ function Lobby(props) {
             >
                 <Grid style={{ width: '50%' }}>
                     <Paper style={{ width: '30%' }}>{props.name}</Paper>
-                    {isLeader && (
-                        <MusicLeader
-                            musicList={props.musicList}
-                            roomID={props.roomID}
-                            roomInfo={props.roomInfo}
-                            time={props.time}
-                            setTime={props.setTime}
-                            socket={props.socket}
-                            SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                            history={props.history}
-                        />
-                    )}
-                    {!isLeader && (
-                        <MusicMember
-                            musicList={props.musicList}
-                            roomID={props.roomID}
-                            roomInfo={props.roomInfo}
-                            time={props.time}
-                            setTime={props.setTime}
-                            socket={props.socket}
-                            SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                            history={props.history}
-                        />
-                    )}
-                    {/* <Test musicList={props.musicList} 
-                roomID={props.roomID}
-                setTime={props.setTime}/> */}
+                    <CheckLeader
+                        roomLeader={roomLeader}
+                        socketId={socketId}
+                        musicList={props.musicList}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                        time={props.time}
+                        setTime={props.setTime}
+                        socket={props.socket}
+                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                        history={props.history}
+                    />
                 </Grid>
                 <Grid style={{ width: '50%' }}>
                     <Grid style={{ height: '80vh' }}>{Card()}</Grid>
-                    <Grid container justify="center">
-                        <input
-                            type="text"
-                            id="gameLink"
-                            className="form-control text-center fw-bold bg-white"
-                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                            style={{ width: '70%' }}
-                            readOnly
-                        />
-                        <Button
-                            class="btn btn-warning"
-                            type="button"
-                            onClick={CopyURL}
-                            id="copy"
-                        >
-                            Copy Link
-                        </Button>
+                    <Grid style={{ width: '50%' }}>
+                        <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                        <Grid container justify="center">
+                            <input
+                                type="text"
+                                id="gameLink"
+                                className="form-control text-center fw-bold bg-white"
+                                value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
+                                style={{ width: '70%' }}
+                                readOnly
+                            />
+                            <Button
+                                class="btn btn-warning"
+                                type="button"
+                                onClick={CopyURL}
+                                id="copy"
+                            >
+                                Copy Link
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

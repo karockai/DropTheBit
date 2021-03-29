@@ -15,14 +15,13 @@ import Tetris99 from './audios/music/Tetris99.mp3';
 
 export default function EnterRoom(props, { history }) {
     const [isStart, setIsStart] = useState(true);
-    useSound(Tetris99, 0.5, 2000, isStart);
+    useSound(Tetris99, 0.4, 300, isStart);
 
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState(props.roomID);
     let textInput = useRef(null);
     let musicList = [];
-
     const handleOnSave = (textInput) => {
         setName(textInput);
         sendName(textInput);

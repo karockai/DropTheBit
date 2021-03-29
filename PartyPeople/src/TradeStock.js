@@ -123,11 +123,12 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
-        SetNewVolume(volume + 1);
+        if (volume + Math.floor(myWallet.myCash / currentBid * 0.1) > Math.floor(myWallet.myCash / currentBid)) return;
+        SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function VolumeDown(volume) {
-        if (volume <= 0) return;
-        SetNewVolume(volume - 1);
+        if (volume - Math.floor(myWallet.myCash / currentBid * 0.1) <= 0) return;
+        SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function BidUp() {
         SetBid(currentBid + unitBid);
@@ -137,10 +138,10 @@ export default function TradeStock(props) {
     }
 
     function RefreshBid() {
-        console.log('현재가로 갱신되었습니다.');
         props.socket.once('chart', (data) => {
             SetUnit(data.priceUnit);
             SetBid(data.curPrice);
+            SetVolume(1);
         });
     }
 
@@ -149,7 +150,6 @@ export default function TradeStock(props) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
         }
-        console.log('Buy Function', myWallet.myCoin, volume);
         if (bid * volume > myWallet.myCash) {
             alert(
                 '구매 가능한 현금이 없습니다.\n' +
@@ -180,7 +180,7 @@ export default function TradeStock(props) {
         props.socket.once('buyDone', (bbid) => {
             SetNewBid(bbid.price);
         });
-        RefreshBid()
+        SetBind(true);
 
     }
     function Sell(bid, volume) {
@@ -188,7 +188,6 @@ export default function TradeStock(props) {
             alert('호가 및 수량이 부적절합니다. (ex. "0")');
             return;
         }
-        console.log('Sell Function', myWallet.myCoin , volume);
         if (myWallet.myCoin < volume) {
             alert(
                 '보유코인이 부족합니다.\n' +
@@ -219,7 +218,7 @@ export default function TradeStock(props) {
         props.socket.once('sellDone', (sbid) => {
             SetNewBid(sbid.price);
         });
-        RefreshBid()
+        SetBind(true);
 
     }
 
@@ -247,64 +246,49 @@ export default function TradeStock(props) {
         }
     }
     function HandleKeyUp(e) {
+        if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
+        if (props.socket == null || isBind === false) {
+            props.requestSocket('TradeStock', props.socket);
+            return;
+        }
         if (e.keyCode === 37) {
             //_ LEFT ARROW
             playSound(HatUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
             playSound(HatDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
             playSound(HatUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             BidUp();
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
             playSound(HatDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             BidDown();
         } else if (e.keyCode === 65) {
             //_ 'A'
             playSound(DrumUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             Buy(currentBid, currentVolume);
         } else if (e.keyCode === 83) {
             //_ 'S'
             playSound(DrumDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             Sell(currentBid, currentVolume);
         } else if (e.keyCode === 68) {
             //_ 'D'
             playSound(DrumDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
             RefreshBid();
+        }else if (e.keyCode === 90) {
+            //_ 'Z'
+            playSound(DrumDown, 1).play();
+            SetSellMaxCount();
+        }else if (e.keyCode === 88) {
+            //_ 'X'
+            playSound(DrumDown, 1).play();
+            SetBuyMaxCount();
         }
     }
 
@@ -356,6 +340,14 @@ export default function TradeStock(props) {
                 ? grey[700]
                 : red[200],
     };
+
+    function SetSellMaxCount() {
+        SetVolume(Math.floor(myWallet.myCash / currentBid));
+    }
+
+    function SetBuyMaxCount() {
+        SetVolume(myWallet.myCoin);
+    }
 
     function SplitByThree(value) {
         if (!value) return 'Something wrong.';
@@ -474,6 +466,22 @@ export default function TradeStock(props) {
                 >
                     {/* <KeyboardArrowRightIcon /> */}
                     <>"D" 🔄</>
+                </Button>
+                <Button
+                    variant="contained"
+                    color="info"
+                    onClick={() => SetSellMaxCount()}
+                >
+                    {/* <KeyboardArrowRightIcon /> */}
+                    <>"Z" BuyMax 📈</>
+                </Button>
+                <Button
+                    variant="contained"
+                    color="info"
+                    onClick={() => SetBuyMaxCount()}
+                >
+                    {/* <KeyboardArrowRightIcon /> */}
+                    <>"X" SellMax 📉</>
                 </Button>
             </Grid>
         </Grid>

@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
 
 export default function Timer(props) {
-    // const [time, setTime] = useState(props.time);
-    var time = -1;
+    const [time, setTime] = useState(-1);
     props.socket.on('restGameTime', (restGameTime) => {
-        time = restGameTime;
+        setTime(restGameTime);
     });
     const ShowTime = ()=> {
-        // if (props.isStart) {
             var minute  = parseInt(time / 60);
             var second = time - minute * 60;
             minute = minute >= 10 ? String(minute) : '0'+String(minute);
