@@ -27,7 +27,6 @@ class Game {
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', gameTime);
-        console.log('start game');
 
         async function realStart() {
             let roomID = socket.roomID;
