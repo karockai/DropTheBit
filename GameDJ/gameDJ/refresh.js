@@ -220,7 +220,6 @@ class Refresh {
                     return b['asset'] - a['asset'];
                 });
                 let rankList2 = rankList.slice(0, 7);
-                console.log(rankList2);
                 io.to(roomID).emit('roomRank', rankList2);
             }
             // console.log(roomInfo);
