@@ -33,8 +33,8 @@ export default function LayoutGridEffect(props) {
             setThreeSecTimerOpen(false);
             setTimerTime(gameTime);
             setIsStart(true);
-            // bgm_audio = new Audio(SpecificMusic);
-            // if(bgm_audio.paused) bgm_audio.play();
+            bgm_audio = new Audio(SpecificMusic);
+            if (bgm_audio.paused) bgm_audio.play();
             // sound.play();
             // sound.on('play', () => {
             //     const fadeouttime = 2000;
