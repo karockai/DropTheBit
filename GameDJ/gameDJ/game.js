@@ -154,6 +154,7 @@ class Game {
         let socketID = reqJson['socketID'];
         let reqPrice = Number(reqJson['currentBid']);
         let reqVol = Number(reqJson['currentVolume']);
+        
 
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
