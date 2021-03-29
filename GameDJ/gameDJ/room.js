@@ -35,6 +35,8 @@ class Room {
             avgPrice: 0,
             bid: {},
             ask: {},
+            bidCash: 0,
+            askVol: 0,
         };
 
         let roomInfo = {
@@ -74,6 +76,8 @@ class Room {
                 avgPrice: 0,
                 bid: {},
                 ask: {},
+                bidCash: 0,
+                askVol: 0,
             };
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;

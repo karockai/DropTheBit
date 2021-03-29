@@ -98,7 +98,7 @@ export default function Test() {
 //     function MusicMenu() {
 //         return (
 //             <>
-//             {props.musicList.map((music) => {
+//             {props..map((music) => {
 //                     console.log(music);
 //                 return (
 //                 (<MenuItem
