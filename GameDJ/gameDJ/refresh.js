@@ -60,8 +60,18 @@ class Refresh {
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
-                    playerInfo['asset'] = cash + playerInfo['bidCash'] + curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(socketID, 'refreshCurCoin-Sell', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+                    playerInfo['asset'] =
+                        cash +
+                        playerInfo['bidCash'] +
+                        curPrice * (playerInfo['askVol'] + coinVol);
+                    await new Game(io, socketID).refreshWallet(
+                        socketID,
+                        'refreshCurCoin-Sell',
+                        playerInfo['coinVol'],
+                        playerInfo['cash'],
+                        playerInfo['asset'],
+                        playerInfo['avgPrice']
+                    );
 
                     // sellDone
                     let playerID = playerInfo['playerID'];
@@ -94,7 +104,7 @@ class Refresh {
                     let playerInfo = roomList[roomID][socketID];
                     let coinVol = playerInfo['coinVol'];
                     let bidVol = playerInfo['bid'][bidPrice];
-                    let cash = playerInfo['cash']
+                    let cash = playerInfo['cash'];
 
                     if (playerInfo['avgPrice'] === 0) {
                         playerInfo['avgPrice'] = bidPrice;
@@ -108,17 +118,24 @@ class Refresh {
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-<<<<<<< HEAD
-=======
                     playerInfo['bidCash'] -= bidPrice * bidVol;
-                    playerInfo['asset'] = cash + playerInfo['bidCash'] + curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(socketID, 'refreshCurCoin-Buy', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
->>>>>>> 8145b92d3982df0f7ec61609cebee2986b1da406
+                    playerInfo['asset'] =
+                        cash +
+                        playerInfo['bidCash'] +
+                        curPrice * (playerInfo['askVol'] + coinVol);
+                    await new Game(io, socketID).refreshWallet(
+                        socketID,
+                        'refreshCurCoin-Buy',
+                        playerInfo['coinVol'],
+                        playerInfo['cash'],
+                        playerInfo['asset'],
+                        playerInfo['avgPrice']
+                    );
 
                     delete playerInfo['bid'][bidPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete bidList[bidPrice][socketID];
-                    
+
                     // buyDone
                     let playerID = playerInfo['playerID'];
                     let buyDone = {
@@ -160,50 +177,29 @@ class Refresh {
         for (let roomID in roomList) {
             let roomInfo = roomList[roomID];
             let rankList = [];
-            
+
             if (priceChange) {
-            // roomInfo 순회하면서 playerInfo 가져옴
+                // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length != 20) continue;
 
-                        let playerInfo = roomInfo[socketID];
-                        let cash = playerInfo['cash'];
-                        let coinVol = playerInfo['coinVol'];
-                        let bidCash = playerInfo['bidCash'];
-                        let askVol = playerInfo['askVol'];
-                        playerInfo['asset'] = cash + bidCash + curPrice * (askVol + coinVol);
-                        let asset = playerInfo['asset'];
-                        
-                        await new Game(io, socketID).refreshWallet(socketID, 'renewalInfo', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+                    let playerInfo = roomInfo[socketID];
+                    let cash = playerInfo['cash'];
+                    let coinVol = playerInfo['coinVol'];
+                    let bidCash = playerInfo['bidCash'];
+                    let askVol = playerInfo['askVol'];
+                    playerInfo['asset'] =
+                        cash + bidCash + curPrice * (askVol + coinVol);
+                    let asset = playerInfo['asset'];
 
-                        // rankObj 삽입
-                        let rankObj = {
-                            playerID: playerInfo['playerID'],
-                            asset: asset,
-                        };
-                        rankList.push(rankObj);
-
-                        roomList[roomID][socketID] = playerInfo;
-                        rankList.sort(function (a, b) {
-                            return b['asset'] - a['asset'];
-                        });
-                        io.to(roomID).emit('roomRank', rankList);
-                    }
-
-<<<<<<< HEAD
-                    for (let askPrice in playerInfo['ask']) {
-                        coinVol += playerInfo['ask'][askPrice];
-                    }
-                    asset += cash + curPrice * coinVol;
-                    playerInfo['asset'] = asset;
-
-                    let refreshWallet = {
-                        type: 1,
-                        cash: cash,
-                        coinVol: coinVol,
-                        asset: asset,
-                        avgPrice: playerInfo['avgPrice'],
-                    };
+                    await new Game(io, socketID).refreshWallet(
+                        socketID,
+                        'renewalInfo',
+                        playerInfo['coinVol'],
+                        playerInfo['cash'],
+                        playerInfo['asset'],
+                        playerInfo['avgPrice']
+                    );
 
                     // rankObj 삽입
                     let rankObj = {
@@ -212,32 +208,31 @@ class Refresh {
                     };
                     rankList.push(rankObj);
 
-                    io.to(socketID).emit('refreshWallet', refreshWallet);
-                    console.log('refresh', refreshWallet);
                     roomList[roomID][socketID] = playerInfo;
-=======
->>>>>>> 8145b92d3982df0f7ec61609cebee2986b1da406
+                    rankList.sort(function (a, b) {
+                        return b['asset'] - a['asset'];
+                    });
+                    io.to(roomID).emit('roomRank', rankList);
                 }
-                // console.log(roomInfo);
-                if (roomInfo['gaming']) {
-                    roomList[roomID]['gameTime']--;
-                    console.log(roomList[roomID]['gameTime']);
-                    io.to(roomID).emit(
-                        'restGameTime',
-                        roomList[roomID]['gameTime']
-                    );
-                }
-                if (roomInfo['gameTime'] === -1) {
-                    roomList[roomID]['gaming'] = false;
-                    this.gameOver(roomID);
-                }
-
             }
-            // console
-            //     .log
-            //     // '----------------------renewalInfo End------------------------'
-            //     ();
-        
+            // console.log(roomInfo);
+            if (roomInfo['gaming']) {
+                roomList[roomID]['gameTime']--;
+                console.log(roomList[roomID]['gameTime']);
+                io.to(roomID).emit(
+                    'restGameTime',
+                    roomList[roomID]['gameTime']
+                );
+            }
+            if (roomInfo['gameTime'] === -1) {
+                roomList[roomID]['gaming'] = false;
+                this.gameOver(roomID);
+            }
+        }
+        // console
+        //     .log
+        //     // '----------------------renewalInfo End------------------------'
+        //     ();
     }
 
     async gameOver(roomID) {
