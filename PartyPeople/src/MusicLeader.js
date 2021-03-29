@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Tetris99 from './audios/music/Tetris99.mp3';
 import {
   Button,
   Fab,
@@ -13,6 +14,9 @@ import {
   TextField,
 } from '@material-ui/core';
 import Test from './Test';
+
+const bgm_audio = new Audio(Tetris99);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -36,7 +40,7 @@ export default function MusicLeader(props) {
   var tmp_time =  props.roomInfo ? props.roomInfo['gameTime'] : '02 : 25';
   const [music, setMusic] = React.useState(tmp_music);
   const [strTime, strSetTime] = React.useState(tmp_time);
-  
+  bgm_audio.play();
   function MusicInput() {
     const handleChange = (event) => {
       const musicName = event.target.value;
@@ -141,16 +145,22 @@ export default function MusicLeader(props) {
     // props.history.push('/game');
 });
 
+let isSetUp = false
+
 useEffect(() => {
-  props.socket.once('startGame_Res', (gameTime) => {
+  if(!isSetUp){
+    props.socket.once('startGame_Res', (gameTime) => {
+        bgm_audio.pause();
+        // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
+        props.history.push({
+          pathname:'/game',
+          state: {gameTime: gameTime}
+        });
 
-      // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
-      props.history.push({
-        pathname:'/game',
-        state: {gameTime: gameTime}
-      });
-
-  });
+    });
+    console.log('무언가 반복이 되고 있구나')
+    isSetUp = true;
+  }
 }, []);
   return(
     <>

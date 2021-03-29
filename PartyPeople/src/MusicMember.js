@@ -4,6 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Tetris99 from './audios/music/Tetris99.mp3';
+
 import {
   Button,
   Fab,
@@ -12,6 +14,9 @@ import {
   makeStyles,
   TextField,
 } from '@material-ui/core';
+
+const bgm_audio = new Audio(Tetris99);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -31,6 +36,7 @@ export default function MusicMember(props) {
   const classes = useStyles();
   // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
   /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
+  bgm_audio.play();
   var tmp_music = props.roomInfo['music'];
   var tmp_time =  props.roomInfo['gameTime'];
 
@@ -90,9 +96,11 @@ export default function MusicMember(props) {
           </form>
       );
   }
+  let isSetUp = false;
     useEffect(() => {
+      if(!isSetUp) {
       props.socket.once('startGame_Res', (gameTime) => {
-
+          bgm_audio.pause();
           // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
           props.history.push({
             pathname:'/game',
@@ -100,6 +108,9 @@ export default function MusicMember(props) {
           });
 
       });
+      console.log('무언가 반복이 되고')
+      isSetUp = true
+    }
   }, []);
   return(
     <>
