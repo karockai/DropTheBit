@@ -11,11 +11,10 @@ import { withRouter } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 import { useSound } from './useSound';
-import Tetris99 from './audios/music/Tetris99.mp3';
+
 
 export default function EnterRoom(props, { history }) {
-    const [isStart, setIsStart] = useState(true);
-    useSound(Tetris99, 0.4, 300, isStart);
+
 
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
@@ -29,6 +28,7 @@ export default function EnterRoom(props, { history }) {
     if (props.socket == null) {
         props.requestSocket('createPrivateRoom');
     }
+
 
     const sendName = (name) => {
         // ev.preventDefault();
@@ -81,7 +81,6 @@ export default function EnterRoom(props, { history }) {
                     roomInfo={props.roomInfo}
                     musicList={musicList}
                     time={props.time}
-                    setTime={props.setTime}
                 />
             )}
         </>

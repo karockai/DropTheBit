@@ -115,7 +115,6 @@ function Lobby(props) {
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                         time={props.time}
-                        setTime={props.setTime}
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
@@ -130,7 +129,6 @@ function Lobby(props) {
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                         time={props.time}
-                        setTime={props.setTime}
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
@@ -155,7 +153,6 @@ function Lobby(props) {
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                         time={props.time}
-                        setTime={props.setTime}
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}

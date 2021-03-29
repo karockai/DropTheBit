@@ -114,6 +114,8 @@ class GameManager extends React.Component {
         );
     };
 
+    
+
     render() {
         const socket = this.state.socketId;
         const roomID = this.state.roomID;

@@ -70,15 +70,19 @@ const changeTime = () => {
     }
   };
     
-    const signal = props.open;
+  const signal = props.open;
 
-    useEffect(()=>{
-      changeTime();
-    },[time]);
-    
-    useEffect(()=>{
-      setOpen(signal);
-    },[signal]);
+  useEffect(()=>{
+    changeTime();
+  },[time]);
+  
+  useEffect(()=>{
+    setOpen(signal);
+  },[signal]);
+
+  useEffect(() => {
+    console.log(open,time,'ThreeSecTimer on.');
+  })
 
   return (
       <Modal
@@ -98,8 +102,8 @@ const changeTime = () => {
       >
       {/* {changeTime} */}
         <Fade in={open}>
-          <div className={classes.paper} >
-            <h2 className={classes.typo} id="spring-modal-title"> {time} </h2>
+          <div className={classes.paper}>
+            <h4 className={classes.typo} id="spring-modal-title" style={{justifyContent: 'center'}}> {time} </h4>
           </div>
         </Fade>
       </Modal>

@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Tetris99 from './audios/music/Tetris99.mp3';
 import {
     Button,
     Fab,
@@ -13,6 +14,10 @@ import {
     TextField,
 } from '@material-ui/core';
 import KeyMapTemp from './images/KeyMap.png';
+import Test from './Test';
+
+const bgm_audio = new Audio(Tetris99);
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -148,14 +153,45 @@ export default function MusicLeader(props) {
         // props.history.push('/game');
     };
 
+    // useEffect(() => {
+    //     props.socket.once('startGame_Res', (gameTime) => {
+    //         // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
+    //         props.history.push({
+    //             pathname: '/game',
+    //             state: { gameTime: gameTime },
+    //         });
+    //     });
+    // }, []);
+    // return (
+    //     <>
+    //         <Grid>
+    //             <MusicInput />
+    //         </Grid>
+    //         <Grid>
+    //             <ShowMusic />
+    //         </Grid>
+    //         <Button variant="contained" color="primary" onClick={StartGameReq}>
+    //             {' '}
+    //             StartGame{' '}
+    //         </Button>
+    //         <Grid style={{ width: '50%' }}>
+    //             <img src={KeyMapTemp} width={'800'} />
+    //         </Grid>
+    let isSetUp = false;
+
     useEffect(() => {
-        props.socket.once('startGame_Res', (gameTime) => {
-            // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
-            props.history.push({
-                pathname: '/game',
-                state: { gameTime: gameTime },
+        if (!isSetUp) {
+            props.socket.once('startGame_Res', (gameTime) => {
+                bgm_audio.pause();
+                // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
+                props.history.push({
+                    pathname: '/game',
+                    state: { gameTime: gameTime },
+                });
             });
-        });
+            console.log('무언가 반복이 되고 있구나');
+            isSetUp = true;
+        }
     }, []);
     return (
         <>
@@ -169,9 +205,6 @@ export default function MusicLeader(props) {
                 {' '}
                 StartGame{' '}
             </Button>
-            <Grid style={{ width: '50%' }}>
-                <img src={KeyMapTemp} width={'800'} />
-            </Grid>
         </>
     );
 }
