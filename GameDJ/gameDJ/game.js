@@ -324,15 +324,12 @@ class Game {
         let playerInfo = roomList[roomID][socketID];
 
         let bidTable = playerInfo['bid'];
-        let bidTableKeys = Object.keys(bidTable);
         let bidTable_Res = [];
 
-        for (let bidPriceIdx in bidTableKeys) {
+        for (let key in bidTable){
             let temp = {};
-            let bidPrice = bidTableKeys[bidPriceIdx];
-            let bidVol = bidTable[bidPrice];
-            temp['price'] = bidPrice;
-            temp['vol'] = bidVol;
+            temp['price'] = key;
+            temp['vol'] = bidTable[key];
 
             bidTable_Res.push(temp);
         }
@@ -351,15 +348,12 @@ class Game {
         let playerInfo = roomList[roomID][socketID];
 
         let askTable = playerInfo['ask'];
-        let askTableKeys = Object.keys(askTable);
         let askTable_Res = [];
 
-        for (let askPriceIdx in askTableKeys) {
+        for (let key in askTable){
             let temp = {};
-            let askPrice = askTableKeys[askPriceIdx];
-            let askVol = askTable[askPrice];
-            temp['price'] = askPrice;
-            temp['vol'] = askVol;
+            temp['price'] = key;
+            temp['vol'] = askTable[key];
 
             askTable_Res.push(temp);
         }
