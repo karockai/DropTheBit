@@ -76,7 +76,7 @@ const changeTime = () => {
   },[time]);
   
   useEffect(()=>{
-    setOpen(signal);
+    setOpen(signal); 
   },[signal]);
 
 

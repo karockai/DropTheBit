@@ -11,6 +11,7 @@ import {
     Paper,
     makeStyles,
 } from '@material-ui/core';
+import { blue } from '@material-ui/core/colors';
 
 const greenTheme = createMuiTheme({
     palette: {
@@ -57,6 +58,7 @@ export default function PlayerList(props) {
     const testXs = 12;
     const [players, setPlayers] = useState([
         {
+            socketID: 'socketID',
             playerID: 'playerID',
             asset: 'asset',
         },
@@ -77,54 +79,105 @@ export default function PlayerList(props) {
     }, [isInit]);
 
     return (
-        <Grid
-            wrap="wrap"
-            container
-            direction="column"
-            justify="center"
-            alignItems="stretch"
-            spacing={2}
-        >
+        <>
             {players.map((player, index) => {
-                return (
-                    <Grid item xs={testXs}>
-                        <Paper
-                            style={{ height: '9.8vh' }}
-                            className={classes.paper}
-                        >
-                            <Grid container direction="row" alignItems="center">
+                if (player.socketID === props.socket.id) {
+                    return (
+                        <div>
+                            <Paper
+                                className={classes.paper}
+                                style={{
+                                    height: '90%',
+                                    border: 'solid',
+                                    borderColor: '#0066bb',
+                                    margin: '0 0 10px 0',
+                                    boxShadow: '12px 12px 2px 1px #ffffff',
+                                }}
+                            >
                                 <Grid
-                                    style={{ width: '20%', height: '5vh' }}
-                                    className="score"
+                                    container
+                                    direction="row"
+                                    alignItems="center"
                                 >
-                                    {'No.'}
-                                    {index + 1}
-                                </Grid>
-                                <Grid>
                                     <Grid
+                                        style={{ width: '20%', height: '100%' }}
+                                        className="score"
+                                    >
+                                        {index + 1}
+                                        {'위.'}
+                                    </Grid>
+                                    <Grid
+                                        style={{ width: '80%', height: '100%' }}
                                         container
-                                        direction="col"
+                                        direction="column"
+                                        className="score"
+                                    >
+                                        <Grid alignItems="right">{player.playerID}</Grid>
+                                        <Grid alignItems="right">{player.asset}</Grid>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </div>
+                    );
+                }
+            })}
+
+            <Grid
+                wrap="wrap"
+                container
+                direction="column"
+                justify="center"
+                alignItems="stretch"
+                spacing={2}
+            >
+                {players.map((player, index) => {
+                    const myColor =
+                        player.socketID === props.socket.id
+                            ? blue[200]
+                            : '#ffffff';
+                    const myFont =
+                        player.socketID === props.socket.id ? 'bold' : 'normal';
+                    return (
+                        <Grid item xs={testXs}>
+                            <Paper
+                                style={{
+                                    height: '9.8vh',
+                                    backgroundColor: myColor,
+                                    fontWeight: myFont,
+                                }}
+                                className={classes.paper}
+                            >
+                                <Grid
+                                    container
+                                    direction="row"
+                                    alignItems="center"
+                                >
+                                    <Grid
+                                        style={{ width: '20%', height: '100%' }}
+                                        className="score"
+                                    >
+                                        {index + 1}
+                                        {'위.'}
+                                    </Grid>
+                                    <Grid
+                                        style={{ width: '80%', height: '100%' }}
+                                        container
+                                        direction="column"
                                         className="score"
                                     >
                                         <Grid alignItems="right">
                                             {player.playerID}
                                         </Grid>
-                                    </Grid>
-                                    <Grid
-                                        container
-                                        direction="col"
-                                        className="score"
-                                    >
                                         <Grid alignItems="right">
                                             {player.asset}
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
-                        </Paper>
-                    </Grid>
-                );
-            })}
-        </Grid>
+                            </Paper>
+                        </Grid>
+                    );
+                })}
+            </Grid>
+        </>
     );
 }
