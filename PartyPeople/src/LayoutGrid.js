@@ -20,6 +20,7 @@ import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
 import { Howl,Howler } from 'howler';
+// import { testSound} from './testSound'
 
 import {
     BrowserRouter as Router,
@@ -41,12 +42,6 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
     },
 }));
-
-function testSound(src) {
-    let sound = new Howl({ src });;
-    console.log(sound);
-
-}
 
 export default function LayoutGrid(props) {
     const classes = useStyles();
@@ -74,9 +69,6 @@ export default function LayoutGrid(props) {
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
     const {Howl, Howler} = require('howler');
-    let sound = new Howl({SpecificMusic});
-    console.log(sound);
-    testSound();
 
     useEffect(() => {
         props.socket.once('startGame_Real', (data) => {
