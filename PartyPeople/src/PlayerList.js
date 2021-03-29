@@ -11,6 +11,7 @@ import {
     Paper,
     makeStyles,
 } from '@material-ui/core';
+import { blue } from '@material-ui/core/colors';
 
 const greenTheme = createMuiTheme({
     palette: {
@@ -57,6 +58,7 @@ export default function PlayerList(props) {
     const testXs = 12;
     const [players, setPlayers] = useState([
         {
+            socketID: 'socketID',
             playerID: 'playerID',
             asset: 'asset',
         },
@@ -76,6 +78,8 @@ export default function PlayerList(props) {
         }
     }, [isInit]);
 
+    
+
     return (
         <Grid
             wrap="wrap"
@@ -86,10 +90,11 @@ export default function PlayerList(props) {
             spacing={2}
         >
             {players.map((player, index) => {
+                const myColor = player.socketID === props.socket.id ? blue[200] : '#ffffff'
                 return (
                     <Grid item xs={testXs}>
                         <Paper
-                            style={{ height: '9.8vh' }}
+                            style={{ height: '9.8vh',  backgroundColor: myColor }}
                             className={classes.paper}
                         >
                             <Grid container direction="row" alignItems="center">
