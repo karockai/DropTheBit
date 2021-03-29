@@ -212,6 +212,7 @@ class Refresh {
                     let rankObj = {
                         playerID: playerInfo['playerID'],
                         asset: asset,
+                        socketID: socketID,
                     };
                     rankList.push(rankObj);
                     roomList[roomID][socketID] = playerInfo;
