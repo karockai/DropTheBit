@@ -141,7 +141,7 @@ export default function TradeStock(props) {
         props.socket.once('chart', (data) => {
             SetUnit(data.priceUnit);
             SetBid(data.curPrice);
-            SetVolume(1);
+            //SetVolume(1);
         });
     }
 

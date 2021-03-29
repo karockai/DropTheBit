@@ -72,30 +72,28 @@ export default {
             // room event << -----------------------------------------
 
             // In-game event ------------------------------------------ >>
-            socket.on('buy_Req', async (reqJson) => {
-                await new Game(io, socket).buy(reqJson);
+            socket.on('buy_Req', (reqJson) => {
+                if (roomList[socket.roomID]['gaming'] === false) return 0;
+                new Game(io, socket).buy(reqJson);
             });
-            socket.on('sell_Req', async (reqJson) => {
-                await new Game(io, socket).sell(reqJson);
+            socket.on('sell_Req', (reqJson) => {
+                if (roomList[socket.roomID]['gaming'] === false) return 0;
+                new Game(io, socket).sell(reqJson);
             });
-            socket.on(
-                'cancelBid_Req',
-                async (reqJson) => await new Game(io, socket).cancelBid(reqJson)
-            );
-            socket.on(
-                'cancelAsk_Req',
-                async (reqJson) => await new Game(io, socket).cancelAsk(reqJson)
-            );
-            socket.on(
-                'bidTable_Req',
-                async (reqJson) =>
-                    await new Game(io, socket).sendBidTable(reqJson)
-            );
-            socket.on(
-                'askTable_Req',
-                async (reqJson) =>
-                    await new Game(io, socket).sendAskTable(reqJson)
-            );
+            socket.on('cancelBid_Req', async (reqJson) => {
+                if (roomList[socket.roomID]['gaming'] === false) return 0;
+                await new Game(io, socket).cancelBid(reqJson)
+            });
+            socket.on('cancelAsk_Req', async (reqJson) => {
+                if (roomList[socket.roomID]['gaming'] === false) return 0;
+                await new Game(io, socket).cancelAsk(reqJson)
+            });
+            socket.on('bidTable_Req', async (reqJson) => {
+                await new Game(io, socket).sendBidTable(reqJson)
+            });
+            socket.on('askTable_Req', async (reqJson) => {
+                await new Game(io, socket).sendAskTable(reqJson)
+            });
 
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>

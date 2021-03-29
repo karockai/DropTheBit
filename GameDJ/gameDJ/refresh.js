@@ -26,11 +26,11 @@ class Refresh {
         //     ();
         // 1. bidList 불러옴
         curCoin = JSON.parse(await dbget('curCoin'));
-
+        if (!curCoin) return false;
         io.emit('chart', curCoin);
-        // console.log(curCoin);
-        let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
+        console.log(curPrice);
+        if (curPrice == prePrice) return false;
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
@@ -45,7 +45,10 @@ class Refresh {
         if (curPrice > prePrice) {
             // askPrice가 curPrice보다 낮은지 확인
             for (let askPrice in askList) {
-                if (askPrice > curPrice) continue;
+                // console.log(askPrice, curPrice);
+                // console.log(askPrice < curPrice);
+                // console.log(Number(askPrice) < curPrice);
+                if (Number(askPrice) > curPrice) continue;
 
                 // 낮다면 거래를 체결한다.
                 for (let socketID in askList[askPrice]) {
@@ -57,6 +60,7 @@ class Refresh {
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
                     playerInfo['askVol'] -= askVol;
+                    // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
@@ -96,8 +100,10 @@ class Refresh {
         else if (curPrice < prePrice) {
             // bidPrice가 curPrice보다 높은지 확인
             for (let bidPrice in bidList) {
-                if (bidPrice < curPrice) continue;
-
+                // console.log(bidPrice, curPrice);
+                // console.log(bidPrice < curPrice);
+                // console.log(Number(bidPrice) < curPrice);
+                if (Number(bidPrice) < curPrice) continue;
                 // 높다면 거래를 체결한다.
                 for (let socketID in bidList[bidPrice]) {
                     let roomID = bidList[bidPrice][socketID];
@@ -131,7 +137,7 @@ class Refresh {
                         playerInfo['asset'],
                         playerInfo['avgPrice']
                     );
-
+                    // console.log('매수 체결', bidPrice, playerInfo['bid'][bidPrice])
                     delete playerInfo['bid'][bidPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete bidList[bidPrice][socketID];
@@ -159,6 +165,7 @@ class Refresh {
         //     .log
         //     // '----------------------renewalCurCoin End------------------------'
         //     ();
+        prePrice = curPrice;
     }
 
     async renewalInfo() {
@@ -181,7 +188,7 @@ class Refresh {
             if (priceChange) {
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
-                    if (socketID.length != 20) continue;
+                    if (socketID.length !== 20) continue;
 
                     let playerInfo = roomInfo[socketID];
                     let cash = playerInfo['cash'];
@@ -207,13 +214,13 @@ class Refresh {
                         asset: asset,
                     };
                     rankList.push(rankObj);
-
                     roomList[roomID][socketID] = playerInfo;
-                    rankList.sort(function (a, b) {
-                        return b['asset'] - a['asset'];
-                    });
-                    io.to(roomID).emit('roomRank', rankList);
                 }
+                rankList.sort(function (a, b) {
+                    return b['asset'] - a['asset'];
+                });
+                let rankList2 = rankList.slice(0, 7);
+                io.to(roomID).emit('roomRank', rankList2);
             }
             // console.log(roomInfo);
             if (roomInfo['gaming']) {

@@ -14,10 +14,10 @@ export default function Timer(props) {
                 minute = '00';
                 second = '00';
             }
-            // else
-                // setTimeout(function(){
-                //     setTime(time - 1);
-                // }, 1000);
+            else
+                setTimeout(function(){
+                    setTime(time - 1);
+                }, 900);
        
             return (
                 <h2 style={{fontSize: 40}}>

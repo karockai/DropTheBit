@@ -16,6 +16,7 @@ function useSound(src, volume = 1, fadeoutTime = 0, signal) {
         soundStop();
         if (signal) {
             soundPlay(src);
+            console.log('useSound Played.')
             sound.on('play', () => {
                 const fadeouttime = fadeoutTime;
                 setTimeout(

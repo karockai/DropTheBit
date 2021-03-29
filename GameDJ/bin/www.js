@@ -17,6 +17,7 @@ global.bgmList = {
 };
 global.curCoin = {};
 global.exTable = {};
+global.prePrice = 0;
 
 // 차트를 바로 그리기 위한 curCoin 50개 리스트
 

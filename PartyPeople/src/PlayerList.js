@@ -6,6 +6,7 @@ import {
     Button,
     Box,
     TextField,
+    GridList,
     Grid,
     Paper,
     makeStyles,
@@ -52,7 +53,6 @@ function MakePlayerPaper(props) {
 }
 
 export default function PlayerList(props) {
-
     const classes = useStyles(greenTheme);
     const testXs = 12;
     const [players, setPlayers] = useState([
@@ -70,6 +70,7 @@ export default function PlayerList(props) {
             setInit(true);
         } else {
             props.socket.on('roomRank', (playerArray) => {
+                // console.log(playerArray)
                 setPlayers(playerArray);
             });
         }
@@ -85,37 +86,44 @@ export default function PlayerList(props) {
             spacing={2}
         >
             {players.map((player, index) => {
-                return (<Grid item xs={testXs}>
-                    <Paper
-                        style={{ height: '9.8vh' }}
-                        className={classes.paper}
-                    >
-                        <Grid container direction="row" alignItems="center">
-                            <Grid
-                                style={{ width: '20%', height: '5vh' }}
-                                className="score"
-                            >
-                                {'No.'}{index + 1}
-                            </Grid>
-                            <Grid >
+                return (
+                    <Grid item xs={testXs}>
+                        <Paper
+                            style={{ height: '9.8vh' }}
+                            className={classes.paper}
+                        >
+                            <Grid container direction="row" alignItems="center">
                                 <Grid
-                                    container
-                                    direction="col"
+                                    style={{ width: '20%', height: '5vh' }}
                                     className="score"
                                 >
-                                    <Grid alignItems="right">{player.playerID}</Grid>
+                                    {'No.'}
+                                    {index + 1}
                                 </Grid>
-                                <Grid
-                                    container
-                                    direction="col"
-                                    className="score"
-                                >
-                                    <Grid alignItems="right">{player.asset}</Grid>
+                                <Grid>
+                                    <Grid
+                                        container
+                                        direction="col"
+                                        className="score"
+                                    >
+                                        <Grid alignItems="right">
+                                            {player.playerID}
+                                        </Grid>
+                                    </Grid>
+                                    <Grid
+                                        container
+                                        direction="col"
+                                        className="score"
+                                    >
+                                        <Grid alignItems="right">
+                                            {player.asset}
+                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
-                    </Paper>
-                </Grid>);
+                        </Paper>
+                    </Grid>
+                );
             })}
         </Grid>
     );

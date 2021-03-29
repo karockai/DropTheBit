@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch,Redirect } from 'react-router-dom';
-import LayoutGrid from './LayoutGrid';
+import LayoutGridEffect from './LayoutGridEffect';
 import EnterRoom from './EnterRoom';
 import Lobby from './Lobby';
 
@@ -11,6 +11,7 @@ export default function Routes(props) {
             return true;
         return false;
     }
+
     return (
         <>
             <Router>
@@ -18,7 +19,9 @@ export default function Routes(props) {
                     <Route
                         exact
                         path="/"
-                        render={() => (
+                        render={() => {
+                            return (
+                                <>
                             <EnterRoom
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
@@ -28,18 +31,21 @@ export default function Routes(props) {
                                 roomID={props.roomID}
                                 roomInfo={props.roomInfo}
                             />
-                        )}
+                            </>)
+                        }}
                     />
                     <Route
                         path="/game"
-                        render={() => (isValid() ? 
-                            <LayoutGrid
+                        render={() => {
+                            return(
+                            isValid() ? 
+                            <LayoutGridEffect
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                                 roomID={props.roomID}
                                 roomInfo={props.roomInfo}
                                 gameTime={time}
-                            /> : <Redirect to="/" />)}
+                            /> : <Redirect to="/" />)}}
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                     />

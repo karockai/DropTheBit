@@ -61,7 +61,6 @@ export default function ThreeSecTimer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [time, setTime] = React.useState(3);
-  console.log('threeSecTimer');
 const changeTime = () => {
   if(time > 1) {
     setTimeout(function(){
@@ -70,15 +69,16 @@ const changeTime = () => {
     }
   };
     
-    const signal = props.open;
+  const signal = props.open;
 
-    useEffect(()=>{
-      changeTime();
-    },[time]);
-    
-    useEffect(()=>{
-      setOpen(signal);
-    },[signal]);
+  useEffect(()=>{
+    changeTime();
+  },[time]);
+  
+  useEffect(()=>{
+    setOpen(signal);
+  },[signal]);
+
 
   return (
       <Modal
@@ -98,8 +98,8 @@ const changeTime = () => {
       >
       {/* {changeTime} */}
         <Fade in={open}>
-          <div className={classes.paper} >
-            <h2 className={classes.typo} id="spring-modal-title"> {time} </h2>
+          <div className={classes.paper}>
+            <h4 className={classes.typo} id="spring-modal-title" style={{justifyContent: 'center'}}> {time} </h4>
           </div>
         </Fade>
       </Modal>

@@ -5,6 +5,7 @@ import {
     Fab,
     Grid,
     Paper,
+    GridList,
     makeStyles,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
@@ -17,7 +18,6 @@ import MusicMember from './MusicMember';
 // 용기
 
 function Lobby(props) {
-
     var IsLeader = true;
     const PutPlayer = (props) => {
         return (
@@ -115,10 +115,10 @@ function Lobby(props) {
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                         time={props.time}
-                        setTime={props.setTime}
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        MusicPause= {props.MusicPause}
                     />
                 </>
             );
@@ -130,10 +130,10 @@ function Lobby(props) {
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                         time={props.time}
-                        setTime={props.setTime}
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        MusicPause= {props.MusicPause}
                     />
                 </>
             );
@@ -155,16 +155,18 @@ function Lobby(props) {
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                         time={props.time}
-                        setTime={props.setTime}
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        MusicPause= {props.MusicPause}
                     />
                 </Grid>
                 <Grid style={{ width: '50%' }}>
-                    <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                    {/* <Grid style={{ height: '80vh' }}>{Card()}</Grid> */}
                     <Grid style={{ width: '50%' }}>
-                        <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                        <GridList>
+                            <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                        </GridList>
                         <Grid container justify="center">
                             <input
                                 type="text"

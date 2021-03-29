@@ -10,16 +10,30 @@ import {
 import { withRouter } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
-import { useSound } from './useSound';
+// import { useSound } from './useSound';
 import Tetris99 from './audios/music/Tetris99.mp3';
 
 export default function EnterRoom(props, { history }) {
-    const [isStart, setIsStart] = useState(true);
-    useSound(Tetris99, 0.4, 300, isStart);
+
 
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState(props.roomID);
+    const [bgm_audio] = useState(new Audio(Tetris99));
+    const [playing, setPlaying] = useState(true);
+
+    const MusicPause = () => {
+        console.log(playing);
+        setPlaying(false);
+        console.log(playing);
+    }
+    useEffect(() => {
+        playing ? bgm_audio.play() : bgm_audio.pause();
+      },
+    //  ?  [playing] 이 조건이 없으면 렌더가 불필요하게 많이 된다.
+    // ? 그런데 있으면 렌더가 한 번 모자라서 음악이 안나옴
+    );
+
     let textInput = useRef(null);
     let musicList = [];
     const handleOnSave = (textInput) => {
@@ -28,7 +42,22 @@ export default function EnterRoom(props, { history }) {
     };
     if (props.socket == null) {
         props.requestSocket('createPrivateRoom');
+        // setPlaying(true);
     }
+    // useLayoutEffect(()=>{
+    //     if (bgm_audio.paused) {
+    //         console.log('play');
+    //         bgm_audio.play();
+    //     }
+    // }, []);
+    // const PauseAudio = (() => {
+    //     // if (!bgm_audio.paused) {
+    //         console.log(bgm_audio.paused);
+    //         bgm_audio.pause();
+    //         console.log(bgm_audio.paused); 
+    //     // }
+    //         // bgm_audio = new Audio('');
+    // });
 
     const sendName = (name) => {
         // ev.preventDefault();
@@ -81,7 +110,8 @@ export default function EnterRoom(props, { history }) {
                     roomInfo={props.roomInfo}
                     musicList={musicList}
                     time={props.time}
-                    setTime={props.setTime}
+                    MusicPause= {MusicPause}
+                    // audio = {bgm_audio}
                 />
             )}
         </>

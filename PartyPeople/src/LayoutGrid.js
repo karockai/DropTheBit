@@ -53,7 +53,6 @@ export default function LayoutGrid(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
-    const [isStart, setIsStart] = useState(false);
     const musicList = {
         Deja_Vu: Deja_Vu,
         King_Conga: King_Conga,
@@ -70,19 +69,19 @@ export default function LayoutGrid(props) {
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
     const {Howl, Howler} = require('howler');
 
-    useEffect(() => {
-        props.socket.once('startGame_Real', (data) => {
-            setThreeSecTimerOpen(false);
-            setTimerTime(gameTime);
-            setIsStart(true);
-            // sound.play();
-            // sound.on('play', () => {
-            //     const fadeouttime = 2000;
-            //     setTimeout(() => sound.fade(0.7, 0, fadeouttime), (sound.duration() - sound.seek()) * 1000 - fadeouttime);
-            // });
+    // useEffect(() => {
+    //     props.socket.once('startGame_Real', (data) => {
+    //         setThreeSecTimerOpen(false);
+    //         setTimerTime(gameTime);
+    //         setIsStart(true);
+    //         // sound.play();
+    //         // sound.on('play', () => {
+    //         //     const fadeouttime = 2000;
+    //         //     setTimeout(() => sound.fade(0.7, 0, fadeouttime), (sound.duration() - sound.seek()) * 1000 - fadeouttime);
+    //         // });
             
-        });
-    }, [timerTime]);
+    //     });
+    // }, [timerTime]);
     // useSound(SpecificMusic, 0.7, 2000, isStart);
 
     useEffect(() => {
@@ -136,10 +135,10 @@ export default function LayoutGrid(props) {
 
     return (
         <React.Fragment>
-            <ThreeSecTimer
+            {/* <ThreeSecTimer
                 SpecificMusic={SpecificMusic}
                 open={threeSecTimerOpen}
-            />
+            /> */}
             {over && <GameOverModal leaderBoard={over} />}
             <Container maxWidth="lg">
                 <Typography component="div" style={{ padding: '0 0 0 0' }}>
@@ -199,7 +198,7 @@ export default function LayoutGrid(props) {
                                             justify-content="center"
                                             align-items="center"
                                             // time={props.time}
-                                            isStart={isStart}
+                                            isStart={props.isStart}
                                             time={timerTime}
                                         />
                                     </Paper>
