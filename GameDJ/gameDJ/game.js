@@ -126,7 +126,7 @@ class Game {
             // console.log('호가 등록 완료', playerInfo);
             socket.emit('bidDone', bidDone);
             socket.to(roomID).emit('bidDone_Room', bidDone);
-            console.log("호가 등록 완료", bidList);
+            // console.log("호가 등록 완료", bidList);
             this.sendBidTable(reqJson);
         }
         // 6-3. refreshWallet update & emit
@@ -213,7 +213,7 @@ class Game {
             
             socket.emit('askDone', askDone);
             socket.to(roomID).emit('askDone_Room', askDone);
-            console.log("호가 등록 완료", askList);
+            // console.log("호가 등록 완료", askList);
             this.sendAskTable(reqJson);
         }
         
@@ -229,7 +229,7 @@ class Game {
         
         // bidList의 Length가 1이면 가격 자체를 지워버린다.
         if(!bidList[bidPrice]) return false;
-        console.log("매수 취소 전", bidList);
+        // console.log("매수 취소 전", bidList);
         if (Object.keys(bidList[bidPrice]).length === 1) {
             delete bidList[bidPrice];
         } else {
@@ -247,7 +247,7 @@ class Game {
         
         // 매수 취소 완료 Response 필요
         this.refreshWallet(socketID, 'cancelBid', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
-        console.log("매수 취소 후", bidList);
+        // console.log("매수 취소 후", bidList);
         
         this.sendBidTable(reqJson);
     }
@@ -261,7 +261,7 @@ class Game {
         // 취소 요청한 가격에 해당하는 목록을 불러온다
         // askList의 Length가 1이면 가격 자체를 지워버린다.
         if(!askList[askPrice]) return false;
-        console.log("매도 취소 전", askList);
+        // console.log("매도 취소 전", askList);
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
         } else {
@@ -280,7 +280,7 @@ class Game {
         
         this.refreshWallet(socketID, 'cancelAsk', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
         
-        console.log("매도 취소 후", askList);
+        // console.log("매도 취소 후", askList);
         // 매수 취소 완료 Response 필요
         this.sendAskTable(reqJson);
     }
