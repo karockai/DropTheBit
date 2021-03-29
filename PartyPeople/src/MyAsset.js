@@ -57,7 +57,7 @@ export default function MyAsset(props) {
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
-
+                console.log(data.type + '으로 인해서 발생함.');
                 const currentCash = data.cash;
                 const currentAsset = data.asset;
                 const currentCoin = data.coinVol;
