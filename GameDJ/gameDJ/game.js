@@ -27,6 +27,7 @@ class Game {
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', gameTime);
+        console.log('start game');
 
         async function realStart() {
             let roomID = socket.roomID;
@@ -56,7 +57,7 @@ class Game {
 
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
-        
+
         // console.log('---------------------------------------------------');
         // console.log('---------------------------------------------------');
 
@@ -70,10 +71,13 @@ class Game {
 
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
-            if (playerInfo['avgPrice'] === 0){
+            if (playerInfo['avgPrice'] === 0) {
                 playerInfo['avgPrice'] = reqPrice;
-            } else{
-                playerInfo['avgPrice'] = Math.round(((coinVol * playerInfo['avgPrice']) + (reqVol * reqPrice)) / (coinVol + reqVol));
+            } else {
+                playerInfo['avgPrice'] = Math.round(
+                    (coinVol * playerInfo['avgPrice'] + reqVol * reqPrice) /
+                        (coinVol + reqVol)
+                );
             }
 
             // 6-1. cash, coin 갯수 갱신
@@ -106,10 +110,11 @@ class Game {
             playerInfo['coinVol'] = coinVol;
             // 4-3. player 호가 목록 등록
             if (playerInfo['bid'].hasOwnProperty(reqPrice)) {
-                playerInfo['bid'][reqPrice] = playerInfo['bid'][reqPrice] + reqVol;
+                playerInfo['bid'][reqPrice] =
+                    playerInfo['bid'][reqPrice] + reqVol;
             } else {
                 playerInfo['bid'][reqPrice] = reqVol;
-                if (!bidList.hasOwnProperty(reqPrice)){
+                if (!bidList.hasOwnProperty(reqPrice)) {
                     bidList[reqPrice] = {};
                 }
                 bidList[reqPrice][socketID] = roomID;
@@ -130,10 +135,17 @@ class Game {
             this.sendBidTable(reqJson);
         }
         // 6-3. refreshWallet update & emit
-        this.refreshWallet(socketID, 'buy', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+        this.refreshWallet(
+            socketID,
+            'buy',
+            playerInfo['coinVol'],
+            playerInfo['cash'],
+            playerInfo['asset'],
+            playerInfo['avgPrice']
+        );
         // console.log('-------BUY END-------------');
     }
-    
+
     // 매도 요청 등록
     sell(reqJson) {
         const { io, socket } = this;
@@ -143,18 +155,16 @@ class Game {
         let socketID = reqJson['socketID'];
         let reqPrice = Number(reqJson['currentBid']);
         let reqVol = Number(reqJson['currentVolume']);
-        
+
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
-        let prePrice = curCoin['prePrice'];
-        let priceChange = curPrice - prePrice;
 
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
-        
+
         // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
         if (reqPrice <= curPrice) {
             // 6-1. cash, coin 갯수 갱신
@@ -167,7 +177,7 @@ class Game {
             playerInfo['coinVol'] = coinVol;
             // playerInfo['asset'] = asset;
             roomList[roomID][socketID] = playerInfo;
-            
+
             // 6-4. sellDone
             let sellDone = {
                 type: '매도 완료',
@@ -175,7 +185,7 @@ class Game {
                 vol: reqVol,
                 price: curPrice,
             };
-            
+
             io.to(socketID).emit('sellDone', sellDone);
             io.to(roomID).emit('sellDone_Room', sellDone);
             // console.log('현재가로 판매 완료 :', playerInfo);
@@ -190,19 +200,20 @@ class Game {
             // 4-3. player 호가 목록 등록
             // console.log(playerInfo);
             // console.log(playerInfo['ask']);
-            
+
             if (playerInfo['ask'].hasOwnProperty(reqPrice)) {
-                playerInfo['ask'][reqPrice] = playerInfo['ask'][reqPrice] + reqVol;
+                playerInfo['ask'][reqPrice] =
+                    playerInfo['ask'][reqPrice] + reqVol;
             } else {
                 playerInfo['ask'][reqPrice] = reqVol;
-                if (!askList.hasOwnProperty(reqPrice)){
+                if (!askList.hasOwnProperty(reqPrice)) {
                     askList[reqPrice] = {};
                 }
                 askList[reqPrice][socketID] = roomID;
             }
             playerInfo['askVol'] += reqVol;
             roomList[roomID][socketID] = playerInfo;
-            
+
             // console.log('호가 등록 완료', playerInfo);
             let askDone = {
                 type: '매도 주문',
@@ -210,32 +221,39 @@ class Game {
                 vol: reqVol,
                 price: reqPrice,
             };
-            
+
             socket.emit('askDone', askDone);
             socket.to(roomID).emit('askDone_Room', askDone);
             // console.log("호가 등록 완료", askList);
             this.sendAskTable(reqJson);
         }
-        
-        this.refreshWallet(socketID, 'sell', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+
+        this.refreshWallet(
+            socketID,
+            'sell',
+            playerInfo['coinVol'],
+            playerInfo['cash'],
+            playerInfo['asset'],
+            playerInfo['avgPrice']
+        );
         // console.log('-----------Sell End-----------');
     }
-    
+
     // 매수 요청 취소
     async cancelBid(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let bidPrice = reqJson['reqPrice'];
-        
+
         // bidList의 Length가 1이면 가격 자체를 지워버린다.
-        if(!bidList[bidPrice]) return false;
+        if (!bidList[bidPrice]) return false;
         // console.log("매수 취소 전", bidList);
         if (Object.keys(bidList[bidPrice]).length === 1) {
             delete bidList[bidPrice];
         } else {
             delete bidList[bidPrice][socketID];
         }
-        
+
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
         let bidVol = playerInfo['bid'][bidPrice];
@@ -244,23 +262,30 @@ class Game {
         playerInfo['bidCash'] -= bidVol * bidPrice;
         delete playerInfo['bid'][bidPrice];
         roomList[roomID][socketID] = playerInfo;
-        
+
         // 매수 취소 완료 Response 필요
-        this.refreshWallet(socketID, 'cancelBid', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+        this.refreshWallet(
+            socketID,
+            'cancelBid',
+            playerInfo['coinVol'],
+            playerInfo['cash'],
+            playerInfo['asset'],
+            playerInfo['avgPrice']
+        );
         // console.log("매수 취소 후", bidList);
-        
+
         this.sendBidTable(reqJson);
     }
-    
+
     // 매도 요청 취소
     async cancelAsk(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let askPrice = reqJson['reqPrice'];
-        
+
         // 취소 요청한 가격에 해당하는 목록을 불러온다
         // askList의 Length가 1이면 가격 자체를 지워버린다.
-        if(!askList[askPrice]) return false;
+        if (!askList[askPrice]) return false;
         // console.log("매도 취소 전", askList);
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
@@ -271,15 +296,22 @@ class Game {
         let playerInfo = roomList[roomID][socketID];
         let coinVol = playerInfo['coinVol'];
         let askVol = playerInfo['ask'][askPrice];
-        
+
         coinVol += askVol;
         playerInfo['coinVol'] = coinVol;
         playerInfo['askVol'] -= askVol;
         delete playerInfo['ask'][askPrice];
         roomList[roomID][socketID] = playerInfo;
-        
-        this.refreshWallet(socketID, 'cancelAsk', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
-        
+
+        this.refreshWallet(
+            socketID,
+            'cancelAsk',
+            playerInfo['coinVol'],
+            playerInfo['cash'],
+            playerInfo['asset'],
+            playerInfo['avgPrice']
+        );
+
         // console.log("매도 취소 후", askList);
         // 매수 취소 완료 Response 필요
         this.sendAskTable(reqJson);
@@ -339,7 +371,7 @@ class Game {
         io.to(socketID).emit('askTable_Res', askTable_Res);
     }
 
-    async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice){
+    async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
         const { io } = this;
         let refreshWallet = {};
         refreshWallet['result'] = 'success';

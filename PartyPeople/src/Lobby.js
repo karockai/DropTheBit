@@ -17,7 +17,6 @@ import MusicMember from './MusicMember';
 // 용기
 
 function Lobby(props) {
-
     var IsLeader = true;
     const PutPlayer = (props) => {
         return (
@@ -162,7 +161,7 @@ function Lobby(props) {
                     />
                 </Grid>
                 <Grid style={{ width: '50%' }}>
-                    <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                    {/* <Grid style={{ height: '80vh' }}>{Card()}</Grid> */}
                     <Grid style={{ width: '50%' }}>
                         <Grid style={{ height: '80vh' }}>{Card()}</Grid>
                         <Grid container justify="center">

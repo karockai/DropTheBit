@@ -26,11 +26,11 @@ class Refresh {
         //     ();
         // 1. bidList 불러옴
         curCoin = JSON.parse(await dbget('curCoin'));
-
+        if (!curCoin) return false;
         io.emit('chart', curCoin);
-        // console.log(curCoin);
-        let prePrice = curCoin['prePrice'];
         let curPrice = curCoin['curPrice'];
+        if (curPrice == prePrice) return false;
+        prePrice = curPrice;
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
@@ -198,7 +198,7 @@ class Refresh {
                         cash + bidCash + curPrice * (askVol + coinVol);
                     let asset = playerInfo['asset'];
 
-                    await new Game(io, socketID).refreshWallet(
+                    new Game(io, socketID).refreshWallet(
                         socketID,
                         'renewalInfo',
                         playerInfo['coinVol'],
@@ -212,14 +212,15 @@ class Refresh {
                         playerID: playerInfo['playerID'],
                         asset: asset,
                     };
-                    rankList.push(rankObj);
-
+                    if (rankList.length < 8) {
+                        rankList.push(rankObj);
+                    }
                     roomList[roomID][socketID] = playerInfo;
-                    rankList.sort(function (a, b) {
-                        return b['asset'] - a['asset'];
-                    });
-                    io.to(roomID).emit('roomRank', rankList);
                 }
+                rankList.sort(function (a, b) {
+                    return b['asset'] - a['asset'];
+                });
+                io.to(roomID).emit('roomRank', rankList);
             }
             // console.log(roomInfo);
             if (roomInfo['gaming']) {
