@@ -1,4 +1,4 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     Button,
     Fab,
@@ -9,11 +9,14 @@ import {
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
+import Logo from './images/Logo.png';
 
 function SetPlayerName(props) {
     // const socket = io();
     // const [name, setName] = React.useState('');
-    const params = window.location.toString().substring(window.location.toString().indexOf('?'));
+    const params = window.location
+        .toString()
+        .substring(window.location.toString().indexOf('?'));
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
 
@@ -22,57 +25,65 @@ function SetPlayerName(props) {
     //     nameInput.current.focus();
     // });
 
-    const onKeyPress =(e)=>{
-        if(e.key == 'Enter') {
+    const onKeyPress = (e) => {
+        if (e.key == 'Enter') {
             handleOnSave(e);
         }
-    }
+    };
 
     const handleChange = (event) => {
         setTemp(event.target.value);
     };
 
     const handleOnSave = (event) => {
-        if(tmp != ''){
+        if (tmp != '') {
             event.preventDefault();
             props.onSave(tmp);
         }
-
-    }
-    let buttonMsg ='Create Private Room';
-    if (searchParams.has('id')) {   // 초대링크 받아서 온 사람
+    };
+    let buttonMsg = 'Create Private Room';
+    if (searchParams.has('id')) {
+        // 초대링크 받아서 온 사람
         buttonMsg = 'Join Room';
-        
-    }
-    else { 
+    } else {
         buttonMsg = 'Create Private Room';
     }
-    return(
-
+    return (
         <>
-        <Grid container justify={'center'} alignItems={'center'} spacing={2} direction='column' style={{width:'100%',height:'99vh'}}>
-            <Grid item>
-                <TextField
-                    id="standard-basic"
-                    label="Name"
-                    inputRef={props.textInput}
-                    onChange={handleChange}
-                    variant="outlined"
-                    size="medium"
-                    // ref={nameInput}
-                    autoFocus
-                    onKeyPress={onKeyPress}
-                />
-            </Grid>
-            <Grid item>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleOnSave}
-                >
-                    {buttonMsg}
-                </Button>
-            </Grid>
+            <Grid
+                container
+                justify={'center'}
+                alignItems={'center'}
+                spacing={2}
+                direction="column"
+                style={{ width: '100%', height: '99vh' }}
+            >
+                <Grid>
+                    <img src={Logo} />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        id="standard-basic"
+                        label="Name"
+                        inputRef={props.textInput}
+                        onChange={handleChange}
+                        variant="outlined"
+                        size="medium"
+                        // ref={nameInput}
+                        autoFocus
+                        onKeyPress={onKeyPress}
+                    />
+                </Grid>
+
+                <Grid item>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleOnSave}
+                    >
+                        {buttonMsg}
+                    </Button>
+                </Grid>
             </Grid>
         </>
     );

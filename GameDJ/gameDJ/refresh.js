@@ -72,7 +72,10 @@ class Refresh {
                     };
                     io.to(socketID).emit('sellDone', sellDone);
                     io.to(roomID).emit('sellDone_Room', sellDone);
-                    await new Game(io, socketID).sendAskTable({'roomID':roomID, 'socketID':socketID});
+                    await new Game(io, socketID).sendAskTable({
+                        roomID: roomID,
+                        socketID: socketID,
+                    });
                 }
                 delete askList[askPrice];
             }
@@ -91,15 +94,19 @@ class Refresh {
                     let coinVol = playerInfo['coinVol'];
                     let bidVol = playerInfo['bid'][bidPrice];
 
-                    if (playerInfo['avgPrice'] === 0){
+                    if (playerInfo['avgPrice'] === 0) {
                         playerInfo['avgPrice'] = bidPrice;
-                    } else{
-                        playerInfo['avgPrice'] = Math.round(((coinVol * playerInfo['avgPrice']) + (bidVol * bidPrice)) / (coinVol + bidVol));
+                    } else {
+                        playerInfo['avgPrice'] = Math.round(
+                            (coinVol * playerInfo['avgPrice'] +
+                                bidVol * bidPrice) /
+                                (coinVol + bidVol)
+                        );
                     }
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-                    
+
                     delete playerInfo['bid'][bidPrice];
                     roomList[roomID][socketID] = playerInfo;
 
@@ -115,7 +122,10 @@ class Refresh {
                     };
                     io.to(socketID).emit('buyDone', buyDone);
                     io.to(roomID).emit('buyDone_Room', buyDone);
-                    await new Game(io, socketID).sendBidTable({'roomID':roomID, 'socketID':socketID});
+                    await new Game(io, socketID).sendBidTable({
+                        roomID: roomID,
+                        socketID: socketID,
+                    });
                 }
                 delete bidList[bidPrice];
             }
@@ -163,7 +173,7 @@ class Refresh {
                     }
                     asset += cash + curPrice * coinVol;
                     playerInfo['asset'] = asset;
-                    
+
                     let refreshWallet = {
                         type: 1,
                         cash: cash,
@@ -180,7 +190,7 @@ class Refresh {
                     rankList.push(rankObj);
 
                     io.to(socketID).emit('refreshWallet', refreshWallet);
-                    console.log("refresh", refreshWallet);
+                    console.log('refresh', refreshWallet);
                     roomList[roomID][socketID] = playerInfo;
                 }
 
@@ -221,18 +231,18 @@ class Refresh {
 
             leaderBoard.push(temp);
 
-            for (let bid in playerInfo['bid']){
-                for (let id  in bidList[bid]){
-                    if (socketID === id){
-                        delete bidList[bid][id]
+            for (let bid in playerInfo['bid']) {
+                for (let id in bidList[bid]) {
+                    if (socketID === id) {
+                        delete bidList[bid][id];
                     }
                 }
             }
 
-            for (let ask in playerInfo['ask']){
-                for (let id  in askList[ask]){
-                    if (socketID === id){
-                        delete askList[ask][id]
+            for (let ask in playerInfo['ask']) {
+                for (let id in askList[ask]) {
+                    if (socketID === id) {
+                        delete askList[ask][id];
                     }
                 }
             }
