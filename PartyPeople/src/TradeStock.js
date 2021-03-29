@@ -123,10 +123,11 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
+        if (volume + Math.floor(myWallet.myCash / currentBid * 0.1) > Math.floor(myWallet.myCash / currentBid)) return;
         SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function VolumeDown(volume) {
-        if (volume <= 0) return;
+        if (volume - Math.floor(myWallet.myCash / currentBid * 0.1) <= 0) return;
         SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
     }
     function BidUp() {
@@ -245,6 +246,7 @@ export default function TradeStock(props) {
         }
     }
     function HandleKeyUp(e) {
+        if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
         if (props.socket == null || isBind === false) {

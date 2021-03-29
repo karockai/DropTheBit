@@ -113,8 +113,8 @@ export default function AskTable(props) {
                 >
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">매수 가격</TableCell>
-                            <TableCell align="center">매수 수량</TableCell>
+                            <TableCell align="center">매도 가격</TableCell>
+                            <TableCell align="center">매도 수량</TableCell>
                         </TableRow>
                     </TableHead>
                 </Table>

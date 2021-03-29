@@ -70,6 +70,10 @@ export default function ChatRoom(props) {
 
     useEffect(() => {
         scrollToBottom();
+        document.addEventListener('keyup', HandleKeyUp);
+        return () => {
+            document.removeEventListener('keyup', HandleKeyUp);
+        };
     },);
     
     // const socket_on = (async() => {
@@ -107,8 +111,29 @@ export default function ChatRoom(props) {
         setMessages(new_messages);
     };
 
+    let isFocus = false;
 
-
+    function HandleKeyUp(e) {
+        if (props.inputCtrl) return;
+        if (e.keyCode === 123 || e.keyCode === 27) return; //_ 'F12' || 'esc'
+        e.preventDefault();
+        // if (props.socket == null || isBind === false) {
+        //     props.requestSocket('TradeStock', props.socket);
+        //     return;
+        // }
+        if (e.keyCode === 13) {
+            //_ Enter
+            if (document.activeElement !== textInput.current) {
+                textInput.current.focus();
+            }
+            else if (textInput.current.value === '') {
+                textInput.current.blur();
+            }
+            else {
+                sendMessage();
+            }
+        }
+    }
 
     function PrintMessage() {
         return <></>;
@@ -155,6 +180,14 @@ export default function ChatRoom(props) {
                             id="standard-basic"
                             inputRef={textInput}
                             label="메세지 보내기"
+                            onFocus={()=> {
+                                isFocus = true;
+                                props.SetInputCtrl(true)
+                            }}
+                            onBlur={()=> {
+                                isFocus = false;
+                                props.SetInputCtrl(false)
+                            }}
                             onChange={handleOnChange}
                             variant="outlined"
                             size="small"

@@ -153,7 +153,7 @@ export default function BidTab(props) {
                             <TableRow>
                                 <TableCell align="center">매도량</TableCell>
                                 <TableCell align="center">거래가</TableCell>
-                                <TableCell align="center">매도량</TableCell>
+                                <TableCell align="center">매수량</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
