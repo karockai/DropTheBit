@@ -79,31 +79,6 @@ const AntTab = withStyles((theme) => ({
     selected: {},
 }))((props) => <Tab disableRipple {...props} />);
 
-const TabsContainer = () => {
-    const classes = useTabStyles();
-
-    const cities = ['전체 호가', '방 호가', '나의 호가'];
-
-    const [active, setActive] = useState(cities[0]);
-    return (
-        <Tabs
-            classes={{ root: classes.root, scroller: classes.scroller }}
-            value={active}
-            onChange={(event, newValue) => {
-                setActive(newValue);
-            }}
-            indicatorColor="primary"
-            textColor="primary"
-            // variant={"scrollable"}
-            //   scrollButtons={"on"}
-        >
-            {cities.map((city, index) => (
-                <AntTab key={index} label={city} value={city} />
-            ))}
-        </Tabs>
-    );
-};
-
 export default function BidTab(props) {
     const [isInit, setInit] = useState(false);
     const [currentBids, SetBid] = useState([
@@ -151,9 +126,8 @@ export default function BidTab(props) {
                     >
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">매도량</TableCell>
+                                <TableCell align="center">거래량</TableCell>
                                 <TableCell align="center">거래가</TableCell>
-                                <TableCell align="center">매수량</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -170,11 +144,8 @@ export default function BidTab(props) {
                                         key={row.name}
                                     >
                                         <TableCell>{row.buy}</TableCell>
-                                        <TableCell align="center">
+                                        <TableCell>
                                             {row.price}
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            {row.sell}
                                         </TableCell>
                                     </TableRow>
                                 );
