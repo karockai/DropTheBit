@@ -55,6 +55,8 @@ class Game {
 
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
+        let prePrice = curCoin['prePrice'];
+        
         // console.log('---------------------------------------------------');
         // console.log('---------------------------------------------------');
 
@@ -78,13 +80,11 @@ class Game {
             // 6-1. cash, coin 갯수 갱신
             cash -= curPrice * reqVol;
             coinVol += reqVol;
-            asset = cash + coinVol * curPrice;
 
             // 6-2. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-            playerInfo['asset'] = asset;
-            
+
             roomList[roomID][socketID] = playerInfo;
 
             // 6-4. buyDone
@@ -103,10 +103,8 @@ class Game {
         } else {
             // 7-1. cash 갱신
             cash -= reqPrice * reqVol;
-            asset = cash + coinVol * curPrice;
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-            playerInfo['asset'] = asset;
             // 4-3. player 호가 목록 등록
             if (playerInfo['bid'].hasOwnProperty(reqPrice)) {
                 playerInfo['bid'][reqPrice] =
@@ -154,7 +152,9 @@ class Game {
         
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
-        
+        let prePrice = curCoin['prePrice'];
+        let priceChange = curPrice - prePrice;
+
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
@@ -167,11 +167,12 @@ class Game {
             // 6-1. cash, coin 갯수 갱신
             cash += curPrice * reqVol;
             coinVol -= reqVol;
-            asset = cash + coinVol * curPrice;
+            // asset = cash + coinVol * curPrice;
+
             // 6-3. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-            playerInfo['asset'] = asset;
+            // playerInfo['asset'] = asset;
             roomList[roomID][socketID] = playerInfo;
             
             // 6-4. sellDone
@@ -188,11 +189,11 @@ class Game {
             // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
         } else {
             coinVol -= reqVol;
-            asset = cash + coinVol * curPrice;
+            // asset = cash + coinVol * curPrice;
 
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-            playerInfo['asset'] = asset;
+            // playerInfo['asset'] = asset;
             // 4-3. player 호가 목록 등록
             // console.log(playerInfo);
             // console.log(playerInfo['ask']);
@@ -233,6 +234,7 @@ class Game {
     
     // 매수 요청 취소
     async cancelBid(reqJson) {
+        const { io } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let bidPrice = reqJson['reqPrice'];
@@ -257,16 +259,17 @@ class Game {
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
         refreshWallet['type'] = 6;
-        refreshWallet['coinVol'] = coinVol;
+        refreshWallet['coinVol'] = playerInfo['coinVol'];
         refreshWallet['cash'] = cash;
         refreshWallet['asset'] = playerInfo['asset'];
-        socket.emit('refreshWallet', refreshWallet);
+        io.to(socketID).emit('refreshWallet', refreshWallet);
 
         this.sendBidTable(reqJson);
     }
 
     // 매도 요청 취소
     async cancelAsk(reqJson) {
+        const { io } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let askPrice = reqJson['reqPrice'];
@@ -295,7 +298,7 @@ class Game {
         refreshWallet['coinVol'] = coinVol;
         refreshWallet['cash'] = playerInfo['cash'];
         refreshWallet['asset'] = playerInfo['asset'];
-        socket.emit('refreshWallet', refreshWallet);
+        io.to(socketID).emit('refreshWallet', refreshWallet);
 
         // 매수 취소 완료 Response 필요
         this.sendAskTable(reqJson);
