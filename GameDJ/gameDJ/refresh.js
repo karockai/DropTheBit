@@ -29,8 +29,9 @@ class Refresh {
         if (!curCoin) return false;
         io.emit('chart', curCoin);
         let curPrice = curCoin['curPrice'];
+        console.log(curPrice);
         if (curPrice == prePrice) return false;
-        prePrice = curPrice;
+        
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
@@ -165,6 +166,7 @@ class Refresh {
         //     .log
         //     // '----------------------renewalCurCoin End------------------------'
         //     ();
+        prePrice = curPrice;
     }
 
     async renewalInfo() {
