@@ -31,7 +31,6 @@ class Refresh {
         let curPrice = curCoin['curPrice'];
         console.log(curPrice);
         if (curPrice == prePrice) return false;
-        
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
@@ -220,7 +219,7 @@ class Refresh {
                 rankList.sort(function (a, b) {
                     return b['asset'] - a['asset'];
                 });
-                const rankList2 = rankList.slice(8, -1);
+                let rankList2 = rankList.splice(8, -1);
                 io.to(roomID).emit('roomRank', rankList2);
             }
             // console.log(roomInfo);
