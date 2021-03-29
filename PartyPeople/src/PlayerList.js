@@ -70,6 +70,7 @@ export default function PlayerList(props) {
             setInit(true);
         } else {
             props.socket.on('roomRank', (playerArray) => {
+                console.log(playerArray)
                 setPlayers(playerArray);
             });
         }

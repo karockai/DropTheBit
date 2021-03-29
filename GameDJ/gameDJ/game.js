@@ -109,7 +109,9 @@ class Game {
                 playerInfo['bid'][reqPrice] = playerInfo['bid'][reqPrice] + reqVol;
             } else {
                 playerInfo['bid'][reqPrice] = reqVol;
-                bidList[reqPrice] = {};
+                if (!bidList.hasOwnProperty(reqPrice)){
+                    bidList[reqPrice] = {};
+                }
                 bidList[reqPrice][socketID] = roomID;
             }
             playerInfo['bidCash'] += reqPrice * reqVol;
@@ -124,7 +126,7 @@ class Game {
             // console.log('호가 등록 완료', playerInfo);
             socket.emit('bidDone', bidDone);
             socket.to(roomID).emit('bidDone_Room', bidDone);
-
+            // console.log("호가 등록 완료", bidList);
             this.sendBidTable(reqJson);
         }
         // 6-3. refreshWallet update & emit
@@ -193,7 +195,9 @@ class Game {
                 playerInfo['ask'][reqPrice] = playerInfo['ask'][reqPrice] + reqVol;
             } else {
                 playerInfo['ask'][reqPrice] = reqVol;
-                askList[reqPrice] = {};
+                if (!askList.hasOwnProperty(reqPrice)){
+                    askList[reqPrice] = {};
+                }
                 askList[reqPrice][socketID] = roomID;
             }
             playerInfo['askVol'] += reqVol;
@@ -209,6 +213,7 @@ class Game {
             
             socket.emit('askDone', askDone);
             socket.to(roomID).emit('askDone_Room', askDone);
+            // console.log("호가 등록 완료", askList);
             this.sendAskTable(reqJson);
         }
         
@@ -224,12 +229,13 @@ class Game {
         
         // bidList의 Length가 1이면 가격 자체를 지워버린다.
         if(!bidList[bidPrice]) return false;
+        // console.log("매수 취소 전", bidList);
         if (Object.keys(bidList[bidPrice]).length === 1) {
             delete bidList[bidPrice];
         } else {
             delete bidList[bidPrice][socketID];
         }
-
+        
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
         let bidVol = playerInfo['bid'][bidPrice];
@@ -238,13 +244,14 @@ class Game {
         playerInfo['bidCash'] -= bidVol * bidPrice;
         delete playerInfo['bid'][bidPrice];
         roomList[roomID][socketID] = playerInfo;
-
+        
         // 매수 취소 완료 Response 필요
         this.refreshWallet(socketID, 'cancelBid', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
-
+        // console.log("매수 취소 후", bidList);
+        
         this.sendBidTable(reqJson);
     }
-
+    
     // 매도 요청 취소
     async cancelAsk(reqJson) {
         let roomID = reqJson['roomID'];
@@ -254,6 +261,7 @@ class Game {
         // 취소 요청한 가격에 해당하는 목록을 불러온다
         // askList의 Length가 1이면 가격 자체를 지워버린다.
         if(!askList[askPrice]) return false;
+        // console.log("매도 취소 전", askList);
         if (Object.keys(askList[askPrice]).length === 1) {
             delete askList[askPrice];
         } else {
@@ -263,15 +271,16 @@ class Game {
         let playerInfo = roomList[roomID][socketID];
         let coinVol = playerInfo['coinVol'];
         let askVol = playerInfo['ask'][askPrice];
-
+        
         coinVol += askVol;
         playerInfo['coinVol'] = coinVol;
         playerInfo['askVol'] -= askVol;
         delete playerInfo['ask'][askPrice];
         roomList[roomID][socketID] = playerInfo;
-
+        
         this.refreshWallet(socketID, 'cancelAsk', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
-
+        
+        // console.log("매도 취소 후", askList);
         // 매수 취소 완료 Response 필요
         this.sendAskTable(reqJson);
     }
