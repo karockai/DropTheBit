@@ -4,6 +4,7 @@ import { Howl } from 'howler';
 // 배경음 재생
 function useSound(src, volume = 1, fadeoutTime = 0, signal) {
     let sound = new Howl({ src });
+
     const soundStop = () => sound.stop();
     const soundPlay = (src) => {
         sound = new Howl({ src });

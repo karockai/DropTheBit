@@ -19,6 +19,9 @@ import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
+import { Howl,Howler } from 'howler';
+// import { testSound} from './testSound'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -65,19 +68,22 @@ export default function LayoutGrid(props) {
 
     const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
+    const {Howl, Howler} = require('howler');
 
     useEffect(() => {
         props.socket.once('startGame_Real', (data) => {
-            // useSound(SpecificMusic, 0.7, 2000);
             setThreeSecTimerOpen(false);
             setTimerTime(gameTime);
             setIsStart(true);
+            // sound.play();
+            // sound.on('play', () => {
+            //     const fadeouttime = 2000;
+            //     setTimeout(() => sound.fade(0.7, 0, fadeouttime), (sound.duration() - sound.seek()) * 1000 - fadeouttime);
+            // });
+            
         });
     }, [timerTime]);
     useSound(SpecificMusic, 0.7, 2000, isStart);
-    // function PlayMusic() {
-    //     useSound(SpecificMusic, 0.7, 2000);
-    // }
 
     useEffect(() => {
         console.log('layoutGrid rendered....!');
