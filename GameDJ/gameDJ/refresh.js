@@ -219,7 +219,8 @@ class Refresh {
                 rankList.sort(function (a, b) {
                     return b['asset'] - a['asset'];
                 });
-                let rankList2 = rankList.splice(8, -1);
+                let rankList2 = rankList.slice(0, 7);
+                console.log(rankList2);
                 io.to(roomID).emit('roomRank', rankList2);
             }
             // console.log(roomInfo);
