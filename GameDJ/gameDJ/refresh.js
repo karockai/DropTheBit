@@ -171,6 +171,7 @@ class Refresh {
                             asset: asset,
                             avgPrice: playerInfo['avgPrice'],
                         };
+                        io.to(socketID).emit('refreshWallet', refreshWallet);
 
                         // rankObj 삽입
                         let rankObj = {
@@ -179,14 +180,13 @@ class Refresh {
                         };
                         rankList.push(rankObj);
 
-                        io.to(socketID).emit('refreshWallet', refreshWallet);
-                        console.log("refresh", refreshWallet);
                         roomList[roomID][socketID] = playerInfo;
+                        rankList.sort(function (a, b) {
+                            return b['asset'] - a['asset'];
+                        });
+                        io.to(roomID).emit('roomRank', rankList);
                     }
 
-                    rankList.sort(function (a, b) {
-                        return b['asset'] - a['asset'];
-                    });
                 }
                 // console.log(roomInfo);
                 if (roomInfo['gaming']) {
@@ -196,7 +196,6 @@ class Refresh {
                 if (roomInfo['gameTime'] < 0) {
                     this.gameOver(roomID);
                 }
-                io.to(roomID).emit('roomRank', rankList);
                 io.to(roomID).emit(
                     'restGameTime',
                     roomList[roomID]['gameTime']
