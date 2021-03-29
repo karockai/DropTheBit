@@ -4,7 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Tetris99 from './audios/music/Tetris99.mp3';
-
+import KeyMapTemp from './images/KeyMap.png';
 import {
     Button,
     Fab,
@@ -35,7 +35,10 @@ export default function MusicMember(props) {
     const classes = useStyles();
     // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
     /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
-    if (bgm_audio.paused) bgm_audio.play();
+    if (bgm_audio.paused) {
+        bgm_audio.play();
+        console.log('music played');
+    }
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
 
@@ -128,6 +131,7 @@ export default function MusicMember(props) {
                 {' '}
                 StartGame{' '}
             </Button>
+            <img src={KeyMapTemp} style={{ width: '800px' }} />
         </>
     );
 }
