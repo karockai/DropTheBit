@@ -41,7 +41,7 @@ export default function MusicLeader(props) {
     var tmp_time = props.roomInfo ? props.roomInfo['gameTime'] : '02 : 25';
     const [music, setMusic] = React.useState(tmp_music);
     const [strTime, strSetTime] = React.useState(tmp_time);
-
+    if (bgm_audio.paused) bgm_audio.play();
     function MusicInput() {
         const handleChange = (event) => {
             const musicName = event.target.value;
@@ -205,6 +205,8 @@ export default function MusicLeader(props) {
                 {' '}
                 StartGame{' '}
             </Button>
+
+            <img src={KeyMapTemp} style={{ width: '800px' }} />
         </>
     );
 }
