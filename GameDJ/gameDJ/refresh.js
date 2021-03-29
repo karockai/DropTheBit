@@ -192,14 +192,16 @@ class Refresh {
                 if (roomInfo['gaming']) {
                     roomList[roomID]['gameTime']--;
                     console.log(roomList[roomID]['gameTime']);
+                    io.to(roomID).emit(
+                        'restGameTime',
+                        roomList[roomID]['gameTime']
+                    );
                 }
-                if (roomInfo['gameTime'] < 0) {
+                if (roomInfo['gameTime'] === -1) {
+                    roomList[roomID]['gaming'] = false;
                     this.gameOver(roomID);
                 }
-                io.to(roomID).emit(
-                    'restGameTime',
-                    roomList[roomID]['gameTime']
-                );
+
             }
             // console
             //     .log
