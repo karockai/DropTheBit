@@ -60,8 +60,18 @@ class Refresh {
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
-                    playerInfo['asset'] = cash + playerInfo['bidCash'] + curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(socketID, 'refreshCurCoin-Sell', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+                    playerInfo['asset'] =
+                        cash +
+                        playerInfo['bidCash'] +
+                        curPrice * (playerInfo['askVol'] + coinVol);
+                    await new Game(io, socketID).refreshWallet(
+                        socketID,
+                        'refreshCurCoin-Sell',
+                        playerInfo['coinVol'],
+                        playerInfo['cash'],
+                        playerInfo['asset'],
+                        playerInfo['avgPrice']
+                    );
 
                     // sellDone
                     let playerID = playerInfo['playerID'];
@@ -73,7 +83,10 @@ class Refresh {
                     };
                     io.to(socketID).emit('sellDone', sellDone);
                     io.to(roomID).emit('sellDone_Room', sellDone);
-                    await new Game(io, socketID).sendAskTable({'roomID':roomID, 'socketID':socketID});
+                    await new Game(io, socketID).sendAskTable({
+                        roomID: roomID,
+                        socketID: socketID,
+                    });
                 }
                 delete askList[askPrice];
             }
@@ -91,24 +104,38 @@ class Refresh {
                     let playerInfo = roomList[roomID][socketID];
                     let coinVol = playerInfo['coinVol'];
                     let bidVol = playerInfo['bid'][bidPrice];
-                    let cash = playerInfo['cash']
+                    let cash = playerInfo['cash'];
 
-                    if (playerInfo['avgPrice'] === 0){
+                    if (playerInfo['avgPrice'] === 0) {
                         playerInfo['avgPrice'] = bidPrice;
-                    } else{
-                        playerInfo['avgPrice'] = Math.round(((coinVol * playerInfo['avgPrice']) + (bidVol * bidPrice)) / (coinVol + bidVol));
+                    } else {
+                        playerInfo['avgPrice'] = Math.round(
+                            (coinVol * playerInfo['avgPrice'] +
+                                bidVol * bidPrice) /
+                                (coinVol + bidVol)
+                        );
                     }
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
                     playerInfo['bidCash'] -= bidPrice * bidVol;
-                    playerInfo['asset'] = cash + playerInfo['bidCash'] + curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(socketID, 'refreshCurCoin-Buy', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+                    playerInfo['asset'] =
+                        cash +
+                        playerInfo['bidCash'] +
+                        curPrice * (playerInfo['askVol'] + coinVol);
+                    await new Game(io, socketID).refreshWallet(
+                        socketID,
+                        'refreshCurCoin-Buy',
+                        playerInfo['coinVol'],
+                        playerInfo['cash'],
+                        playerInfo['asset'],
+                        playerInfo['avgPrice']
+                    );
 
                     delete playerInfo['bid'][bidPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete bidList[bidPrice][socketID];
-                    
+
                     // buyDone
                     let playerID = playerInfo['playerID'];
                     let buyDone = {
@@ -119,7 +146,10 @@ class Refresh {
                     };
                     io.to(socketID).emit('buyDone', buyDone);
                     io.to(roomID).emit('buyDone_Room', buyDone);
-                    await new Game(io, socketID).sendBidTable({'roomID':roomID, 'socketID':socketID});
+                    await new Game(io, socketID).sendBidTable({
+                        roomID: roomID,
+                        socketID: socketID,
+                    });
                 }
                 delete bidList[bidPrice];
             }
@@ -147,57 +177,62 @@ class Refresh {
         for (let roomID in roomList) {
             let roomInfo = roomList[roomID];
             let rankList = [];
-            
+
             if (priceChange) {
-            // roomInfo 순회하면서 playerInfo 가져옴
+                // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length != 20) continue;
 
-                        let playerInfo = roomInfo[socketID];
-                        let cash = playerInfo['cash'];
-                        let coinVol = playerInfo['coinVol'];
-                        let bidCash = playerInfo['bidCash'];
-                        let askVol = playerInfo['askVol'];
-                        playerInfo['asset'] = cash + bidCash + curPrice * (askVol + coinVol);
-                        let asset = playerInfo['asset'];
-                        
-                        await new Game(io, socketID).refreshWallet(socketID, 'renewalInfo', playerInfo['coinVol'], playerInfo['cash'], playerInfo['asset'], playerInfo['avgPrice']);
+                    let playerInfo = roomInfo[socketID];
+                    let cash = playerInfo['cash'];
+                    let coinVol = playerInfo['coinVol'];
+                    let bidCash = playerInfo['bidCash'];
+                    let askVol = playerInfo['askVol'];
+                    playerInfo['asset'] =
+                        cash + bidCash + curPrice * (askVol + coinVol);
+                    let asset = playerInfo['asset'];
 
-                        // rankObj 삽입
-                        let rankObj = {
-                            playerID: playerInfo['playerID'],
-                            asset: asset,
-                        };
-                        rankList.push(rankObj);
-
-                        roomList[roomID][socketID] = playerInfo;
-                        rankList.sort(function (a, b) {
-                            return b['asset'] - a['asset'];
-                        });
-                        io.to(roomID).emit('roomRank', rankList);
-                    }
-
-                }
-                // console.log(roomInfo);
-                if (roomInfo['gaming']) {
-                    roomList[roomID]['gameTime']--;
-                    console.log(roomList[roomID]['gameTime']);
-                    io.to(roomID).emit(
-                        'restGameTime',
-                        roomList[roomID]['gameTime']
+                    await new Game(io, socketID).refreshWallet(
+                        socketID,
+                        'renewalInfo',
+                        playerInfo['coinVol'],
+                        playerInfo['cash'],
+                        playerInfo['asset'],
+                        playerInfo['avgPrice']
                     );
-                }
-                if (roomInfo['gameTime'] === -1) {
-                    roomList[roomID]['gaming'] = false;
-                    this.gameOver(roomID);
-                }
 
+                    // rankObj 삽입
+                    let rankObj = {
+                        playerID: playerInfo['playerID'],
+                        asset: asset,
+                    };
+                    rankList.push(rankObj);
+
+                    roomList[roomID][socketID] = playerInfo;
+                    rankList.sort(function (a, b) {
+                        return b['asset'] - a['asset'];
+                    });
+                    io.to(roomID).emit('roomRank', rankList);
+                }
             }
-            // console
-            //     .log
-            //     // '----------------------renewalInfo End------------------------'
-            //     ();
-        
+            // console.log(roomInfo);
+            if (roomInfo['gaming']) {
+                roomList[roomID]['gameTime']--;
+                console.log(roomList[roomID]['gameTime']);
+                io.to(roomID).emit(
+                    'restGameTime',
+                    roomList[roomID]['gameTime']
+                );
+            }
+            if (roomInfo['gameTime'] === -1) {
+                roomList[roomID]['gaming'] = false;
+                this.gameOver(roomID);
+            }
+        }
+        // console
+        //     .log
+        //     // '----------------------renewalInfo End------------------------'
+        //     ();
     }
 
     async gameOver(roomID) {
@@ -213,18 +248,18 @@ class Refresh {
 
             leaderBoard.push(temp);
 
-            for (let bid in playerInfo['bid']){
-                for (let id  in bidList[bid]){
-                    if (socketID === id){
-                        delete bidList[bid][id]
+            for (let bid in playerInfo['bid']) {
+                for (let id in bidList[bid]) {
+                    if (socketID === id) {
+                        delete bidList[bid][id];
                     }
                 }
             }
 
-            for (let ask in playerInfo['ask']){
-                for (let id  in askList[ask]){
-                    if (socketID === id){
-                        delete askList[ask][id]
+            for (let ask in playerInfo['ask']) {
+                for (let id in askList[ask]) {
+                    if (socketID === id) {
+                        delete askList[ask][id];
                     }
                 }
             }
@@ -245,61 +280,51 @@ class Refresh {
         let exList = [];
 
         let bidObject4 = {
-            sell: parseInt(exTable.bid_size4),
             price: exTable.bid_price4,
-            buy: 0,
+            buy: parseInt(exTable.bid_size4),
         };
 
         let bidObject3 = {
-            sell: parseInt(exTable.bid_size3),
             price: exTable.bid_price3,
-            buy: 0,
+            buy: parseInt(exTable.bid_size3),
         };
 
         let bidObject2 = {
-            sell: parseInt(exTable.bid_size2),
             price: exTable.bid_price2,
-            buy: 0,
+            buy: parseInt(exTable.bid_size2),
         };
 
         let bidObject1 = {
-            sell: parseInt(exTable.bid_size1),
             price: exTable.bid_price1,
-            buy: 0,
+            buy: parseInt(exTable.bid_size1),
         };
 
         let bidObject0 = {
-            sell: parseInt(exTable.bid_size0),
             price: exTable.bid_price0,
-            buy: 0,
+            buy: parseInt(exTable.bid_size0),
         };
 
         let askObject0 = {
-            sell: 0,
             price: exTable.ask_price0,
             buy: parseInt(exTable.ask_size0),
         };
 
         let askObject1 = {
-            sell: 0,
             price: exTable.ask_price1,
             buy: parseInt(exTable.ask_size1),
         };
 
         let askObject2 = {
-            sell: 0,
             price: exTable.ask_price2,
             buy: parseInt(exTable.ask_size2),
         };
 
         let askObject3 = {
-            sell: 0,
             price: exTable.ask_price3,
             buy: parseInt(exTable.ask_size3),
         };
 
         let askObject4 = {
-            sell: 0,
             price: exTable.ask_price4,
             buy: parseInt(exTable.ask_size4),
         };
