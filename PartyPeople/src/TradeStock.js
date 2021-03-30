@@ -17,6 +17,8 @@ import DrumDown from './audios/effect/drumDown.wav';
 import HatUp from './audios/effect/hatUp.wav';
 import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
+import { SnackAlertBtn, SnackAlertFunc } from './SnackAlert';
+import { SnackbarProvider } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,6 +86,8 @@ function ArrowButton(props) {
     );
 }
 
+let Snacks = [];
+
 export default function TradeStock(props) {
     const classes = useStyles();
 
@@ -94,6 +98,8 @@ export default function TradeStock(props) {
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
+    const [sellStatus, setSellStatus] = useState('');
+
     if (!isBind) SetBind(true);
     const [myWallet, setWallet] = useState({
         myCash: 0,
@@ -121,6 +127,10 @@ export default function TradeStock(props) {
             });
         }
     }, [isInit]);
+
+    useEffect(() => {
+        setSellStatus('')
+    }, [sellStatus])
 
     function VolumeUp(volume) {
         // if (
@@ -170,12 +180,10 @@ export default function TradeStock(props) {
             return;
         }
         if (bid * volume > myWallet.myCash) {
-            alert(
-                '구매 가능한 현금이 없습니다.\n' +
-                    (bid * volume).toString() +
-                    ' > ' +
-                    myWallet.myCash.toString()
-            );
+            // SnackAlertFunc({
+            //     severity:"error",
+            //     message:"호가 및 수량이 부적절합니다. (ex. '0') 😱"
+            // })
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
@@ -201,10 +209,11 @@ export default function TradeStock(props) {
         });
         SetBind(true);
     }
+
     function Sell(bid, volume) {
         if (bid === 0 || volume === 0) {
-            alert('호가 및 수량이 부적절합니다. (ex. "0")');
-            return;
+            // alert('호가 및 수량이 부적절합니다. (ex. "0")');
+            return 'invalid';
         }
         if (myWallet.myCoin < volume) {
             alert(
@@ -216,7 +225,7 @@ export default function TradeStock(props) {
             props.socket.once('sellDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
-            return;
+            return 'lack';
         }
         //@ Sell Emit
         console.log(

@@ -43,6 +43,7 @@ def on_message(ws, msg):
     global cur_price
 
     msg = json.loads(msg.decode('utf-8'))
+    # print(msg)
     coin_name = msg['cd']
 
 

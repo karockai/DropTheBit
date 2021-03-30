@@ -83,11 +83,6 @@ export default function LayoutGrid(props) {
     //     });
     // }, [timerTime]);
     // useSound(SpecificMusic, 0.7, 2000, isStart);
-
-    useEffect(() => {
-        console.log('layoutGrid rendered....!');
-    });
-
     const [over, setOver] = useState(false);
     // const [leaderBoard, setLeaderBoard]= useState('');
 
