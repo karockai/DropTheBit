@@ -43,6 +43,7 @@ def on_message(ws, msg):
     global cur_price
 
     msg = json.loads(msg.decode('utf-8'))
+    # print(msg)
     coin_name = msg['cd']
 
 
@@ -148,7 +149,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-STORJ"]},{"type": "orderbook", "codes": ["KRW-STORJ.5"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-PCI"]},{"type": "orderbook", "codes": ["KRW-PCI.5"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)
