@@ -81,7 +81,6 @@ const changeTime = () => {
   },[signal]);
 
   useEffect(() => {
-    console.log(open,time,'ThreeSecTimer on.');
   })
 
   return (

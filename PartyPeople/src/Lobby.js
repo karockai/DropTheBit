@@ -12,6 +12,8 @@ import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
 import MusicLeader from './MusicLeader';
 import MusicMember from './MusicMember';
+import {SnackAlertBtn} from './SnackAlert';
+import {SnackbarProvider} from 'notistack';
 // 용기
 // 용기
 
@@ -34,7 +36,7 @@ function Lobby(props) {
         var copyText = document.getElementById('gameLink');
         copyText.select();
         document.execCommand('Copy');
-        alert('복사되었습니다.');
+        // alert('복사되었습니다.');
     }
     let [roomInfo, setRoomInfo] = useState('');
     const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
@@ -173,14 +175,18 @@ function Lobby(props) {
                                 style={{ width: '70%' }}
                                 readOnly
                             />
-                            <Button
-                                class="btn btn-warning"
-                                type="button"
-                                onClick={CopyURL}
-                                id="copy"
-                            >
-                                Copy Link
-                            </Button>
+                            <SnackbarProvider maxSnack={5}>
+                                <SnackAlertBtn
+                                    class="btn btn-warning"
+                                    severity="success"
+                                    message="링크가 복사됐어요! 😚"
+                                    label="게임 방 URL copy"
+                                    onAlert= {true}
+                                    type="button"
+                                    onClick={CopyURL}
+                                    id="copy"
+                                />
+                            </SnackbarProvider>
                         </Grid>
                     </Grid>
                 </Grid>

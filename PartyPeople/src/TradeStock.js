@@ -17,6 +17,8 @@ import DrumDown from './audios/effect/drumDown.wav';
 import HatUp from './audios/effect/hatUp.wav';
 import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
+import { SnackAlertBtn, SnackAlertFunc } from './SnackAlert';
+import { SnackbarProvider } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,6 +86,8 @@ function ArrowButton(props) {
     );
 }
 
+let Snacks = [];
+
 export default function TradeStock(props) {
     const classes = useStyles();
 
@@ -94,6 +98,8 @@ export default function TradeStock(props) {
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
+    const [sellStatus, setSellStatus] = useState('');
+
     if (!isBind) SetBind(true);
     const [myWallet, setWallet] = useState({
         myCash: 0,
@@ -122,13 +128,22 @@ export default function TradeStock(props) {
         }
     }, [isInit]);
 
+    useEffect(() => {
+        setSellStatus('')
+    }, [sellStatus])
+
     function VolumeUp(volume) {
-        if (volume + Math.floor(myWallet.myCash / currentBid * 0.1) > Math.floor(myWallet.myCash / currentBid)) return;
-        SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
+        if (
+            volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
+            Math.floor(myWallet.myCash / currentBid)
+        )
+            return;
+        SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        if (volume - Math.floor(myWallet.myCash / currentBid * 0.1) <= 0) return;
-        SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
+        if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0)
+            return;
+        SetNewVolume(volume - Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function BidUp() {
         SetBid(currentBid + unitBid);
@@ -151,12 +166,10 @@ export default function TradeStock(props) {
             return;
         }
         if (bid * volume > myWallet.myCash) {
-            alert(
-                '구매 가능한 현금이 없습니다.\n' +
-                    (bid * volume).toString() +
-                    ' > ' +
-                    myWallet.myCash.toString()
-            );
+            // SnackAlertFunc({
+            //     severity:"error",
+            //     message:"호가 및 수량이 부적절합니다. (ex. '0') 😱"
+            // })
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
@@ -181,24 +194,24 @@ export default function TradeStock(props) {
             SetNewBid(bbid.price);
         });
         SetBind(true);
-
     }
+
     function Sell(bid, volume) {
         if (bid === 0 || volume === 0) {
-            alert('호가 및 수량이 부적절합니다. (ex. "0")');
-            return;
+            // alert('호가 및 수량이 부적절합니다. (ex. "0")');
+            return 'invalid';
         }
         if (myWallet.myCoin < volume) {
-            alert(
-                '보유코인이 부족합니다.\n' +
-                    volume.toString() +
-                    ' > ' +
-                    myWallet.myCoin.toString()
-            );
+            // alert(
+            //     '보유코인이 부족합니다.\n' +
+            //         volume.toString() +
+            //         ' > ' +
+            //         myWallet.myCoin.toString()
+            // );
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
-            return;
+            return 'lack';
         }
         //@ Sell Emit
         console.log(
@@ -219,7 +232,6 @@ export default function TradeStock(props) {
             SetNewBid(sbid.price);
         });
         SetBind(true);
-
     }
 
     const interval = 0.2;
@@ -281,11 +293,11 @@ export default function TradeStock(props) {
             //_ 'D'
             playSound(DrumDown, 1).play();
             RefreshBid();
-        }else if (e.keyCode === 90) {
+        } else if (e.keyCode === 90) {
             //_ 'Z'
             playSound(DrumDown, 1).play();
             SetSellMaxCount();
-        }else if (e.keyCode === 88) {
+        } else if (e.keyCode === 88) {
             //_ 'X'
             playSound(DrumDown, 1).play();
             SetBuyMaxCount();
@@ -307,7 +319,7 @@ export default function TradeStock(props) {
             document.removeEventListener('keyup', HandleKeyUp);
             // document.removeEventListener('keydown', HandleKeyDown);
         };
-    },);
+    });
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -437,52 +449,59 @@ export default function TradeStock(props) {
                 justify="center"
                 style={{ width: '80%', margin: '0 10 0 1' }}
             >
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {
-                        Buy(currentBid, currentVolume)
-                    }}
-                >
-                    {/* <KeyboardArrowLeftIcon /> */}
-                    <>"A" </>
-                    매수
-                </Button>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        Sell(currentBid, currentVolume)
-                    }}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    <>"S" </>
-                    매도
-                </Button>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => RefreshBid()}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    <>"D" 🔄</>
-                </Button>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => SetSellMaxCount()}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    <>"Z" BuyMax 📈</>
-                </Button>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => SetBuyMaxCount()}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    <>"X" SellMax 📉</>
-                </Button>
+                <SnackbarProvider>
+                    <SnackAlertBtn
+                        onAlert = {currentBid * currentVolume > myWallet.myCash}
+                        severity = 'error'
+                        message = '금액이 부족합니다.'
+                        label = '매수'
+                        class = 'btn btn-secondary'
+                        onClick={() => {
+                            Buy(currentBid, currentVolume);
+                        }}
+                    >
+                        {/* buyBtn ? {SnackPop('error','보유 금액이 부족합니다.')} : <></> */}
+                        {/* <KeyboardArrowLeftIcon /> */}
+                        <>"A" </>
+                        매수
+                    </SnackAlertBtn>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            setSellStatus(Sell(currentBid, currentVolume));
+                        }}
+                        >
+                        {sellStatus === 'lack' && <SnackAlertFunc severity="warning" message="보유코인이 부족합니다." />}
+                        {sellStatus === 'invalid' && <SnackAlertFunc severity="error" message="유효하지 않은 값입니다." />}
+                        <>"S" </>
+                        매도
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => RefreshBid()}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        <>"D" 🔄</>
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => SetSellMaxCount()}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        <>"Z" BuyMax 📈</>
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => SetBuyMaxCount()}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        <>"X" SellMax 📉</>
+                    </Button>
+                </SnackbarProvider>
             </Grid>
         </Grid>
     );

@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import GameManager from './GameManager';
+import Test from './Test';
 import GameOverModal from './GameOverModal';
 
 ReactDOM.render(
     <React.StrictMode>
         <GameManager/>
         {/* <GameOverModal/> */}
+        {/* <Test/> */}
     </React.StrictMode>,
     document.getElementById('root')
 );

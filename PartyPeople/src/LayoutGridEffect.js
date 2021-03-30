@@ -29,7 +29,6 @@ export default function LayoutGridEffect(props) {
 
     useEffect(() => {
         props.socket.once('startGame_Real', (data) => {
-            console.log('hihihihihihihihihihihihihihi');
             setThreeSecTimerOpen(false);
             setTimerTime(gameTime);
             setIsStart(true);
