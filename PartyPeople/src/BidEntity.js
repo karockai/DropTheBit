@@ -59,13 +59,21 @@ export default function BidEntity(props) {
             >
                 <Grid container direction="row" alignItems="center">
                     <Grid
-                        style={{ width: '50%', height: '4vh' }}
+                        style={{ width: '20%', height: '4vh' }}
+                        className="price"
+                    >
+                        <span style={{ fontStyle: 'italic' }}>
+                            [{props.index}]
+                        </span>
+                    </Grid>
+                    <Grid
+                        style={{ width: '40%', height: '4vh' }}
                         className="price"
                     >
                         {props.price}
                     </Grid>
                     <Grid
-                        style={{ width: '50%', height: '4vh' }}
+                        style={{ width: '40%', height: '4vh' }}
                         className="vol"
                     >
                         {props.vol}
