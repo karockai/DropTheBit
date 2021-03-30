@@ -71,10 +71,10 @@ class Game {
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
             if (playerInfo['avgPrice'] === 0) {
-                playerInfo['avgPrice'] = reqPrice;
+                playerInfo['avgPrice'] = curPrice;
             } else {
                 playerInfo['avgPrice'] = Math.round(
-                    (coinVol * playerInfo['avgPrice'] + reqVol * reqPrice) /
+                    (coinVol * playerInfo['avgPrice'] + reqVol * curPrice) /
                         (coinVol + reqVol)
                 );
             }
@@ -154,7 +154,6 @@ class Game {
         let socketID = reqJson['socketID'];
         let reqPrice = Number(reqJson['currentBid']);
         let reqVol = Number(reqJson['currentVolume']);
-        
 
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
@@ -326,7 +325,7 @@ class Game {
         let bidTable = playerInfo['bid'];
         let bidTable_Res = [];
 
-        for (let key in bidTable){
+        for (let key in bidTable) {
             let temp = {};
             temp['price'] = key;
             temp['vol'] = bidTable[key];
@@ -350,7 +349,7 @@ class Game {
         let askTable = playerInfo['ask'];
         let askTable_Res = [];
 
-        for (let key in askTable){
+        for (let key in askTable) {
             let temp = {};
             temp['price'] = key;
             temp['vol'] = askTable[key];
@@ -374,6 +373,7 @@ class Game {
         refreshWallet['cash'] = cash;
         refreshWallet['asset'] = asset;
         refreshWallet['avgPrice'] = avgPrice;
+        console.log('refreshWallet_');
         io.to(socketID).emit('refreshWallet', refreshWallet);
     }
 }

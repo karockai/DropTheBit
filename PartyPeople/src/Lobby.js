@@ -120,6 +120,7 @@ function Lobby(props) {
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        MusicPause= {props.MusicPause}
                     />
                 </>
             );
@@ -134,6 +135,7 @@ function Lobby(props) {
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        MusicPause= {props.MusicPause}
                     />
                 </>
             );
@@ -158,6 +160,7 @@ function Lobby(props) {
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        MusicPause= {props.MusicPause}
                     />
                 </Grid>
                 <Grid style={{ width: '50%' }}>

@@ -14,11 +14,6 @@ export default function Timer(props) {
                 minute = '00';
                 second = '00';
             }
-            // else
-                // setTimeout(function(){
-                //     setTime(time - 1);
-                // }, 1000);
-       
             return (
                 <h2 style={{fontSize: 40}}>
                     {minute+' : '+second}    

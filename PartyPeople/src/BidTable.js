@@ -69,7 +69,7 @@ export default function BidTable(props) {
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         let reqJson = {
             socketID: props.socket.id,
             roomID: props.roomID,
@@ -86,22 +86,64 @@ export default function BidTable(props) {
         }
     }, [isInit]);
 
-    // for debugging
+    function CancelBid(num, table) {
+        let reqJson = {
+            socketID: props.socket.id,
+            roomID: props.roomID,
+            reqPrice: table[num]['price'],
+            reqVol: table[num]['vol'],
+        };
+        props.socket.emit('cancelBid_Req', reqJson);
+    }
 
-    // useEffect(() => {
-    //     let reqJson = {
-    //         socketID: props.socket.id,
-    //         roomID: props.roomID,
-    //     };
+    function HandleKeyUp(e, BidTable) {
+        if (props.inputCtrl) return;
+        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
+        e.preventDefault();
 
-    //     props.socket.emit('bidTable_Req', reqJson);
-    // }, [props]);
+        if (e.keyCode === 49 && BidTable.length >= 1) {
+            //_ 1
+
+            CancelBid(0, BidTable);
+        } else if (e.keyCode === 50 && BidTable.length >= 2) {
+            //_ 2
+            CancelBid(1, BidTable);
+        } else if (e.keyCode === 51 && BidTable.length >= 3) {
+            //_ 3
+            CancelBid(2, BidTable);
+        } else if (e.keyCode === 52 && BidTable.length >= 4) {
+            //_ 4
+            CancelBid(3, BidTable);
+        } else if (e.keyCode === 53 && BidTable.length >= 5) {
+            //_ 5
+            CancelBid(4, BidTable);
+        } else if (e.keyCode === 54 && BidTable.length >= 6) {
+            //_ 6
+            CancelBid(5, BidTable);
+        } else if (e.keyCode === 55 && BidTable.length >= 7) {
+            //_ 7
+            CancelBid(6, BidTable);
+        } else if (e.keyCode === 56 && BidTable.length >= 8) {
+            //_ 8
+            CancelBid(7, BidTable);
+        }
+    }
+
+    useEffect(() => {
+        const CancelBidByKey = (e) => {
+            HandleKeyUp(e, BidTable);
+        };
+        document.addEventListener('keyup', CancelBidByKey);
+        return () => {
+            document.removeEventListener('keyup', CancelBidByKey);
+        };
+    });
 
     return (
         <Grid
             wrap="wrap"
             container
-            direction="column"
+            direction="row"
             justify="center"
             alignItems="stretch"
             spacing={2}
@@ -114,24 +156,41 @@ export default function BidTable(props) {
                 >
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">매수 가격</TableCell>
-                            <TableCell align="center">매수 수량</TableCell>
+                            <TableCell
+                                style={{ align: 'center', width: '20%' }}
+                            >
+                                <span style={{ fontWeight: 'bold' }}>
+                                    취소 번호 [1]~[8]
+                                </span>
+                            </TableCell>
+                            <TableCell
+                                style={{ align: 'center', width: '20%' }}
+                            >
+                                <span style={{ fontWeight: 'bold' }}>
+                                    매수 가격
+                                </span>
+                            </TableCell>
+                            <TableCell
+                                style={{ align: 'center', width: '20%' }}
+                            >
+                                <span style={{ fontWeight: 'bold' }}>
+                                    매수 수량
+                                </span>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                 </Table>
             </TableContainer>
-            <GridList
-                spacing={0}
-                wrap="wrap"
-                style={{ width: '100%', height: '100%' }}
-            >
-                <div style={{ width: '98%' }}>
-                    {BidTable.map((bidTable) => {
+
+            <GridList wrap="wrap" style={{ width: '100%', height: '30vh' }}>
+                <Grid style={{ width: '99%' }}>
+                    {BidTable.map((bidElem, index, BidTable) => {
                         return (
                             <Grid style={{ margin: '5px' }} item xs={testXs}>
                                 <BidEntity
-                                    price={bidTable.price}
-                                    vol={bidTable.vol}
+                                    price={bidElem.price}
+                                    vol={bidElem.vol}
+                                    index={index + 1}
                                     socket={props.socket}
                                     requestSocket={props.requestSocket}
                                     roomID={props.roomID}
@@ -139,7 +198,7 @@ export default function BidTable(props) {
                             </Grid>
                         );
                     })}
-                </div>
+                </Grid>
             </GridList>
         </Grid>
     );

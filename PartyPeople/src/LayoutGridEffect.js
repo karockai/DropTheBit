@@ -34,11 +34,6 @@ export default function LayoutGridEffect(props) {
             setIsStart(true);
             bgm_audio = new Audio(SpecificMusic);
             if (bgm_audio.paused) bgm_audio.play();
-            // sound.play();
-            // sound.on('play', () => {
-            //     const fadeouttime = 2000;
-            //     setTimeout(() => sound.fade(0.7, 0, fadeouttime), (sound.duration() - sound.seek()) * 1000 - fadeouttime);
-            // });
         });
     }, [timerTime]);
     return (
@@ -53,7 +48,9 @@ export default function LayoutGridEffect(props) {
                 roomID={props.roomID}
                 roomInfo={props.roomInfo}
                 gameTime={props.time}
-            />
+                isStart={isStart}
+                />
+                
         </React.Fragment>
     );
 }
