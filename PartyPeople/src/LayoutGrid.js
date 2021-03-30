@@ -53,7 +53,6 @@ export default function LayoutGrid(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
-    const [isStart, setIsStart] = useState(false);
     const musicList = {
         Deja_Vu: Deja_Vu,
         King_Conga: King_Conga,
@@ -84,11 +83,6 @@ export default function LayoutGrid(props) {
     //     });
     // }, [timerTime]);
     // useSound(SpecificMusic, 0.7, 2000, isStart);
-
-    useEffect(() => {
-        console.log('layoutGrid rendered....!');
-    });
-
     const [over, setOver] = useState(false);
     // const [leaderBoard, setLeaderBoard]= useState('');
 
@@ -199,7 +193,7 @@ export default function LayoutGrid(props) {
                                             justify-content="center"
                                             align-items="center"
                                             // time={props.time}
-                                            isStart={isStart}
+                                            isStart={props.isStart}
                                             time={timerTime}
                                         />
                                     </Paper>

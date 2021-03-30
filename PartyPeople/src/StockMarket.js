@@ -13,7 +13,6 @@ import {
 import { Button } from '@material-ui/core';
 import './PlayerManager.css';
 import axios from 'axios';
-import SimpleSnackbar from './GameAlert';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';

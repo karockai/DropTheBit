@@ -37,7 +37,6 @@ export default function Routes(props) {
                     <Route
                         path="/game"
                         render={() => {
-                            console.log('!!!!!', time)
                             return(
                             isValid() ? 
                             <LayoutGridEffect

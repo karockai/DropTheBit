@@ -35,8 +35,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function MusicLeader(props) {
     const classes = useStyles();
-    // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
-    /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
     let tmp_music = props.roomInfo ? props.roomInfo['music'] : 'King_Conga.mp3';
     let tmp_time = props.roomInfo ? props.roomInfo['gameTime'] : '02 : 25';
     const [music, setMusic] = React.useState(tmp_music);
@@ -51,17 +49,10 @@ export default function MusicLeader(props) {
         strSetTime(minute + ' : ' + second);
     }
 
-    if (bgm_audio.paused) {
-        bgm_audio.play();
-        console.log('music played');
-    }
     function MusicInput() {
         const handleChange = (event) => {
             const musicName = event.target.value;
             setMusic(musicName);
-            // var tmp_roomInfo = props.roomInfo;
-            // tmp_roomInfo['music'] = musicName;
-            // props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
             props.socket.emit('settingsUpdate_Req', {
                 roomID: props.roomID,
                 musicName: musicName,
@@ -117,16 +108,12 @@ export default function MusicLeader(props) {
         );
     }
     function ShowMusic() {
-        // {musicName : musicName, musicTime : musicTime}
-        // if (props.roomInfo) {
         useEffect(() => {
             props.socket.once('settingsUpdate_Res', (data) => {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
 
                 if (props.roomInfo) {
-                    // props.setTime(musicTime);
-
                     var minute = parseInt(musicTime / 60);
                     var second = musicTime % 60;
                     minute =
@@ -136,7 +123,6 @@ export default function MusicLeader(props) {
 
                     var tmp_roomInfo = props.roomInfo;
                     tmp_roomInfo['music'] = musicName;
-                    // props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
                     strSetTime(minute + ' : ' + second);
                 }
             });
@@ -149,7 +135,6 @@ export default function MusicLeader(props) {
                         id="standard-read-only-input"
                         label="Play Time"
                         defaultValue={strTime}
-                        // value={time}
                         InputProps={{
                             readOnly: true,
                         }}
@@ -164,46 +149,20 @@ export default function MusicLeader(props) {
         } else {
             props.socket.emit('startGame_Req', props.roomID);
         }
-        // props.history.push('/game');
     };
 
-    // useEffect(() => {
-    //     props.socket.once('startGame_Res', (gameTime) => {
-    //         // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
-    //         props.history.push({
-    //             pathname: '/game',
-    //             state: { gameTime: gameTime },
-    //         });
-    //     });
-    // }, []);
-    // return (
-    //     <>
-    //         <Grid>
-    //             <MusicInput />
-    //         </Grid>
-    //         <Grid>
-    //             <ShowMusic />
-    //         </Grid>
-    //         <Button variant="contained" color="primary" onClick={StartGameReq}>
-    //             {' '}
-    //             StartGame{' '}
-    //         </Button>
-    //         <Grid style={{ width: '50%' }}>
-    //             <img src={KeyMapTemp} width={'800'} />
-    //         </Grid>
-    let isSetUp = false;
 
+    let isSetUp = false;
     useEffect(() => {
         if (!isSetUp) {
-            props.socket.once('startGame_Res', (gameTime) => {
-                bgm_audio.pause();
+            props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
+                props.MusicPause();
                 // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
                 props.history.push({
                     pathname: '/game',
                     state: { gameTime: gameTime },
                 });
             });
-            console.log('무언가 반복이 되고 있구나');
             isSetUp = true;
         }
     }, []);

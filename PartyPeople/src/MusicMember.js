@@ -14,8 +14,6 @@ import {
     TextField,
 } from '@material-ui/core';
 
-const bgm_audio = new Audio(Tetris99);
-
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -33,12 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function MusicMember(props) {
     const classes = useStyles();
-    // 방장인데 선택X / 방장인데 선택O / 팀원인데 선택X / 팀원인데 선택 O
-    /* ''  => 선택  /  roomInfo에 music 정보가 있으면 받아오고 없으면 '' */
-    if (bgm_audio.paused) {
-        bgm_audio.play();
-        console.log('music played');
-    }
+
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
 
@@ -78,16 +71,12 @@ export default function MusicMember(props) {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
                 setMusic(musicName);
-                // props.setTime(musicTime);
-                // if (props.roomInfo) {
+
                 var minute = parseInt(musicTime / 60);
                 var second = musicTime % 60;
                 var tmp_roomInfo = props.roomInfo;
                 tmp_roomInfo['music'] = musicName;
-                // props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo: tmp_roomInfo});
                 strSetTime(String(minute) + ' : ' + String(second));
-                // MusicInput(musicName);
-                // }
             });
         }, []);
         return (
@@ -107,15 +96,13 @@ export default function MusicMember(props) {
     let isSetUp = false;
     useEffect(() => {
         if (!isSetUp) {
-            props.socket.once('startGame_Res', (gameTime) => {
-                bgm_audio.pause();
-                // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
+          props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
+              props.MusicPause();
                 props.history.push({
                     pathname: '/game',
                     state: { gameTime: gameTime },
                 });
             });
-            console.log('무언가 반복이 되고');
             isSetUp = true;
         }
     }, []);
