@@ -53,13 +53,17 @@ export function SnackAlertBtn(props) {
 export function SnackAlertFunc(props) {
     const { enqueueSnackbar } = useSnackbar();
     // variant could be success, error, warning, info, or default
-    enqueueSnackbar(props.message, {
-        variant: props.severity,
-        anchorOrigin: {
-            vertical: 'bottom',
-            horizontal: 'left',
-        },
-        autoHideDuration: 1000,
-    });
-    return (<></>);
+    const callback = () => {
+        enqueueSnackbar(props.message, {
+            variant: props.severity,
+            anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'left',
+            },
+            autoHideDuration: 1500,
+        });
+    }
+    console.log('SnackAlert!!!!');
+    callback();
+    return <></>;
 }
