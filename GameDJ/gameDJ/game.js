@@ -373,7 +373,6 @@ class Game {
         refreshWallet['cash'] = cash;
         refreshWallet['asset'] = asset;
         refreshWallet['avgPrice'] = avgPrice;
-        console.log('refreshWallet_');
         io.to(socketID).emit('refreshWallet', refreshWallet);
     }
 }

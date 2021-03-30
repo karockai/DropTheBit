@@ -82,17 +82,22 @@ export default {
             });
             socket.on('cancelBid_Req', async (reqJson) => {
                 if (roomList[socket.roomID]['gaming'] === false) return 0;
-                await new Game(io, socket).cancelBid(reqJson)
+                await new Game(io, socket).cancelBid(reqJson);
             });
             socket.on('cancelAsk_Req', async (reqJson) => {
                 if (roomList[socket.roomID]['gaming'] === false) return 0;
-                await new Game(io, socket).cancelAsk(reqJson)
+                await new Game(io, socket).cancelAsk(reqJson);
             });
             socket.on('bidTable_Req', async (reqJson) => {
-                await new Game(io, socket).sendBidTable(reqJson)
+                await new Game(io, socket).sendBidTable(reqJson);
             });
             socket.on('askTable_Req', async (reqJson) => {
-                await new Game(io, socket).sendAskTable(reqJson)
+                await new Game(io, socket).sendAskTable(reqJson);
+            });
+            socket.on('RefreshBid_Req', () => {
+                console.log('refresh get');
+                let curPrice = curCoin['curPrice'];
+                socket.emit('RefreshBid_Res', curPrice);
             });
 
             // In-game event << -----------------------------------------

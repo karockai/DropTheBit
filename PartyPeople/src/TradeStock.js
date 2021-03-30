@@ -131,7 +131,6 @@ export default function TradeStock(props) {
         SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        console.log('hi');
         if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0) {
             console.log(
                 'setVolunme:',
@@ -140,22 +139,30 @@ export default function TradeStock(props) {
             SetNewVolume(1);
             return;
         }
-        SetNewVolume(volume - Math.floor((myWallet.myCash / currentBid) * 0.1));
+        SetNewVolume(
+            volume - Math.floor((myWallet.myCash / currentBid) * 0.1 + 1)
+        );
     }
     function BidUp() {
+        console.log('hi');
         SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
         SetBid(Number(currentBid) - Number(unitBid));
     }
 
-    function RefreshBid() {
-        props.socket.once('chart', (data) => {
-            SetUnit(data.priceUnit);
-            SetBid(data.curPrice);
-            //SetVolume(1);
+    function RefreshBid_Req() {
+        props.socket.emit('RefreshBid_Req');
+        props.socket.once('RefreshBid_Res', (curPrice) => {
+            SetBid(curPrice);
         });
     }
+
+    // function RefreshBid_Res() {
+    //     props.socket.once('RefreshBid_Res', (curPrice) => {
+    //         SetBid(curPrice);
+    //     });
+    // }
 
     function Buy(bid, volume) {
         if (bid === 0 || volume === 0) {
@@ -290,7 +297,7 @@ export default function TradeStock(props) {
         } else if (e.keyCode === 68) {
             //_ 'D'
             playSound(DrumDown, 1).play();
-            RefreshBid();
+            RefreshBid_Req();
         } else if (e.keyCode === 90) {
             //_ 'Z'
             playSound(DrumDown, 1).play();
@@ -303,7 +310,10 @@ export default function TradeStock(props) {
     }
 
     useEffect(() => {
-        RefreshBid();
+        props.socket.once('chart', (data) => {
+            SetUnit(data.priceUnit);
+            SetBid(data.curPrice);
+        });
     }, []);
 
     useEffect(() => {
@@ -410,9 +420,10 @@ export default function TradeStock(props) {
                     label="매매 호가 ▲▼"
                     size="small"
                     type="number"
-                    style={{ width: '80%' }}
+                    style={{ width: '80%', color: '#000000' }}
                     value={currentBid}
                     onChange={handleBidChange}
+                    disabled
                 />
                 <ArrowButton
                     upEvent={() => BidUp(currentBid)}
@@ -426,9 +437,10 @@ export default function TradeStock(props) {
                     label="수량 ◀▶"
                     type="number"
                     size="small"
-                    style={{ width: '80%' }}
+                    style={{ width: '80%', color: '#000000' }}
                     value={currentVolume}
                     onChange={handleVolumeChange}
+                    disabled
                 />
                 <ArrowButton
                     upEvent={() => VolumeUp(currentVolume)}
@@ -470,10 +482,10 @@ export default function TradeStock(props) {
                 <Button
                     variant="contained"
                     color="info"
-                    onClick={() => RefreshBid()}
+                    onClick={() => RefreshBid_Req()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    [D] 현재가 설정🔄
+                    [D] 현재가로 설정
                 </Button>
                 <Button
                     variant="contained"
@@ -481,7 +493,7 @@ export default function TradeStock(props) {
                     onClick={() => SetSellMaxCount()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    [Z] 최대 구매량 설정 📈
+                    [Z] 최대 구매량으로 설정
                 </Button>
                 <Button
                     variant="contained"
@@ -489,7 +501,7 @@ export default function TradeStock(props) {
                     onClick={() => SetBuyMaxCount()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    [X] 최대 매도량 설정 📉
+                    [X] 최대 매도량으로 설정
                 </Button>
             </Grid>
         </Grid>
