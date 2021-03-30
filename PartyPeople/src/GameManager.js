@@ -16,12 +16,7 @@ class GameManager extends React.Component {
             message: '',
             messages: [],
             socketId: null,
-            // //@ 아래와 같이 할 때,
-            // // chatRoom: {
-            // //     author: '',ssss
-            // //     message: '',
-            // //     messages: []
-            // // },
+
             roomID: null,
             roomInfo: null,
         };

@@ -92,11 +92,7 @@ const changeTime = () => {
         open={open}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        // BackdropProps={{
-        //   timeout: 500,
-        // }}
       >
-      {/* {changeTime} */}
         <Fade in={open}>
           <div className={classes.paper}>
             <h4 className={classes.typo} id="spring-modal-title" style={{justifyContent: 'center'}}> {time} </h4>
