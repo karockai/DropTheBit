@@ -52,14 +52,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function TabControl(props) {
+function TabControl(props) {
     const classes = useStyles();
     const [value, setValue] = useState(0);
     const [isBind, SetBind] = useState(false);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -123,3 +122,4 @@ export default function TabControl(props) {
         </div>
     );
 }
+export { TabPanel, TabControl};

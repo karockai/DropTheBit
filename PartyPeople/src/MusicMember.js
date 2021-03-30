@@ -118,7 +118,6 @@ export default function MusicMember(props) {
                 {' '}
                 StartGame{' '}
             </Button>
-            <img src={KeyMapTemp} style={{ width: '800px' }} />
         </>
     );
 }

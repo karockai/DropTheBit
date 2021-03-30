@@ -1,35 +1,61 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
     Button,
-    TextField,
-    Fab,
     Grid,
     Paper,
     GridList,
     makeStyles,
+    Typography,
+    Container,
 } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
+import Fade from '@material-ui/core/Fade';
+import Zoom from '@material-ui/core/Zoom';
 import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
-import MusicLeader from './MusicLeader';
-import MusicMember from './MusicMember';
-// 용기
-// 용기
 
-// 용기
+import ChatRoom from './ChatRoom';
+import { ChatFeed, Message } from 'react-chat-ui';
+import LobbyTabs from './LobbyTabs'
+import './Lobby.css';
+import backgroundImg from './videos/LobbyImage3.gif';
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
+    paper: {
+        textAlign: 'center',
+        padding: theme.spacing(1),
+        textAlign: 'left',
+        color: theme.palette.text.secondary,
+    },
+}));
 
 function Lobby(props) {
-    var IsLeader = true;
+    let leftSm = 3;
+    let middleSm = 5;
+    let rightSm = 3;
+    const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
+    const [socketId, setSocketId] = useState(props.socket.id);
+
+    const classes = useStyles();
     const PutPlayer = (props) => {
         return (
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" style={{margin:'2vh 0 0 0'}}>
                 <LobbyPlayerCard
                     playerID={props.player.playerID}
-                    cash={props.player.cash}
-                    asset={props.player.asset}
+                    roomLeader={roomLeader}
                 />
             </Grid>
         );
     };
+
+    const [inputCtrl, setInputCtrl] = useState(false);
+    const SetInputCtrl =  (isChat) => {
+        setInputCtrl(isChat);
+    };
+
     function CopyURL() {
         var copyText = document.getElementById('gameLink');
         copyText.select();
@@ -37,8 +63,7 @@ function Lobby(props) {
         alert('복사되었습니다.');
     }
     let [roomInfo, setRoomInfo] = useState('');
-    const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
-    const [socketId, setSocketId] = useState(props.socket.id);
+
 
     let soc = props.socket;
     useLayoutEffect(() => {
@@ -54,7 +79,6 @@ function Lobby(props) {
     }, []);
 
     useLayoutEffect(() => {
-        // let soc = props.socket;
         if (soc) {
             soc.on('disconnect', (roomInfo) => {
                 // 사람이 나갈 때마다 roomInfo 갱신
@@ -91,13 +115,11 @@ function Lobby(props) {
         if (props.roomInfo != '') {
             let PlayerList = getPlayersList(props.roomInfo);
 
-            // ? PlayerList.forEach(player => console.log(player));
             let tmparr = [];
             for (let key in PlayerList) {
                 tmparr.push(PlayerList[key]);
             }
             return (
-                // ? PlayerList.forEach((player) => (<putPlayer player = {player}/>))
                 <div>
                     {tmparr.map((player) => {
                         return <PutPlayer player={player} />;
@@ -106,68 +128,103 @@ function Lobby(props) {
             );
         }
     }
-    const CheckLeader = (props) => {
-        if (props.roomLeader === props.socketId) {
-            return (
-                <>
-                    <MusicLeader
-                        musicList={props.musicList}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                        time={props.time}
-                        socket={props.socket}
-                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                        history={props.history}
-                        MusicPause= {props.MusicPause}
-                    />
-                </>
-            );
-        } else {
-            return (
-                <>
-                    <MusicMember
-                        musicList={props.musicList}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                        time={props.time}
-                        socket={props.socket}
-                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                        history={props.history}
-                        MusicPause= {props.MusicPause}
-                    />
-                </>
-            );
-        }
-    };
     return (
-        <>
+        <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} >  
+        <><Container maxWidth="xl">
+        <Typography component="div" >
             <Grid
+                style={{ height: '100%',padding: '1vh 0 0 0' }}
+                wrap="wrap"
                 container
+                direction="row"
                 justify="center"
-                style={{ height: '80vh', margin: '5vh 5vh 5vh 5vh' }}
+                alignItems="stretch"
+                spacing={1}
             >
-                <Grid style={{ width: '50%' }}>
-                    <Paper style={{ width: '30%' }}>{props.name}</Paper>
-                    <CheckLeader
-                        roomLeader={roomLeader}
-                        socketId={socketId}
-                        musicList={props.musicList}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                        time={props.time}
-                        socket={props.socket}
-                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                        history={props.history}
-                        MusicPause= {props.MusicPause}
-                    />
+                <Grid className="playerListGrid" item xs={leftSm}>
+                        <Grid style={{ height: '80vh' }}>{Card()}</Grid>
                 </Grid>
-                <Grid style={{ width: '50%' }}>
-                    {/* <Grid style={{ height: '80vh' }}>{Card()}</Grid> */}
-                    <Grid style={{ width: '50%' }}>
-                        <GridList>
-                            <Grid style={{ height: '80vh' }}>{Card()}</Grid>
-                        </GridList>
-                        <Grid container justify="center">
+                <Grid
+                    className="stockTradeGrid"
+                    container
+                    item
+                    xs={middleSm}
+                    wrap="wrap"
+                    alignContents="stretch"
+                >
+                    <Grid
+                        style={{ height: '90vh' }}
+                        item
+                        wrap="wrap"
+                        alignContents="stretch"
+                        alignItems="stretch"
+                        container
+                        direction="column"
+                        justify="center"
+                        spacing={1}
+                    >
+                        <Grid style={{ height: '27vh' }} item>
+                            <Grid
+                                style={{ height: '100%' }}
+                                wrap="wrap"
+                                alignItems="stretch"
+                                container
+                                direction="row"
+                                justify="space-around"
+                            >
+                                <Grid
+                                    style={{
+                                        width: '45%',
+                                        height: '22vh',
+                                    }}
+                                    item
+                                >
+                                </Grid>
+                                <Grid
+                                    style={{
+                                        width: '50%',
+                                        height: '22vh',
+                                        margin: '0 0 0 0',
+                                    }}
+                                    item
+                                >
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid className="bidChatGrid" item xs={rightSm}>
+                    <Grid
+                        style={{  width: '100%'}}
+                        wrap="wrap"
+                        alignItems="stretch"
+                        container
+                        direction="column"
+                        justify="center"
+                        spacing={2}
+                    >
+                        <Grid
+                            style={{ height: '45vh' }}
+                            item
+                            alignItems="stretch"
+                        >
+                        <div>
+                            <LobbyTabs
+                                roomLeader={roomLeader}
+                                socketId={socketId}
+                                musicList={props.musicList}
+                                roomID={props.roomID}
+                                roomInfo={props.roomInfo}
+                                time={props.time}
+                                socket={props.socket}
+                                SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                                history={props.history}
+                                MusicPause= {props.MusicPause}
+                                MusicStart={props.MusicStart}
+                            />
+                        </div>
+                        <Grid style={{ height: '45vh' }} container alignItems={'flex-end'} >
+                        <Grid style={{margin:'0 0 10px 0'}} container justify={'space-between'} alignItems={'center'}>
                             <input
                                 type="text"
                                 id="gameLink"
@@ -179,16 +236,36 @@ function Lobby(props) {
                             <Button
                                 class="btn btn-warning"
                                 type="button"
+                                style={{ width: '20%' }}
                                 onClick={CopyURL}
                                 id="copy"
                             >
-                                Copy Link
+                                Link
                             </Button>
+                        </Grid>
+                        </Grid>
+
+                            <Paper
+                                style={{ height: '40vh' }}
+                                className={classes.paper}
+                            >
+
+                                <ChatRoom
+                                    SetInputCtrl={SetInputCtrl}
+                                    roomInfo={props.roomInfo}
+                                    roomID={props.roomID}
+                                    socket={props.socket}
+                                    chat={props.chat}
+                                />
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
+        </Typography>
+    </Container>
         </>
+    </div>
     );
 }
 

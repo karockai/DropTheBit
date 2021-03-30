@@ -10,17 +10,12 @@ import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
-import { useSound, playSound, getDuration } from './useSound';
-import King_Conga from './audios/music/King_Conga.mp3';
-import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
-import Deja_Vu from './audios/music/Deja_Vu.mp3';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
 import { Howl,Howler } from 'howler';
-// import { testSound} from './testSound'
 
 import {
     BrowserRouter as Router,
@@ -28,14 +23,13 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
-import TabControl from './TabControl';
+import {TabPanel} from './TabControl';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
     paper: {
-        // padding: theme.spacing(2),
         textAlign: 'center',
         padding: theme.spacing(1),
         textAlign: 'left',
@@ -53,77 +47,26 @@ export default function LayoutGrid(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
-    const musicList = {
-        Deja_Vu: Deja_Vu,
-        King_Conga: King_Conga,
-        Mausoleum_Mash: Mausoleum_Mash,
-    };
-
     const [inputCtrl, setInputCtrl] = useState(false);
 
     const SetInputCtrl =  (isChat) => {
         setInputCtrl(isChat);
     };
 
-    const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
-    const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
-    const {Howl, Howler} = require('howler');
-
-    // useEffect(() => {
-    //     props.socket.once('startGame_Real', (data) => {
-    //         setThreeSecTimerOpen(false);
-    //         setTimerTime(gameTime);
-    //         setIsStart(true);
-    //         // sound.play();
-    //         // sound.on('play', () => {
-    //         //     const fadeouttime = 2000;
-    //         //     setTimeout(() => sound.fade(0.7, 0, fadeouttime), (sound.duration() - sound.seek()) * 1000 - fadeouttime);
-    //         // });
-            
-    //     });
-    // }, [timerTime]);
-    // useSound(SpecificMusic, 0.7, 2000, isStart);
-
     useEffect(() => {
         console.log('layoutGrid rendered....!');
     });
 
     const [over, setOver] = useState(false);
-    // const [leaderBoard, setLeaderBoard]= useState('');
 
     useEffect(() => {
         props.socket.on('gameOver', (leaderBoard) => {
             console.log('gameover');
             if (leaderBoard) {
-                // GameOver(readerBoard);
                 setOver(leaderBoard);
             }
         });
     }, []);
-
-    // const GameOver = (leaderBoard) => {
-    //     console.log('gameover');
-    //     return (
-    //         <>
-    //             <GameOverModal leaderBoard={leaderBoard}/>
-    //         </>
-    //     );
-
-    // }
-
-    // const GameOver = (readerBoard) => {
-    //     // modal 띄울 함수 호출
-    //     useEffect(() => {
-    //         props.socket.once('gameOver', (leaderBoard) => {
-    //             console.log('gameover');
-    //             return (
-    //                 <>
-    //                     <GameOverModal leaderBoard={leaderBoard}/>
-    //                 </>
-    //             );
-    //         });
-    //     }, []);
-    // };
 
     const [APIdata, setAPI] = useState(null);
     let setCurrentAPIData = (data) => {
@@ -135,10 +78,6 @@ export default function LayoutGrid(props) {
 
     return (
         <React.Fragment>
-            {/* <ThreeSecTimer
-                SpecificMusic={SpecificMusic}
-                open={threeSecTimerOpen}
-            /> */}
             {over && <GameOverModal leaderBoard={over} />}
             <Container maxWidth="lg">
                 <Typography component="div" style={{ padding: '0 0 0 0' }}>
@@ -152,14 +91,12 @@ export default function LayoutGrid(props) {
                         spacing={1}
                     >
                         <Grid className="playerListGrid" item xs={leftSm}>
-                            {/* <Paper style={{ height: "100%" }} className={classes.paper}> */}
                             <PlayerList
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                                 roomID={props.roomID}
                                 roomInfo={props.roomInfo}
                             />
-                            {/* </Paper> */}
                         </Grid>
                         <Grid
                             className="stockTradeGrid"
@@ -326,7 +263,7 @@ export default function LayoutGrid(props) {
                                         style={{ height: '44vh' }}
                                         className={classes.paper}
                                     >
-                                        <TabControl
+                                        <TabPanel
                                             inputCtrl={inputCtrl}
                                             roomID={props.roomID}
                                             socket={props.socket}

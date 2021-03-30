@@ -169,14 +169,15 @@ export default function ChatRoom(props) {
                     item
                     container
                     wrap="wrap"
-                    dirction="column"
+                    dirction="row"
                     style={{ height: '5vh' }}
-                    spacing={1}
-                    alignItems="flex-end"
+                    spacing={2}
+                    justify={'center'}
+                    alignItems="center"
                 >
                     <Grid item style={{ margin: '0 0 0 -10', width: '70%' }}>
                         <TextField
-                            style={{ height: '100%' }}
+                            style={{ height: '100%', width:'100%' }}
                             id="standard-basic"
                             inputRef={textInput}
                             label="메세지 보내기"
@@ -193,16 +194,16 @@ export default function ChatRoom(props) {
                             size="small"
                         />
                     </Grid>
-                    <Grid item style={{ width: '20%' }}>
+                    {/* <Grid item style={{  }}> */}
                         <Button
-                            style={{ height: '100%' }}
+                            style={{ width: '20%' }}
                             variant="contained"
                             color="primary"
                             onClick={()=>{sendMessage()}}
                         >
                             전송
                         </Button>
-                    </Grid>
+                    {/* </Grid> */}
                 </Grid>
             </Grid>
         </Grid>

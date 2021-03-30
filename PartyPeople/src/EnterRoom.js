@@ -23,9 +23,10 @@ export default function EnterRoom(props, { history }) {
     const [playing, setPlaying] = useState(true);
 
     const MusicPause = () => {
-        console.log(playing);
         setPlaying(false);
-        console.log(playing);
+    }
+    const MusicStart = () => {
+        setPlaying(true);
     }
     useEffect(() => {
         playing ? bgm_audio.play() : bgm_audio.pause();
@@ -42,22 +43,7 @@ export default function EnterRoom(props, { history }) {
     };
     if (props.socket == null) {
         props.requestSocket('createPrivateRoom');
-        // setPlaying(true);
     }
-    // useLayoutEffect(()=>{
-    //     if (bgm_audio.paused) {
-    //         console.log('play');
-    //         bgm_audio.play();
-    //     }
-    // }, []);
-    // const PauseAudio = (() => {
-    //     // if (!bgm_audio.paused) {
-    //         console.log(bgm_audio.paused);
-    //         bgm_audio.pause();
-    //         console.log(bgm_audio.paused); 
-    //     // }
-    //         // bgm_audio = new Audio('');
-    // });
 
     const sendName = (name) => {
         // ev.preventDefault();
@@ -72,14 +58,12 @@ export default function EnterRoom(props, { history }) {
                 playerID: name,
                 roomID: searchParams.get('id'),
             });
-            // console.log(searchParams.get('id'));
             setRoomID(searchParams.get('id'));
             setPlayer(name);
         } else {
             // 방장
             props.socket.emit('createPrivateRoom_Req', { playerID: name });
             props.socket.on('createPrivateRoom_Res', (data, useSound) => {
-                // console.log(data.roomInfo[props.socket.id]);
                 props.SetRoomIdAndInfo(data);
                 setPlayer(data.roomInfo[props.socket.id]);
                 setRoomID(data.roomID);
@@ -109,9 +93,8 @@ export default function EnterRoom(props, { history }) {
                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                     roomInfo={props.roomInfo}
                     musicList={musicList}
-                    time={props.time}
                     MusicPause= {MusicPause}
-                    // audio = {bgm_audio}
+                    MusicStart={MusicStart}
                 />
             )}
         </>

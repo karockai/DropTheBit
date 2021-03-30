@@ -13,7 +13,6 @@ import {
     makeStyles,
     TextField,
 } from '@material-ui/core';
-import KeyMapTemp from './images/KeyMap.png';
 import Test from './Test';
 
 const bgm_audio = new Audio(Tetris99);
@@ -179,7 +178,6 @@ export default function MusicLeader(props) {
                 StartGame{' '}
             </Button>
 
-            <img src={KeyMapTemp} style={{ width: '800px' }} />
         </>
     );
 }
