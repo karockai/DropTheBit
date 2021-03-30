@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -50,9 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
-function TabControl(props) {
+export default function TabControl(props) {
     const classes = useStyles();
     const [value, setValue] = useState(0);
     const [isBind, SetBind] = useState(false);
@@ -86,17 +84,15 @@ function TabControl(props) {
             document.removeEventListener('keyup', HandleKeyUp);
             // document.removeEventListener('keydown', HandleKeyDown);
         };
-
-    },);
-
+    });
 
     return (
         <div className={classes.demo2}>
             <AppBar position="static">
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab label='"Q" 매수 주문 목록' {...a11yProps(0)} />
-                    <Tab label='"W" 매도 주문 목록' {...a11yProps(1)} />
-                    <Tab label='"E" 호가 목록' {...a11yProps(2)} />
+                    <Tab label="[Q] 매수 주문 목록" {...a11yProps(0)} />
+                    <Tab label="[W] 매도 주문 목록" {...a11yProps(1)} />
+                    <Tab label="[E] 호가 목록" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
@@ -122,4 +118,3 @@ function TabControl(props) {
         </div>
     );
 }
-export { TabPanel, TabControl};

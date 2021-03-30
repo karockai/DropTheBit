@@ -17,6 +17,8 @@ import DrumDown from './audios/effect/drumDown.wav';
 import HatUp from './audios/effect/hatUp.wav';
 import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
+import { SnackAlertBtn, SnackAlertFunc } from './SnackAlert';
+import { SnackbarProvider } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -84,16 +86,20 @@ function ArrowButton(props) {
     );
 }
 
+let Snacks = [];
+
 export default function TradeStock(props) {
     const classes = useStyles();
 
-    const [currentBid, SetBid] = useState(99999999);
-    const [newBid, SetNewBid] = useState(99999999); //props.APIdata.curPrice
+    const [currentBid, SetBid] = useState(0);
+    const [newBid, SetNewBid] = useState(0); //props.APIdata.curPrice
     const [currentVolume, SetVolume] = useState(1);
     const [newVolume, SetNewVolume] = useState(1);
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
+    const [sellStatus, setSellStatus] = useState('');
+
     if (!isBind) SetBind(true);
     const [myWallet, setWallet] = useState({
         myCash: 0,
@@ -122,19 +128,35 @@ export default function TradeStock(props) {
         }
     }, [isInit]);
 
+    useEffect(() => {
+        setSellStatus('')
+    }, [sellStatus])
+
     function VolumeUp(volume) {
-        if (volume + Math.floor(myWallet.myCash / currentBid * 0.1) > Math.floor(myWallet.myCash / currentBid)) return;
-        SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
+        // if (
+        //     volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
+        //     Math.floor(myWallet.myCash / currentBid)
+        // )
+        //     return;
+        SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        if (volume - Math.floor(myWallet.myCash / currentBid * 0.1) <= 0) return;
-        SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
+        console.log('hi');
+        if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0) {
+            console.log(
+                'setVolunme:',
+                volume - Math.floor((myWallet.myCash / currentBid) * 0.1)
+            );
+            SetNewVolume(1);
+            return;
+        }
+        SetNewVolume(volume - Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function BidUp() {
-        SetBid(currentBid + unitBid);
+        SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
-        SetBid(currentBid - unitBid);
+        SetBid(Number(currentBid) - Number(unitBid));
     }
 
     function RefreshBid() {
@@ -151,12 +173,10 @@ export default function TradeStock(props) {
             return;
         }
         if (bid * volume > myWallet.myCash) {
-            alert(
-                '구매 가능한 현금이 없습니다.\n' +
-                    (bid * volume).toString() +
-                    ' > ' +
-                    myWallet.myCash.toString()
-            );
+            // SnackAlertFunc({
+            //     severity:"error",
+            //     message:"호가 및 수량이 부적절합니다. (ex. '0') 😱"
+            // })
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
@@ -181,12 +201,12 @@ export default function TradeStock(props) {
             SetNewBid(bbid.price);
         });
         SetBind(true);
-
     }
+
     function Sell(bid, volume) {
         if (bid === 0 || volume === 0) {
-            alert('호가 및 수량이 부적절합니다. (ex. "0")');
-            return;
+            // alert('호가 및 수량이 부적절합니다. (ex. "0")');
+            return 'invalid';
         }
         if (myWallet.myCoin < volume) {
             alert(
@@ -195,10 +215,10 @@ export default function TradeStock(props) {
                     ' > ' +
                     myWallet.myCoin.toString()
             );
-            props.socket.once('buyDone', (bbid) => {
+            props.socket.once('sellDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
-            return;
+            return 'lack';
         }
         //@ Sell Emit
         console.log(
@@ -219,32 +239,31 @@ export default function TradeStock(props) {
             SetNewBid(sbid.price);
         });
         SetBind(true);
-
     }
 
     const interval = 0.2;
     let cTime, pTime;
-    function HandleKeyDown(e) {
-        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
-        e.preventDefault();
-        if (e.keyCode === 37) {
-            //_ LEFT ARROW
-            playSound(HatUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
-            VolumeDown(currentVolume);
-        } else if (e.keyCode === 39) {
-            //_ RIGHT ARROW
-            playSound(HatDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
-            VolumeUp(currentVolume);
-        }
-    }
+    // function HandleKeyDown(e) {
+    //     if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
+    //     e.preventDefault();
+    //     if (e.keyCode === 37) {
+    //         //_ LEFT ARROW
+    //         playSound(HatUp, 1).play();
+    //         if (props.socket == null || isBind === false) {
+    //             props.requestSocket('TradeStock', props.socket);
+    //             return;
+    //         }
+    //         VolumeDown(currentVolume);
+    //     } else if (e.keyCode === 39) {
+    //         //_ RIGHT ARROW
+    //         playSound(HatDown, 1).play();
+    //         if (props.socket == null || isBind === false) {
+    //             props.requestSocket('TradeStock', props.socket);
+    //             return;
+    //         }
+    //         VolumeUp(currentVolume);
+    //     }
+    // }
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -281,11 +300,11 @@ export default function TradeStock(props) {
             //_ 'D'
             playSound(DrumDown, 1).play();
             RefreshBid();
-        }else if (e.keyCode === 90) {
+        } else if (e.keyCode === 90) {
             //_ 'Z'
             playSound(DrumDown, 1).play();
             SetSellMaxCount();
-        }else if (e.keyCode === 88) {
+        } else if (e.keyCode === 88) {
             //_ 'X'
             playSound(DrumDown, 1).play();
             SetBuyMaxCount();
@@ -307,7 +326,7 @@ export default function TradeStock(props) {
             document.removeEventListener('keyup', HandleKeyUp);
             // document.removeEventListener('keydown', HandleKeyDown);
         };
-    },);
+    });
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -441,23 +460,21 @@ export default function TradeStock(props) {
                     variant="contained"
                     color="secondary"
                     onClick={() => {
-                        Buy(currentBid, currentVolume)
+                        Buy(currentBid, currentVolume);
                     }}
                 >
                     {/* <KeyboardArrowLeftIcon /> */}
-                    <>"A" </>
-                    매수
+                    [A] 매수 확정
                 </Button>
                 <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                        Sell(currentBid, currentVolume)
+                        Sell(currentBid, currentVolume);
                     }}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"S" </>
-                    매도
+                    [S] 매도 확정
                 </Button>
                 <Button
                     variant="contained"
@@ -465,7 +482,7 @@ export default function TradeStock(props) {
                     onClick={() => RefreshBid()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"D" 🔄</>
+                    [D] 현재가 설정🔄
                 </Button>
                 <Button
                     variant="contained"
@@ -473,7 +490,7 @@ export default function TradeStock(props) {
                     onClick={() => SetSellMaxCount()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"Z" BuyMax 📈</>
+                    [Z] 최대 구매량 설정 📈
                 </Button>
                 <Button
                     variant="contained"
@@ -481,7 +498,7 @@ export default function TradeStock(props) {
                     onClick={() => SetBuyMaxCount()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"X" SellMax 📉</>
+                    [X] 최대 매도량 설정 📉
                 </Button>
             </Grid>
         </Grid>

@@ -13,6 +13,12 @@ import Fade from '@material-ui/core/Fade';
 import Zoom from '@material-ui/core/Zoom';
 import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
+import MusicLeader from './MusicLeader';
+import MusicMember from './MusicMember';
+import {SnackAlertBtn} from './SnackAlert';
+import {SnackbarProvider} from 'notistack';
+// 용기
+// 용기
 
 import ChatRoom from './ChatRoom';
 import { ChatFeed, Message } from 'react-chat-ui';
@@ -60,7 +66,7 @@ function Lobby(props) {
         var copyText = document.getElementById('gameLink');
         copyText.select();
         document.execCommand('Copy');
-        alert('복사되었습니다.');
+        // alert('복사되었습니다.');
     }
     let [roomInfo, setRoomInfo] = useState('');
 
@@ -233,15 +239,18 @@ function Lobby(props) {
                                 style={{ width: '70%' }}
                                 readOnly
                             />
-                            <Button
-                                class="btn btn-warning"
-                                type="button"
-                                style={{ width: '20%' }}
-                                onClick={CopyURL}
-                                id="copy"
-                            >
-                                Link
-                            </Button>
+                            <SnackbarProvider maxSnack={5}>
+                                <SnackAlertBtn
+                                    class="btn btn-warning"
+                                    severity="success"
+                                    message="링크가 복사됐어요! 😚"
+                                    label="게임 방 URL copy"
+                                    onAlert= {true}
+                                    type="button"
+                                    onClick={CopyURL}
+                                    id="copy"
+                                />
+                            </SnackbarProvider>
                         </Grid>
                         </Grid>
 

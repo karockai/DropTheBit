@@ -16,6 +16,7 @@ import {
     GridList,
 } from '@material-ui/core';
 import Message from './Message';
+import StockDoneList from './StockDoneList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,6 +49,7 @@ export default function ChatRoom(props) {
     let testXs = 12;
     const classes = useStyles();
     const [message, setMessage] = useState(''); // 보낼 때의 메시지자체만 저장
+    const [resMsg, setResMsg] = useState('');
     const [messages, setMessages] = useState(
         // author와 쌍으로 저장된 메시지
         [
@@ -57,24 +59,33 @@ export default function ChatRoom(props) {
     const [isChanged, setChanged]  = useState(true);
     let textInput = useRef(null);
     const scrollToBottom = () => {
-        messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+        messagesEnd.current.scrollIntoView();
     }
 
     useEffect(() => {
-        props.socket.once('update', (data) => {
-            if (data) {
-                addMessage(data);
-            }
-        })
-    });
+        if(messages.length >= 15) messages.shift();
+        setMessages([...messages, resMsg]);
+        scrollToBottom();
+    },[resMsg])
 
     useEffect(() => {
-        scrollToBottom();
+        props.socket.on('update', (data) => {
+            if (data) {
+                setResMsg(data);
+            }
+        })
+    },[]);
+
+    useEffect(() => {
         document.addEventListener('keyup', HandleKeyUp);
         return () => {
             document.removeEventListener('keyup', HandleKeyUp);
         };
     },);
+
+    useEffect(() => {
+        scrollToBottom();
+    },[messages])
     
     // const socket_on = (async() => {
     //     await props.socket.on('update', (data) => {
@@ -147,8 +158,8 @@ export default function ChatRoom(props) {
             style={{ height: '100%' }}
             justify={'space-between'}
         >
-            <GridList item style={{ height: '29vh' }}>
-                <Grid style={{ width: '100%'}}>
+            <GridList item >
+                <Grid style={{ height: '29vh', width: '100%'}}>
                     {messages.map((message) => {
                         return (
                             <>
@@ -175,12 +186,12 @@ export default function ChatRoom(props) {
                     justify={'center'}
                     alignItems="center"
                 >
-                    <Grid item style={{ margin: '0 0 0 -10', width: '70%' }}>
+                    <Grid item style={{ margin: '10 0 0 -10', width: '70%' }}>
                         <TextField
                             style={{ height: '100%', width:'100%' }}
                             id="standard-basic"
                             inputRef={textInput}
-                            label="메세지 보내기"
+                            label="메세지 보내기 (15자 제한)"
                             onFocus={()=> {
                                 isFocus = true;
                                 props.SetInputCtrl(true)
@@ -192,6 +203,7 @@ export default function ChatRoom(props) {
                             onChange={handleOnChange}
                             variant="outlined"
                             size="small"
+                            inputProps={{ 'maxlength': 15 }}
                         />
                     </Grid>
                     {/* <Grid item style={{  }}> */}
