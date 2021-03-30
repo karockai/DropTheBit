@@ -65,11 +65,9 @@ export default function StockDoneList(props) {
     useEffect(() => {
         if (doneList.length >= 10) doneList.shift();
         setList([...doneList, doneItem]);
-    }, [doneItem]);
-
-    useEffect(() => {
         scrollToBottom();
-    });
+
+    }, [doneItem]);
 
     return (
         <GridList
