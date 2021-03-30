@@ -123,12 +123,17 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
-        if (volume + Math.floor(myWallet.myCash / currentBid * 0.1) > Math.floor(myWallet.myCash / currentBid)) return;
-        SetNewVolume(volume + Math.floor(myWallet.myCash / currentBid * 0.1));
+        if (
+            volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
+            Math.floor(myWallet.myCash / currentBid)
+        )
+            return;
+        SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        if (volume - Math.floor(myWallet.myCash / currentBid * 0.1) <= 0) return;
-        SetNewVolume(volume - Math.floor(myWallet.myCash / currentBid * 0.1));
+        if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0)
+            return;
+        SetNewVolume(volume - Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function BidUp() {
         SetBid(currentBid + unitBid);
@@ -181,7 +186,6 @@ export default function TradeStock(props) {
             SetNewBid(bbid.price);
         });
         SetBind(true);
-
     }
     function Sell(bid, volume) {
         if (bid === 0 || volume === 0) {
@@ -219,32 +223,31 @@ export default function TradeStock(props) {
             SetNewBid(sbid.price);
         });
         SetBind(true);
-
     }
 
     const interval = 0.2;
     let cTime, pTime;
-    function HandleKeyDown(e) {
-        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
-        e.preventDefault();
-        if (e.keyCode === 37) {
-            //_ LEFT ARROW
-            playSound(HatUp, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
-            VolumeDown(currentVolume);
-        } else if (e.keyCode === 39) {
-            //_ RIGHT ARROW
-            playSound(HatDown, 1).play();
-            if (props.socket == null || isBind === false) {
-                props.requestSocket('TradeStock', props.socket);
-                return;
-            }
-            VolumeUp(currentVolume);
-        }
-    }
+    // function HandleKeyDown(e) {
+    //     if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
+    //     e.preventDefault();
+    //     if (e.keyCode === 37) {
+    //         //_ LEFT ARROW
+    //         playSound(HatUp, 1).play();
+    //         if (props.socket == null || isBind === false) {
+    //             props.requestSocket('TradeStock', props.socket);
+    //             return;
+    //         }
+    //         VolumeDown(currentVolume);
+    //     } else if (e.keyCode === 39) {
+    //         //_ RIGHT ARROW
+    //         playSound(HatDown, 1).play();
+    //         if (props.socket == null || isBind === false) {
+    //             props.requestSocket('TradeStock', props.socket);
+    //             return;
+    //         }
+    //         VolumeUp(currentVolume);
+    //     }
+    // }
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -281,11 +284,11 @@ export default function TradeStock(props) {
             //_ 'D'
             playSound(DrumDown, 1).play();
             RefreshBid();
-        }else if (e.keyCode === 90) {
+        } else if (e.keyCode === 90) {
             //_ 'Z'
             playSound(DrumDown, 1).play();
             SetSellMaxCount();
-        }else if (e.keyCode === 88) {
+        } else if (e.keyCode === 88) {
             //_ 'X'
             playSound(DrumDown, 1).play();
             SetBuyMaxCount();
@@ -307,7 +310,7 @@ export default function TradeStock(props) {
             document.removeEventListener('keyup', HandleKeyUp);
             // document.removeEventListener('keydown', HandleKeyDown);
         };
-    },);
+    });
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -441,7 +444,7 @@ export default function TradeStock(props) {
                     variant="contained"
                     color="secondary"
                     onClick={() => {
-                        Buy(currentBid, currentVolume)
+                        Buy(currentBid, currentVolume);
                     }}
                 >
                     {/* <KeyboardArrowLeftIcon /> */}
@@ -452,7 +455,7 @@ export default function TradeStock(props) {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                        Sell(currentBid, currentVolume)
+                        Sell(currentBid, currentVolume);
                     }}
                 >
                     {/* <KeyboardArrowRightIcon /> */}

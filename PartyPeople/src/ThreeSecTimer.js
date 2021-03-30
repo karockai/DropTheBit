@@ -61,7 +61,6 @@ export default function ThreeSecTimer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [time, setTime] = React.useState(3);
-
 const changeTime = () => {
   if(time > 1) {
     setTimeout(function(){
@@ -77,12 +76,9 @@ const changeTime = () => {
   },[time]);
   
   useEffect(()=>{
-    setOpen(signal);
+    setOpen(signal); 
   },[signal]);
 
-  useEffect(() => {
-    console.log(open,time,'ThreeSecTimer on.');
-  })
 
   return (
       <Modal
@@ -96,11 +92,7 @@ const changeTime = () => {
         open={open}
         closeAfterTransition
         BackdropComponent={Backdrop}
-        // BackdropProps={{
-        //   timeout: 500,
-        // }}
       >
-      {/* {changeTime} */}
         <Fade in={open}>
           <div className={classes.paper}>
             <h4 className={classes.typo} id="spring-modal-title" style={{justifyContent: 'center'}}> {time} </h4>
