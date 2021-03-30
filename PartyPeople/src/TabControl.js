@@ -91,9 +91,9 @@ export default function TabControl(props) {
         <div className={classes.demo2}>
             <AppBar position="static">
                 <Tabs value={value} onChange={handleChange}>
-                    <Tab label='"Q" 매수 주문 목록' {...a11yProps(0)} />
-                    <Tab label='"W" 매도 주문 목록' {...a11yProps(1)} />
-                    <Tab label='"E" 호가 목록' {...a11yProps(2)} />
+                    <Tab label="[Q] 매수 주문 목록" {...a11yProps(0)} />
+                    <Tab label="[W] 매도 주문 목록" {...a11yProps(1)} />
+                    <Tab label="[E] 호가 목록" {...a11yProps(2)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>

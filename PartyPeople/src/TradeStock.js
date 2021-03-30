@@ -87,8 +87,8 @@ function ArrowButton(props) {
 export default function TradeStock(props) {
     const classes = useStyles();
 
-    const [currentBid, SetBid] = useState(99999999);
-    const [newBid, SetNewBid] = useState(99999999); //props.APIdata.curPrice
+    const [currentBid, SetBid] = useState(0);
+    const [newBid, SetNewBid] = useState(0); //props.APIdata.curPrice
     const [currentVolume, SetVolume] = useState(1);
     const [newVolume, SetNewVolume] = useState(1);
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
@@ -123,23 +123,30 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
-        if (
-            volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
-            Math.floor(myWallet.myCash / currentBid)
-        )
-            return;
+        // if (
+        //     volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
+        //     Math.floor(myWallet.myCash / currentBid)
+        // )
+        //     return;
         SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0)
+        console.log('hi');
+        if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0) {
+            console.log(
+                'setVolunme:',
+                volume - Math.floor((myWallet.myCash / currentBid) * 0.1)
+            );
+            SetNewVolume(1);
             return;
+        }
         SetNewVolume(volume - Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function BidUp() {
-        SetBid(currentBid + unitBid);
+        SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
-        SetBid(currentBid - unitBid);
+        SetBid(Number(currentBid) - Number(unitBid));
     }
 
     function RefreshBid() {
@@ -199,7 +206,7 @@ export default function TradeStock(props) {
                     ' > ' +
                     myWallet.myCoin.toString()
             );
-            props.socket.once('buyDone', (bbid) => {
+            props.socket.once('sellDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
             return;
@@ -448,8 +455,7 @@ export default function TradeStock(props) {
                     }}
                 >
                     {/* <KeyboardArrowLeftIcon /> */}
-                    <>"A" </>
-                    매수
+                    [A] 매수 확정
                 </Button>
                 <Button
                     variant="contained"
@@ -459,8 +465,7 @@ export default function TradeStock(props) {
                     }}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"S" </>
-                    매도
+                    [S] 매도 확정
                 </Button>
                 <Button
                     variant="contained"
@@ -468,7 +473,7 @@ export default function TradeStock(props) {
                     onClick={() => RefreshBid()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"D" 🔄</>
+                    [D] 현재가 설정🔄
                 </Button>
                 <Button
                     variant="contained"
@@ -476,7 +481,7 @@ export default function TradeStock(props) {
                     onClick={() => SetSellMaxCount()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"Z" BuyMax 📈</>
+                    [Z] 최대 구매량 설정 📈
                 </Button>
                 <Button
                     variant="contained"
@@ -484,7 +489,7 @@ export default function TradeStock(props) {
                     onClick={() => SetBuyMaxCount()}
                 >
                     {/* <KeyboardArrowRightIcon /> */}
-                    <>"X" SellMax 📉</>
+                    [X] 최대 매도량 설정 📉
                 </Button>
             </Grid>
         </Grid>

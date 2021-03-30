@@ -161,7 +161,7 @@ export default function AskTable(props) {
                                 style={{ align: 'center', width: '20%' }}
                             >
                                 <span style={{ fontWeight: 'bold' }}>
-                                    취소 번호 (1~8)
+                                    취소 번호 [1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
