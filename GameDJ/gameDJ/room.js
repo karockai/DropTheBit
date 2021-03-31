@@ -85,9 +85,11 @@ class Room {
 
             socket.roomID = roomID;
             socket.join(roomID);
+            playercnt++;
             io.to(roomID).emit('joinRoom_Res', {
                 roomID: roomID,
                 roomInfo: roomInfo,
+                socketID: socket.id
             });
         }
     }
