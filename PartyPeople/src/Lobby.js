@@ -178,9 +178,9 @@ function Lobby(props) {
                                 style={{ width: '70%' }}
                                 readOnly
                             />
-                            <SnackbarProvider maxSnack={5}>
+                            <SnackbarProvider maxSnack={3}>
                                 <SnackAlertBtn
-                                    class="btn btn-warning"
+                                    className="btn btn-warning"
                                     severity="success"
                                     message="링크가 복사됐어요! 😚"
                                     label="게임 방 URL copy"

@@ -95,7 +95,7 @@ export default function StockDoneList(props) {
                                         : 'normal',
                             };
                             return (
-                                <pre>
+                                <pre key = {idx}>
                                     <span style={{ fontWeight: 'bold' }}>
                                         {props.isMine ? '' : done.playerID}
                                     </span>

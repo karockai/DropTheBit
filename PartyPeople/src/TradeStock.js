@@ -9,15 +9,13 @@ import {
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { useSound, playSound } from './useSound';
 import DrumUp from './audios/effect/drumUp.wav';
 import DrumDown from './audios/effect/drumDown.wav';
 import HatUp from './audios/effect/hatUp.wav';
 import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
-import { SnackAlertBtn, SnackAlertFunc } from './SnackAlert';
+import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
@@ -86,11 +84,10 @@ function ArrowButton(props) {
     );
 }
 
-let Snacks = [];
+let startTime = null;
 
 export default function TradeStock(props) {
     const classes = useStyles();
-
     const [currentBid, SetBid] = useState(0);
     const [newBid, SetNewBid] = useState(0); //props.APIdata.curPrice
     const [currentVolume, SetVolume] = useState(1);
@@ -98,18 +95,28 @@ export default function TradeStock(props) {
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
-    const [sellStatus, setSellStatus] = useState('');
-
-    if (!isBind) SetBind(true);
+    const [sellStatus, setSellStatus] = useState({
+        status: '',
+        val: 0,
+        vol: 0,
+    });
+    const [buyStatus, setBuyStatus] = useState({
+        status: '',
+        val: 0,
+        vol: 0,
+    });
     const [myWallet, setWallet] = useState({
         myCash: 0,
         myAsset: 0,
         myCoin: 0,
     });
     const [isInit, setInit] = useState(false);
+
+    if (!isBind) SetBind(true);
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
     useLayoutEffect(() => {
+        startTime = new Date();
         if (props.socket == null) {
             props.requestSocket('MyAsset', props.socket);
             setInit(true);
@@ -128,10 +135,6 @@ export default function TradeStock(props) {
         }
     }, [isInit]);
 
-    useEffect(() => {
-        setSellStatus('')
-    }, [sellStatus])
-
     function VolumeUp(volume) {
         // if (
         //     volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
@@ -141,12 +144,7 @@ export default function TradeStock(props) {
         SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        console.log('hi');
         if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0) {
-            console.log(
-                'setVolunme:',
-                volume - Math.floor((myWallet.myCash / currentBid) * 0.1)
-            );
             SetNewVolume(1);
             return;
         }
@@ -168,9 +166,13 @@ export default function TradeStock(props) {
     }
 
     function Buy(bid, volume) {
-        if (bid === 0 || volume === 0) {
-            alert('호가 및 수량이 부적절합니다. (ex. "0")');
-            return;
+        let status = '';
+        if (bid <= 0 || volume <= 0) {
+            return {
+                status: 'invalid',
+                val: bid,
+                vol: volume,
+            };
         }
         if (bid * volume > myWallet.myCash) {
             // SnackAlertFunc({
@@ -180,16 +182,17 @@ export default function TradeStock(props) {
             props.socket.once('buyDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
-            return;
+            return {
+                status: 'lack',
+                val: bid,
+                vol: volume,
+            };
         }
-        //@ Buy Emit
-        console.log(
-            '[ 가격',
-            bid,
-            ', 갯수',
-            volume,
-            '] 매수 주문을 요청합니다.'
-        );
+        status = {
+            status: 'request',
+            val: bid,
+            vol: volume,
+        };
         props.socket.emit('buy_Req', {
             //@ reqJson.json 형식확인
             roomID: props.roomID,
@@ -199,35 +202,40 @@ export default function TradeStock(props) {
         });
         props.socket.once('buyDone', (bbid) => {
             SetNewBid(bbid.price);
+            setBuyStatus({
+                status: 'done',
+                val: bid,
+                vol: volume,
+            });
         });
         SetBind(true);
+        return status;
     }
 
     function Sell(bid, volume) {
-        if (bid === 0 || volume === 0) {
-            // alert('호가 및 수량이 부적절합니다. (ex. "0")');
-            return 'invalid';
+        let status = '';
+        if (bid <= 0 || volume <= 0) {
+            return {
+                status: 'invalid',
+                val: bid,
+                vol: volume,
+            };
         }
         if (myWallet.myCoin < volume) {
-            alert(
-                '보유코인이 부족합니다.\n' +
-                    volume.toString() +
-                    ' > ' +
-                    myWallet.myCoin.toString()
-            );
             props.socket.once('sellDone', (bbid) => {
                 SetNewBid(bbid.price);
             });
-            return 'lack';
+            return {
+                status: 'lack',
+                val: bid,
+                vol: volume,
+            };
         }
-        //@ Sell Emit
-        console.log(
-            '[ 가격',
-            bid,
-            ', 갯수',
-            volume,
-            '] 매도 주문을 요청합니다.'
-        );
+        status = {
+            status: 'request',
+            val: bid,
+            vol: volume,
+        };
         props.socket.emit('sell_Req', {
             roomID: props.roomID,
             socketID: props.socket.id,
@@ -236,34 +244,18 @@ export default function TradeStock(props) {
         });
         //@ 중복 문제가 발생한다.
         props.socket.once('sellDone', (sbid) => {
+            console.log(sbid);
             SetNewBid(sbid.price);
+            setSellStatus({
+                status: 'done',
+                val: bid,
+                vol: volume,
+            });
         });
         SetBind(true);
+        return status;
     }
 
-    const interval = 0.2;
-    let cTime, pTime;
-    // function HandleKeyDown(e) {
-    //     if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
-    //     e.preventDefault();
-    //     if (e.keyCode === 37) {
-    //         //_ LEFT ARROW
-    //         playSound(HatUp, 1).play();
-    //         if (props.socket == null || isBind === false) {
-    //             props.requestSocket('TradeStock', props.socket);
-    //             return;
-    //         }
-    //         VolumeDown(currentVolume);
-    //     } else if (e.keyCode === 39) {
-    //         //_ RIGHT ARROW
-    //         playSound(HatDown, 1).play();
-    //         if (props.socket == null || isBind === false) {
-    //             props.requestSocket('TradeStock', props.socket);
-    //             return;
-    //         }
-    //         VolumeUp(currentVolume);
-    //     }
-    // }
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -291,11 +283,11 @@ export default function TradeStock(props) {
         } else if (e.keyCode === 65) {
             //_ 'A'
             playSound(DrumUp, 1).play();
-            Buy(currentBid, currentVolume);
+            setBuyStatus(Buy(currentBid, currentVolume));
         } else if (e.keyCode === 83) {
             //_ 'S'
             playSound(DrumDown, 1).play();
-            Sell(currentBid, currentVolume);
+            setSellStatus(Sell(currentBid, currentVolume));
         } else if (e.keyCode === 68) {
             //_ 'D'
             playSound(DrumDown, 1).play();
@@ -339,6 +331,16 @@ export default function TradeStock(props) {
         SetVolume(responseVolume);
         return () => {};
     }, [newVolume]);
+
+    useEffect(() => {
+        console.log(sellStatus, 'sellStatus');
+        if (sellStatus !== null) setSellStatus(null);
+    }, [sellStatus]);
+
+    useEffect(() => {
+        console.log(buyStatus, 'buy');
+        if (buyStatus !== null) setBuyStatus(null);
+    }, [buyStatus]);
 
     function handleVolumeChange(e) {
         if (e.target.id === 'outlined-required') {
@@ -401,106 +403,180 @@ export default function TradeStock(props) {
         return ret + '원';
     }
 
+    let dateString = new Date();
+    dateString = '('+dateString.getMinutes() + ':' + dateString.getSeconds() + '.' + dateString.getMilliseconds() + ') '
+
     return (
-        <Grid
-            wrap="wrap"
-            className={classes.paper}
-            alignItems="stretch"
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            style={{ height: '100%' }}
-        >
-            <Grid container item justify="center">
-                <TextField
-                    className="buysell"
-                    id="outlined-required"
-                    label="매매 호가 ▲▼"
-                    size="small"
-                    type="number"
-                    style={{ width: '80%' }}
-                    value={currentBid}
-                    onChange={handleBidChange}
-                />
-                <ArrowButton
-                    upEvent={() => BidUp(currentBid)}
-                    downEvent={() => BidDown(currentBid)}
-                />
-            </Grid>
-            <Grid container item justify="center">
-                <TextField
-                    className="count"
-                    id="outlined-required"
-                    label="수량 ◀▶"
-                    type="number"
-                    size="small"
-                    style={{ width: '80%' }}
-                    value={currentVolume}
-                    onChange={handleVolumeChange}
-                />
-                <ArrowButton
-                    upEvent={() => VolumeUp(currentVolume)}
-                    downEvent={() => VolumeDown(currentVolume)}
-                />
-            </Grid>
-            <Grid container item justify="center" alignItems="start">
-                예상소요금액 :{' '}
-                <span style={costColor}>
-                    {ExpBySymbol(parseWonToStr(currentVolume * currentBid))}
-                </span>
-            </Grid>
+        <>
+            <SnackbarProvider maxSnack={8}>
+                {buyStatus && buyStatus.status === 'lack' && (
+                    <SnackAlertFunc
+                        severity="warning"
+                        message= {dateString + " 보유 금액이 부족해요 😨"}
+                    />
+                )}
+                {buyStatus && buyStatus.status === 'invalid' && (
+                    <SnackAlertFunc
+                        severity="error"
+                        message= {dateString +" 유효하지 않은 값입니다."}
+                    />
+                )}
+                {buyStatus && buyStatus.status === 'request' && (
+                    <SnackAlertFunc
+                        severity="info"
+                        message={
+                            dateString + buyStatus.val +
+                            ' 호가에 ' +
+                            buyStatus.vol +
+                            '개 [매수] 주문했어요! 📈'
+                        }
+                    />
+                )}
+                {buyStatus && buyStatus.status === 'done' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={
+                            dateString + buyStatus.val +
+                            ',' +
+                            buyStatus.vol +
+                            ' [매수] 주문이 체결되었어요! 🎁'
+                        }
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'lack' && (
+                    <SnackAlertFunc
+                        severity="warning"
+                        message= {dateString + "코인이 없는걸요? 😨"}
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'invalid' && (
+                    <SnackAlertFunc
+                        severity="error"
+                        message= {dateString +"유효하지 않은 값입니다."}
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'request' && (
+                    <SnackAlertFunc
+                        severity="info"
+                        message={
+                            dateString +sellStatus.val +
+                            ' 호가에 ' +
+                            sellStatus.vol +
+                            '개 [매도] 주문했어요! 📉'
+                        }
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'done' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={
+                            dateString + sellStatus.val +
+                            ',' +
+                            sellStatus.vol +
+                            ' [매도] 주문이 체결되었어요! 💸'
+                        }
+                    />
+                )}
+            </SnackbarProvider>
             <Grid
+                wrap="wrap"
+                className={classes.paper}
+                alignItems="stretch"
                 container
-                item
+                direction="row"
                 justify="center"
-                style={{ width: '80%', margin: '0 10 0 1' }}
+                alignItems="center"
+                style={{ height: '100%' }}
             >
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {
-                        Buy(currentBid, currentVolume);
-                    }}
+                <Grid container item justify="center">
+                    <TextField
+                        className="buysell"
+                        id="outlined-required"
+                        label="매매 호가 ▲▼"
+                        size="small"
+                        type="number"
+                        style={{ width: '80%' }}
+                        value={currentBid}
+                        onChange={handleBidChange}
+                    />
+                    <ArrowButton
+                        upEvent={() => BidUp(currentBid)}
+                        downEvent={() => BidDown(currentBid)}
+                    />
+                </Grid>
+                <Grid container item justify="center">
+                    <TextField
+                        className="count"
+                        id="outlined-required"
+                        label="수량 ◀▶"
+                        type="number"
+                        size="small"
+                        style={{ width: '80%' }}
+                        value={currentVolume}
+                        onChange={handleVolumeChange}
+                    />
+                    <ArrowButton
+                        upEvent={() => VolumeUp(currentVolume)}
+                        downEvent={() => VolumeDown(currentVolume)}
+                    />
+                </Grid>
+                <Grid container item justify="center" alignItems="start">
+                    예상소요금액 :{' '}
+                    <span style={costColor}>
+                        {ExpBySymbol(parseWonToStr(currentVolume * currentBid))}
+                    </span>
+                </Grid>
+                <Grid
+                    container
+                    item
+                    justify="center"
+                    style={{ width: '80%', margin: '0 10 0 1' }}
                 >
-                    {/* <KeyboardArrowLeftIcon /> */}
-                    [A] 매수 확정
-                </Button>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                        Sell(currentBid, currentVolume);
-                    }}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    [S] 매도 확정
-                </Button>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => RefreshBid()}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    [D] 현재가 설정🔄
-                </Button>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => SetSellMaxCount()}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    [Z] 최대 구매량 설정 📈
-                </Button>
-                <Button
-                    variant="contained"
-                    color="info"
-                    onClick={() => SetBuyMaxCount()}
-                >
-                    {/* <KeyboardArrowRightIcon /> */}
-                    [X] 최대 매도량 설정 📉
-                </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {
+                            setBuyStatus(Buy(currentBid, currentVolume));
+                        }}
+                    >
+                        [A] 매수 확정
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            setSellStatus(Sell(currentBid, currentVolume));
+                        }}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        [S] 매도 확정
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => RefreshBid()}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        [D] 현재가 설정🔄
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => SetSellMaxCount()}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        [Z] 최대 구매량 설정 📈
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="info"
+                        onClick={() => SetBuyMaxCount()}
+                    >
+                        {/* <KeyboardArrowRightIcon /> */}
+                        [X] 최대 매도량 설정 📉
+                    </Button>
+                </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 }
