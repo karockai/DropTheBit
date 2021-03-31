@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
-
 //@ 5 params
 //? ------- props -----------------------------
 //? {
@@ -13,6 +12,10 @@ import { useSnackbar } from 'notistack';
 //?     onClick = ...
 //? }
 //? -------------------------------------------
+
+
+
+
 export function SnackAlertBtn(props) {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -39,6 +42,7 @@ export function SnackAlertBtn(props) {
             >
                 {props.label}
             </Button>
+
         </>
     );
 }

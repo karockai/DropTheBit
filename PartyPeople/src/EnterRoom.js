@@ -12,6 +12,7 @@ import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 // import { useSound } from './useSound';
 import Tetris99 from './audios/music/Tetris99.mp3';
+import backgroundImg from './videos/LobbyImage3.gif';
 
 export default function EnterRoom(props, { history }) {
 
@@ -74,6 +75,7 @@ export default function EnterRoom(props, { history }) {
 
     const isName = name === '';
     return (
+        <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
         <>
             {isName && (
                 <SetPlayerName
@@ -98,5 +100,6 @@ export default function EnterRoom(props, { history }) {
                 />
             )}
         </>
+        </div>
     );
 }

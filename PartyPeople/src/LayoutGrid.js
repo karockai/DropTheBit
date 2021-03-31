@@ -23,7 +23,7 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
-import {TabPanel} from './TabControl';
+import TabPanel from './TabControl';
 
 const useStyles = makeStyles((theme) => ({
     root: {

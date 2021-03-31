@@ -24,7 +24,9 @@ import ChatRoom from './ChatRoom';
 import { ChatFeed, Message } from 'react-chat-ui';
 import LobbyTabs from './LobbyTabs'
 import './Lobby.css';
-import backgroundImg from './videos/LobbyImage3.gif';
+
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -36,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         color: theme.palette.text.secondary,
     },
+    button: {
+        // color: theme.palette.getContrastText
+        backgroundColor: '#0069d9',
+    }
 }));
 
 function Lobby(props) {
@@ -69,8 +75,6 @@ function Lobby(props) {
         // alert('복사되었습니다.');
     }
     let [roomInfo, setRoomInfo] = useState('');
-
-
     let soc = props.socket;
     useLayoutEffect(() => {
         if (soc) {
@@ -135,20 +139,20 @@ function Lobby(props) {
         }
     }
     return (
-        <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} >  
-        <><Container maxWidth="xl">
-        <Typography component="div" >
+ 
+        // <><Container maxWidth="xl">
+        // <Typography component="div" >
             <Grid
-                style={{ height: '100%',padding: '1vh 0 0 0' }}
+                style={{ height: '100vh'}}
                 wrap="wrap"
                 container
                 direction="row"
                 justify="center"
                 alignItems="stretch"
-                spacing={1}
+                // spacing={1}
             >
                 <Grid className="playerListGrid" item xs={leftSm}>
-                        <Grid style={{ height: '80vh' }}>{Card()}</Grid>
+                        <Grid >{Card()}</Grid>
                 </Grid>
                 <Grid
                     className="stockTradeGrid"
@@ -158,63 +162,13 @@ function Lobby(props) {
                     wrap="wrap"
                     alignContents="stretch"
                 >
-                    <Grid
-                        style={{ height: '90vh' }}
-                        item
-                        wrap="wrap"
-                        alignContents="stretch"
-                        alignItems="stretch"
-                        container
-                        direction="column"
-                        justify="center"
-                        spacing={1}
-                    >
-                        <Grid style={{ height: '27vh' }} item>
-                            <Grid
-                                style={{ height: '100%' }}
-                                wrap="wrap"
-                                alignItems="stretch"
-                                container
-                                direction="row"
-                                justify="space-around"
-                            >
-                                <Grid
-                                    style={{
-                                        width: '45%',
-                                        height: '22vh',
-                                    }}
-                                    item
-                                >
-                                </Grid>
-                                <Grid
-                                    style={{
-                                        width: '50%',
-                                        height: '22vh',
-                                        margin: '0 0 0 0',
-                                    }}
-                                    item
-                                >
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
                 </Grid>
-                <Grid className="bidChatGrid" item xs={rightSm}>
-                    <Grid
-                        style={{  width: '100%'}}
-                        wrap="wrap"
+                <Grid className="bidChatGrid" item xs={rightSm} 
+                // wrap="wrap"
                         alignItems="stretch"
                         container
                         direction="column"
-                        justify="center"
-                        spacing={2}
-                    >
-                        <Grid
-                            style={{ height: '45vh' }}
-                            item
-                            alignItems="stretch"
-                        >
-                        <div>
+                        justify="space-between">
                             <LobbyTabs
                                 roomLeader={roomLeader}
                                 socketId={socketId}
@@ -228,53 +182,49 @@ function Lobby(props) {
                                 MusicPause= {props.MusicPause}
                                 MusicStart={props.MusicStart}
                             />
-                        </div>
-                        <Grid style={{ height: '45vh' }} container alignItems={'flex-end'} >
-                        <Grid style={{margin:'0 0 10px 0'}} container justify={'space-between'} alignItems={'center'}>
-                            <input
-                                type="text"
-                                id="gameLink"
-                                className="form-control text-center fw-bold bg-white"
-                                value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                style={{ width: '70%' }}
-                                readOnly
-                            />
-                            <SnackbarProvider maxSnack={5}>
-                                <SnackAlertBtn
-                                    class="btn btn-warning"
-                                    severity="success"
-                                    message="링크가 복사됐어요! 😚"
-                                    label="게임 방 URL copy"
-                                    onAlert= {true}
-                                    type="button"
-                                    onClick={CopyURL}
-                                    id="copy"
-                                />
-                            </SnackbarProvider>
-                        </Grid>
-                        </Grid>
-
-                            <Paper
-                                style={{ height: '40vh' }}
-                                className={classes.paper}
-                            >
-
-                                <ChatRoom
-                                    SetInputCtrl={SetInputCtrl}
-                                    roomInfo={props.roomInfo}
-                                    roomID={props.roomID}
-                                    socket={props.socket}
-                                    chat={props.chat}
-                                />
-                            </Paper>
-                        </Grid>
+                            <Grid container direction ={'column'} justify={'flex-end'}>
+                                <Grid style={{margin:'0 0 10px 0'}} container justify={'space-between'} alignItems={'center'}>
+                                    <input
+                                        type="text"
+                                        id="gameLink"
+                                        className="form-control text-center fw-bold bg-white"
+                                        value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
+                                        style={{ width: '80%' }}
+                                        readOnly
+                                    />
+                                    <SnackbarProvider maxSnack={5}>
+                                        <SnackAlertBtn
+                                            class="btn btn-warning"
+                                            severity="success"
+                                            message="링크가 복사됐어요! 😚"
+                                            // label="게임 방 URL copy"
+                                            label="LINK"
+                                            onAlert= {true}
+                                            type="button"
+                                            onClick={CopyURL}
+                                            id="copy"
+                                        />
+                                    </SnackbarProvider>
+                                </Grid>
+                                <Paper
+                                    style={{ height: '40vh' }}
+                                    className={classes.paper}
+                                >
+                                    <ChatRoom
+                                        SetInputCtrl={SetInputCtrl}
+                                        roomInfo={props.roomInfo}
+                                        roomID={props.roomID}
+                                        socket={props.socket}
+                                        chat={props.chat}
+                                    />
+                                </Paper>
+                            </Grid>
                     </Grid>
-                </Grid>
             </Grid>
-        </Typography>
-    </Container>
-        </>
-    </div>
+        // </Typography>
+    // </Container>
+        // </>
+
     );
 }
 

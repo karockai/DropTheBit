@@ -5,7 +5,32 @@ import { Typography,Switch } from '@material-ui/core';
 import KeyMapTemp from './images/KeyMap.png';
 import MusicLeader from './MusicLeader';
 import MusicMember from './MusicMember';
-import { purple } from '@material-ui/core/colors';
+import { purple, yellow } from '@material-ui/core/colors';
+
+const PurpleButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(purple[500]),
+    // backgroundColor: purple[500],
+    backgroundColor: 'rgba(89, 32, 146, 0.37)',
+    '&:hover': {
+      backgroundColor: purple[700],
+    },
+  },
+}))(Button);
+
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: yellow[300],
+    '&$checked': {
+      color: purple[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: purple[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,19 +43,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
 }));
-const PurpleSwitch = withStyles({
-    switchBase: {
-      color: purple[300],
-      '&$checked': {
-        color: purple[500],
-      },
-      '&$checked + $track': {
-        backgroundColor: purple[500],
-      },
-    },
-    checked: {},
-    track: {},
-  })(Switch);
+
+
 
   
   function LobbyMusicOnOff(props) {
@@ -62,9 +76,11 @@ const PurpleSwitch = withStyles({
 
 export default function LobbyTabs(props) {
   const classes = useStyles();
-  const [keymap, setKeymap] = React.useState(props.roomLeader ? null : 'key_map');
-  const [selectMusic, setSelectMusic] = React.useState(props.roomLeader ? 'select_music' : null);
-
+  // const keyMapButton = () => {<Button id="key_map" size="large">KEY MAP</Button>}
+  const [keymap, setKeymap] = React.useState(null);
+  // const [keymap, setKeymap] = React.useState(props.roomLeader ? null : 'key_map');
+  const [selectMusic, setSelectMusic] = React.useState(null);
+  
   const handleKeymap = (event) => {
     console.log(event.currentTarget);
     setKeymap(event.currentTarget);
@@ -116,16 +132,17 @@ export default function LobbyTabs(props) {
         );
     }
 };
-
+console.log(keymap, openKey);
+console.log(selectMusic, openSelect);
   return (   
     <div>
         <Grid container justify={'space-around'} alignItems={'center'}>
-            <Button id="key_map" onClick={handleKeymap} size="large">
+            <PurpleButton id="key_map" color="transparent" onClick={handleKeymap} size="large">
             KEY MAP
-            </Button>
-            <Button id="select_music" onClick={handleSelectMusic} size="large">
+            </PurpleButton>
+            <PurpleButton id="select_music" onClick={handleSelectMusic} size="large">
             SELECT MUSIC
-            </Button>
+            </PurpleButton>
             <LobbyMusicOnOff MusicPause={props.MusicPause} MusicStart={props.MusicStart}/>
         </Grid>
         <Popover
