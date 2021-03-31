@@ -1,4 +1,4 @@
-import React, { useState, makeStyle, useLayoutEffect } from 'react';
+import React, { useState, makeStyle, useLayoutEffect, useEffect } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import {
@@ -99,57 +99,61 @@ export default function PlayerList(props) {
         return won;
     };
 
+    let defaultPage = {
+        playerID: '',
+        asset: '',
+    };
+    const [myRankPage, setMyRankPage] = useState(defaultPage);
+    const [myRank, setMyRank] = useState(null);
+
+    function MyRank() {
+        props.socket.once('MyRank', (myRankPage, myRank) => {
+            setMyRankPage(myRankPage);
+            setMyRank(myRank);
+        });
+        return (
+            <div>
+                <Paper
+                    className={classes.paper}
+                    style={{
+                        height: '90%',
+                        border: 'solid',
+                        borderColor: '#0066bb',
+                        margin: '0 0 10px 0',
+                        boxShadow: '12px 12px 2px 1px #ffffff',
+                    }}
+                >
+                    <Grid container direction="row" alignItems="center">
+                        <Grid
+                            style={{ width: '20%', height: '100%' }}
+                            className="score"
+                        >
+                            {'현재 '}
+                            {myRank}
+                            {'위'}
+                        </Grid>
+                        <Grid
+                            style={{ width: '80%', height: '100%' }}
+                            container
+                            direction="column"
+                            className="score"
+                        >
+                            <Grid alignItems="right">
+                                {myRankPage.playerID}
+                            </Grid>
+                            <Grid alignItems="right">
+                                {ExpBySymbol(parseWonToStr(myRankPage.asset))}원
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </div>
+        );
+    }
+
     return (
         <>
-            {players.map((player, index) => {
-                if (player.socketID === props.socket.id) {
-                    return (
-                        <div>
-                            <Paper
-                                className={classes.paper}
-                                style={{
-                                    height: '90%',
-                                    border: 'solid',
-                                    borderColor: '#0066bb',
-                                    margin: '0 0 10px 0',
-                                    boxShadow: '12px 12px 2px 1px #ffffff',
-                                }}
-                            >
-                                <Grid
-                                    container
-                                    direction="row"
-                                    alignItems="center"
-                                >
-                                    <Grid
-                                        style={{ width: '20%', height: '100%' }}
-                                        className="score"
-                                    >
-                                        {index + 1}
-                                        {'위'}
-                                    </Grid>
-                                    <Grid
-                                        style={{ width: '80%', height: '100%' }}
-                                        container
-                                        direction="column"
-                                        className="score"
-                                    >
-                                        <Grid alignItems="right">
-                                            {player.playerID}
-                                        </Grid>
-                                        <Grid alignItems="right">
-                                            {ExpBySymbol(
-                                                parseWonToStr(player.asset)
-                                            )}
-                                            원
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </div>
-                    );
-                }
-            })}
-
+            <MyRank />
             <Grid
                 wrap="wrap"
                 container

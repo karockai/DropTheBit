@@ -220,6 +220,15 @@ class Refresh {
                 rankList.sort(function (a, b) {
                     return b['asset'] - a['asset'];
                 });
+
+                for (let idx in rankList) {
+                    io.to(rankList[idx]['socketID']).emit(
+                        'MyRank',
+                        rankList[idx],
+                        idx + 1
+                    );
+                }
+
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
             }
@@ -285,6 +294,8 @@ class Refresh {
     async refreshBid() {
         const { io } = this;
         let exTable = JSON.parse(await dbget('bidTable'));
+        if (!exTable) return false;
+
         let exList = [];
 
         let bidObject4 = {
