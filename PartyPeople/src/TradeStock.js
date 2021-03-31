@@ -9,15 +9,13 @@ import {
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { useSound, playSound } from './useSound';
 import DrumUp from './audios/effect/drumUp.wav';
 import DrumDown from './audios/effect/drumDown.wav';
 import HatUp from './audios/effect/hatUp.wav';
 import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
-import { SnackAlertBtn, SnackAlertFunc } from './SnackAlert';
+import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
@@ -86,11 +84,10 @@ function ArrowButton(props) {
     );
 }
 
-let Snacks = [];
+let startTime = null;
 
 export default function TradeStock(props) {
     const classes = useStyles();
-
     const [currentBid, SetBid] = useState(0);
     const [newBid, SetNewBid] = useState(0); //props.APIdata.curPrice
     const [currentVolume, SetVolume] = useState(1);
@@ -108,17 +105,18 @@ export default function TradeStock(props) {
         val: 0,
         vol: 0,
     });
-
-    if (!isBind) SetBind(true);
     const [myWallet, setWallet] = useState({
         myCash: 0,
         myAsset: 0,
         myCoin: 0,
     });
     const [isInit, setInit] = useState(false);
+
+    if (!isBind) SetBind(true);
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
     useLayoutEffect(() => {
+        startTime = new Date();
         if (props.socket == null) {
             props.requestSocket('MyAsset', props.socket);
             setInit(true);
@@ -137,14 +135,6 @@ export default function TradeStock(props) {
         }
     }, [isInit]);
 
-    useEffect(() => {
-        setSellStatus(null);
-    }, [sellStatus]);
-
-    useEffect(() => {
-        setBuyStatus(null);
-    }, [buyStatus]);
-
     function VolumeUp(volume) {
         // if (
         //     volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
@@ -154,12 +144,7 @@ export default function TradeStock(props) {
         SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
-        console.log('hi');
         if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0) {
-            console.log(
-                'setVolunme:',
-                volume - Math.floor((myWallet.myCash / currentBid) * 0.1)
-            );
             SetNewVolume(1);
             return;
         }
@@ -203,14 +188,6 @@ export default function TradeStock(props) {
                 vol: volume,
             };
         }
-        //@ Buy Emit
-        // console.log(
-        //     '[ 가격',
-        //     bid,
-        //     ', 갯수',
-        //     volume,
-        //     '] 매수 주문을 요청합니다.'
-        // );
         status = {
             status: 'request',
             val: bid,
@@ -254,14 +231,6 @@ export default function TradeStock(props) {
                 vol: volume,
             };
         }
-        //@ Sell Emit
-        // console.log(
-        //     '[ 가격',
-        //     bid,
-        //     ', 갯수',
-        //     volume,
-        //     '] 매도 주문을 요청합니다.'
-        // );
         status = {
             status: 'request',
             val: bid,
@@ -275,6 +244,7 @@ export default function TradeStock(props) {
         });
         //@ 중복 문제가 발생한다.
         props.socket.once('sellDone', (sbid) => {
+            console.log(sbid);
             SetNewBid(sbid.price);
             setSellStatus({
                 status: 'done',
@@ -286,29 +256,6 @@ export default function TradeStock(props) {
         return status;
     }
 
-    const interval = 0.2;
-    let cTime, pTime;
-    // function HandleKeyDown(e) {
-    //     if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
-    //     e.preventDefault();
-    //     if (e.keyCode === 37) {
-    //         //_ LEFT ARROW
-    //         playSound(HatUp, 1).play();
-    //         if (props.socket == null || isBind === false) {
-    //             props.requestSocket('TradeStock', props.socket);
-    //             return;
-    //         }
-    //         VolumeDown(currentVolume);
-    //     } else if (e.keyCode === 39) {
-    //         //_ RIGHT ARROW
-    //         playSound(HatDown, 1).play();
-    //         if (props.socket == null || isBind === false) {
-    //             props.requestSocket('TradeStock', props.socket);
-    //             return;
-    //         }
-    //         VolumeUp(currentVolume);
-    //     }
-    // }
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -385,6 +332,16 @@ export default function TradeStock(props) {
         return () => {};
     }, [newVolume]);
 
+    useEffect(() => {
+        console.log(sellStatus, 'sellStatus');
+        if (sellStatus !== null) setSellStatus(null);
+    }, [sellStatus]);
+
+    useEffect(() => {
+        console.log(buyStatus, 'buy');
+        if (buyStatus !== null) setBuyStatus(null);
+    }, [buyStatus]);
+
     function handleVolumeChange(e) {
         if (e.target.id === 'outlined-required') {
             SetVolume(e.target.value);
@@ -446,26 +403,29 @@ export default function TradeStock(props) {
         return ret + '원';
     }
 
+    let dateString = new Date();
+    dateString = '('+dateString.getMinutes() + ':' + dateString.getSeconds() + '.' + dateString.getMilliseconds() + ') '
+
     return (
         <>
-            <SnackbarProvider maxSnack={7}>
+            <SnackbarProvider maxSnack={8}>
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message="보유 금액이 부족해요 😨"
+                        message= {dateString + " 보유 금액이 부족해요 😨"}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="error"
-                        message="유효하지 않은 값입니다."
+                        message= {dateString +" 유효하지 않은 값입니다."}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="info"
                         message={
-                            buyStatus.val +
+                            dateString + buyStatus.val +
                             ' 호가에 ' +
                             buyStatus.vol +
                             '개 [매수] 주문했어요! 📈'
@@ -476,7 +436,7 @@ export default function TradeStock(props) {
                     <SnackAlertFunc
                         severity="success"
                         message={
-                            buyStatus.val +
+                            dateString + buyStatus.val +
                             ',' +
                             buyStatus.vol +
                             ' [매수] 주문이 체결되었어요! 🎁'
@@ -486,20 +446,20 @@ export default function TradeStock(props) {
                 {sellStatus && sellStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message="코인이 없는걸요? 😨"
+                        message= {dateString + "코인이 없는걸요? 😨"}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="error"
-                        message="유효하지 않은 값입니다."
+                        message= {dateString +"유효하지 않은 값입니다."}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="info"
                         message={
-                            sellStatus.val +
+                            dateString +sellStatus.val +
                             ' 호가에 ' +
                             sellStatus.vol +
                             '개 [매도] 주문했어요! 📉'
@@ -510,7 +470,7 @@ export default function TradeStock(props) {
                     <SnackAlertFunc
                         severity="success"
                         message={
-                            sellStatus.val +
+                            dateString + sellStatus.val +
                             ',' +
                             sellStatus.vol +
                             ' [매도] 주문이 체결되었어요! 💸'

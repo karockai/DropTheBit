@@ -9,7 +9,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import { blue, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
@@ -24,60 +23,6 @@ function createData(sell, price, buy) {
     return { sell, price, buy };
 }
 
-const useTabStyles = makeStyles({
-    root: {
-        justifyContent: 'center',
-    },
-    scroller: {
-        flexGrow: '0',
-    },
-});
-
-const rows = [
-    createData(6.0, 53, 0),
-    createData(237, 9.0, 52, 0),
-    createData(16.0, 51, 0),
-    createData(3, 50, 0),
-    createData(14, 49, 39),
-    createData(0, 48, 9),
-    createData(0, 47, 3),
-    createData(0, 46, 11),
-    createData(16, 45, 9),
-    createData(16, 45, 9),
-];
-
-const AntTab = withStyles((theme) => ({
-    root: {
-        textTransform: 'none',
-        minWidth: 72,
-        fontWeight: theme.typography.fontWeightRegular,
-        marginRight: theme.spacing(3),
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(','),
-        '&:hover': {
-            color: '#40a9ff',
-            opacity: 1,
-        },
-        '&$selected': {
-            color: '#1890ff',
-            fontWeight: theme.typography.fontWeightMedium,
-        },
-        '&:focus': {
-            color: '#40a9ff',
-        },
-    },
-    selected: {},
-}))((props) => <Tab disableRipple {...props} />);
 
 export default function BidTab(props) {
     const [isInit, setInit] = useState(false);
@@ -103,9 +48,7 @@ export default function BidTab(props) {
 
     const classes = useStyles();
 
-    const bidTag = () => {
-        return <></>;
-    };
+
     return (
         <MuiThemeProvider>
             <Grid
@@ -141,7 +84,7 @@ export default function BidTab(props) {
                                                     : red[100],
                                             opacity: 0.9,
                                         }}
-                                        key={row.name}
+                                        key={row.price}
                                     >
                                         <TableCell>{row.buy}</TableCell>
                                         <TableCell>

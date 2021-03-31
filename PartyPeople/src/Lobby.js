@@ -180,7 +180,7 @@ function Lobby(props) {
                             />
                             <SnackbarProvider maxSnack={3}>
                                 <SnackAlertBtn
-                                    class="btn btn-warning"
+                                    className="btn btn-warning"
                                     severity="success"
                                     message="링크가 복사됐어요! 😚"
                                     label="게임 방 URL copy"

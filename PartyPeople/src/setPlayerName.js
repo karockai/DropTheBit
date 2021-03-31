@@ -72,7 +72,7 @@ function SetPlayerName(props) {
                         // ref={nameInput}
                         autoFocus
                         onKeyPress={onKeyPress}
-                        inputProps={{ 'maxlength': 8 }}
+                        inputProps={{ 'maxLength': 8 }}
                     />
                 </Grid>
 
