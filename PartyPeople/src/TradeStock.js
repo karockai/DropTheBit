@@ -1,4 +1,4 @@
-import React, { useEffect, useState, makeStyle, useLayoutEffect } from 'react';
+import React, { useEffect, useState,  useLayoutEffect } from 'react';
 import {
     IconButton,
     Button,
@@ -6,6 +6,7 @@ import {
     Grid,
     Paper,
     makeStyles,
+    withStyles,
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -17,6 +18,38 @@ import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
 import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
+
+const CssTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#CDD7E0',
+    },
+    '& .MuiInputLabel-root': {
+      color: '#CDD7E0',
+    },
+    '& .MuiInputBase-input': {
+      color: '#CDD7E0',
+    },
+      
+    //   '& .MuiInput-underline:after': {
+    //     borderBottomColor: 'white',
+    //   },
+    //   '& .MuiInput-underline:before': {
+    //     borderBottomColor: 'white',
+    //   },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: 'green',
+        },
+      },
+    },
+  })(TextField);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,10 +63,15 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     paper: {
-        padding: theme.spacing(1),
-        // margin: theme.spacing(1),
-        // textAlign: 'center',
-        color: theme.palette.text.secondary,
+        // padding: theme.spacing(1),
+        textAlign: 'left',
+        color: '#CDD7E0',
+        backgroundColor: '#0C151C',
+    },
+
+    input: {
+        textAlign: 'left',
+        color: '#CDD7E0',
     },
 
     button_block: {
@@ -408,7 +446,7 @@ export default function TradeStock(props) {
 
     return (
         <>
-            <SnackbarProvider maxSnack={8}>
+            <SnackbarProvider maxSnack={15}>
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -489,36 +527,36 @@ export default function TradeStock(props) {
                 style={{ height: '100%' }}
             >
                 <Grid container item justify="center">
-                    <TextField
-                        className="buysell"
-                        id="outlined-required"
-                        label="매매 호가 ▲▼"
+                    <CssTextField
+                        className={classes.input}
+                        id="custom-css-standard-input"
+                        label="매매 호가 ▲ ▼"
                         size="small"
-                        type="number"
+                        // type="number"
                         style={{ width: '80%' }}
                         value={currentBid}
                         onChange={handleBidChange}
                     />
-                    <ArrowButton
+                    {/* <ArrowButton
                         upEvent={() => BidUp(currentBid)}
                         downEvent={() => BidDown(currentBid)}
-                    />
+                    /> */}
                 </Grid>
                 <Grid container item justify="center">
-                    <TextField
+                    <CssTextField
                         className="count"
                         id="outlined-required"
-                        label="수량 ◀▶"
-                        type="number"
+                        label="수량 ◀ ▶"
+                        // type="number"
                         size="small"
                         style={{ width: '80%' }}
                         value={currentVolume}
                         onChange={handleVolumeChange}
                     />
-                    <ArrowButton
+                    {/* <ArrowButton
                         upEvent={() => VolumeUp(currentVolume)}
                         downEvent={() => VolumeDown(currentVolume)}
-                    />
+                    /> */}
                 </Grid>
                 <Grid container item justify="center" alignItems="start">
                     예상소요금액 :{' '}
@@ -547,7 +585,7 @@ export default function TradeStock(props) {
                         onClick={() => {
                             setSellStatus(Sell(currentBid, currentVolume));
                         }}
-                    >
+                    > 
                         {/* <KeyboardArrowRightIcon /> */}
                         [S] 매도 확정
                     </Button>

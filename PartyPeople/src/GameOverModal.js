@@ -75,7 +75,7 @@ export default function GameOverModal(props) {
                 closeAfterTransition
                 BackdropComponent={Backdrop}
             >
-                <Fade in={open}>
+                {/* <Fade in={open}> */}
                     <div container className={classes.paper}>
                         <h2
                             id="transition-modal-title"
@@ -131,7 +131,7 @@ export default function GameOverModal(props) {
                             </Button>
                         </Grid>
                     </div>
-                </Fade>
+                {/* </Fade> */}
             </Modal>
         </div>
     );

@@ -39,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         padding: theme.spacing(1),
         textAlign: 'left',
-        color: theme.palette.text.secondary,
+        color: '#CDD7E0',
+        backgroundColor: '#0C151C',
     },
 }));
 
@@ -91,7 +92,7 @@ export default function LayoutGrid(props) {
             console.log('gameover');
             if (leaderBoard) {
                 // GameOver(readerBoard);
-                setOver(leaderBoard);
+                // setOver(leaderBoard);
             }
         });
     }, []);
@@ -129,13 +130,13 @@ export default function LayoutGrid(props) {
     };
 
     return (
-        <React.Fragment>
+        <>
             {/* <ThreeSecTimer
                 SpecificMusic={SpecificMusic}
                 open={threeSecTimerOpen}
             /> */}
             {over && <GameOverModal leaderBoard={over} />}
-            <Container maxWidth="lg">
+            <Container maxWidth="xl">
                 <Typography component="div" style={{ padding: '0 0 0 0' }}>
                     <Grid
                         style={{ height: '100vh' }}
@@ -348,6 +349,6 @@ export default function LayoutGrid(props) {
                     </Grid>
                 </Typography>
             </Container>
-        </React.Fragment>
+        </>
     );
 }

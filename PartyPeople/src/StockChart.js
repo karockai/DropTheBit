@@ -20,14 +20,14 @@ import { last } from 'react-stockcharts/lib/utils';
 import { blue, red } from '@material-ui/core/colors';
 
 const candlesAppearance = {
-    wickStroke: '#000000',
+    wickStroke: '#ffffff',
     fill: function fill(d) {
-        return d.close > d.open ? red[500] : blue[500];
+        return d.close > d.open ? red[600] : blue[600];
     },
-    stroke: '#303030',
-    candleStrokeWidth: 0.5,
-    widthRatio: 0.6,
-    opacity: 0.6,
+    stroke: '#000000',
+    candleStrokeWidth: 1,
+    widthRatio: 0.8,
+    opacity: 1,
 };
 
 class StockChart extends React.Component {
@@ -68,7 +68,7 @@ class StockChart extends React.Component {
                         displayFormat={format('.2f')}
                     />
                     <CandlestickSeries {...candlesAppearance} />
-                    <OHLCTooltip forChart={1} origin={[-40, 0]} />
+                    {/* <OHLCTooltip forChart={1} origin={[-40, 0]} /> */}
                 </Chart>
                 <CrossHairCursor />
             </ChartCanvas>

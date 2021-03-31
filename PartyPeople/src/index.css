@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'NEXON Lv1 Gothic OTF', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +10,20 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+    
+
+}
+
+.GameManager {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  background-color: #060c10;
+}
+
+
+
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
