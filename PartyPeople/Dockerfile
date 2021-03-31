@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN npm install && npm run build
+RUN npm install && npm run buildDocker
 
 COPY ./build ./build
 
