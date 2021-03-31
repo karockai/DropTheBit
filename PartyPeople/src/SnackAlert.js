@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
-
+import {PurpleButton, PurpleSwitch} from './PurpleComponent';
 //@ 5 params
 //? ------- props -----------------------------
 //? {
@@ -13,6 +13,10 @@ import { useSnackbar } from 'notistack';
 //?     onClick = ...
 //? }
 //? -------------------------------------------
+
+
+
+
 export function SnackAlertBtn(props) {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -34,12 +38,13 @@ export function SnackAlertBtn(props) {
 
     return (
         <>
-            <Button
+            <PurpleButton
                 className={props.class}
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}
-            </Button>
+            </PurpleButton>
+
         </>
     );
 }

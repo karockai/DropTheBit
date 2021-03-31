@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -9,6 +9,33 @@ import Box from '@material-ui/core/Box';
 import BidTab from './BidTab';
 import BidTable from './BidTable';
 import AskTable from './AskTable';
+
+
+const StyledTabs = withStyles({
+    indicator: {
+      display: "flex",
+      justifyContent: "center",
+      backgroundColor: "transparent",
+      "& > span": {
+        maxWidth: 40,
+        width: "100%",
+        backgroundColor: "#635ee7"
+      }
+    }
+  })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+  
+  const StyledTab = withStyles((theme) => ({
+    root: {
+      textTransform: "none",
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightRegular,
+      fontSize: theme.typography.pxToRem(15),
+      marginRight: theme.spacing(1),
+      "&:focus": {
+        opacity: 1
+      }
+    }
+  }))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -45,10 +72,18 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
-    },
-}));
+        flexGrow: 1
+      },
+      padding: {
+        padding: theme.spacing(3)
+      },
+      demo1: {
+        backgroundColor: theme.palette.background.paper
+      },
+      demo2: {
+        backgroundColor: "#0C151C"
+      }
+    }));
 
 export default function TabControl(props) {
     const classes = useStyles();
@@ -57,7 +92,6 @@ export default function TabControl(props) {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -89,13 +123,11 @@ export default function TabControl(props) {
 
     return (
         <div className={classes.demo2}>
-            <AppBar position="static">
-                <Tabs value={value} onChange={handleChange}>
-                    <Tab label="[Q] 매수 주문 목록" {...a11yProps(0)} />
-                    <Tab label="[W] 매도 주문 목록" {...a11yProps(1)} />
-                    <Tab label="[E] 호가 목록" {...a11yProps(2)} />
-                </Tabs>
-            </AppBar>
+            <StyledTabs value={value} onChange={handleChange}>
+                <StyledTab label="[Q] 매수 주문 목록" {...a11yProps(0)} />
+                <StyledTab label="[W] 매도 주문 목록" {...a11yProps(1)} />
+                <StyledTab label="[E] 호가 목록" {...a11yProps(2)} />
+            </StyledTabs>
             <TabPanel value={value} index={0}>
                 <BidTable
                     roomID={props.roomID}

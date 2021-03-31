@@ -11,6 +11,7 @@ import Deja_Vu from './audios/music/Deja_Vu.mp3';
 import { useSound, playSound, getDuration } from './useSound';
 import ThreeSecTimer from './ThreeSecTimer';
 import LayoutGrid from './LayoutGrid';
+import Sound from './Sound';
 
 let bgm_audio = new Audio('');
 
@@ -37,7 +38,7 @@ export default function LayoutGridEffect(props) {
         });
     }, [timerTime]);
     return (
-        <React.Fragment>
+        <>
             <ThreeSecTimer
                 SpecificMusic={SpecificMusic}
                 open={threeSecTimerOpen}
@@ -49,8 +50,7 @@ export default function LayoutGridEffect(props) {
                 roomInfo={props.roomInfo}
                 gameTime={props.time}
                 isStart={isStart}
-                />
-                
-        </React.Fragment>
+            />
+        </>
     );
 }

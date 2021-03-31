@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary,
     },
     score: {},
+    table :{
+        color: '#2D4053',
+        spacing: 1,
+
+    }
 }));
 
 // const bidCancel = (props, price, vol) => {
@@ -159,21 +164,21 @@ export default function BidTable(props) {
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold' }}>
                                     취소 번호 [1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{  color: 'white', fontWeight: 'bold' }}>
                                     매수 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{  color: 'white', fontWeight: 'bold' }}>
                                     매수 수량
                                 </span>
                             </TableCell>

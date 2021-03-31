@@ -12,11 +12,51 @@ import {
     TextField,
     Grid,
     Paper,
+    withStyles,
     makeStyles,
     GridList,
 } from '@material-ui/core';
 import Message from './Message';
 import StockDoneList from './StockDoneList';
+
+const CssTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#CDD7E0',
+    },
+    '& .MuiInputLabel-root': {
+      color: '#CDD7E0',
+    },
+    '& .MuiInputBase-input': {
+      color: '#CDD7E0',
+    },
+      
+    //   '& .MuiInput-underline:after': {
+    //     borderBottomColor: 'white',
+    //   },
+    //   '& .MuiInput-underline:before': {
+    //     borderBottomColor: 'white',
+    //   },
+      '& .MuiOutlinedInput-root': {
+        '& .MuiInputBase-input': {
+            color: '#CDD7E0',
+        },
+        '& .MuiInputLabel-root': {
+            color: '#CDD7E0',
+            fontStyle:'italic'
+        },
+        '& fieldset': {
+          borderColor: '#2D4053',
+        },
+        '&:hover fieldset': {
+          borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#635ee7',
+        },
+      },
+    },
+  })(TextField);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button2: {
         '& > *': {
-            width: '45%',
+            // width: '45%',
             // margin: theme.spacing(1),
             justify: 'space-between',
         },
@@ -152,45 +192,53 @@ export default function ChatRoom(props) {
 
     return (
         <>
-        <Grid
+        <Grid container
+            direction={'column'}
+            justify={'space-evenly'}
+            >
+        {/* <Grid
             container
             className={classes.button}
-            style={{ height: '100%' }}
-            justify={'space-between'}
-        >
-            <GridList item >
-                <Grid style={{ height: '29vh', width: '100%'}}>
-                    {messages.map((message) => {
-                        return (
-                            <>
-                            <pre>
-                                {message.author} : {message.message}
-                            </pre>
-                            </>
-                        )
-                    })}
+            // direction={'row'}
+            // justify={'space-between'}
+            wrap={'nowrap'}
+            
+        > */}
+            <GridList item style={{width: '100%', height: '30vh'}} wrap={'nowrap'} >
+                <Grid>
+                    {
+                        messages.map( (message) => {
+                            return (
+                                <>
+                                <pre style ={{ color: 'white'}}>
+                                    {message.author} : {message.message}
+                                </pre>
+                                </>
+                            );
+                        })
+                    }
                 </Grid>
-                <div
+                <Grid
                     style={{ float:"left", clear: "both", height: "0%" }}
                     ref={messagesEnd}>
-                </div> 
+                </Grid> 
             </GridList>
-            <Grid item>
-                <Grid
+        </Grid>
+        <Grid
                     item
                     container
-                    wrap="wrap"
                     dirction="column"
-                    style={{ height: '10vh' }}
-                    spacing={1}
-                    alignItems="flex-end"
+                    style={{ padding: '2vh 0 0 0'}}
+                    spacing={2}
+                    justify={'center'}
+                    alignItems="center"
                 >
-                    <Grid item style={{ margin: '10 0 0 -10', width: '70%' }}>
-                        <TextField
+                    <Grid item style={{ margin: '10 0 0 0', width: '70%' }}>
+                        <CssTextField
                             style={{ height: '100%' }}
                             id="standard-basic"
                             inputRef={textInput}
-                            label="메세지 보내기 (15자 제한)"
+                            label="메세지 보내기 (최대 20자)"
                             onFocus={()=> {
                                 isFocus = true;
                                 props.SetInputCtrl(true)
@@ -202,12 +250,12 @@ export default function ChatRoom(props) {
                             onChange={handleOnChange}
                             variant="outlined"
                             size="small"
-                            inputProps={{ 'maxlength': 15 }}
+                            inputProps={{ 'maxlength': 20 }}
                         />
                     </Grid>
                     <Grid item style={{ width: '20%' }}>
                         <Button
-                            style={{ height: '100%' }}
+                            style={{ height: '100%' ,backgroundColor:'#635ee7' }}
                             variant="contained"
                             color="primary"
                             onClick={()=>{sendMessage()}}
@@ -216,8 +264,6 @@ export default function ChatRoom(props) {
                         </Button>
                     </Grid>
                 </Grid>
-            </Grid>
-        </Grid>
         </>
     );
 }

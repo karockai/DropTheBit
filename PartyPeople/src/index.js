@@ -7,11 +7,11 @@ import Test from './Test';
 import GameOverModal from './GameOverModal';
 
 ReactDOM.render(
-    <React.StrictMode>
+    <div className='GameManager'>
         <GameManager/>
         {/* <GameOverModal/> */}
         {/* <Test/> */}
-    </React.StrictMode>,
+    </div>,
     document.getElementById('root')
 );
 

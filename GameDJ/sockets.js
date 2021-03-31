@@ -89,15 +89,12 @@ export default {
                 await new Game(io, socket).cancelAsk(reqJson);
             });
             socket.on('bidTable_Req', async (reqJson) => {
+                if (!roomList[socket.roomID]) return 0;
                 await new Game(io, socket).sendBidTable(reqJson);
             });
             socket.on('askTable_Req', async (reqJson) => {
+                if (!roomList[socket.roomID]) return 0;
                 await new Game(io, socket).sendAskTable(reqJson);
-            });
-            socket.on('RefreshBid_Req', () => {
-                console.log('refresh get');
-                let curPrice = curCoin['curPrice'];
-                socket.emit('RefreshBid_Res', curPrice);
             });
 
             // In-game event << -----------------------------------------

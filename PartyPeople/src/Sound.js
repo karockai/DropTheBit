@@ -49,7 +49,7 @@ import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
 
 // Module
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export default function Sound(props) {
     const [action, SetAction] = useState(props.action);
@@ -57,7 +57,7 @@ export default function Sound(props) {
     const [name, SetName] = useState(props.soundName);
     const [volume, SetSoundVol] = useState(props.soundVol);
     const musicLink = {
-        Tetris99: Tetris99,
+        lobbyMusic: Tetris99,
         Deja_Vu: Deja_Vu,
         Dont_Stop_Me_Now: Dont_Stop_Me_Now,
         Gong: Gong,
@@ -104,16 +104,15 @@ export default function Sound(props) {
         VolDown: VolDown,
         VolUp: VolUp,
     };
-
+    console.log('action:', action);
     const [audio, SetAudio] = useState(new Audio(musicLink[name]));
-
-    function MusicPlay() {
-        audio.loop = true;
-        audio.play();
+    console.log(props);
+    if (props.sendAudio) {
+        props.sendAudio(audio);
     }
 
-    function SoundPause() {
-        audio.pause();
+    function MusicPlay() {
+        audio.play();
     }
 
     function EffectPlay() {
@@ -137,11 +136,6 @@ export default function Sound(props) {
         } else if (type === 'effect') {
             EffectPlay();
         }
-    }
-
-    // 음악 정지
-    else if (action === 'pause') {
-        SoundPause();
     }
 
     // 음악 길이 반환
