@@ -27,7 +27,8 @@ const useStyles = makeStyles({
 
 export default function LobbyPlayerCard(props) {
   const classes = useStyles();
-  const isLeader =  props.roomLeader ? '방장' : ''
+  // console.log(props.roomLeader, props.socketID);
+  const isLeader =  props.roomLeader===props.socketID ? '방장' : ''
   return (
     <Card className={classes.root} >
       <CardContent>

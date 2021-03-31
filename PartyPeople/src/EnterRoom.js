@@ -7,22 +7,21 @@ import {
     makeStyles,
     TextField,
 } from '@material-ui/core';
-import { withRouter } from 'react-router-dom';
+import {Router, Route, Switch,Redirect,  useHistory } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 // import { useSound } from './useSound';
 import Tetris99 from './audios/music/Tetris99.mp3';
 import backgroundImg from './videos/LobbyImage3.gif';
 
-export default function EnterRoom(props, { history }) {
-
-
+export default function EnterRoom(props) {
+    // const history = useHistory();
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState(props.roomID);
     const [bgm_audio] = useState(new Audio(Tetris99));
     const [playing, setPlaying] = useState(true);
-
+    const history = useHistory();
     const MusicPause = () => {
         setPlaying(false);
     }
@@ -36,7 +35,6 @@ export default function EnterRoom(props, { history }) {
     // ? 그런데 있으면 렌더가 한 번 모자라서 음악이 안나옴
     );
 
-    let textInput = useRef(null);
     let musicList = [];
     const handleOnSave = (textInput) => {
         setName(textInput);
@@ -47,8 +45,6 @@ export default function EnterRoom(props, { history }) {
     }
 
     const sendName = (name) => {
-        // ev.preventDefault();
-        // console.log(props.socket);
         const params = window.location
             .toString()
             .substring(window.location.toString().indexOf('?'));
@@ -59,32 +55,59 @@ export default function EnterRoom(props, { history }) {
                 playerID: name,
                 roomID: searchParams.get('id'),
             });
-            setRoomID(searchParams.get('id'));
-            setPlayer(name);
+            props.socket.on('joinRoom_Res', (room) => {
+                // setRoomInfo(room.roomInfo);
+                props.SetRoomIdAndInfo(room);
+                // setRoomLeader(room.roomInfo['roomLeader']);
+                // setSocketId(soc.id);
+            // setRoomID(searchParams.get('id'));
+            // setPlayer(name);
+            });
         } else {
             // 방장
             props.socket.emit('createPrivateRoom_Req', { playerID: name });
             props.socket.on('createPrivateRoom_Res', (data, useSound) => {
                 props.SetRoomIdAndInfo(data);
-                setPlayer(data.roomInfo[props.socket.id]);
-                setRoomID(data.roomID);
+                console.log('ddd');
+                // setPlayer(data.roomInfo[props.socket.id]);
+                // setRoomID(data.roomID);
                 musicList = data.musicList;
             });
         }
     };
 
-    const isName = name === '';
-    return (
-        <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
-            {isName && (
+    // const isName = name === '';
+
+    
+    const gotoLobby = () => {
+        // console.log(history);
+        let path = '/lobby';
+        history.push({
+            pathname: '/lobby',
+            state: { playerID: name },
+        });
+
+    };
+
+    if(props.roomInfo) {
+        gotoLobby();
+    }
+return (
+        // <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
+        <>
+            {
                 <SetPlayerName
                     onSave={handleOnSave}
                     name={name}
                     setName={setName}
-                    history={history}
+                    // history={history}
                 />
-            )}
-            {!isName && (
+            }
+        </>
+    );
+}
+
+            {/* {!isName && (
                 <Lobby
                     name={name}
                     socket={props.socket}
@@ -97,7 +120,4 @@ export default function EnterRoom(props, { history }) {
                     MusicPause= {MusicPause}
                     MusicStart={MusicStart}
                 />
-            )}
-        </div>
-    );
-}
+            )} */}

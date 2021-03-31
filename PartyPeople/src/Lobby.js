@@ -54,20 +54,11 @@ function Lobby(props) {
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;
-    const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
-    const [socketId, setSocketId] = useState(props.socket.id);
-
+    // const [roomLeader, setRoomLeader] = useState(props.roomInfo['roomLeader']); //props.roomInfo['roomLeader']
+    // const [socketId, setSocketId] = useState(props.socket.id);
+    // console.log(props.socket.id);
+    // console.log(props);
     const classes = useStyles();
-    const PutPlayer = (props) => {
-        return (
-            <Grid container justify="space-between" style={{margin:'2vh 0 0 0'}}>
-                <LobbyPlayerCard
-                    playerID={props.player.playerID}
-                    roomLeader={roomLeader}
-                />
-            </Grid>
-        );
-    };
 
     const [inputCtrl, setInputCtrl] = useState(false);
     const SetInputCtrl =  (isChat) => {
@@ -80,16 +71,16 @@ function Lobby(props) {
         document.execCommand('Copy');
         // alert('복사되었습니다.');
     }
-    let [roomInfo, setRoomInfo] = useState('');
+    // let [roomInfo, setRoomInfo] = useState('');
     let soc = props.socket;
     useLayoutEffect(() => {
         if (soc) {
             soc.on('joinRoom_Res', (room) => {
                 // 사람이 들어올 때마다 roomInfo 갱신
-                setRoomInfo(room.roomInfo);
+                // setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
-                setRoomLeader(room.roomInfo['roomLeader']);
-                setSocketId(soc.id);
+                // setRoomLeader(room.roomInfo['roomLeader']);
+                // setSocketId(soc.id);
             });
         }
     }, []);
@@ -98,21 +89,60 @@ function Lobby(props) {
         if (soc) {
             soc.on('disconnect', (roomInfo) => {
                 // 사람이 나갈 때마다 roomInfo 갱신
-                setRoomInfo(roomInfo);
+                // setRoomInfo(roomInfo);
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
                     roomInfo: roomInfo,
                 });
-                setRoomLeader(roomInfo['roomLeader']);
-                setSocketId(soc.id);
+                // setRoomLeader(roomInfo['roomLeader']);
+                // setSocketId(soc.id);
             });
         }
     });
 
-    const Card = () => {
-        if (roomInfo != '') {
-            return <PutNewCard roomInfo={roomInfo} socket={props.socket} />;
+    const PutPlayer = (props) => {
+        console.log(props);
+        return (
+            <Grid container justify="space-between" style={{margin:'2vh 0 0 0'}}>
+                <LobbyPlayerCard
+                    playerID={props.playerID}
+                    roomLeader={props.roomLeader}
+                    socketID={props.socketID}
+                />
+            </Grid>
+        );
+    };
+
+    function PutNewCard(props) {
+        console.log(props.roomInfo);
+        if (props.roomInfo != '') {
+            let PlayerList = getPlayersList(props.roomInfo);
+            console.log(PlayerList);
+            let tmparr = [];
+            for (let key in PlayerList) {
+                console.log(key);
+                tmparr.push([key,PlayerList[key]]);
+            }
+            return (
+                <div>
+                    {tmparr.map(([socketID, player]) => {
+                        console.log(Object.keys(player));
+                        return <PutPlayer 
+                        playerID={player.playerID}
+                        roomLeader={props.roomInfo['roomLeader']}
+                        socketID={socketID}
+                        />;
+                    })}
+                </div>
+            );
         }
+    }
+    
+    const Card = () => {
+
+        return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
+
+        //맨 처음 들어온 사람
         return <PutPlayer player={props.player} />;
     };
 
@@ -127,23 +157,8 @@ function Lobby(props) {
         return playerList;
     }
 
-    function PutNewCard(props) {
-        if (props.roomInfo != '') {
-            let PlayerList = getPlayersList(props.roomInfo);
+    console.log(props.roomInfo);
 
-            let tmparr = [];
-            for (let key in PlayerList) {
-                tmparr.push(PlayerList[key]);
-            }
-            return (
-                <div>
-                    {tmparr.map((player) => {
-                        return <PutPlayer player={player} />;
-                    })}
-                </div>
-            );
-        }
-    }
     return (
  
         // <><Container maxWidth="xl">
@@ -188,8 +203,8 @@ function Lobby(props) {
                         style={{margin:'2vh 2vw 10vh 2vw'}}
                        >
                             <LobbyTabs
-                                roomLeader={roomLeader}
-                                socketId={socketId}
+                                roomLeader={props.roomLeader}
+                                // socketId={socketId}
                                 musicList={props.musicList}
                                 roomID={props.roomID}
                                 roomInfo={props.roomInfo}
