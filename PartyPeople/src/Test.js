@@ -1,9 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { SnackbarProvider } from 'notistack';
-import { SnackAlertFunc } from './SnackAlert';
 
 export default function Test() {
+<<<<<<< HEAD
     const snackAlert = <SnackAlertFunc severity="info" message="안뇽!" />;
     return (
         <SnackbarProvider>
@@ -16,4 +15,7 @@ export default function Test() {
             </Button>
         </SnackbarProvider>
     );
+=======
+  
+>>>>>>> 60f645f88054fe8026fd924372e0bba1fa284d1e
 }

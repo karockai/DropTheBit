@@ -73,20 +73,29 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', (reqJson) => {
-                if (roomList[socket.roomID]['gaming'] === false) return 0;
+                if (!roomList[socket.roomID]) return 0;
                 new Game(io, socket).buy(reqJson);
             });
             socket.on('sell_Req', (reqJson) => {
-                if (roomList[socket.roomID]['gaming'] === false) return 0;
+                if (!roomList[socket.roomID]) return 0;
                 new Game(io, socket).sell(reqJson);
             });
             socket.on('cancelBid_Req', async (reqJson) => {
+<<<<<<< HEAD
                 if (roomList[socket.roomID]['gaming'] === false) return 0;
                 await new Game(io, socket).cancelBid(reqJson);
             });
             socket.on('cancelAsk_Req', async (reqJson) => {
                 if (roomList[socket.roomID]['gaming'] === false) return 0;
                 await new Game(io, socket).cancelAsk(reqJson);
+=======
+                if (!roomList[socket.roomID]) return 0;
+                await new Game(io, socket).cancelBid(reqJson)
+            });
+            socket.on('cancelAsk_Req', async (reqJson) => {
+                if (!roomList[socket.roomID]) return 0;
+                await new Game(io, socket).cancelAsk(reqJson)
+>>>>>>> 60f645f88054fe8026fd924372e0bba1fa284d1e
             });
             socket.on('bidTable_Req', async (reqJson) => {
                 await new Game(io, socket).sendBidTable(reqJson);
