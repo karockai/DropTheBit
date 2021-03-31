@@ -169,7 +169,7 @@ function Lobby(props) {
                     xs={middleSm}
                     // alignContents="stretch"
                 >
-                    <Grid style={{height:'25vh'}}>
+                    <Grid style={{height:'20vh'}}>
 
                     </Grid>
                     <StartGame
@@ -184,8 +184,9 @@ function Lobby(props) {
                         alignItems="stretch"
                         container
                         direction="column"
-                        justify="space-between"
-                        style={{margin:'2vh 2vw 14vh 2vw'}}>
+                        // justify="space-between" //? 있으면 스크롤 생기고 없으면 배치 망함
+                        style={{margin:'2vh 2vw 10vh 2vw'}}
+                       >
                             <LobbyTabs
                                 roomLeader={roomLeader}
                                 socketId={socketId}
@@ -209,8 +210,6 @@ function Lobby(props) {
                                         InputProps={{
                                             className: classes.input,
                                         }}
-                                        // color="white"
-                                        // colorScheme="white"
                                         style={{ width: '80%',}}
                                         readOnly
                                     />

@@ -10,6 +10,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
+import {PurpleButton} from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
     input: {
         color: "white",
@@ -66,7 +67,7 @@ function SetPlayerName(props) {
                 <Grid>
                     <img src={Logo} />
                 </Grid>
-                <Grid item>
+                <Grid  style={{margin:'4vh' }} item>
                     <TextField
                         id="form-control text-center fw-bold bg-transparent"
                         label="인게임 닉네임 (8자 제한)"
@@ -88,13 +89,14 @@ function SetPlayerName(props) {
                 </Grid>
 
                 <Grid item>
-                    <Button
+                    <PurpleButton
                         variant="contained"
                         color="primary"
                         onClick={handleOnSave}
+                        style={{width:'50vh', height:"7vh"}}
                     >
                         {buttonMsg}
-                    </Button>
+                    </PurpleButton>
                 </Grid>
             </Grid>
         </>
