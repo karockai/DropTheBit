@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         textAlign: 'center',
-        // padding: theme.spacing(1),
-        padding: '2vh 2vw 0 2vw',
+        padding: theme.spacing(1),
         textAlign: 'left',
-        color: theme.palette.text.secondary,
+        color: '#CDD7E0',
+        backgroundColor: '#0C151C',
     },
     button: {
         // color: theme.palette.getContrastText

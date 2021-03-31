@@ -14,9 +14,11 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(1),
+        spacing: 2,
         textAlign: 'center',
-        color: theme.palette.primary,
+        backgroundColor: '#2D4053',
+        color: 'white',
+        margin: '0 0 10px 0'
     },
     score: {},
 }));
@@ -53,11 +55,11 @@ export default function BidEntity(props) {
             spacing={2}
         >
             <Paper
-                style={{ height: '4vh', width: '100%' }}
+                // style={{ height: '4vh', width: '100%' }}
                 className={classes.paper}
                 onClick={bidCancel}
             >
-                <Grid container direction="row" alignItems="center">
+                <Grid container direction="row" justifyItems="center" alignItems="center">
                     <Grid
                         style={{ width: '20%', height: '4vh' }}
                         className="price"

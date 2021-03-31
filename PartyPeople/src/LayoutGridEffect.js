@@ -37,7 +37,7 @@ export default function LayoutGridEffect(props) {
         });
     }, [timerTime]);
     return (
-        <React.Fragment>
+        <>
             <ThreeSecTimer
                 SpecificMusic={SpecificMusic}
                 open={threeSecTimerOpen}
@@ -51,6 +51,6 @@ export default function LayoutGridEffect(props) {
                 isStart={isStart}
                 />
                 
-        </React.Fragment>
+        </>
     );
 }

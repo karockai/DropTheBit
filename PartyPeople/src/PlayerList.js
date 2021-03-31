@@ -24,9 +24,10 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.primary,
+        // padding: theme.spacing(1),
+        textAlign: 'left',
+        color: '#CDD7E0',
+        backgroundColor: '#0C151C',
     },
     score: {},
 }));
@@ -89,9 +90,9 @@ export default function PlayerList(props) {
                                 style={{
                                     height: '90%',
                                     border: 'solid',
-                                    borderColor: '#0066bb',
+                                    borderColor: '#2D4053',
                                     margin: '0 0 10px 0',
-                                    boxShadow: '12px 12px 2px 1px #ffffff',
+                                    // boxShadow: '12px 12px 2px 1px #ffffff',
                                 }}
                             >
                                 <Grid
@@ -133,8 +134,8 @@ export default function PlayerList(props) {
                 {players.map((player, index) => {
                     const myColor =
                         player.socketID === props.socket.id
-                            ? blue[200]
-                            : '#ffffff';
+                            ? '#2D4053'
+                            : '#0C151C';
                     const myFont =
                         player.socketID === props.socket.id ? 'bold' : 'normal';
                     return (

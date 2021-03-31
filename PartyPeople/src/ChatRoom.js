@@ -12,11 +12,51 @@ import {
     TextField,
     Grid,
     Paper,
+    withStyles,
     makeStyles,
     GridList,
 } from '@material-ui/core';
 import Message from './Message';
 import StockDoneList from './StockDoneList';
+
+const CssTextField = withStyles({
+    root: {
+      '& label.Mui-focused': {
+        color: '#CDD7E0',
+    },
+    '& .MuiInputLabel-root': {
+      color: '#CDD7E0',
+    },
+    '& .MuiInputBase-input': {
+      color: '#CDD7E0',
+    },
+      
+    //   '& .MuiInput-underline:after': {
+    //     borderBottomColor: 'white',
+    //   },
+    //   '& .MuiInput-underline:before': {
+    //     borderBottomColor: 'white',
+    //   },
+      '& .MuiOutlinedInput-root': {
+        '& .MuiInputBase-input': {
+            color: '#CDD7E0',
+        },
+        '& .MuiInputLabel-root': {
+            color: '#CDD7E0',
+            fontStyle:'italic'
+        },
+        '& fieldset': {
+          borderColor: '#2D4053',
+        },
+        '&:hover fieldset': {
+          borderColor: 'white',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#635ee7',
+        },
+      },
+    },
+  })(TextField);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -164,13 +204,13 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList item style={{width: '100%'}} wrap={'nowrap'} >
+            <GridList item style={{width: '100%', height: '30vh'}} wrap={'nowrap'} >
                 <Grid>
                     {
                         messages.map( (message) => {
                             return (
                                 <>
-                                <pre>
+                                <pre style ={{ color: 'white'}}>
                                     {message.author} : {message.message}
                                 </pre>
                                 </>
@@ -183,7 +223,7 @@ export default function ChatRoom(props) {
                     ref={messagesEnd}>
                 </Grid> 
             </GridList>
-        {/* </Grid> */}
+        </Grid>
         <Grid
                     item
                     container
@@ -193,12 +233,12 @@ export default function ChatRoom(props) {
                     justify={'center'}
                     alignItems="center"
                 >
-                    <Grid item style={{ margin: '10 0 0 0', width: '70%' }} >
-                        <TextField
-                            style={{ height: '70%', width:'100%' }}
+                    <Grid item style={{ margin: '10 0 0 0', width: '70%' }}>
+                        <CssTextField
+                            style={{ height: '100%' }}
                             id="standard-basic"
                             inputRef={textInput}
-                            label="메세지 보내기 (15자 제한)"
+                            label="메세지 보내기 (최대 20자)"
                             onFocus={()=> {
                                 isFocus = true;
                                 props.SetInputCtrl(true)
@@ -210,18 +250,19 @@ export default function ChatRoom(props) {
                             onChange={handleOnChange}
                             variant="outlined"
                             size="small"
-                            inputProps={{ 'maxlength': 15 }}
+                            inputProps={{ 'maxlength': 20 }}
                         />
                     </Grid>
-                    <Button
-                        style={{ width: '20%' }}
-                        variant="contained"
-                        color="primary"
-                        onClick={()=>{sendMessage()}}
-                    >
-                        전송
-                    </Button>
-                </Grid>
+                    <Grid item style={{ width: '20%' }}>
+                        <Button
+                            style={{ height: '100%' ,backgroundColor:'#635ee7' }}
+                            variant="contained"
+                            color="primary"
+                            onClick={()=>{sendMessage()}}
+                        >
+                            전송
+                        </Button>
+                    </Grid>
                 </Grid>
         </>
     );

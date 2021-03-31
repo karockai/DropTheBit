@@ -29,10 +29,9 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         // padding: theme.spacing(1),
-        margin: theme.spacing(1),
-
-        // textAlign: 'center',
-        color: theme.palette.text.secondary,
+        textAlign: 'left',
+        color: '#CDD7E0',
+        backgroundColor: '#0C151C',
     },
 }));
 export default function MyAsset(props) {
@@ -121,7 +120,7 @@ export default function MyAsset(props) {
                         margin: '0 4px 1vh 0',
                     }}
                 >
-                    <Paper style={{ height: '100%' }}>
+                    <Paper className={classes.paper}  style={{ height: '100%' }}>
                         보유 현금 (KRW)
                         {/* <h4>
                             {SplitByThree(parseWonToStr(myWallet.myCash)) +
@@ -135,7 +134,7 @@ export default function MyAsset(props) {
                 <Grid
                     style={{ width: '40%', height: '95%', margin: '0 0 1vh 0' }}
                 >
-                    <Paper style={{ height: '100%' }}>
+                    <Paper className={classes.paper} style={{ height: '100%' }}>
                         보유 코인 수 (개)<h3>{myWallet.myCoin}</h3>
                         평균매입단가<h6>{myWallet.myAvg}</h6>
                     </Paper>
@@ -147,8 +146,8 @@ export default function MyAsset(props) {
                 alignItems="stretch"
                 display="flex"
             >
-                <Grid style={{ width: '100%', height: '100%' }}>
-                    <Paper style={{ height: '100%' }}>
+                <Grid  style={{ width: '100%', height: '100%' }}>
+                    <Paper className={classes.paper} style={{ height: '100%' }}>
                         총 평가 자산 (KRW)
                         {/* <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +
