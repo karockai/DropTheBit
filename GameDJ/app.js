@@ -5,6 +5,7 @@ import express from 'express';
 
 const app = express();
 app.use(express.static('public'));
+
 // app.use(cors());
 // app.set('view engine', 'ejs');
 

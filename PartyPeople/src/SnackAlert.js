@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
+import {PurpleButton, PurpleSwitch} from './PurpleComponent';
 //@ 5 params
 //? ------- props -----------------------------
 //? {
@@ -20,6 +21,7 @@ export function SnackAlertBtn(props) {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleClickVariant = (variant) => () => {
+        console.log('btn 수행한다.')
         props.onClick();
         // variant could be success, error, warning, info, or default
         if (props.onAlert) {
@@ -36,12 +38,12 @@ export function SnackAlertBtn(props) {
 
     return (
         <>
-            <Button
-                class={props.class}
+            <PurpleButton
+                className={props.class}
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}
-            </Button>
+            </PurpleButton>
 
         </>
     );
@@ -54,16 +56,21 @@ export function SnackAlertBtn(props) {
 //?     message = "스낵메세지"
 //? }
 //? -------------------------------------------
+let index = 0;
 export function SnackAlertFunc(props) {
     const { enqueueSnackbar } = useSnackbar();
     // variant could be success, error, warning, info, or default
-    enqueueSnackbar(props.message, {
-        variant: props.severity,
-        anchorOrigin: {
-            vertical: 'bottom',
-            horizontal: 'left',
-        },
-        autoHideDuration: 1000,
-    });
-    return (<></>);
+    const callback = () => {
+        enqueueSnackbar(props.message, {
+            variant: props.severity,
+            anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'left',
+            },
+            autoHideDuration: 1500,
+            preventDuplicate: true
+        }); 
+    }
+    callback();
+    return <></>;
 }

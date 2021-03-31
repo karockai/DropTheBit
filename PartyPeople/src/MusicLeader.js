@@ -13,9 +13,6 @@ import {
     makeStyles,
     TextField,
 } from '@material-ui/core';
-import Test from './Test';
-
-const bgm_audio = new Audio(Tetris99);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -142,29 +139,28 @@ export default function MusicLeader(props) {
             </form>
         );
     }
-    const StartGameReq = () => {
-        if (music === '') {
-            return alert('음악을 선택해주세요');
-        } else {
-            props.socket.emit('startGame_Req', props.roomID);
-        }
-    };
+    // const StartGameReq = () => {
+    //     if (music === '') {
+    //         return alert('음악을 선택해주세요');
+    //     } else {
+    //         props.socket.emit('startGame_Req', props.roomID);
+    //     }
+    // };
 
 
-    let isSetUp = false;
-    useEffect(() => {
-        if (!isSetUp) {
-            props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
-                props.MusicPause();
-                // ? props.setTime(gameTime);  // 이미 저번 통신으로 저장한 정보임
-                props.history.push({
-                    pathname: '/game',
-                    state: { gameTime: gameTime },
-                });
-            });
-            isSetUp = true;
-        }
-    }, []);
+    // let isSetUp = false;
+    // useEffect(() => {
+    //     if (!isSetUp) {
+    //         props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
+    //             props.MusicPause();
+    //             props.history.push({
+    //                 pathname: '/game',
+    //                 state: { gameTime: gameTime },
+    //             });
+    //         });
+    //         isSetUp = true;
+    //     }
+    // }, []);
     return (
         <>
             <Grid>
@@ -173,10 +169,10 @@ export default function MusicLeader(props) {
             <Grid>
                 <ShowMusic />
             </Grid>
-            <Button variant="contained" color="primary" onClick={StartGameReq}>
+            {/* <Button variant="contained" color="primary" onClick={StartGameReq}>
                 {' '}
                 StartGame{' '}
-            </Button>
+            </Button> */}
 
         </>
     );

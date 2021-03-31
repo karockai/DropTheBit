@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button2: {
         '& > *': {
-            width: '45%',
+            // width: '45%',
             // margin: theme.spacing(1),
             justify: 'space-between',
         },
@@ -152,43 +152,50 @@ export default function ChatRoom(props) {
 
     return (
         <>
-        <Grid
+        <Grid container
+            direction={'column'}
+            justify={'space-evenly'}
+            >
+        {/* <Grid
             container
             className={classes.button}
-            style={{ height: '100%' }}
-            justify={'space-between'}
-        >
-            <GridList item >
-                <Grid style={{ height: '29vh', width: '100%'}}>
-                    {messages.map((message) => {
-                        return (
-                            <>
-                            <pre>
-                                {message.author} : {message.message}
-                            </pre>
-                            </>
-                        )
-                    })}
+            // direction={'row'}
+            // justify={'space-between'}
+            wrap={'nowrap'}
+            
+        > */}
+            <GridList item style={{width: '100%'}} wrap={'nowrap'} >
+                <Grid>
+                    {
+                        messages.map( (message) => {
+                            return (
+                                <>
+                                <pre>
+                                    {message.author} : {message.message}
+                                </pre>
+                                </>
+                            );
+                        })
+                    }
                 </Grid>
-                <div
+                <Grid
                     style={{ float:"left", clear: "both", height: "0%" }}
                     ref={messagesEnd}>
-                </div> 
+                </Grid> 
             </GridList>
-            <Grid item>
-                <Grid
+        {/* </Grid> */}
+        <Grid
                     item
                     container
-                    wrap="wrap"
-                    dirction="row"
-                    style={{ height: '5vh' }}
+                    dirction="column"
+                    style={{ padding: '2vh 0 0 0'}}
                     spacing={2}
                     justify={'center'}
                     alignItems="center"
                 >
-                    <Grid item style={{ margin: '10 0 0 -10', width: '70%' }}>
+                    <Grid item style={{ margin: '10 0 0 0', width: '70%' }} >
                         <TextField
-                            style={{ height: '100%', width:'100%' }}
+                            style={{ height: '70%', width:'100%' }}
                             id="standard-basic"
                             inputRef={textInput}
                             label="메세지 보내기 (15자 제한)"
@@ -206,19 +213,16 @@ export default function ChatRoom(props) {
                             inputProps={{ 'maxlength': 15 }}
                         />
                     </Grid>
-                    {/* <Grid item style={{  }}> */}
-                        <Button
-                            style={{ width: '20%' }}
-                            variant="contained"
-                            color="primary"
-                            onClick={()=>{sendMessage()}}
-                        >
-                            전송
-                        </Button>
-                    {/* </Grid> */}
+                    <Button
+                        style={{ width: '20%' }}
+                        variant="contained"
+                        color="primary"
+                        onClick={()=>{sendMessage()}}
+                    >
+                        전송
+                    </Button>
                 </Grid>
-            </Grid>
-        </Grid>
+                </Grid>
         </>
     );
 }

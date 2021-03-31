@@ -93,19 +93,19 @@ export default function MusicMember(props) {
             </form>
         );
     }
-    let isSetUp = false;
-    useEffect(() => {
-        if (!isSetUp) {
-          props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
-              props.MusicPause();
-                props.history.push({
-                    pathname: '/game',
-                    state: { gameTime: gameTime },
-                });
-            });
-            isSetUp = true;
-        }
-    }, []);
+    // let isSetUp = false;
+    // useEffect(() => {
+    //     if (!isSetUp) {
+    //       props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
+    //           props.MusicPause();
+    //             props.history.push({
+    //                 pathname: '/game',
+    //                 state: { gameTime: gameTime },
+    //             });
+    //         });
+    //         isSetUp = true;
+    //     }
+    // }, []);
     return (
         <>
             <Grid>
@@ -114,10 +114,10 @@ export default function MusicMember(props) {
             <Grid>
                 <ShowMusic />
             </Grid>
-            <Button variant="contained" color="primary" disabled>
+            {/* <Button variant="contained" color="primary" disabled>
                 {' '}
                 StartGame{' '}
-            </Button>
+            </Button> */}
         </>
     );
 }

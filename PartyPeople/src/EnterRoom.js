@@ -76,7 +76,6 @@ export default function EnterRoom(props, { history }) {
     const isName = name === '';
     return (
         <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
-        <>
             {isName && (
                 <SetPlayerName
                     onSave={handleOnSave}
@@ -99,7 +98,6 @@ export default function EnterRoom(props, { history }) {
                     MusicStart={MusicStart}
                 />
             )}
-        </>
         </div>
     );
 }

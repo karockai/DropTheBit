@@ -1,40 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Button, Grid, Paper, Popover,FormGroup,FormControlLabel } from '@material-ui/core';
+import {Grid, Paper, Popover,FormGroup,FormControlLabel } from '@material-ui/core';
 import { Typography,Switch } from '@material-ui/core';
 import KeyMapTemp from './images/KeyMap.png';
 import MusicLeader from './MusicLeader';
 import MusicMember from './MusicMember';
-import { purple, yellow } from '@material-ui/core/colors';
-
-const PurpleButton = withStyles((theme) => ({
-  root: {
-    color: theme.palette.getContrastText(purple[500]),
-    // backgroundColor: purple[500],
-    backgroundColor: 'rgba(89, 32, 146, 0.37)',
-    '&:hover': {
-      backgroundColor: purple[700],
-    },
-  },
-}))(Button);
-
-const PurpleSwitch = withStyles({
-  switchBase: {
-    color: yellow[300],
-    '&$checked': {
-      color: purple[500],
-    },
-    '&$checked + $track': {
-      backgroundColor: purple[500],
-    },
-  },
-  checked: {},
-  track: {},
-})(Switch);
-
+import {PurpleButton, PurpleSwitch} from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   padding: {
     padding: theme.spacing(1),
@@ -45,8 +19,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-  
   function LobbyMusicOnOff(props) {
     const [state, setState] = React.useState(true);
   
@@ -135,9 +107,9 @@ export default function LobbyTabs(props) {
 console.log(keymap, openKey);
 console.log(selectMusic, openSelect);
   return (   
-    <div>
-        <Grid container justify={'space-around'} alignItems={'center'}>
-            <PurpleButton id="key_map" color="transparent" onClick={handleKeymap} size="large">
+    <>
+        <Grid container justify={'space-around'}  alignItems={'center'}>
+            <PurpleButton id="key_map" onClick={handleKeymap} size="large">
             KEY MAP
             </PurpleButton>
             <PurpleButton id="select_music" onClick={handleSelectMusic} size="large">
@@ -179,8 +151,7 @@ console.log(selectMusic, openSelect);
             <CheckLeader/>
         </Typography>
         </Popover>
-        
-    </div>
+    </>
 );
 }
 

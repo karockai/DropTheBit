@@ -10,10 +10,15 @@ import {
 import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
-
+const useStyles = makeStyles((theme) => ({
+    input: {
+        color: "white",
+    },
+}));
 function SetPlayerName(props) {
     // const socket = io();
     // const [name, setName] = React.useState('');
+    const classes = useStyles();
     const params = window.location
         .toString()
         .substring(window.location.toString().indexOf('?'));
@@ -63,16 +68,22 @@ function SetPlayerName(props) {
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="standard-basic"
+                        id="form-control text-center fw-bold bg-transparent"
                         label="인게임 닉네임 (8자 제한)"
                         inputRef={props.textInput}
                         onChange={handleChange}
                         variant="outlined"
                         size="medium"
+                        InputProps={{
+                            className: classes.input,
+                        }}
+                        InputLabelProps={{
+                            style: { color: '#fff' },
+                        }}
                         // ref={nameInput}
                         autoFocus
                         onKeyPress={onKeyPress}
-                        inputProps={{ 'maxlength': 8 }}
+                        inputProps={{ 'maxLength': 8 }}
                     />
                 </Grid>
 

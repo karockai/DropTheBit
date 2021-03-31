@@ -7,6 +7,7 @@ import {
     makeStyles,
     Typography,
     Container,
+    TextField,
 } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
@@ -24,24 +25,29 @@ import ChatRoom from './ChatRoom';
 import { ChatFeed, Message } from 'react-chat-ui';
 import LobbyTabs from './LobbyTabs'
 import './Lobby.css';
+import StartGame from './StartGame';
 
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
+        // flexGrow: 1,
+        // padding: theme.spacing(3),
     },
     paper: {
         textAlign: 'center',
-        padding: theme.spacing(1),
+        // padding: theme.spacing(1),
+        padding: '2vh 2vw 0 2vw',
         textAlign: 'left',
         color: theme.palette.text.secondary,
     },
     button: {
         // color: theme.palette.getContrastText
         backgroundColor: '#0069d9',
-    }
+    },
+    input: {
+        color: "white",
+    },
 }));
 
 function Lobby(props) {
@@ -143,12 +149,11 @@ function Lobby(props) {
         // <><Container maxWidth="xl">
         // <Typography component="div" >
             <Grid
-                style={{ height: '100vh'}}
-                wrap="wrap"
+                style={{ height: '100vh', }}
+                // wrap="wrap"
                 container
-                direction="row"
+                // direction="row"
                 justify="center"
-                alignItems="stretch"
                 // spacing={1}
             >
                 <Grid className="playerListGrid" item xs={leftSm}>
@@ -158,17 +163,29 @@ function Lobby(props) {
                     className="stockTradeGrid"
                     container
                     item
+                    direction={'column'}
+                    alignItems={'center'}
+                    justify={'space-around'}
                     xs={middleSm}
-                    wrap="wrap"
-                    alignContents="stretch"
+                    // alignContents="stretch"
                 >
+                    <Grid style={{height:'25vh'}}>
+
+                    </Grid>
+                    <StartGame
+                        roomID={props.roomID}
+                        socket={props.socket}
+                        history={props.history}
+                        MusicPause= {props.MusicPause}
+
+                    />
                 </Grid>
                 <Grid className="bidChatGrid" item xs={rightSm} 
-                // wrap="wrap"
                         alignItems="stretch"
                         container
                         direction="column"
-                        justify="space-between">
+                        justify="space-between"
+                        style={{margin:'2vh 2vw 14vh 2vw'}}>
                             <LobbyTabs
                                 roomLeader={roomLeader}
                                 socketId={socketId}
@@ -183,13 +200,18 @@ function Lobby(props) {
                                 MusicStart={props.MusicStart}
                             />
                             <Grid container direction ={'column'} justify={'flex-end'}>
-                                <Grid style={{margin:'0 0 10px 0'}} container justify={'space-between'} alignItems={'center'}>
-                                    <input
+                                <Grid style={{margin:'0 0 10px 0'}} container justify={'space-between'} >
+                                    <TextField
                                         type="text"
                                         id="gameLink"
-                                        className="form-control text-center fw-bold bg-white"
+                                        className="form-control text-center fw-bold bg-transparent"
                                         value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                        style={{ width: '80%' }}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        // color="white"
+                                        // colorScheme="white"
+                                        style={{ width: '80%',}}
                                         readOnly
                                     />
                                     <SnackbarProvider maxSnack={5}>
@@ -209,6 +231,7 @@ function Lobby(props) {
                                 <Paper
                                     style={{ height: '40vh' }}
                                     className={classes.paper}
+                                    
                                 >
                                     <ChatRoom
                                         SetInputCtrl={SetInputCtrl}
