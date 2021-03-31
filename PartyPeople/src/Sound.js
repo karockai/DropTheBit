@@ -49,13 +49,14 @@ import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
 
 // Module
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Sound(props) {
     const [action, SetAction] = useState(props.action);
     const [type, SetType] = useState(props.soundType);
     const [name, SetName] = useState(props.soundName);
     const [volume, SetSoundVol] = useState(props.soundVol);
+    console.log(action);
     const musicLink = {
         lobbyMusic: Tetris99,
         Deja_Vu: Deja_Vu,
@@ -104,9 +105,9 @@ export default function Sound(props) {
         VolDown: VolDown,
         VolUp: VolUp,
     };
-    console.log('action:', action);
+
     const [audio, SetAudio] = useState(new Audio(musicLink[name]));
-    console.log(props);
+
     if (props.sendAudio) {
         props.sendAudio(audio);
     }
