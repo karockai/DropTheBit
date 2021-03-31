@@ -59,7 +59,7 @@ export default function BidEntity(props) {
                 className={classes.paper}
                 onClick={bidCancel}
             >
-                <Grid container direction="row" alignItems="center">
+                <Grid container direction="row" justifyItems="center" alignItems="center">
                     <Grid
                         style={{ width: '20%', height: '4vh' }}
                         className="price"

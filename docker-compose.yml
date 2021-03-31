@@ -1,0 +1,100 @@
+version: '3.3'
+
+services:
+  server:
+    restart: always
+    build:
+      context: ./GameDJ
+      dockerfile: Dockerfile
+    container_name: server
+    volumes:
+      - /app/node_modules
+      - ./GameDJ:/app
+    ports:
+      - 5000:5000
+    networks:
+      - DropTheBit
+    # depends_on:
+    #   - redis
+    # links:
+    #   - redis
+    # environment: # 환경변수 설정
+    #   - REDIS_PORT=6379
+    #   - REDIS_HOST=redis
+    # environment: 
+    #   NODE_ENV: ${NODE_ENV}
+
+  # redis:
+  #   build:
+  #     context: ./redis
+  #   restart: always
+  #   ports: 
+  #     - 6379:6379
+  #   expose:
+  #     - 6379
+  #   networks:
+  #     - DropTheBit
+    # environment:
+
+  nginx:
+    build:
+      context: ./nginx
+    restart: always
+    ports: 
+      - 80:80
+    networks:
+      - DropTheBit
+  
+  # python:
+  #   build:
+  #     context: ./pythonData
+  #   restart: always
+  #   networks:
+  #     - DropTheBit
+  #   links:
+  #     - redis
+
+networks:
+  DropTheBit:
+    driver: bridge
+
+    
+
+
+
+
+
+
+
+
+
+# services:
+#   web:
+#     image: nginx:latest
+#     container_name: nginx
+#     restart: "on-failure"
+#     ports:
+#       - 80:80
+#     volumes:
+#       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+
+
+
+      
+  # 아래 부분은 Client 설정으로, Dockerfile을 통해 설정 후 별도로 nginx통해서 실행할 수 있을 듯
+  # client:
+  #   build:
+  #     context: ./PartyPeople
+  #   container_name: PartyPeople
+  #   restart: "on-failure"
+  #   expose:
+  #     - 3000
+  #   volumes:
+  #     - './client:/app'
+  #     - '/app/node_modules'
+  #   environment: 
+  #     - NODE_ENV=development 
+  #     - CHOKIDAR_USEPOLLING=true
+  #   stdin_open: true
+  #   tty: true

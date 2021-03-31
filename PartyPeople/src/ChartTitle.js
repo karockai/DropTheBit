@@ -91,7 +91,7 @@ function ChartTitle(props) {
                             {SplitByThree(parseWonToStr(currentWon))}
                             
                         </strong>
-                        {' ' + unit}
+                        <span style={{color: 'white'}} >{' ' + unit}</span>
                     </Grid>
                     {/* <Grid>
                         <span style={{ color: grey[900] ,}}>
@@ -104,7 +104,7 @@ function ChartTitle(props) {
                     <p
                         style={{
                             fontSize: '12px',
-                            color: '#000000',
+                            color: '#ffffff',
                             display: 'inline-block',
                         }}
                     >

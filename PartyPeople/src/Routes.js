@@ -34,6 +34,21 @@ export default function Routes(props) {
                             </>)
                         }}
                     />
+                    {/* <Route  // ? 어떻게 /lobby 라우트에 필요한 인자 넘길지 고민중..
+                        path="/lobby"
+                        render={() => {
+                            return(
+                            isValid() ? 
+                            <Lobby
+                                socket={props.socket}
+                                requestSocket={props.requestSocket}
+                                roomID={props.roomID}
+                                roomInfo={props.roomInfo}
+                                gameTime={time}
+                            /> : <Redirect to="/" />)}}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                    /> */}
                     <Route
                         path="/game"
                         render={() => {

@@ -33,31 +33,31 @@ import stock from './stock.json';
  * socket_id를 대조해서 현재 플레이어가 누군지 저장해둔다.
  */
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props) {
+//     const { children, value, index, ...other } = props;
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
+//     return (
+//         <div
+//             role="tabpanel"
+//             hidden={value !== index}
+//             id={`full-width-tabpanel-${index}`}
+//             aria-labelledby={`full-width-tab-${index}`}
+//             {...other}
+//         >
+//             {value === index && (
+//                 <Box p={3}>
+//                     <Typography>{children}</Typography>
+//                 </Box>
+//             )}
+//         </div>
+//     );
+// }
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-};
+// TabPanel.propTypes = {
+//     children: PropTypes.node,
+//     index: PropTypes.any.isRequired,
+//     value: PropTypes.any.isRequired,
+// };
 
 function a11yProps(index) {
     return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+import {Card,Grid} from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {   
-    maxWidth: '30vh',
+    width: '30vh',
+    height: '15vh',
     margin: '0 2vh 2vh 2vh',
   },
   bullet: {
@@ -26,25 +27,19 @@ const useStyles = makeStyles({
 
 export default function LobbyPlayerCard(props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
+  const isLeader =  props.roomLeader ? '방장' : ''
   return (
     <Card className={classes.root} >
       <CardContent>
-        {/* <Typography className={classes.title} color="textSecondary" gutterBottom>
-          방장
-        </Typography> */}
+      <Grid container direction={'column'} justify={'center'} alignItems={'flex-end'}>
+        <Typography className={classes.title} color="textSecondary" gutterBottom>
+          {isLeader}
+        </Typography>
         <Typography variant="h5" component="h2">
           {props.playerID}
         </Typography>
-        <Typography variant="body2" component="p">
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+        </Grid>
       </CardContent>
-      <CardActions>
-        <Button size="small">강퇴하기</Button>
-      </CardActions>
     </Card>
   );
 }
