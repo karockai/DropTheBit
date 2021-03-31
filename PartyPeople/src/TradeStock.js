@@ -9,14 +9,18 @@ import {
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { useSound, playSound } from './useSound';
-import DrumUp from './audios/effect/drumUp.wav';
-import DrumDown from './audios/effect/drumDown.wav';
-import HatUp from './audios/effect/hatUp.wav';
-import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
 import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
+
+// 음악 관련 >>
+// import { useSound, playSound } from './useSound';
+// import DrumUp from './audios/effect/drumUp.wav';
+// import DrumDown from './audios/effect/drumDown.wav';
+// import HatUp from './audios/effect/hatUp.wav';
+// import HatDown from './audios/effect/hatDown.wav';
+
+// 음악 관련 <<
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -274,39 +278,39 @@ export default function TradeStock(props) {
         }
         if (e.keyCode === 37) {
             //_ LEFT ARROW
-            playSound(HatUp, 1).play();
+            // playSound(HatUp, 1).play();
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
-            playSound(HatDown, 1).play();
+            // playSound(HatDown, 1).play();
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
-            playSound(HatUp, 1).play();
+            // playSound(HatUp, 1).play();
             BidUp();
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
-            playSound(HatDown, 1).play();
+            // playSound(HatDown, 1).play();
             BidDown();
         } else if (e.keyCode === 65) {
-            //_ 'A'
-            playSound(DrumUp, 1).play();
+            //_ 'A' :
+            // playSound(DrumUp, 1).play();
             setBuyStatus(Buy(currentBid, currentVolume));
         } else if (e.keyCode === 83) {
             //_ 'S'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             setSellStatus(Sell(currentBid, currentVolume));
         } else if (e.keyCode === 68) {
             //_ 'D'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             RefreshBid_Req();
         } else if (e.keyCode === 90) {
             //_ 'Z'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             SetSellMaxCount();
         } else if (e.keyCode === 88) {
             //_ 'X'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             SetBuyMaxCount();
         }
     }
