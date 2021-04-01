@@ -51,20 +51,40 @@ export default {
                 new Room(io, socket).createPrivateRoom(playerID);
             });
 
-            // socket.on('joinRandom_Req', (playerID) => {
-            //     if (public === 0){
-            //         new Room(io, socket).createPrivateRoom(playerID);
-            //     }
+            // data : {playerID : name}
+            socket.on('joinRandom_Req', (playerID) => {
+                let data = {
+                    "roomID": publicRoomID,
+                    "playerID": playerID.playerID
+                }
+                let roomExist = false;
+                for (const [key, value] of Object.entries(roomList[data.roomID])) {
+                    if (key.length === 20) {
+                        roomExist = true;
+                        break;
+                    }
+                }
+                // 공방 최초의 유저라면
+                if (roomExist === false){
+                    new Room(io, socket).createPublicRoom(data);
+                }
+                // 공방 최초의 유저가 아니라면
+                else{
+                    new Room(io, socket).joinRoom(data);
+                }
 
-            // });
+            });
 
             // data : {roomID : roomID, playerID : name}
-            socket.on('joinRoom_Req', async (data) => {
-                await new Room(io, socket).joinRoom(data);
+            socket.on('joinRoom_Req', (data) => {
+                new Room(io, socket).joinRoom(data);
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
             socket.on('settingsUpdate_Req', (data) => {
                 new Room(io, socket).updateSettings(data);
+            });
+            socket.on('backToLobby', (roomID) => {
+                new Room(io, socket).roomReinit(roomID);
             });
             socket.on('startGame_Req', () => {
                 new Game(io, socket).startGame();
