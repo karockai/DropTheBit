@@ -94,21 +94,6 @@ function Lobby(props) {
         }
     });
 
-    const PutPlayer = (props) => {
-        console.log(props);
-        return (
-            <>
-                <Grid style={{margin:'2vh 0 0 0'}}>
-                    <LobbyPlayerCard
-                        playerID={props.playerID}
-                        roomLeader={props.roomLeader}
-                        socketID={props.socketID}
-                    />
-                </Grid>
-            </>
-        );
-    };
-
     function PutNewCard(props) {
         console.log(props.roomInfo);
         if (props.roomInfo != '') {
@@ -120,13 +105,12 @@ function Lobby(props) {
                 tmparr.push([key,PlayerList[key]]);
             }
             return (
-                <GridList contianer style={{width: '100%', height: '100vh'}} wrap={'nowrap'}>
+                <GridList contianer style={{width: '100%',height: '100vh'}} justify={'flex-start'} alignItems={'flex-start'}>
                     {tmparr.map(([socketID, player]) => {
-                        console.log(Object.keys(player));
-                        return <PutPlayer 
-                        playerID={player.playerID}
-                        roomLeader={props.roomInfo['roomLeader']}
-                        socketID={socketID}
+                        return <LobbyPlayerCard
+                            playerID={player.playerID}
+                            roomLeader={props.roomInfo['roomLeader']}
+                            socketID={socketID}
                         />;
                     })}
                 </GridList>
@@ -134,13 +118,9 @@ function Lobby(props) {
         }
     }
     
-    const Card = () => {
-
-        return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
-
-        //맨 처음 들어온 사람
-        return <PutPlayer player={props.player} />;
-    };
+    // const Card = () => {
+    //     return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
+    // };
 
     function getPlayersList(roomInfo) {
         // let keyList = Object.keys(roomInfo).filter((key) => key.length === 20);
@@ -153,8 +133,6 @@ function Lobby(props) {
         return playerList;
     }
 
-    console.log(props.roomInfo);
-
     return (
         <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
         <Grid
@@ -164,7 +142,7 @@ function Lobby(props) {
             
         >
             <Grid className="playerListGrid" item xs={leftSm} direction='column' justify='flex-start'  alignItems='flex-start' >
-                <Grid>{Card()}</Grid>
+                <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />
             </Grid>
             <Grid
                 className="stockTradeGrid"
@@ -176,11 +154,13 @@ function Lobby(props) {
                 xs={middleSm}
             >
                 <Grid style={{ height: '25vh' }}></Grid>
+                
                 <StartGame
                     roomID={props.roomID}
                     socket={props.socket}
                     history={props.history}
                     audio={props.audio}
+                    isLeader={props.roomInfo['roomLeader'] === props.socket.id }
                 />
             </Grid>
             <Grid

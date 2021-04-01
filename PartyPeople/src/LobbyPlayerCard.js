@@ -44,7 +44,7 @@ export default function LobbyPlayerCard(props) {
   const classes = useStyles();
   const isLeader =  props.roomLeader===props.socketID ? '방장' : ''
   return (
-    <Card className={classes.root} >
+    <Card className={classes.root} style={{margin:'2vh 0 0 0'}}>
       <CardContent>
       <Grid container direction={'column'} justify={'center'} alignItems={'flex-end'}>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
