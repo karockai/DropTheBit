@@ -20,6 +20,8 @@ global.exTable = {};
 global.prePrice = 0;
 
 // 차트를 바로 그리기 위한 curCoin 50개 리스트
+// for stress test
+global.playercnt = 0;
 
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);

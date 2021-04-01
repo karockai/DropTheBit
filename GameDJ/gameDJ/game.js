@@ -50,7 +50,7 @@ class Game {
         const { io, socket } = this;
         // 1. reqJson setting
         let roomID = reqJson['roomID'];
-        let socketID = reqJson['socketID'];
+        let socketID = socket.id;
         let reqPrice = Number(reqJson['currentBid']);
         let reqVol = Number(reqJson['currentVolume']);
 
@@ -151,7 +151,7 @@ class Game {
         // 1. reqJson setting
         // console.log('-----------Sell -----------', reqJson);
         let roomID = reqJson['roomID'];
-        let socketID = reqJson['socketID'];
+        let socketID = socket.id;
         let reqPrice = Number(reqJson['currentBid']);
         let reqVol = Number(reqJson['currentVolume']);
 
