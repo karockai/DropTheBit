@@ -51,6 +51,13 @@ export default {
                 new Room(io, socket).createPrivateRoom(playerID);
             });
 
+            // socket.on('joinRandom_Req', (playerID) => {
+            //     if (공방 인원수 == 0){
+            //         new Room(io, socket).createPrivateRoom(playerID);
+            //     }
+
+            // });
+
             // data : {roomID : roomID, playerID : name}
             socket.on('joinRoom_Req', async (data) => {
                 await new Room(io, socket).joinRoom(data);
