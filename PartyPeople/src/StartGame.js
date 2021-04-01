@@ -57,16 +57,27 @@ export default function StartGame(props) {
 
     return (
         <>
-            <PurpleButton
+            {props.isLeader &&
+                <PurpleButton
                 variant="contained"
-                color="primary"
                 onClick={StartGameReq}
                 style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
                 text
             >
                 {' '}
                 Start Game{' '}
-            </PurpleButton>
+            </PurpleButton>}
+            {!props.isLeader &&
+                <PurpleButton
+                variant="contained"
+                style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
+                text
+                disabled
+            >
+                {' '}
+                Waiting to start
+                {' '}
+            </PurpleButton>}
         </>
     );
 }

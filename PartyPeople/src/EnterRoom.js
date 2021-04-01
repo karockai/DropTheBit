@@ -86,7 +86,7 @@ export default function EnterRoom(props) {
     return (
         <>
         <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
-                    <Sound
+                <Sound
                 soundName={'lobbyMusic'}
                 soundType={'music'}
                 soundVol={0.3}

@@ -47,7 +47,7 @@ export default function GameOverModal(props) {
 
     const history = useHistory();
     const BackToLobby = () => {
-        let path = '/';
+        let path = '/lobby';
         history.push(path);
     };
 
