@@ -1,6 +1,4 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-export default function Test() {
-  
-}
+export default function Test() {}

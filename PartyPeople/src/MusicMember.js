@@ -31,22 +31,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function MusicMember(props) {
     const classes = useStyles();
+    // var tmp_music = props.roomInfo['music'];
+    // var tmp_time = props.roomInfo['gameTime'];
 
-    var tmp_music = props.roomInfo['music'];
-    var tmp_time = props.roomInfo['gameTime'];
-
-    var minute = parseInt(tmp_time / 60);
-    var second = tmp_time % 60;
-    minute = minute >= 10 ? String(minute) : '0' + String(minute);
-    second = second >= 10 ? String(second) : '0' + String(second);
-    const [music, setMusic] = React.useState(tmp_music);
-    const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
+    // var minute = parseInt(tmp_time / 60);
+    // var second = tmp_time % 60;
+    // minute = minute >= 10 ? String(minute) : '0' + String(minute);
+    // second = second >= 10 ? String(second) : '0' + String(second);
+    // const [music, setMusic] = React.useState(tmp_music);
+    // const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
+    
     function MusicInput() {
         return (
             <div>
                 <FormControl className={classes.formControl} disabled>
                     <InputLabel id="demo-simple-select-label">
-                        {music}
+                        {props.music}
                     </InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
@@ -70,21 +70,22 @@ export default function MusicMember(props) {
             props.socket.once('settingsUpdate_Res', (data) => {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
-                setMusic(musicName);
+                // setMusic(musicName);
 
                 var minute = parseInt(musicTime / 60);
                 var second = musicTime % 60;
-                var tmp_roomInfo = props.roomInfo;
-                tmp_roomInfo['music'] = musicName;
-                strSetTime(String(minute) + ' : ' + String(second));
+                // var tmp_roomInfo = props.roomInfo;
+                // tmp_roomInfo['music'] = musicName;
+                // strSetTime(String(minute) + ' : ' + String(second));
+                props.setMusicTime(musicName, musicTime);
             });
         }, []);
         return (
             <form className={classes.root} noValidate autoComplete="off">
                 <div>
                     <TextField
-                        label={strTime}
-                        defaultValue={strTime}
+                        label={props.strTime}
+                        defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
                         }}

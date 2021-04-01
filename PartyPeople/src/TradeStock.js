@@ -1,4 +1,4 @@
-import React, { useEffect, useState,  useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import {
     IconButton,
     Button,
@@ -10,46 +10,41 @@ import {
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { useSound, playSound } from './useSound';
-import DrumUp from './audios/effect/drumUp.wav';
-import DrumDown from './audios/effect/drumDown.wav';
-import HatUp from './audios/effect/hatUp.wav';
-import HatDown from './audios/effect/hatDown.wav';
 import { grey, red } from '@material-ui/core/colors';
 import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
 
 const CssTextField = withStyles({
     root: {
-      '& label.Mui-focused': {
-        color: '#CDD7E0',
-    },
-    '& .MuiInputLabel-root': {
-      color: '#CDD7E0',
-    },
-    '& .MuiInputBase-input': {
-      color: '#CDD7E0',
-    },
-      
-    //   '& .MuiInput-underline:after': {
-    //     borderBottomColor: 'white',
-    //   },
-    //   '& .MuiInput-underline:before': {
-    //     borderBottomColor: 'white',
-    //   },
-      '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-          borderColor: 'red',
+        '& label.Mui-focused': {
+            color: '#CDD7E0',
         },
-        '&:hover fieldset': {
-          borderColor: 'yellow',
+        '& .MuiInputLabel-root': {
+            color: '#CDD7E0',
         },
-        '&.Mui-focused fieldset': {
-          borderColor: 'green',
+        '& .MuiInputBase-input': {
+            color: '#CDD7E0',
         },
-      },
+
+        //   '& .MuiInput-underline:after': {
+        //     borderBottomColor: 'white',
+        //   },
+        //   '& .MuiInput-underline:before': {
+        //     borderBottomColor: 'white',
+        //   },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: 'red',
+            },
+            '&:hover fieldset': {
+                borderColor: 'yellow',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: 'green',
+            },
+        },
     },
-  })(TextField);
+})(TextField);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -186,22 +181,30 @@ export default function TradeStock(props) {
             SetNewVolume(1);
             return;
         }
-        SetNewVolume(volume - Math.floor((myWallet.myCash / currentBid) * 0.1));
+        SetNewVolume(
+            volume - Math.floor((myWallet.myCash / currentBid) * 0.1 + 1)
+        );
     }
     function BidUp() {
+        console.log('hi');
         SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
         SetBid(Number(currentBid) - Number(unitBid));
     }
 
-    function RefreshBid() {
-        props.socket.once('chart', (data) => {
-            SetUnit(data.priceUnit);
-            SetBid(data.curPrice);
-            //SetVolume(1);
+    function RefreshBid_Req() {
+        props.socket.emit('RefreshBid_Req');
+        props.socket.once('RefreshBid_Res', (curPrice) => {
+            SetBid(curPrice);
         });
     }
+
+    // function RefreshBid_Res() {
+    //     props.socket.once('RefreshBid_Res', (curPrice) => {
+    //         SetBid(curPrice);
+    //     });
+    // }
 
     function Buy(bid, volume) {
         let status = '';
@@ -304,45 +307,48 @@ export default function TradeStock(props) {
         }
         if (e.keyCode === 37) {
             //_ LEFT ARROW
-            playSound(HatUp, 1).play();
+            // playSound(HatUp, 1).play();
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
-            playSound(HatDown, 1).play();
+            // playSound(HatDown, 1).play();
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
-            playSound(HatUp, 1).play();
+            // playSound(HatUp, 1).play();
             BidUp();
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
-            playSound(HatDown, 1).play();
+            // playSound(HatDown, 1).play();
             BidDown();
         } else if (e.keyCode === 65) {
-            //_ 'A'
-            playSound(DrumUp, 1).play();
+            //_ 'A' :
+            // playSound(DrumUp, 1).play();
             setBuyStatus(Buy(currentBid, currentVolume));
         } else if (e.keyCode === 83) {
             //_ 'S'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             setSellStatus(Sell(currentBid, currentVolume));
         } else if (e.keyCode === 68) {
             //_ 'D'
-            playSound(DrumDown, 1).play();
-            RefreshBid();
+            // playSound(DrumDown, 1).play();
+            RefreshBid_Req();
         } else if (e.keyCode === 90) {
             //_ 'Z'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             SetSellMaxCount();
         } else if (e.keyCode === 88) {
             //_ 'X'
-            playSound(DrumDown, 1).play();
+            // playSound(DrumDown, 1).play();
             SetBuyMaxCount();
         }
     }
 
     useEffect(() => {
-        RefreshBid();
+        props.socket.once('chart', (data) => {
+            SetUnit(data.priceUnit);
+            SetBid(data.curPrice);
+        });
     }, []);
 
     useEffect(() => {
@@ -442,7 +448,14 @@ export default function TradeStock(props) {
     }
 
     let dateString = new Date();
-    dateString = '('+dateString.getMinutes() + ':' + dateString.getSeconds() + '.' + dateString.getMilliseconds() + ') '
+    dateString =
+        '(' +
+        dateString.getMinutes() +
+        ':' +
+        dateString.getSeconds() +
+        '.' +
+        dateString.getMilliseconds() +
+        ') ';
 
     return (
         <>
@@ -450,20 +463,21 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message= {dateString + " 보유 금액이 부족해요 😨"}
+                        message={dateString + ' 보유 금액이 부족해요 😨'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="error"
-                        message= {dateString +" 유효하지 않은 값입니다."}
+                        message={dateString + ' 유효하지 않은 값입니다.'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="info"
                         message={
-                            dateString + buyStatus.val +
+                            dateString +
+                            buyStatus.val +
                             ' 호가에 ' +
                             buyStatus.vol +
                             '개 [매수] 주문했어요! 📈'
@@ -474,7 +488,8 @@ export default function TradeStock(props) {
                     <SnackAlertFunc
                         severity="success"
                         message={
-                            dateString + buyStatus.val +
+                            dateString +
+                            buyStatus.val +
                             ',' +
                             buyStatus.vol +
                             ' [매수] 주문이 체결되었어요! 🎁'
@@ -484,20 +499,21 @@ export default function TradeStock(props) {
                 {sellStatus && sellStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message= {dateString + "코인이 없는걸요? 😨"}
+                        message={dateString + '코인이 없는걸요? 😨'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="error"
-                        message= {dateString +"유효하지 않은 값입니다."}
+                        message={dateString + '유효하지 않은 값입니다.'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="info"
                         message={
-                            dateString +sellStatus.val +
+                            dateString +
+                            sellStatus.val +
                             ' 호가에 ' +
                             sellStatus.vol +
                             '개 [매도] 주문했어요! 📉'
@@ -508,7 +524,8 @@ export default function TradeStock(props) {
                     <SnackAlertFunc
                         severity="success"
                         message={
-                            dateString + sellStatus.val +
+                            dateString +
+                            sellStatus.val +
                             ',' +
                             sellStatus.vol +
                             ' [매도] 주문이 체결되었어요! 💸'
@@ -585,14 +602,14 @@ export default function TradeStock(props) {
                         onClick={() => {
                             setSellStatus(Sell(currentBid, currentVolume));
                         }}
-                    > 
+                    >
                         {/* <KeyboardArrowRightIcon /> */}
                         [S] 매도 확정
                     </Button>
                     <Button
                         variant="contained"
                         color="info"
-                        onClick={() => RefreshBid()}
+                        onClick={() => RefreshBid_Req()}
                     >
                         {/* <KeyboardArrowRightIcon /> */}
                         [D] 현재가 설정🔄

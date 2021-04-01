@@ -196,14 +196,6 @@ export default function ChatRoom(props) {
             direction={'column'}
             justify={'space-evenly'}
             >
-        {/* <Grid
-            container
-            className={classes.button}
-            // direction={'row'}
-            // justify={'space-between'}
-            wrap={'nowrap'}
-            
-        > */}
             <GridList item style={{width: '100%', height: '30vh'}} wrap={'nowrap'} >
                 <Grid>
                     {
