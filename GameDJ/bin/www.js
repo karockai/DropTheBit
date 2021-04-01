@@ -23,7 +23,7 @@ global.prePrice = 0;
 // for stress test
 global.playercnt = 0;
 // for 공방
-global.publicRoom = 0;
+global.publicRoom = false;
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
 });

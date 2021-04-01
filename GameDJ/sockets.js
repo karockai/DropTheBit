@@ -52,7 +52,7 @@ export default {
             });
 
             // socket.on('joinRandom_Req', (playerID) => {
-            //     if (공방 인원수 == 0){
+            //     if (public === 0){
             //         new Room(io, socket).createPrivateRoom(playerID);
             //     }
 
