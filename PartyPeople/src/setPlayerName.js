@@ -26,10 +26,7 @@ function SetPlayerName(props) {
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
     console.log('setplayerid');
-    // const nameInput = useRef();
-    // useEffect(()=>{
-    //     nameInput.current.focus();
-    // });
+
 
     const onKeyPress = (e) => {
         if (e.key == 'Enter') {

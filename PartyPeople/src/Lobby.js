@@ -97,7 +97,7 @@ function Lobby(props) {
     const PutPlayer = (props) => {
         console.log(props);
         return (
-            <GridList item style={{width: '100%', height: '100vh'}} wrap={'nowrap'}>
+            <>
                 <Grid style={{margin:'2vh 0 0 0'}}>
                     <LobbyPlayerCard
                         playerID={props.playerID}
@@ -105,7 +105,7 @@ function Lobby(props) {
                         socketID={props.socketID}
                     />
                 </Grid>
-            </GridList>
+            </>
         );
     };
 
@@ -120,7 +120,7 @@ function Lobby(props) {
                 tmparr.push([key,PlayerList[key]]);
             }
             return (
-                <div>
+                <GridList contianer style={{width: '100%', height: '100vh'}} wrap={'nowrap'}>
                     {tmparr.map(([socketID, player]) => {
                         console.log(Object.keys(player));
                         return <PutPlayer 
@@ -129,7 +129,7 @@ function Lobby(props) {
                         socketID={socketID}
                         />;
                     })}
-                </div>
+                </GridList>
             );
         }
     }
@@ -161,8 +161,9 @@ function Lobby(props) {
             style={{ height: '100vh' }}
             container
             justify="center"
+            
         >
-            <Grid className="playerListGrid" item xs={leftSm}>
+            <Grid className="playerListGrid" item xs={leftSm} direction='column' justify='flex-start'  alignItems='flex-start' >
                 <Grid>{Card()}</Grid>
             </Grid>
             <Grid
