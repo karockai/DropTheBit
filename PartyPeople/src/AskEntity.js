@@ -26,13 +26,6 @@ export default function AskEntity(props) {
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
 
-    // useLayoutEffect(() => {
-    //     if (props.socket == null) {
-    //         props.requestSocket('makeTableEntity', props.socket);
-    //         setInit(true);
-    //     }
-    // }, [isInit]);
-
     const askCancel = () => {
         let reqJson = {
             socketID: props.socket.id,

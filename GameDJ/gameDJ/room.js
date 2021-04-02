@@ -43,7 +43,7 @@ class Room {
             gameTime: 145,
             music: 'King_Conga.mp3',
             roomLeader: socket.id,
-            gaming : false,
+            gaming: false,
         };
 
         roomInfo[socketID] = playerInfo;
@@ -82,7 +82,7 @@ class Room {
             gameTime: 145,
             music: 'King_Conga.mp3',
             roomLeader: socket.id,
-            gaming : false,
+            gaming: false,
             readyTime: 30,
         };
 
@@ -93,12 +93,11 @@ class Room {
         socket.join(roomID);
         let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
 
-        socket.emit('createPublicRoom_Res', {
+        socket.emit('createPublic_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
             musicList: musicList,
         });
-        
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -108,7 +107,7 @@ class Room {
             const roomID = data.roomID;
             let roomInfo = roomList[roomID];
             let socketID = socket.id;
-        
+
             let playerInfo = {
                 playerID: data['playerID'],
                 cash: 100000000,
@@ -122,7 +121,7 @@ class Room {
             };
 
             roomInfo[socketID] = playerInfo;
-            roomList[roomID] = roomInfo;   
+            roomList[roomID] = roomInfo;
 
             socket.roomID = roomID;
             socket.join(roomID);
@@ -130,7 +129,7 @@ class Room {
             io.to(roomID).emit('joinRoom_Res', {
                 roomID: roomID,
                 roomInfo: roomInfo,
-                socketID: socket.id
+                socketID: socket.id,
             });
         }
     }
@@ -159,8 +158,8 @@ class Room {
     }
 
     // 게임 한판 끝나고 로비로 돌아왔을때 방의 정보, 유저 정보 초기화
-    // 룸의 정보가 초기화된 상태인지만 확인하고, 안되어있으면 초기화하고 되어있으면 안한다 
-    roomReinit(roomID){
+    // 룸의 정보가 초기화된 상태인지만 확인하고, 안되어있으면 초기화하고 되어있으면 안한다
+    roomReinit(roomID) {
         const { io, socket } = this;
         const socketID = socket.id;
         let roomInfo = roomList[roomID];
@@ -177,20 +176,18 @@ class Room {
             askVol: 0,
         };
         roomInfo[socketID] = playerInfo;
-        
+
         // 방 정보가 초기화되어있지 않으면
-        if (roomInfo['gameTime'] === -1){
+        if (roomInfo['gameTime'] === -1) {
             roomInfo['gameTime'] = 145;
             roomInfo['music'] = 'King_Conga.mp3';
             roomInfo['roomLeader'] = socketID;
             roomInfo['gaming'] = false;
-            if (roomInfo['readyTime']){
+            if (roomInfo['readyTime']) {
                 roomInfo['readyTime'] = 30;
             }
         }
     }
-
-
 }
 
 export default Room;

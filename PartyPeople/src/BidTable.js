@@ -27,13 +27,6 @@ import Cancel6 from './audios/effect/Cancel6.wav';
 import Cancel7 from './audios/effect/Cancel7.wav';
 import Cancel8 from './audios/effect/Cancel8.wav';
 
-// const dummyTable = [
-//     { price: 1000, vol: 100 },
-//     { price: 1000, vol: 100 },
-//     { price: 1000, vol: 100 },
-//     { price: 1000, vol: 100 },
-//     { price: 1000, vol: 100 },
-// ];
 const greenTheme = createMuiTheme({
     palette: {
         primary: green,
@@ -55,25 +48,6 @@ const useStyles = makeStyles((theme) => ({
         spacing: 1,
     },
 }));
-
-// const bidCancel = (props, price, vol) => {
-
-// function MakeTableEntity(props) {
-//     const classes = useStyles(greenTheme);
-
-//     return (
-//         <Paper style={{ height: '9.8vh' }} className={classes.paper}>
-//             <Grid container direction="row" alignItems="center">
-//                 <Grid style={{ width: '50%', height: '5vh' }} className="price">
-//                     {props.price}
-//                 </Grid>
-//                 <Grid style={{ width: '50%', height: '5vh' }} className="vol">
-//                     {props.vol}
-//                 </Grid>
-//             </Grid>
-//         </Paper>
-//     );
-// }
 
 export default function BidTable(props) {
     const classes = useStyles(greenTheme);
