@@ -28,10 +28,10 @@ export function SnackAlertBtn(props) {
             enqueueSnackbar(props.message, {
                 variant,
                 anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: 'top',
+                    horizontal: 'center',
                 },
-                autoHideDuration: 700,
+                autoHideDuration: 1500,
             });
         }
     };

@@ -87,31 +87,26 @@ function ChartTitle(props) {
                 <span style={{ display: 'block' }}>
                 <Grid container justify='space-between'>
                     <Grid>
-                        <strong style={{ fontSize: '40px' }}>
+                        <strong style={{ fontSize: '3vw' }}>
                             {SplitByThree(parseWonToStr(currentWon))}
                             
                         </strong>
-                        <span style={{color: 'white'}} >{' ' + unit}</span>
+                        <span style={{color: 'white', fontSize: '1vw'}} >{' ' + unit}</span>
                     </Grid>
-                    {/* <Grid>
-                        <span style={{ color: grey[900] ,}}>
-                            {/* <ShowTime/> */}
-                        {/* </span> */}
-                    {/* </Grid> */}
                 </Grid>
                 </span>
                 <span>
                     <p
                         style={{
-                            fontSize: '12px',
+                            fontSize: '0.8vw',
                             color: '#ffffff',
                             display: 'inline-block',
                         }}
                     >
                         {subtit}
                     </p>
-                    <strong>{'   ' + wonYield + '  '}</strong>
-                    <strong style={{ display: 'inline' }}>
+                    <strong style={{ fontSize: '1vw', display: 'inline' }}>{'   ' + wonYield + '  '}</strong>
+                    <strong style={{ fontSize: '1vw', display: 'inline' }}>
                         {' ' + isBullIcon + ' ' + parseWonToStr(upDown)}
                     </strong>
 

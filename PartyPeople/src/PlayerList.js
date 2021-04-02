@@ -101,14 +101,16 @@ export default function PlayerList(props) {
                                     alignItems="center"
                                 >
                                     <Grid
-                                        style={{ width: '20%', height: '100%' }}
+                                        style={{ fontSize: '1vw', width: '20%', height: '100%' }}
                                         className="score"
+                                        item
                                     >
                                         {index + 1}
                                         {'위.'}
                                     </Grid>
                                     <Grid
-                                        style={{ width: '80%', height: '100%' }}
+                                        item
+                                        style={{ fontSize: '1vw', width: '80%', height: '100%' }}
                                         container
                                         direction="column"
                                         className="score"
@@ -127,9 +129,9 @@ export default function PlayerList(props) {
                 wrap="wrap"
                 container
                 direction="column"
-                justify="center"
+                justify="flex-start"
                 alignItems="stretch"
-                spacing={2}
+                spacing={1}
             >
                 {players.map((player, index) => {
                     const myColor =
@@ -139,7 +141,7 @@ export default function PlayerList(props) {
                     const myFont =
                         player.socketID === props.socket.id ? 'bold' : 'normal';
                     return (
-                        <Grid item xs={testXs}>
+                        <Grid item>
                             <Paper
                                 style={{
                                     height: '9.8vh',
@@ -154,14 +156,14 @@ export default function PlayerList(props) {
                                     alignItems="center"
                                 >
                                     <Grid
-                                        style={{ width: '20%', height: '100%' }}
+                                        style={{ fontSize: '1vw', width: '20%', height: '100%' }}
                                         className="score"
                                     >
                                         {index + 1}
                                         {'위.'}
                                     </Grid>
                                     <Grid
-                                        style={{ width: '80%', height: '100%' }}
+                                        style={{ fontSize: '1vw', width: '80%', height: '100%' }}
                                         container
                                         direction="column"
                                         className="score"

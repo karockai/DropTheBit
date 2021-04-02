@@ -23,14 +23,23 @@ const CssTextField = withStyles({
     root: {
       '& label.Mui-focused': {
         color: '#CDD7E0',
+        
     },
     '& .MuiInputLabel-root': {
       color: '#CDD7E0',
+      fontSize: '0.8vw',
+      
+      
     },
     '& .MuiInputBase-input': {
       color: '#CDD7E0',
+      fontSize: '0.9vw',
     },
-      
+    '& .MuiInputBase-formControl': {
+        color: '#CDD7E0',
+        fontSize: '0.9vw',
+        height: '50%'
+    },
     //   '& .MuiInput-underline:after': {
     //     borderBottomColor: 'white',
     //   },
@@ -78,7 +87,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     paper: {
-        padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
@@ -92,7 +100,10 @@ export default function ChatRoom(props) {
     const [resMsg, setResMsg] = useState('');
     const [messages, setMessages] = useState(
         // author와 쌍으로 저장된 메시지
-        [
+        [{
+            author: 'SERVER',
+            message: '게임이 시작됩니다.'
+        }
         ]
     );
     const messagesEnd =  React.useRef(null);
@@ -194,30 +205,30 @@ export default function ChatRoom(props) {
         <>
         <Grid container
             direction={'column'}
-            justify={'space-evenly'}
+            justify={'center'}
+            alignItems={'stretch'}
+            style={{width: '100%', height: '80%'}}
             >
         {/* <Grid
             container
             className={classes.button}
-            // direction={'row'}
-            // justify={'space-between'}
+            direction={'row'}
+            justify={'space-between'}
             wrap={'nowrap'}
             
         > */}
-            <GridList item style={{width: '100%', height: '30vh'}} wrap={'nowrap'} >
-                <Grid>
+            <GridList style={{width: '100%', height: '100%'}} wrap={'wrap'} >
                     {
                         messages.map( (message) => {
+                            console.log(messages)
+                            if(message === '') return;
                             return (
-                                <>
-                                <pre style ={{ color: 'white'}}>
+                                <Grid item style={{color: 'white', width: '100%', height:'1vh', fontSize: '0.8vw'}}  wrap={'wrap'}>
                                     {message.author} : {message.message}
-                                </pre>
-                                </>
+                                </Grid>
                             );
                         })
                     }
-                </Grid>
                 <Grid
                     style={{ float:"left", clear: "both", height: "0%" }}
                     ref={messagesEnd}>
@@ -227,15 +238,12 @@ export default function ChatRoom(props) {
         <Grid
                     item
                     container
-                    dirction="column"
-                    style={{ padding: '2vh 0 0 0'}}
-                    spacing={2}
-                    justify={'center'}
-                    alignItems="center"
+                    dirction="row"
+                    style={{ width: '100%', height: '20%' }}
                 >
-                    <Grid item style={{ margin: '10 0 0 0', width: '70%' }}>
+                    <Grid item style={{  width: '70%', height: '100%' }}>
                         <CssTextField
-                            style={{ height: '100%' }}
+                            style={{ width: '100%', height: '100%' }}
                             id="standard-basic"
                             inputRef={textInput}
                             label="메세지 보내기 (최대 20자)"
@@ -253,15 +261,16 @@ export default function ChatRoom(props) {
                             inputProps={{ 'maxlength': 20 }}
                         />
                     </Grid>
-                    <Grid item style={{ width: '20%' }}>
-                        <Button
-                            style={{ height: '100%' ,backgroundColor:'#635ee7' }}
+                    <Grid item style={{ width: '20%', height: '100%' }}>
+                        <button
+                            style={{ width: '100%', height:'50%', backgroundColor:'#635ee7', fontSize: '0.9vw', color: 'white' }}
                             variant="contained"
                             color="primary"
                             onClick={()=>{sendMessage()}}
+                            label="전송"
                         >
                             전송
-                        </Button>
+                        </button>
                     </Grid>
                 </Grid>
         </>

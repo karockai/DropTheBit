@@ -15,7 +15,7 @@ export default function Timer(props) {
                 second = '00';
             }
             return (
-                <h2 style={{fontSize: 40}}>
+                <h2 style={{fontSize: '2.5vw'}}>
                     {minute+' : '+second}    
                 </h2>
             );

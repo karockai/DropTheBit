@@ -239,6 +239,7 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         props.socket.once('buyDone', (bbid) => {
+            console.log(bbid);
             SetNewBid(bbid.price);
             setBuyStatus({
                 status: 'done',
