@@ -60,8 +60,10 @@ let index = 0;
 export function SnackAlertFunc(props) {
     const { enqueueSnackbar } = useSnackbar();
     // variant could be success, error, warning, info, or default
+    const parseMsg = props.message.split(')')[1];
+    console.log('parse', parseMsg);
     const callback = () => {
-        enqueueSnackbar(props.message, {
+        enqueueSnackbar(parseMsg, {
             variant: props.severity,
             anchorOrigin: {
                 vertical: 'bottom',
