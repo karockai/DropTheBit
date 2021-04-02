@@ -17,9 +17,10 @@ import AskTableSound from './audios/effect/AskTable.wav';
 
 const StyledTabs = withStyles({
     indicator: {
+        width:'100%',
       display: "flex",
       justifyContent: "center",
-      alignContent: "flex-start",
+      alignContent: "center",
       backgroundColor: "transparent",
       "& > span": {
         maxWidth: 60,
@@ -36,14 +37,13 @@ const StyledTabs = withStyles({
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: '0.8vw',
       alignItems: 'center',
-      maxWidth: '33%',
+      width: '33%',
       "&:focus": {
         opacity: 1
       }
     },
-    '& .MuiTab-root': {
-        width: '33%',
-    },
+    '& .MuiButtonBase-root': {
+    }
   }))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
@@ -58,7 +58,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3} style={{padding:'0', height:'100%'}}>
+                <Box p={3} style={{padding: '0', width:'100%', height:'100%'}}>
                     {children}
                 </Box>
             )}
@@ -133,8 +133,8 @@ export default function TabControl(props) {
     });
 
     return (
-        <div className={classes.demo2}  style={{height:'100%'}}>
-            <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%'}}>
+        <div className={classes.demo2}  style={{height:'100%', width: '100%'}}>
+            <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%', alignItems:'stretch'}}>
                 <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} />
                 <StyledTab label="[W] 매도 주문" {...a11yProps(1)} />
                 <StyledTab label="[E] 호가" {...a11yProps(2)} />

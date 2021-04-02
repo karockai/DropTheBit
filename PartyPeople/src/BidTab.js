@@ -12,15 +12,13 @@ import TableRow from '@material-ui/core/TableRow';
 import { blue, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
-    table: {
-    },
+    table: {},
 });
 
 const StyledTable = withStyles({
-    '&.MuiTableCell-root' :{
-        height:'100%',
-
-    }
+    '&.MuiTableCell-root': {
+        height: '100%',
+    },
 })(Table);
 
 function createData(sell, price, buy) {
@@ -68,94 +66,91 @@ export default function BidTab(props) {
         );
     }
     return (
-            <Grid
-                style={{ height: '100%' }}
-                container
-                wrap="wrap"
-                justify="center"
-                direction="column"
-            >
-                <TableContainer style={{height:'100%'}}>
-                    <StyledTable
-                        className={classes.table}
-                        size="small"
-                        aria-label="a dense table"
-                        style={{height:'100%'}}
-                    >
-                        <TableHead  style={{height:'10%'}}>
-                            <TableRow
+        <Grid
+            style={{ height: '100%' }}
+            container
+            wrap="wrap"
+            justify="center"
+            direction="column"
+        >
+            <TableContainer style={{ height: '100%' }}>
+                <StyledTable
+                    className={classes.table}
+                    size="small"
+                    aria-label="a dense table"
+                    style={{ height: '100%' }}
+                >
+                    <TableHead style={{ height: '10%' }}>
+                        <TableRow
+                            style={{
+                                height: '100%',
+                                width: '100%',
+                            }}
+                        >
+                            <TableCell
                                 style={{
-                                    height: '100%',
-                                    width: '100%',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    fontSize: '0.9vw',
                                 }}
+                                align="left"
                             >
-                                <TableCell
+                                거래량
+                            </TableCell>
+                            <TableCell
+                                style={{
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    fontSize: '0.9vw',
+                                }}
+                                align="left"
+                            >
+                                거래가
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody style={{ height: '90%' }}>
+                        {currentBids.map((row, index) => {
+                            if (index === 0 || index === 9) return <></>;
+                            return (
+                                <TableRow
                                     style={{
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                        fontSize: '0.9vw',
+                                        backgroundColor:
+                                            index <= 4
+                                                ? blue[index * 100 + 100]
+                                                : red[
+                                                      500 -
+                                                          ((index - 5) * 100 +
+                                                              100)
+                                                  ],
+                                        opacity: 0.6,
+                                        width: '100%',
                                     }}
-                                    align="left"
+                                    key={row.price}
                                 >
-                                    거래량
-                                </TableCell>
-                                <TableCell
-                                    style={{
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                        fontSize: '0.9vw',
-                                    }}
-                                    align="left"
-                                >
-                                    거래가
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody  style={{height:'90%'}}>
-                            {currentBids.map((row, index) => {
-                                if (index === 0 || index === 9) return <></>;
-                                return (
-                                    <TableRow
+                                    <TableCell
                                         style={{
-                                            backgroundColor:
-                                                index <= 4
-                                                    ? blue[index * 100 + 100]
-                                                    : red[
-                                                          500 -
-                                                              ((index - 5) *
-                                                                  100 +
-                                                                  100)
-                                                      ],
+                                            fontSize: '0.9vw',
                                             opacity: 1,
-                                            height: '10%',
-                                            width: '100%',
                                         }}
-                                        key={row.price}
                                     >
-                                        <TableCell
-                                            style={{ fontSize: '0.9vw',                                             opacity: 1,
-                                            height: '10%',
-                                       }}
-                                        >
-                                            {row.buy}
-                                        </TableCell>
-                                        <TableCell
-                                            style={
-                                                (boldIndex(index),
-                                                { fontSize: '0.9vw',                                            opacity: 1,
-                                                height: '10%',
-                                            })
-                                            }
-                                        >
-                                            {row.price}
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </StyledTable>
-                </TableContainer>
-            </Grid>
+                                        {row.buy}
+                                    </TableCell>
+                                    <TableCell
+                                        style={
+                                            (boldIndex(index),
+                                            { fontSize: '0.9vw', opacity: 1 })
+                                        }
+                                    >
+                                        {row.price}
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </StyledTable>
+            </TableContainer>
+        </Grid>
     );
 }
 
