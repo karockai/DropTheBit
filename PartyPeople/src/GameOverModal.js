@@ -48,6 +48,7 @@ export default function GameOverModal(props) {
     const history = useHistory();
     const BackToLobby = () => {
         props.socket.emit('backToLobby', props.roomID);
+        props.setLeaderBoard(false);
         let path = '/lobby';
         history.push(path);
     };

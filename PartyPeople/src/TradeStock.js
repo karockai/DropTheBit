@@ -55,6 +55,8 @@ const CssTextField = withStyles({
         },
         '& .MuiInputBase-input': {
             color: '#CDD7E0',
+            fontFamily: 'NEXON Lv1 Gothic OTF',
+            fontSize: '2.5vw',
         },
 
         //   '& .MuiInput-underline:after': {
@@ -231,6 +233,7 @@ export default function TradeStock(props) {
     function RefreshBid_Req() {
         props.socket.emit('RefreshBid_Req');
         props.socket.once('RefreshBid_Res', (curPrice) => {
+            console.log('RefreshBid_Req');
             SetBid(curPrice);
         });
     }
@@ -341,7 +344,12 @@ export default function TradeStock(props) {
             props.requestSocket('TradeStock', props.socket);
             return;
         }
-        if (e.keyCode === 37) {
+        if(e.keyCode === 32) {
+            console.log('ddddd');
+            new Audio(CurPrice).play();
+            RefreshBid_Req(); 
+        }   
+        else if (e.keyCode === 37) {
             //_ LEFT ARROW
             new Audio(VolDown).play();
             VolumeDown(currentVolume);
@@ -369,10 +377,6 @@ export default function TradeStock(props) {
             //_ 'S'
             new Audio(Sell100).play();
             SetSellMaxCount();
-        } else if (e.keyCode === 32) {
-            //_ 'D'
-            new Audio(CurPrice).play();
-            RefreshBid_Req();
         } else if (e.keyCode === 90) {
             //_ 'Z'
             new Audio(Check).play();
@@ -382,12 +386,13 @@ export default function TradeStock(props) {
             new Audio(Check).play();
             setSellStatus(Sell(currentBid, currentVolume));
         }
+        console.log(e);
         const key = document.getElementById(e.key);
-        console.log(key);
+        // console.log(key);
         if (key) key.classList.add('pressed');
         console.log(key);
     }
-
+    
     function HandleKeyDown(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -396,9 +401,9 @@ export default function TradeStock(props) {
             props.requestSocket('TradeStock', props.socket);
             return;
         }
+        
         const key = document.getElementById(e.key);
-        console.log(key);
-        if (key) key.classList.remove('pressed');
+        if (key) key.classList.remove("pressed");
         console.log(key);
     }
 
@@ -597,15 +602,12 @@ export default function TradeStock(props) {
                 alignItems="stretch"
                 container
                 direction="column"
-                // justify="center"
                 alignItems="flex-start"
                 style={{ height: '100%', fontSize: '2vh' }}
             >
                 <Grid container item direction="row" justify="space-between">
                     <span className={classes.small_text}>매매호가</span>
-                    <span className={classes.small_text}>
-                        현재가로 갱신 : SPACE
-                    </span>
+                    <span className={classes.small_text}>현재가로 갱신 : [SPACE]</span>
                 </Grid>
                 <Grid
                     container
@@ -617,7 +619,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            setBuyStatus(Buy(currentBid, currentVolume));
+                            BidUp();
                         }}
                         id="ArrowUp"
                     >
@@ -636,7 +638,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            setBuyStatus(Buy(currentBid, currentVolume));
+                            BidDown();
                         }}
                         id="ArrowDown"
                     >
@@ -654,7 +656,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            setBuyStatus(Buy(currentBid, currentVolume));
+                            VolumeDown();
                         }}
                         id="ArrowLeft"
                     >
@@ -670,7 +672,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            setBuyStatus(Buy(currentBid, currentVolume));
+                            VolumeUp();
                         }}
                         id="ArrowRight"
                     >
@@ -701,7 +703,7 @@ export default function TradeStock(props) {
                             class="pulse"
                             onClick={() => {
                                 SetBuyMaxCount();
-                                setBuyStatus(Buy(currentBid, currentVolume));
+                                // setBuyStatus(Buy(currentBid, currentVolume));
                             }}
                             id="a"
                         >
@@ -712,7 +714,7 @@ export default function TradeStock(props) {
                             class="pulse"
                             onClick={() => {
                                 SetSellMaxCount();
-                                setSellStatus(Sell(currentBid, currentVolume));
+                                // setSellStatus(Sell(currentBid, currentVolume));
                             }}
                             id="s"
                         >

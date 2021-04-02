@@ -11,6 +11,13 @@
 */
 /* // Animate the size, inside */
 /* .fill:pressed */
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .fill:hover,
 .fill:focus {
   -webkit-box-shadow: inset 0 0 0 2em var(--hover);
@@ -100,7 +107,9 @@
 }
 
 .pulse {
-  --color: #ef6eae;
+  /* --color: #635ee7; */
+  /* 기존 theme color보다 명도 높 */
+  --color: #7974f2;
   --hover: #ef8f6e;
 }
 
