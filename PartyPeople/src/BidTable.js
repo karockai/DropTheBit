@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.primary,
     },
@@ -140,7 +139,6 @@ export default function BidTable(props) {
             direction="row"
             justify="center"
             alignItems="stretch"
-            spacing={2}
         >
             <TableContainer>
                 <Table
@@ -154,7 +152,7 @@ export default function BidTable(props) {
                                 style={{ align: 'center', width: '20%' }}
                             >
                                 <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
-                                    취소 [1]~[8]
+                                    취소[1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
@@ -165,7 +163,7 @@ export default function BidTable(props) {
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', width: '20%' }}
+                                style={{ align: 'center', width: '20%' , height:'100%'}}
                             >
                                 <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     매수 수량
@@ -176,11 +174,10 @@ export default function BidTable(props) {
                 </Table>
             </TableContainer>
 
-            <GridList wrap="wrap" style={{ width: '100%', height: '30vh' }}>
-                <Grid style={{ width: '99%' }}>
+            <GridList wrap="wrap" style={{ width: '100%', height: '100%' }}>
                     {BidTable.map((bidElem, index, BidTable) => {
                         return (
-                            <Grid style={{ fontSize: '1vw', }} item xs={testXs}>
+                            <Grid style={{ height:'10%', fontSize: '1vw', }} item xs={testXs}>
                                 <BidEntity
                                     price={bidElem.price}
                                     vol={bidElem.vol}
@@ -192,7 +189,6 @@ export default function BidTable(props) {
                             </Grid>
                         );
                     })}
-                </Grid>
             </GridList>
         </Grid>
     );
