@@ -243,9 +243,9 @@ class Refresh {
                 );
             }
 
-            if (roomInfo['readyTime'] === -1 && roomList[roomID]['gaming'] === false) {
+            if (roomInfo['readyTime'] === 0 && roomList[roomID]['gaming'] === false) {
                 roomList[roomID]['gaming'] = true;
-                new Game(io, socketID).startGame();
+                new Game(io, roomList[roomID]['roomLeader']).startGame();
             }
 
             // gameOver logic

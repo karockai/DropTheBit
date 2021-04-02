@@ -34,10 +34,12 @@ class Room {
         }
         // 공방 최초의 유저라면
         if (roomExist === false) {
+            console.log('내가 공방의 방장이다!');
             this.createPublicRoom(data);
         }
         // 공방 최초의 유저가 아니라면
         else {
+            console.log('공방의 유저다!');
             this.joinRoom(data);
         }
     }
