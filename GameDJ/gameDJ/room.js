@@ -184,6 +184,8 @@ class Room {
         const { io, socket } = this;
         const socketID = socket.id;
         let roomInfo = roomList[roomID];
+        console.log('roomReinit');
+        console.log(roomInfo);
         let playerID = roomInfo[socketID]['playerID'];
         let playerInfo = {
             playerID: playerID,
@@ -208,6 +210,8 @@ class Room {
                 roomInfo['readyTime'] = 30;
             }
         }
+        console.log('roomReinit');
+        console.log(roomInfo);
     }
 }
 

@@ -278,7 +278,6 @@ class Refresh {
             let temp = {};
             temp['playerID'] = playerInfo['playerID'];
             temp['asset'] = playerInfo['asset'];
-
             leaderBoard.push(temp);
 
             for (let bid in playerInfo['bid']) {
@@ -288,7 +287,6 @@ class Refresh {
                     }
                 }
             }
-
             for (let ask in playerInfo['ask']) {
                 for (let id in askList[ask]) {
                     if (socketID === id) {
@@ -297,10 +295,11 @@ class Refresh {
                 }
             }
         }
-
         leaderBoard.sort(function (a, b) {
             return b['asset'] - a['asset'];
         });
+        console.log('gameOver');
+        console.log(roomInfo);
 
         io.to(roomID).emit('gameOver', leaderBoard);
     }

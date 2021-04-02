@@ -81,7 +81,7 @@ export default function LayoutGrid(props) {
 
     return (
         <>
-            {over && <GameOverModal leaderBoard={over} />}
+            {over && <GameOverModal leaderBoard={over} socket={props.socket} roomID={props.roomID}/>}
             <Container maxWidth="xl">
                 <Typography component="div" style={{ padding: '0 0 0 0' }}>
                     <Grid
