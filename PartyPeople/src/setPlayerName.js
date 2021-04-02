@@ -12,7 +12,7 @@ import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
 const useStyles = makeStyles((theme) => ({
     input: {
-        color: "white",
+        color: 'white',
     },
 }));
 function SetPlayerName(props) {
@@ -83,7 +83,7 @@ function SetPlayerName(props) {
                         // ref={nameInput}
                         autoFocus
                         onKeyPress={onKeyPress}
-                        inputProps={{ 'maxLength': 8 }}
+                        inputProps={{ maxLength: 8 }}
                     />
                 </Grid>
 
