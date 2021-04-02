@@ -153,36 +153,21 @@ export default function BidTable(props) {
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span
-                                    style={{
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
-                                    취소 번호 [1]~[8]
+                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
+                                    취소 [1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span
-                                    style={{
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
+                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     매수 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span
-                                    style={{
-                                        color: 'white',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
+                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     매수 수량
                                 </span>
                             </TableCell>
@@ -195,7 +180,7 @@ export default function BidTable(props) {
                 <Grid style={{ width: '99%' }}>
                     {BidTable.map((bidElem, index, BidTable) => {
                         return (
-                            <Grid style={{ margin: '5px' }} item xs={testXs}>
+                            <Grid style={{ fontSize: '1vw', }} item xs={testXs}>
                                 <BidEntity
                                     price={bidElem.price}
                                     vol={bidElem.vol}

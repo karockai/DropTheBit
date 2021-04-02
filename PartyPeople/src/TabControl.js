@@ -17,29 +17,34 @@ import AskTableSound from './audios/effect/AskTable.wav';
 
 const StyledTabs = withStyles({
     indicator: {
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-        '& > span': {
-            maxWidth: 40,
-            width: '100%',
-            backgroundColor: '#635ee7',
-        },
-    },
-})((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
-
-const StyledTab = withStyles((theme) => ({
+      display: "flex",
+      justifyContent: "center",
+      alignContent: "flex-start",
+      backgroundColor: "transparent",
+      "& > span": {
+        maxWidth: 60,
+        width: "100%",
+        backgroundColor: "#635ee7"
+      }
+    }
+  })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+  
+  const StyledTab = withStyles((theme) => ({
     root: {
-        textTransform: 'none',
-        color: '#fff',
-        fontWeight: theme.typography.fontWeightRegular,
-        fontSize: theme.typography.pxToRem(15),
-        marginRight: theme.spacing(1),
-        '&:focus': {
-            opacity: 1,
-        },
+      textTransform: "none",
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightRegular,
+      fontSize: '0.8vw',
+      alignItems: 'center',
+      maxWidth: '33%',
+      "&:focus": {
+        opacity: 1
+      }
     },
-}))((props) => <Tab disableRipple {...props} />);
+    '& .MuiTab-root': {
+        width: '33%',
+    },
+  }))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -53,8 +58,8 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
+                <Box p={3} style={{padding:'0', height:'100%'}}>
+                    {children}
                 </Box>
             )}
         </div>
@@ -76,18 +81,17 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-    },
-    padding: {
-        padding: theme.spacing(3),
-    },
-    demo1: {
-        backgroundColor: theme.palette.background.paper,
-    },
-    demo2: {
-        backgroundColor: '#0C151C',
-    },
-}));
+        flexGrow: 1
+      },
+      padding: {
+      },
+      demo1: {
+        backgroundColor: theme.palette.background.paper
+      },
+      demo2: {
+        backgroundColor: "#0C151C"
+      }
+    }));
 
 export default function TabControl(props) {
     const classes = useStyles();
@@ -129,30 +133,31 @@ export default function TabControl(props) {
     });
 
     return (
-        <div className={classes.demo2}>
-            <StyledTabs value={value} onChange={handleChange}>
-                <StyledTab label="[Q] 매수 주문 목록" {...a11yProps(0)} />
-                <StyledTab label="[W] 매도 주문 목록" {...a11yProps(1)} />
-                <StyledTab label="[E] 호가 목록" {...a11yProps(2)} />
+        <div className={classes.demo2}  style={{height:'100%'}}>
+            <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%'}}>
+                <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} />
+                <StyledTab label="[W] 매도 주문" {...a11yProps(1)} />
+                <StyledTab label="[E] 호가" {...a11yProps(2)} />
             </StyledTabs>
-            <TabPanel value={value} index={0}>
+            <TabPanel value={value} index={0} style={{height:'90%'}}>
                 <BidTable
                     roomID={props.roomID}
                     socket={props.socket}
                     requestSocket={props.requestSocket}
                 />
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={value} index={1} style={{height:'90%'}}>
                 <AskTable
                     roomID={props.roomID}
                     socket={props.socket}
                     requestSocket={props.requestSocket}
                 />
             </TabPanel>
-            <TabPanel value={value} index={2}>
+            <TabPanel value={value} index={2} style={{height:'90%'}}>
                 <BidTab
                     socket={props.socket}
                     requestSocket={props.requestSocket}
+                    style={{height: '100%'}}
                 />
             </TabPanel>
         </div>

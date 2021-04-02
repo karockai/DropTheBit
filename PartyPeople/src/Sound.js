@@ -29,7 +29,7 @@ import Cancel5 from './audios/effect/Cancel5.wav';
 import Cancel6 from './audios/effect/Cancel6.wav';
 import Cancel7 from './audios/effect/Cancel7.wav';
 import Cancel8 from './audios/effect/Cancel8.wav';
-import Check from './audios/effect/Check.mp3';
+import Check from './audios/effect/check.mp3';
 import CurPrice from './audios/effect/CurPrice.wav';
 import Enter from './audios/effect/Enter.wav';
 import Error_Sound from './audios/effect/Error.mp3';

@@ -67,7 +67,7 @@ function SetPlayerName(props) {
                 alignItems={'center'}
                 // spacing={2}
                 direction="column"
-                style={{ width: '100%', height: '100vh' }}
+                style={{ width: '100vw', height: '100vh' }}
             >
                 <Grid>
                     <img src={Logo} />

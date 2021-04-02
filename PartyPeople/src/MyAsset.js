@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         '& > *': {
-            margin: theme.spacing(1),
             width: '100%',
             justify: 'center',
         },
@@ -44,7 +43,7 @@ export default function MyAsset(props) {
         myCash: 0,
         myAsset: 0,
         myCoin: 0,
-        myAvg: 0
+        myAvg: 0,
     });
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
@@ -105,60 +104,65 @@ export default function MyAsset(props) {
     }
 
     return (
-        <Grid wrap="wrap" container direction="row" style={{ height: '100%' }}>
+        <>
             <Grid
                 container
+                item
                 direction="row"
-                alignItems="center"
-                display="flex"
-                justify="space-between"
+                alignItems="flex-start"
+                wrap="wrap"
+                justify="stretch"
+                // display="flex"
             >
                 <Grid
                     style={{
-                        width: '55%',
-                        height: '95%',
-                        margin: '0 4px 1vh 0',
+                        width: '60%',
+                        height: '100%'
                     }}
+                    item
                 >
-                    <Paper className={classes.paper}  style={{ height: '100%' }}>
+                    <Paper className={classes.paper} style={{ height: '100%', fontSize: '1vw' }}>
                         보유 현금 (KRW)
                         {/* <h4>
                             {SplitByThree(parseWonToStr(myWallet.myCash)) +
                                 ' 원'}
                         </h4> */}
-                        <h5 style={{ fontWeight: 'bold' }}>
+                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw'  }}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))}
                         </h5>
                     </Paper>
                 </Grid>
                 <Grid
-                    style={{ width: '40%', height: '95%', margin: '0 0 1vh 0' }}
+                    item
+                    style={{ width: '40%',height: '100%'}}
                 >
-                    <Paper className={classes.paper} style={{ height: '100%' }}>
-                        보유 코인 수 (개)<h3>{myWallet.myCoin}</h3>
-                        평균매입단가<h6>{myWallet.myAvg}</h6>
+                    <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw'  }}>
+                        보유 코인 수 (개)<h3  style={{ height: '100%', fontSize: '1.5vw'  }}>{myWallet.myCoin}</h3>
+                        {/* 평균매입단가<h6>{myWallet.myAvg}</h6> */}
                     </Paper>
                 </Grid>
             </Grid>
             <Grid
                 container
-                justify="center"
+                item
+                justify="flex-start"
+                wrap="wrap"
                 alignItems="stretch"
                 display="flex"
             >
-                <Grid  style={{ width: '100%', height: '100%' }}>
-                    <Paper className={classes.paper} style={{ height: '100%' }}>
+                <Grid item style={{ width: '100%', height: '100%' }}>
+                    <Paper className={classes.paper} style={{ height: '100%',fontSize: '1.5vw' }}>
                         총 평가 자산 (KRW)
                         {/* <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +
                                 ' 원'}
                         </h2> */}
-                        <h2 style={{ fontWeight: 'bold' }}>
+                        <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw' }}>
                             {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
                         </h2>
                     </Paper>
                 </Grid>
             </Grid>
-        </Grid>
+        </>
     );
 }

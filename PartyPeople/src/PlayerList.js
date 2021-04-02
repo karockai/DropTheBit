@@ -154,15 +154,57 @@ export default function PlayerList(props) {
 
     return (
         <>
-            <MyRank />
+            {players.map((player, index) => {
+                if (player.socketID === props.socket.id) {
+                    return (
+                        <div>
+                            <Paper
+                                className={classes.paper}
+                                style={{
+                                    height: '90%',
+                                    border: 'solid',
+                                    borderColor: '#2D4053',
+                                    margin: '0 0 10px 0',
+                                    // boxShadow: '12px 12px 2px 1px #ffffff',
+                                }}
+                            >
+                                <Grid
+                                    container
+                                    direction="row"
+                                    alignItems="center"
+                                >
+                                    <Grid
+                                        style={{ fontSize: '1vw', width: '20%', height: '100%' }}
+                                        className="score"
+                                        item
+                                    >
+                                        {index + 1}
+                                        {'위.'}
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        style={{ fontSize: '1vw', width: '80%', height: '100%' }}
+                                        container
+                                        direction="column"
+                                        className="score"
+                                    >
+                                        <Grid alignItems="right">{player.playerID}</Grid>
+                                        <Grid alignItems="right">{player.asset}</Grid>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </div>
+                    );
+                }
+            })}
 
             <Grid
                 wrap="wrap"
                 container
                 direction="column"
-                justify="center"
+                justify="flex-start"
                 alignItems="stretch"
-                spacing={2}
+                spacing={1}
             >
                 {players.map((player, index) => {
                     const myColor =
@@ -172,7 +214,7 @@ export default function PlayerList(props) {
                     const myFont =
                         player.socketID === props.socket.id ? 'bold' : 'normal';
                     return (
-                        <Grid item xs={testXs}>
+                        <Grid item>
                             <Paper
                                 style={{
                                     height: '9.8vh',
@@ -187,14 +229,14 @@ export default function PlayerList(props) {
                                     alignItems="center"
                                 >
                                     <Grid
-                                        style={{ width: '20%', height: '100%' }}
+                                        style={{ fontSize: '1vw', width: '20%', height: '100%' }}
                                         className="score"
                                     >
                                         {index + 1}
                                         {'위'}
                                     </Grid>
                                     <Grid
-                                        style={{ width: '80%', height: '100%' }}
+                                        style={{ fontSize: '1vw', width: '80%', height: '100%' }}
                                         container
                                         direction="column"
                                         className="score"

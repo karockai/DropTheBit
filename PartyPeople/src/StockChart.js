@@ -5,6 +5,9 @@ import { format } from 'd3-format';
 import { timeFormat } from 'd3-time-format';
 
 import { ChartCanvas, Chart } from 'react-stockcharts';
+import {
+	PriceCoordinate
+} from "react-stockcharts/lib/coordinates";
 import { BarSeries, CandlestickSeries } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
 import {
@@ -31,6 +34,32 @@ const candlesAppearance = {
 };
 
 class StockChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            height: window.innerHeight * 0.3,
+            width: window.innerWidth * 0.4,
+        };
+
+        this.dataHigh = 0
+        this.dataLow = 99999999999
+    }
+
+    handleResize = () => {
+        this.setState({
+            height: window.innerHeight * 0.3,
+            width: window.innerWidth * 0.4,
+        });
+    };
+
+    componentDidMount() {
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleResize);
+    }
+
     render() {
         const { type, data: initialData, width, ratio } = this.props;
 
@@ -44,27 +73,54 @@ class StockChart extends React.Component {
         const start = xAccessor(last(data));
         const end = xAccessor(data[Math.max(0, data.length - 100)]);
         const xExtents = [start, end];
-
+        this.dataHigh = last(data).high > this.dataHigh ? last(data).high : this.dataHigh;
+        this.dataLow = last(data).low < this.dataLow ? last(data).low : this.dataLow;
         return (
             <ChartCanvas
-                height={235}
+                height={this.state.height}
                 ratio={ratio}
                 width={width}
                 margin={{ left: 55, right: 70, top: 10, bottom: 30 }}
                 type={type}
-                seriesName="MSFT"
+                seriesName="MACD"
                 data={data}
                 xScale={xScale}
                 xAccessor={xAccessor}
                 displayXAccessor={displayXAccessor}
                 xExtents={xExtents}
             >
-                <Chart id={1} yExtents={[(d) => [d.high + 0.5, d.low - 0.5]]}>
+                {/* <Chart id={1} yExtents={[(d) => [d.high + 0.5, d.low - 0.5]]}> */}
+                <Chart id={1} yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}>
                     <XAxis axisAt="bottom" orient="bottom" />
                     <YAxis axisAt="right" orient="right" ticks={5} />
                     <MouseCoordinateY
                         at="right"
                         orient="right"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        at="right"
+                        orient="right"
+                        price={this.dataLow}
+                        stroke="#3490DC"
+                        strokeWidth={1}
+                        fill="blue"
+                        textFill="#ffffff"
+                        arrowWidth={7}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+
+                    <PriceCoordinate
+                        at="right"
+                        orient="right"
+                        price={this.dataHigh}
+                        stroke="#3490DC"
+                        strokeWidth={1}
+                        fill="red"
+                        textFill="#ffffff"
+                        arrowWidth={7}
+                        strokeDasharray="ShortDash"
                         displayFormat={format('.2f')}
                     />
                     <CandlestickSeries {...candlesAppearance} />

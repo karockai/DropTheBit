@@ -17,6 +17,10 @@ code {
 .GameManager {
   font-family: 'NEXON Lv1 Gothic OTF';
   background-color: #060c10;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  overflow: hidden; 
+  touch-action: none;
 }
 
 
