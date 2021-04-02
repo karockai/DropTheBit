@@ -50,31 +50,10 @@ export default {
             socket.on('createPrivateRoom_Req', (playerID) => {
                 new Room(io, socket).createPrivateRoom(playerID);
             });
-
             // data : {playerID : name}
-            socket.on('joinRandom_Req', (playerID) => {
-                let data = {
-                    "roomID": publicRoomID,
-                    "playerID": playerID.playerID
-                }
-                let roomExist = false;
-                for (const [key, value] of Object.entries(roomList[data.roomID])) {
-                    if (key.length === 20) {
-                        roomExist = true;
-                        break;
-                    }
-                }
-                // 공방 최초의 유저라면
-                if (roomExist === false){
-                    new Room(io, socket).createPublicRoom(data);
-                }
-                // 공방 최초의 유저가 아니라면
-                else{
-                    new Room(io, socket).joinRoom(data);
-                }
-
+            socket.on('joinPublic_Req', (playerID) => {
+                new Room(io, socket).checkPublic(playerID);
             });
-
             // data : {roomID : roomID, playerID : name}
             socket.on('joinRoom_Req', (data) => {
                 new Room(io, socket).joinRoom(data);

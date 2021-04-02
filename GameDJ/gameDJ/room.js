@@ -21,6 +21,27 @@ class Room {
         this.socket = socket;
     }
 
+    // joinPublic 에서 최초의 유저인지 아닌지 확인
+    checkPublic(playerID){
+        let data = {
+            "roomID": publicRoomID,
+            "playerID": playerID.playerID
+        }
+        // 공방 존재 확인
+        let roomExist = false;
+        if (roomList[publicRoomID]){
+            roomExist = true;
+        }
+        // 공방 최초의 유저라면
+        if (roomExist === false){
+            createPublicRoom(data);
+        }
+        // 공방 최초의 유저가 아니라면
+        else{
+            joinRoom(data);
+        }
+    }
+
     // 사방 : data : {playerID : name}
     createPrivateRoom(data) {
         const { socket } = this;
@@ -83,7 +104,7 @@ class Room {
             music: 'King_Conga.mp3',
             roomLeader: socket.id,
             gaming : false,
-            readyTime: 30,
+            readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
         };
 
         roomInfo[socketID] = playerInfo;
@@ -98,7 +119,6 @@ class Room {
             roomID: roomID,
             musicList: musicList,
         });
-        
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -126,7 +146,7 @@ class Room {
 
             socket.roomID = roomID;
             socket.join(roomID);
-            playercnt++;
+            playerStress++;
             io.to(roomID).emit('joinRoom_Res', {
                 roomID: roomID,
                 roomInfo: roomInfo,
