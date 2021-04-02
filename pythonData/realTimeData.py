@@ -20,7 +20,7 @@ hoka_result = dict()
 
 try:
     conn = redis.StrictRedis(
-        host='localhost',
+        host='3.34.156.16',
         port=6379,
         db=0)
     # print("hmset", conn.set("curCoin", "hihhihihi"))
@@ -149,7 +149,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-PCI"]},{"type": "orderbook", "codes": ["KRW-PCI.5"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-MED"]},{"type": "orderbook", "codes": ["KRW-MED.5"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)

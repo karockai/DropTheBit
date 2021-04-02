@@ -16,6 +16,7 @@ import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
+import GameEnd from './audios/effect/GameEnd.mp3';
 
 import {
     BrowserRouter as Router,
@@ -58,8 +59,9 @@ export default function LayoutGrid(props) {
     const [over, setOver] = useState(false);
 
     useEffect(() => {
-        props.socket.on('gameOver', (leaderBoard) => {
+        props.socket.once('gameOver', (leaderBoard) => {
             console.log('gameover');
+            new Audio(GameEnd).play();
             if (leaderBoard) {
                 setOver(leaderBoard);
             }
@@ -76,7 +78,7 @@ export default function LayoutGrid(props) {
 
     return (
         <>
-            {/* {over && <GameOverModal leaderBoard={over} />} */}
+            {over && <GameOverModal leaderBoard={over} />}
 
             <Grid
                 style={{

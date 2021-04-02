@@ -1,5 +1,12 @@
-import React, { Component, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch,Redirect } from 'react-router-dom';
+import React, { Component, useEffect, useContext } from 'react';
+// import { withRouter as Route, Router, Switch,Redirect,  useHistory } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    useHistory,
+} from 'react-router-dom';
 import LayoutGridEffect from './LayoutGridEffect';
 import EnterRoom from './EnterRoom';
 import Lobby from './Lobby';
@@ -7,10 +14,14 @@ import Lobby from './Lobby';
 export default function Routes(props) {
     const [time, setTime] = React.useState(0);
     const isValid = () => {
-        if (props.socket)
-            return true;
+        if (props.socket) return true;
         return false;
-    }
+    };
+    const [lobbyAudio, setAudio] = React.useState(null);
+
+    const sendAudio = (audio) => {
+        setAudio(audio);
+    };
 
     return (
         <>
@@ -22,45 +33,56 @@ export default function Routes(props) {
                         render={() => {
                             return (
                                 <>
-                            <EnterRoom
-                                socket={props.socket}
-                                requestSocket={props.requestSocket}
-                                SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                                time ={time}
-                                setTime={setTime}
-                                roomID={props.roomID}
-                                roomInfo={props.roomInfo}
-                            />
-                            </>)
+                                    <EnterRoom
+                                        socket={props.socket}
+                                        requestSocket={props.requestSocket}
+                                        SetRoomIdAndInfo={
+                                            props.SetRoomIdAndInfo
+                                        }
+                                        roomID={props.roomID}
+                                        roomInfo={props.roomInfo}
+                                        sendAudio={sendAudio}
+                                    />
+                                </>
+                            );
                         }}
                     />
-                    {/* <Route  // ? 어떻게 /lobby 라우트에 필요한 인자 넘길지 고민중..
+                    <Route // ? 어떻게 /lobby 라우트에 필요한 인자 넘길지 고민중..
                         path="/lobby"
                         render={() => {
-                            return(
-                            isValid() ? 
-                            <Lobby
-                                socket={props.socket}
-                                requestSocket={props.requestSocket}
-                                roomID={props.roomID}
-                                roomInfo={props.roomInfo}
-                                gameTime={time}
-                            /> : <Redirect to="/" />)}}
+                            return isValid() ? (
+                                <Lobby
+                                    socket={props.socket}
+                                    // history={history}
+                                    roomID={props.roomID}
+                                    roomInfo={props.roomInfo}
+                                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                                    lobbyAudio={lobbyAudio}
+                                    // MusicPause= {MusicPause}
+                                    // MusicStart={MusicStart}
+                                />
+                            ) : (
+                                <Redirect to="/" />
+                            );
+                        }}
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
-                    /> */}
+                    />
                     <Route
                         path="/game"
                         render={() => {
-                            return(
-                            isValid() ? 
-                            <LayoutGridEffect
-                                socket={props.socket}
-                                requestSocket={props.requestSocket}
-                                roomID={props.roomID}
-                                roomInfo={props.roomInfo}
-                                gameTime={time}
-                            /> : <Redirect to="/" />)}}
+                            return isValid() ? (
+                                <LayoutGridEffect
+                                    socket={props.socket}
+                                    requestSocket={props.requestSocket}
+                                    roomID={props.roomID}
+                                    roomInfo={props.roomInfo}
+                                    gameTime={time}
+                                />
+                            ) : (
+                                <Redirect to="/" />
+                            );
+                        }}
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
                     />

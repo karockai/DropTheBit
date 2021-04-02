@@ -1,0 +1,56 @@
+config:
+  target: "http://localhost:5000"
+  socketio:
+    query: "id=ayRJM7U837exkJE"
+  phases:
+    - duration: 20
+      arrivalRate: 3
+scenarios:
+  - name: "Connect and join Room"
+    engine: "socketio"
+    flow:
+      - emit:
+          channel: "joinRoom_Req"
+          data:
+            "playerID": "{{$randomString()}}"
+            "roomID": "ayRJM7U837exkJE"
+
+      - think: 25
+      - loop:
+        - emit:
+            channel: "buy_Req"
+            data:
+              "roomID": "ayRJM7U837exkJE"
+              "socketID": 0
+              "currentBid": 10000
+              "currentVolume": 10000
+        - think: 2
+        - emit:
+            channel: "sell_Req"
+            data:
+                "roomID": "ayRJM7U837exkJE"
+                "socketID": 0
+                "currentBid": 1000
+                "currentVolume": 10000
+        - think: 2
+      - think: 45
+
+  # - name: "Connect and join Room"
+  #   engine: "socketio"
+  #   flow:
+  #     - emit:
+  #         channel: "joinRoom_Req"
+  #         data:
+  #           "playerID": "hola"
+  #           "roomID": "4DUX94cpo0TAB2o"
+  #     - think: 70
+
+  # - name: "Connect and join Room"
+  #   engine: "socketio"
+  #   flow:
+  #     - emit:
+  #         channel: "joinRoom_Req"
+  #         data:
+  #           "playerID": "bye"
+  #           "roomID": "4DUX94cpo0TAB2o"
+  #     - think: 70

@@ -5,26 +5,45 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
-import King_Conga from './audios/music/King_Conga.mp3';
-import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
-import Deja_Vu from './audios/music/Deja_Vu.mp3';
+
 import { useSound, playSound, getDuration } from './useSound';
 import ThreeSecTimer from './ThreeSecTimer';
 import LayoutGrid from './LayoutGrid';
+import Sound from './Sound';
 
-let bgm_audio = new Audio('');
+// Music
+import Deja_Vu from './audios/music/Deja_Vu.mp3';
+import Dont_Stop_Me_Now from './audios/music/Dont_Stop_Me_Now.mp3';
+import Gong from './audios/music/GONG.mp3';
+import King_Conga from './audios/music/King_Conga.mp3';
+import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
+import Without_Me from './audios/music/Without_Me.mp3';
+import StormRoad from './audios/music/질풍가도.mp3';
+import Beethven_Virus from './audios/music/Beethven_Virus.mp3';
+import The_Wight_to_Remain from './audios/music/The_Wight_to_Remain.mp3';
+import GameMusicStart from './MusicStart';
+
+let gameMusic = new Audio('');
 
 export default function LayoutGridEffect(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
     const [isStart, setIsStart] = useState(false);
+
     const musicList = {
         Deja_Vu: Deja_Vu,
+        Dont_Stop_Me_Now: Dont_Stop_Me_Now,
+        Gong: Gong,
         King_Conga: King_Conga,
         Mausoleum_Mash: Mausoleum_Mash,
+        Without_Me: Without_Me,
+        StormRoad: StormRoad,
+        Beethven_Virus: Beethven_Virus,
+        The_Wight_to_Remain: The_Wight_to_Remain,
     };
-    const SpecificMusic = musicList[props.roomInfo['music'].split('.')[0]];
+
+    const SpecificMusic = musicList[props.roomInfo['music']];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
     useEffect(() => {
@@ -32,16 +51,14 @@ export default function LayoutGridEffect(props) {
             setThreeSecTimerOpen(false);
             setTimerTime(gameTime);
             setIsStart(true);
-            bgm_audio = new Audio(SpecificMusic);
-            if (bgm_audio.paused) bgm_audio.play();
+            gameMusic = new Audio(SpecificMusic);
+            if (gameMusic) gameMusic.play();
         });
     }, [timerTime]);
+
     return (
         <>
-            <ThreeSecTimer
-                SpecificMusic={SpecificMusic}
-                open={threeSecTimerOpen}
-            />
+            <ThreeSecTimer open={threeSecTimerOpen} />
             <LayoutGrid
                 socket={props.socket}
                 requestSocket={props.requestSocket}
@@ -49,8 +66,7 @@ export default function LayoutGridEffect(props) {
                 roomInfo={props.roomInfo}
                 gameTime={props.time}
                 isStart={isStart}
-                />
-                
+            />
         </>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useState, makeStyle, useLayoutEffect } from 'react';
+import React, { useState, makeStyle, useLayoutEffect, useEffect } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import {
@@ -78,6 +78,79 @@ export default function PlayerList(props) {
             });
         }
     }, [isInit]);
+
+    function ExpBySymbol(value) {
+        let ret = '';
+        if (value.length >= 9) {
+            // 199489230 -> 1억 9948만 9230
+            ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
+            value = value.substring(value.length - 9 + 1);
+        }
+        if (value.length >= 5) {
+            // value 99489230
+            ret += value.substring(0, value.length - 5 + 1) + '만'; // 9948만
+            value = value.substring(value.length - 5 + 1);
+        }
+        // ret += value;
+        return ret;
+    }
+
+    const parseWonToStr = (won) => {
+        if (typeof won == 'number') won = won.toString();
+        return won;
+    };
+
+    let defaultPage = {
+        playerID: '',
+        asset: '',
+    };
+    const [myRankPage, setMyRankPage] = useState(defaultPage);
+    const [myRank, setMyRank] = useState(null);
+
+    function MyRank() {
+        props.socket.once('MyRank', (myRankPage, myRank) => {
+            setMyRankPage(myRankPage);
+            setMyRank(myRank);
+        });
+        return (
+            <div>
+                <Paper
+                    className={classes.paper}
+                    style={{
+                        height: '90%',
+                        border: 'solid',
+                        borderColor: '#0066bb',
+                        margin: '0 0 10px 0',
+                        boxShadow: '12px 12px 2px 1px #ffffff',
+                    }}
+                >
+                    <Grid container direction="row" alignItems="center">
+                        <Grid
+                            style={{ width: '20%', height: '100%' }}
+                            className="score"
+                        >
+                            {'현재 '}
+                            {myRank}
+                            {'위'}
+                        </Grid>
+                        <Grid
+                            style={{ width: '80%', height: '100%' }}
+                            container
+                            direction="column"
+                            className="score"
+                        >
+                            <Grid alignItems="right">
+                                {myRankPage.playerID}
+                            </Grid>
+                            <Grid alignItems="right">
+                                {ExpBySymbol(parseWonToStr(myRankPage.asset))}원
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -160,7 +233,7 @@ export default function PlayerList(props) {
                                         className="score"
                                     >
                                         {index + 1}
-                                        {'위.'}
+                                        {'위'}
                                     </Grid>
                                     <Grid
                                         style={{ fontSize: '1vw', width: '80%', height: '100%' }}
@@ -172,7 +245,10 @@ export default function PlayerList(props) {
                                             {player.playerID}
                                         </Grid>
                                         <Grid alignItems="right">
-                                            {player.asset}
+                                            {ExpBySymbol(
+                                                parseWonToStr(player.asset)
+                                            )}
+                                            원
                                         </Grid>
                                     </Grid>
                                 </Grid>

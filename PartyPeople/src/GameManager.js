@@ -22,13 +22,13 @@ class GameManager extends React.Component {
         };
         // this.socket = io('15.165.129.19:5000'); //_ http://15.165.129.19:5000/
         this.socket = io('localhost:5000');
+        console.log(this.socket);
         this.socket.on('connect', () => {
             console.log('connnected', this.socket);
             this.socket.emit('join');
         });
     }
-    componentWillUnmount() {
-    }
+    componentWillUnmount() {}
     componentDidMount() {
         let socketCopy = null;
         let user_cnt = 0;
@@ -43,25 +43,31 @@ class GameManager extends React.Component {
             let seconds = today.getSeconds(); // 초
             let milliseconds = today.getMilliseconds(); // 밀리초
         });
+
         this.socket.on('socket', (socket) => {
             setSocket();
         });
+
         this.socket.on('update', function (data) {
             addMessage(data);
         });
-        this.socket.on('get_chart_data', function (data) {
-        });
+
+        this.socket.on('get_chart_data', function (data) {});
+
         const setSocket = (socket) => {
             this.setState({ socketId: socket });
         };
+
         const addSocket = () => {
             if (this.socketId === null) {
                 this.setState({ socketId: this.socket });
             }
         };
+
         const addMessage = (data) => {
             this.setState({ messages: [...this.state.messages, data] });
         };
+
         this.socket.on('update_users', function (data, user_count) {
             user_cnt = user_count;
             // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
@@ -104,17 +110,15 @@ class GameManager extends React.Component {
             roomID: data.roomID,
             roomInfo: data.roomInfo,
         });
-        console.log(
-            'SetRoomIdAndInfo. 랜더링을 다시 합니다.'
-        );
+        console.log('SetRoomIdAndInfo. 랜더링을 다시 합니다.');
     };
-
-    
 
     render() {
         const socket = this.state.socketId;
         const roomID = this.state.roomID;
         const roomInfo = this.state.roomInfo;
+        const lobbyAudio = this.state.lobbyAudio;
+
         return (
             <>
                 <Routes
@@ -123,6 +127,8 @@ class GameManager extends React.Component {
                     SetRoomIdAndInfo={this.SetRoomIdAndInfo}
                     roomID={roomID}
                     roomInfo={roomInfo}
+                    sendAudio={this.sendAudio}
+                    // lobbyAudio={lobbyAudio}
                 />
             </>
         );

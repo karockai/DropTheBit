@@ -11,16 +11,19 @@ global.bidList = {};
 global.askList = {};
 global.roomList = {};
 global.bgmList = {
-    'Deja_Vu.mp3': 265,
-    'King_Conga.mp3': 145,
-    'Mausoleum_Mash.mp3': 176,
+    Deja_Vu: 265,
+    King_Conga: 145,
+    Mausoleum_Mash: 176,
 };
 global.curCoin = {};
 global.exTable = {};
 global.prePrice = 0;
 
 // 차트를 바로 그리기 위한 curCoin 50개 리스트
-
+// for stress test
+global.playerStress = 0;
+// for 공방
+global.publicRoomID = 'AAAAAAAAAAAAAAA';
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
 });
@@ -115,4 +118,3 @@ sockets.init(server);
 //      : 'port ' + addr.port;
 //    debug('Listening on ' + bind);
 //  }
-

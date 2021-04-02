@@ -220,10 +220,35 @@ class Refresh {
                 rankList.sort(function (a, b) {
                     return b['asset'] - a['asset'];
                 });
+
+                for (let idx in rankList) {
+                    io.to(rankList[idx]['socketID']).emit(
+                        'MyRank',
+                        rankList[idx],
+                        idx + 1
+                    );
+                }
+
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
             }
-            // console.log(roomInfo);
+
+            // 공방 startGame logic
+            if (roomInfo['readyTime'] && roomInfo['readyTime'] > 0){
+                roomList[roomID]['readyTime']--;
+                console.log('readyTime : ', roomList[roomID]['readyTime']);
+                io.to(roomID).emit(
+                    'restReadyTime',
+                    roomList[roomID]['readyTime']
+                );
+            }
+
+            if (roomInfo['readyTime'] === 0 && roomList[roomID]['gaming'] === false) {
+                roomList[roomID]['gaming'] = true;
+                new Game(io, roomList[roomID]['roomLeader']).startGame();
+            }
+
+            // gameOver logic
             if (roomInfo['gaming']) {
                 roomList[roomID]['gameTime']--;
                 console.log(roomList[roomID]['gameTime']);
@@ -253,7 +278,6 @@ class Refresh {
             let temp = {};
             temp['playerID'] = playerInfo['playerID'];
             temp['asset'] = playerInfo['asset'];
-
             leaderBoard.push(temp);
 
             for (let bid in playerInfo['bid']) {
@@ -263,7 +287,6 @@ class Refresh {
                     }
                 }
             }
-
             for (let ask in playerInfo['ask']) {
                 for (let id in askList[ask]) {
                     if (socketID === id) {
@@ -272,12 +295,12 @@ class Refresh {
                 }
             }
         }
-
         leaderBoard.sort(function (a, b) {
             return b['asset'] - a['asset'];
         });
+        console.log('gameOver');
+        console.log(roomInfo);
 
-        delete roomList[roomID];
         io.to(roomID).emit('gameOver', leaderBoard);
     }
 
@@ -285,6 +308,8 @@ class Refresh {
     async refreshBid() {
         const { io } = this;
         let exTable = JSON.parse(await dbget('bidTable'));
+        if (!exTable) return false;
+
         let exList = [];
 
         let bidObject4 = {

@@ -60,6 +60,7 @@ class Disconnect {
             // 방에 사람이 0명이 되면 방을 지운다
             if (playerCnt === 0) {
                 delete roomList[roomID];
+                playerStress = 0;
             } else {
                 // 방에 사람이 1명 이상이면 방을 지우지 않는다
                 // 나간 사람이 방장이라면 다음 사람으로 방장을 변경한다

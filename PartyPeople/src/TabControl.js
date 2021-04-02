@@ -10,6 +10,10 @@ import BidTab from './BidTab';
 import BidTable from './BidTable';
 import AskTable from './AskTable';
 
+// 음악
+import ExTable from './audios/effect/ExTable.wav';
+import BidTableSound from './audios/effect/BidTable.wav';
+import AskTableSound from './audios/effect/AskTable.wav';
 
 const StyledTabs = withStyles({
     indicator: {
@@ -106,12 +110,15 @@ export default function TabControl(props) {
         // }
         if (e.keyCode === 81) {
             //_ Q
+            new Audio(BidTableSound).play();
             setValue(0);
         } else if (e.keyCode === 87) {
             //_ W
+            new Audio(AskTableSound).play();
             setValue(1);
         } else if (e.keyCode === 69) {
             //_ E
+            new Audio(ExTable).play();
             setValue(2);
         }
     }

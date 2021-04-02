@@ -10,9 +10,10 @@ import {
 import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
+import { PurpleButton } from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
     input: {
-        color: "white",
+        color: 'white',
     },
 }));
 function SetPlayerName(props) {
@@ -24,11 +25,7 @@ function SetPlayerName(props) {
         .substring(window.location.toString().indexOf('?'));
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
-
-    // const nameInput = useRef();
-    // useEffect(()=>{
-    //     nameInput.current.focus();
-    // });
+    console.log('setplayerid');
 
     const onKeyPress = (e) => {
         if (e.key == 'Enter') {
@@ -43,16 +40,25 @@ function SetPlayerName(props) {
     const handleOnSave = (event) => {
         if (tmp != '') {
             event.preventDefault();
-            props.onSave(tmp);
+            props.onSave(tmp, 0);
+        }
+    };
+
+    const handleOnSave2 = (event) => {
+        if (tmp != '') {
+            event.preventDefault();
+            props.onSave(tmp, 1);
         }
     };
     let buttonMsg = 'Create Private Room';
+    let publicButton = 'Join Public Room';
     if (searchParams.has('id')) {
         // 초대링크 받아서 온 사람
         buttonMsg = 'Join Room';
     } else {
         buttonMsg = 'Create Private Room';
     }
+
     return (
         <>
             <Grid
@@ -66,7 +72,7 @@ function SetPlayerName(props) {
                 <Grid>
                     <img src={Logo} />
                 </Grid>
-                <Grid item>
+                <Grid style={{ margin: '4vh' }} item>
                     <TextField
                         id="form-control text-center fw-bold bg-transparent"
                         label="인게임 닉네임 (8자 제한)"
@@ -83,18 +89,27 @@ function SetPlayerName(props) {
                         // ref={nameInput}
                         autoFocus
                         onKeyPress={onKeyPress}
-                        inputProps={{ 'maxLength': 8 }}
+                        inputProps={{ maxLength: 8 }}
                     />
                 </Grid>
 
                 <Grid item>
-                    <Button
+                    <PurpleButton
                         variant="contained"
                         color="primary"
                         onClick={handleOnSave}
+                        style={{ width: '50vh', height: '7vh' }}
                     >
                         {buttonMsg}
-                    </Button>
+                    </PurpleButton>
+                    <PurpleButton
+                        variant="contained"
+                        color="primary"
+                        onClick={handleOnSave2}
+                        style={{ width: '50vh', height: '7vh' }}
+                    >
+                        {publicButton}
+                    </PurpleButton>
                 </Grid>
             </Grid>
         </>

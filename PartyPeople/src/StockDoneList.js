@@ -2,9 +2,6 @@ import { Grid, GridList } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { useSound, playSound } from './useSound';
-import Check from './audios/effect/check.mp3';
-import BidSound from './audios/effect/bidSound.wav';
-import AskSound from './audios/effect/askSound.wav';
 
 const defaultTextStyle = {
     color: '#444444',
@@ -40,17 +37,17 @@ export default function StockDoneList(props) {
             } else {
                 props.socket.on('buyDone', (done) => {
                     if (done.type === '매수 완료') {
-                        playSound(Check, 1).play();
+                        // playSound(Check, 1).play();
                     } else if (done.type === '매수 주문 체결') {
-                        playSound(BidSound, 1).play();
+                        // playSound(BidSound, 1).play();
                     }
                     setItem(done);
                 });
                 props.socket.on('sellDone', (done) => {
                     if (done.type === '매도 완료') {
-                        playSound(Check, 1).play();
+                        // playSound(Check, 1).play();
                     } else if (done.type === '매도 주문 체결') {
-                        playSound(AskSound, 1).play();
+                        // playSound(AskSound, 1).play();
                     }
                     setItem(done);
                 });
