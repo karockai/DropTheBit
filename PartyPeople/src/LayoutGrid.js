@@ -61,7 +61,7 @@ export default function LayoutGrid(props) {
     const [over, setOver] = useState(false);
 
     useEffect(() => {
-        props.socket.on('gameOver', (leaderBoard) => {
+        props.socket.once('gameOver', (leaderBoard) => {
             console.log('gameover');
             if (leaderBoard) {
                 setOver(leaderBoard);
@@ -79,7 +79,7 @@ export default function LayoutGrid(props) {
 
     return (
         <>
-            {over && <GameOverModal leaderBoard={over} />}
+            {over && <GameOverModal leaderBoard={over} socket={props.socket} roomID={props.roomID}/>}
             <Container maxWidth="xl">
                 <Typography component="div" style={{ padding: '0 0 0 0' }}>
                     <Grid
@@ -106,6 +106,7 @@ export default function LayoutGrid(props) {
                             xs={middleSm}
                             wrap="wrap"
                             alignContents="stretch"
+                            
                         >
                             <Grid
                                 style={{ height: '90vh' }}
@@ -115,11 +116,10 @@ export default function LayoutGrid(props) {
                                 alignItems="stretch"
                                 container
                                 direction="column"
-                                justify="center"
                                 spacing={1}
                             >
                                 <Grid
-                                    style={{ height: '45vh' }}
+                                    style={{ height: '45vh', width:'100%' }}
                                     item
                                     alignItems="stretch"
                                 >
@@ -135,45 +135,17 @@ export default function LayoutGrid(props) {
                                             display="flex"
                                             justify-content="center"
                                             align-items="center"
-                                            // time={props.time}
                                             isStart={props.isStart}
                                             time={timerTime}
                                         />
                                     </Paper>
                                 </Grid>
-                                <Grid style={{ height: '18vh' }}>
-                                    <Grid
-                                        style={{ height: '100%' }}
-                                        wrap="wrap"
-                                        alignItems="stretch"
-                                        container
-                                        direction="row"
-                                        justify="space-around"
-                                    >
+                                {/*  chart 끝  */}
+                                <Grid style={{width: "100%", height: '44vh' }} container direction={"row"}> 
+                                <Grid style={{width: "50%", height: '100%' }} container direction={"column"}>       
                                         <Grid
                                             style={{
-                                                width: '45%',
-                                                height: '100%',
-                                            }}
-                                            item
-                                        >
-                                            <Paper
-                                                style={{ height: '17vh' }}
-                                                className={classes.paper}
-                                            >
-                                                <StockDoneList
-                                                    socket={props.socket}
-                                                    requestSocket={
-                                                        props.requestSocket
-                                                    }
-                                                    isMine={true}
-                                                />
-                                            </Paper>
-                                        </Grid>
-                                        <Grid
-                                            style={{
-                                                width: '55%',
-                                                height: '100%',
+                                                width: '100%',
                                             }}
                                             item
                                         >
@@ -190,25 +162,9 @@ export default function LayoutGrid(props) {
                                                 />
                                             </Paper>
                                         </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid style={{ height: '27vh' }} item>
-                                    <Grid
-                                        style={{ height: '100%' }}
-                                        wrap="wrap"
-                                        alignItems="stretch"
-                                        container
-                                        direction="row"
-                                        justify="space-around"
-                                    >
                                         <Grid
-                                            style={{
-                                                width: '45%',
-                                                height: '22vh',
-                                            }}
                                             item
                                         >
-                                            {/* <Paper style={{ height: "100%" }} > */}
                                             <MyAsset
                                                 roomID={props.roomID}
                                                 socket={props.socket}
@@ -216,21 +172,10 @@ export default function LayoutGrid(props) {
                                                     props.requestSocket
                                                 }
                                             />
-                                            {/* </Paper> */}
                                         </Grid>
-                                        <Grid
-                                            style={{
-                                                width: '50%',
-                                                height: '22vh',
-                                                margin: '0 0 0 0',
-                                            }}
-                                            item
-                                        >
-                                            <Paper
-                                                style={{ height: '100%' }}
-                                                className={classes.paper}
-                                            >
-                                                <TradeStock
+                                </Grid>
+                                <Grid style={{width: "50%", height: '100%', }} container direction={"column"}>
+                                <TradeStock
                                                     inputCtrl={inputCtrl}
                                                     roomID={props.roomID}
                                                     APIdata={APIdata}
@@ -239,9 +184,8 @@ export default function LayoutGrid(props) {
                                                         props.requestSocket
                                                     }
                                                 />
-                                            </Paper>
-                                        </Grid>
-                                    </Grid>
+                                </Grid>
+
                                 </Grid>
                             </Grid>
                         </Grid>
