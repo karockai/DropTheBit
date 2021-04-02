@@ -123,10 +123,10 @@ def on_message(ws, msg):
             if (juka_result and hoka_result):
                 conn.set("curCoin", juka_result)
                 conn.set("bidTable", hoka_result)
-                print("save juka : ", juka_result)
-                print("save hoka : ", hoka_result)
+                print(juka_result)
+                print(hoka_result)
             pre_price = cur_price
-            print(data_make)
+            # print(data_make)
             data_make.clear()
     else:
         pass

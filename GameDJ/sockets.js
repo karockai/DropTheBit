@@ -102,6 +102,12 @@ export default {
                 if (!roomList[socket.roomID]) return 0;
                 await new Game(io, socket).sendAskTable(reqJson);
             });
+            socket.on('RefreshBid_Req', () => {
+                if (!roomList[socket.roomID]) return 0;
+                let curPrice = curCoin['curPrice'];
+                socket.emit('RefreshBid_Res', curPrice);
+            });
+
 
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>

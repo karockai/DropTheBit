@@ -34,12 +34,10 @@ class Room {
         }
         // 공방 최초의 유저라면
         if (roomExist === false) {
-            console.log('내가 공방의 방장이다!');
             this.createPublicRoom(data);
         }
         // 공방 최초의 유저가 아니라면
         else {
-            console.log('공방의 유저다!');
             this.joinRoom(data);
         }
     }
@@ -103,7 +101,7 @@ class Room {
 
         let roomInfo = {
             gameTime: 145,
-            music: 'King_Conga.mp3',
+            music: 'King_Conga',
             roomLeader: socket.id,
             gaming: false,
             readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
@@ -114,7 +112,7 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
+        let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPublic_Res', {
             roomInfo: roomInfo,
@@ -186,8 +184,6 @@ class Room {
         const { io, socket } = this;
         const socketID = socket.id;
         let roomInfo = roomList[roomID];
-        console.log('roomReinit');
-        console.log(roomInfo);
         let playerID = roomInfo[socketID]['playerID'];
         let playerInfo = {
             playerID: playerID,
@@ -205,15 +201,13 @@ class Room {
         // 방 정보가 초기화되어있지 않으면
         if (roomInfo['gameTime'] === -1) {
             roomInfo['gameTime'] = 145;
-            roomInfo['music'] = 'King_Conga.mp3';
+            roomInfo['music'] = 'King_Conga';
             roomInfo['roomLeader'] = socketID;
             roomInfo['gaming'] = false;
             if (roomInfo['readyTime']) {
                 roomInfo['readyTime'] = 30;
             }
         }
-        console.log('roomReinit');
-        console.log(roomInfo);
     }
 }
 
