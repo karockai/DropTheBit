@@ -231,7 +231,7 @@ export default function TradeStock(props) {
     }
 
     function RefreshBid_Req() {
-        props.socket.emit('RefreshBid_Req');
+        props.socket.emit('RefreshBid_Req', '예은아 부탁해');
         props.socket.once('RefreshBid_Res', (curPrice) => {
             console.log('RefreshBid_Req');
             SetBid(curPrice);
@@ -345,7 +345,6 @@ export default function TradeStock(props) {
             return;
         }
         if(e.keyCode === 32) {
-            console.log('ddddd');
             new Audio(CurPrice).play();
             RefreshBid_Req(); 
         }   
