@@ -55,6 +55,8 @@ const CssTextField = withStyles({
         },
         '& .MuiInputBase-input': {
             color: '#CDD7E0',
+            fontFamily: 'NEXON Lv1 Gothic OTF',
+            fontSize: '2.5vw',
         },
 
         //   '& .MuiInput-underline:after': {
@@ -396,10 +398,9 @@ export default function TradeStock(props) {
             props.requestSocket('TradeStock', props.socket);
             return;
         }
+        
         const key = document.getElementById(e.key);
-        console.log(key);
         if (key) key.classList.remove("pressed");
-        console.log(key);
     }
 
     useEffect(() => {
@@ -597,13 +598,12 @@ export default function TradeStock(props) {
                 alignItems="stretch"
                 container
                 direction="column"
-                // justify="center"
                 alignItems="flex-start"
                 style={{ height: '100%' ,fontSize:"2vh"}}
             >
                 <Grid container item direction="row" justify="space-between">
                     <span className={classes.small_text}>매매호가</span>
-                    <span className={classes.small_text}>현재가로 갱신 : SPACE</span>
+                    <span className={classes.small_text}>현재가로 갱신 : [SPACE]</span>
                 </Grid>
                 <Grid container item direction="row" justify="space-between" alignItems="flex-end" > 
                     <Button
