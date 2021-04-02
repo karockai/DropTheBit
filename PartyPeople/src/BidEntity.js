@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         backgroundColor: '#2D4053',
         color: 'white',
-        margin: '0 0 10px 0'
+        margin: '0 0 10px 0',
     },
     score: {},
 }));
@@ -27,13 +27,6 @@ export default function BidEntity(props) {
     const classes = useStyles(greenTheme);
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
-
-    // useLayoutEffect(() => {
-    //     if (props.socket == null) {
-    //         props.requestSocket('makeTableEntity', props.socket);
-    //         setInit(true);
-    //     }
-    // }, [isInit]);
 
     const bidCancel = () => {
         let reqJson = {
@@ -59,7 +52,12 @@ export default function BidEntity(props) {
                 className={classes.paper}
                 onClick={bidCancel}
             >
-                <Grid container direction="row" justifyItems="center" alignItems="center">
+                <Grid
+                    container
+                    direction="row"
+                    justifyItems="center"
+                    alignItems="center"
+                >
                     <Grid
                         style={{ width: '20%', height: '4vh' }}
                         className="price"

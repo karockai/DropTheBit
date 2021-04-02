@@ -1,4 +1,4 @@
-import { POINT_CONVERSION_COMPRESSED } from 'constants';
+import { POINT_CONVERSION_COMPRESSED, SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import {
     dbset,
     dbget,
@@ -23,13 +23,27 @@ class Game {
 
     async startGame() {
         const { io, socket } = this;
-        let roomID = socket.roomID;
+        let roomID = 0;
+        if (socket.roomID){
+            roomID = socket.roomID;
+        }
+        else{
+            roomID = publicRoomID;
+        }
+        console.log('startGame');
+        console.log(roomList[roomID]);
         let gameTime = roomList[roomID]['gameTime'];
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', gameTime);
 
         async function realStart() {
-            let roomID = socket.roomID;
+            let roomID = 0;
+            if (socket.roomID){
+                roomID = socket.roomID;
+            }
+            else{
+                roomID = publicRoomID;
+            }
             let musicName = roomList[roomID]['music'];
             roomList[roomID]['gaming'] = true;
             io.to(roomID).emit('startGame_Real', musicName);

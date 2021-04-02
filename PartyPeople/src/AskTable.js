@@ -18,6 +18,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import AskEntity from './AskEntity';
 
+import Cancel1 from './audios/effect/Cancel1.wav';
+import Cancel2 from './audios/effect/Cancel2.wav';
+import Cancel3 from './audios/effect/Cancel3.wav';
+import Cancel4 from './audios/effect/Cancel4.wav';
+import Cancel5 from './audios/effect/Cancel5.wav';
+import Cancel6 from './audios/effect/Cancel6.wav';
+import Cancel7 from './audios/effect/Cancel7.wav';
+import Cancel8 from './audios/effect/Cancel8.wav';
 // const dummyTable = [
 //     { price: 1000, vol: 100 },
 //     { price: 1000, vol: 100 },
@@ -105,27 +113,35 @@ export default function AskTable(props) {
 
         if (e.keyCode === 49 && AskTable.length >= 1) {
             //_ 1
+            new Audio(Cancel1).play();
             CancelAsk(0, AskTable);
         } else if (e.keyCode === 50 && AskTable.length >= 2) {
             //_ 2
+            new Audio(Cancel2).play();
             CancelAsk(1, AskTable);
         } else if (e.keyCode === 51 && AskTable.length >= 3) {
             //_ 3
+            new Audio(Cancel3).play();
             CancelAsk(2, AskTable);
         } else if (e.keyCode === 52 && AskTable.length >= 4) {
             //_ 4
+            new Audio(Cancel4).play();
             CancelAsk(3, AskTable);
         } else if (e.keyCode === 53 && AskTable.length >= 5) {
             //_ 5
+            new Audio(Cancel5).play();
             CancelAsk(4, AskTable);
         } else if (e.keyCode === 54 && AskTable.length >= 6) {
             //_ 6
+            new Audio(Cancel6).play();
             CancelAsk(5, AskTable);
         } else if (e.keyCode === 55 && AskTable.length >= 7) {
             //_ 7
+            new Audio(Cancel7).play();
             CancelAsk(6, AskTable);
         } else if (e.keyCode === 56 && AskTable.length >= 8) {
             //_ 8
+            new Audio(Cancel8).play();
             CancelAsk(7, AskTable);
         }
     }
@@ -160,21 +176,21 @@ export default function AskTable(props) {
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
-                                    취소 번호 [1]~[8]
+                                <span style={{ color: 'white', fontWeight: 'bold' }}>
+                                    취소 [1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold' }}>
                                     매도 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold' }}>
                                     매도 수량
                                 </span>
                             </TableCell>

@@ -16,6 +16,35 @@ import { SnackbarProvider } from 'notistack';
 // import {YellowShiningButton} from './ShiningButton';
 import './ShiningButton.css';
 
+// 음악
+// Effect
+
+import Buy100 from './audios/effect/Buy100.wav';
+import BuyConfirm from './audios/effect/BuyConfirm.wav';
+import BuyDone from './audios/effect/BuyDone.wav';
+
+import Check from './audios/effect/check.mp3';
+import CurPrice from './audios/effect/CurPrice.wav';
+import Enter from './audios/effect/Enter.wav';
+import Error_Sound from './audios/effect/Error.mp3';
+import ExEnroll from './audios/effect/ExEnroll.wav';
+
+import Nope from './audios/effect/Nope.mp3';
+import PriceDown from './audios/effect/PriceDown.wav';
+import PriceUp from './audios/effect/PriceUp.wav';
+import Result from './audios/effect/Result.mp3';
+import Sell0 from './audios/effect/Sell0.wav';
+import Sell50 from './audios/effect/Sell50.wav';
+import Sell100 from './audios/effect/Sell100.wav';
+import SellConfirm from './audios/effect/SellConfirm.wav';
+import SellDone from './audios/effect/SellDone.wav';
+import VolDown from './audios/effect/VolDown.wav';
+import VolUp from './audios/effect/VolUp.wav';
+
+// Module
+
+// 음악
+
 const CssTextField = withStyles({
     root: {
         '& label.Mui-focused': {
@@ -248,6 +277,7 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         props.socket.once('buyDone', (bbid) => {
+            console.log(bbid);
             SetNewBid(bbid.price);
             setBuyStatus({
                 status: 'done',
@@ -313,45 +343,63 @@ export default function TradeStock(props) {
         }
         if (e.keyCode === 37) {
             //_ LEFT ARROW
-            // playSound(HatUp, 1).play();
+            new Audio(VolDown).play();
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
-            // playSound(HatDown, 1).play();
+            new Audio(VolUp).play();
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
-            // playSound(HatUp, 1).play();
+            new Audio(PriceUp).play();
             BidUp();
-            console.log(e.key);
-
-            const key = document.getElementById(e.key);
-            if (key) key.classList.add("pressed");
+            
+            // console.log(e.key);
+            // const key = document.getElementById(e.key);
+            // if (key) key.classList.add("pressed");
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
-            // playSound(HatDown, 1).play();
+            new Audio(PriceDown).play();
             BidDown();
         } else if (e.keyCode === 65) {
             //_ 'A' :
-            // playSound(DrumUp, 1).play();
-            setBuyStatus(Buy(currentBid, currentVolume));
+            new Audio(Buy100).play();
+            SetBuyMaxCount();
         } else if (e.keyCode === 83) {
             //_ 'S'
-            // playSound(DrumDown, 1).play();
-            setSellStatus(Sell(currentBid, currentVolume));
-        } else if (e.keyCode === 68) {
+            new Audio(Sell100).play();
+            SetSellMaxCount();
+        } else if (e.keyCode === 32) {
             //_ 'D'
-            // playSound(DrumDown, 1).play();
+            new Audio(CurPrice).play();
             RefreshBid_Req();
         } else if (e.keyCode === 90) {
             //_ 'Z'
-            // playSound(DrumDown, 1).play();
-            SetSellMaxCount();
+            new Audio(Check).play();
+            setBuyStatus(Buy(currentBid, currentVolume));
         } else if (e.keyCode === 88) {
             //_ 'X'
-            // playSound(DrumDown, 1).play();
-            SetBuyMaxCount();
+            new Audio(Check).play();
+            setSellStatus(Sell(currentBid, currentVolume));
         }
+        const key = document.getElementById(e.key);
+        console.log(key);
+        if (key) key.classList.add("pressed");
+        console.log(key);
+    }
+
+    function HandleKeyDown(e) {
+        if (props.inputCtrl) return;
+        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
+        e.preventDefault();
+        if (props.socket == null || isBind === false) {
+            props.requestSocket('TradeStock', props.socket);
+            return;
+        }
+        const key = document.getElementById(e.key);
+        console.log(key);
+        if (key) key.classList.remove("pressed");
+        console.log(key);
     }
 
     useEffect(() => {
@@ -367,10 +415,10 @@ export default function TradeStock(props) {
             return;
         }
         document.addEventListener('keyup', HandleKeyUp);
-        // document.addEventListener('keydown', HandleKeyDown);
+        document.addEventListener('keydown', HandleKeyDown);
         return () => {
             document.removeEventListener('keyup', HandleKeyUp);
-            // document.removeEventListener('keydown', HandleKeyDown);
+            document.removeEventListener('keydown', HandleKeyDown);
         };
     });
 
@@ -417,11 +465,11 @@ export default function TradeStock(props) {
     };
 
     function SetSellMaxCount() {
-        SetVolume(Math.floor(myWallet.myCash / currentBid));
+        SetVolume(myWallet.myCoin);
     }
 
     function SetBuyMaxCount() {
-        SetVolume(myWallet.myCoin);
+        SetVolume(Math.floor(myWallet.myCash / currentBid));
     }
 
     function SplitByThree(value) {
@@ -578,6 +626,7 @@ export default function TradeStock(props) {
                         class="pulse"
                         onClick={() => {
                         setBuyStatus(Buy(currentBid, currentVolume));}}
+                        id="ArrowDown"
                     >▼</Button>
                 </Grid>
                 <span className={classes.small_text}>수량</span>
@@ -586,13 +635,11 @@ export default function TradeStock(props) {
                         class="pulse"
                         onClick={() => {
                         setBuyStatus(Buy(currentBid, currentVolume));}}
+                        id="ArrowLeft"
                     >◀</Button>
                     <CssTextField
                         className="count"
                         id="outlined-required"
-                        // label="수량 ◀ ▶"
-                        // type="number"
-                        // size="small"
                         style={{ width: '50%', fontSize:20, }}
                         value={currentVolume}
                         onChange={handleVolumeChange}
@@ -602,6 +649,7 @@ export default function TradeStock(props) {
                         class="pulse"
                         onClick={() => {
                         setBuyStatus(Buy(currentBid, currentVolume));}}
+                        id="ArrowRight"
                     >▶</Button>
                 </Grid>
                 {/* <Grid container item justify="center" alignItems="start">
@@ -630,6 +678,7 @@ export default function TradeStock(props) {
                                 SetBuyMaxCount();
                                 setBuyStatus(Buy(currentBid, currentVolume));
                             }}
+                            id="a"
                         >
                             [A] 매수 MAX
                         </Button>
@@ -640,6 +689,7 @@ export default function TradeStock(props) {
                                 SetSellMaxCount();
                                 setSellStatus(Sell(currentBid, currentVolume));
                             }}
+                            id="s"
                         >
                             {/* <KeyboardArrowRightIcon /> */}
                             [S] 매도 MAX
@@ -656,6 +706,7 @@ export default function TradeStock(props) {
                             onClick={() => {
                                 setBuyStatus(Buy(currentBid, currentVolume));
                             }}
+                            id="z"
                         >
                             [Z] 매수
                         </Button>
@@ -665,6 +716,7 @@ export default function TradeStock(props) {
                             onClick={() => {
                                 setSellStatus(Sell(currentBid, currentVolume));
                             }}
+                            id="x"
                         >
                             {/* <KeyboardArrowRightIcon /> */}
                             [X] 매도

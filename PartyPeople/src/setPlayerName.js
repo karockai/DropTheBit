@@ -10,10 +10,10 @@ import {
 import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
-import {PurpleButton} from './PurpleComponent';
+import { PurpleButton } from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
     input: {
-        color: "white",
+        color: 'white',
     },
 }));
 function SetPlayerName(props) {
@@ -26,7 +26,6 @@ function SetPlayerName(props) {
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
     console.log('setplayerid');
-
 
     const onKeyPress = (e) => {
         if (e.key == 'Enter') {
@@ -41,16 +40,25 @@ function SetPlayerName(props) {
     const handleOnSave = (event) => {
         if (tmp != '') {
             event.preventDefault();
-            props.onSave(tmp);
+            props.onSave(tmp, 0);
+        }
+    };
+
+    const handleOnSave2 = (event) => {
+        if (tmp != '') {
+            event.preventDefault();
+            props.onSave(tmp, 1);
         }
     };
     let buttonMsg = 'Create Private Room';
+    let publicButton = 'Join Public Room';
     if (searchParams.has('id')) {
         // 초대링크 받아서 온 사람
         buttonMsg = 'Join Room';
     } else {
         buttonMsg = 'Create Private Room';
     }
+
     return (
         <>
             <Grid
@@ -59,12 +67,12 @@ function SetPlayerName(props) {
                 alignItems={'center'}
                 // spacing={2}
                 direction="column"
-                style={{ width: '100%', height: '100vh' }}
+                style={{ width: '100vw', height: '100vh' }}
             >
                 <Grid>
                     <img src={Logo} />
                 </Grid>
-                <Grid  style={{margin:'4vh' }} item>
+                <Grid style={{ margin: '4vh' }} item>
                     <TextField
                         id="form-control text-center fw-bold bg-transparent"
                         label="인게임 닉네임 (8자 제한)"
@@ -81,7 +89,7 @@ function SetPlayerName(props) {
                         // ref={nameInput}
                         autoFocus
                         onKeyPress={onKeyPress}
-                        inputProps={{ 'maxLength': 8 }}
+                        inputProps={{ maxLength: 8 }}
                     />
                 </Grid>
 
@@ -90,9 +98,17 @@ function SetPlayerName(props) {
                         variant="contained"
                         color="primary"
                         onClick={handleOnSave}
-                        style={{width:'50vh', height:"7vh"}}
+                        style={{ width: '50vh', height: '7vh' }}
                     >
                         {buttonMsg}
+                    </PurpleButton>
+                    <PurpleButton
+                        variant="contained"
+                        color="primary"
+                        onClick={handleOnSave2}
+                        style={{ width: '50vh', height: '7vh' }}
+                    >
+                        {publicButton}
                     </PurpleButton>
                 </Grid>
             </Grid>

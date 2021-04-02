@@ -18,8 +18,6 @@ import MusicLeader from './MusicLeader';
 import MusicMember from './MusicMember';
 import { SnackAlertBtn } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
-// 용기
-// 용기
 
 import ChatRoom from './ChatRoom';
 import { ChatFeed, Message } from 'react-chat-ui';
@@ -102,22 +100,29 @@ function Lobby(props) {
             let tmparr = [];
             for (let key in PlayerList) {
                 console.log(key);
-                tmparr.push([key,PlayerList[key]]);
+                tmparr.push([key, PlayerList[key]]);
             }
             return (
-                <GridList contianer style={{width: '100%',height: '100vh'}} justify={'flex-start'} alignItems={'flex-start'}>
+                <GridList
+                    contianer
+                    style={{ width: '100%', height: '100vh' }}
+                    justify={'flex-start'}
+                    alignItems={'flex-start'}
+                >
                     {tmparr.map(([socketID, player]) => {
-                        return <LobbyPlayerCard
-                            playerID={player.playerID}
-                            roomLeader={props.roomInfo['roomLeader']}
-                            socketID={socketID}
-                        />;
+                        return (
+                            <LobbyPlayerCard
+                                playerID={player.playerID}
+                                roomLeader={props.roomInfo['roomLeader']}
+                                socketID={socketID}
+                            />
+                        );
                     })}
                 </GridList>
             );
         }
     }
-    
+
     // const Card = () => {
     //     return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
     // };
@@ -133,100 +138,118 @@ function Lobby(props) {
         return playerList;
     }
 
+    console.log('@Lobby // lobbyAudio :', props.lobbyAudio);
+    console.log('@Lobby // props :', props);
+
     return (
-        <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
-        <Grid
-            style={{ height: '100vh' }}
-            container
-            justify="center"
-            
+        <div
+            style={{
+                backgroundImage: `url(${backgroundImg})`,
+                backgroundSize: 'cover',
+            }}
         >
-            <Grid className="playerListGrid" item xs={leftSm} direction='column' justify='flex-start'  alignItems='flex-start' >
-                <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />
-            </Grid>
-            <Grid
-                className="stockTradeGrid"
-                container
-                item
-                direction={'column'}
-                alignItems={'center'}
-                justify={'space-around'}
-                xs={middleSm}
-            >
-                <Grid style={{ height: '25vh' }}></Grid>
-                
-                <StartGame
-                    roomID={props.roomID}
-                    socket={props.socket}
-                    history={props.history}
-                    audio={props.audio}
-                    isLeader={props.roomInfo['roomLeader'] === props.socket.id }
-                />
-            </Grid>
-            <Grid
-                className="bidChatGrid"
-                item
-                xs={rightSm}
-                alignItems="stretch"
-                container
-                direction="column"
-                justify="space-between"
-                style={{ margin: '2vh 2vw 14vh 2vw' }}
-            >
-                <LobbyTabs
-                    roomLeader={props.roomInfo['roomLeader']}
-                    socketId={props.socket.id}
-                    musicList={props.musicList}
-                    roomID={props.roomID}
-                    roomInfo={props.roomInfo}
-                    time={props.time}
-                    socket={props.socket}
-                    SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                    history={props.history}
-                    MusicStart={props.MusicStart}
-                />
-                <Grid container direction={'column'} justify={'flex-end'}>
-                    <Grid
-                        style={{ margin: '0 0 10px 0' }}
-                        container
-                        justify={'space-between'}
-                    >
-                        <TextField
-                            type="text"
-                            id="gameLink"
-                            className="form-control text-center fw-bold bg-transparent"
-                            value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                            InputProps={{
-                                className: classes.input,
-                            }}
-                            style={{ width: '80%' }}
-                            readOnly
-                        />
-                        <SnackbarProvider maxSnack={5}>
-                            <SnackAlertBtn
-                                class="btn btn-warning"
-                                severity="success"
-                                message="링크가 복사됐어요! 😚"
-                                label="LINK"
-                                onAlert={true}
-                                type="button"
-                                onClick={CopyURL}
-                                id="copy"
+            <Grid style={{ height: '100vh' }} container justify="center">
+                <Grid
+                    className="playerListGrid"
+                    item
+                    xs={leftSm}
+                    direction="column"
+                    justify="flex-start"
+                    alignItems="flex-start"
+                >
+                    <PutNewCard
+                        roomInfo={props.roomInfo}
+                        socket={props.socket}
+                    />
+                </Grid>
+                <Grid
+                    className="stockTradeGrid"
+                    container
+                    item
+                    direction={'column'}
+                    alignItems={'center'}
+                    justify={'space-around'}
+                    xs={middleSm}
+                >
+                    <Grid style={{ height: '25vh' }}></Grid>
+
+                    <StartGame
+                        roomID={props.roomID}
+                        socket={props.socket}
+                        history={props.history}
+                        lobbyAudio={props.lobbyAudio}
+                        isLeader={
+                            props.roomInfo['roomLeader'] === props.socket.id
+                        }
+                    />
+                </Grid>
+                <Grid
+                    className="bidChatGrid"
+                    item
+                    xs={rightSm}
+                    alignItems="stretch"
+                    container
+                    direction="column"
+                    justify="space-between"
+                    style={{ margin: '2vh 2vw 14vh 2vw' }}
+                >
+                    <LobbyTabs
+                        roomLeader={props.roomInfo['roomLeader']}
+                        socketId={props.socket.id}
+                        musicList={props.musicList}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                        time={props.time}
+                        socket={props.socket}
+                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                        history={props.history}
+                        MusicStart={props.MusicStart}
+                    />
+                    <Grid container direction={'column'} justify={'flex-end'}>
+                        <Grid
+                            style={{ margin: '0 0 10px 0' }}
+                            container
+                            justify={'space-between'}
+                        >
+                            <TextField
+                                type="text"
+                                id="gameLink"
+                                className="form-control text-center fw-bold bg-transparent"
+                                value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
+                                InputProps={{
+                                    className: classes.input,
+                                }}
+                                style={{ width: '80%' }}
+                                readOnly
                             />
-                        </SnackbarProvider>
+                            <SnackbarProvider maxSnack={5}>
+                                <SnackAlertBtn
+                                    class="btn btn-warning"
+                                    severity="success"
+                                    message="링크가 복사됐어요! 😚"
+                                    label="LINK"
+                                    onAlert={true}
+                                    type="button"
+                                    onClick={CopyURL}
+                                    id="copy"
+                                />
+                            </SnackbarProvider>
+                        </Grid>
+                        <Paper
+                            style={{ height: '40vh' }}
+                            className={classes.paper}
+                        >
+                            <ChatRoom
+                                SetInputCtrl={SetInputCtrl}
+                                roomInfo={props.roomInfo}
+                                roomID={props.roomID}
+                                socket={props.socket}
+                                chat={props.chat}
+                            />
+                        </Paper>
                     </Grid>
-                    <Paper style={{ height: '40vh' }} className={classes.paper}>
-                        <ChatRoom
-                            SetInputCtrl={SetInputCtrl}
-                            roomInfo={props.roomInfo}
-                            roomID={props.roomID}
-                            socket={props.socket}
-                            chat={props.chat}
-                        />
-                    </Paper>
                 </Grid>
             </Grid>
-        </Grid>
         </div>
     );
 }
