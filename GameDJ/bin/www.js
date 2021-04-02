@@ -11,9 +11,9 @@ global.bidList = {};
 global.askList = {};
 global.roomList = {};
 global.bgmList = {
-    'Deja_Vu.mp3': 265,
-    'King_Conga.mp3': 145,
-    'Mausoleum_Mash.mp3': 176,
+    Deja_Vu: 265,
+    King_Conga: 145,
+    Mausoleum_Mash: 176,
 };
 global.curCoin = {};
 global.exTable = {};
@@ -118,4 +118,3 @@ sockets.init(server);
 //      : 'port ' + addr.port;
 //    debug('Listening on ' + bind);
 //  }
-

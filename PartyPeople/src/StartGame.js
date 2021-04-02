@@ -39,13 +39,12 @@ export default function StartGame(props) {
     };
 
     let isSetUp = false;
-    const [musicPlaying, setPlaying] = useState('play');
     useEffect(() => {
         if (!isSetUp) {
             props.socket
                 .off('startGame_Res')
                 .once('startGame_Res', (gameTime) => {
-                    // props.audio.pause();
+                    props.lobbyAudio.pause();
                     props.history.push({
                         pathname: '/game',
                         state: { gameTime: gameTime },
@@ -57,27 +56,28 @@ export default function StartGame(props) {
 
     return (
         <>
-            {props.isLeader &&
+            {props.isLeader && (
                 <PurpleButton
-                variant="contained"
-                onClick={StartGameReq}
-                style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
-                text
-            >
-                {' '}
-                Start Game{' '}
-            </PurpleButton>}
-            {!props.isLeader &&
+                    variant="contained"
+                    onClick={StartGameReq}
+                    style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
+                    text
+                >
+                    {' '}
+                    Start Game{' '}
+                </PurpleButton>
+            )}
+            {!props.isLeader && (
                 <PurpleButton
-                variant="contained"
-                style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
-                text
-                disabled
-            >
-                {' '}
-                Waiting to start
-                {' '}
-            </PurpleButton>}
+                    variant="contained"
+                    style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
+                    text
+                    disabled
+                >
+                    {' '}
+                    Waiting to start{' '}
+                </PurpleButton>
+            )}
         </>
     );
 }

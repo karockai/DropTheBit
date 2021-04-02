@@ -64,7 +64,7 @@ class Room {
 
         let roomInfo = {
             gameTime: 145,
-            music: 'King_Conga.mp3',
+            music: 'King_Conga',
             roomLeader: socket.id,
             gaming: false,
         };
@@ -74,7 +74,7 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = ['Deja_Vu.mp3', 'King_Conga.mp3', 'Mausoleum_Mash.mp3'];
+        let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
