@@ -26,10 +26,14 @@ export default function EnterRoom(props) {
         setPlaying(true);
     };
 
-    useEffect(() => {
-        playing ? lobbyAudio.play() : lobbyAudio.pause();
-        props.sendAudio(lobbyAudio);
-    });
+    useEffect(
+        () => {
+            playing ? lobbyAudio.play() : lobbyAudio.pause();
+            props.sendAudio(lobbyAudio);
+        }
+        //  ?  [playing] 이 조건이 없으면 렌더가 불필요하게 많이 된다.
+        // ? 그런데 있으면 렌더가 한 번 모자라서 음악이 안나옴
+    );
 
     let musicList = [];
 

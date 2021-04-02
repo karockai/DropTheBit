@@ -6,11 +6,12 @@ import GameManager from './GameManager';
 import Test from './Test';
 import GameOverModal from './GameOverModal';
 
+
 ReactDOM.render(
     <div className='GameManager'>
         <GameManager/>
-        {/* <GameOverModal/> */}
-        {/* <Test/> */}
+        {/* <ShiningButton/> */}
+
     </div>,
     document.getElementById('root')
 );

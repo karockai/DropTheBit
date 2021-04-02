@@ -21,42 +21,48 @@ import StockDoneList from './StockDoneList';
 
 const CssTextField = withStyles({
     root: {
-      '& label.Mui-focused': {
-        color: '#CDD7E0',
-    },
-    '& .MuiInputLabel-root': {
-      color: '#CDD7E0',
-    },
-    '& .MuiInputBase-input': {
-      color: '#CDD7E0',
-    },
-      
-    //   '& .MuiInput-underline:after': {
-    //     borderBottomColor: 'white',
-    //   },
-    //   '& .MuiInput-underline:before': {
-    //     borderBottomColor: 'white',
-    //   },
-      '& .MuiOutlinedInput-root': {
-        '& .MuiInputBase-input': {
+        '& label.Mui-focused': {
             color: '#CDD7E0',
         },
         '& .MuiInputLabel-root': {
             color: '#CDD7E0',
-            fontStyle:'italic'
+            fontSize: '0.8vw',
         },
-        '& fieldset': {
-          borderColor: '#2D4053',
+        '& .MuiInputBase-input': {
+            color: '#CDD7E0',
+            fontSize: '0.9vw',
         },
-        '&:hover fieldset': {
-          borderColor: 'white',
+        '& .MuiInputBase-formControl': {
+            color: '#CDD7E0',
+            fontSize: '0.9vw',
+            height: '50%',
         },
-        '&.Mui-focused fieldset': {
-          borderColor: '#635ee7',
+        //   '& .MuiInput-underline:after': {
+        //     borderBottomColor: 'white',
+        //   },
+        //   '& .MuiInput-underline:before': {
+        //     borderBottomColor: 'white',
+        //   },
+        '& .MuiOutlinedInput-root': {
+            '& .MuiInputBase-input': {
+                color: '#CDD7E0',
+            },
+            '& .MuiInputLabel-root': {
+                color: '#CDD7E0',
+                fontStyle: 'italic',
+            },
+            '& fieldset': {
+                borderColor: '#2D4053',
+            },
+            '&:hover fieldset': {
+                borderColor: 'white',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: '#635ee7',
+            },
         },
-      },
     },
-  })(TextField);
+})(TextField);
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,7 +84,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     paper: {
-        padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
@@ -93,40 +98,44 @@ export default function ChatRoom(props) {
     const [messages, setMessages] = useState(
         // author와 쌍으로 저장된 메시지
         [
+            {
+                author: 'SERVER',
+                message: '게임이 시작됩니다.',
+            },
         ]
     );
-    const messagesEnd =  React.useRef(null);
-    const [isChanged, setChanged]  = useState(true);
+    const messagesEnd = React.useRef(null);
+    const [isChanged, setChanged] = useState(true);
     let textInput = useRef(null);
     const scrollToBottom = () => {
         messagesEnd.current.scrollIntoView();
-    }
+    };
 
     useEffect(() => {
-        if(messages.length >= 15) messages.shift();
+        if (messages.length >= 15) messages.shift();
         setMessages([...messages, resMsg]);
         scrollToBottom();
-    },[resMsg])
+    }, [resMsg]);
 
     useEffect(() => {
         props.socket.on('update', (data) => {
             if (data) {
                 setResMsg(data);
             }
-        })
-    },[]);
+        });
+    }, []);
 
     useEffect(() => {
         document.addEventListener('keyup', HandleKeyUp);
         return () => {
             document.removeEventListener('keyup', HandleKeyUp);
         };
-    },);
+    });
 
     useEffect(() => {
         scrollToBottom();
-    },[messages])
-    
+    }, [messages]);
+
     // const socket_on = (async() => {
     //     await props.socket.on('update', (data) => {
     //         if (data) {
@@ -139,7 +148,7 @@ export default function ChatRoom(props) {
     const handleOnChange = (event) => {
         setMessage(event.target.value);
     };
-    
+
     const sendMessage = () => {
         if (textInput.current.value) {
             // ev.preventDefault();
@@ -155,7 +164,7 @@ export default function ChatRoom(props) {
         }
     };
     // * 서버에서 받아온 채팅메시지를 채팅창에 씀
-    
+
     const addMessage = (data) => {
         // setMessages({ messages: [...messages, data['message']] });
         const new_messages = [...messages, data];
@@ -176,11 +185,9 @@ export default function ChatRoom(props) {
             //_ Enter
             if (document.activeElement !== textInput.current) {
                 textInput.current.focus();
-            }
-            else if (textInput.current.value === '') {
+            } else if (textInput.current.value === '') {
                 textInput.current.blur();
-            }
-            else {
+            } else {
                 sendMessage();
             }
         }
@@ -192,70 +199,92 @@ export default function ChatRoom(props) {
 
     return (
         <>
-        <Grid container
-            direction={'column'}
-            justify={'space-evenly'}
-            >
-            <GridList item style={{width: '100%', height: '30vh'}} wrap={'nowrap'} >
-                <Grid>
-                    {
-                        messages.map( (message) => {
-                            return (
-                                <>
-                                <pre style ={{ color: 'white'}}>
-                                    {message.author} : {message.message}
-                                </pre>
-                                </>
-                            );
-                        })
-                    }
-                </Grid>
+            {/* <Grid
+            container
+            className={classes.button}
+            direction={'row'}
+            justify={'space-between'}
+            wrap={'nowrap'}
+            
+        > */}
+            <GridList style={{ width: '100%', height: '100%' }} wrap={'wrap'}>
                 <Grid
-                    style={{ float:"left", clear: "both", height: "0%" }}
-                    ref={messagesEnd}>
-                </Grid> 
-            </GridList>
-        </Grid>
-        <Grid
-                    item
                     container
-                    dirction="column"
-                    style={{ padding: '2vh 0 0 0'}}
-                    spacing={2}
-                    justify={'center'}
-                    alignItems="center"
+                    direction={'column'}
+                    justify={'flex-start'}
+                    alignItems={'stretch'}
+                    style={{ width: '100%', height: '80%' }}
                 >
-                    <Grid item style={{ margin: '10 0 0 0', width: '70%' }}>
-                        <CssTextField
-                            style={{ height: '100%' }}
-                            id="standard-basic"
-                            inputRef={textInput}
-                            label="메세지 보내기 (최대 20자)"
-                            onFocus={()=> {
-                                isFocus = true;
-                                props.SetInputCtrl(true)
-                            }}
-                            onBlur={()=> {
-                                isFocus = false;
-                                props.SetInputCtrl(false)
-                            }}
-                            onChange={handleOnChange}
-                            variant="outlined"
-                            size="small"
-                            inputProps={{ 'maxlength': 20 }}
-                        />
-                    </Grid>
-                    <Grid item style={{ width: '20%' }}>
-                        <Button
-                            style={{ height: '100%' ,backgroundColor:'#635ee7' }}
-                            variant="contained"
-                            color="primary"
-                            onClick={()=>{sendMessage()}}
-                        >
-                            전송
-                        </Button>
-                    </Grid>
+                    {messages.map((message) => {
+                        console.log(messages);
+                        if (message === '') return;
+                        return (
+                            <Grid
+                                item
+                                style={{
+                                    color: 'white',
+                                    width: '100%',
+                                    height: '1vh',
+                                    fontSize: '0.8vw',
+                                }}
+                                wrap={'wrap'}
+                            >
+                                {message.author} : {message.message}
+                            </Grid>
+                        );
+                    })}
+                    <Grid
+                        style={{ float: 'left', clear: 'both', height: '0%' }}
+                        ref={messagesEnd}
+                    ></Grid>
                 </Grid>
+            <Grid
+                item
+                container
+                dirction="row"
+                style={{ width: '100%', height: '20%' }}
+            >
+                <Grid item style={{ width: '70%', height: '100%' }}>
+                    <CssTextField
+                        style={{ width: '100%', height: '100%' }}
+                        id="standard-basic"
+                        inputRef={textInput}
+                        label="메세지 보내기 (최대 20자)"
+                        onFocus={() => {
+                            isFocus = true;
+                            props.SetInputCtrl(true);
+                        }}
+                        onBlur={() => {
+                            isFocus = false;
+                            props.SetInputCtrl(false);
+                        }}
+                        onChange={handleOnChange}
+                        variant="outlined"
+                        size="small"
+                        inputProps={{ maxlength: 20 }}
+                    />
+                </Grid>
+                <Grid item style={{ width: '20%', height: '100%' }}>
+                    <button
+                        style={{
+                            width: '100%',
+                            height: '50%',
+                            backgroundColor: '#635ee7',
+                            fontSize: '0.9vw',
+                            color: 'white',
+                        }}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                            sendMessage();
+                        }}
+                        label="전송"
+                    >
+                        전송
+                    </button>
+                </Grid>
+            </Grid>
+            </GridList>
         </>
     );
 }

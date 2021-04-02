@@ -3,11 +3,8 @@ import socketio from 'socket.io';
 import Room from './gameDJ/room.js';
 import Game from './gameDJ/game.js';
 import Disconnect from './gameDJ/disconnect.js';
-import Test from './gameDJ/testfile.js';
 import Refresh from './gameDJ/refresh.js';
 import Chat from './gameDJ/chat.js';
-
-import { dbset, dbget, dblpush } from './gameDJ/redis.js';
 
 export default {
     async init(server) {
@@ -19,21 +16,6 @@ export default {
             });
         }
         await serverSetting(server);
-
-        // db setting ------------------------------------- >>
-        // let bidDummy = {
-        //     0: {
-        //         dummyID: 'dummyRoom',
-        //     },
-        // };
-        // let askDummy = {
-        //     10000000000: {
-        //         dummyID: 'dummyRoom',
-        //     },
-        // };
-        // dbset('bidList', JSON.stringify(bidDummy));
-        // dbset('askList', JSON.stringify(askDummy));
-        // db setting  ------------------------------------ <<
 
         // curPrice refresh --------------------------------- >>
         setInterval(async () => {
@@ -107,8 +89,6 @@ export default {
                 let curPrice = curCoin['curPrice'];
                 socket.emit('RefreshBid_Res', curPrice);
             });
-
-
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>
             socket.on('message', (data) =>

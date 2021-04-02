@@ -45,11 +45,14 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(1),
         textAlign: 'center',
         color: theme.palette.primary,
     },
     score: {},
+    table: {
+        color: '#2D4053',
+        spacing: 1,
+    },
 }));
 
 // function MakeTableEntity(props) {
@@ -94,9 +97,6 @@ export default function AskTable(props) {
     }, [isInit]);
 
     function CancelAsk(num, table) {
-        console.log('num:', num);
-        console.log('table:', table);
-        console.log('hi');
         let reqJson = {
             socketID: props.socket.id,
             roomID: props.roomID,
@@ -163,7 +163,6 @@ export default function AskTable(props) {
             direction="column"
             justify="center"
             alignItems="stretch"
-            spacing={2}
         >
             <TableContainer>
                 <Table
@@ -174,23 +173,23 @@ export default function AskTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell
-                                style={{ align: 'center', width: '20%' }}
+                                style={{ align: 'center', height:'100%', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
-                                    취소 번호 [1]~[8]
+                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw' }}>
+                                    취소[1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw' }}>
                                     매도 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ fontWeight: 'bold' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     매도 수량
                                 </span>
                             </TableCell>
@@ -198,11 +197,11 @@ export default function AskTable(props) {
                     </TableHead>
                 </Table>
             </TableContainer>
-            <GridList wrap="wrap" style={{ width: '100%', height: '30vh' }}>
-                <Grid style={{ width: '99%' }}>
+            <GridList wrap="wrap" style={{ width: '100%', height: '100%' }}>
+                <Grid style={{ width: '100%' }}>
                     {AskTable.map((askElem, index, AskTable) => {
                         return (
-                            <Grid style={{ margin: '5px' }} item xs={testXs}>
+                            <Grid  item xs={testXs}>
                                 <AskEntity
                                     price={askElem.price}
                                     vol={askElem.vol}

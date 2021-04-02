@@ -1,19 +1,21 @@
 import { Grid, GridList } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-// import { useSound, playSound } from './useSound';
-// import Check from './audios/effect/check.mp3';
-// import BidSound from './audios/effect/bidSound.wav';
-// import AskSound from './audios/effect/askSound.wav';
+import { useSound, playSound } from './useSound';
+
+const defaultTextStyle = {
+    color: '#444444',
+};
+const highlightTextStyle = {
+    color: 'white',
+    fontWeight: 'bold',
+};
+
 export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
     const [doneItem, setItem] = useState(null);
     const [doneList, setList] = useState([]);
-    const messagesEnd = React.useRef(null);
 
-    const scrollToBottom = () => {
-        messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
-    };
 
     useEffect(() => {
         if (props.socket == null) {
@@ -60,68 +62,46 @@ export default function StockDoneList(props) {
     }, []);
 
     useEffect(() => {
-        if (doneList.length >= 10) doneList.shift();
+        if (doneList.length >= 5) doneList.shift();
         setList([...doneList, doneItem]);
-        scrollToBottom();
     }, [doneItem]);
 
     return (
-        <GridList
-            spacing={0}
-            wrap="wrap"
-            style={{ width: '100%', height: '100%' }}
-        >
-            {
-                <Grid style={{ width: '100%' }}>
-                    <div>
-                        {doneList.map((done, idx) => {
-                            if (done === null) return;
-                            let buySellColor = {
-                                color:
-                                    done.type.substring(0, 2) === '매수'
-                                        ? done.type.substring(3, 5) ===
-                                              '완료' ||
-                                          done.type.substring(6, 8) === '체결'
-                                            ? red[500]
-                                            : red[300]
-                                        : done.type.substring(3, 5) ===
-                                              '완료' ||
-                                          done.type.substring(6, 8) === '체결'
-                                        ? blue[500]
-                                        : blue[300],
-                                fontWeight:
-                                    done.type.substring(3, 5) === '완료' ||
-                                    done.type.substring(6, 8) === '체결'
-                                        ? 'bold'
-                                        : 'normal',
-                            };
-                            return (
-                                <pre key={idx}>
-                                    <span style={{ fontWeight: 'bold' }}>
-                                        {props.isMine ? '' : done.playerID}
-                                    </span>
-                                    {props.isMine ? '' : '님이 '}
-                                    <span style={{ fontWeight: 'bold' }}>
-                                        {done.price}
-                                    </span>
-                                    원에{' '}
-                                    <span style={{ fontWeight: 'bold' }}>
-                                        {done.vol}
-                                    </span>
-                                    개를{' '}
-                                    <span style={buySellColor}>
-                                        {done.type}.
-                                    </span>
-                                </pre>
-                            );
-                        })}
-                    </div>
-                    <div
-                        style={{ float: 'left', clear: 'both', height: '0%' }}
-                        ref={messagesEnd}
-                    ></div>
-                </Grid>
-            }
-        </GridList>
+        <div style={{height: '100%'}}>
+                {doneList.map((done, idx) => {
+                    if (done === null) return <></>;
+                    let buySellColor = {
+                        color:
+                            done.type.substring(0, 2) === '매수'
+                                ? done.type.substring(3, 5) === '완료' ||
+                                  done.type.substring(6, 8) === '체결'
+                                    ? red[500]
+                                    : red[300]
+                                : done.type.substring(3, 5) === '완료' ||
+                                  done.type.substring(6, 8) === '체결'
+                                ? blue[500]
+                                : blue[300],
+                        fontWeight:
+                            done.type.substring(3, 5) === '완료' ||
+                            done.type.substring(6, 8) === '체결'
+                                ? 'bold'
+                                : 'normal',
+                    };
+                    return (
+                    <Grid style={{fontSize: '1.05vw'}}>
+
+                        <pre style={defaultTextStyle} key={idx}>
+                            <span style={highlightTextStyle}>
+                                {props.isMine ? '' : done.playerID}
+                            </span>
+                            {props.isMine ? '' : '님이 '}
+                            <span style={highlightTextStyle}>{done.price}</span>
+                            원에{' '}
+                            <span style={highlightTextStyle}>{done.vol}</span>
+                            개를 <span style={buySellColor}>{done.type}.</span>
+                        </pre>
+                    </Grid>
+                    );})}
+        </div>
     );
 }
