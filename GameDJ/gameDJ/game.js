@@ -33,8 +33,9 @@ class Game {
         console.log('startGame');
         console.log(roomList[roomID]);
         let gameTime = roomList[roomID]['gameTime'];
+        let musicName = roomList[roomID]['music'];
         io.to(roomID).emit('chartData', { chartData: chartData });
-        io.to(roomID).emit('startGame_Res', gameTime);
+        io.to(roomID).emit('startGame_Res', {gameTime : gameTime, musicName : musicName});
 
         async function realStart() {
             let roomID = 0;

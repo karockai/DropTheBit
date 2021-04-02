@@ -44,12 +44,16 @@ export default function StartGame(props) {
         if (!isSetUp) {
             props.socket
                 .off('startGame_Res')
-                .once('startGame_Res', (gameTime) => {
+                .on('startGame_Res', (data) => {
                     props.lobbyAudio.pause();
-                    props.history.push({
-                        pathname: '/game',
-                        state: { gameTime: gameTime },
-                    });
+                    console.log(data);
+                    // if (data.musicName)
+                        props.history.push({
+                            pathname: '/game',
+                            state: { 
+                                musicName: data.musicName,
+                                gameTime: data.gameTime },
+                        });
                 });
             isSetUp = true;
         }

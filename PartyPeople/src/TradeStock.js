@@ -409,6 +409,7 @@ export default function TradeStock(props) {
 
     useEffect(() => {
         props.socket.once('chart', (data) => {
+            // coinName 추가
             SetUnit(data.priceUnit);
             SetBid(data.curPrice);
         });
