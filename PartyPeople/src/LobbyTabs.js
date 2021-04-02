@@ -27,15 +27,15 @@ const useStyles = makeStyles((theme) => ({
 function LobbyMusicOnOff(props) {
     const [state, setState] = React.useState(true);
 
-    const handleChange = (event) => {
+    const handleChange = (event, lobbyAudio) => {
         setState({ ...state, [event.target.name]: event.target.checked });
         if (state) {
             setState(false);
             setState(false);
-            // props.MusicPause();
+            props.lobbyAudio.pause();
         } else {
             setState(true);
-            // props.MusicStart();
+            props.lobbyAudio.play();
         }
     };
 
@@ -72,13 +72,13 @@ export default function LobbyTabs(props) {
     const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
     const [time, setTime] = React.useState(props.musicTime);
 
-    const setMusicTime =((music, time)=>{
+    const setMusicTime = (music, time) => {
         setMusic(music);
         var minute = parseInt(time / 60);
         var second = time % 60;
         strSetTime(String(minute) + ' : ' + String(second));
         setTime(time);
-    });
+    };
 
     const handleKeymap = (event) => {
         console.log(event.currentTarget);
@@ -115,7 +115,6 @@ export default function LobbyTabs(props) {
                         strTime={strTime}
                         time={time}
                         setMusicTime={setMusicTime}
-                         
                     />
                 </>
             );
@@ -153,8 +152,7 @@ export default function LobbyTabs(props) {
                 >
                     SELECT MUSIC
                 </PurpleButton>
-                <LobbyMusicOnOff />
-                {/* MusicPause={props.MusicPause} MusicStart={props.MusicStart} */}
+                <LobbyMusicOnOff lobbyAudio={props.lobbyAudio} />
             </Grid>
             <Popover
                 open={openKey}
