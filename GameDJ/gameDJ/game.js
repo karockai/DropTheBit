@@ -30,8 +30,6 @@ class Game {
         else{
             roomID = publicRoomID;
         }
-        console.log('startGame');
-        console.log(roomList[roomID]);
         let gameTime = roomList[roomID]['gameTime'];
         let musicName = roomList[roomID]['music'];
         io.to(roomID).emit('chartData', { chartData: chartData });

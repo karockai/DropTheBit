@@ -298,8 +298,6 @@ class Refresh {
         leaderBoard.sort(function (a, b) {
             return b['asset'] - a['asset'];
         });
-        console.log('gameOver');
-        console.log(roomInfo);
 
         io.to(roomID).emit('gameOver', leaderBoard);
     }
