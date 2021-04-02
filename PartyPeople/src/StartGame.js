@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StartGame(props) {
     const classes = useStyles();
+    const [restReadyTime, SetRestTime] = useState(null);
 
     const StartGameReq = () => {
         props.socket.emit('startGame_Req', props.roomID);
@@ -54,30 +55,77 @@ export default function StartGame(props) {
         }
     }, []);
 
-    return (
-        <>
-            {props.isLeader && (
-                <PurpleButton
-                    variant="contained"
-                    onClick={StartGameReq}
-                    style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
-                    text
-                >
-                    {' '}
-                    Start Game{' '}
-                </PurpleButton>
-            )}
-            {!props.isLeader && (
-                <PurpleButton
-                    variant="contained"
-                    style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
-                    text
-                    disabled
-                >
-                    {' '}
-                    Waiting to start{' '}
-                </PurpleButton>
-            )}
-        </>
-    );
+    useEffect(() => {
+        props.socket.on('restReadyTime', (restTime) => {
+            SetRestTime(restTime);
+        });
+    });
+
+    if (props.roomID === 'AAAAAAAAAAAAAAA') {
+        return (
+            <>
+                {props.isLeader && (
+                    <PurpleButton
+                        variant="contained"
+                        style={{
+                            width: '80%',
+                            height: '20vh',
+                            fontSize: '8vh',
+                        }}
+                        text
+                    >
+                        {' '}
+                        {restReadyTime}
+                    </PurpleButton>
+                )}
+                {!props.isLeader && (
+                    <PurpleButton
+                        variant="contained"
+                        style={{
+                            width: '80%',
+                            height: '20vh',
+                            fontSize: '8vh',
+                        }}
+                        text
+                    >
+                        {' '}
+                        {restReadyTime}
+                    </PurpleButton>
+                )}
+            </>
+        );
+    } else {
+        return (
+            <>
+                {props.isLeader && (
+                    <PurpleButton
+                        variant="contained"
+                        onClick={StartGameReq}
+                        style={{
+                            width: '80%',
+                            height: '20vh',
+                            fontSize: '8vh',
+                        }}
+                        text
+                    >
+                        {'START'}
+                    </PurpleButton>
+                )}
+                {!props.isLeader && (
+                    <PurpleButton
+                        variant="contained"
+                        style={{
+                            width: '80%',
+                            height: '20vh',
+                            fontSize: '8vh',
+                        }}
+                        text
+                        disabled
+                    >
+                        {'START'}
+                    </PurpleButton>
+                )}
+            </>
+        );
+    }
 }

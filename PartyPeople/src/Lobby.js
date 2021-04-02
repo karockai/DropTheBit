@@ -138,9 +138,6 @@ function Lobby(props) {
         return playerList;
     }
 
-    console.log('@Lobby // lobbyAudio :', props.lobbyAudio);
-    console.log('@Lobby // props :', props);
-
     return (
         <div
             style={{
@@ -203,7 +200,7 @@ function Lobby(props) {
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
-                        MusicStart={props.MusicStart}
+                        lobbyAudio={props.lobbyAudio}
                     />
                     <Grid container direction={'column'} justify={'flex-end'}>
                         <Grid
