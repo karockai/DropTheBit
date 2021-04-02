@@ -20,8 +20,10 @@ export default function Routes(props) {
     const [lobbyAudio, setAudio] = React.useState(null);
 
     const sendAudio = (audio) => {
+        console.log('sendAudio : ', audio);
         setAudio(audio);
     };
+    console.log('@Routes // lobbyAudio:', lobbyAudio);
 
     return (
         <>
