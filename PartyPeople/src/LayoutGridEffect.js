@@ -5,15 +5,11 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
-// import King_Conga from './audios/music/King_Conga.mp3';
-// import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
-// import Deja_Vu from './audios/music/Deja_Vu.mp3';
+
 import { useSound, playSound, getDuration } from './useSound';
 import ThreeSecTimer from './ThreeSecTimer';
 import LayoutGrid from './LayoutGrid';
 import Sound from './Sound';
-
-let bgm_audio = new Audio('');
 
 export default function LayoutGridEffect(props) {
     const location = useLocation();
@@ -24,7 +20,6 @@ export default function LayoutGridEffect(props) {
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
     const [audio, SetAudio] = useState(null);
-
     const sendAudio = (audio) => {
         SetAudio(audio);
     };
@@ -50,10 +45,7 @@ export default function LayoutGridEffect(props) {
                 soundType={'music'}
                 sendAudio={sendAudio}
             />
-            <ThreeSecTimer
-                // SpecificMusic={SpecificMusic}
-                open={threeSecTimerOpen}
-            />
+            <ThreeSecTimer open={threeSecTimerOpen} />
             <LayoutGrid
                 socket={props.socket}
                 requestSocket={props.requestSocket}

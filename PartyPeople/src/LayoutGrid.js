@@ -15,7 +15,8 @@ import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
-import { Howl,Howler } from 'howler';
+import { Howl, Howler } from 'howler';
+import GameEnd from './audios/effect/GameEnd.mp3';
 
 import {
     BrowserRouter as Router,
@@ -50,7 +51,7 @@ export default function LayoutGrid(props) {
     const [timerTime, setTimerTime] = useState(gameTime);
     const [inputCtrl, setInputCtrl] = useState(false);
 
-    const SetInputCtrl =  (isChat) => {
+    const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
     };
 
@@ -63,6 +64,7 @@ export default function LayoutGrid(props) {
     useEffect(() => {
         props.socket.once('gameOver', (leaderBoard) => {
             console.log('gameover');
+            new Audio(GameEnd).play();
             if (leaderBoard) {
                 setOver(leaderBoard);
             }
@@ -273,9 +275,7 @@ export default function LayoutGrid(props) {
                                     </Paper>
                                 </Grid>
                                 <Grid style={{ height: '45vh' }} item>
-                                    <Paper
-                                        className={classes.paper}
-                                    >
+                                    <Paper className={classes.paper}>
                                         <ChatRoom
                                             SetInputCtrl={SetInputCtrl}
                                             roomInfo={props.roomInfo}

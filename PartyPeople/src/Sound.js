@@ -56,7 +56,7 @@ export default function Sound(props) {
     const [type, SetType] = useState(props.soundType);
     const [name, SetName] = useState(props.soundName);
     const [volume, SetSoundVol] = useState(props.soundVol);
-    console.log(action);
+
     const musicLink = {
         lobbyMusic: Tetris99,
         Deja_Vu: Deja_Vu,
@@ -107,7 +107,7 @@ export default function Sound(props) {
     };
 
     const [audio, SetAudio] = useState(new Audio(musicLink[name]));
-
+    const [letPlay, SetLet] = useState(false);
     if (props.sendAudio) {
         props.sendAudio(audio);
     }

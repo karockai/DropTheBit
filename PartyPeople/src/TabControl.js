@@ -10,32 +10,36 @@ import BidTab from './BidTab';
 import BidTable from './BidTable';
 import AskTable from './AskTable';
 
+// 음악
+import ExTable from './audios/effect/ExTable.wav';
+import BidTableSound from './audios/effect/BidTable.wav';
+import AskTableSound from './audios/effect/AskTable.wav';
 
 const StyledTabs = withStyles({
     indicator: {
-      display: "flex",
-      justifyContent: "center",
-      backgroundColor: "transparent",
-      "& > span": {
-        maxWidth: 40,
-        width: "100%",
-        backgroundColor: "#635ee7"
-      }
-    }
-  })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
-  
-  const StyledTab = withStyles((theme) => ({
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+        '& > span': {
+            maxWidth: 40,
+            width: '100%',
+            backgroundColor: '#635ee7',
+        },
+    },
+})((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+
+const StyledTab = withStyles((theme) => ({
     root: {
-      textTransform: "none",
-      color: "#fff",
-      fontWeight: theme.typography.fontWeightRegular,
-      fontSize: theme.typography.pxToRem(15),
-      marginRight: theme.spacing(1),
-      "&:focus": {
-        opacity: 1
-      }
-    }
-  }))((props) => <Tab disableRipple {...props} />);
+        textTransform: 'none',
+        color: '#fff',
+        fontWeight: theme.typography.fontWeightRegular,
+        fontSize: theme.typography.pxToRem(15),
+        marginRight: theme.spacing(1),
+        '&:focus': {
+            opacity: 1,
+        },
+    },
+}))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -72,18 +76,18 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
-      },
-      padding: {
-        padding: theme.spacing(3)
-      },
-      demo1: {
-        backgroundColor: theme.palette.background.paper
-      },
-      demo2: {
-        backgroundColor: "#0C151C"
-      }
-    }));
+        flexGrow: 1,
+    },
+    padding: {
+        padding: theme.spacing(3),
+    },
+    demo1: {
+        backgroundColor: theme.palette.background.paper,
+    },
+    demo2: {
+        backgroundColor: '#0C151C',
+    },
+}));
 
 export default function TabControl(props) {
     const classes = useStyles();
@@ -102,12 +106,15 @@ export default function TabControl(props) {
         // }
         if (e.keyCode === 81) {
             //_ Q
+            new Audio(BidTableSound).play();
             setValue(0);
         } else if (e.keyCode === 87) {
             //_ W
+            new Audio(AskTableSound).play();
             setValue(1);
         } else if (e.keyCode === 69) {
             //_ E
+            new Audio(ExTable).play();
             setValue(2);
         }
     }

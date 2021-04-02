@@ -18,6 +18,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import BidEntity from './BidEntity';
 
+import Cancel1 from './audios/effect/Cancel1.wav';
+import Cancel2 from './audios/effect/Cancel2.wav';
+import Cancel3 from './audios/effect/Cancel3.wav';
+import Cancel4 from './audios/effect/Cancel4.wav';
+import Cancel5 from './audios/effect/Cancel5.wav';
+import Cancel6 from './audios/effect/Cancel6.wav';
+import Cancel7 from './audios/effect/Cancel7.wav';
+import Cancel8 from './audios/effect/Cancel8.wav';
+
 // const dummyTable = [
 //     { price: 1000, vol: 100 },
 //     { price: 1000, vol: 100 },
@@ -41,11 +50,10 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary,
     },
     score: {},
-    table :{
+    table: {
         color: '#2D4053',
         spacing: 1,
-
-    }
+    },
 }));
 
 // const bidCancel = (props, price, vol) => {
@@ -108,28 +116,35 @@ export default function BidTable(props) {
 
         if (e.keyCode === 49 && BidTable.length >= 1) {
             //_ 1
-
+            new Audio(Cancel1).play();
             CancelBid(0, BidTable);
         } else if (e.keyCode === 50 && BidTable.length >= 2) {
             //_ 2
+            new Audio(Cancel2).play();
             CancelBid(1, BidTable);
         } else if (e.keyCode === 51 && BidTable.length >= 3) {
             //_ 3
+            new Audio(Cancel3).play();
             CancelBid(2, BidTable);
         } else if (e.keyCode === 52 && BidTable.length >= 4) {
             //_ 4
+            new Audio(Cancel4).play();
             CancelBid(3, BidTable);
         } else if (e.keyCode === 53 && BidTable.length >= 5) {
             //_ 5
+            new Audio(Cancel5).play();
             CancelBid(4, BidTable);
         } else if (e.keyCode === 54 && BidTable.length >= 6) {
             //_ 6
+            new Audio(Cancel6).play();
             CancelBid(5, BidTable);
         } else if (e.keyCode === 55 && BidTable.length >= 7) {
             //_ 7
+            new Audio(Cancel7).play();
             CancelBid(6, BidTable);
         } else if (e.keyCode === 56 && BidTable.length >= 8) {
             //_ 8
+            new Audio(Cancel8).play();
             CancelBid(7, BidTable);
         }
     }
@@ -164,21 +179,36 @@ export default function BidTable(props) {
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold' }}>
+                                <span
+                                    style={{
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
                                     취소 번호 [1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{  color: 'white', fontWeight: 'bold' }}>
+                                <span
+                                    style={{
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
                                     매수 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{  color: 'white', fontWeight: 'bold' }}>
+                                <span
+                                    style={{
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
                                     매수 수량
                                 </span>
                             </TableCell>
