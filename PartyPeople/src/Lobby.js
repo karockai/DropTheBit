@@ -138,6 +138,9 @@ function Lobby(props) {
         return playerList;
     }
 
+    console.log('@Lobby // lobbyAudio :', props.lobbyAudio);
+    console.log('@Lobby // props :', props);
+
     return (
         <div
             style={{
@@ -174,7 +177,7 @@ function Lobby(props) {
                         roomID={props.roomID}
                         socket={props.socket}
                         history={props.history}
-                        audio={props.audio}
+                        lobbyAudio={props.lobbyAudio}
                         isLeader={
                             props.roomInfo['roomLeader'] === props.socket.id
                         }

@@ -18,20 +18,17 @@ export default function EnterRoom(props) {
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState(props.roomID);
-    const [lobbyMusic] = useState(new Audio(LobbyMusic));
+    const [lobbyAudio] = useState(new Audio(LobbyMusic));
     const [playing, setPlaying] = useState(true);
     const history = useHistory();
-
-    const MusicPause = () => {
-        setPlaying(false);
-    };
 
     const MusicStart = () => {
         setPlaying(true);
     };
 
     useEffect(() => {
-        playing ? lobbyMusic.play() : lobbyMusic.pause();
+        playing ? lobbyAudio.play() : lobbyAudio.pause();
+        props.sendAudio(lobbyAudio);
     });
 
     let musicList = [];
@@ -75,6 +72,11 @@ export default function EnterRoom(props) {
                 props.SetRoomIdAndInfo(data);
                 musicList = data.musicList;
             });
+            props.socket.on('joinRoom_Res', (data) => {
+                console.log('enter public');
+                props.SetRoomIdAndInfo(data);
+                musicList = data.musicList;
+            });
         }
     };
 
@@ -83,8 +85,6 @@ export default function EnterRoom(props) {
         history.push({
             pathname: '/lobby',
             state: { playerID: name },
-            stopMusic: MusicPause,
-            resumeMusic: MusicStart,
         });
     };
 

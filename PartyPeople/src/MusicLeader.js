@@ -4,7 +4,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Tetris99 from './audios/music/Tetris99.mp3';
 import {
     Button,
     Fab,
@@ -31,26 +30,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function MusicLeader(props) {
     const classes = useStyles();
-    // let tmp_music = props.roomInfo['music'];
-    // let tmp_time =props.roomInfo['gameTime'];
-
-    // var minute = parseInt(tmp_time / 60);
-    // var second = tmp_time % 60;
-    // minute = minute >= 10 ? String(minute) : '0' + String(minute);
-    // second = second >= 10 ? String(second) : '0' + String(second);
-    // const [music, setMusic] = React.useState(tmp_music);
-    // const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
-    // const [music, setMusic] = React.useState(tmp_music);
-    // const [strTime, strSetTime] = React.useState(tmp_time);
-
-    // if (typeof strTime === 'number') {
-    //     let minute = parseInt(strTime / 60);
-    //     let second = strTime % 60;
-    //     minute = minute >= 10 ? String(minute) : '0' + String(minute);
-    //     second = second >= 10 ? String(second) : '0' + String(second);
-
-    //     strSetTime(minute + ' : ' + second);
-    // }
 
     function MusicInput() {
         const handleChange = (event) => {
@@ -61,22 +40,7 @@ export default function MusicLeader(props) {
                 musicName: musicName,
             });
         };
-        /*  music select 현재 하드코딩 상태에서 동적으로 구현할 함수..!
-      function MusicMenu() {
-          return (
-              <>
-              {props.musicList.map((music) => {
-                      console.log(music);
-                  return (
-                  (<MenuItem
-                      value={music}>{music}
-                  </MenuItem>)
-                  );
-              })}
-              </>
-          );
-      }
-*/
+
         return (
             <div>
                 <FormControl className={classes.formControl}>
@@ -90,13 +54,23 @@ export default function MusicLeader(props) {
                         value={props.music}
                         onChange={handleChange}
                     >
-                        <MenuItem value={'King_Conga.mp3'}>
-                            King_Conga.mp3
+                        <MenuItem value={'Dont_Stop_Me_Now'}>
+                            Dont_Stop_Me_Now
                         </MenuItem>
-                        <MenuItem value={'Mausoleum_Mash.mp3'}>
-                            Mausoleum_Mash.mp3
+                        <MenuItem value={'King_Conga'}>King_Conga</MenuItem>
+                        <MenuItem value={'Mausoleum_Mash'}>
+                            Mausoleum_Mash
                         </MenuItem>
-                        <MenuItem value={'Deja_Vu.mp3'}>Deja_Vu.mp3</MenuItem>
+                        <MenuItem value={'Deja_Vu'}>Deja_Vu</MenuItem>
+                        <MenuItem value={'Without_Me'}>Without_Me</MenuItem>
+                        <MenuItem value={'StormRoad'}>StormRoad</MenuItem>
+                        <MenuItem value={'Beethven_Virus'}>
+                            Beethven_Virus
+                        </MenuItem>
+                        <MenuItem value={'The_Wight_to_Remain'}>
+                            The_Wight_to_Remain
+                        </MenuItem>
+
                         {/* <>
               {props.musicList.map((music) => {
                   return (
@@ -151,7 +125,6 @@ export default function MusicLeader(props) {
     //     }
     // };
 
-
     // let isSetUp = false;
     // useEffect(() => {
     //     if (!isSetUp) {
@@ -177,7 +150,6 @@ export default function MusicLeader(props) {
                 {' '}
                 StartGame{' '}
             </Button> */}
-
         </>
     );
 }
