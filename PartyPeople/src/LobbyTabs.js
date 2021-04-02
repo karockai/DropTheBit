@@ -61,6 +61,24 @@ export default function LobbyTabs(props) {
     const [keymap, setKeymap] = React.useState(null);
     // const [keymap, setKeymap] = React.useState(props.roomLeader ? null : 'key_map');
     const [selectMusic, setSelectMusic] = React.useState(null);
+    var tmp_music = props.roomInfo['music'];
+    var tmp_time = props.roomInfo['gameTime'];
+
+    var minute = parseInt(tmp_time / 60);
+    var second = tmp_time % 60;
+    minute = minute >= 10 ? String(minute) : '0' + String(minute);
+    second = second >= 10 ? String(second) : '0' + String(second);
+    const [music, setMusic] = React.useState(tmp_music);
+    const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
+    const [time, setTime] = React.useState(props.musicTime);
+
+    const setMusicTime =((music, time)=>{
+        setMusic(music);
+        var minute = parseInt(time / 60);
+        var second = time % 60;
+        strSetTime(String(minute) + ' : ' + String(second));
+        setTime(time);
+    });
 
     const handleKeymap = (event) => {
         console.log(event.currentTarget);
@@ -93,6 +111,11 @@ export default function LobbyTabs(props) {
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        music={music}
+                        strTime={strTime}
+                        time={time}
+                        setMusicTime={setMusicTime}
+                         
                     />
                 </>
             );
@@ -106,6 +129,10 @@ export default function LobbyTabs(props) {
                         socket={props.socket}
                         SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                         history={props.history}
+                        music={music}
+                        strTime={strTime}
+                        time={time}
+                        setMusicTime={setMusicTime}
                     />
                 </>
             );
@@ -126,7 +153,8 @@ export default function LobbyTabs(props) {
                 >
                     SELECT MUSIC
                 </PurpleButton>
-                {/* <LobbyMusicOnOff MusicPause={props.MusicPause} MusicStart={props.MusicStart}/> */}
+                <LobbyMusicOnOff />
+                {/* MusicPause={props.MusicPause} MusicStart={props.MusicStart} */}
             </Grid>
             <Popover
                 open={openKey}

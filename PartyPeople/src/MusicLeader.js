@@ -31,24 +31,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function MusicLeader(props) {
     const classes = useStyles();
-    let tmp_music = props.roomInfo ? props.roomInfo['music'] : 'King_Conga.mp3';
-    let tmp_time = props.roomInfo ? props.roomInfo['gameTime'] : '02 : 25';
-    const [music, setMusic] = React.useState(tmp_music);
-    const [strTime, strSetTime] = React.useState(tmp_time);
+    // let tmp_music = props.roomInfo['music'];
+    // let tmp_time =props.roomInfo['gameTime'];
 
-    if (typeof strTime === 'number') {
-        let minute = parseInt(strTime / 60);
-        let second = strTime % 60;
-        minute = minute >= 10 ? String(minute) : '0' + String(minute);
-        second = second >= 10 ? String(second) : '0' + String(second);
+    // var minute = parseInt(tmp_time / 60);
+    // var second = tmp_time % 60;
+    // minute = minute >= 10 ? String(minute) : '0' + String(minute);
+    // second = second >= 10 ? String(second) : '0' + String(second);
+    // const [music, setMusic] = React.useState(tmp_music);
+    // const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
+    // const [music, setMusic] = React.useState(tmp_music);
+    // const [strTime, strSetTime] = React.useState(tmp_time);
 
-        strSetTime(minute + ' : ' + second);
-    }
+    // if (typeof strTime === 'number') {
+    //     let minute = parseInt(strTime / 60);
+    //     let second = strTime % 60;
+    //     minute = minute >= 10 ? String(minute) : '0' + String(minute);
+    //     second = second >= 10 ? String(second) : '0' + String(second);
+
+    //     strSetTime(minute + ' : ' + second);
+    // }
 
     function MusicInput() {
         const handleChange = (event) => {
             const musicName = event.target.value;
-            setMusic(musicName);
+            // props.setMusic(musicName);
             props.socket.emit('settingsUpdate_Req', {
                 roomID: props.roomID,
                 musicName: musicName,
@@ -75,11 +82,12 @@ export default function MusicLeader(props) {
                 <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-label">
                         Select Music
+                        {/* {props.music} */}
                     </InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={music}
+                        value={props.music}
                         onChange={handleChange}
                     >
                         <MenuItem value={'King_Conga.mp3'}>
@@ -108,19 +116,15 @@ export default function MusicLeader(props) {
             props.socket.once('settingsUpdate_Res', (data) => {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
+                // setMusic(musicName);
 
-                if (props.roomInfo) {
-                    var minute = parseInt(musicTime / 60);
-                    var second = musicTime % 60;
-                    minute =
-                        minute >= 10 ? String(minute) : '0' + String(minute);
-                    second =
-                        second >= 10 ? String(second) : '0' + String(second);
-
-                    var tmp_roomInfo = props.roomInfo;
-                    tmp_roomInfo['music'] = musicName;
-                    strSetTime(minute + ' : ' + second);
-                }
+                var minute = parseInt(musicTime / 60);
+                var second = musicTime % 60;
+                // var tmp_roomInfo = props.roomInfo;
+                // tmp_roomInfo['music'] = musicName;
+                // strSetTime(String(minute) + ' : ' + String(second));
+                // SetRoomIdAndInfo();
+                props.setMusicTime(musicName, musicTime);
             });
         }, []);
         // }
@@ -130,7 +134,7 @@ export default function MusicLeader(props) {
                     <TextField
                         id="standard-read-only-input"
                         label="Play Time"
-                        defaultValue={strTime}
+                        defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
                         }}

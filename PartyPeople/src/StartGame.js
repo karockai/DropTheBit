@@ -35,12 +35,7 @@ export default function StartGame(props) {
     const classes = useStyles();
 
     const StartGameReq = () => {
-        // props.audio.pause();
-        // if (music === '') {
-        //     return alert('음악을 선택해주세요');
-        // } else {
         props.socket.emit('startGame_Req', props.roomID);
-        // }
     };
 
     let isSetUp = false;
@@ -50,7 +45,7 @@ export default function StartGame(props) {
             props.socket
                 .off('startGame_Res')
                 .once('startGame_Res', (gameTime) => {
-                    props.audio.pause();
+                    // props.audio.pause();
                     props.history.push({
                         pathname: '/game',
                         state: { gameTime: gameTime },
@@ -62,16 +57,27 @@ export default function StartGame(props) {
 
     return (
         <>
-            <PurpleButton
+            {props.isLeader &&
+                <PurpleButton
                 variant="contained"
-                color="primary"
                 onClick={StartGameReq}
                 style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
                 text
             >
                 {' '}
                 Start Game{' '}
-            </PurpleButton>
+            </PurpleButton>}
+            {!props.isLeader &&
+                <PurpleButton
+                variant="contained"
+                style={{ width: '80%', height: '20vh', fontSize: '8vh' }}
+                text
+                disabled
+            >
+                {' '}
+                Waiting to start
+                {' '}
+            </PurpleButton>}
         </>
     );
 }

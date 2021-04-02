@@ -2,8 +2,8 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
     Button,
     Grid,
-    Paper,
     GridList,
+    Paper,
     makeStyles,
     Typography,
     Container,
@@ -26,12 +26,8 @@ import { ChatFeed, Message } from 'react-chat-ui';
 import LobbyTabs from './LobbyTabs';
 import './Lobby.css';
 import StartGame from './StartGame';
-
+import backgroundImg from './videos/LobbyImage3.gif';
 const useStyles = makeStyles((theme) => ({
-    root: {
-        // flexGrow: 1,
-        // padding: theme.spacing(3),
-    },
     paper: {
         textAlign: 'center',
         padding: theme.spacing(1),
@@ -52,24 +48,11 @@ function Lobby(props) {
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;
-    const [roomLeader, setRoomLeader] = useState(props.socket.id); //props.roomInfo['roomLeader']
-    const [socketId, setSocketId] = useState(props.socket.id);
-
+    // const [roomLeader, setRoomLeader] = useState(props.roomInfo['roomLeader']); //props.roomInfo['roomLeader']
+    // const [socketId, setSocketId] = useState(props.socket.id);
+    // console.log(props.socket.id);
+    // console.log(props);
     const classes = useStyles();
-    const PutPlayer = (props) => {
-        return (
-            <Grid
-                container
-                justify="space-between"
-                style={{ margin: '2vh 0 0 0' }}
-            >
-                <LobbyPlayerCard
-                    playerID={props.player.playerID}
-                    roomLeader={roomLeader}
-                />
-            </Grid>
-        );
-    };
 
     const [inputCtrl, setInputCtrl] = useState(false);
     const SetInputCtrl = (isChat) => {
@@ -82,16 +65,16 @@ function Lobby(props) {
         document.execCommand('Copy');
         // alert('복사되었습니다.');
     }
-    let [roomInfo, setRoomInfo] = useState('');
+    // let [roomInfo, setRoomInfo] = useState('');
     let soc = props.socket;
     useLayoutEffect(() => {
         if (soc) {
             soc.on('joinRoom_Res', (room) => {
                 // 사람이 들어올 때마다 roomInfo 갱신
-                setRoomInfo(room.roomInfo);
+                // setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
-                setRoomLeader(room.roomInfo['roomLeader']);
-                setSocketId(soc.id);
+                // setRoomLeader(room.roomInfo['roomLeader']);
+                // setSocketId(soc.id);
             });
         }
     }, []);
@@ -100,23 +83,44 @@ function Lobby(props) {
         if (soc) {
             soc.on('disconnect', (roomInfo) => {
                 // 사람이 나갈 때마다 roomInfo 갱신
-                setRoomInfo(roomInfo);
+                // setRoomInfo(roomInfo);
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
                     roomInfo: roomInfo,
                 });
-                setRoomLeader(roomInfo['roomLeader']);
-                setSocketId(soc.id);
+                // setRoomLeader(roomInfo['roomLeader']);
+                // setSocketId(soc.id);
             });
         }
     });
 
-    const Card = () => {
-        if (roomInfo != '') {
-            return <PutNewCard roomInfo={roomInfo} socket={props.socket} />;
+    function PutNewCard(props) {
+        console.log(props.roomInfo);
+        if (props.roomInfo != '') {
+            let PlayerList = getPlayersList(props.roomInfo);
+            console.log(PlayerList);
+            let tmparr = [];
+            for (let key in PlayerList) {
+                console.log(key);
+                tmparr.push([key,PlayerList[key]]);
+            }
+            return (
+                <GridList contianer style={{width: '100%',height: '100vh'}} justify={'flex-start'} alignItems={'flex-start'}>
+                    {tmparr.map(([socketID, player]) => {
+                        return <LobbyPlayerCard
+                            playerID={player.playerID}
+                            roomLeader={props.roomInfo['roomLeader']}
+                            socketID={socketID}
+                        />;
+                    })}
+                </GridList>
+            );
         }
-        return <PutPlayer player={props.player} />;
-    };
+    }
+    
+    // const Card = () => {
+    //     return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
+    // };
 
     function getPlayersList(roomInfo) {
         // let keyList = Object.keys(roomInfo).filter((key) => key.length === 20);
@@ -129,36 +133,16 @@ function Lobby(props) {
         return playerList;
     }
 
-    function PutNewCard(props) {
-        if (props.roomInfo != '') {
-            let PlayerList = getPlayersList(props.roomInfo);
-
-            let tmparr = [];
-            for (let key in PlayerList) {
-                tmparr.push(PlayerList[key]);
-            }
-            return (
-                <div>
-                    {tmparr.map((player) => {
-                        return <PutPlayer player={player} />;
-                    })}
-                </div>
-            );
-        }
-    }
     return (
-        // <><Container maxWidth="xl">
-        // <Typography component="div" >
+        <div style={{backgroundImage: `url(${backgroundImg})`,  backgroundSize: 'cover'}} > 
         <Grid
             style={{ height: '100vh' }}
-            // wrap="wrap"
             container
-            // direction="row"
             justify="center"
-            // spacing={1}
+            
         >
-            <Grid className="playerListGrid" item xs={leftSm}>
-                <Grid>{Card()}</Grid>
+            <Grid className="playerListGrid" item xs={leftSm} direction='column' justify='flex-start'  alignItems='flex-start' >
+                <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />
             </Grid>
             <Grid
                 className="stockTradeGrid"
@@ -168,14 +152,15 @@ function Lobby(props) {
                 alignItems={'center'}
                 justify={'space-around'}
                 xs={middleSm}
-                // alignContents="stretch"
             >
                 <Grid style={{ height: '25vh' }}></Grid>
+                
                 <StartGame
                     roomID={props.roomID}
                     socket={props.socket}
                     history={props.history}
                     audio={props.audio}
+                    isLeader={props.roomInfo['roomLeader'] === props.socket.id }
                 />
             </Grid>
             <Grid
@@ -189,8 +174,8 @@ function Lobby(props) {
                 style={{ margin: '2vh 2vw 14vh 2vw' }}
             >
                 <LobbyTabs
-                    roomLeader={roomLeader}
-                    socketId={socketId}
+                    roomLeader={props.roomInfo['roomLeader']}
+                    socketId={props.socket.id}
                     musicList={props.musicList}
                     roomID={props.roomID}
                     roomInfo={props.roomInfo}
@@ -214,8 +199,6 @@ function Lobby(props) {
                             InputProps={{
                                 className: classes.input,
                             }}
-                            // color="white"
-                            // colorScheme="white"
                             style={{ width: '80%' }}
                             readOnly
                         />
@@ -224,7 +207,6 @@ function Lobby(props) {
                                 class="btn btn-warning"
                                 severity="success"
                                 message="링크가 복사됐어요! 😚"
-                                // label="게임 방 URL copy"
                                 label="LINK"
                                 onAlert={true}
                                 type="button"
@@ -245,9 +227,7 @@ function Lobby(props) {
                 </Grid>
             </Grid>
         </Grid>
-        // </Typography>
-        // </Container>
-        // </>
+        </div>
     );
 }
 
