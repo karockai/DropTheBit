@@ -10,35 +10,37 @@ import {
 import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
-import Sound from './Sound';
+// import Sound from './Sound';
 import backgroundImg from './videos/LobbyImage3.gif';
-// import Tetris99 from './audios/music/Tetris99.mp3';
+import LobbyMusic from './audios/music/Tetris99.mp3';
 export default function EnterRoom(props) {
     // const history = useHistory();
     const [name, setName] = React.useState('');
     const [player, setPlayer] = React.useState('');
     const [roomID, setRoomID] = React.useState(props.roomID);
-    // const [bgm_audio] = useState(new Audio(Tetris99));
+    const [lobbyMusic] = useState(new Audio(LobbyMusic));
     const [playing, setPlaying] = useState(true);
     const history = useHistory();
-    // const MusicPause = () => {
-    //     setPlaying(false);
-    // }
-    // const MusicStart = () => {
-    //     setPlaying(true);
-    // }
-    // useEffect(() => {
-    //     playing ? bgm_audio.play() : bgm_audio.pause();
-    //   },
-    //  ?  [playing] 이 조건이 없으면 렌더가 불필요하게 많이 된다.
-    // ? 그런데 있으면 렌더가 한 번 모자라서 음악이 안나옴
-    // );
+
+    const MusicPause = () => {
+        setPlaying(false);
+    };
+
+    const MusicStart = () => {
+        setPlaying(true);
+    };
+
+    useEffect(() => {
+        playing ? lobbyMusic.play() : lobbyMusic.pause();
+    });
 
     let musicList = [];
+
     const handleOnSave = (textInput, flag) => {
         setName(textInput);
         sendName(textInput, flag);
     };
+
     if (props.socket == null) {
         props.requestSocket('createPrivateRoom');
     }
@@ -81,11 +83,9 @@ export default function EnterRoom(props) {
         history.push({
             pathname: '/lobby',
             state: { playerID: name },
+            stopMusic: MusicPause,
+            resumeMusic: MusicStart,
         });
-    };
-    const [audio, SetAudio] = useState(null);
-    const sendAudio = (audio) => {
-        SetAudio(audio);
     };
 
     if (props.roomInfo) {
@@ -99,13 +99,6 @@ export default function EnterRoom(props) {
                     backgroundSize: 'cover',
                 }}
             >
-                <Sound
-                    soundName={'lobbyMusic'}
-                    soundType={'music'}
-                    soundVol={0.3}
-                    action={'play'}
-                    sendAudio={sendAudio}
-                />
                 {
                     <SetPlayerName
                         onSave={handleOnSave}
