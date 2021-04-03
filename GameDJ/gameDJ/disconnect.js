@@ -11,7 +11,10 @@ import {
     dbllen,
     dbdel,
     dbhdel,
+    dbhincrby,
 } from './redis.js';
+import dotenv from 'dotenv'
+dotenv.config();
 
 class Disconnect {
     constructor(io, socket) {
@@ -31,6 +34,8 @@ class Disconnect {
             let roomInfo = roomList[roomID];
             let playerInfo = roomInfo[socket.id];
             //ask, bid 지우기
+            //성현 추가(210403) 서버 인원 감소시키기
+            dbhincrby(process.env.SERVERNAME, 'player', -1);
             for (let bid in playerInfo['bid']){
                 for (let id  in bidList[bid]){
                     if (socket.id === id){

@@ -9,7 +9,9 @@ const dbget = util.promisify(client.get).bind(client);
 const dbset = util.promisify(client.set).bind(client);
 const dbhset = util.promisify(client.hset).bind(client);
 const dbhmset = util.promisify(client.hmset).bind(client);
+const dbhmget = util.promisify(client.hmget).bind(client);
 const dbhget = util.promisify(client.hget).bind(client);
+const dbhincrby = util.promisify(client.hincrby).bind(client);
 const dbhgetall = util.promisify(client.hgetall).bind(client);
 
 export default {
@@ -24,13 +26,16 @@ export default {
         await serverSetting(server);
         function returnIpAddress(socket, roomID){
             return new Promise(async function (resolve, reject) {
-                let serverList = ['AWS0', 'AWS1'];
+            let serverList = (process.env.SERVERS).split(' ');
             if (roomID) {
                 // 링크 받아서 들어온 사람
                 console.log("참가자 연결");
                 // roomID에 해당하는 주소를 받아와서 연결한다.
                 console.log(roomID);
-                let ipAddress = await dbget(roomID);
+                let response = await dbhmget(roomID, 'ip', 'name');
+                let ipAddress = response[0];
+                let name = response[1];
+                dbhincrby(name, 'player', 1);
                 socket.emit('ipToConnect', ipAddress);
             } else {
                 // 방장
