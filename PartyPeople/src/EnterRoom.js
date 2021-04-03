@@ -37,8 +37,6 @@ export default function EnterRoom(props) {
         // ? 그런데 있으면 렌더가 한 번 모자라서 음악이 안나옴
     );
 
-    let musicList = [];
-
     const handleOnSave = (textInput, flag) => {
         setName(textInput);
         sendName(textInput, flag);
@@ -67,21 +65,16 @@ export default function EnterRoom(props) {
             props.socket.emit('createPrivateRoom_Req', { playerID: name });
             props.socket.on('createPrivateRoom_Res', (data) => {
                 props.SetRoomIdAndInfo(data);
-                musicList = data.musicList;
             });
         } else {
             // flag === 1, joinPublic
 
             props.socket.emit('joinPublic_Req', { playerID: name });
             props.socket.on('createPublic_Res', (data) => {
-                console.log('enter public');
                 props.SetRoomIdAndInfo(data);
-                musicList = data.musicList;
             });
             props.socket.on('joinRoom_Res', (data) => {
-                console.log('enter public');
                 props.SetRoomIdAndInfo(data);
-                musicList = data.musicList;
             });
         }
     };
