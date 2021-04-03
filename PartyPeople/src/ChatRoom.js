@@ -35,7 +35,7 @@ const CssTextField = withStyles({
         '& .MuiInputBase-formControl': {
             color: '#CDD7E0',
             fontSize: '0.9vw',
-            height: '50%',
+            height: '100%',
         },
         //   '& .MuiInput-underline:after': {
         //     borderBottomColor: 'white',
@@ -207,13 +207,13 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList style={{ width: '100%', height: '100%' }} wrap={'wrap'}>
+            <GridList style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
                 <Grid
                     container
                     direction={'column'}
                     justify={'flex-start'}
                     alignItems={'stretch'}
-                    style={{ width: '100%', height: '80%' }}
+                    style={{ width: '100%', height: '100%' }}
                 >
                     {messages.map((message) => {
                         console.log(messages);
@@ -224,10 +224,9 @@ export default function ChatRoom(props) {
                                 style={{
                                     color: 'white',
                                     width: '100%',
-                                    height: '1vh',
+                                    padding: '1vh 0 0 0 ',
                                     fontSize: '0.8vw',
                                 }}
-                                wrap={'wrap'}
                             >
                                 {message.author} : {message.message}
                             </Grid>
@@ -238,13 +237,14 @@ export default function ChatRoom(props) {
                         ref={messagesEnd}
                     ></Grid>
                 </Grid>
+            </GridList>
             <Grid
                 item
                 container
                 dirction="row"
-                style={{ width: '100%', height: '20%' }}
+                style={{ width: '100%', height: '10%' }}
             >
-                <Grid item style={{ width: '70%', height: '100%' }}>
+                <Grid item style={{ width: '80%', height: '100%' }}>
                     <CssTextField
                         style={{ width: '100%', height: '100%' }}
                         id="standard-basic"
@@ -267,8 +267,9 @@ export default function ChatRoom(props) {
                 <Grid item style={{ width: '20%', height: '100%' }}>
                     <button
                         style={{
+                            margin:'0',
                             width: '100%',
-                            height: '50%',
+                            height: '100%',
                             backgroundColor: '#635ee7',
                             fontSize: '0.9vw',
                             color: 'white',
@@ -284,7 +285,6 @@ export default function ChatRoom(props) {
                     </button>
                 </Grid>
             </Grid>
-            </GridList>
         </>
     );
 }
