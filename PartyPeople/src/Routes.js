@@ -80,6 +80,7 @@ export default function Routes(props) {
                                     roomID={props.roomID}
                                     roomInfo={props.roomInfo}
                                     gameTime={time}
+                                    lobbyAudio={lobbyAudio}
                                 />
                             ) : (
                                 <Redirect to="/" />

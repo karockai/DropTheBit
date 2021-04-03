@@ -67,6 +67,7 @@ export default function LayoutGridEffect(props) {
                 roomInfo={props.roomInfo}
                 gameTime={props.time}
                 isStart={isStart}
+                lobbyAudio={props.lobbyAudio}
             />
         </>
     );

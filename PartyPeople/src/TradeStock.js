@@ -83,13 +83,13 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    button: {
-        '& > *': {
-            width: '42%',
-            // textAlign: 'center',
-            margin: theme.spacing(1),
-        },
-    },
+    // button: {
+    //     '& > *': {
+    //         width: '42%',
+    //         // textAlign: 'center',
+    //         margin: theme.spacing(1),
+    //     },
+    // },
     paper: {
         // padding: theme.spacing(1),
         // textAlign: 'left',
@@ -102,12 +102,13 @@ const useStyles = makeStyles((theme) => ({
         color: '#CDD7E0',
     },
 
-    button_block: {
-        width: '1vh',
-    },
+    // button_block: {
+    //     width: '1vh',
+    //     margin: '0 0 0.5vh 0',
+    // },
     small_text: {
-        margin: '1vw 1vw 0 1vw',
-        fontSize: '0.5vw',
+        margin: '0 0.5vw -0.5vh 0.5vw',
+        fontSize: '1vw',
     },
 }));
 
@@ -136,7 +137,7 @@ function ArrowButton(props) {
         >
             <IconButton
                 aria-label="delete"
-                className={classes.margin}
+                className={classes.button_block}
                 size="small"
                 onClick={props.upEvent}
             >
@@ -144,7 +145,7 @@ function ArrowButton(props) {
             </IconButton>
             <IconButton
                 aria-label="delete"
-                className={classes.margin}
+                className={classes.button_block}
                 size="small"
                 onClick={props.downEvent}
             >
@@ -606,8 +607,8 @@ export default function TradeStock(props) {
                 style={{ height: '100%', fontSize: '2vh' }}
             >
                 <Grid container item direction="row" justify="space-between">
-                    <span className={classes.small_text}>매매호가</span>
-                    <span className={classes.small_text}>현재가로 갱신 : [SPACE]</span>
+                    <span  className={classes.small_text}>매매호가</span>
+                    {/* <span  className={classes.small_text}>현재가 [SPACE]</span> */}
                 </Grid>
                 <Grid
                     container
@@ -615,10 +616,12 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
+                    style={{margin:'0 0 0.5vh 0'}}
                 >
                     <Button
                         class="pulse"
                         onClick={() => {
+                            new Audio(PriceUp).play();
                             BidUp();
                         }}
                         id="ArrowUp"
@@ -638,6 +641,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
+                            new Audio(PriceDown).play();
                             BidDown();
                         }}
                         id="ArrowDown"
@@ -652,11 +656,13 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
+                    style={{margin:'0 0 0.5vh 0'}}
                 >
                     <Button
                         class="pulse"
                         onClick={() => {
-                            VolumeDown();
+                            new Audio(VolDown).play();
+                            VolumeDown(currentVolume);
                         }}
                         id="ArrowLeft"
                     >
@@ -672,7 +678,8 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            VolumeUp();
+                            new Audio(VolUp).play();
+                            VolumeUp(currentVolume);
                         }}
                         id="ArrowRight"
                     >
@@ -702,6 +709,7 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="pulse"
                             onClick={() => {
+                                new Audio(Buy100).play();
                                 SetBuyMaxCount();
                                 // setBuyStatus(Buy(currentBid, currentVolume));
                             }}
@@ -713,6 +721,7 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="pulse"
                             onClick={() => {
+                                new Audio(Sell100).play();
                                 SetSellMaxCount();
                                 // setSellStatus(Sell(currentBid, currentVolume));
                             }}
@@ -732,6 +741,7 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="pulse"
                             onClick={() => {
+                                new Audio(Check).play();
                                 setBuyStatus(Buy(currentBid, currentVolume));
                             }}
                             id="z"
@@ -742,12 +752,31 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="pulse"
                             onClick={() => {
+                                new Audio(Check).play();
                                 setSellStatus(Sell(currentBid, currentVolume));
                             }}
                             id="x"
                         >
                             {/* <KeyboardArrowRightIcon /> */}
                             [X] 매도
+                        </Button>
+                    </Grid>
+                    <Grid
+                        container
+                        direction={'row'}
+                        justify="space-between"
+                        style={{ width: '100%', margin: '0 10 0 1' }}
+                    >
+                        <Button
+                            style={{ width: '100%' }}
+                            class="pulse"
+                            onClick={() => {
+                                new Audio(CurPrice).play();
+                                RefreshBid_Req(); 
+                            }}
+                            id=" "
+                        >
+                            [SPACE] 현재가로 갱신
                         </Button>
                     </Grid>
                     {/* <Button
