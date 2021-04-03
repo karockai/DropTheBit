@@ -50,7 +50,7 @@ export default function MusicLeader(props) {
         King_Conga: King_Conga,
         Mausoleum_Mash: Mausoleum_Mash,
         Without_Me: Without_Me,
-        StormRoad: StormRoad,
+        질풍가도: StormRoad,
         Beethven_Virus: Beethven_Virus,
         The_Wight_to_Remain: The_Wight_to_Remain,
     };
@@ -92,7 +92,7 @@ export default function MusicLeader(props) {
                         </MenuItem>
                         <MenuItem value={'Deja_Vu'}>Deja_Vu</MenuItem>
                         <MenuItem value={'Without_Me'}>Without_Me</MenuItem>
-                        <MenuItem value={'StormRoad'}>StormRoad</MenuItem>
+                        <MenuItem value={'질풍가도'}>질풍가도</MenuItem>
                         <MenuItem value={'Beethven_Virus'}>
                             Beethven_Virus
                         </MenuItem>
