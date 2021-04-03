@@ -106,8 +106,8 @@ const useStyles = makeStyles((theme) => ({
         width: '1vh',
     },
     small_text: {
-        margin: '1vw 1vw 0 1vw',
-        fontSize: '0.5vw',
+        margin: '0.5vh 0.5vw -0.5vh 0.5vw',
+        fontSize: '1vw',
     },
 }));
 
@@ -606,8 +606,8 @@ export default function TradeStock(props) {
                 style={{ height: '100%', fontSize: '2vh' }}
             >
                 <Grid container item direction="row" justify="space-between">
-                    <span className={classes.small_text}>매매호가</span>
-                    <span className={classes.small_text}>현재가로 갱신 : [SPACE]</span>
+                    <span  className={classes.small_text}>매매호가</span>
+                    <span  className={classes.small_text}>현재가 [SPACE]</span>
                 </Grid>
                 <Grid
                     container
@@ -646,6 +646,7 @@ export default function TradeStock(props) {
                     </Button>
                 </Grid>
                 <span className={classes.small_text}>수량</span>
+                <span  className={classes.small_text}>현재가 [SPACE]</span>
                 <Grid
                     container
                     item
@@ -656,7 +657,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            VolumeDown();
+                            VolumeDown(currentVolume);
                         }}
                         id="ArrowLeft"
                     >
@@ -672,7 +673,7 @@ export default function TradeStock(props) {
                     <Button
                         class="pulse"
                         onClick={() => {
-                            VolumeUp();
+                            VolumeUp(currentVolume);
                         }}
                         id="ArrowRight"
                     >
