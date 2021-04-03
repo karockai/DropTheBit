@@ -70,13 +70,10 @@ export default function MusicMember(props) {
             props.socket.once('settingsUpdate_Res', (data) => {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
-                // setMusic(musicName);
-
-                var minute = parseInt(musicTime / 60);
-                var second = musicTime % 60;
-                // var tmp_roomInfo = props.roomInfo;
-                // tmp_roomInfo['music'] = musicName;
+                var tmp_roomInfo = props.roomInfo;
+                tmp_roomInfo['music'] = musicName;
                 // strSetTime(String(minute) + ' : ' + String(second));
+                props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo : tmp_roomInfo});
                 props.setMusicTime(musicName, musicTime);
             });
         }, []);

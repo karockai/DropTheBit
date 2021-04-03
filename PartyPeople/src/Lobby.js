@@ -61,9 +61,7 @@ function Lobby(props) {
         var copyText = document.getElementById('gameLink');
         copyText.select();
         document.execCommand('Copy');
-        // alert('복사되었습니다.');
     }
-    // let [roomInfo, setRoomInfo] = useState('');
     let soc = props.socket;
     useLayoutEffect(() => {
         if (soc) {
@@ -169,9 +167,9 @@ function Lobby(props) {
                     xs={middleSm}
                 >
                     <Grid style={{ height: '25vh' }}></Grid>
-
                     <StartGame
                         roomID={props.roomID}
+                        music={props.roomInfo['music']}
                         socket={props.socket}
                         history={props.history}
                         lobbyAudio={props.lobbyAudio}

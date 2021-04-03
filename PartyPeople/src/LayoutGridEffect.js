@@ -28,6 +28,7 @@ let gameMusic = new Audio('');
 export default function LayoutGridEffect(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
+    const musicName = location.state.musicName;
     const [timerTime, setTimerTime] = useState(gameTime);
     const [isStart, setIsStart] = useState(false);
 
@@ -42,8 +43,9 @@ export default function LayoutGridEffect(props) {
         Beethven_Virus: Beethven_Virus,
         The_Wight_to_Remain: The_Wight_to_Remain,
     };
-
-    const SpecificMusic = musicList[props.roomInfo['music']];
+    console.log(props);
+    const SpecificMusic = musicList[musicName];
+    console.log(SpecificMusic);
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
     useEffect(() => {
