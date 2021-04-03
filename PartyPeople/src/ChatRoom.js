@@ -207,13 +207,13 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
+            <GridList style={{ width: '100%', height: '90%', }} wrap={'wrap'}>
                 <Grid
                     container
                     direction={'column'}
                     justify={'flex-start'}
                     alignItems={'stretch'}
-                    style={{ width: '100%', height: '100%' }}
+                    style={{ width: '100%', height: '100%', padding:'1vw 1vw 1vw 1vw', }}
                 >
                     {messages.map((message) => {
                         // console.log(messages);
@@ -225,7 +225,8 @@ export default function ChatRoom(props) {
                                     color: 'white',
                                     width: '100%',
                                     padding: '1vh 0 0 0 ',
-                                    fontSize: '0.8vw',
+                                    fontSize: '1vw',
+                                    
                                 }}
                             >
                                 {message.author} : {message.message}

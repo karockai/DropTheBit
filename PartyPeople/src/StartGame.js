@@ -181,7 +181,7 @@ export default function StartGame(props) {
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '20vh',
+                            height: '80%',
                             fontSize: '8vh',
                         }}
                         text
@@ -239,7 +239,7 @@ export default function StartGame(props) {
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '20vh',
+                            height: '80%',
                             fontSize: '8vh',
                         }}
                         text
