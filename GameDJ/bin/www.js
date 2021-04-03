@@ -10,11 +10,6 @@ global.chartData = [];
 global.bidList = {};
 global.askList = {};
 global.roomList = {};
-global.bgmList = {
-    Deja_Vu: 265,
-    King_Conga: 145,
-    Mausoleum_Mash: 176,
-};
 global.curCoin = {};
 global.exTable = {};
 global.prePrice = 0;
