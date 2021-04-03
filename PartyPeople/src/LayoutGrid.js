@@ -78,7 +78,15 @@ export default function LayoutGrid(props) {
 
     return (
         <>
-            {over && <GameOverModal leaderBoard={over} setLeaderBoard={setOver} socket={props.socket} roomID={props.roomID} lobbyAudio={props.lobbyAudio}/>}
+            {over && (
+                <GameOverModal
+                    leaderBoard={over}
+                    setLeaderBoard={setOver}
+                    socket={props.socket}
+                    roomID={props.roomID}
+                    lobbyAudio={props.lobbyAudio}
+                />
+            )}
 
             <Grid
                 style={{
@@ -238,7 +246,10 @@ export default function LayoutGrid(props) {
                     justify="space-between"
                 >
                     <Grid style={{ height: '50%', width: '100%' }} item>
-                        <Paper className={classes.paper} style={{ height: '100%', width: '100%' }} >
+                        <Paper
+                            className={classes.paper}
+                            style={{ height: '100%', width: '100%' }}
+                        >
                             <TabPanel
                                 inputCtrl={inputCtrl}
                                 roomID={props.roomID}
@@ -248,7 +259,10 @@ export default function LayoutGrid(props) {
                         </Paper>
                     </Grid>
                     <Grid style={{ height: '50%', width: '100%' }} item>
-                        <Paper className={classes.paper} style={{ height: '100%', width: '100%' }}>
+                        <Paper
+                            className={classes.paper}
+                            style={{ height: '100%', width: '100%' }}
+                        >
                             <ChatRoom
                                 SetInputCtrl={SetInputCtrl}
                                 roomInfo={props.roomInfo}

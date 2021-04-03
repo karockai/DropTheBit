@@ -6,7 +6,7 @@ import ChartTitle from './ChartTitle';
 import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
-import {CircularProgress,Grid} from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import Timer from './Timer';
 
 class ChartComponent extends React.Component {
@@ -33,7 +33,7 @@ class ChartComponent extends React.Component {
             return;
         }
         data.date = new Date(data.date);
-        if(!this.setAPI) {
+        if (!this.setAPI) {
             this.props.setAPIData(data);
             this.setAPI = true;
         }
@@ -55,11 +55,13 @@ class ChartComponent extends React.Component {
                 console.log('requestSocket is null');
             } else if (this.props.socket != null) {
                 this.props.socket.emit('chartData_Req');
-                this.props.socket.on('chartData_Res', (datas) =>{
-                    console.log('게임 시작 이전의 차트 데이터(최대 100tick)가 로드되었습니다.');
+                this.props.socket.on('chartData_Res', (datas) => {
+                    console.log(
+                        '게임 시작 이전의 차트 데이터(최대 100tick)가 로드되었습니다.'
+                    );
                     datas.chartData.map((data) => {
                         this.addCandleData(data);
-                    })
+                    });
                     this.props.socket.on('chart', (data) => {
                         this.addCandleData(data);
                     });
@@ -85,11 +87,13 @@ class ChartComponent extends React.Component {
         // console.log(this.props.time);
         return (
             <>
-                <Grid container justify={'space-between'} style={{padding:'1vh'}}>
+                <Grid
+                    container
+                    justify={'space-between'}
+                    style={{ padding: '1vh' }}
+                >
                     <ChartTitle data={this.state.data} time={this.props.time} />
-                    {
-                        this.props.isStart && <Timer socket={this.props.socket}/>
-                    }
+                    {this.props.isStart && <Timer socket={this.props.socket} />}
                 </Grid>
                 <StockChart type={'hybrid'} data={this.state.data} />
             </>
