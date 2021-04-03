@@ -63,8 +63,8 @@ export default function BidTable(props) {
         props.socket.emit('bidTable_Req', reqJson);
 
         if (props.socket == null) {
-            props.requestSocket('makeTableEntity', props.socket);
-            setInit(true);
+            // props.requestSocket('makeTableEntity', props.socket);
+            // setInit(true);
         } else {
             props.socket.on('bidTable_Res', (bidTable) => {
                 setTable(bidTable);

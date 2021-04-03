@@ -87,8 +87,8 @@ export default function AskTable(props) {
         props.socket.emit('askTable_Req', reqJson);
 
         if (props.socket == null) {
-            props.requestSocket('makeTableEntity', props.socket);
-            setInit(true);
+            // props.requestSocket('makeTableEntity', props.socket);
+            // setInit(true);
         } else {
             props.socket.on('askTable_Res', (askTable) => {
                 setTable(askTable);

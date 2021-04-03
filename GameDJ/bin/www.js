@@ -5,6 +5,8 @@
 
 import app from '../app.js';
 import sockets from '../sockets.js';
+import dotenv from 'dotenv'
+dotenv.config();
 
 global.chartData = [];
 global.bidList = {};
@@ -21,6 +23,7 @@ global.playerStress = 0;
 global.publicRoomID = 'EnjoyPublicGame';
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
+    console.log(process.env.REDIS);
 });
 
 sockets.init(server);

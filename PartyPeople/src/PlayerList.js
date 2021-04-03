@@ -69,8 +69,8 @@ export default function PlayerList(props) {
 
     useLayoutEffect(() => {
         if (props.socket == null) {
-            props.requestSocket('MakePlayerPaper', props.socket);
-            setInit(true);
+            // props.requestSocket('MakePlayerPaper', props.socket);
+            // setInit(true);
         } else {
             props.socket.on('roomRank', (playerArray) => {
                 // console.log(playerArray)
