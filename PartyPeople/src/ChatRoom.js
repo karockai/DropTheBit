@@ -232,10 +232,11 @@ export default function ChatRoom(props) {
                             </Grid>
                         );
                     })}
-                    <Grid
+                    <GridList
+                        id ="whaitisthis" 
                         style={{ float: 'left', clear: 'both', height: '0%' }}
                         ref={messagesEnd}
-                    ></Grid>
+                    ></GridList>
                 </Grid>
             </GridList>
             <Grid

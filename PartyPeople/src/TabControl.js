@@ -14,7 +14,14 @@ import AskTable from './AskTable';
 import ExTable from './audios/effect/ExTable.wav';
 import BidTableSound from './audios/effect/BidTable.wav';
 import AskTableSound from './audios/effect/AskTable.wav';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+
+function SimpleMediaQuery() {
+    const matches = useMediaQuery('(min-width:100px)');
+  
+    return <span>{`(min-width:100px) matches: ${matches}`}</span>;
+  }
 const StyledTabs = withStyles({
     indicator: {
         width:'100%',
@@ -28,22 +35,28 @@ const StyledTabs = withStyles({
         backgroundColor: "#635ee7"
       }
     }
+//   })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
   })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
   
   const StyledTab = withStyles((theme) => ({
     root: {
+        padding: '0 0 0 0',
       textTransform: "none",
       color: "#fff",
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: '0.8vw',
       alignItems: 'center',
-      width: '33%',
+      wrapped:'false',
+    //   width: '33%',
       "&:focus": {
         opacity: 1
       }
     },
     '& .MuiButtonBase-root': {
-    }
+    },
+    // "& .MuiTab-root": {
+    //     minWidth: '2vw'
+    // }
   }))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
@@ -135,6 +148,7 @@ export default function TabControl(props) {
     return (
         <div className={classes.demo2}  style={{height:'100%', width: '100%'}}>
             <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%', alignItems:'stretch'}}>
+                {/* <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} /> */}
                 <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} />
                 <StyledTab label="[W] 매도 주문" {...a11yProps(1)} />
                 <StyledTab label="[E] 호가" {...a11yProps(2)} />

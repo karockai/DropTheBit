@@ -47,7 +47,6 @@ export default function LayoutGridEffect(props) {
 
     console.log(props);
     const SpecificMusic = musicList[musicName];
-    console.log(SpecificMusic);
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
     useEffect(() => {
