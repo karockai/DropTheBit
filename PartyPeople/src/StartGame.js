@@ -72,8 +72,8 @@ export default function StartGame(props) {
                         variant="contained"
                         style={{
                             width: '80%',
-                            height: '20vh',
-                            fontSize: '8vh',
+                            height: '80%',
+                            fontSize: '12vh',
                         }}
                         text
                     >
@@ -86,8 +86,8 @@ export default function StartGame(props) {
                         variant="contained"
                         style={{
                             width: '80%',
-                            height: '20vh',
-                            fontSize: '8vh',
+                            height: '80%',
+                            fontSize: '12vh',
                         }}
                         text
                     >
@@ -106,7 +106,7 @@ export default function StartGame(props) {
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '20vh',
+                            height: '80%',
                             fontSize: '8vh',
                         }}
                         text
@@ -119,7 +119,7 @@ export default function StartGame(props) {
                         variant="contained"
                         style={{
                             width: '80%',
-                            height: '20vh',
+                            height: '80%',
                             fontSize: '8vh',
                         }}
                         text

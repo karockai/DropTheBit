@@ -11,7 +11,7 @@ ReactDOM.render(
     <div className='GameManager'>
         <GameManager/>
         {/* <ShiningButton/> */}
-
+        {/* <Test/> */}
     </div>,
     document.getElementById('root')
 );
