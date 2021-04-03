@@ -25,6 +25,7 @@ import LobbyTabs from './LobbyTabs';
 import './Lobby.css';
 import StartGame from './StartGame';
 import backgroundImg from './videos/LobbyImage3.gif';
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         textAlign: 'center',
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Lobby(props) {
+    console.log(props.roomInfo);
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;
@@ -177,6 +179,7 @@ function Lobby(props) {
                             props.roomInfo['roomLeader'] === props.socket.id
                         }
                         roomOnGame={props.roomInfo['gaming']}
+                        gameMusic={props.roomInfo['music']}
                     />
                 </Grid>
                 <Grid

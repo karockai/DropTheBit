@@ -67,8 +67,8 @@ class Room {
         };
 
         let roomInfo = {
-            gameTime: 145,
-            music: 'King_Conga',
+            gameTime: 0,
+            music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
         };
@@ -78,12 +78,12 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
+        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            musicList: musicList,
+            // musicList: musicList,
         });
     }
 
@@ -106,8 +106,8 @@ class Room {
         };
 
         let roomInfo = {
-            gameTime: 145,
-            music: 'King_Conga',
+            gameTime: 0,
+            music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
             readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
@@ -178,25 +178,6 @@ class Room {
         roomList[roomID]['gameTime'] = musicTime;
         roomList[roomID]['music'] = musicName;
 
-        // randum setting
-        // if (musicNAme === 'Randum')
-        // {
-        //     const musicList = {
-        //         Deja_Vu: Deja_Vu,
-        //         Dont_Stop_Me_Now: Dont_Stop_Me_Now,
-        //         Gong: Gong,
-        //         King_Conga: King_Conga,
-        //         Mausoleum_Mash: Mausoleum_Mash,
-        //         Without_Me: Without_Me,
-        //         StormRoad: StormRoad,
-        //         Beethven_Virus: Beethven_Virus,
-        //         The_Wight_to_Remain: The_Wight_to_Remain,
-        //     }
-
-        //     const musicArray = ['Deja_Vu','Dont_Stop_Me_Now']
-
-        // }
-
         io.to(roomID).emit('settingsUpdate_Res', {
             musicName: musicName,
             musicTime: musicTime,
@@ -222,6 +203,8 @@ class Room {
             askVol: 0,
         };
         roomInfo[socketID] = playerInfo;
+        roomInfo['gameTime'] = 0;
+        roomInfo['music'] = 'Random_Music';
 
         // 방 정보가 초기화되어있지 않으면
         if (roomInfo['gameTime'] === -1) {
