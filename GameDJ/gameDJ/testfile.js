@@ -12,12 +12,12 @@ class Test {
     }
 
     async testComment(comment) {
-        console.log(comment);
+        // console.log(comment);
     }
 
     async refresh(data) {
         const { socket } = this;
-        console.log(socket.id, '님의 자산이 갱신되었습니다.');
+        // console.log(socket.id, '님의 자산이 갱신되었습니다.');
         socket.emit('testAsset', {
             cash: data.cash,
             asset: data.asset,
@@ -33,14 +33,14 @@ class Test {
 
     async testBuy(data) {
         const { socket } = this;
-        console.log(
-            socket.id,
-            '님의 [ 가격',
-            data.currentBid,
-            ', 갯수',
-            data.currentVolume,
-            '] 매수 주문이 체결되었습니다.'
-        );
+        // console.log(
+        //     socket.id,
+        //     '님의 [ 가격',
+        //     data.currentBid,
+        //     ', 갯수',
+        //     data.currentVolume,
+        //     '] 매수 주문이 체결되었습니다.'
+        // );
         socket.emit('testBuy', 3000);
         this.refresh({
             cash: data.currentBid * data.currentVolume,
@@ -50,14 +50,14 @@ class Test {
 
     async testSell(data) {
         const { socket } = this;
-        console.log(
-            socket.id,
-            '님의 [ 가격',
-            data.currentBid,
-            ', 갯수',
-            data.currentVolume,
-            '] 매도 주문이 체결되었습니다.'
-        );
+        // console.log(
+        //     socket.id,
+        //     '님의 [ 가격',
+        //     data.currentBid,
+        //     ', 갯수',
+        //     data.currentVolume,
+        //     '] 매도 주문이 체결되었습니다.'
+        // );
         socket.emit('testSell', 1000000);
         this.refresh({
             cash: data.currentBid * data.currentVolume,

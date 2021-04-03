@@ -227,7 +227,7 @@ export default function TradeStock(props) {
         );
     }
     function BidUp() {
-        console.log('hi');
+        // console.log('hi');
         SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
@@ -237,7 +237,7 @@ export default function TradeStock(props) {
     function RefreshBid_Req() {
         props.socket.emit('RefreshBid_Req');
         props.socket.once('RefreshBid_Res', (curPrice) => {
-            console.log('RefreshBid_Req');
+            // console.log('RefreshBid_Req');
             SetBid(curPrice);
         });
     }
@@ -284,7 +284,7 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         props.socket.once('buyDone', (bbid) => {
-            console.log(bbid);
+            // console.log(bbid);
             SetNewBid(bbid.price);
             setBuyStatus({
                 status: 'done',
@@ -328,7 +328,7 @@ export default function TradeStock(props) {
         });
         //@ 중복 문제가 발생한다.
         props.socket.once('sellDone', (sbid) => {
-            console.log(sbid);
+            // console.log(sbid);
             SetNewBid(sbid.price);
             setSellStatus({
                 status: 'done',
@@ -406,26 +406,12 @@ export default function TradeStock(props) {
             tmpAudio.remove();
             setSellStatus(Sell(currentBid, currentVolume));
         }
-        console.log(e);
+        // console.log(e);
         const key = document.getElementById(e.key);
-        console.log(key);
         if(key) key.classList.add('pressed');
         setTimeout(function(){
             key.classList.remove('pressed');
         },eventTime);
-    }
-
-    function HandleKeyDown(e) {
-        if (props.inputCtrl) return;
-        if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
-        e.preventDefault();
-        if (props.socket == null || isBind === false) {
-            props.requestSocket('TradeStock', props.socket);
-            return;
-        }
-
-        const key = document.getElementById(e.key);
-        key.classList.remove('pressed');
     }
 
     useEffect(() => {
@@ -438,7 +424,6 @@ export default function TradeStock(props) {
 
     useEffect(() => {
         if (isFocus === true) {
-            console.log('keydown event not working now!');
             return;
         }
         document.addEventListener('keyup', HandleKeyUp);
@@ -446,13 +431,6 @@ export default function TradeStock(props) {
             document.removeEventListener('keyup', HandleKeyUp); 
         };
     });
-
-    // useEffect(()=>{
-    //     document.addEventListener('keydown', HandleKeyDown);
-    //     return()=>{
-    //         document.removeEventListener('keydown', HandleKeyDown);
-    //     };
-    // }, []);
 
     //@ socket을 통해 정보가 변했음을 알고 render이전에 호가를 갱신해야할 필요가 있다.
     useEffect(() => {
@@ -467,12 +445,12 @@ export default function TradeStock(props) {
     }, [newVolume]);
 
     useEffect(() => {
-        console.log(sellStatus, 'sellStatus');
+        // console.log(sellStatus, 'sellStatus');
         if (sellStatus !== null) setSellStatus(null);
     }, [sellStatus]);
 
     useEffect(() => {
-        console.log(buyStatus, 'buy');
+        // console.log(buyStatus, 'buy');
         if (buyStatus !== null) setBuyStatus(null);
     }, [buyStatus]);
 
@@ -552,7 +530,6 @@ export default function TradeStock(props) {
         
         setTimeout(function(){
             e.target.classList.remove('clicked');
-            console.log(e.target);
           },eventTime);
     };
 

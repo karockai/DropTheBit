@@ -1,4 +1,7 @@
-import { POINT_CONVERSION_COMPRESSED, SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
+import {
+    POINT_CONVERSION_COMPRESSED,
+    SSL_OP_SSLEAY_080_CLIENT_DH_BUG,
+} from 'constants';
 import {
     dbset,
     dbget,
@@ -24,28 +27,33 @@ class Game {
     async startGame() {
         const { io, socket } = this;
         let roomID = 0;
-        if (socket.roomID){
+        if (socket.roomID) {
             roomID = socket.roomID;
-        }
-        else{
+        } else {
             roomID = publicRoomID;
         }
         let gameTime = roomList[roomID]['gameTime'];
         let musicName = roomList[roomID]['music'];
         io.to(roomID).emit('chartData', { chartData: chartData });
-        io.to(roomID).emit('startGame_Res', {gameTime : gameTime, musicName : musicName});
+        io.to(roomID).emit('startGame_Res', {
+            gameTime: gameTime,
+            musicName: musicName,
+        });
 
         async function realStart() {
             let roomID = 0;
-            if (socket.roomID){
+            if (socket.roomID) {
                 roomID = socket.roomID;
-            }
-            else{
+            } else {
                 roomID = publicRoomID;
             }
-            let musicName = roomList[roomID]['music'];
+            let dataForStart = {};
+
+            dataForStart['musicName'] = roomList[roomID]['music'];
+            dataForStart['gameTime'] = roomList[roomID]['gameTime'];
+            console.log('');
             roomList[roomID]['gaming'] = true;
-            io.to(roomID).emit('startGame_Real', musicName);
+            io.to(roomID).emit('startGame_Real', dataForStart);
         }
 
         let gameSchedule1 = setTimeout(realStart, 3000);
