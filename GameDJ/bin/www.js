@@ -23,7 +23,6 @@ global.playerStress = 0;
 global.publicRoomID = 'EnjoyPublicGame';
 const server = app.listen(process.env.PORT, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
-    console.log(process.env.REDIS);
 });
 
 sockets.init(server);

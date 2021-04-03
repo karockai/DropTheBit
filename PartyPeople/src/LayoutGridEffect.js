@@ -45,7 +45,7 @@ export default function LayoutGridEffect(props) {
     const [isStart, setIsStart] = useState(false);
 
 
-    console.log(props);
+    // console.log(props);
     const SpecificMusic = musicList[musicName];
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 

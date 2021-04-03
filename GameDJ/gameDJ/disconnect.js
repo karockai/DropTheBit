@@ -53,8 +53,8 @@ class Disconnect {
             }
 
             // await dbhdel(roomID, socket.id);  
-            console.log('----------before disconnect roominfo');
-            console.log(roomInfo);
+            // console.log('----------before disconnect roominfo');
+            // console.log(roomInfo);
             delete roomList[roomID][socket.id];
             for (const [key, value] of Object.entries(roomInfo)) {
                 if (key.length === 20) {
@@ -83,8 +83,8 @@ class Disconnect {
             }
             // console.log('나간 놈 ', socket.id);
             // console.log(roomInfo);
-            console.log('----------after disconnect roominfo');
-            console.log(roomInfo);
+            // console.log('----------after disconnect roominfo');
+            // console.log(roomInfo);
             io.to(roomID).emit('disconnect', roomInfo);
         }
     }

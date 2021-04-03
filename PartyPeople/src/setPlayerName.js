@@ -25,7 +25,7 @@ function SetPlayerName(props) {
         .substring(window.location.toString().indexOf('?'));
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
-    console.log('setplayerid');
+    // console.log('setplayerid');
 
     const onKeyPress = (e) => {
         if (e.key == 'Enter') {

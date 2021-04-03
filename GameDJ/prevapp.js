@@ -13,7 +13,7 @@ var cors = require('cors');
 app.use(cors());
 
 http.listen(5000, () => {
-    console.log("Running on Port 5000...");
+    // console.log("Running on Port 5000...");
 });
 
 
@@ -194,7 +194,7 @@ curPriceRenewal();
 setInterval(curPriceRenewal, 100);
 io.on('connection', (socket) => {
     socket.on('receive_data', (comment) => {
-        console.log(comment);
+        // console.log(comment);
         socket.emit('receive_data',
             {
                 x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0
@@ -358,7 +358,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('test', (comment) => {
-        console.log(comment);
+        // console.log(comment);
     });
 
 

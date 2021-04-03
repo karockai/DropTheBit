@@ -53,14 +53,14 @@ export default function LayoutGrid(props) {
     };
 
     useEffect(() => {
-        console.log('layoutGrid rendered....!');
+        // console.log('layoutGrid rendered....!');
     });
 
     const [over, setOver] = useState(false);
 
     useEffect(() => {
         props.socket.once('gameOver', (leaderBoard) => {
-            console.log('gameover');
+            // console.log('gameover');
             new Audio(GameEnd).play();
             if (leaderBoard) {
                 setOver(leaderBoard);

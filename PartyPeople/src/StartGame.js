@@ -44,7 +44,7 @@ export default function StartGame(props) {
         if (!isSetUp) {
             props.socket.off('startGame_Res').on('startGame_Res', (data) => {
                 props.lobbyAudio.pause();
-                console.log(data);
+                // console.log(data);
                 // if (data.musicName)
                 props.history.push({
                     pathname: '/game',
@@ -64,7 +64,7 @@ export default function StartGame(props) {
         });
     });
     // Step1. 공개 방이 경우
-    console.log('@StartGame // props.roomOnGame :', props.roomOnGame);
+    // console.log('@StartGame // props.roomOnGame :', props.roomOnGame);
     if (props.roomID === 'EnjoyPublicGame') {
         // Step1-1.방이 게임 중이 아닌 경우
         if (props.roomOnGame === false) {

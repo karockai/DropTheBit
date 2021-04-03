@@ -224,7 +224,7 @@ export default function TradeStock(props) {
         );
     }
     function BidUp() {
-        console.log('hi');
+        // console.log('hi');
         SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
@@ -234,7 +234,7 @@ export default function TradeStock(props) {
     function RefreshBid_Req() {
         props.socket.emit('RefreshBid_Req');
         props.socket.once('RefreshBid_Res', (curPrice) => {
-            console.log('RefreshBid_Req');
+            // console.log('RefreshBid_Req');
             SetBid(curPrice);
         });
     }
@@ -281,7 +281,7 @@ export default function TradeStock(props) {
             currentVolume: volume,
         });
         props.socket.once('buyDone', (bbid) => {
-            console.log(bbid);
+            // console.log(bbid);
             SetNewBid(bbid.price);
             setBuyStatus({
                 status: 'done',
@@ -325,7 +325,7 @@ export default function TradeStock(props) {
         });
         //@ 중복 문제가 발생한다.
         props.socket.once('sellDone', (sbid) => {
-            console.log(sbid);
+            // console.log(sbid);
             SetNewBid(sbid.price);
             setSellStatus({
                 status: 'done',
@@ -403,11 +403,11 @@ export default function TradeStock(props) {
             tmpAudio.remove();
             setSellStatus(Sell(currentBid, currentVolume));
         }
-        console.log(e);
+        // console.log(e);
         const key = document.getElementById(e.key);
         // console.log(key);
         if (key) key.classList.add('pressed');
-        console.log(key);
+        // console.log(key);
     }
 
     function HandleKeyDown(e) {
@@ -421,7 +421,7 @@ export default function TradeStock(props) {
 
         const key = document.getElementById(e.key);
         if (key) key.classList.remove('pressed');
-        console.log(key);
+        // console.log(key);
     }
 
     useEffect(() => {
@@ -434,7 +434,7 @@ export default function TradeStock(props) {
 
     useEffect(() => {
         if (isFocus === true) {
-            console.log('keydown event not working now!');
+            // console.log('keydown event not working now!');
             return;
         }
         document.addEventListener('keyup', HandleKeyUp);
@@ -458,12 +458,12 @@ export default function TradeStock(props) {
     }, [newVolume]);
 
     useEffect(() => {
-        console.log(sellStatus, 'sellStatus');
+        // console.log(sellStatus, 'sellStatus');
         if (sellStatus !== null) setSellStatus(null);
     }, [sellStatus]);
 
     useEffect(() => {
-        console.log(buyStatus, 'buy');
+        // console.log(buyStatus, 'buy');
         if (buyStatus !== null) setBuyStatus(null);
     }, [buyStatus]);
 
