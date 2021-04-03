@@ -13,6 +13,17 @@ import {
     TextField,
 } from '@material-ui/core';
 
+// Music
+import Deja_Vu from './audios/music/Deja_Vu.mp3';
+import Dont_Stop_Me_Now from './audios/music/Dont_Stop_Me_Now.mp3';
+import Gong from './audios/music/GONG.mp3';
+import King_Conga from './audios/music/King_Conga.mp3';
+import Mausoleum_Mash from './audios/music/Mausoleum_Mash.mp3';
+import Without_Me from './audios/music/Without_Me.mp3';
+import StormRoad from './audios/music/질풍가도.mp3';
+import Beethven_Virus from './audios/music/Beethven_Virus.mp3';
+import The_Wight_to_Remain from './audios/music/The_Wight_to_Remain.mp3';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -28,16 +39,34 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     },
 }));
+
 export default function MusicLeader(props) {
     const classes = useStyles();
+
+    const musicList = {
+        Deja_Vu: Deja_Vu,
+        Dont_Stop_Me_Now: Dont_Stop_Me_Now,
+        Gong: Gong,
+        King_Conga: King_Conga,
+        Mausoleum_Mash: Mausoleum_Mash,
+        Without_Me: Without_Me,
+        StormRoad: StormRoad,
+        Beethven_Virus: Beethven_Virus,
+        The_Wight_to_Remain: The_Wight_to_Remain,
+    };
 
     function MusicInput() {
         const handleChange = (event) => {
             const musicName = event.target.value;
-            // props.setMusic(musicName);
-            props.socket.emit('settingsUpdate_Req', {
-                roomID: props.roomID,
-                musicName: musicName,
+            let tmpAudio = new Audio(musicList[musicName]);
+            tmpAudio.addEventListener('loadedmetadata', () => {
+                let gameTime = parseInt(tmpAudio.duration);
+                props.socket.emit('settingsUpdate_Req', {
+                    roomID: props.roomID,
+                    musicName: musicName,
+                    gameTime: gameTime,
+                });
+                tmpAudio.remove();
             });
         };
 
