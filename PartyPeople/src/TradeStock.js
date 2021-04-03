@@ -210,7 +210,7 @@ export default function TradeStock(props) {
         //     volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
         //     Math.floor(myWallet.myCash / currentBid)
         // )
-        //     return;
+        //     return;555
         SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
     }
     function VolumeDown(volume) {
@@ -231,7 +231,7 @@ export default function TradeStock(props) {
     }
 
     function RefreshBid_Req() {
-        props.socket.emit('RefreshBid_Req', '예은아 부탁해');
+        props.socket.emit('RefreshBid_Req');
         props.socket.once('RefreshBid_Res', (curPrice) => {
             console.log('RefreshBid_Req');
             SetBid(curPrice);
@@ -344,21 +344,28 @@ export default function TradeStock(props) {
             // props.requestSocket('TradeStock', props.socket);
             // return;
         }
-        if(e.keyCode === 32) {
-            new Audio(CurPrice).play();
-            RefreshBid_Req(); 
-        }   
-        else if (e.keyCode === 37) {
+        if (e.keyCode === 32) {
+            let tmpAudio = new Audio(CurPrice);
+            tmpAudio.play();
+            tmpAudio.remove();
+            RefreshBid_Req();
+        } else if (e.keyCode === 37) {
             //_ LEFT ARROW
-            new Audio(VolDown).play();
+            let tmpAudio = new Audio(VolDown);
+            tmpAudio.play();
+            tmpAudio.remove();
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
-            new Audio(VolUp).play();
+            let tmpAudio = new Audio(VolUp);
+            tmpAudio.play();
+            tmpAudio.remove();
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
-            new Audio(PriceUp).play();
+            let tmpAudio = new Audio(PriceUp);
+            tmpAudio.play();
+            tmpAudio.remove();
             BidUp();
 
             // console.log(e.key);
@@ -366,23 +373,33 @@ export default function TradeStock(props) {
             // if (key) key.classList.add("pressed");
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
-            new Audio(PriceDown).play();
+            let tmpAudio = new Audio(PriceDown);
+            tmpAudio.play();
+            tmpAudio.remove();
             BidDown();
         } else if (e.keyCode === 65) {
             //_ 'A' :
-            new Audio(Buy100).play();
+            let tmpAudio = new Audio(Buy100);
+            tmpAudio.play();
+            tmpAudio.remove();
             SetBuyMaxCount();
         } else if (e.keyCode === 83) {
             //_ 'S'
-            new Audio(Sell100).play();
+            let tmpAudio = new Audio(Sell100);
+            tmpAudio.play();
+            tmpAudio.remove();
             SetSellMaxCount();
         } else if (e.keyCode === 90) {
             //_ 'Z'
-            new Audio(Check).play();
+            let tmpAudio = new Audio(Check);
+            tmpAudio.play();
+            tmpAudio.remove();
             setBuyStatus(Buy(currentBid, currentVolume));
         } else if (e.keyCode === 88) {
             //_ 'X'
-            new Audio(Check).play();
+            let tmpAudio = new Audio(Check);
+            tmpAudio.play();
+            tmpAudio.remove();
             setSellStatus(Sell(currentBid, currentVolume));
         }
         console.log(e);
@@ -391,7 +408,7 @@ export default function TradeStock(props) {
         if (key) key.classList.add('pressed');
         console.log(key);
     }
-    
+
     function HandleKeyDown(e) {
         if (props.inputCtrl) return;
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
@@ -400,9 +417,9 @@ export default function TradeStock(props) {
             props.requestSocket('TradeStock', props.socket);
             return;
         }
-        
+
         const key = document.getElementById(e.key);
-        if (key) key.classList.remove("pressed");
+        if (key) key.classList.remove('pressed');
         console.log(key);
     }
 
@@ -606,8 +623,8 @@ export default function TradeStock(props) {
                 style={{ height: '100%', fontSize: '2vh' }}
             >
                 <Grid container item direction="row" justify="space-between">
-                    <span  className={classes.small_text}>매매호가</span>
-                    <span  className={classes.small_text}>현재가 [SPACE]</span>
+                    <span className={classes.small_text}>매매호가</span>
+                    <span className={classes.small_text}>현재가 [SPACE]</span>
                 </Grid>
                 <Grid
                     container
@@ -646,7 +663,7 @@ export default function TradeStock(props) {
                     </Button>
                 </Grid>
                 <span className={classes.small_text}>수량</span>
-                <span  className={classes.small_text}>현재가 [SPACE]</span>
+                <span className={classes.small_text}>현재가 [SPACE]</span>
                 <Grid
                     container
                     item

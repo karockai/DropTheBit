@@ -25,6 +25,18 @@ import GameMusicStart from './MusicStart';
 
 let gameMusic = new Audio('');
 
+const musicList = {
+    Deja_Vu: Deja_Vu,
+    Dont_Stop_Me_Now: Dont_Stop_Me_Now,
+    Gong: Gong,
+    King_Conga: King_Conga,
+    Mausoleum_Mash: Mausoleum_Mash,
+    Without_Me: Without_Me,
+    StormRoad: StormRoad,
+    Beethven_Virus: Beethven_Virus,
+    The_Wight_to_Remain: The_Wight_to_Remain,
+};
+
 export default function LayoutGridEffect(props) {
     const location = useLocation();
     const gameTime = location.state.gameTime;
@@ -32,17 +44,7 @@ export default function LayoutGridEffect(props) {
     const [timerTime, setTimerTime] = useState(gameTime);
     const [isStart, setIsStart] = useState(false);
 
-    const musicList = {
-        Deja_Vu: Deja_Vu,
-        Dont_Stop_Me_Now: Dont_Stop_Me_Now,
-        Gong: Gong,
-        King_Conga: King_Conga,
-        Mausoleum_Mash: Mausoleum_Mash,
-        Without_Me: Without_Me,
-        StormRoad: StormRoad,
-        Beethven_Virus: Beethven_Virus,
-        The_Wight_to_Remain: The_Wight_to_Remain,
-    };
+
     console.log(props);
     const SpecificMusic = musicList[musicName];
     console.log(SpecificMusic);
