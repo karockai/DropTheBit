@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@dicebear/avatars": "^4.5.4",
+    "@dicebear/avatars-human-sprites": "^4.5.4",
     "@dicebear/avatars-male-sprites": "^4.5.4",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
