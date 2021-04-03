@@ -10,11 +10,6 @@ global.chartData = [];
 global.bidList = {};
 global.askList = {};
 global.roomList = {};
-global.bgmList = {
-    Deja_Vu: 265,
-    King_Conga: 145,
-    Mausoleum_Mash: 176,
-};
 global.curCoin = {};
 global.exTable = {};
 global.prePrice = 0;
@@ -23,7 +18,7 @@ global.prePrice = 0;
 // for stress test
 global.playerStress = 0;
 // for 공방
-global.publicRoomID = 'AAAAAAAAAAAAAAA';
+global.publicRoomID = 'EnjoyPublicGame';
 const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
 });

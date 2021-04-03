@@ -167,7 +167,7 @@ class Room {
         const { io } = this;
         const roomID = data.roomID;
         const musicName = data.musicName;
-        const musicTime = bgmList[musicName];
+        const musicTime = data.gameTime;
 
         roomList[roomID]['gameTime'] = musicTime;
         roomList[roomID]['music'] = musicName;
