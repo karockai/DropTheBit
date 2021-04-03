@@ -6,27 +6,22 @@ import ChartComponent from './ChartComponent';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LayoutGrid from './LayoutGrid';
 import Routes from './Routes';
+import dotenv from 'dotenv'
+dotenv.config();
 
 class GameManager extends React.Component {
     constructor(props) {
-        super(props);
+        super(props);   
         this.state = {
             hash: '',
             author: '',
             message: '',
             messages: [],
             socketId: null,
-
             roomID: null,
             roomInfo: null,
         };
         // this.socket = io('15.165.129.19:5000'); //_ http://15.165.129.19:5000/
-        this.socket = io('localhost:5000');
-        console.log(this.socket);
-        this.socket.on('connect', () => {
-            console.log('connnected', this.socket);
-            this.socket.emit('join');
-        });
     }
     componentWillUnmount() {}
     componentDidMount() {
@@ -37,43 +32,98 @@ class GameManager extends React.Component {
         //   console.log("connnected", this.socket);
         //   this.socket.emit("join");
         // });
-        this.socket.on('curCoin', (data) => {
-            let today = new Date();
-            let minutes = today.getMinutes(); // 분
-            let seconds = today.getSeconds(); // 초
-            let milliseconds = today.getMilliseconds(); // 밀리초
-        });
-
-        this.socket.on('socket', (socket) => {
-            setSocket();
-        });
-
-        this.socket.on('update', function (data) {
-            addMessage(data);
-        });
-
-        this.socket.on('get_chart_data', function (data) {});
-
-        const setSocket = (socket) => {
-            this.setState({ socketId: socket });
-        };
-
-        const addSocket = () => {
-            if (this.socketId === null) {
-                this.setState({ socketId: this.socket });
-            }
-        };
-
-        const addMessage = (data) => {
-            this.setState({ messages: [...this.state.messages, data] });
-        };
-
-        this.socket.on('update_users', function (data, user_count) {
-            user_cnt = user_count;
-            // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
-            // 이 자리에 들어가면 될거같아요
-            // room, start 버튼 도입하면 해결될 문제 !
-        });
+        const params = window.location
+            .toString()
+            .substring(window.location.toString().indexOf('?'));
+        const searchParams = new URLSearchParams(params);
+        if(process.env.REACT_APP_PROD){
+            let socket = io(process.env.REACT_APP_LOBBY);
+            socket.on('connect', () => {
+                console.log('연결 요청');
+                socket.emit('requireIpInfo', searchParams.get('id'), () =>{
+                })
+                console.log('requireInfo');
+                socket.on('ipToConnect', (ipAddress)=>{
+                    console.log(ipAddress);
+                    this.socket = io(ipAddress);
+                    this.socket.on('connect', () =>{
+                        console.log("connected to ", ipAddress);
+                        this.setState({socketId: this.socket});
+                        this.socket.on('curCoin', (data) => {
+                            let today = new Date();
+                            let minutes = today.getMinutes(); // 분
+                            let seconds = today.getSeconds(); // 초
+                            let milliseconds = today.getMilliseconds(); // 밀리초
+                        });
+                        this.socket.on('socket', (socket) => {
+                            setSocket();
+                        });
+                        this.socket.on('update', function (data) {
+                            addMessage(data);
+                        });
+                        this.socket.on('get_chart_data', function (data) {
+                        });
+                        this.socket.on('update_users', function (data, user_count) {
+                            user_cnt = user_count;
+                        })
+                        socket.emit('disconnect');
+                    })
+            });
+            const setSocket = (socket) => {
+                this.setState({ socketId: socket });
+            };
+            const addSocket = () => {
+                if (this.socketId === null) {
+                    this.setState({ socketId: this.socket });
+                }
+            };
+            const addMessage = (data) => {
+                this.setState({ messages: [...this.state.messages, data] });
+            };
+                // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
+                // 이 자리에 들어가면 될거같아요
+                // room, start 버튼 도입하면 해결될 문제 !
+            });
+        }
+        else{
+            this.socket = io('localhost:5000');
+            this.socket.on('connect', () => {
+                console.log('connnected', this.socket);
+                this.socket.emit('join');
+            });
+            this.setState({socketId: this.socket});
+            this.socket.on('curCoin', (data) => {
+                let today = new Date();
+                let minutes = today.getMinutes(); // 분
+                let seconds = today.getSeconds(); // 초
+                let milliseconds = today.getMilliseconds(); // 밀리초
+            });
+            this.socket.on('socket', (socket) => {
+                setSocket();
+            });
+            this.socket.on('update', function (data) {
+                addMessage(data);
+            });
+            this.socket.on('get_chart_data', function (data) {
+            });
+            const setSocket = (socket) => {
+                this.setState({ socketId: socket });
+            };
+            const addSocket = () => {
+                if (this.socketId === null) {
+                    this.setState({ socketId: this.socket });
+                }
+            };
+            const addMessage = (data) => {
+                this.setState({ messages: [...this.state.messages, data] });
+            };
+            this.socket.on('update_users', function (data, user_count) {
+                user_cnt = user_count;
+                // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
+                // 이 자리에 들어가면 될거같아요
+                // room, start 버튼 도입하면 해결될 문제 !
+            });
+        }
     }
 
     TestEmitButton = (props) => {

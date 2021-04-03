@@ -188,8 +188,8 @@ export default function TradeStock(props) {
     useLayoutEffect(() => {
         startTime = new Date();
         if (props.socket == null) {
-            props.requestSocket('MyAsset', props.socket);
-            setInit(true);
+            // props.requestSocket('MyAsset', props.socket);
+            // setInit(true);
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
@@ -341,8 +341,8 @@ export default function TradeStock(props) {
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
         if (props.socket == null || isBind === false) {
-            props.requestSocket('TradeStock', props.socket);
-            return;
+            // props.requestSocket('TradeStock', props.socket);
+            // return;
         }
         if(e.keyCode === 32) {
             new Audio(CurPrice).play();
