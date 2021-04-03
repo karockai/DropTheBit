@@ -248,8 +248,8 @@ export default function ChatRoom(props) {
                     <CssTextField
                         style={{ width: '100%', height: '100%' }}
                         id="standard-basic"
+                        placeholder="메세지 보내기"
                         inputRef={textInput}
-                        label="메세지 보내기 (최대 20자)"
                         onFocus={() => {
                             isFocus = true;
                             props.SetInputCtrl(true);
@@ -260,8 +260,9 @@ export default function ChatRoom(props) {
                         }}
                         onChange={handleOnChange}
                         variant="outlined"
-                        size="small"
-                        inputProps={{ maxlength: 20 }}
+                        autoFocus={true}
+                        // size="small"
+                        inputProps={{ 'aria-label': 'description',maxlength: 20 }}
                     />
                 </Grid>
                 <Grid item style={{ width: '20%', height: '100%' }}>
