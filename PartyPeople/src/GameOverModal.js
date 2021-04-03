@@ -51,6 +51,8 @@ export default function GameOverModal(props) {
         props.setLeaderBoard(false);
         let path = '/lobby';
         history.push(path);
+        props.lobbyAudio.currentTime = 0;
+        props.lobbyAudio.play();
     };
 
     const handleOpen = () => {

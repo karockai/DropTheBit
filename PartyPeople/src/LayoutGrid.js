@@ -78,7 +78,7 @@ export default function LayoutGrid(props) {
 
     return (
         <>
-            {/* {over && <GameOverModal leaderBoard={over} setLeaderBoard={setOver} socket={props.socket} roomID={props.roomID}/>} */}
+            {over && <GameOverModal leaderBoard={over} setLeaderBoard={setOver} socket={props.socket} roomID={props.roomID} lobbyAudio={props.lobbyAudio}/>}
 
             <Grid
                 style={{
