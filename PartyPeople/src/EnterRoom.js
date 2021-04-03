@@ -43,7 +43,7 @@ export default function EnterRoom(props) {
     };
 
     if (props.socket == null) {
-        props.requestSocket('createPrivateRoom');
+        // props.requestSocket('createPrivateRoom');
     }
 
     const sendName = (name, flag) => {
