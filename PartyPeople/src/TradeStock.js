@@ -415,7 +415,7 @@ export default function TradeStock(props) {
         if (e.keyCode === 123 || e.keyCode === 27 || e.keyCode === 13) return; //_ 'F12' || 'esc' || 'enter'
         e.preventDefault();
         if (props.socket == null || isBind === false) {
-            props.requestSocket('TradeStock', props.socket);
+            // props.requestSocket('TradeStock', props.socket);
             return;
         }
 

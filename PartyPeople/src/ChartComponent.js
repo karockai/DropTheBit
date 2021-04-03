@@ -49,7 +49,7 @@ class ChartComponent extends React.Component {
         if (this.setup) {
             //@ candle data callback
             if (this.props.socket == null) {
-                this.props.requestSocket('ChartComponent');
+                // this.props.requestSocket('ChartComponent');
             }
             if (this.props.requestSocket == null) {
                 console.log('requestSocket is null');

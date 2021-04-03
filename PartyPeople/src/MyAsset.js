@@ -50,8 +50,8 @@ export default function MyAsset(props) {
     //@ 가정 => props에 socket이 전달되었어야함.
     useLayoutEffect(() => {
         if (props.socket == null) {
-            props.requestSocket('MyAsset', props.socket);
-            setInit(true);
+            // props.requestSocket('MyAsset', props.socket);
+            // setInit(true);
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq

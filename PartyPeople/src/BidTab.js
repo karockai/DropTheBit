@@ -32,8 +32,8 @@ export default function BidTab(props) {
 
     useLayoutEffect(() => {
         if (props.socket == null) {
-            props.requestSocket('BidTab', props.socket);
-            setInit(true);
+            // props.requestSocket('BidTab', props.socket);
+            // setInit(true);
         } else {
             props.socket.on('refreshBid', (bidObject) => {
                 SetBid(bidObject);

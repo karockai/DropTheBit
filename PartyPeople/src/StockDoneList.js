@@ -19,7 +19,7 @@ export default function StockDoneList(props) {
 
     useEffect(() => {
         if (props.socket == null) {
-            props.requestSocket('StockDoneList', props.socket);
+            // props.requestSocket('StockDoneList', props.socket);
         } else {
             if (!props.isMine) {
                 props.socket.on('buyDone_Room', (done) => {
