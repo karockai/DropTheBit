@@ -15,7 +15,6 @@ export default function LayoutGridEffect(props) {
 
     const [isStart, setIsStart] = useState(false);
 
-    // console.log(props);
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
     useEffect(() => {

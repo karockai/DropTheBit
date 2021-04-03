@@ -28,7 +28,7 @@ export default function EnterRoom(props) {
 
     useEffect(
         () => {
-            console.log(lobbyAudio);
+            // console.log(lobbyAudio);
             lobbyAudio.loop = true;
             playing ? lobbyAudio.play() : lobbyAudio.pause();
             props.sendAudio(lobbyAudio);

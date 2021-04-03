@@ -1,9 +1,9 @@
 // ///////////////////////////////////////////////////////////////
 // const redis = require("redis");
 import redis from 'redis';
-import jsonify from 'redis-jsonify';
-// let jsonify = require('redis-jsonify');
-let client = redis.createClient({ host: '3.34.156.16' });
+import dotenv from 'dotenv';
+dotenv.config();
+let client = redis.createClient({ host: process.env.REDIS});
 client.on('error', function (error) {
     console.error(error);
 });
@@ -30,6 +30,7 @@ const dbdel = util.promisify(client.del).bind(client);
 const dbhdel = util.promisify(client.hdel).bind(client);
 const dbwatch = util.promisify(client.watch).bind(client);
 const dbmulti = util.promisify(client.multi).bind(client);
+const dbhincrby = util.promisify(client.hincrby).bind(client);
 
 // DB function ----------------------------<<
 
@@ -38,5 +39,5 @@ const dbmulti = util.promisify(client.multi).bind(client);
 //     dbget
 // };
 
-export { dbset, dbget, dbhset, dbhmset, dbhget, dbhexi, dbhgetall, dbrpush, dblpush, dblrem, dblrange, dbllen, dbdel, dbhdel, dbwatch, dbmulti};
+export { dbset, dbget, dbhset, dbhmset, dbhget, dbhexi, dbhgetall, dbrpush, dblpush, dblrem, dblrange, dbllen, dbdel, dbhdel, dbwatch, dbmulti, dbhincrby};
 // ///////////////////////////////////////////////////////////////

@@ -4,7 +4,11 @@ import json
 import time, datetime
 import redis, copy
 import coinName
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+redisIP = os.environ.get("REDIS")
 start = 0
 end = 0
 data_make = []
@@ -20,7 +24,7 @@ hoka_result = dict()
 
 try:
     conn = redis.StrictRedis(
-        host='3.34.156.16',
+        host=redisIP,
         port=6379,
         db=0)
     # print("hmset", conn.set("curCoin", "hihhihihi"))

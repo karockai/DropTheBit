@@ -236,7 +236,7 @@ class Refresh {
             // 공방 startGame logic
             if (roomInfo['readyTime'] && roomInfo['readyTime'] > 0){
                 roomList[roomID]['readyTime']--;
-                console.log('readyTime : ', roomList[roomID]['readyTime']);
+                // console.log('readyTime : ', roomList[roomID]['readyTime']);
                 io.to(roomID).emit(
                     'restReadyTime',
                     roomList[roomID]['readyTime']
@@ -251,7 +251,7 @@ class Refresh {
             // gameOver logic
             if (roomInfo['gaming']) {
                 roomList[roomID]['gameTime']--;
-                console.log(roomList[roomID]['gameTime']);
+                // console.log(roomList[roomID]['gameTime']);
                 io.to(roomID).emit(
                     'restGameTime',
                     roomList[roomID]['gameTime']

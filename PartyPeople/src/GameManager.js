@@ -39,15 +39,15 @@ class GameManager extends React.Component {
         if(process.env.REACT_APP_PROD){
             let socket = io(process.env.REACT_APP_LOBBY);
                 socket.on('connect', () => {
-                    console.log('연결 요청');
+                    // console.log('연결 요청');
                     socket.emit('requireIpInfo', searchParams.get('id'), () =>{
                     })
-                    console.log('requireInfo');
+                    // console.log('requireInfo');
                     socket.on('ipToConnect', (ipAddress)=>{
-                        console.log(ipAddress);
+                        // console.log(ipAddress);
                         this.socket = io(ipAddress);
                         this.socket.on('connect', () =>{
-                            console.log("connected to ", ipAddress);
+                            // console.log("connected to ", ipAddress);
                             this.setState({socketId: this.socket});
                             this.socket.on('curCoin', (data) => {
                                 let today = new Date();
@@ -88,7 +88,7 @@ class GameManager extends React.Component {
         else{
             this.socket = io(process.env.REACT_APP_SERVER);
             this.socket.on('connect', () => {
-                console.log('connnected', this.socket);
+                // console.log('connnected', this.socket);
                 this.socket.emit('join');
             });
             this.setState({socketId: this.socket});
@@ -149,9 +149,9 @@ class GameManager extends React.Component {
     };
     RequestSocket = (component, socket) => {
         if (socket != null) return;
-        console.log(
-            component + ' 에서 socket을 요청했습니다. 랜더링을 다시 합니다.'
-        );
+        // console.log(
+        //     component + ' 에서 socket을 요청했습니다. 랜더링을 다시 합니다.'
+        // );
         this.setState({ socketId: this.socket });
     };
 
@@ -160,7 +160,7 @@ class GameManager extends React.Component {
             roomID: data.roomID,
             roomInfo: data.roomInfo,
         });
-        console.log('SetRoomIdAndInfo. 랜더링을 다시 합니다.');
+        // console.log('SetRoomIdAndInfo. 랜더링을 다시 합니다.');
     };
 
     render() {

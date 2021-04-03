@@ -91,13 +91,13 @@ function Lobby(props) {
     });
 
     function PutNewCard(props) {
-        console.log(props.roomInfo);
+        // console.log(props.roomInfo);
         if (props.roomInfo != '') {
             let PlayerList = getPlayersList(props.roomInfo);
-            console.log(PlayerList);
+            // console.log(PlayerList);
             let tmparr = [];
             for (let key in PlayerList) {
-                console.log(key);
+                // console.log(key);
                 tmparr.push([key, PlayerList[key]]);
             }
             return (

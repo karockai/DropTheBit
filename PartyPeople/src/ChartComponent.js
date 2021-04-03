@@ -29,7 +29,7 @@ class ChartComponent extends React.Component {
     setAPI = false;
     addCandleData = (data) => {
         if (data === null) {
-            console.log('하늘소....하늘소.. 응답하라....');
+            // console.log('하늘소....하늘소.. 응답하라....');
             return;
         }
         data.date = new Date(data.date);
@@ -52,13 +52,11 @@ class ChartComponent extends React.Component {
                 // this.props.requestSocket('ChartComponent');
             }
             if (this.props.requestSocket == null) {
-                console.log('requestSocket is null');
+                // console.log('requestSocket is null');
             } else if (this.props.socket != null) {
                 this.props.socket.emit('chartData_Req');
                 this.props.socket.on('chartData_Res', (datas) => {
-                    console.log(
-                        '게임 시작 이전의 차트 데이터(최대 100tick)가 로드되었습니다.'
-                    );
+                    // console.log('게임 시작 이전의 차트 데이터(최대 100tick)가 로드되었습니다.');
                     datas.chartData.map((data) => {
                         this.addCandleData(data);
                     });

@@ -10,10 +10,13 @@ import {
     dblrem,
     dblrange,
     dbllen,
+    dbhincrby,
 } from './redis.js';
 import { nanoid } from 'nanoid';
 import fs from 'fs';
 import { publicDecrypt } from 'crypto';
+import dotenv from 'dotenv'
+
 
 class Room {
     constructor(io, socket) {
@@ -47,6 +50,10 @@ class Room {
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
+        dotenv.config();
+        let ipAddress = String(process.env.IP) + ':' + String(process.env.PORT);
+        dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
+        dbhincrby(process.env.SERVERNAME, 'player', 1);
         let playerID = data.playerID;
         let playerInfo = {
             playerID: playerID,
