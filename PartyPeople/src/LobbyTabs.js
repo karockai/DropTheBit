@@ -81,13 +81,13 @@ export default function LobbyTabs(props) {
     };
 
     const handleKeymap = (event) => {
-        console.log(event.currentTarget);
+        // console.log(event.currentTarget);
         setKeymap(event.currentTarget);
-        console.log(keymap);
+        // console.log(keymap);
     };
 
     const handleSelectMusic = (event) => {
-        console.log(event.currentTarget);
+        // console.log(event.currentTarget);
         setSelectMusic(event.currentTarget);
     };
 
@@ -100,7 +100,7 @@ export default function LobbyTabs(props) {
     const openSelect = Boolean(selectMusic);
 
     const CheckLeader = () => {
-        console.log(props.socket);
+        // console.log(props.socket);
         if (props.roomLeader === props.socketId) {
             return (
                 <>
@@ -137,8 +137,8 @@ export default function LobbyTabs(props) {
             );
         }
     };
-    console.log(keymap, openKey);
-    console.log(selectMusic, openSelect);
+    // console.log(keymap, openKey);
+    // console.log(selectMusic, openSelect);
     return (
         <>
             <Grid container justify={'space-around'} alignItems={'center'}>

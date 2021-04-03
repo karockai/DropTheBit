@@ -147,23 +147,23 @@ export default function BidTable(props) {
                     aria-label="a dense table"
                 >
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                             <TableCell
-                                style={{ align: 'center', width: '20%' }}
+                                style={{ align: 'center', minWidth:'20%'}}
                             >
                                 <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     취소[1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', width: '20%' }}
+                                style={{ align: 'center', minWidth:'20%'}}
                             >
                                 <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     매수 가격
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', width: '20%' , height:'100%'}}
+                                style={{ align: 'center', minWidth:'20%', height:'100%'}}
                             >
                                 <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
                                     매수 수량

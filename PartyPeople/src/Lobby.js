@@ -347,6 +347,7 @@ function Lobby(props) {
                         isLeader={
                             props.roomInfo['roomLeader'] === props.socket.id
                         }
+                        roomOnGame={props.roomInfo['gaming']}
                     />
                 </Grid>
                 <Grid

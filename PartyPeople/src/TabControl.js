@@ -22,6 +22,7 @@ function SimpleMediaQuery() {
   
     return <span>{`(min-width:100px) matches: ${matches}`}</span>;
   }
+
 const StyledTabs = withStyles({
     indicator: {
         width:'100%',
@@ -30,7 +31,6 @@ const StyledTabs = withStyles({
       alignContent: "center",
       backgroundColor: "transparent",
       "& > span": {
-        maxWidth: 60,
         width: "100%",
         backgroundColor: "#635ee7"
       }
@@ -47,7 +47,7 @@ const StyledTabs = withStyles({
       fontSize: '0.8vw',
       alignItems: 'center',
       wrapped:'false',
-    //   width: '33%',
+      minWidth: '33%',
       "&:focus": {
         opacity: 1
       }

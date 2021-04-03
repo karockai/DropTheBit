@@ -9,7 +9,9 @@ const dbget = util.promisify(client.get).bind(client);
 const dbset = util.promisify(client.set).bind(client);
 const dbhset = util.promisify(client.hset).bind(client);
 const dbhmset = util.promisify(client.hmset).bind(client);
+const dbhmget = util.promisify(client.hmget).bind(client);
 const dbhget = util.promisify(client.hget).bind(client);
+const dbhincrby = util.promisify(client.hincrby).bind(client);
 const dbhgetall = util.promisify(client.hgetall).bind(client);
 
 export default {
@@ -24,17 +26,20 @@ export default {
         await serverSetting(server);
         function returnIpAddress(socket, roomID){
             return new Promise(async function (resolve, reject) {
-                let serverList = ['AWS0', 'AWS1'];
+            let serverList = (process.env.SERVERS).split(' ');
             if (roomID) {
                 // 링크 받아서 들어온 사람
-                console.log("참가자 연결");
+                // console.log("참가자 연결");
                 // roomID에 해당하는 주소를 받아와서 연결한다.
-                console.log(roomID);
-                let ipAddress = await dbget(roomID);
+                // console.log(roomID);
+                let response = await dbhmget(roomID, 'ip', 'name');
+                let ipAddress = response[0];
+                let name = response[1];
+                dbhincrby(name, 'player', 1);
                 socket.emit('ipToConnect', ipAddress);
             } else {
                 // 방장
-                console.log("방장 연결");
+                // console.log("방장 연결");
                 // IPAddress를 돌면서 room * 5 + people이 가장 낮은 곳을 찾음
                 let minConnected = 300;
                 let connectionInfo = 0;
@@ -44,23 +49,23 @@ export default {
                 // 최소로 연결된 IP를 찾는다.
                 for(let idx =0; idx <serverList.length; idx++){
                     
-                    console.log(serverList[idx]);
+                    // console.log(serverList[idx]);
                     connectionInfo = await dbhgetall(serverList[idx]);
-                    console.log(connectionInfo);
-                    console.log(connectionInfo['room']);
+                    // console.log(connectionInfo);
+                    // console.log(connectionInfo['room']);
                     numConnected = Number(connectionInfo['room']) * 5 + Number(connectionInfo['player']);
                     if (numConnected < minConnected){
                         minConnected = numConnected;
                         ipAddress = connectionInfo['IP'];
                     }
                 }
-                console.log(ipAddress);
+                // console.log(ipAddress);
                 if(ipAddress){
                     socket.emit('ipToConnect', ipAddress);
                 }
                 else{
                     //이리로 들어올 일이 있으려나?
-                    console.log("서버 수용인원이 가득찼습니다.")
+                    // console.log("서버 수용인원이 가득찼습니다.")
                     return undefined
                 }
             }

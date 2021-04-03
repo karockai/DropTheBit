@@ -10,10 +10,12 @@ import {
     dblrem,
     dblrange,
     dbllen,
+    dbhincrby,
 } from './redis.js';
 import { nanoid } from 'nanoid';
 import fs from 'fs';
 import { publicDecrypt } from 'crypto';
+import dotenv from 'dotenv';
 
 class Room {
     constructor(io, socket) {
@@ -47,6 +49,10 @@ class Room {
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
+        dotenv.config();
+        let ipAddress = String(process.env.IP) + ':' + String(process.env.PORT);
+        dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
+        dbhincrby(process.env.SERVERNAME, 'player', 1);
         let playerID = data.playerID;
         let playerInfo = {
             playerID: playerID,
@@ -171,6 +177,25 @@ class Room {
 
         roomList[roomID]['gameTime'] = musicTime;
         roomList[roomID]['music'] = musicName;
+
+        // randum setting
+        // if (musicNAme === 'Randum')
+        // {
+        //     const musicList = {
+        //         Deja_Vu: Deja_Vu,
+        //         Dont_Stop_Me_Now: Dont_Stop_Me_Now,
+        //         Gong: Gong,
+        //         King_Conga: King_Conga,
+        //         Mausoleum_Mash: Mausoleum_Mash,
+        //         Without_Me: Without_Me,
+        //         StormRoad: StormRoad,
+        //         Beethven_Virus: Beethven_Virus,
+        //         The_Wight_to_Remain: The_Wight_to_Remain,
+        //     }
+
+        //     const musicArray = ['Deja_Vu','Dont_Stop_Me_Now']
+
+        // }
 
         io.to(roomID).emit('settingsUpdate_Res', {
             musicName: musicName,

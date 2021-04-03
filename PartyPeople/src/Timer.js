@@ -2,12 +2,16 @@ import { red } from '@material-ui/core/colors';
 import React, { useEffect, useState } from 'react';
 import fiveSecLeft from './audios/effect/5secLeft.wav';
 
+const timeAudio = new Audio(fiveSecLeft);
+
 export default function Timer(props) {
-    const [timerSound] = useState(new Audio(fiveSecLeft));
+    const [timerSound] = useState(timeAudio);
     const [time, setTime] = useState(-1);
+
     props.socket.on('restGameTime', (restGameTime) => {
         setTime(restGameTime);
     });
+
     const ShowTime = () => {
         if (0 <= time && time <= 5) {
             timerSound.play();
@@ -19,11 +23,19 @@ export default function Timer(props) {
         if (time <= 0) {
             minute = '00';
             second = '00';
-            return <h2 style={{ fontSize: '2.5vw',  }}>{minute + ' : ' + second}</h2>;
+            return (
+                <h2 style={{ fontSize: '2.5vw' }}>{minute + ' : ' + second}</h2>
+            );
         } else if (time < 60) {
             return (
-                <h2 style={{fontSize: '2.5vw', color: 'red', fontWeight: 'bold' }} >
-                    {minute+' : '+second}    
+                <h2
+                    style={{
+                        fontSize: '2.5vw',
+                        color: 'red',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {minute + ' : ' + second}
                 </h2>
             );
         } else {

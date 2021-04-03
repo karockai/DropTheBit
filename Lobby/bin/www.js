@@ -36,8 +36,8 @@ global.playercnt = 0;
 global.publicRoom = false;
 let serverList = (process.env.SERVERS).split(' ');
 let ipList = (process.env.IPS).split(' ');
-console.log('servers', serverList);
-console.log('ips', ipList);
+// console.log('servers', serverList);
+// console.log('ips', ipList);
 for(let idx=0; idx<serverList.length; idx++){
     dbhset(serverList[idx], 'room', 0, 'player', 0, 'IP', ipList[idx]);
 }

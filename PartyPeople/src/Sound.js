@@ -65,7 +65,7 @@ export default function Sound(props) {
         King_Conga: King_Conga,
         Mausoleum_Mash: Mausoleum_Mash,
         Without_Me: Without_Me,
-        StormRoad: StormRoad,
+        질풍가도: StormRoad,
         Beethven_Virus: Beethven_Virus,
         The_Wight_to_Remain: The_Wight_to_Remain,
         fiveLeft: fiveLeft,

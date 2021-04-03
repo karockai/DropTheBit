@@ -29,17 +29,20 @@
 .pulse:focus {
   -webkit-animation: pulse 1s;
           animation: pulse 1s;
+  
+}
+
+.clicked {
   -webkit-box-shadow: 0 0 0 2em rgba(255, 255, 255, 0);
           box-shadow: 0 0 0 2em rgba(255, 255, 255, 0);
 }
+
+
 .pressed{
   -webkit-animation: pulse 1s;
           animation: pulse 1s;
   -webkit-box-shadow: 0 0 0 2em rgba(255, 255, 255, 0);
           box-shadow: 0 0 0 2em rgba(255, 255, 255, 0);
-  /* border-color: var(--hover);
-  color: #fff; */
-
 }
 
 @-webkit-keyframes pulse {
@@ -87,7 +90,7 @@
 }
 
 /* // Multiple shadows, one on the outside, another on the inside */
-.offset {
+/* .offset {
   -webkit-box-shadow: 0.3em 0.3em 0 0 var(--color), inset 0.3em 0.3em 0 0 var(--color);
           box-shadow: 0.3em 0.3em 0 0 var(--color), inset 0.3em 0.3em 0 0 var(--color);
 }
@@ -95,7 +98,7 @@
 .offset:hover, .offset:focus {
   -webkit-box-shadow: 0 0 0 0 var(--hover), inset 6em 3.5em 0 0 var(--hover);
           box-shadow: 0 0 0 0 var(--hover), inset 6em 3.5em 0 0 var(--hover);
-}
+} */
 
 /* //=== Set button colors
 // If you wonder why use Sass vars or CSS custom properties...
@@ -146,10 +149,13 @@ button {
   transition: 0.25s;
 }
 
-button:hover, button:focus {
+/* button:hover, button:focus { */
+button:hover, button:focus, button.pressed {
   border-color: var(--hover);
   color: #fff;
 }
+
+
 
 /* //=== Pen styling, ignore */
 body {

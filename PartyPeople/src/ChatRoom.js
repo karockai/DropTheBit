@@ -216,7 +216,7 @@ export default function ChatRoom(props) {
                     style={{ width: '100%', height: '100%', padding:'1vw 1vw 1vw 1vw', }}
                 >
                     {messages.map((message) => {
-                        console.log(messages);
+                        // console.log(messages);
                         if (message === '') return;
                         return (
                             <Grid

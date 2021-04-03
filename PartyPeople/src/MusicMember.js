@@ -72,7 +72,7 @@ export default function MusicMember(props) {
                 const musicTime = data.musicTime;
                 var tmp_roomInfo = props.roomInfo;
                 tmp_roomInfo['music'] = musicName;
-                console.log('@MusicMemeber // musicTime :,', musicTime);
+                // console.log('@MusicMemeber // musicTime :,', musicTime);
                 // strSetTime(String(minute) + ' : ' + String(second));
                 props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo : tmp_roomInfo});
                 props.setMusicTime(musicName, musicTime);

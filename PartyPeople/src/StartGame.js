@@ -44,7 +44,7 @@ export default function StartGame(props) {
         if (!isSetUp) {
             props.socket.off('startGame_Res').on('startGame_Res', (data) => {
                 props.lobbyAudio.pause();
-                console.log(data);
+                // console.log(data);
                 // if (data.musicName)
                 props.history.push({
                     pathname: '/game',
@@ -63,44 +63,48 @@ export default function StartGame(props) {
             SetRestTime(restTime);
         });
     });
-
+    // Step1. 공개 방이 경우
+    // console.log('@StartGame // props.roomOnGame :', props.roomOnGame);
     if (props.roomID === 'EnjoyPublicGame') {
-        return (
-            <>
-                {props.isLeader && (
-                    <PurpleButton
-                        variant="contained"
-                        style={{
-                            width: '80%',
-                            height: '80%',
-                            fontSize: '12vh',
-                        }}
-                        text
-                    >
-                        {' '}
-                        {restReadyTime}
-                    </PurpleButton>
-                )}
-                {!props.isLeader && (
-                    <PurpleButton
-                        variant="contained"
-                        style={{
-                            width: '80%',
-                            height: '80%',
-                            fontSize: '12vh',
-                        }}
-                        text
-                    >
-                        {' '}
-                        {restReadyTime}
-                    </PurpleButton>
-                )}
-            </>
-        );
-    } else {
-        return (
-            <>
-                {props.isLeader && (
+        // Step1-1.방이 게임 중이 아닌 경우
+        if (props.roomOnGame === false) {
+            return (
+                <>
+                    {props.isLeader && (
+                        <PurpleButton
+                            variant="contained"
+                            style={{
+                                width: '80%',
+                                height: '20vh',
+                                fontSize: '8vh',
+                            }}
+                            text
+                        >
+                            {' '}
+                            {restReadyTime}
+                        </PurpleButton>
+                    )}
+                    {!props.isLeader && (
+                        <PurpleButton
+                            variant="contained"
+                            style={{
+                                width: '80%',
+                                height: '20vh',
+                                fontSize: '8vh',
+                            }}
+                            text
+                        >
+                            {' '}
+                            {restReadyTime}
+                        </PurpleButton>
+                    )}
+                </>
+            );
+        }
+        // Step1-2. 방이 게임 중인 경우
+        else {
+            return (
+                <>
                     <PurpleButton
                         variant="contained"
                         onClick={StartGameReq}
@@ -113,22 +117,66 @@ export default function StartGame(props) {
                     >
                         {'START'}
                     </PurpleButton>
-                )}
-                {!props.isLeader && (
+                </>
+            );
+        }
+    }
+    // Step2. 사설 방인 경우
+    else {
+        // Step2-1. 방이 게임 중이 아닌 경우
+        if (props.roomOnGame === false) {
+            return (
+                <>
+                    {props.isLeader && (
+                        <PurpleButton
+                            variant="contained"
+                            onClick={StartGameReq}
+                            style={{
+                                width: '80%',
+                                height: '20vh',
+                                fontSize: '8vh',
+                            }}
+                            text
+                        >
+                            {'START'}
+                        </PurpleButton>
+                    )}
+                    {!props.isLeader && (
+                        <PurpleButton
+                            variant="contained"
+                            style={{
+                                width: '80%',
+                                height: '20vh',
+                                fontSize: '8vh',
+                            }}
+                            text
+                            disabled
+                        >
+                            {'START'}
+                        </PurpleButton>
+                    )}
+                </>
+            );
+        }
+
+        // Step2-2. 방이 게임 중인 경우
+        else {
+            return (
+                <>
                     <PurpleButton
                         variant="contained"
+                        onClick={StartGameReq}
                         style={{
                             width: '80%',
                             height: '80%',
                             fontSize: '8vh',
                         }}
                         text
-                        disabled
                     >
                         {'START'}
                     </PurpleButton>
-                )}
-            </>
-        );
+                </>
+            );
+        }
     }
 }
