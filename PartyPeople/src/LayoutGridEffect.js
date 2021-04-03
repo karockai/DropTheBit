@@ -43,9 +43,8 @@ export default function LayoutGridEffect(props) {
         Beethven_Virus: Beethven_Virus,
         The_Wight_to_Remain: The_Wight_to_Remain,
     };
-    console.log(props);
+
     const SpecificMusic = musicList[musicName];
-    console.log(SpecificMusic);
     const [threeSecTimerOpen, setThreeSecTimerOpen] = useState(true);
 
     useEffect(() => {

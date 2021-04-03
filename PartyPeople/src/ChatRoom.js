@@ -207,7 +207,7 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList style={{ width: '100%', height: '100%' }} wrap={'wrap'}>
+            <Grid style={{ width: '100%', height: '100%' }} wrap={'wrap'}>
                 <Grid
                     container
                     direction={'column'}
@@ -233,10 +233,11 @@ export default function ChatRoom(props) {
                             </Grid>
                         );
                     })}
-                    <Grid
+                    <GridList
+                        id ="whaitisthis" 
                         style={{ float: 'left', clear: 'both', height: '0%' }}
                         ref={messagesEnd}
-                    ></Grid>
+                    ></GridList>
                 </Grid>
             <Grid
                 item
@@ -284,7 +285,7 @@ export default function ChatRoom(props) {
                     </button>
                 </Grid>
             </Grid>
-            </GridList>
+            </Grid>
         </>
     );
 }
