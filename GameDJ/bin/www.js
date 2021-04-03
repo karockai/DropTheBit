@@ -20,8 +20,8 @@ global.prePrice = 0;
 // for stress test
 global.playerStress = 0;
 // for 공방
-global.publicRoomID = 'AAAAAAAAAAAAAAA';
-const server = app.listen(process.env.PORT, process.env.IP, () => {
+global.publicRoomID = 'EnjoyPublicGame';
+const server = app.listen(process.env.PORT || 5000, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
     console.log(process.env.REDIS);
 });

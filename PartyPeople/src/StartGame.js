@@ -42,19 +42,18 @@ export default function StartGame(props) {
     let isSetUp = false;
     useEffect(() => {
         if (!isSetUp) {
-            props.socket
-                .off('startGame_Res')
-                .on('startGame_Res', (data) => {
-                    props.lobbyAudio.pause();
-                    console.log(data);
-                    // if (data.musicName)
-                        props.history.push({
-                            pathname: '/game',
-                            state: { 
-                                musicName: data.musicName,
-                                gameTime: data.gameTime },
-                        });
+            props.socket.off('startGame_Res').on('startGame_Res', (data) => {
+                props.lobbyAudio.pause();
+                console.log(data);
+                // if (data.musicName)
+                props.history.push({
+                    pathname: '/game',
+                    state: {
+                        musicName: data.musicName,
+                        gameTime: data.gameTime,
+                    },
                 });
+            });
             isSetUp = true;
         }
     }, []);
@@ -65,7 +64,7 @@ export default function StartGame(props) {
         });
     });
 
-    if (props.roomID === 'AAAAAAAAAAAAAAA') {
+    if (props.roomID === 'EnjoyPublicGame') {
         return (
             <>
                 {props.isLeader && (

@@ -38,36 +38,36 @@ class GameManager extends React.Component {
         const searchParams = new URLSearchParams(params);
         if(process.env.REACT_APP_PROD){
             let socket = io(process.env.REACT_APP_LOBBY);
-            socket.on('connect', () => {
-                console.log('연결 요청');
-                socket.emit('requireIpInfo', searchParams.get('id'), () =>{
-                })
-                console.log('requireInfo');
-                socket.on('ipToConnect', (ipAddress)=>{
-                    console.log(ipAddress);
-                    this.socket = io(ipAddress);
-                    this.socket.on('connect', () =>{
-                        console.log("connected to ", ipAddress);
-                        this.setState({socketId: this.socket});
-                        this.socket.on('curCoin', (data) => {
-                            let today = new Date();
-                            let minutes = today.getMinutes(); // 분
-                            let seconds = today.getSeconds(); // 초
-                            let milliseconds = today.getMilliseconds(); // 밀리초
-                        });
-                        this.socket.on('socket', (socket) => {
-                            setSocket();
-                        });
-                        this.socket.on('update', function (data) {
-                            addMessage(data);
-                        });
-                        this.socket.on('get_chart_data', function (data) {
-                        });
-                        this.socket.on('update_users', function (data, user_count) {
-                            user_cnt = user_count;
-                        })
-                        socket.emit('disconnect');
+                socket.on('connect', () => {
+                    console.log('연결 요청');
+                    socket.emit('requireIpInfo', searchParams.get('id'), () =>{
                     })
+                    console.log('requireInfo');
+                    socket.on('ipToConnect', (ipAddress)=>{
+                        console.log(ipAddress);
+                        this.socket = io(ipAddress);
+                        this.socket.on('connect', () =>{
+                            console.log("connected to ", ipAddress);
+                            this.setState({socketId: this.socket});
+                            this.socket.on('curCoin', (data) => {
+                                let today = new Date();
+                                let minutes = today.getMinutes(); // 분
+                                let seconds = today.getSeconds(); // 초
+                                let milliseconds = today.getMilliseconds(); // 밀리초
+                            });
+                            this.socket.on('socket', (socket) => {
+                                setSocket();
+                            });
+                            this.socket.on('update', function (data) {
+                                addMessage(data);
+                            });
+                            this.socket.on('get_chart_data', function (data) {
+                            });
+                            this.socket.on('update_users', function (data, user_count) {
+                                user_cnt = user_count;
+                            })
+                            socket.emit('disconnect');
+                        })
             });
             const setSocket = (socket) => {
                 this.setState({ socketId: socket });
@@ -86,7 +86,7 @@ class GameManager extends React.Component {
             });
         }
         else{
-            this.socket = io('localhost:5000');
+            this.socket = io(process.env.REACT_APP_SERVER);
             this.socket.on('connect', () => {
                 console.log('connnected', this.socket);
                 this.socket.emit('join');
