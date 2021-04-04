@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './ShiningButton.css';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -24,6 +25,7 @@ import Without_Me from './audios/music/Without_Me.mp3';
 import StormRoad from './audios/music/질풍가도.mp3';
 import Beethven_Virus from './audios/music/Beethven_Virus.mp3';
 import The_Wight_to_Remain from './audios/music/The_Wight_to_Remain.mp3';
+import TestMusic from './audios/music/TestMusic.mp3';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,6 +69,7 @@ export default function StartGame(props) {
             질풍가도: StormRoad,
             Beethven_Virus: Beethven_Virus,
             The_Wight_to_Remain: The_Wight_to_Remain,
+            TestMusic: TestMusic,
         };
 
         let gameAudio;
@@ -148,32 +151,34 @@ export default function StartGame(props) {
             return (
                 <>
                     {props.isLeader && (
-                        <PurpleButton
+                        <Button
+                            class="start"
                             variant="contained"
                             style={{
                                 width: '80%',
-                                height: '20vh',
-                                fontSize: '8vh',
+                                height: '17vh',
+                                fontSize: '10vh',
                             }}
                             text
                         >
                             {' '}
                             {restReadyTime}
-                        </PurpleButton>
+                        </Button>
                     )}
                     {!props.isLeader && (
-                        <PurpleButton
+                        <Button
+                            class="start"
                             variant="contained"
                             style={{
                                 width: '80%',
-                                height: '20vh',
-                                fontSize: '8vh',
+                                height: '17vh',
+                                fontSize: '10vh',
                             }}
                             text
                         >
                             {' '}
                             {restReadyTime}
-                        </PurpleButton>
+                        </Button>
                     )}
                 </>
             );
@@ -182,18 +187,19 @@ export default function StartGame(props) {
         else {
             return (
                 <>
-                    <PurpleButton
+                    <Button
+                        class="start"
                         variant="contained"
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '80%',
-                            fontSize: '8vh',
+                            height: '17vh',
+                            fontSize: '10vh',
                         }}
                         text
                     >
                         {'START'}
-                    </PurpleButton>
+                    </Button>
                 </>
             );
         }
@@ -205,32 +211,32 @@ export default function StartGame(props) {
             return (
                 <>
                     {props.isLeader && (
-                        <PurpleButton
-                            variant="contained"
+                        <Button
+                            class="start"
                             onClick={StartGameReq}
                             style={{
                                 width: '80%',
-                                height: '20vh',
-                                fontSize: '8vh',
+                                height: '17vh',
+                                fontSize: '10vh',
                             }}
                             text
                         >
                             {'START'}
-                        </PurpleButton>
+                        </Button>
                     )}
                     {!props.isLeader && (
-                        <PurpleButton
-                            variant="contained"
+                        <Button
+                            class="start"
                             style={{
                                 width: '80%',
-                                height: '20vh',
-                                fontSize: '8vh',
+                                height: '17vh',
+                                fontSize: '10vh',
                             }}
                             text
                             disabled
                         >
                             {'START'}
-                        </PurpleButton>
+                        </Button>
                     )}
                 </>
             );
@@ -240,18 +246,18 @@ export default function StartGame(props) {
         else {
             return (
                 <>
-                    <PurpleButton
-                        variant="contained"
+                    <Button
+                        class="start"
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '80%',
-                            fontSize: '8vh',
+                            height: '18vh',
+                            fontSize: '10vh',
                         }}
                         text
                     >
                         {'START'}
-                    </PurpleButton>
+                    </Button>
                 </>
             );
         }

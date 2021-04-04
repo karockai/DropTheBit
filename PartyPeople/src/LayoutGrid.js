@@ -16,7 +16,7 @@ import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './ThreeSecTimer';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
-import GameEnd from './audios/effect/GameEnd.mp3';
+import Result from './audios/effect/Result.mp3';
 
 import {
     BrowserRouter as Router,
@@ -61,10 +61,12 @@ export default function LayoutGrid(props) {
     useEffect(() => {
         props.socket.once('gameOver', (leaderBoard) => {
             // console.log('gameover');
-            new Audio(GameEnd).play();
+            let tmpAudio = new Audio(Result);
+            tmpAudio.play();
             if (leaderBoard) {
                 setOver(leaderBoard);
             }
+            tmpAudio.remove();
         });
     }, []);
 

@@ -165,7 +165,7 @@ function Lobby(props) {
                 <Grid
                     className="상단메뉴바"
                     item
-                    style={{ height: '7vh', opacity: 0.8 }}
+                    style={{ height: '7vh', opacity: 0.9 }}
                 >
                     <AppBar
                         position="static"
@@ -207,7 +207,6 @@ function Lobby(props) {
                     className="하단컨텐츠그리드"
                     container
                     direction={'row'}
-                    alignItems={'stretch'}
                 >
                     <Grid
                         className="채팅창제외좌측그리드"
@@ -256,7 +255,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '80%' }}
+                                    style={{ width: '70%', height:'100%' }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={5}>
@@ -293,9 +292,10 @@ function Lobby(props) {
                     <Grid
                         className="채팅창"
                         style={{
+                            width:'100%',
                             height: '90vh',
                             padding: '1vw 1vw 1vw 1vw',
-                            opacity: '0.7',
+                            opacity: '0.8',
                         }}
                         item
                         xs={4}
@@ -303,6 +303,7 @@ function Lobby(props) {
                         <Paper
                             className={classes.paper}
                             style={{
+                                width:'100%',
                                 height: '100%',
                                 padding: '1vw 1vw 1vw 1vw',
                             }}
