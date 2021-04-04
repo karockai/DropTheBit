@@ -212,11 +212,14 @@ class Room {
             roomInfo['music'] = 'King_Conga';
             roomInfo['roomLeader'] = socketID;
             roomInfo['gaming'] = false;
-            if (roomInfo['readyTime']) {
-                roomInfo['readyTime'] = 30;
+            if (roomInfo['readyTime'] == 0) {
+                roomInfo['readyTime'] = 10;
             }
         }
+        console.log('---------------roomReinit--------------');
+        console.log(roomInfo);
     }
+    
 }
 
 export default Room;
