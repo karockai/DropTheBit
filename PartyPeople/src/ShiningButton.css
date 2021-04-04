@@ -18,15 +18,24 @@
   font-style: normal;
 }
 
-.fill:hover,
-.fill:focus {
-  -webkit-box-shadow: inset 0 0 0 2em var(--hover);
-          box-shadow: inset 0 0 0 2em var(--hover);
-}
+/* pulse => arrow, buy_max, buy, sell_max, sell 
 
+
+  애니메이션은 똑같으니까 두고 
+  색만 분리해서 만들자
+  */
 /* // Animate the size, outside */
-.pulse:hover,
-.pulse:focus {
+.arrow:hover,
+.arrow:focus,
+.buy_max:hover,
+.buy_max:focus,
+.buy:hover,
+.buy:focus,
+.sell_max:hover,
+.sell_max:focus,
+.sell:hover,
+.sell:focus
+{
   -webkit-animation: pulse 1s;
           animation: pulse 1s;
   
@@ -58,89 +67,35 @@
             box-shadow: 0 0 0 0 var(--hover);
   }
 }
-
-/* // Stack multiple shadows, one from the left, the other from the right */
-.close:hover,
-.close:focus {
-  -webkit-box-shadow: inset -3.5em 0 0 0 var(--hover), inset 3.5em 0 0 0 var(--hover);
-          box-shadow: inset -3.5em 0 0 0 var(--hover), inset 3.5em 0 0 0 var(--hover);
-}
-
-/* // Size can also be negative; see how it's smaller than the element */
-.raise:hover,
-.raise:focus {
-  -webkit-box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-          box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-  -webkit-transform: translateY(-0.25em);
-          transform: translateY(-0.25em);
-}
-
-/* // Animating from the bottom */
-.up:hover,
-.up:focus {
-  -webkit-box-shadow: inset 0 -3.25em 0 0 var(--hover);
-          box-shadow: inset 0 -3.25em 0 0 var(--hover);
-}
-
-/* // And from the left */
-.slide:hover,
-.slide:focus {
-  -webkit-box-shadow: inset 6.5em 0 0 0 var(--hover);
-          box-shadow: inset 6.5em 0 0 0 var(--hover);
-}
-
-/* // Multiple shadows, one on the outside, another on the inside */
-/* .offset {
-  -webkit-box-shadow: 0.3em 0.3em 0 0 var(--color), inset 0.3em 0.3em 0 0 var(--color);
-          box-shadow: 0.3em 0.3em 0 0 var(--color), inset 0.3em 0.3em 0 0 var(--color);
-}
-
-.offset:hover, .offset:focus {
-  -webkit-box-shadow: 0 0 0 0 var(--hover), inset 6em 3.5em 0 0 var(--hover);
-          box-shadow: 0 0 0 0 var(--hover), inset 6em 3.5em 0 0 var(--hover);
-} */
-
-/* //=== Set button colors
-// If you wonder why use Sass vars or CSS custom properties...
-  // Make a map with the class names and matching colors */
-/* // Sass variables compile to a static string; CSS variables are dynamic and inherited
-  // Loop through the map and set CSS custom properties using Sass variables */
-.fill {
-  --color: #a972cb;
-  --hover: #cb72aa;
-}
-
-.pulse {
+/* pulse => arrow, buy_max, buy, sell_max, sell 
+  */
+.arrow {
   /* --color: #635ee7; */
   /* 기존 theme color보다 명도 높 */
   --color: #7974f2;
   --hover: #ef8f6e;
 }
-
-.close {
-  --color: #ff7f82;
-  --hover: #ffdc7f;
+.buy_max {
+  /* --color: #635ee7; */
+  --color: #a073f2;
+  --hover:#fbadbe;
+}
+.buy {
+  /* --color: #635ee7; */
+  --color: #dd73f2;
+  --hover: #fbadbe;
+}
+.sell_max {
+  /* --color: #635ee7; */
+  --color: #739ef2;
+  --hover: #ef8f6e;
+}
+.sell {
+  /* --color: #635ee7; */
+  --color: #73b2f2;
+  --hover: #ef8f6e;
 }
 
-.raise {
-  --color: #ffa260;
-  --hover: #e5ff60;
-}
-
-.up {
-  --color: #e4cb58;
-  --hover: #94e458;
-}
-
-.slide {
-  --color: #8fc866;
-  --hover: #66c887;
-}
-
-.offset {
-  --color: #19bc8b;
-  --hover: #1973bc;
-}
 
 /* // Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties. */
 button {
@@ -156,8 +111,6 @@ button:hover, button:focus, button.pressed {
 }
 
 
-
-/* //=== Pen styling, ignore */
 body {
   color: #fff;
   background: #17181c;
@@ -179,15 +132,17 @@ body {
   /* display: flex; */
 }
 
-/* // Basic button styles */
+
 button {
   background: none;
   border: 2px solid;
   font: inherit;
   line-height: 1;
-  margin: 0.5em;
-  padding: 1em 1.5em;
+  margin: 0.25rem;
+  padding: 2vh 1.5vw;
   /* padding: 1em 2em; */
+  font-size: 1vh;
+  /* font-size: 1em; */
 
 }
 
