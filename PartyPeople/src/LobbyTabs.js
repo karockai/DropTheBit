@@ -143,11 +143,11 @@ export default function LobbyTabs(props) {
     return (
         <>
             <Grid container justify={'space-around'} alignItems={'center'}>
-                <button  class="buy_max" id="key_map" onClick={handleKeymap} size="large">
+                <button  class="arrow" id="key_map" onClick={handleKeymap} size="large">
                     KEY MAP
                 </button>
                 <button                     
-                    class="buy_max"
+                    class="arrow"
                     id="select_music"
                     onClick={handleSelectMusic}
                     size="large"
