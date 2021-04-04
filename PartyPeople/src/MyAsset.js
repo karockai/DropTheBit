@@ -128,11 +128,12 @@ export default function MyAsset(props) {
                 <Grid
                     style={{
                         width: '60%',
-                        height: '100%'
+                        height: '100%',
+                        padding:'0.3vh 0.3vw 0.3vh 0.3vw'
                     }}
                     item
                 >
-                    <Paper className={classes.paper} style={{ height: '100%', fontSize: '1vw' }}>
+                    <Paper className={classes.paper} style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
                         <span>
                         보유 현금 (KRW)
                         </span>
@@ -147,9 +148,9 @@ export default function MyAsset(props) {
                 </Grid>
                 <Grid
                     item
-                    style={{ width: '40%',height: '100%'}}
+                    style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
                 >
-                    <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw'  }}>
+                    <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
                         보유 코인 수 (개)<h3  style={{ height: '100%', fontSize: '1.5vw'  }}>{myWallet.myCoin}</h3>
                         {/* 평균매입단가<h6>{myWallet.myAvg}</h6> */}
                     </Paper>
@@ -163,8 +164,8 @@ export default function MyAsset(props) {
                 alignItems="stretch"
                 display="flex"
             >
-                <Grid item style={{ width: '100%', height: '100%' }}>
-                    <Paper className={classes.paper} style={{ height: '100%',fontSize: '1.5vw' }}>
+                <Grid item style={{ width: '100%', height: '100%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
+                    <Paper className={classes.paper} style={{ height: '100%',fontSize: '1.5vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}>
                         총 평가 자산 (KRW)
                         {/* <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +

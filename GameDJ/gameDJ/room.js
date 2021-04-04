@@ -187,9 +187,7 @@ class Room {
         });
     }
     
-    // 게임 한판 끝나고 바로 룸 정보를 초기화한다. 그러면 레디타임은 ? 
-    // 게임 한판 끝나고 로비로 돌아왔을때 방의 정보, 유저 정보 초기화
-    // 룸의 정보가 초기화된 상태인지만 확인하고, 안되어있으면 초기화하고 되어있으면 안한다
+    // 게임 한판 끝나고 로비로 돌아왔을때 유저 정보 초기화 (방 정보는 gameOver시 초기화)
     roomReinit(roomID) {
         const { io, socket } = this;
         const socketID = socket.id;
@@ -206,18 +204,21 @@ class Room {
             bidCash: 0,
             askVol: 0,
         };
+        if (roomInfo['roomLeader'] === 0){
+            roomInfo['roomLeader'] = socket.id;
+        }
         roomInfo[socketID] = playerInfo;
 
         // 방 정보가 초기화되어있지 않으면
-        if (roomInfo['gameTime'] < 0) {
-            roomInfo['gameTime'] = 0;
-            roomInfo['music'] = 'Random_Music';
-            roomInfo['roomLeader'] = socketID;
-            roomInfo['gaming'] = false;
-            if (roomInfo.hasOwnProperty('readyTime')) {
-                roomInfo['readyTime'] = 5;
-            }
-        }
+        // if (roomInfo['gameTime'] < 0) {
+        //     roomInfo['gameTime'] = 0;
+        //     roomInfo['music'] = 'Random_Music';
+        //     roomInfo['roomLeader'] = socketID;
+        //     roomInfo['gaming'] = false;
+        //     if (roomInfo.hasOwnProperty('readyTime')) {
+        //         roomInfo['readyTime'] = 5;
+        //     }
+        // }
         roomList[roomID] = roomInfo;
         console.log('---------------roomReinit--------------');
         console.log(roomList[roomID]);
