@@ -44,8 +44,8 @@ const useStyles = makeStyles((cnt) => ({
 export default function LobbyPlayerCard(props) {
     const classes = useStyles(props.playerCount);
     const playerCount = props.playerCount;
-    let index = 0;
-    for (let interval = 1; ; interval += 2, index++) {
+    let index = 1;
+    for (let interval = 3; ; interval += 2, index++) {
         const comp = Math.pow(2, interval);
         if (comp >= playerCount) break;
     }

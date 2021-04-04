@@ -72,7 +72,7 @@ function SetPlayerName(props) {
                     <Grid style={{ margin: '4vh' }} item>
                         <TextField
                             id="form-control text-center fw-bold bg-transparent"
-                            label="인게임 닉네임 (8자 제한)"
+                            label="인게임 닉네임 (5자 제한)"
                             inputRef={props.textInput}
                             onChange={handleChange}
                             variant="outlined"
@@ -86,7 +86,7 @@ function SetPlayerName(props) {
                             // ref={nameInput}
                             autoFocus
                             onKeyPress={onKeyPress}
-                            inputProps={{ maxLength: 8 }}
+                            inputProps={{ maxLength: 5 }}
                         />
                     </Grid>
 
