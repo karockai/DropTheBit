@@ -262,7 +262,6 @@ export default function ChatRoom(props) {
                         }}
                         onChange={handleOnChange}
                         variant="outlined"
-                        autoFocus={true}
                         // size="small"
                         inputProps={{ 'aria-label': 'description',maxlength: 20 }}
                     />
