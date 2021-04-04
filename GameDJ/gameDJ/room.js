@@ -203,19 +203,18 @@ class Room {
             askVol: 0,
         };
         roomInfo[socketID] = playerInfo;
-        roomInfo['gameTime'] = 0;
-        roomInfo['music'] = 'Random_Music';
 
         // 방 정보가 초기화되어있지 않으면
-        if (roomInfo['gameTime'] === -1) {
-            roomInfo['gameTime'] = 145;
-            roomInfo['music'] = 'King_Conga';
+        if (roomInfo['gameTime'] <= -1) {
+            roomInfo['gameTime'] = 0;
+            roomInfo['music'] = 'Random_Music';
             roomInfo['roomLeader'] = socketID;
             roomInfo['gaming'] = false;
             if (roomInfo['readyTime']) {
-                roomInfo['readyTime'] = 30;
+                roomInfo['readyTime'] = 10;
             }
         }
+        roomList[roomID] = roomInfo;
     }
 }
 

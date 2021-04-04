@@ -81,6 +81,7 @@ class Refresh {
                     let playerID = playerInfo['playerID'];
                     let sellDone = {
                         type: '매도 주문 체결',
+                        socketID: socketID,
                         playerID: playerID,
                         vol: askVol,
                         price: askPrice,
@@ -146,6 +147,7 @@ class Refresh {
                     let playerID = playerInfo['playerID'];
                     let buyDone = {
                         type: '매수 주문 체결',
+                        socketID: socketID,
                         playerID: playerID,
                         vol: bidVol,
                         price: bidPrice,
