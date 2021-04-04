@@ -74,32 +74,21 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    // button: {
-    //     '& > *': {
-    //         width: '42%',
-    //         // textAlign: 'center',
-    //         margin: theme.spacing(1),
-    //     },
-    // },
     paper: {
-        // padding: theme.spacing(1),
-        // textAlign: 'left',
         color: '#CDD7E0',
         backgroundColor: '#0C151C',
     },
-
+    button_layer: {
+        // width:
+        minWidth: '100%',
+        maxHeight: '18%',
+    },
     input: {
-        // textAlign: 'left',
         color: '#CDD7E0',
     },
-
-    // button_block: {
-    //     width: '1vh',
-    //     margin: '0 0 0.5vh 0',
-    // },
     small_text: {
         margin: '0 0.5vw -0.5vh 0.5vw',
-        fontSize: '1vw',
+        fontSize: '1vh',
     },
 }));
 
@@ -218,7 +207,7 @@ export default function TradeStock(props) {
         );
     }
     function BidUp() {
-        // console.log('hi');
+        console.log('hi');
         SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
@@ -401,7 +390,7 @@ export default function TradeStock(props) {
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');
         setTimeout(function () {
-            key.classList.remove('pressed');
+            if (key) key.classList.remove('pressed');
         }, eventTime);
     }
 
@@ -519,7 +508,7 @@ export default function TradeStock(props) {
         if (e.target) e.target.classList.add('clicked');
 
         setTimeout(function () {
-            e.target.classList.remove('clicked');
+            if (e.target) e.target.classList.remove('clicked');
         }, eventTime);
     };
 
@@ -606,22 +595,22 @@ export default function TradeStock(props) {
                 container
                 direction="column"
                 alignItems="flex-start"
-                style={{ height: '100%', fontSize: '2vh' }}
+                style={{ fontSize: '1rem,' }}
             >
                 <Grid container item direction="row" justify="space-between">
                     <span className={classes.small_text}>매매호가</span>
-                    {/* <span  className={classes.small_text}>현재가 [SPACE]</span> */}
                 </Grid>
                 <Grid
                     container
                     item
+                    className={classes.button_layer}
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    style={{ margin: '0 0 0.5vh 0' }}
+                    // style={{margin:'0 0 0.5vh 0'}}
                 >
                     <Button
-                        class="pulse"
+                        class="arrow"
                         onClick={(e) => {
                             clickButton(e);
                             new Audio(PriceUp).play();
@@ -640,7 +629,8 @@ export default function TradeStock(props) {
                         onChange={handleBidChange}
                     />
                     <Button
-                        class="pulse"
+                        class="arrow"
+                        className={classes.arrow}
                         onClick={(e) => {
                             clickButton(e);
                             new Audio(PriceDown).play();
@@ -658,10 +648,10 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    style={{ margin: '0 0 0.5vh 0' }}
+                    // style={{margin:'0 0 0.5vh 0'}}
                 >
                     <Button
-                        class="pulse"
+                        class="arrow"
                         onClick={(e) => {
                             clickButton(e);
                             new Audio(VolDown).play();
@@ -679,7 +669,7 @@ export default function TradeStock(props) {
                         onChange={handleVolumeChange}
                     />
                     <Button
-                        class="pulse"
+                        class="arrow"
                         onClick={(e) => {
                             clickButton(e);
                             new Audio(VolUp).play();
@@ -701,17 +691,17 @@ export default function TradeStock(props) {
                     item
                     direction={'column'}
                     justify="center"
-                    style={{ width: '100%', margin: '0 10 0 1' }}
+                    // style={{ width: '100%', margin: '0 10 0 1' }}
                 >
                     <Grid
                         container
                         direction={'row'}
                         justify="space-between"
-                        style={{ width: '100%', margin: '0 10 0 1' }}
+                        // style={{ width: '100%', margin: '0 10 0 1' }}
                     >
                         <Button
                             style={{ width: '45%' }}
-                            class="pulse"
+                            class="buy_max"
                             onClick={(e) => {
                                 clickButton(e);
                                 new Audio(BuyMax).play();
@@ -724,7 +714,7 @@ export default function TradeStock(props) {
                         </Button>
                         <Button
                             style={{ width: '45%' }}
-                            class="pulse"
+                            class="sell_max"
                             onClick={(e) => {
                                 clickButton(e);
                                 new Audio(SellMax).play();
@@ -745,7 +735,7 @@ export default function TradeStock(props) {
                     >
                         <Button
                             style={{ width: '45%' }}
-                            class="pulse"
+                            class="buy"
                             onClick={(e) => {
                                 clickButton(e);
                                 new Audio(Check).play();
@@ -757,7 +747,7 @@ export default function TradeStock(props) {
                         </Button>
                         <Button
                             style={{ width: '45%' }}
-                            class="pulse"
+                            class="sell"
                             onClick={(e) => {
                                 clickButton(e);
                                 new Audio(Check).play();
@@ -777,7 +767,7 @@ export default function TradeStock(props) {
                     >
                         <Button
                             style={{ width: '100%' }}
-                            class="pulse"
+                            class="arrow"
                             onClick={(e) => {
                                 clickButton(e);
                                 new Audio(CurPrice).play();
