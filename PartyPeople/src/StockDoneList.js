@@ -1,7 +1,11 @@
 import { Grid, GridList } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import { useSound, playSound } from './useSound';
+
+// 효과음
+import ExEnroll from './audios/effect/ExEnroll.wav';
+import BuyDone from './audios/effect/BuyDone.wav';
+import SellDone from './audios/effect/SellDone.wav';
 
 const defaultTextStyle = {
     color: '#444444',
@@ -15,7 +19,6 @@ export default function StockDoneList(props) {
     // socket ,  type (me , others), socket
     const [doneItem, setItem] = useState(null);
     const [doneList, setList] = useState([]);
-
 
     useEffect(() => {
         if (props.socket == null) {
@@ -37,24 +40,32 @@ export default function StockDoneList(props) {
             } else {
                 props.socket.on('buyDone', (done) => {
                     if (done.type === '매수 완료') {
-                        // playSound(Check, 1).play();
                     } else if (done.type === '매수 주문 체결') {
-                        // playSound(BidSound, 1).play();
                     }
+                    let tmpAudio = new Audio(BuyDone);
+                    tmpAudio.play();
+                    tmpAudio.remove();
                     setItem(done);
                 });
                 props.socket.on('sellDone', (done) => {
                     if (done.type === '매도 완료') {
-                        // playSound(Check, 1).play();
                     } else if (done.type === '매도 주문 체결') {
-                        // playSound(AskSound, 1).play();
                     }
+                    let tmpAudio = new Audio(SellDone);
+                    tmpAudio.play();
+                    tmpAudio.remove();
                     setItem(done);
                 });
                 props.socket.on('bidDone', (done) => {
+                    let tmpAudio = new Audio(ExEnroll);
+                    tmpAudio.play();
+                    tmpAudio.remove();
                     setItem(done);
                 });
                 props.socket.on('askDone', (done) => {
+                    let tmpAudio = new Audio(ExEnroll);
+                    tmpAudio.play();
+                    tmpAudio.remove();
                     setItem(done);
                 });
             }
@@ -67,29 +78,28 @@ export default function StockDoneList(props) {
     }, [doneItem]);
 
     return (
-        <div style={{height: '100%'}}>
-                {doneList.map((done, idx) => {
-                    if (done === null) return <></>;
-                    let buySellColor = {
-                        color:
-                            done.type.substring(0, 2) === '매수'
-                                ? done.type.substring(3, 5) === '완료' ||
-                                  done.type.substring(6, 8) === '체결'
-                                    ? red[500]
-                                    : red[300]
-                                : done.type.substring(3, 5) === '완료' ||
-                                  done.type.substring(6, 8) === '체결'
-                                ? blue[500]
-                                : blue[300],
-                        fontWeight:
-                            done.type.substring(3, 5) === '완료' ||
-                            done.type.substring(6, 8) === '체결'
-                                ? 'bold'
-                                : 'normal',
-                    };
-                    return (
-                    <Grid style={{fontSize: '1.05vw'}}>
-
+        <div style={{ height: '100%' }}>
+            {doneList.map((done, idx) => {
+                if (done === null) return <></>;
+                let buySellColor = {
+                    color:
+                        done.type.substring(0, 2) === '매수'
+                            ? done.type.substring(3, 5) === '완료' ||
+                              done.type.substring(6, 8) === '체결'
+                                ? red[500]
+                                : red[300]
+                            : done.type.substring(3, 5) === '완료' ||
+                              done.type.substring(6, 8) === '체결'
+                            ? blue[500]
+                            : blue[300],
+                    fontWeight:
+                        done.type.substring(3, 5) === '완료' ||
+                        done.type.substring(6, 8) === '체결'
+                            ? 'bold'
+                            : 'normal',
+                };
+                return (
+                    <Grid style={{ fontSize: '1.05vw' }}>
                         <pre style={defaultTextStyle} key={idx}>
                             <span style={highlightTextStyle}>
                                 {props.isMine ? '' : done.playerID}
@@ -101,7 +111,8 @@ export default function StockDoneList(props) {
                             개를 <span style={buySellColor}>{done.type}.</span>
                         </pre>
                     </Grid>
-                    );})}
+                );
+            })}
         </div>
     );
 }

@@ -18,6 +18,7 @@ import {
 } from '@material-ui/core';
 import Message from './Message';
 import StockDoneList from './StockDoneList';
+import Enter from './audios/effect/Enter.wav';
 
 const CssTextField = withStyles({
     root: {
@@ -182,6 +183,9 @@ export default function ChatRoom(props) {
         //     return;
         // }
         if (e.keyCode === 13) {
+            let tmpAudio = new Audio(Enter);
+            tmpAudio.play();
+            tmpAudio.remove();
             //_ Enter
             if (document.activeElement !== textInput.current) {
                 textInput.current.focus();
@@ -207,13 +211,17 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList style={{ width: '100%', height: '90%', }} wrap={'wrap'}>
+            <GridList style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
                 <Grid
                     container
                     direction={'column'}
                     justify={'flex-start'}
                     alignItems={'stretch'}
-                    style={{ width: '100%', height: '100%', padding:'1vw 1vw 1vw 1vw', }}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        padding: '1vw 1vw 1vw 1vw',
+                    }}
                 >
                     {messages.map((message) => {
                         // console.log(messages);
@@ -226,7 +234,6 @@ export default function ChatRoom(props) {
                                     width: '100%',
                                     padding: '1vh 0 0 0 ',
                                     fontSize: '1vw',
-                                    
                                 }}
                             >
                                 {message.author} : {message.message}
@@ -234,7 +241,7 @@ export default function ChatRoom(props) {
                         );
                     })}
                     <GridList
-                        id ="whaitisthis" 
+                        id="whaitisthis"
                         style={{ float: 'left', clear: 'both', height: '0%' }}
                         ref={messagesEnd}
                     ></GridList>
@@ -262,15 +269,17 @@ export default function ChatRoom(props) {
                         }}
                         onChange={handleOnChange}
                         variant="outlined"
-                        autoFocus={true}
                         // size="small"
-                        inputProps={{ 'aria-label': 'description',maxlength: 20 }}
+                        inputProps={{
+                            'aria-label': 'description',
+                            maxlength: 20,
+                        }}
                     />
                 </Grid>
                 <Grid item style={{ width: '20%', height: '100%' }}>
                     <button
                         style={{
-                            margin:'0',
+                            margin: '0',
                             width: '100%',
                             height: '100%',
                             backgroundColor: '#635ee7',
