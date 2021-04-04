@@ -24,51 +24,40 @@ export default function StockDoneList(props) {
         if (props.socket == null) {
             // props.requestSocket('StockDoneList', props.socket);
         } else {
-            if (!props.isMine) {
-                props.socket.on('buyDone_Room', (done) => {
-                    setItem(done);
-                });
-                props.socket.on('sellDone_Room', (done) => {
-                    setItem(done);
-                });
-                props.socket.on('bidDone_Room', (done) => {
-                    setItem(done);
-                });
-                props.socket.on('askDone_Room', (done) => {
-                    setItem(done);
-                });
-            } else {
-                props.socket.on('buyDone', (done) => {
-                    if (done.type === '매수 완료') {
-                    } else if (done.type === '매수 주문 체결') {
-                    }
+            props.socket.on('buyDone_Room', (done) => {
+                if (done['socketID'] === props.socket.id) {
                     let tmpAudio = new Audio(BuyDone);
                     tmpAudio.play();
                     tmpAudio.remove();
-                    setItem(done);
-                });
-                props.socket.on('sellDone', (done) => {
-                    if (done.type === '매도 완료') {
-                    } else if (done.type === '매도 주문 체결') {
-                    }
+                }
+                setItem(done);
+            });
+            props.socket.on('sellDone_Room', (done) => {
+                if (done['socketID'] === props.socket.id) {
                     let tmpAudio = new Audio(SellDone);
                     tmpAudio.play();
                     tmpAudio.remove();
-                    setItem(done);
-                });
-                props.socket.on('bidDone', (done) => {
+                }
+                setItem(done);
+            });
+            props.socket.on('bidDone_Room', (done) => {
+                if (done['socketID'] === props.socket.id) {
                     let tmpAudio = new Audio(ExEnroll);
                     tmpAudio.play();
                     tmpAudio.remove();
-                    setItem(done);
-                });
-                props.socket.on('askDone', (done) => {
+                }
+                setItem(done);
+            });
+            props.socket.on('askDone_Room', (done) => {
+                if (done['socketID'] === props.socket.id) {
+                    console.log('props.socket:', props.socket.id);
+                    console.log('data.socket:', done['socketID']);
                     let tmpAudio = new Audio(ExEnroll);
                     tmpAudio.play();
                     tmpAudio.remove();
-                    setItem(done);
-                });
-            }
+                }
+                setItem(done);
+            });
         }
     }, []);
 

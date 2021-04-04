@@ -87,8 +87,8 @@ const useStyles = makeStyles((theme) => ({
         color: '#CDD7E0',
     },
     small_text: {
-        margin: '0 0.5vw -0.5vh 0.5vw',
-        fontSize: '1vh',
+        margin: '1 0.5vw -0.5vh 0.5vw',
+        fontSize: '3.5vh',
     },
 }));
 
@@ -167,7 +167,7 @@ export default function TradeStock(props) {
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
 
-    const eventTime = 700;
+    const eventTime = 300;
 
     useLayoutEffect(() => {
         startTime = new Date();
@@ -609,17 +609,21 @@ export default function TradeStock(props) {
                     alignItems="flex-end"
                     // style={{margin:'0 0 0.5vh 0'}}
                 >
-                    <Button
-                        class="arrow"
-                        onClick={(e) => {
-                            clickButton(e);
-                            new Audio(PriceUp).play();
-                            BidUp();
-                        }}
-                        id="ArrowUp"
-                    >
-                        ▲
-                    </Button>
+                <Button
+                            class="arrow"
+                            className={
+                                classes.arrow
+                                }
+                            onClick={(e) => {
+                                clickButton(e);
+                                new Audio(PriceDown).play();
+                                BidDown();
+                            }}
+                            id="ArrowDown"
+                        >
+                            ▼
+                        </Button>
+                        
                     <CssTextField
                         className={classes.input}
                         id="custom-css-standard-input"
@@ -629,17 +633,17 @@ export default function TradeStock(props) {
                         onChange={handleBidChange}
                     />
                     <Button
-                        class="arrow"
-                        className={classes.arrow}
-                        onClick={(e) => {
-                            clickButton(e);
-                            new Audio(PriceDown).play();
-                            BidDown();
-                        }}
-                        id="ArrowDown"
-                    >
-                        ▼
-                    </Button>
+                            class="arrow"
+                            onClick={(e) => {
+                                clickButton(e);
+                                new Audio(PriceUp).play();
+                                BidUp();
+                            }}
+                            id="ArrowUp"
+                        >
+                            ▲
+                        </Button>
+                        
                 </Grid>
                 <span className={classes.small_text}>수량</span>
                 <Grid
@@ -767,7 +771,7 @@ export default function TradeStock(props) {
                     >
                         <Button
                             style={{ width: '100%' }}
-                            class="arrow"
+                            class="space"
                             onClick={(e) => {
                                 clickButton(e);
                                 new Audio(CurPrice).play();
