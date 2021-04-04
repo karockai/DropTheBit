@@ -20,11 +20,6 @@ global.chartData = [];
 global.bidList = {};
 global.askList = {};
 global.roomList = {};
-global.bgmList = {
-    'Deja_Vu.mp3': 265,
-    'King_Conga.mp3': 145,
-    'Mausoleum_Mash.mp3': 176,
-};
 global.curCoin = {};
 global.exTable = {};
 global.prePrice = 0;
@@ -39,9 +34,10 @@ let ipList = (process.env.IPS).split(' ');
 // console.log('servers', serverList);
 // console.log('ips', ipList);
 for(let idx=0; idx<serverList.length; idx++){
-    dbhset(serverList[idx], 'room', 0, 'player', 0, 'IP', ipList[idx]);
+    console.log(serverList[idx], ipList[idx]);
+    dbhset(serverList[idx], 'room', 0, 'player', 0, 'ip', ipList[idx]);
 }
-const server = app.listen(process.env.PORT || 5000, process.env.LOBBY, () => {
+const server = app.listen(process.env.PORT, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
 });
 

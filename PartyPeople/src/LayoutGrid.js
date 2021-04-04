@@ -194,7 +194,6 @@ export default function LayoutGrid(props) {
                                     <StockDoneList
                                         socket={props.socket}
                                         requestSocket={props.requestSocket}
-                                        isMine={false}
                                     />
                                 </Paper>
                             </Grid>
