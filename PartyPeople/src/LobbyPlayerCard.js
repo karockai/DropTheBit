@@ -81,7 +81,7 @@ export default function LobbyPlayerCard(props) {
         <Grid item style={{ fontSize: 3 / ratio + 'vw' }}>
         {isLeader}
     </Grid>
-    <Grid item style={{ fontSize: 4 / ratio + 'vw' }}>
+    <Grid item style={{ fontSize: 5 / ratio + 'vw' }}>
         {props.playerID}
     </Grid>
     </>

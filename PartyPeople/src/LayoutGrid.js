@@ -91,6 +91,7 @@ export default function LayoutGrid(props) {
             )}
 
             <Grid
+            className="전체그리드"
                 style={{
                     padding: '3vh 3vw 3vh 3vw',
                     width: '100vw',
@@ -103,12 +104,13 @@ export default function LayoutGrid(props) {
                 alignItems="stretch"
             >
                 <Grid
-                    className="playerListGrid"
+                    className="플레이어리스트그리드"
                     item
                     xs={leftSm}
                     style={{
                         width: '100%',
                         height: '100%',
+                        padding:'0.3vh 0.3vw 0.3vh 0.3vw'
                     }}
                 >
                     <PlayerList
@@ -119,7 +121,7 @@ export default function LayoutGrid(props) {
                     />
                 </Grid>
                 <Grid
-                    className="stockTradeGrid"
+                    className="차트및거래및지갑"
                     item
                     xs={middleSm}
                     container
@@ -128,7 +130,7 @@ export default function LayoutGrid(props) {
                     alignItems="stretch"
                     justify="space-between"
                 >
-                    <Grid item style={{ width: '100%', height: '50%' }}>
+                    <Grid className="차트컴퍼넌트" item style={{ width: '100%', height: '50%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
                         <Paper
                             style={{ height: '100%' }}
                             className={classes.paper}
@@ -146,8 +148,9 @@ export default function LayoutGrid(props) {
                         </Paper>
                     </Grid>
                     <Grid
+                        className ="지갑및호가거래"
                         container
-                        style={{ width: '100%', height: '50%' }}
+                        style={{ width: '100%', height: '50%', }}
                         item
                         wrap="wrap"
                         direction="row"
@@ -163,6 +166,7 @@ export default function LayoutGrid(props) {
                             justify="flex-start"
                         >
                             <Grid
+                            className ="지갑컴퍼넌트"
                                 style={{
                                     width: '100%',
                                     height: '50%',
@@ -181,9 +185,11 @@ export default function LayoutGrid(props) {
                                 />
                             </Grid>
                             <Grid
+                            className="거래내역컴퍼넌트"
                                 style={{
                                     width: '100%',
                                     height: '50%',
+                                    padding:'0.3vh 0.3vw 0.3vh 0.3vw'
                                 }}
                                 item
                             >
@@ -199,9 +205,10 @@ export default function LayoutGrid(props) {
                             </Grid>
                         </Grid>
                         <Grid
+                            className="주식거래컴퍼넌트"
                             container
                             item
-                            style={{ height: '100%', width: '50%' }}
+                            style={{ height: '100%', width: '50%', padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}
                         >
                             <Grid
                                 style={{ height: '100%' }}
@@ -237,16 +244,16 @@ export default function LayoutGrid(props) {
                     </Grid>
                 </Grid>
                 <Grid
-                    className="bidChatGrid"
+                    className="매수매도호가및채팅"
                     item
                     xs={rightSm}
-                    style={{ height: '100%', width: '100%' }}
+                    style={{ height: '100%', width: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}
                     alignItems="flex-end"
                     container
                     direction="column"
                     justify="space-between"
                 >
-                    <Grid style={{ height: '50%', width: '100%' }} item>
+                    <Grid className="매수매도호가테이블" style={{ height: '50%', width: '100%' ,padding:'0.3vh 0.3vw 0.3vh 0.3vw' }} item>
                         <Paper
                             className={classes.paper}
                             style={{ height: '100%', width: '100%' }}
@@ -259,7 +266,7 @@ export default function LayoutGrid(props) {
                             />
                         </Paper>
                     </Grid>
-                    <Grid style={{ height: '50%', width: '100%' }} item>
+                    <Grid className="채팅방" style={{ height: '50%', width: '100%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }} item>
                         <Paper
                             className={classes.paper}
                             style={{ height: '100%', width: '100%' }}
