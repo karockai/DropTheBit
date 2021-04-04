@@ -259,7 +259,7 @@ export default function ChatRoom(props) {
                     <CssTextField
                         style={{ width: '100%', height: '100%' }}
                         id="standard-basic"
-                        placeholder="메세지 보내기"
+                        placeholder="메세지 보내기 (Enter)"
                         inputRef={textInput}
                         onFocus={() => {
                             isFocus = true;
@@ -274,17 +274,17 @@ export default function ChatRoom(props) {
                         // size="small"
                         inputProps={{
                             'aria-label': 'description',
-                            maxlength: 20,
+                            maxLength: 20,
                         }}
                     />
                 </Grid>
                 <Grid item style={{ width: '20%', height: '100%' }}>
                     <button
                         style={{
-                            margin: '0',
+                            padding: '0',
                             width: '100%',
                             height: '100%',
-                            backgroundColor: '#635ee7',
+                            backgroundColor: '#635ee7', 
                             fontSize: '0.9vw',
                             color: 'white',
                         }}
