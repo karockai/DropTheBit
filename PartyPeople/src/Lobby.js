@@ -207,7 +207,6 @@ function Lobby(props) {
                     className="하단컨텐츠그리드"
                     container
                     direction={'row'}
-                    alignItems={'stretch'}
                 >
                     <Grid
                         className="채팅창제외좌측그리드"
@@ -293,6 +292,7 @@ function Lobby(props) {
                     <Grid
                         className="채팅창"
                         style={{
+                            width:'100%',
                             height: '90vh',
                             padding: '1vw 1vw 1vw 1vw',
                             opacity: '0.8',
@@ -303,6 +303,7 @@ function Lobby(props) {
                         <Paper
                             className={classes.paper}
                             style={{
+                                width:'100%',
                                 height: '100%',
                                 padding: '1vw 1vw 1vw 1vw',
                             }}

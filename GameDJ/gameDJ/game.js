@@ -24,7 +24,7 @@ class Game {
         this.socket = socket;
     }
 
-    async startGame(musicData) {
+    startGame(musicData) {
         const { io, socket } = this;
         let roomID = 0;
         if (socket.roomID) {
@@ -34,17 +34,19 @@ class Game {
         }
 
         if (roomList[roomID]['gaming'] === false) {
+            roomList[roomID]['gaming'] = true;
             roomList[roomID]['music'] = musicData['musicName'];
             roomList[roomID]['gameTime'] = musicData['gameTime'];
         }
-
+        console.log('startgamee---------');
+        console.log(roomList[roomID]);
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', {
             gameTime: roomList[roomID]['gameTime'],
             musicName: roomList[roomID]['music'],
         });
 
-        async function realStart() {
+        function realStart() {
             let roomID = 0;
             if (socket.roomID) {
                 roomID = socket.roomID;
@@ -52,9 +54,11 @@ class Game {
                 roomID = publicRoomID;
             }
             let dataForStart = {};
+            roomList[roomID]['gameTime'] += 3;
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
-            roomList[roomID]['gaming'] = true;
+            console.log('------real Start');
+            console.log(roomList[roomID]);
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
 
@@ -116,11 +120,11 @@ class Game {
             let buyDone = {
                 type: '매수 완료',
                 // 6-3. refreshWallet update & emit
+                socketID: socketID,
                 playerID: playerID,
                 vol: reqVol,
                 price: curPrice,
             };
-            io.to(socketID).emit('buyDone', buyDone);
             io.to(roomID).emit('buyDone_Room', buyDone);
 
             // console.log('현재가로 구매 완료 :', playerInfo);
@@ -146,13 +150,15 @@ class Game {
 
             let bidDone = {
                 type: '매수 주문',
+                socketID: socketID,
                 playerID: playerID,
                 vol: reqVol,
                 price: reqPrice,
             };
             // console.log('호가 등록 완료', playerInfo);
             socket.emit('bidDone', bidDone);
-            socket.to(roomID).emit('bidDone_Room', bidDone);
+            console.log('roomID:', roomID);
+            io.to(roomID).emit('bidDone_Room', bidDone);
             // console.log("호가 등록 완료", bidList);
             this.sendBidTable(reqJson);
         }
@@ -203,12 +209,12 @@ class Game {
             // 6-4. sellDone
             let sellDone = {
                 type: '매도 완료',
+                socketID: socketID,
                 playerID: playerID,
                 vol: reqVol,
                 price: curPrice,
             };
 
-            io.to(socketID).emit('sellDone', sellDone);
             io.to(roomID).emit('sellDone_Room', sellDone);
             // console.log('현재가로 판매 완료 :', playerInfo);
             // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
@@ -239,13 +245,14 @@ class Game {
             // console.log('호가 등록 완료', playerInfo);
             let askDone = {
                 type: '매도 주문',
+                socketID: socketID,
                 playerID: playerID,
                 vol: reqVol,
                 price: reqPrice,
             };
 
             socket.emit('askDone', askDone);
-            socket.to(roomID).emit('askDone_Room', askDone);
+            io.to(roomID).emit('askDone_Room', askDone);
             // console.log("호가 등록 완료", askList);
             this.sendAskTable(reqJson);
         }

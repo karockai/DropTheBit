@@ -113,7 +113,7 @@ export default function ChatRoom(props) {
     };
 
     useEffect(() => {
-        if (messages.length >= 15) messages.shift();
+        if (messages.length >= 100) messages.shift();
         setMessages([...messages, resMsg]);
         scrollToBottom();
     }, [resMsg]);
@@ -206,20 +206,21 @@ export default function ChatRoom(props) {
             {/* <Grid
             container
             className={classes.button}
-            direction={'row'}
+            direction={'column'}
             justify={'space-between'}
             wrap={'nowrap'}
             
         > */}
-            <GridList style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
+            <GridList cellHeight='auto' className="채팅창그리드리스트" style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
                 <Grid
                     container
+                    item
                     direction={'column'}
                     justify={'flex-start'}
                     alignItems={'stretch'}
                     style={{
                         width: '100%',
-                        height: '100%',
+                        // height: '90vh',
                         padding: '1vw 1vw 1vw 1vw',
                     }}
                 >
@@ -240,11 +241,12 @@ export default function ChatRoom(props) {
                             </Grid>
                         );
                     })}
-                    <GridList
+                    <div
+                        item
                         id="whaitisthis"
-                        style={{ float: 'left', clear: 'both', height: '0%' }}
+                        style={{  clear: 'both', height: '0%' }}
                         ref={messagesEnd}
-                    ></GridList>
+                    ></div>
                 </Grid>
             </GridList>
             <Grid

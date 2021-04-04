@@ -81,6 +81,7 @@ class Refresh {
                     let playerID = playerInfo['playerID'];
                     let sellDone = {
                         type: '매도 주문 체결',
+                        socketID: socketID,
                         playerID: playerID,
                         vol: askVol,
                         price: askPrice,
@@ -146,6 +147,7 @@ class Refresh {
                     let playerID = playerInfo['playerID'];
                     let buyDone = {
                         type: '매수 주문 체결',
+                        socketID: socketID,
                         playerID: playerID,
                         vol: bidVol,
                         price: bidPrice,
@@ -234,9 +236,8 @@ class Refresh {
             }
 
             // 공방 startGame logic
-            if (roomInfo['readyTime'] && roomInfo['readyTime'] > 0) {
+            if (roomInfo.hasOwnProperty('readyTime') && roomInfo['readyTime'] > 0) {
                 roomList[roomID]['readyTime']--;
-                // console.log('readyTime : ', roomList[roomID]['readyTime']);
                 io.to(roomID).emit(
                     'restReadyTime',
                     roomList[roomID]['readyTime']
@@ -248,14 +249,13 @@ class Refresh {
                 roomList[roomID]['gaming'] === false
             ) {
                 roomList[roomID]['gaming'] = true;
-                // new Game(io, roomList[roomID]['roomLeader']).startGame();
                 io.to(roomInfo['roomLeader']).emit('publicGameStart');
             }
 
             // gameOver logic
             if (roomInfo['gaming']) {
                 roomList[roomID]['gameTime']--;
-                // console.log(roomList[roomID]['gameTime']);
+                console.log(roomList[roomID]['gameTime']);
                 io.to(roomID).emit(
                     'restGameTime',
                     roomList[roomID]['gameTime']
@@ -272,7 +272,7 @@ class Refresh {
         //     ();
     }
 
-    async gameOver(roomID) {
+    gameOver(roomID) {
         const { io } = this;
         let roomInfo = roomList[roomID];
         let leaderBoard = [];
