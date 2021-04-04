@@ -43,11 +43,8 @@ class ChartComponent extends React.Component {
         //     // date = data.date.split('.');
         //     console.log(date);
         // }
-        console.log(data.date);
         data.date = new Date(data.date);
-        console.log(data.date);
         const tmp_date = JSON.stringify(data.date).split('"');
-        console.log(tmp_date);
         // console.log(typeof(date));
         if (!this.setAPI) {
             this.props.setAPIData(data);

@@ -50,12 +50,6 @@ const CssTextField = withStyles({
             fontSize: '2.5vw',
         },
 
-        //   '& .MuiInput-underline:after': {
-        //     borderBottomColor: 'white',
-        //   },
-        //   '& .MuiInput-underline:before': {
-        //     borderBottomColor: 'white',
-        //   },
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
                 borderColor: 'red',
@@ -92,50 +86,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function ArrowButton(props) {
-    const classes = useStyles();
-    const [stock, setStock] = useState(null);
-    const [tmpStock, setTmpStock] = useState(0);
-    const [diffrence, setDiffrence] = useState(0);
-
-    function PlusArrow(props) {
-        setDiffrence(diffrence + 1);
-        return setTmpStock(tmpStock + 1);
-    }
-
-    function MinusArrow(props) {
-        setDiffrence(diffrence - 1);
-        return setTmpStock(tmpStock - 1);
-    }
-
-    return (
-        <Grid
-            className={classes.button_block}
-            display="flex"
-            justify="center"
-            style={{ height: '100%' }}
-        >
-            <IconButton
-                aria-label="delete"
-                className={classes.button_block}
-                size="small"
-                onClick={props.upEvent}
-            >
-                <ArrowDropUpIcon />
-            </IconButton>
-            <IconButton
-                aria-label="delete"
-                className={classes.button_block}
-                size="small"
-                onClick={props.downEvent}
-            >
-                <ArrowDropDownIcon />
-            </IconButton>
-        </Grid>
-    );
-}
-
-let startTime = null;
 
 export default function TradeStock(props) {
     const classes = useStyles();
@@ -170,7 +120,6 @@ export default function TradeStock(props) {
     const eventTime = 300;
 
     useLayoutEffect(() => {
-        startTime = new Date();
         if (props.socket == null) {
             props.requestSocket('MyAsset', props.socket);
             setInit(true);
@@ -607,7 +556,6 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    // style={{margin:'0 0 0.5vh 0'}}
                 >
                 <Button
                             class="arrow"
@@ -652,7 +600,6 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    // style={{margin:'0 0 0.5vh 0'}}
                 >
                     <Button
                         class="arrow"
@@ -684,24 +631,16 @@ export default function TradeStock(props) {
                         ▶
                     </Button>
                 </Grid>
-                {/* <Grid container item justify="center" alignItems="start">
-                    예상소요금액 :{' '}
-                    <span style={costColor}>
-                        {ExpBySymbol(parseWonToStr(currentVolume * currentBid))}
-                    </span>
-                </Grid> */}
                 <Grid
                     container
                     item
                     direction={'column'}
                     justify="center"
-                    // style={{ width: '100%', margin: '0 10 0 1' }}
                 >
                     <Grid
                         container
                         direction={'row'}
                         justify="space-between"
-                        // style={{ width: '100%', margin: '0 10 0 1' }}
                     >
                         <Button
                             style={{ width: '45%' }}
@@ -710,7 +649,6 @@ export default function TradeStock(props) {
                                 clickButton(e);
                                 new Audio(BuyMax).play();
                                 SetBuyMaxCount();
-                                // setBuyStatus(Buy(currentBid, currentVolume));
                             }}
                             id="a"
                         >
@@ -723,11 +661,9 @@ export default function TradeStock(props) {
                                 clickButton(e);
                                 new Audio(SellMax).play();
                                 SetSellMaxCount();
-                                // setSellStatus(Sell(currentBid, currentVolume));
                             }}
                             id="s"
                         >
-                            {/* <KeyboardArrowRightIcon /> */}
                             [S] 매도 MAX
                         </Button>
                     </Grid>
@@ -759,7 +695,6 @@ export default function TradeStock(props) {
                             }}
                             id="x"
                         >
-                            {/* <KeyboardArrowRightIcon /> */}
                             [X] 매도
                         </Button>
                     </Grid>
@@ -782,27 +717,7 @@ export default function TradeStock(props) {
                             [SPACE] 현재가로 갱신
                         </Button>
                     </Grid>
-                    {/* <Button
-                        variant="contained"
-                        color="info"
-                        onClick={() => RefreshBid_Req()}
-                    >
-                        [D] 현재가 설정🔄
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="info"
-                        onClick={() => SetSellMaxCount()}
-                    >
-                        [Z] 최대 구매량 설정 📈
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="info"
-                        onClick={() => SetBuyMaxCount()}
-                    >
-                        [X] 최대 매도량 설정 📉
-                    </Button> */}
+
                 </Grid>
             </Grid>
         </>

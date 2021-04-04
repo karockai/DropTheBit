@@ -8,7 +8,7 @@ import {
     TextareaAutosize,
 } from '@material-ui/core';
 import { propTypes } from 'react-bootstrap/esm/Image';
-
+import {ExpBySymbol, parseWonToStr} from './parseMoney';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -48,6 +48,7 @@ export default function MyAsset(props) {
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
+    let color = 'white';
     useLayoutEffect(() => {
         if (props.socket == null) {
             // props.requestSocket('MyAsset', props.socket);
@@ -60,6 +61,16 @@ export default function MyAsset(props) {
                 const currentAsset = data.asset;
                 const currentCoin = data.coinVol;
                 const currentAvg = data.avgPrice;
+                
+                if (currentAsset > myAsset) {
+                    color = 'red';
+                }
+                else if (currentAsset < myAsset) {
+                    color = 'blue';
+                }
+                console.log(currentAsset);
+                console.log(myAsset);
+                console.log(color);
                 setWallet({
                     myCash: currentCash,
                     myAsset: currentAsset,
@@ -80,28 +91,28 @@ export default function MyAsset(props) {
         );
     }
 
-    const parseWonToStr = (won) => {
-        if (typeof won == 'number') won = won.toString();
-        return won;
-    };
+    // const parseWonToStr = (won) => {
+    //     if (typeof won == 'number') won = won.toString();
+    //     return won;
+    // };
 
-    function ExpBySymbol(value) {
-        // console.log(value);
-        if (!value) return 'Something wrong.';
-        let ret = '';
-        if (value.length >= 9) {
-            // 199489230 -> 1억 9948만 9230
-            ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
-            value = value.substring(value.length - 9 + 1);
-        }
-        if (value.length >= 5) {
-            // value 99489230
-            ret += value.substring(0, value.length - 5 + 1) + '만 '; // 9948만
-            value = value.substring(value.length - 5 + 1);
-        }
-        ret += value;
-        return ret + '원';
-    }
+    // function ExpBySymbol(value) {
+    //     // console.log(value);
+    //     if (!value) return 'Something wrong.';
+    //     let ret = '';
+    //     if (value.length >= 9) {
+    //         // 199489230 -> 1억 9948만 9230
+    //         ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
+    //         value = value.substring(value.length - 9 + 1);
+    //     }
+    //     if (value.length >= 5) {
+    //         // value 99489230
+    //         ret += value.substring(0, value.length - 5 + 1) + '만 '; // 9948만
+    //         value = value.substring(value.length - 5 + 1);
+    //     }
+    //     ret += value;
+    //     return ret + '원';
+    // }
 
     return (
         <>
@@ -129,7 +140,7 @@ export default function MyAsset(props) {
                             {SplitByThree(parseWonToStr(myWallet.myCash)) +
                                 ' 원'}
                         </h4> */}
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw', backgroundColor:'red'  }}>
+                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))}
                         </h5>
                     </Paper>
@@ -159,7 +170,7 @@ export default function MyAsset(props) {
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +
                                 ' 원'}
                         </h2> */}
-                        <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw' }}>
+                        <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
                         </h2>
                     </Paper>

@@ -80,23 +80,41 @@ export default function PlayerList(props) {
     }, [isInit]);
 
     function ExpBySymbol(value) {
-        let ret = '';
-        if (value.length >= 9) {
+        let ret = value;
+        let length = ret.length;
+        let isPlus = true;
+        if (ret.charAt() === '-'){
+            ret = ret.substring(1,length);
+            length -= 1;
+            isPlus =false;
+        } 
+        let color = isPlus ?  '#e53935' : '#1e88e5';
+        let ans = '';
+        if (length >= 9) {
             // 199489230 -> 1억 9948만 9230
-            ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
-            value = value.substring(value.length - 9 + 1);
+            ans += ret.substring(0, ret.length - 9 + 1) + '억 '; // 1억
+            ret = ret.substring(ret.length - 9 + 1);
+            
         }
-        if (value.length >= 5) {
+        if (length >= 5) {
             // value 99489230
-            ret += value.substring(0, value.length - 5 + 1) + '만'; // 9948만
-            value = value.substring(value.length - 5 + 1);
+            ans += ret.substring(0, ret.length - 5 + 1) + '만 '; // 9948만
+            ret = ret.substring(ret.length - 5 + 1);
         }
-        // ret += value;
-        return ret;
+        ans+=ret;
+        let minus = isPlus ? '' : '-';
+        ans = minus+ans;
+        return (
+            <span style={{color:color}}>
+            {ans}</span>
+        );
     }
 
     const parseWonToStr = (won) => {
-        if (typeof won == 'number') won = won.toString();
+        if (typeof won == 'number') {
+            won = won - 100000000;
+            won = won.toString();
+        }
         return won;
     };
 
@@ -106,51 +124,52 @@ export default function PlayerList(props) {
     };
     const [myRankPage, setMyRankPage] = useState(defaultPage);
     const [myRank, setMyRank] = useState(null);
-
-    function MyRank() {
-        props.socket.once('MyRank', (myRankPage, myRank) => {
-            setMyRankPage(myRankPage);
-            setMyRank(myRank);
-        });
-        return (
-            <div>
-                <Paper
-                    className={classes.paper}
-                    style={{
-                        height: '90%',
-                        border: 'solid',
-                        borderColor: '#0066bb',
-                        margin: '0 0 10px 0',
-                        boxShadow: '12px 12px 2px 1px #ffffff',
-                    }}
-                >
-                    <Grid container direction="row" alignItems="center">
-                        <Grid
-                            style={{ width: '20%', height: '100%' }}
-                            className="score"
-                        >
-                            {'현재 '}
-                            {myRank}
-                            {'위'}
-                        </Grid>
-                        <Grid
-                            style={{ width: '80%', height: '100%' }}
-                            container
-                            direction="column"
-                            className="score"
-                        >
-                            <Grid alignItems="right">
-                                {myRankPage.playerID}
-                            </Grid>
-                            <Grid alignItems="right">
-                                {ExpBySymbol(parseWonToStr(myRankPage.asset))}원
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Paper>
-            </div>
-        );
-    }
+    // function MyRank() {
+    //     props.socket.once('MyRank', (myRankPage, myRank) => {
+    //         setMyRankPage(myRankPage);
+    //         setMyRank(myRank);
+    //     });
+    //     console.log(myRankPage);
+    //     return (
+    //         <div>
+    //             <Paper
+    //                 className={classes.paper}
+    //                 style={{
+    //                     height: '90%',
+    //                     border: 'solid',
+    //                     borderColor: '#0066bb',
+    //                     margin: '0 0 10px 0',
+    //                     boxShadow: '12px 12px 2px 1px #ffffff',
+    //                 }}
+    //             >
+    //                 <Grid container direction="row" alignItems="center">
+    //                     <Grid
+    //                         style={{ width: '20%', height: '100%' }}
+    //                         className="score"
+    //                     >
+    //                         {'현재 '}
+    //                         {myRank}
+    //                         {'위'}
+    //                     </Grid>
+    //                     <Grid
+    //                         style={{ width: '80%', height: '100%' }}
+    //                         container
+    //                         direction="column"
+    //                         className="score"
+    //                     >
+    //                         <Grid alignItems="right">
+    //                             {/* {myRankPage.playerID} */}
+    //                         </Grid>
+    //                         <Grid alignItems="right">
+    //                             {/* {ExpBySymbol(parseWonToStr(myRankPage.asset))} */}
+    //                             {myRankPage.asset}
+    //                         </Grid>
+    //                     </Grid>
+    //                 </Grid>
+    //             </Paper>
+    //         </div>
+    //     );
+    // }
 
     return (
         <>
@@ -189,7 +208,7 @@ export default function PlayerList(props) {
                                         className="score"
                                     >
                                         <Grid alignItems="right">{player.playerID}</Grid>
-                                        <Grid alignItems="right">{player.asset}</Grid>
+                                        <Grid alignItems="right">{ExpBySymbol(parseWonToStr(player.asset))}원</Grid>
                                     </Grid>
                                 </Grid>
                             </Paper>
