@@ -19,25 +19,16 @@ import './ShiningButton.css';
 // 음악
 // Effect
 
-import Buy100 from './audios/effect/Buy100.wav';
+import BuyMax from './audios/effect/BuyMax.wav';
 import BuyConfirm from './audios/effect/BuyConfirm.wav';
-import BuyDone from './audios/effect/BuyDone.wav';
 
 import Check from './audios/effect/Check.mp3';
 import CurPrice from './audios/effect/CurPrice.wav';
-import Enter from './audios/effect/Enter.wav';
-import Error_Sound from './audios/effect/Error.mp3';
-import ExEnroll from './audios/effect/ExEnroll.wav';
 
-import Nope from './audios/effect/Nope.mp3';
 import PriceDown from './audios/effect/PriceDown.wav';
 import PriceUp from './audios/effect/PriceUp.wav';
-import Result from './audios/effect/Result.mp3';
-import Sell0 from './audios/effect/Sell0.wav';
-import Sell50 from './audios/effect/Sell50.wav';
-import Sell100 from './audios/effect/Sell100.wav';
+import SellMax from './audios/effect/SellMax.wav';
 import SellConfirm from './audios/effect/SellConfirm.wav';
-import SellDone from './audios/effect/SellDone.wav';
 import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
 
@@ -88,16 +79,16 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#0C151C',
     },
     button_layer: {
-        // width: 
+        // width:
         minWidth: '100%',
-        maxHeight: '18%'
+        maxHeight: '18%',
     },
     input: {
         color: '#CDD7E0',
     },
     small_text: {
-        margin: '0 0.5vw -0.5vh 0.5vw',
-        fontSize: '1vh',
+        margin: '1 0.5vw -0.5vh 0.5vw',
+        fontSize: '3.5vh',
     },
 }));
 
@@ -176,7 +167,7 @@ export default function TradeStock(props) {
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
 
-    const eventTime = 700;
+    const eventTime = 300;
 
     useLayoutEffect(() => {
         startTime = new Date();
@@ -372,35 +363,35 @@ export default function TradeStock(props) {
             BidDown();
         } else if (e.keyCode === 65) {
             //_ 'A' :
-            let tmpAudio = new Audio(Buy100);
+            let tmpAudio = new Audio(BuyMax);
             tmpAudio.play();
             tmpAudio.remove();
             SetBuyMaxCount();
         } else if (e.keyCode === 83) {
             //_ 'S'
-            let tmpAudio = new Audio(Sell100);
+            let tmpAudio = new Audio(SellMax);
             tmpAudio.play();
             tmpAudio.remove();
             SetSellMaxCount();
         } else if (e.keyCode === 90) {
             //_ 'Z'
-            let tmpAudio = new Audio(Check);
+            let tmpAudio = new Audio(BuyConfirm);
             tmpAudio.play();
             tmpAudio.remove();
             setBuyStatus(Buy(currentBid, currentVolume));
         } else if (e.keyCode === 88) {
             //_ 'X'
-            let tmpAudio = new Audio(Check);
+            let tmpAudio = new Audio(SellConfirm);
             tmpAudio.play();
             tmpAudio.remove();
             setSellStatus(Sell(currentBid, currentVolume));
         }
         // console.log(e);
         const key = document.getElementById(e.key);
-        if(key) key.classList.add('pressed');
-        setTimeout(function(){
-            if(key)key.classList.remove('pressed');
-        },eventTime);
+        if (key) key.classList.add('pressed');
+        setTimeout(function () {
+            if (key) key.classList.remove('pressed');
+        }, eventTime);
     }
 
     useEffect(() => {
@@ -417,7 +408,7 @@ export default function TradeStock(props) {
         }
         document.addEventListener('keyup', HandleKeyUp);
         return () => {
-            document.removeEventListener('keyup', HandleKeyUp); 
+            document.removeEventListener('keyup', HandleKeyUp);
         };
     });
 
@@ -514,12 +505,11 @@ export default function TradeStock(props) {
         dateString.getMilliseconds() +
         ') ';
     const clickButton = (e) => {
-    
-        if(e.target) e.target.classList.add('clicked');
-        
-        setTimeout(function(){
-            if(e.target) e.target.classList.remove('clicked');
-          },eventTime);
+        if (e.target) e.target.classList.add('clicked');
+
+        setTimeout(function () {
+            if (e.target) e.target.classList.remove('clicked');
+        }, eventTime);
     };
 
     return (
@@ -605,10 +595,10 @@ export default function TradeStock(props) {
                 container
                 direction="column"
                 alignItems="flex-start"
-                style={{fontSize: '1rem,' }}
+                style={{ fontSize: '1rem,' }}
             >
                 <Grid container item direction="row" justify="space-between">
-                    <span  className={classes.small_text}>매매호가</span>
+                    <span className={classes.small_text}>매매호가</span>
                 </Grid>
                 <Grid
                     container
@@ -619,26 +609,7 @@ export default function TradeStock(props) {
                     alignItems="flex-end"
                     // style={{margin:'0 0 0.5vh 0'}}
                 >
-                        <Button
-                            class="arrow"
-                            onClick={(e) => {
-                                clickButton(e);
-                                new Audio(PriceUp).play();
-                                BidUp();
-                            }}
-                            id="ArrowUp"
-                        >
-                            ▲
-                        </Button>
-                    <CssTextField
-                        className={classes.input}
-                        id="custom-css-standard-input"
-                        size="small"
-                        style={{ width: '50%' }}
-                        value={currentBid}
-                        onChange={handleBidChange}
-                    />
-                        <Button
+                <Button
                             class="arrow"
                             className={
                                 classes.arrow
@@ -652,6 +623,27 @@ export default function TradeStock(props) {
                         >
                             ▼
                         </Button>
+                        
+                    <CssTextField
+                        className={classes.input}
+                        id="custom-css-standard-input"
+                        size="small"
+                        style={{ width: '50%' }}
+                        value={currentBid}
+                        onChange={handleBidChange}
+                    />
+                    <Button
+                            class="arrow"
+                            onClick={(e) => {
+                                clickButton(e);
+                                new Audio(PriceUp).play();
+                                BidUp();
+                            }}
+                            id="ArrowUp"
+                        >
+                            ▲
+                        </Button>
+                        
                 </Grid>
                 <span className={classes.small_text}>수량</span>
                 <Grid
@@ -715,8 +707,8 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="buy_max"
                             onClick={(e) => {
-                            clickButton(e);
-                                new Audio(Buy100).play();
+                                clickButton(e);
+                                new Audio(BuyMax).play();
                                 SetBuyMaxCount();
                                 // setBuyStatus(Buy(currentBid, currentVolume));
                             }}
@@ -728,8 +720,8 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="sell_max"
                             onClick={(e) => {
-                            clickButton(e);
-                                new Audio(Sell100).play();
+                                clickButton(e);
+                                new Audio(SellMax).play();
                                 SetSellMaxCount();
                                 // setSellStatus(Sell(currentBid, currentVolume));
                             }}
@@ -749,7 +741,7 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="buy"
                             onClick={(e) => {
-                            clickButton(e);
+                                clickButton(e);
                                 new Audio(Check).play();
                                 setBuyStatus(Buy(currentBid, currentVolume));
                             }}
@@ -761,7 +753,7 @@ export default function TradeStock(props) {
                             style={{ width: '45%' }}
                             class="sell"
                             onClick={(e) => {
-                            clickButton(e);
+                                clickButton(e);
                                 new Audio(Check).play();
                                 setSellStatus(Sell(currentBid, currentVolume));
                             }}
@@ -779,11 +771,11 @@ export default function TradeStock(props) {
                     >
                         <Button
                             style={{ width: '100%' }}
-                            class="arrow"
+                            class="space"
                             onClick={(e) => {
-                            clickButton(e);
+                                clickButton(e);
                                 new Audio(CurPrice).play();
-                                RefreshBid_Req(); 
+                                RefreshBid_Req();
                             }}
                             id=" "
                         >

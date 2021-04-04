@@ -4,6 +4,7 @@ import { React, useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import './blink.css';
 
+import Timer from './Timer';
 //@ won -> string (4자리 단위로 ',' 끊어주기)
 //@ isBullMarket에 따른 color 변경
 //@ TimeChecker랑 병렬로 놓게 될 것 고려
@@ -22,10 +23,14 @@ function ChartTitle(props) {
     const [beforeWon, SetWonBefore] = useState();
     const [currentWon, SetWonCurrent] = useState(0);
     const [upDown, SetUpDown] = useState(0);
+    const [coinName, SetName] = useState(props.coinName);
 
     useEffect(() => {
         return () => {
             const datas = props.data;
+            // const name = props.data.coin;
+            // console.log(datas);
+            // SetName(datas.coinName);
             const length = props.data.length;
             const before = datas[length - 2].curPrice;
             const current = datas[length - 1].curPrice;
@@ -84,19 +89,24 @@ function ChartTitle(props) {
 
     return (
         <>
-            <div className="ChartTitle" style={textColor}>
-                <span style={{ display: 'block' }}>
-                <Grid container justify='space-between'>
-                    <Grid>
-                        <strong className="blick" style={{ fontSize: '3vw' }}>
+            <div className="ChartTitle" style={{width:'100%'}}>
+                {/* <span style={{ display: 'block' }}> */}
+                {/* <Grid container direction={'row'} justify={'space-between'}> */}
+                <Grid container direction={'row'} justify={'space-between'}>
+                    <Grid item style={textColor}>
+                        <strong style={{ fontSize: '3vw' }}>
                             {SplitByThree(parseWonToStr(currentWon))}
-                            
                         </strong>
                         <span style={{color: 'white', fontSize: '1vw'}} >{' ' + unit}</span>
                     </Grid>
+                    <Grid item>
+                        {props.isStart && <Timer socket={props.socket} />}
+                    </Grid>
                 </Grid>
-                </span>
-                <span>
+                <Grid container direction={'row'} justify={'space-between'} alignItems={'flex-start'}>
+                
+                <Grid>
+                    <span>
                     <p
                         style={{
                             fontSize: '0.8vw',
@@ -106,12 +116,26 @@ function ChartTitle(props) {
                     >
                         {subtit}
                     </p>
-                    <strong style={{ fontSize: '1vw', display: 'inline' }}>{'   ' + wonYield + '  '}</strong>
-                    <strong style={{ fontSize: '1vw', display: 'inline' }}>
-                        {' ' + isBullIcon + ' ' + parseWonToStr(upDown)}
-                    </strong>
-
-                </span>
+                    <span style={textColor}>
+                        <strong style={{ fontSize: '1vw', display: 'inline' }}>
+                            {'   ' + wonYield + '  '}
+                        </strong>
+                        <strong style={{ fontSize: '1vw', display: 'inline' }}>
+                            {' ' + isBullIcon + ' ' + parseWonToStr(upDown)}
+                        </strong>
+                    </span>
+                    </span>
+                    <span>
+                        {/* {name} */}
+                    </span>
+                </Grid>
+                <Grid>
+                    <span>{coinName}</span>
+                    <span style={{color: 'gray'}}>{' '}{props.date}</span>
+                    </Grid>
+                </Grid>
+                {/* </span> */}
+                
             </div>
         </>
     );

@@ -28,7 +28,7 @@ export default function Timer(props) {
             return (
                 <h2
                     style={{
-                        fontSize: '2.5vw',
+                        fontSize: '2.7vw',
                         color: 'red',
                         fontWeight: 'bold',
                     }}
