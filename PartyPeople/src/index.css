@@ -25,11 +25,22 @@ code {
   position: relative;
 }
 
+.title {
+  font-family: 'Changa', sans-serif;
+  font-size: xx-large;
+}
 
 
 @font-face {
   font-family: 'NEXON Lv1 Gothic OTF';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  src: url('https://fonts.google.com/share?selection.family=Changa:wght@700;800') format('woff');
+  font-weight: 700;
   font-style: normal;
 }

@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, } from 'react';
+
 import {
     Button,
     Fab,
@@ -6,26 +7,72 @@ import {
     Paper,
     makeStyles,
     TextField,
+    withStyles,
 } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
 import { PurpleButton } from './PurpleComponent';
+import './ShiningButton.css';
+import './index.css'
+
+const CssTextField = withStyles({
+    root: {
+        '& label.Mui-focused': {
+            color: '#CDD7E0',
+        },
+        '& .MuiInputLabel-root': {
+            color: '#CDD7E0',
+            fontSize: '0.8vw',
+        },
+        '& .MuiInputBase-input': {
+            color: '#CDD7E0',
+            fontSize: '0.9vw',
+        },
+        '& .MuiInputBase-formControl': {
+            color: '#CDD7E0',
+            fontSize: '0.9vw',
+            height: '100%',
+        },
+        //   '& .MuiInput-underline:after': {
+        //     borderBottomColor: 'white',
+        //   },
+        //   '& .MuiInput-underline:before': {
+        //     borderBottomColor: 'white',
+        //   },
+        '& .MuiOutlinedInput-root': {
+            '& .MuiInputBase-input': {
+                color: '#CDD7E0',
+            },
+            '& .MuiInputLabel-root': {
+                color: '#CDD7E0',
+                fontStyle: 'italic',
+            },
+            '& fieldset': {
+                borderColor: '#2D4053',
+            },
+            '&:hover fieldset': {
+                borderColor: 'white',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: '#635ee7',
+            },
+        },
+    },
+})(TextField);
+
 const useStyles = makeStyles((theme) => ({
     input: {
         color: 'white',
     },
 }));
 function SetPlayerName(props) {
-    // const socket = io();
-    // const [name, setName] = React.useState('');
     const classes = useStyles();
     const params = window.location
         .toString()
         .substring(window.location.toString().indexOf('?'));
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
-    // console.log('setplayerid');
 
     const onKeyPress = (e) => {
         if (e.key == 'Enter') {
@@ -68,9 +115,14 @@ function SetPlayerName(props) {
                 >
                     <Grid>
                         <img src={Logo} />
+                        {/* <span 
+                        class="title"
+                        >
+                        DROP THE BIT
+                        </span> */}
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
-                        <TextField
+                        <CssTextField
                             id="form-control text-center fw-bold bg-transparent"
                             label="인게임 닉네임 (5자 제한)"
                             inputRef={props.textInput}
@@ -90,15 +142,14 @@ function SetPlayerName(props) {
                         />
                     </Grid>
 
-                    <Grid item>
-                        <PurpleButton
+                    <Grid item container direction="column" justify="center" alignItems="center">
+                        <Button
                             variant="contained"
-                            color="primary"
                             onClick={handleOnSave}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {buttonMsg}
-                        </PurpleButton>
+                        </Button>
                     </Grid>
                 </Grid>
             </>
@@ -118,11 +169,12 @@ function SetPlayerName(props) {
                 >
                     <Grid>
                         <img src={Logo} />
+                        {/* DROP THE BIT */}
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
-                        <TextField
+                        <CssTextField
                             id="form-control text-center fw-bold bg-transparent"
-                            label="인게임 닉네임 (8자 제한)"
+                            placeholder="인게임 닉네임 (5자 제한)"
                             inputRef={props.textInput}
                             onChange={handleChange}
                             variant="outlined"
@@ -136,27 +188,28 @@ function SetPlayerName(props) {
                             // ref={nameInput}
                             autoFocus
                             onKeyPress={onKeyPress}
-                            inputProps={{ maxLength: 8 }}
+                            inputProps={{ maxLength: 5 }}
                         />
                     </Grid>
 
-                    <Grid item>
-                        <PurpleButton
-                            variant="contained"
-                            color="primary"
+                    <Grid item container direction="column" justify="center" alignItems="center">
+                        <Button
+                            class="start"
                             onClick={handleOnSave}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {buttonMsg}
-                        </PurpleButton>
-                        <PurpleButton
-                            variant="contained"
-                            color="primary"
+                        </Button>
+                        <Grid style={{padding:"0.3vh"}}>    
+                        </Grid>
+
+                        <Button
+                            class="start"
                             onClick={handleOnSave2}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {publicButton}
-                        </PurpleButton>
+                        </Button>
                     </Grid>
                 </Grid>
             </>
