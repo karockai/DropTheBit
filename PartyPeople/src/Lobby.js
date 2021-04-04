@@ -118,13 +118,14 @@ function Lobby(props) {
                     {tmparr.map(([socketID, player]) => {
                         return (
                             <>
-                            <LobbyPlayerCard
-                                playerID={player.playerID}
-                                roomLeader={props.roomInfo['roomLeader']}
-                                socketID={socketID}
-                                playerCount={playerCount}
-                            /> {/*//?*/}
-                    </>
+                                <LobbyPlayerCard
+                                    playerID={player.playerID}
+                                    roomLeader={props.roomInfo['roomLeader']}
+                                    socketID={socketID}
+                                    playerCount={playerCount}
+                                />{' '}
+                                {/*//?*/}
+                            </>
                         );
                     })}
                 </>
@@ -279,6 +280,8 @@ function Lobby(props) {
                                     socket={props.socket}
                                     history={props.history}
                                     lobbyAudio={props.lobbyAudio}
+                                    roomOnGame={props.roomInfo['gaming']}
+                                    gameMusic={props.roomInfo['music']}
                                     isLeader={
                                         props.roomInfo['roomLeader'] ===
                                         props.socket.id

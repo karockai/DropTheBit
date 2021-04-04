@@ -49,11 +49,14 @@ export default function StartGame(props) {
 
     useEffect(() => {
         props.socket.once('publicGameStart', () => {
+            console.log('get publicGameStart');
+            console.log('@StartGame // gameMusic:', gameMusic);
             StartGameReq();
         });
     }, []);
 
     const StartGameReq = () => {
+        console.log('get StartGameReq');
         const musicList = {
             Deja_Vu: Deja_Vu,
             Dont_Stop_Me_Now: Dont_Stop_Me_Now,
@@ -137,8 +140,11 @@ export default function StartGame(props) {
     // Step1. 공개 방이 경우
     // console.log('@StartGame // props.roomOnGame :', props.roomOnGame);
     if (props.roomID === 'EnjoyPublicGame') {
+        console.log('Enter EnjoyPublicGame');
+        console.log('@StartGame // roomOnGame:', props.roomOnGame);
         // Step1-1.방이 게임 중이 아닌 경우
         if (props.roomOnGame === false) {
+            console.log('Enter EnjoyPublicGame // not playing');
             return (
                 <>
                     {props.isLeader && (
