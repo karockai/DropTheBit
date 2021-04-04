@@ -45,12 +45,14 @@ class Room {
     }
 
     // 사방 : data : {playerID : name}
-    createPrivateRoom(data) {
+    async createPrivateRoom(data) {
         const { socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
         dotenv.config();
-        let ipAddress = String(process.env.IP) + ':' + String(process.env.PORT);
+        let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
+        console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
+        console.log(ipAddress);
         dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
         dbhincrby(process.env.SERVERNAME, 'player', 1);
         let playerID = data.playerID;
