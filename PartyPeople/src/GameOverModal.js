@@ -25,18 +25,30 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         // alignItems: 'center',
         justifyContent: 'center',
+        padding: '5vh 2vw 5vh 2vw',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#0C151C',
         border: '2px solid #000',
+        // borderRadius: '3rem',
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        padding: '5vh 2vw 5vh 2vw',
         alignItems: 'center',
         justifyContent: 'center',
     },
     table: {
         minWidth: 650,
     },
+    tableHead: {
+        fontSize:'1vw'
+    },
+    tableBody: {
+        background: '#212529',
+    },
+    tableBodyText : {
+        fontSize: '1.0vw',
+        color:'white'
+    }
 }));
 
 export default function GameOverModal(props) {
@@ -80,61 +92,64 @@ export default function GameOverModal(props) {
                 BackdropComponent={Backdrop}
             >
                 {/* <Fade in={open}> */}
-                    <div container className={classes.paper}>
-                        <h2
-                            id="transition-modal-title"
-                            style={{ textAlign: 'center' }}
-                        >
-                            🌠Game Finished🌠
-                        </h2>
-                        <Grid
-                            container
-                            direction={'column'}
-                            alignItems={'center'}
-                        >
-                            <TableContainer component={Paper}>
-                                <Table
-                                    className={classes.table}
-                                    aria-label="simple table"
-                                >
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Rank</TableCell>
-                                            <TableCell align="right">
-                                                Player ID
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                asset
-                                            </TableCell>
-                                            {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
+                <div container className={classes.paper}>
+                    <Button
+                        style={{
+                            textShadow:
+                                '-1px -1px 0 #aaa,1px -1px 0 #aaa,-1px 1px 0 #aaa,1px 1px 0 #aaa',
+                        }}
+                        onClick={BackToLobby}
+                    >
+                        {' '}
+                        Back to Lobby{' '}
+                    </Button>
+                    <h2
+                        id="transition-modal-title"
+                        style={{ textAlign: 'center', margin:'0 0 5vh 0', fontSize:'3vw' }}
+                    >
+                        🌠Game Finished🌠
+                    </h2>
+                    <Grid container direction={'column'} alignItems={'center'}>
+                        <TableContainer component={Paper}>
+                            <Table
+                                className={classes.table}
+                                aria-label="simple table"
+                            >
+                                <TableHead>
+                                    <TableRow className={classes.tableHead}>
+                                        <TableCell className={classes.tableHead}>순위</TableCell>
+                                        <TableCell className={classes.tableHead} align="right">
+                                            Player ID
+                                        </TableCell>
+                                        <TableCell className={classes.tableHead} align="right">
+                                            최종 평가 자산
+                                        </TableCell>
+                                        {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
                                         {rows.map((row, idx) => (
-                                            <TableRow key={row.playerID}>
+                                            <TableRow key={row.playerID} className={classes.tableBody}>
                                                 <TableCell
                                                     component="th"
                                                     scope="row"
+                                                    className={classes.tableBodyText} 
                                                 >
                                                     {idx + 1}
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell className={classes.tableBodyText}  align="right">
                                                     {row.playerID}
                                                 </TableCell>
-                                                <TableCell align="right">
+                                                <TableCell className={classes.tableBodyText} align="right">
                                                     {row.asset}
                                                 </TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <Button onClick={BackToLobby}>
-                                {' '}
-                                Back to Lobby{' '}
-                            </Button>
-                        </Grid>
-                    </div>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
+                </div>
                 {/* </Fade> */}
             </Modal>
         </div>
