@@ -16,6 +16,7 @@ import { nanoid } from 'nanoid';
 import fs from 'fs';
 import { publicDecrypt } from 'crypto';
 import dotenv from 'dotenv';
+import { RSA_PKCS1_PADDING } from 'constants';
 
 class Room {
     constructor(io, socket) {
@@ -112,7 +113,7 @@ class Room {
             music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
-            readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
+            readyTime: 5, // 디버깅 위해 10초로 (원래 30초)
         };
 
         roomInfo[socketID] = playerInfo;
@@ -120,12 +121,12 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
+        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPublic_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            musicList: musicList,
+            // musicList: musicList,
         });
     }
 
@@ -185,7 +186,8 @@ class Room {
             musicTime: musicTime,
         });
     }
-
+    
+    // 게임 한판 끝나고 바로 룸 정보를 초기화한다. 그러면 레디타임은 ? 
     // 게임 한판 끝나고 로비로 돌아왔을때 방의 정보, 유저 정보 초기화
     // 룸의 정보가 초기화된 상태인지만 확인하고, 안되어있으면 초기화하고 되어있으면 안한다
     roomReinit(roomID) {
@@ -207,17 +209,20 @@ class Room {
         roomInfo[socketID] = playerInfo;
 
         // 방 정보가 초기화되어있지 않으면
-        if (roomInfo['gameTime'] <= -1) {
+        if (roomInfo['gameTime'] < 0) {
             roomInfo['gameTime'] = 0;
             roomInfo['music'] = 'Random_Music';
             roomInfo['roomLeader'] = socketID;
             roomInfo['gaming'] = false;
-            if (roomInfo['readyTime']) {
-                roomInfo['readyTime'] = 10;
+            if (roomInfo.hasOwnProperty('readyTime')) {
+                roomInfo['readyTime'] = 5;
             }
         }
         roomList[roomID] = roomInfo;
+        console.log('---------------roomReinit--------------');
+        console.log(roomList[roomID]);
     }
+    
 }
 
 export default Room;

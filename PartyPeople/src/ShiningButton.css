@@ -120,6 +120,11 @@
   --hover: #bf50ff;
 }
 
+.tutorial {
+  --color: rgb(255, 87, 87);
+  --hover: rgb(206, 206, 48);
+}
+
 
 /* // Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties. */
 button {
