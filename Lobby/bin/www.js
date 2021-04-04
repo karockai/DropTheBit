@@ -20,11 +20,6 @@ global.chartData = [];
 global.bidList = {};
 global.askList = {};
 global.roomList = {};
-global.bgmList = {
-    'Deja_Vu.mp3': 265,
-    'King_Conga.mp3': 145,
-    'Mausoleum_Mash.mp3': 176,
-};
 global.curCoin = {};
 global.exTable = {};
 global.prePrice = 0;
