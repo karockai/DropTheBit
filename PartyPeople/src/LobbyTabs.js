@@ -41,7 +41,7 @@ function LobbyMusicOnOff(props) {
     };
 
     return (
-        <FormGroup>
+        <FormGroup style={{padding:'0.8vh 0 0 0.8vw'}}>
             <FormControlLabel
                 control={
                     <PurpleSwitch
@@ -62,6 +62,7 @@ export default function LobbyTabs(props) {
     const [keymap, setKeymap] = React.useState(null);
     // const [keymap, setKeymap] = React.useState(props.roomLeader ? null : 'key_map');
     const [selectMusic, setSelectMusic] = React.useState(null);
+    const [tutoToggle, setTutoToggle] = React.useState(null);
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
 
@@ -92,13 +93,19 @@ export default function LobbyTabs(props) {
         setSelectMusic(event.currentTarget);
     };
 
+    const handleSelectTuto = (event) => {
+        setTutoToggle(true);
+    }
+
     const handleClose = () => {
         setKeymap(null);
         setSelectMusic(null);
+        setTutoToggle(null);
     };
 
     const openKey = Boolean(keymap);
     const openSelect = Boolean(selectMusic);
+    const openTuto = Boolean(tutoToggle);
 
     const CheckLeader = () => {
         // console.log(props.socket);
@@ -142,11 +149,26 @@ export default function LobbyTabs(props) {
     // console.log(selectMusic, openSelect);
     return (
         <>
-            <Grid container justify={'space-around'} alignItems={'center'}>
-                <button  class="arrow" id="key_map" onClick={handleKeymap} size="large">
+                                    
+            <Grid container style={{padding:'0 1vw 0 1vw'}} justify={'space-around'} alignItems={'center'}>
+                <button
+                    class="tutorial"
+                    id="tutorials"
+                    onClick={handleSelectTuto}
+                    size="large"
+                >
+                    ?
+                </button>
+                <button
+                    class="arrow"
+                    id="key_map"
+                    onClick={handleKeymap}
+                    style={{padding:'1vw'}}
+                    size="large"
+                >
                     KEY MAP
                 </button>
-                <button                     
+                <button
                     class="arrow"
                     id="select_music"
                     onClick={handleSelectMusic}
@@ -169,10 +191,24 @@ export default function LobbyTabs(props) {
                     horizontal: 'right',
                 }}
             >
+
                 <Typography className={classes.typography}>
                     <img src={KeyMapTemp} style={{ width: '50vw' }} />
                 </Typography>
             </Popover>
+            <Popover
+                open={tutoToggle}
+                anchorEl={openTuto}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >살려주세요.... 기묘..ㅇ기가 절..</Popover>
             <Popover
                 open={openSelect}
                 anchorEl={selectMusic}

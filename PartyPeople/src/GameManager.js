@@ -39,7 +39,7 @@ class GameManager extends React.Component {
         if(process.env.REACT_APP_PROD){
             let socket = io(process.env.REACT_APP_LOBBY);
                 socket.on('connect', () => {
-                    // console.log('연결 요청');
+                    console.log('연결 요청');
                     socket.emit('requireIpInfo', searchParams.get('id'), () =>{
                     })
                     // console.log('requireInfo');
