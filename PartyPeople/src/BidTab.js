@@ -73,7 +73,7 @@ export default function BidTab(props) {
             justify="center"
             direction="column"
         >
-            <TableContainer style={{ height: '100%' }}>
+            <TableContainer style={{ height: '100%', padding:'2vh 2vw 2vh 2vw' }}>
                 <StyledTable
                     className={classes.table}
                     size="small"
@@ -123,7 +123,7 @@ export default function BidTab(props) {
                                                           ((index - 5) * 100 +
                                                               100)
                                                   ],
-                                        opacity: 0.6,
+                                        opacity: 1,
                                         width: '100%',
                                     }}
                                     key={row.price}

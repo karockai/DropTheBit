@@ -1,7 +1,7 @@
 import React, {useEffect}from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import {Modal, Typography} from '@material-ui/core';
+import {Modal,CircularProgress} from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 const useStyles = makeStyles((theme) => ({
@@ -94,9 +94,7 @@ const changeTime = () => {
         BackdropComponent={Backdrop}
       >
         {/* <Fade in={open}> */}
-          <div className={classes.paper}>
-            <h4 className={classes.typo} id="spring-modal-title" style={{justifyContent: 'center'}}> {time} </h4>
-          </div>
+        <CircularProgress size={150} color='white'/>
         {/* </Fade> */}
       </Modal>
 

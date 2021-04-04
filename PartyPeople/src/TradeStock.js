@@ -82,7 +82,8 @@ const useStyles = makeStyles((theme) => ({
     },
     small_text: {
         margin: '1 0.5vw -0.5vh 0.5vw',
-        fontSize: '3.5vh',
+        fontSize: '2.5vh',
+        padding: '0.5vh 0.5vw 0.5vh 0.5vw',
     },
 }));
 
@@ -579,6 +580,7 @@ export default function TradeStock(props) {
                         style={{ width: '50%' }}
                         value={currentBid}
                         onChange={handleBidChange}
+                        disabled
                     />
                     <Button
                             class="arrow"
@@ -618,6 +620,7 @@ export default function TradeStock(props) {
                         style={{ width: '50%', fontSize: 20 }}
                         value={currentVolume}
                         onChange={handleVolumeChange}
+                        disabled
                     />
                     <Button
                         class="arrow"
