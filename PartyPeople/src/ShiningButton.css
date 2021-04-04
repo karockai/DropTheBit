@@ -96,6 +96,12 @@
   --hover: #ef8f6e;
 }
 
+.start {
+  /* --color: #635ee7; */
+  --color: #ffffff;
+  --hover: #bf50ff;
+}
+
 
 /* // Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties. */
 button {
@@ -104,10 +110,17 @@ button {
   transition: 0.25s;
 }
 
+button, .start {
+  background-color: #17181c;
+  opacity: 0.6;
+}
+
+
 /* button:hover, button:focus { */
 button:hover, button:focus, button.pressed {
   border-color: var(--hover);
   color: #fff;
+  opacity: 1;
 }
 
 

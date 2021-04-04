@@ -2,6 +2,7 @@ import { blue, red, grey } from '@material-ui/core/colors';
 import { Grid } from '@material-ui/core';
 import { React, useState, useEffect } from 'react';
 import { render } from 'react-dom';
+import './blink.css';
 
 //@ won -> string (4자리 단위로 ',' 끊어주기)
 //@ isBullMarket에 따른 color 변경
@@ -87,7 +88,7 @@ function ChartTitle(props) {
                 <span style={{ display: 'block' }}>
                 <Grid container justify='space-between'>
                     <Grid>
-                        <strong style={{ fontSize: '3vw' }}>
+                        <strong className="blick" style={{ fontSize: '3vw' }}>
                             {SplitByThree(parseWonToStr(currentWon))}
                             
                         </strong>

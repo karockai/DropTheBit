@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ShiningButton.css';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
     Grid,
@@ -142,16 +143,17 @@ export default function LobbyTabs(props) {
     return (
         <>
             <Grid container justify={'space-around'} alignItems={'center'}>
-                <PurpleButton id="key_map" onClick={handleKeymap} size="large">
+                <button  class="buy_max" id="key_map" onClick={handleKeymap} size="large">
                     KEY MAP
-                </PurpleButton>
-                <PurpleButton
+                </button>
+                <button                     
+                    class="buy_max"
                     id="select_music"
                     onClick={handleSelectMusic}
                     size="large"
                 >
                     SELECT MUSIC
-                </PurpleButton>
+                </button>
                 <LobbyMusicOnOff lobbyAudio={props.lobbyAudio} />
             </Grid>
             <Popover

@@ -165,7 +165,7 @@ function Lobby(props) {
                 <Grid
                     className="상단메뉴바"
                     item
-                    style={{ height: '7vh', opacity: 0.8 }}
+                    style={{ height: '7vh', opacity: 0.9 }}
                 >
                     <AppBar
                         position="static"
@@ -256,7 +256,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '80%' }}
+                                    style={{ width: '70%', height:'100%' }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={5}>
@@ -295,7 +295,7 @@ function Lobby(props) {
                         style={{
                             height: '90vh',
                             padding: '1vw 1vw 1vw 1vw',
-                            opacity: '0.7',
+                            opacity: '0.8',
                         }}
                         item
                         xs={4}
