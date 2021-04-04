@@ -122,12 +122,14 @@ export default function MyAsset(props) {
                     item
                 >
                     <Paper className={classes.paper} style={{ height: '100%', fontSize: '1vw' }}>
+                        <span>
                         보유 현금 (KRW)
+                        </span>
                         {/* <h4>
                             {SplitByThree(parseWonToStr(myWallet.myCash)) +
                                 ' 원'}
                         </h4> */}
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw'  }}>
+                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw', backgroundColor:'red'  }}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))}
                         </h5>
                     </Paper>
