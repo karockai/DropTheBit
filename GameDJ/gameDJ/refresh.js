@@ -303,6 +303,18 @@ class Refresh {
             return b['asset'] - a['asset'];
         });
 
+        // back to lobby 를 위한 수정
+        // 방 정보가 초기화되어있지 않으면
+        if (roomInfo['gameTime'] < 0) {
+            roomInfo['gameTime'] = 0;
+            roomInfo['music'] = 'Random_Music';
+            roomInfo['roomLeader'] = 0;
+            roomInfo['gaming'] = false;
+            if (roomInfo.hasOwnProperty('readyTime')) {
+                roomInfo['readyTime'] = 5;
+            }
+        }
+        roomList[roomID] = roomInfo;
         io.to(roomID).emit('gameOver', leaderBoard);
     }
 
