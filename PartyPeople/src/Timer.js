@@ -24,7 +24,15 @@ export default function Timer(props) {
             minute = '00';
             second = '00';
             return (
-                <h2 style={{ fontSize: '2.5vw' }}>{minute + ' : ' + second}</h2>
+                <h2
+                    style={{
+                        fontSize: '2.5vw',
+                        color: 'red',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    {minute + ' : ' + second}
+                </h2>
             );
         } else if (time < 60) {
             return (

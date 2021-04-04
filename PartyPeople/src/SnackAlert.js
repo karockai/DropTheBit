@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
-import {PurpleButton, PurpleSwitch} from './PurpleComponent';
+import { PurpleButton, PurpleSwitch } from './PurpleComponent';
 //@ 5 params
 //? ------- props -----------------------------
 //? {
@@ -14,8 +14,8 @@ import {PurpleButton, PurpleSwitch} from './PurpleComponent';
 //? }
 //? -------------------------------------------
 
-
-
+// 효과음
+import Error_Sound from './audios/effect/Error.mp3';
 
 export function SnackAlertBtn(props) {
     const { enqueueSnackbar } = useSnackbar();
@@ -44,7 +44,6 @@ export function SnackAlertBtn(props) {
             >
                 {props.label}
             </PurpleButton>
-
         </>
     );
 }
@@ -62,6 +61,13 @@ export function SnackAlertFunc(props) {
     // variant could be success, error, warning, info, or default
     const parseMsg = props.message.split(')')[1];
     // console.log('parse', parseMsg);
+
+    if (props.severity === 'warning') {
+        let tmpAudio = new Audio(Error_Sound);
+        tmpAudio.play();
+        tmpAudio.remove();
+    }
+
     const callback = () => {
         enqueueSnackbar(parseMsg, {
             variant: props.severity,
@@ -70,9 +76,9 @@ export function SnackAlertFunc(props) {
                 horizontal: 'left',
             },
             autoHideDuration: 1500,
-            preventDuplicate: true
-        }); 
-    }
+            preventDuplicate: true,
+        });
+    };
     callback();
     return <></>;
 }
