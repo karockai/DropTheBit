@@ -92,6 +92,7 @@ class ChartComponent extends React.Component {
                 >
                     <ChartTitle data={this.state.data} time={this.props.time} />
                     {this.props.isStart && <Timer socket={this.props.socket} />}
+                    {/* <h2>출처</h2> */}
                 </Grid>
                 <StockChart type={'hybrid'} data={this.state.data} />
             </>

@@ -20,13 +20,11 @@ export default function Timer(props) {
         var second = time - minute * 60;
         minute = minute >= 10 ? String(minute) : '0' + String(minute);
         second = second >= 10 ? String(second) : '0' + String(second);
-        if (time <= 0) {
-            minute = '00';
-            second = '00';
-            return (
-                <h2 style={{ fontSize: '2.5vw' }}>{minute + ' : ' + second}</h2>
-            );
-        } else if (time < 60) {
+        if (time < 60) {
+            if (time <= 0) {
+                minute = '00';
+                second = '00';
+            }
             return (
                 <h2
                     style={{
