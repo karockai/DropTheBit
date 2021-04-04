@@ -50,24 +50,33 @@ export default function MusicLeader(props) {
         King_Conga: King_Conga,
         Mausoleum_Mash: Mausoleum_Mash,
         Without_Me: Without_Me,
-        StormRoad: StormRoad,
+        질풍가도: StormRoad,
         Beethven_Virus: Beethven_Virus,
         The_Wight_to_Remain: The_Wight_to_Remain,
+        Random_Music: 'Random_Music',
     };
 
     function MusicInput() {
         const handleChange = (event) => {
             const musicName = event.target.value;
-            let tmpAudio = new Audio(musicList[musicName]);
-            tmpAudio.addEventListener('loadedmetadata', () => {
-                let gameTime = parseInt(tmpAudio.duration);
+            if (musicName === 'Random_Music') {
                 props.socket.emit('settingsUpdate_Req', {
                     roomID: props.roomID,
                     musicName: musicName,
-                    gameTime: gameTime,
+                    gameTime: 0,
                 });
-                tmpAudio.remove();
-            });
+            } else {
+                let tmpAudio = new Audio(musicList[musicName]);
+                tmpAudio.addEventListener('loadedmetadata', () => {
+                    let gameTime = parseInt(tmpAudio.duration);
+                    props.socket.emit('settingsUpdate_Req', {
+                        roomID: props.roomID,
+                        musicName: musicName,
+                        gameTime: gameTime,
+                    });
+                    tmpAudio.remove();
+                });
+            }
         };
 
         return (
@@ -83,6 +92,7 @@ export default function MusicLeader(props) {
                         value={props.music}
                         onChange={handleChange}
                     >
+                        <MenuItem value={'Random_Music'}>Random_Music</MenuItem>
                         <MenuItem value={'Dont_Stop_Me_Now'}>
                             Dont_Stop_Me_Now
                         </MenuItem>
@@ -92,7 +102,7 @@ export default function MusicLeader(props) {
                         </MenuItem>
                         <MenuItem value={'Deja_Vu'}>Deja_Vu</MenuItem>
                         <MenuItem value={'Without_Me'}>Without_Me</MenuItem>
-                        <MenuItem value={'StormRoad'}>StormRoad</MenuItem>
+                        <MenuItem value={'질풍가도'}>질풍가도</MenuItem>
                         <MenuItem value={'Beethven_Virus'}>
                             Beethven_Virus
                         </MenuItem>

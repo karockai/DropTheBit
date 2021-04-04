@@ -22,6 +22,7 @@ code {
   scrollbar-width: none; /* Firefox */
   overflow: hidden; 
   touch-action: none;
+  position: relative;
 }
 
 

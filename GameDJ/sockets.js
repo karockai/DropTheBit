@@ -47,8 +47,8 @@ export default {
             socket.on('backToLobby', (roomID) => {
                 new Room(io, socket).roomReinit(roomID);
             });
-            socket.on('startGame_Req', () => {
-                new Game(io, socket).startGame();
+            socket.on('startGame_Req', (musicData) => {
+                new Game(io, socket).startGame(musicData);
             });
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()

@@ -15,8 +15,7 @@ import {
 import { nanoid } from 'nanoid';
 import fs from 'fs';
 import { publicDecrypt } from 'crypto';
-import dotenv from 'dotenv'
-
+import dotenv from 'dotenv';
 
 class Room {
     constructor(io, socket) {
@@ -68,8 +67,8 @@ class Room {
         };
 
         let roomInfo = {
-            gameTime: 145,
-            music: 'King_Conga',
+            gameTime: 0,
+            music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
         };
@@ -79,12 +78,12 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
+        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            musicList: musicList,
+            // musicList: musicList,
         });
     }
 
@@ -107,8 +106,8 @@ class Room {
         };
 
         let roomInfo = {
-            gameTime: 145,
-            music: 'King_Conga',
+            gameTime: 0,
+            music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
             readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
@@ -204,6 +203,8 @@ class Room {
             askVol: 0,
         };
         roomInfo[socketID] = playerInfo;
+        roomInfo['gameTime'] = 0;
+        roomInfo['music'] = 'Random_Music';
 
         // 방 정보가 초기화되어있지 않으면
         if (roomInfo['gameTime'] === -1) {

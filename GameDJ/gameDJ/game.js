@@ -24,7 +24,7 @@ class Game {
         this.socket = socket;
     }
 
-    async startGame() {
+    async startGame(musicData) {
         const { io, socket } = this;
         let roomID = 0;
         if (socket.roomID) {
@@ -32,12 +32,16 @@ class Game {
         } else {
             roomID = publicRoomID;
         }
-        let gameTime = roomList[roomID]['gameTime'];
-        let musicName = roomList[roomID]['music'];
+
+        if (roomList[roomID]['gaming'] === false) {
+            roomList[roomID]['music'] = musicData['musicName'];
+            roomList[roomID]['gameTime'] = musicData['gameTime'];
+        }
+
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', {
-            gameTime: gameTime,
-            musicName: musicName,
+            gameTime: roomList[roomID]['gameTime'],
+            musicName: roomList[roomID]['music'],
         });
 
         async function realStart() {
@@ -48,10 +52,8 @@ class Game {
                 roomID = publicRoomID;
             }
             let dataForStart = {};
-
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
-            console.log('');
             roomList[roomID]['gaming'] = true;
             io.to(roomID).emit('startGame_Real', dataForStart);
         }

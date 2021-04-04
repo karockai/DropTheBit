@@ -18,11 +18,11 @@ import sprites from '@dicebear/avatars-male-sprites';
 //     },
 //   },
 // });
-
-const useStyles = makeStyles((theme) => ({
+let size = 30;
+const useStyles = makeStyles((cnt) => ({
     root: {
-        width: '30vh',
-        height: '15vh',
+        width: '100%',
+        height: '100%',
         margin: '0 2vh 2vh 2vh',
         color: '#CDD7E0',
         backgroundColor: '#0C151C',
@@ -42,45 +42,85 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LobbyPlayerCard(props) {
-    const classes = useStyles();
-    const isLeader = props.roomLeader === props.socketID ? '방장' : '';
-    let options = {};
+    const classes = useStyles(props.playerCount);
+    const playerCount = props.playerCount;
+    let index = 1;
+    for (let interval = 3; ; interval += 2, index++) {
+        const comp = Math.pow(2, interval);
+        if (comp >= playerCount) break;
+    }
+    const ratio = Math.pow(2, index); // playerCount ~2^1일때 1, ~8 2^3일때 2, ~32 2^5일때 4, ~128 2^7일때, 8
+    const isLeader = props.roomLeader === props.socketID ? '👑 방장' : '게스트';
+    let options = null;
+    if(ratio > 8) {
+      options = 
+      {
+          w: 10 / ratio * 3 + 'vw',
+          h: 10 / ratio * 3 + 'vw',
+          // m: 3 / ratio + 'vh ' + 3 / ratio + 'vw',
+      };
+    }
+    else {
+      options = 
+      {
+          w: 10 / ratio + 'vw',
+          h: 10 / ratio + 'vw',
+          m: 3 / ratio + 'vh ' + 3 / ratio + 'vw',
+      };
+    }
     let avatars = new Avatars(sprites, options);
     let svg = avatars.create(props.playerID);
+
+    let playerInfo = null;
+    if(ratio > 8){
+      playerInfo = (<></>)
+    }
+    else {
+      playerInfo = (
+        <>
+        <Grid item style={{ fontSize: 3 / ratio + 'vw' }}>
+        {isLeader}
+    </Grid>
+    <Grid item style={{ fontSize: 4 / ratio + 'vw' }}>
+        {props.playerID}
+    </Grid>
+    </>
+      )
+    }
+    
+
     return (
-        <Card className={classes.root} style={{ margin: '2vh 0 0 0' }}>
-            <CardContent>
-                <Grid
-                    container
-                    direction={'row'}
-                    justify={'flex-start'}
-                    alignItems={'flex-start'}
+        <Grid
+            style={{
+                width: 50 / ratio + '%',
+                height: 100 / ratio + '%',
+                padding: 1 / ratio + 'vh ' + 1 / ratio + 'vw',
+            }}
+        >
+            <Card className={classes.root}>
+                <CardContent
+                    style={{ padding: 1 / ratio + 'vh ' + 1 / ratio + 'vw' }}
                 >
-                    <Grid container item>
-                      <div dangerouslySetInnerHTML={{__html: svg}}/>
-                    </Grid>
-                    <Grid
-                        container
-                        item
-                        direction={'column'}
-                        justify={'center'}
-                        alignItems={'flex-end'}
-                    >
-                        {/* <Typography
-                            className={classes.title}
-                            color="textSecondary"
-                            gutterBottom
-                        > */}
-                        <Grid item>{isLeader}</Grid>
-                        {/* </Typography> */}
-                        {/* <Typography variant="h5" component="h2"> */}
-                        <Grid item>
-                            {props.playerID}
-                            {/* </Typography> */}
+                    <Grid container item direction={'row'}>
+                        <Grid container item xs={4}>
+                            <div
+                                style={{ width: '100%', height: '100%' }}
+                                dangerouslySetInnerHTML={{ __html: svg }}
+                            />
+                        </Grid>
+                        <Grid
+                            container
+                            item
+                            xs={8}
+                            direction={'column'}
+                            justify={'flex-start'}
+                            alignItems={'flex-end'}
+                        >
+                            {playerInfo}
                         </Grid>
                     </Grid>
-                </Grid>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+        </Grid>
     );
 }

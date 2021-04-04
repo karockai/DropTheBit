@@ -55,64 +55,112 @@ function SetPlayerName(props) {
     if (searchParams.has('id')) {
         // 초대링크 받아서 온 사람
         buttonMsg = 'Join Room';
+
+        return (
+            <>
+                <Grid
+                    container
+                    justify={'center'}
+                    alignItems={'center'}
+                    // spacing={2}
+                    direction="column"
+                    style={{ width: '100vw', height: '100vh' }}
+                >
+                    <Grid>
+                        <img src={Logo} />
+                    </Grid>
+                    <Grid style={{ margin: '4vh' }} item>
+                        <TextField
+                            id="form-control text-center fw-bold bg-transparent"
+                            label="인게임 닉네임 (5자 제한)"
+                            inputRef={props.textInput}
+                            onChange={handleChange}
+                            variant="outlined"
+                            size="medium"
+                            InputProps={{
+                                className: classes.input,
+                            }}
+                            InputLabelProps={{
+                                style: { color: '#fff' },
+                            }}
+                            // ref={nameInput}
+                            autoFocus
+                            onKeyPress={onKeyPress}
+                            inputProps={{ maxLength: 5 }}
+                        />
+                    </Grid>
+
+                    <Grid item>
+                        <PurpleButton
+                            variant="contained"
+                            color="primary"
+                            onClick={handleOnSave}
+                            style={{ width: '50vh', height: '7vh' }}
+                        >
+                            {buttonMsg}
+                        </PurpleButton>
+                    </Grid>
+                </Grid>
+            </>
+        );
     } else {
         buttonMsg = 'Create Private Room';
+
+        return (
+            <>
+                <Grid
+                    container
+                    justify={'center'}
+                    alignItems={'center'}
+                    // spacing={2}
+                    direction="column"
+                    style={{ width: '100vw', height: '100vh' }}
+                >
+                    <Grid>
+                        <img src={Logo} />
+                    </Grid>
+                    <Grid style={{ margin: '4vh' }} item>
+                        <TextField
+                            id="form-control text-center fw-bold bg-transparent"
+                            label="인게임 닉네임 (8자 제한)"
+                            inputRef={props.textInput}
+                            onChange={handleChange}
+                            variant="outlined"
+                            size="medium"
+                            InputProps={{
+                                className: classes.input,
+                            }}
+                            InputLabelProps={{
+                                style: { color: '#fff' },
+                            }}
+                            // ref={nameInput}
+                            autoFocus
+                            onKeyPress={onKeyPress}
+                            inputProps={{ maxLength: 8 }}
+                        />
+                    </Grid>
+
+                    <Grid item>
+                        <PurpleButton
+                            variant="contained"
+                            color="primary"
+                            onClick={handleOnSave}
+                            style={{ width: '50vh', height: '7vh' }}
+                        >
+                            {buttonMsg}
+                        </PurpleButton>
+                        <PurpleButton
+                            variant="contained"
+                            color="primary"
+                            onClick={handleOnSave2}
+                            style={{ width: '50vh', height: '7vh' }}
+                        >
+                            {publicButton}
+                        </PurpleButton>
+                    </Grid>
+                </Grid>
+            </>
+        );
     }
-
-    return (
-        <>
-            <Grid
-                container
-                justify={'center'}
-                alignItems={'center'}
-                // spacing={2}
-                direction="column"
-                style={{ width: '100vw', height: '100vh' }}
-            >
-                <Grid>
-                    <img src={Logo} />
-                </Grid>
-                <Grid style={{ margin: '4vh' }} item>
-                    <TextField
-                        id="form-control text-center fw-bold bg-transparent"
-                        label="인게임 닉네임 (8자 제한)"
-                        inputRef={props.textInput}
-                        onChange={handleChange}
-                        variant="outlined"
-                        size="medium"
-                        InputProps={{
-                            className: classes.input,
-                        }}
-                        InputLabelProps={{
-                            style: { color: '#fff' },
-                        }}
-                        // ref={nameInput}
-                        autoFocus
-                        onKeyPress={onKeyPress}
-                        inputProps={{ maxLength: 8 }}
-                    />
-                </Grid>
-
-                <Grid item>
-                    <PurpleButton
-                        variant="contained"
-                        color="primary"
-                        onClick={handleOnSave}
-                        style={{ width: '50vh', height: '7vh' }}
-                    >
-                        {buttonMsg}
-                    </PurpleButton>
-                    <PurpleButton
-                        variant="contained"
-                        color="primary"
-                        onClick={handleOnSave2}
-                        style={{ width: '50vh', height: '7vh' }}
-                    >
-                        {publicButton}
-                    </PurpleButton>
-                </Grid>
-            </Grid>
-        </>
-    );
 }
 export default withRouter(SetPlayerName);

@@ -234,7 +234,7 @@ class Refresh {
             }
 
             // 공방 startGame logic
-            if (roomInfo['readyTime'] && roomInfo['readyTime'] > 0){
+            if (roomInfo['readyTime'] && roomInfo['readyTime'] > 0) {
                 roomList[roomID]['readyTime']--;
                 // console.log('readyTime : ', roomList[roomID]['readyTime']);
                 io.to(roomID).emit(
@@ -243,9 +243,13 @@ class Refresh {
                 );
             }
 
-            if (roomInfo['readyTime'] === 0 && roomList[roomID]['gaming'] === false) {
+            if (
+                roomInfo['readyTime'] === 0 &&
+                roomList[roomID]['gaming'] === false
+            ) {
                 roomList[roomID]['gaming'] = true;
-                new Game(io, roomList[roomID]['roomLeader']).startGame();
+                // new Game(io, roomList[roomID]['roomLeader']).startGame();
+                io.to(roomInfo['roomLeader']).emit('publicGameStart');
             }
 
             // gameOver logic
