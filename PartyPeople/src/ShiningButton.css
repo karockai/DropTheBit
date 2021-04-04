@@ -73,27 +73,45 @@
   /* --color: #635ee7; */
   /* 기존 theme color보다 명도 높 */
   --color: #7974f2;
-  --hover: #ef8f6e;
+  --hover: #b9b6ff;
 }
 .buy_max {
   /* --color: #635ee7; */
-  --color: #a073f2;
-  --hover:#fbadbe;
+
+  /* --color: #dd73f2;
+  --hover:#fbadbe; */
+  background: rgba(229,57,53, 0.5);
+  --color: white;
+  --hover:rgba(229,57,53, 0.5);
 }
 .buy {
   /* --color: #635ee7; */
-  --color: #dd73f2;
-  --hover: #fbadbe;
+  background: red;
+  /* --color: #e53935; */
+  --color: white;
+  --hover: red;
 }
 .sell_max {
   /* --color: #635ee7; */
-  --color: #739ef2;
-  --hover: #ef8f6e;
+  /* --color: #73b2f2;
+  --hover: #ef8f6e; */
+  background:rgba(0, 136, 255, 0.7);
+  --color: white;
+  --hover:rgba(0, 136, 255, 0.7);
 }
 .sell {
   /* --color: #635ee7; */
-  --color: #73b2f2;
-  --hover: #ef8f6e;
+  /* background: #0088ff; */
+  background: #0088ff;
+  --color: white;
+  --hover: #0088ff;
+}
+.space {
+  /* --color: #635ee7; */  
+  /* background: #0088ff; */
+  background: rgba(255,255,255,0.15);
+  --color: white;
+  --hover: rgba(255, 255, 255, 0.522);
 }
 
 
@@ -113,7 +131,8 @@ button:hover, button:focus, button.pressed {
 
 body {
   color: #fff;
-  background: #17181c;
+  /* background: #17181c; */
+  background: #fff;
   font: 300 1em 'Fira Sans', sans-serif;
   /* // Center everything ever */
   -webkit-box-pack: center;
@@ -141,9 +160,8 @@ button {
   margin: 0.25rem;
   padding: 2vh 1.5vw;
   /* padding: 1em 2em; */
-  font-size: 2vh;
+  font-size: 2.5vh;
   /* font-size: 1em; */
-
 }
 
 h1 {
