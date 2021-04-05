@@ -33,7 +33,9 @@ class Game {
                 roomID = publicRoomID;
             }
             let dataForStart = {};
-            roomList[roomID]['gameTime'] += 3;
+            if (roomList[roomID]['roomLeader'] === socket.id){
+                roomList[roomID]['gameTime'] += 3;
+            }
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
             io.to(roomID).emit('startGame_Real', dataForStart);
