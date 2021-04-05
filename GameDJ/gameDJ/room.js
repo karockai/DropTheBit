@@ -1,8 +1,4 @@
-import {
-    dbhget,
-    dbhmset,
-    dbhincrby,
-} from './redis.js';
+import { dbhget, dbhmset, dbhincrby } from './redis.js';
 import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
 
@@ -40,7 +36,7 @@ class Room {
         const socketID = socket.id;
         dotenv.config();
         let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
-        if(ipAddress){
+        if (ipAddress) {
             console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
             console.log(ipAddress);
             dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
@@ -141,16 +137,16 @@ class Room {
             };
 
             // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
-            if (roomInfo['roomLeader'] === 0){
+            if (roomInfo['roomLeader'] === 0) {
                 roomInfo['roomLeader'] = socket.id;
             }
 
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
-            
+
             // if (!socket.roomID){
-                socket.roomID = roomID;
-                socket.join(roomID);
+            socket.roomID = roomID;
+            socket.join(roomID);
             // }
             playerStress++;
             io.to(roomID).emit('joinRoom_Res', {
@@ -177,13 +173,14 @@ class Room {
 
         roomList[roomID]['gameTime'] = musicTime;
         roomList[roomID]['music'] = musicName;
+        console.log((roomList[roomID]['music'] = musicName));
 
         io.to(roomID).emit('settingsUpdate_Res', {
             musicName: musicName,
             musicTime: musicTime,
         });
     }
-    
+
     // 게임 한판 끝나고 로비로 돌아왔을때 유저 정보 초기화 (방 정보는 gameOver시 초기화)
     roomReinit(roomID) {
         const { io, socket } = this;
@@ -202,15 +199,14 @@ class Room {
             askVol: 0,
         };
 
-        // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함. 
+        // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함.
         // 방장이 설정된 후부터 ready time이 줄어들도록 함
-        if (roomInfo['roomLeader'] === 0){
+        if (roomInfo['roomLeader'] === 0) {
             roomInfo['roomLeader'] = socket.id;
         }
         roomInfo[socketID] = playerInfo;
         roomList[roomID] = roomInfo;
     }
-    
 }
 
 export default Room;
