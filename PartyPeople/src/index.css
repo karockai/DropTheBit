@@ -25,6 +25,7 @@ code {
 
 .title {
   font-family: 'Fugaz One', cursive;
+  color: white;
   font-size: 20vh;
   mix-blend-mode: screen;
   position: absolute;

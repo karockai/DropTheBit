@@ -62,12 +62,18 @@ export default function MyAsset(props) {
                 const currentCoin = data.coinVol;
                 const currentAvg = data.avgPrice;
                 
-                if (currentAsset > myAsset) {
-                    color = 'red';
-                }
-                else if (currentAsset < myAsset) {
-                    color = 'blue';
-                }
+                const asset = document.getElementById('changeAsset');
+                console.log(asset);
+                if (asset) asset.classList.add('blinking');
+                setTimeout(function () {
+                    if (asset) asset.classList.remove('blinking');
+                }, 700);
+                // if (currentAsset > myAsset) {
+                //     color = 'red';
+                // }
+                // else if (currentAsset < myAsset) {
+                //     color = 'blue';
+                // }
                 // console.log(currentAsset);
                 // console.log(myAsset);
                 // console.log(color);
@@ -137,7 +143,7 @@ export default function MyAsset(props) {
                         <span>
                         보유 현금 (KRW)
                         </span>
-                        <h5 class="blinking" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
+                        <h5 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))}
                         </h5>
                     </Paper>
@@ -147,7 +153,7 @@ export default function MyAsset(props) {
                     style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
                 >
                     <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
-                        보유 코인 수 (개)<h3  style={{ height: '100%', fontSize: '1.5vw' }}>{myWallet.myCoin}</h3>
+                        보유 코인 수 (개)<h3 id="changeAsset" style={{ height: '100%', fontSize: '1.5vw' }}>{myWallet.myCoin}</h3>
                     </Paper>
                 </Grid>
             </Grid>
@@ -166,7 +172,7 @@ export default function MyAsset(props) {
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +
                                 ' 원'}
                         </h2> */}
-                        <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
+                        <h2 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
                         </h2>
                     </Paper>
