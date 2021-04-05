@@ -52,10 +52,12 @@ class Room {
         const socketID = socket.id;
         dotenv.config();
         let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
-        console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
-        console.log(ipAddress);
-        dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
-        dbhincrby(process.env.SERVERNAME, 'player', 1);
+        if(ipAddress){
+            console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
+            console.log(ipAddress);
+            dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
+            dbhincrby(process.env.SERVERNAME, 'player', 1);
+        }
         let playerID = data.playerID;
         let playerInfo = {
             playerID: playerID,

@@ -93,6 +93,15 @@ class Game {
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
 
+
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
+        if (cash < reqPrice * reqVol){
+            
+            
+            
+        }
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
+
         // 5. 구매 처리 및 asset 정보 emit
 
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
@@ -192,6 +201,14 @@ class Game {
         let cash = playerInfo['cash'];
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
+
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
+        if (coinVol < reqVol){
+            
+            
+            
+        }
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
         // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
         if (reqPrice <= curPrice) {

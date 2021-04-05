@@ -25,8 +25,9 @@ class Refresh {
         //     // '----------------------renewalCurCoin------------------------'
         //     ();
         // 1. bidList 불러옴
-        curCoin = JSON.parse(await dbget('curCoin'));
-        if (!curCoin) return false;
+        updateCurCoin = JSON.parse(await dbget('curCoin'));
+        if (!updateCurCoin) return false;
+        curCoin = updateCurCoin
         io.emit('chart', curCoin);
         let curPrice = curCoin['curPrice'];
         console.log(curPrice);
