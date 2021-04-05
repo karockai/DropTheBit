@@ -38,8 +38,6 @@ class Game {
             roomList[roomID]['music'] = musicData['musicName'];
             roomList[roomID]['gameTime'] = musicData['gameTime'];
         }
-        console.log('startgamee---------');
-        console.log(roomList[roomID]);
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', {
             gameTime: roomList[roomID]['gameTime'],
@@ -57,8 +55,6 @@ class Game {
             roomList[roomID]['gameTime'] += 3;
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
-            console.log('------real Start');
-            console.log(roomList[roomID]);
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
 

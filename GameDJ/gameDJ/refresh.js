@@ -267,10 +267,6 @@ class Refresh {
                 this.gameOver(roomID);
             }
         }
-        // console
-        //     .log
-        //     // '----------------------renewalInfo End------------------------'
-        //     ();
     }
 
     gameOver(roomID) {
@@ -309,15 +305,15 @@ class Refresh {
         if (roomInfo['gameTime'] < 0) {
             roomInfo['gameTime'] = 0;
             roomInfo['music'] = 'Random_Music';
-            roomInfo['roomLeader'] = 0;
+            if (roomID === publicRoomID){
+                roomInfo['roomLeader'] = 0;
+            }
             roomInfo['gaming'] = false;
             if (roomInfo.hasOwnProperty('readyTime')) {
                 roomInfo['readyTime'] = 5;
             }
         }
         roomList[roomID] = roomInfo;
-        console.log('gameOver-------');
-        console.log(roomList[roomID]);
         io.to(roomID).emit('gameOver', leaderBoard);
     }
 
