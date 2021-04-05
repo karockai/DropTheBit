@@ -152,6 +152,11 @@ class Room {
                 askVol: 0,
             };
 
+            // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
+            if (roomInfo['roomLeader'] === 0){
+                roomInfo['roomLeader'] = socket.id;
+            }
+
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
 
@@ -213,20 +218,7 @@ class Room {
             roomInfo['roomLeader'] = socket.id;
         }
         roomInfo[socketID] = playerInfo;
-
-        // 방 정보가 초기화되어있지 않으면
-        // if (roomInfo['gameTime'] < 0) {
-        //     roomInfo['gameTime'] = 0;
-        //     roomInfo['music'] = 'Random_Music';
-        //     roomInfo['roomLeader'] = socketID;
-        //     roomInfo['gaming'] = false;
-        //     if (roomInfo.hasOwnProperty('readyTime')) {
-        //         roomInfo['readyTime'] = 5;
-        //     }
-        // }
         roomList[roomID] = roomInfo;
-        console.log('---------------roomReinit--------------');
-        console.log(roomList[roomID]);
     }
     
 }
