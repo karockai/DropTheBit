@@ -28,6 +28,15 @@ const useStyles = makeStyles((theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    select: {
+        '&:before': {
+            borderColor: 'red',
+        },
+    },
+    icon: {
+        fill: 'red',
+    },
+
 }));
 export default function MusicMember(props) {
     const classes = useStyles();
@@ -45,10 +54,11 @@ export default function MusicMember(props) {
         return (
             <div>
                 <FormControl className={classes.formControl} disabled>
-                    <InputLabel id="demo-simple-select-label">
+                    <InputLabel label="음악 제목" id="demo-simple-select-label" style={{ color: '#fff' }}>
                         {props.music}
                     </InputLabel>
                     <Select
+                        style={{ color: '#fff' }}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                     >
@@ -82,10 +92,14 @@ export default function MusicMember(props) {
             <form className={classes.root} noValidate autoComplete="off">
                 <div>
                     <TextField
-                        label={props.strTime}
+                                            InputLabelProps={{
+                                                style: { color: '#fff' },
+                                            }}
+                        label='게임 플레이 시간'
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
+                            style: { color: '#fff' },
                         }}
                     />
                 </div>
