@@ -50,7 +50,6 @@ export default function StartGame(props) {
 
     useEffect(() => {
         props.socket.on('settingsUpdate_Res', (data) => {
-            console.log(data.musicName);
             SetGameMusic(data.musicName);
         });
     }, []);
