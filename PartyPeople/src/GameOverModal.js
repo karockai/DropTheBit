@@ -18,7 +18,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, GridList} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -119,6 +119,8 @@ export default function GameOverModal(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
+                                <GridList>
+                                {/* <Grid> */}
                                         {rows.map((row, idx) => (
                                             <TableRow key={row.playerID} className={classes.tableBody}>
                                                 <TableCell
@@ -131,11 +133,24 @@ export default function GameOverModal(props) {
                                                 <TableCell className={classes.tableBodyText}  align="right">
                                                     {row.playerID}
                                                 </TableCell>
-                                                <TableCell className={classes.tableBodyText} align="right">
-                                                    {row.asset}
-                                                </TableCell>
+                                                {   (() => {
+                                                    let result = row.asset -100000000;
+                                                    let color = 'white';
+                                                    if (result > 0) color= 'red';
+                                                    if (result < 0) color= 'blue';
+                                                        return(
+                                                        <TableCell style={{fontSize:'1vh', color:color}} align="right">
+                                                            {
+                                                                result
+                                                            }
+                                                        </TableCell>
+                                                        );
+                                                    })
+                                                }
                                             </TableRow>
                                         ))}
+                                        {/* </Grid> */}
+                                        </GridList>
                                     </TableBody>
                             </Table>
                         </TableContainer>

@@ -235,7 +235,7 @@ export default function StartGame(props) {
                             text
                             disabled
                         >
-                            {'START'}
+                            {'Waiting to Start'}
                         </Button>
                     )}
                 </>

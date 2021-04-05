@@ -165,7 +165,6 @@ function SetPlayerName(props) {
                     container
                     justify={'center'}
                     alignItems={'center'}
-                    // spacing={2}
                     direction="column"
                     style={{ width: '100vw', height: '100vh' }}
                 >
