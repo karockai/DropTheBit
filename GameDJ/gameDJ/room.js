@@ -39,8 +39,8 @@ class Room {
         const roomID = nanoid(15);
         const socketID = socket.id;
         dotenv.config();
-        dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
         let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
+        dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
         if(ipAddress){
             console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
             console.log(ipAddress);
