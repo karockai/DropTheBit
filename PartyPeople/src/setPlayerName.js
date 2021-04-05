@@ -26,8 +26,12 @@ const CssTextField = withStyles({
             fontSize: '0.8vw',
         },
         '& .MuiInputBase-input': {
+            width: '15vw',
+            opacity: 0.8,
+            backgroundColor: '#000000',
             color: '#CDD7E0',
             fontSize: '0.9vw',
+            size:"large"
         },
         '& .MuiInputBase-formControl': {
             color: '#CDD7E0',
@@ -111,7 +115,7 @@ function SetPlayerName(props) {
                     justify={'center'}
                     alignItems={'center'}
                     // spacing={2}
-                    direction="column"
+                    direction="column" 
                     style={{ width: '100vw', height: '100vh' }}
                 >
                     <Grid style={{ position: 'relative'}}>
@@ -128,7 +132,7 @@ function SetPlayerName(props) {
                     <Grid style={{ margin: '4vh' }} item>
                         <CssTextField
                             id="form-control text-center fw-bold bg-transparent"
-                            label="인게임 닉네임 (5자 제한)"
+                            label="인게임 닉네임 (10자 제한)"
                             inputRef={props.textInput}
                             onChange={handleChange}
                             variant="outlined"
@@ -141,7 +145,7 @@ function SetPlayerName(props) {
                             }}
                             autoFocus
                             onKeyPress={onKeyPress}
-                            inputProps={{ maxLength: 5 }}
+                            inputProps={{ maxLength: 10 }}
                         />
                     </Grid>
 
@@ -182,12 +186,11 @@ function SetPlayerName(props) {
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
                         <CssTextField
-                            id="form-control text-center fw-bold bg-transparent"
-                            placeholder="인게임 닉네임 (5자 제한)"
+                            id="form-control text-center fw-bold "
+                            placeholder="인게임 닉네임 (10자 제한)"
                             inputRef={props.textInput}
                             onChange={handleChange}
                             variant="outlined"
-                            size="medium"
                             InputProps={{
                                 className: classes.input,
                             }}
@@ -197,15 +200,15 @@ function SetPlayerName(props) {
                             // ref={nameInput}
                             autoFocus
                             onKeyPress={onKeyPress}
-                            inputProps={{ maxLength: 5 }}
+                            inputProps={{ maxLength: 10 }}
                         />
                     </Grid>
 
-                    <Grid item container direction="row" justify="center" alignItems="center">
+                    <Grid item container direction="column" justify="center" alignItems="center" style={{ padding:'5vh 0 0 0'}}>
                         <button
                             class="start"
                             onClick={handleOnSave}
-                            style={{ width: '50vh', height: '7vh' }}
+                            style={{ width: '50vh', height: '7vh'}}
                         >
                             {buttonMsg}
                         </button>

@@ -215,7 +215,7 @@ export default function LobbyTabs(props) {
                     horizontal: 'center',
                 }}
             >
-                보지마세요 부끄러워요..<LobbyTutorial></LobbyTutorial>
+                보지마세요 부끄러워요.. 금방 찾아뵐게요.<LobbyTutorial></LobbyTutorial>
             </Popover>
             <Popover
                 open={openSelect}
