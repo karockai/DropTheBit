@@ -1,22 +1,10 @@
 import {
-    dbset,
-    dbget,
-    dbhset,
     dbhget,
     dbhmset,
-    dbhgetall,
-    dbrpush,
-    dblpush,
-    dblrem,
-    dblrange,
-    dbllen,
     dbhincrby,
 } from './redis.js';
 import { nanoid } from 'nanoid';
-import fs from 'fs';
-import { publicDecrypt } from 'crypto';
 import dotenv from 'dotenv';
-import { RSA_PKCS1_PADDING } from 'constants';
 
 class Room {
     constructor(io, socket) {

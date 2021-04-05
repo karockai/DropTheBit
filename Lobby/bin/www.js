@@ -12,9 +12,6 @@ client.on('error', function (error) {
     console.error(error);
 });
 const dbhset = util.promisify(client.hset).bind(client);
-const dbhmset = util.promisify(client.hmset).bind(client);
-const dbhget = util.promisify(client.hget).bind(client);
-const dbhgetall = util.promisify(client.hgetall).bind(client);
 
 global.chartData = [];
 global.bidList = {};

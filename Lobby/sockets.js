@@ -7,12 +7,7 @@ let client = redis.createClient({ host: '3.34.156.16' });
 client.on('error', function (error) {
     console.error(error);
 });
-const dbget = util.promisify(client.get).bind(client);
-const dbset = util.promisify(client.set).bind(client);
-const dbhset = util.promisify(client.hset).bind(client);
-const dbhmset = util.promisify(client.hmset).bind(client);
 const dbhmget = util.promisify(client.hmget).bind(client);
-const dbhget = util.promisify(client.hget).bind(client);
 const dbhincrby = util.promisify(client.hincrby).bind(client);
 const dbhgetall = util.promisify(client.hgetall).bind(client);
 
