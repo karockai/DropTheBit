@@ -18,7 +18,6 @@ class Disconnect {
         // disconnection 보내면 room에서 그 사람을 지우도록 함
         if (roomID && roomList[roomID]) {
             let playerCnt = 0;
-            // let roomInfo = await dbhgetall(roomID);
             let roomInfo = roomList[roomID];
             let playerInfo = roomInfo[socket.id];
             //ask, bid 지우기
@@ -40,9 +39,6 @@ class Disconnect {
                 }
             }
 
-            // await dbhdel(roomID, socket.id);  
-            // console.log('----------before disconnect roominfo');
-            // console.log(roomInfo);
             delete roomList[roomID][socket.id];
             for (const [key, value] of Object.entries(roomInfo)) {
                 if (key.length === 20) {
@@ -54,25 +50,23 @@ class Disconnect {
             if (playerCnt === 0) {
                 delete roomList[roomID];
                 playerStress = 0;
-            } else {
+            } 
+            else {
+                let message = playerInfo['playerID'] + '님이 나가셨습니다.\n';
                 // 방에 사람이 1명 이상이면 방을 지우지 않는다
                 // 나간 사람이 방장이라면 다음 사람으로 방장을 변경한다
                 if (roomInfo['roomLeader'] == socket.id) {
-                    // console.log('흑흑 방장이 나갔어요');
                     for (const [key, value] of Object.entries(roomInfo)) {
                         if (key.length === 20) {
                             roomInfo['roomLeader'] = key;
-                            // console.log('방장을 바꿨어요', key);
+                            message += '[SERVER] : ' + roomInfo[key]['playerID'] + '님으로 방장이 변경되었습니다.';
                             break;
                         }
                     }
-
                 }
+                io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
+                console.log(message);
             }
-            // console.log('나간 놈 ', socket.id);
-            // console.log(roomInfo);
-            // console.log('----------after disconnect roominfo');
-            // console.log(roomInfo);
             io.to(roomID).emit('disconnect', roomInfo);
         }
     }

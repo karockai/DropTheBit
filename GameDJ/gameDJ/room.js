@@ -31,7 +31,7 @@ class Room {
 
     // 사방 : data : {playerID : name}
     async createPrivateRoom(data) {
-        const { socket } = this;
+        const { io, socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
         dotenv.config();
@@ -67,18 +67,18 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            // musicList: musicList,
         });
+        let message = playerID + '님이 들어오셨습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }
 
     // 공방 : data : {roomID : roomID, playerID : name}
     createPublicRoom(data) {
-        const { socket } = this;
+        const { io, socket } = this;
         const roomID = data.roomID;
         const socketID = socket.id;
         let playerID = data.playerID;
@@ -107,13 +107,13 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPublic_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            // musicList: musicList,
         });
+        let message = playerID + '님이 들어오셨습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -122,10 +122,11 @@ class Room {
         if (data.playerID) {
             const roomID = data.roomID;
             let roomInfo = roomList[roomID];
+            let playerID = data.playerID;
             let socketID = socket.id;
 
             let playerInfo = {
-                playerID: data['playerID'],
+                playerID: playerID,
                 cash: 100000000,
                 asset: 100000000,
                 coinVol: 0,
@@ -154,6 +155,9 @@ class Room {
                 roomInfo: roomInfo,
                 socketID: socket.id,
             });
+
+            let message = playerID + '님이 들어오셨습니다.';
+            io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
         }
     }
 
@@ -179,6 +183,8 @@ class Room {
             musicName: musicName,
             musicTime: musicTime,
         });
+        let message = '배경음악이 "' + musicName + '"로 변경되었습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SYSTEM]'});
     }
 
     // 게임 한판 끝나고 로비로 돌아왔을때 유저 정보 초기화 (방 정보는 gameOver시 초기화)
@@ -206,6 +212,8 @@ class Room {
         }
         roomInfo[socketID] = playerInfo;
         roomList[roomID] = roomInfo;
+        let message = playerID + '님이 들어오셨습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }
 }
 

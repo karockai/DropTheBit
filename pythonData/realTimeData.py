@@ -104,20 +104,28 @@ def on_message(ws, msg):
         if (prev_second != cur_second):
             # 호가 단위
             if cur_price < 1000:
+                price_max = 1000
                 juka_result['priceUnit'] = 1
             elif 1000 <= cur_price < 10000:
+                price_max = 10000
                 juka_result['priceUnit'] = 5
             elif 10000 <= cur_price < 100000:
+                price_max = 100000
                 juka_result['priceUnit'] = 10
             elif 100000 <= cur_price < 500000:
+                price_max = 500000
                 juka_result['priceUnit'] = 50
             elif 500000 <= cur_price < 1000000:
+                price_max = 1000000
                 juka_result['priceUnit'] = 100
             elif 1000000 <= cur_price < 2000000:
+                price_max = 2000000
                 juka_result['priceUnit'] = 500
             else:
+                price_max = 5000000
                 juka_result['priceUnit'] = 1000
-
+            
+            juka_result['volUnit'] = (100000000 / price_max) * 0.1
             juka_result['coinName'] = coinName.coinList[coin_name]
             hoka_result['coinName'] = coinName.coinList[coin_name]
   

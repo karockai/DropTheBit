@@ -98,12 +98,7 @@ export default function ChatRoom(props) {
     const [resMsg, setResMsg] = useState('');
     const [messages, setMessages] = useState(
         // author와 쌍으로 저장된 메시지
-        [
-            {
-                author: '[SYSTEM]',
-                message: '게임이 시작됩니다.',
-            },
-        ]
+        []
     );
     const messagesEnd = React.useRef(null);
     const [isChanged, setChanged] = useState(true);
