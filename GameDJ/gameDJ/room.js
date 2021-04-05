@@ -147,10 +147,14 @@ class Room {
 
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
-
-            socket.roomID = roomID;
-            socket.join(roomID);
+            
+            // if (!socket.roomID){
+                socket.roomID = roomID;
+                socket.join(roomID);
+            // }
             playerStress++;
+            console.log('joinroom--------');
+            console.log(roomList[roomID]);
             io.to(roomID).emit('joinRoom_Res', {
                 roomID: roomID,
                 roomInfo: roomInfo,
