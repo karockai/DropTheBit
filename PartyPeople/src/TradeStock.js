@@ -631,7 +631,7 @@ export default function TradeStock(props) {
                     justify="space-between"
                     alignItems="flex-end"
                 >
-                    <Button
+                    <button
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
@@ -643,7 +643,7 @@ export default function TradeStock(props) {
                         id="ArrowLeft"
                     >
                         ◀
-                    </Button>
+                    </button>
                     <CssTextField
                         className="count"
                         id="outlined-required"
@@ -652,7 +652,7 @@ export default function TradeStock(props) {
                         onChange={handleVolumeChange}
                         disabled
                     />
-                    <Button
+                    <button
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
@@ -664,11 +664,11 @@ export default function TradeStock(props) {
                         id="ArrowRight"
                     >
                         ▶
-                    </Button>
+                    </button>
                 </Grid>
                 <Grid container item direction={'column'} justify="center">
                     <Grid container direction={'row'} justify="space-between">
-                        <Button
+                        <button
                             style={{ width: '45%' }}
                             class="buy_max"
                             onClick={(e) => {
@@ -681,8 +681,8 @@ export default function TradeStock(props) {
                             id="a"
                         >
                             [A] 매수량 MAX
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             style={{ width: '45%' }}
                             class="sell_max"
                             onClick={(e) => {
@@ -695,7 +695,7 @@ export default function TradeStock(props) {
                             id="s"
                         >
                             [S] 매도량 MAX
-                        </Button>
+                        </button>
                     </Grid>
                     <Grid
                         container
@@ -703,7 +703,7 @@ export default function TradeStock(props) {
                         justify="space-between"
                         style={{ width: '100%', margin: '0 10 0 1' }}
                     >
-                        <Button
+                        <button
                             style={{ width: '45%' }}
                             class="buy"
                             onClick={(e) => {
@@ -716,8 +716,8 @@ export default function TradeStock(props) {
                             id="z"
                         >
                             [Z] 매수 확정
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             style={{ width: '45%' }}
                             class="sell"
                             onClick={(e) => {
@@ -730,7 +730,7 @@ export default function TradeStock(props) {
                             id="x"
                         >
                             [X] 매도 확정
-                        </Button>
+                        </button>
                     </Grid>
                     <Grid
                         container
@@ -738,7 +738,7 @@ export default function TradeStock(props) {
                         justify="space-between"
                         style={{ width: '100%', margin: '0 10 0 1' }}
                     >
-                        <Button
+                        <button
                             style={{ width: '100%' }}
                             class="space"
                             onClick={(e) => {
@@ -751,7 +751,7 @@ export default function TradeStock(props) {
                             id=" "
                         >
                             [SPACE] 현재가로 갱신
-                        </Button>
+                        </button>
                     </Grid>
                 </Grid>
             </Grid>
