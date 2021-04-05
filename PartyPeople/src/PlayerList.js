@@ -73,7 +73,6 @@ export default function PlayerList(props) {
             // setInit(true);
         } else {
             props.socket.on('roomRank', (playerArray) => {
-                // console.log(playerArray)
                 setPlayers(playerArray);
             });
         }
@@ -102,7 +101,7 @@ export default function PlayerList(props) {
             ret = ret.substring(ret.length - 5 + 1);
         }
         ans+=ret;
-        let minus = isPlus ? '' : '-';
+        let minus = isPlus ? '+' : '-';
         ans = minus+ans;
         return (
             <span style={{color:color}}>
@@ -198,7 +197,7 @@ export default function PlayerList(props) {
                                         item
                                     >
                                         {index + 1}
-                                        {'위.'}
+                                        {'위'}
                                     </Grid>
                                     <Grid
                                         item
@@ -208,7 +207,7 @@ export default function PlayerList(props) {
                                         className="score"
                                     >
                                         <Grid alignItems="right">{player.playerID}</Grid>
-                                        <Grid alignItems="right">{ExpBySymbol(parseWonToStr(player.asset))}원</Grid>
+                                        <Grid alignItems="right">{ExpBySymbol(parseWonToStr(player.asset))}{' '} 원</Grid>
                                     </Grid>
                                 </Grid>
                             </Paper>
@@ -267,7 +266,7 @@ export default function PlayerList(props) {
                                             {ExpBySymbol(
                                                 parseWonToStr(player.asset)
                                             )}
-                                            원
+                                            {' '}원
                                         </Grid>
                                     </Grid>
                                 </Grid>

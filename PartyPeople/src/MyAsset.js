@@ -68,9 +68,9 @@ export default function MyAsset(props) {
                 else if (currentAsset < myAsset) {
                     color = 'blue';
                 }
-                console.log(currentAsset);
-                console.log(myAsset);
-                console.log(color);
+                // console.log(currentAsset);
+                // console.log(myAsset);
+                // console.log(color);
                 setWallet({
                     myCash: currentCash,
                     myAsset: currentAsset,
@@ -137,11 +137,7 @@ export default function MyAsset(props) {
                         <span>
                         보유 현금 (KRW)
                         </span>
-                        {/* <h4>
-                            {SplitByThree(parseWonToStr(myWallet.myCash)) +
-                                ' 원'}
-                        </h4> */}
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
+                        <h5 class="blinking" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))}
                         </h5>
                     </Paper>
@@ -151,8 +147,7 @@ export default function MyAsset(props) {
                     style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
                 >
                     <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
-                        보유 코인 수 (개)<h3  style={{ height: '100%', fontSize: '1.5vw'  }}>{myWallet.myCoin}</h3>
-                        {/* 평균매입단가<h6>{myWallet.myAvg}</h6> */}
+                        보유 코인 수 (개)<h3  style={{ height: '100%', fontSize: '1.5vw' }}>{myWallet.myCoin}</h3>
                     </Paper>
                 </Grid>
             </Grid>
