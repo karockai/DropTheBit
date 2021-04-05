@@ -10,10 +10,7 @@ class Refresh {
 
     async renewalCurCoin() {
         const { io } = this;
-        // console
-        //     .log
-        //     // '----------------------renewalCurCoin------------------------'
-        //     ();
+
         // 1. bidList 불러옴
         let updateCurCoin = JSON.parse(await dbget('curCoin'));
         if (!updateCurCoin) return false;
@@ -227,7 +224,7 @@ class Refresh {
             }
 
             // 공방 startGame logic
-            if (roomInfo.hasOwnProperty('readyTime') && roomInfo['readyTime'] > 0 && roomInfo['roomLeader'] !== 0) {
+            if (roomInfo['readyTime'] > 0 && roomInfo['roomLeader']) {
                 roomList[roomID]['readyTime']--;
                 io.to(roomID).emit(
                     'restReadyTime',
