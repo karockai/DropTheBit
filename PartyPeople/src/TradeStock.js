@@ -193,6 +193,13 @@ export default function TradeStock(props) {
             //     message:"호가 및 수량이 부적절합니다. (ex. '0') 😱"
             // })
             props.socket.once('buyDone', (bbid) => {
+                if(bbid.type === "실패") {
+                    return {
+                        status: 'invalid',
+                        val: bid,
+                        vol: volume,
+                    };
+                }
                 SetNewBid(bbid.price);
             });
             return {
@@ -215,6 +222,13 @@ export default function TradeStock(props) {
         });
         props.socket.once('buyDone', (bbid) => {
             // console.log(bbid);
+            if(bbid.type === "실패") {
+                return {
+                    status: 'invalid',
+                    val: bid,
+                    vol: volume,
+                };
+            }
             SetNewBid(bbid.price);
             setBuyStatus({
                 status: 'done',
@@ -237,6 +251,13 @@ export default function TradeStock(props) {
         }
         if (myWallet.myCoin < volume) {
             props.socket.once('sellDone', (bbid) => {
+                if(bbid.type === "실패") {
+                    return {
+                        status: 'invalid',
+                        val: bid,
+                        vol: volume,
+                    };
+                }
                 SetNewBid(bbid.price);
             });
             return {
@@ -259,6 +280,13 @@ export default function TradeStock(props) {
         //@ 중복 문제가 발생한다.
         props.socket.once('sellDone', (sbid) => {
             // console.log(sbid);
+            if(sbid.type === "실패") {
+                return {
+                    status: 'invalid',
+                    val: bid,
+                    vol: volume,
+                };
+            }
             SetNewBid(sbid.price);
             setSellStatus({
                 status: 'done',
