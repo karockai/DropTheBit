@@ -1,4 +1,3 @@
-
 class Game {
     constructor(io, socket) {
         this.io = io;
@@ -72,10 +71,9 @@ class Game {
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
 
-
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
-        if (cash < reqPrice * reqVol){
-            console.log('buy 실패 :', reqJson);            
+        if (cash < reqPrice * reqVol) {
+            console.log('buy 실패 :', reqJson);
         }
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
@@ -180,8 +178,8 @@ class Game {
         let playerID = playerInfo['playerID'];
 
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
-        if (coinVol < reqVol){
-            console.log('sell 실패 :', reqJson);            
+        if (coinVol < reqVol) {
+            console.log('sell 실패 :', reqJson);
         }
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
