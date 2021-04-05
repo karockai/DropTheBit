@@ -94,6 +94,7 @@ export default function EnterRoom(props) {
     return (
         <>
             <div
+                class="img"
                 style={{
                     backgroundImage: `url(${backgroundImg})`,
                     backgroundSize: 'cover',

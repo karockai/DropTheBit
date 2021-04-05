@@ -1,22 +1,10 @@
 import {
-    dbset,
-    dbget,
-    dbhset,
     dbhget,
     dbhmset,
-    dbhgetall,
-    dbrpush,
-    dblpush,
-    dblrem,
-    dblrange,
-    dbllen,
     dbhincrby,
 } from './redis.js';
 import { nanoid } from 'nanoid';
-import fs from 'fs';
-import { publicDecrypt } from 'crypto';
 import dotenv from 'dotenv';
-import { RSA_PKCS1_PADDING } from 'constants';
 
 class Room {
     constructor(io, socket) {
@@ -51,11 +39,11 @@ class Room {
         const roomID = nanoid(15);
         const socketID = socket.id;
         dotenv.config();
+        dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
         let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
         if(ipAddress){
             console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
             console.log(ipAddress);
-            dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
             dbhincrby(process.env.SERVERNAME, 'player', 1);
         }
         let playerID = data.playerID;

@@ -130,8 +130,8 @@ function ChartTitle(props) {
                     </span>
                 </Grid>
                 <Grid>
-                    <span>{coinName}</span>
-                    <span style={{color: 'gray'}}>{' '}{props.date}</span>
+                    <span style={{color: 'gray'}}>{props.date}</span>
+                    <span>{' '}{coinName}</span>
                     </Grid>
                 </Grid>
                 {/* </span> */}

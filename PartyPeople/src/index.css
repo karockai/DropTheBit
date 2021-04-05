@@ -11,8 +11,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-    
-
 }
 
 .GameManager {
@@ -26,10 +24,40 @@ code {
 }
 
 .title {
-  font-family: 'Changa', sans-serif;
-  font-size: xx-large;
+  font-family: 'Fugaz One', cursive;
+  font-size: 20vh;
+  mix-blend-mode: screen;
+  position: absolute;
+  opacity: 0.2;
+  top: 1vh;
+  left: 0;
+}
+.title_overlay {
+  font-family: 'Fugaz One', cursive;
+  z-index: 1;
+  /* margin: 30px; */
+  font-size: 20vh;
+  mix-blend-mode: overlay;
+  position: absolute;
+  top: -1vh;
+  left: 0;
+  /* mix-blend-mode: luminosity; */
+  /* opacity: 0; */
+}
+.title_overlay2 {
+  font-family: 'Fugaz One', cursive;
+  z-index: 2;
+  /* margin: 30px; */
+  font-size: 20vh;
+  mix-blend-mode: overlay;
+  /* mix-blend-mode: luminosity; */
+  /* opacity: 0; */
 }
 
+
+.img {
+  /* opacity: 0.8; */
+}
 
 @font-face {
   font-family: 'NEXON Lv1 Gothic OTF';
@@ -39,8 +67,17 @@ code {
 }
 
 @font-face {
-  font-family: 'NEXON Lv1 Gothic OTF';
-  src: url('https://fonts.google.com/share?selection.family=Changa:wght@700;800') format('woff');
-  font-weight: 700;
+  /* font-family: 'Fugaz One', cursive;
+  src: url('https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap') format('woff');
+  font-weight: 400; */
+  /* font-style: normal; */
+}
+
+@font-face {
+  font-family: 'Fugaz One';
   font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/fugazone/v10/rax_HiWKp9EAITukFsl8Axhf.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
