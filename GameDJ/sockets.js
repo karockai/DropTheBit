@@ -45,7 +45,12 @@ export default {
                 new Room(io, socket).updateSettings(data);
             });
             socket.on('backToLobby', (roomID) => {
-                new Room(io, socket).roomReinit(roomID);
+                if (roomList[roomID]['gaming'] === false){
+                    new Room(io, socket).roomReinit(roomID);
+                }
+                else{
+                    new Room(io, socket).joinRoom({roomID : roomID, playerID : roomList[roomID][socket.id]['playerID']});
+                }
             });
             socket.on('startGame_Req', (musicData) => {
                 new Game(io, socket).startGame(musicData);
