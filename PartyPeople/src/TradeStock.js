@@ -558,7 +558,7 @@ export default function TradeStock(props) {
                     justify="space-between"
                     alignItems="flex-end"
                 >
-                <Button
+                <button
                             class="arrow"
                             className={
                                 classes.arrow
@@ -571,7 +571,7 @@ export default function TradeStock(props) {
                             id="ArrowDown"
                         >
                             ▼
-                        </Button>
+                        </button>
                         
                     <CssTextField
                         className={classes.input}
@@ -582,7 +582,7 @@ export default function TradeStock(props) {
                         onChange={handleBidChange}
                         disabled
                     />
-                    <Button
+                    <button
                             class="arrow"
                             onClick={(e) => {
                                 clickButton(e);
@@ -592,7 +592,7 @@ export default function TradeStock(props) {
                             id="ArrowUp"
                         >
                             ▲
-                        </Button>
+                        </button>
                         
                 </Grid>
                 <span className={classes.small_text}>수량</span>
@@ -603,7 +603,7 @@ export default function TradeStock(props) {
                     justify="space-between"
                     alignItems="flex-end"
                 >
-                    <Button
+                    <button
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
@@ -613,7 +613,7 @@ export default function TradeStock(props) {
                         id="ArrowLeft"
                     >
                         ◀
-                    </Button>
+                    </button>
                     <CssTextField
                         className="count"
                         id="outlined-required"
@@ -622,7 +622,7 @@ export default function TradeStock(props) {
                         onChange={handleVolumeChange}
                         disabled
                     />
-                    <Button
+                    <button
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
@@ -632,7 +632,7 @@ export default function TradeStock(props) {
                         id="ArrowRight"
                     >
                         ▶
-                    </Button>
+                    </button>
                 </Grid>
                 <Grid
                     container
@@ -645,7 +645,7 @@ export default function TradeStock(props) {
                         direction={'row'}
                         justify="space-between"
                     >
-                        <Button
+                        <button
                             style={{ width: '45%' }}
                             class="buy_max"
                             onClick={(e) => {
@@ -656,8 +656,8 @@ export default function TradeStock(props) {
                             id="a"
                         >
                             [A] 매수 MAX
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             style={{ width: '45%' }}
                             class="sell_max"
                             onClick={(e) => {
@@ -668,7 +668,7 @@ export default function TradeStock(props) {
                             id="s"
                         >
                             [S] 매도 MAX
-                        </Button>
+                        </button>
                     </Grid>
                     <Grid
                         container
@@ -676,7 +676,7 @@ export default function TradeStock(props) {
                         justify="space-between"
                         style={{ width: '100%', margin: '0 10 0 1' }}
                     >
-                        <Button
+                        <button
                             style={{ width: '45%' }}
                             class="buy"
                             onClick={(e) => {
@@ -687,8 +687,8 @@ export default function TradeStock(props) {
                             id="z"
                         >
                             [Z] 매수
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             style={{ width: '45%' }}
                             class="sell"
                             onClick={(e) => {
@@ -699,7 +699,7 @@ export default function TradeStock(props) {
                             id="x"
                         >
                             [X] 매도
-                        </Button>
+                        </button>
                     </Grid>
                     <Grid
                         container
@@ -707,7 +707,7 @@ export default function TradeStock(props) {
                         justify="space-between"
                         style={{ width: '100%', margin: '0 10 0 1' }}
                     >
-                        <Button
+                        <button
                             style={{ width: '100%' }}
                             class="space"
                             onClick={(e) => {
@@ -718,7 +718,7 @@ export default function TradeStock(props) {
                             id=" "
                         >
                             [SPACE] 현재가로 갱신
-                        </Button>
+                        </button>
                     </Grid>
 
                 </Grid>

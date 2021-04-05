@@ -115,11 +115,13 @@ function SetPlayerName(props) {
                     style={{ width: '100vw', height: '100vh' }}
                 >
                     <Grid style={{ position: 'relative'}}>
-                        {/* <img src={Logo} /> */}
                         <div class="title">
                         {title}
                         </div>
                         <div class="title_overlay">
+                        {title}
+                        </div>
+                        <div class="title_overlay2">
                         {title}
                         </div>
                     </Grid>
