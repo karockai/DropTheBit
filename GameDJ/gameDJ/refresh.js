@@ -25,7 +25,7 @@ class Refresh {
         //     // '----------------------renewalCurCoin------------------------'
         //     ();
         // 1. bidList 불러옴
-        updateCurCoin = JSON.parse(await dbget('curCoin'));
+        let updateCurCoin = JSON.parse(await dbget('curCoin'));
         if (!updateCurCoin) return false;
         curCoin = updateCurCoin
         io.emit('chart', curCoin);
@@ -237,7 +237,7 @@ class Refresh {
             }
 
             // 공방 startGame logic
-            if (roomInfo.hasOwnProperty('readyTime') && roomInfo['readyTime'] > 0) {
+            if (roomInfo.hasOwnProperty('readyTime') && roomInfo['readyTime'] > 0 && roomInfo['roomLeader'] !== 0) {
                 roomList[roomID]['readyTime']--;
                 io.to(roomID).emit(
                     'restReadyTime',
@@ -316,6 +316,8 @@ class Refresh {
             }
         }
         roomList[roomID] = roomInfo;
+        console.log('gameOver-------');
+        console.log(roomList[roomID]);
         io.to(roomID).emit('gameOver', leaderBoard);
     }
 

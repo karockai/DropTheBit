@@ -206,6 +206,9 @@ class Room {
             bidCash: 0,
             askVol: 0,
         };
+
+        // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함. 
+        // 방장이 설정된 후부터 ready time이 줄어들도록 함
         if (roomInfo['roomLeader'] === 0){
             roomInfo['roomLeader'] = socket.id;
         }
