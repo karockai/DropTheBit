@@ -188,7 +188,7 @@ class Refresh {
             let roomInfo = roomList[roomID];
             let rankList = [];
 
-            if (priceChange) {
+            if (priceChange && roomInfo['gaming']) {
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;

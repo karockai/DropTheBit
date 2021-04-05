@@ -309,7 +309,6 @@ class Game {
         delete playerInfo['bid'][bidPrice];
         roomList[roomID][socketID] = playerInfo;
 
-        // 매수 취소 완료 Response 필요
         this.refreshWallet(
             socketID,
             'cancelBid',
@@ -318,7 +317,6 @@ class Game {
             playerInfo['asset'],
             playerInfo['avgPrice']
         );
-        // console.log("매수 취소 후", bidList);
 
         this.sendBidTable(reqJson);
     }
@@ -358,8 +356,6 @@ class Game {
             playerInfo['avgPrice']
         );
 
-        // console.log("매도 취소 후", askList);
-        // 매수 취소 완료 Response 필요
         this.sendAskTable(reqJson);
     }
 
