@@ -56,12 +56,13 @@ export default {
                     connectionInfo = await dbhgetall(serverList[idx]);
                     // console.log(connectionInfo);
                     // console.log(connectionInfo['room']);
-                    numConnected = Number(connectionInfo['room']) * 5 + Number(connectionInfo['player']);
+                    numConnected = Number(connectionInfo['player']);
                     if (numConnected < minConnected){
                         minConnected = numConnected;
                         ipAddress = connectionInfo['ip'];
                     }
                 }
+                
                 // console.log(ipAddress);
                 if(ipAddress){
                     console.log("새로운 방 생성", ipAddress);
