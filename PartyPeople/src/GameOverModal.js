@@ -62,6 +62,9 @@ export default function GameOverModal(props) {
         props.socket.emit('backToLobby', props.roomID);
         props.setLeaderBoard(false);
         let path = '/lobby';
+        if (props.roomInfo.gaming) {
+            path = '/';
+        }
         history.push(path);
         props.lobbyAudio.currentTime = 0;
         props.lobbyAudio.play();
@@ -74,8 +77,6 @@ export default function GameOverModal(props) {
     const handleClose = () => {
         setOpen(false);
     };
-
-    console.log(props.leaderBoard);
     return (
         <div>
             <Modal

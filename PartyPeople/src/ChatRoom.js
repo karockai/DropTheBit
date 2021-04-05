@@ -253,6 +253,7 @@ export default function ChatRoom(props) {
                 item
                 container
                 dirction="row"
+                justify = "flex-start"
                 style={{ width: '100%', height: '10%' }}
             >
                 <Grid item style={{ width: '80%', height: '100%' }}>

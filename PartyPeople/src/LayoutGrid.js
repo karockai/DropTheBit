@@ -77,7 +77,6 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
-
     return (
         <>
             {over && (
@@ -86,6 +85,7 @@ export default function LayoutGrid(props) {
                     setLeaderBoard={setOver}
                     socket={props.socket}
                     roomID={props.roomID}
+                    roomInfo={props.roomInfo}
                     lobbyAudio={props.lobbyAudio}
                 />
             )}

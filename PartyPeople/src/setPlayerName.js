@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 function SetPlayerName(props) {
+    const title = 'DROP THE BIT'
     const classes = useStyles();
     const params = window.location
         .toString()
@@ -113,13 +114,14 @@ function SetPlayerName(props) {
                     direction="column"
                     style={{ width: '100vw', height: '100vh' }}
                 >
-                    <Grid>
-                        <img src={Logo} />
-                        {/* <span 
-                        class="title"
-                        >
-                        DROP THE BIT
-                        </span> */}
+                    <Grid style={{ position: 'relative'}}>
+                        {/* <img src={Logo} /> */}
+                        <div class="title">
+                        {title}
+                        </div>
+                        <div class="title_overlay">
+                        {title}
+                        </div>
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
                         <CssTextField
@@ -135,7 +137,6 @@ function SetPlayerName(props) {
                             InputLabelProps={{
                                 style: { color: '#fff' },
                             }}
-                            // ref={nameInput}
                             autoFocus
                             onKeyPress={onKeyPress}
                             inputProps={{ maxLength: 5 }}
@@ -143,13 +144,12 @@ function SetPlayerName(props) {
                     </Grid>
 
                     <Grid item container direction="column" justify="center" alignItems="center">
-                        <Button
-                            variant="contained"
+                        <button
                             onClick={handleOnSave}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {buttonMsg}
-                        </Button>
+                        </button>
                     </Grid>
                 </Grid>
             </>
@@ -167,9 +167,16 @@ function SetPlayerName(props) {
                     direction="column"
                     style={{ width: '100vw', height: '100vh' }}
                 >
-                    <Grid>
-                        <img src={Logo} />
-                        {/* DROP THE BIT */}
+                    <Grid style={{ position: 'relative'}}>
+                        <div class="title">
+                        {title}
+                        </div>
+                        <div class="title_overlay">
+                        {title}
+                        </div>
+                        <div class="title_overlay2">
+                        {title}
+                        </div>
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
                         <CssTextField
@@ -192,24 +199,24 @@ function SetPlayerName(props) {
                         />
                     </Grid>
 
-                    <Grid item container direction="column" justify="center" alignItems="center">
-                        <Button
+                    <Grid item container direction="row" justify="center" alignItems="center">
+                        <button
                             class="start"
                             onClick={handleOnSave}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {buttonMsg}
-                        </Button>
+                        </button>
                         <Grid style={{padding:"0.3vh"}}>    
                         </Grid>
 
-                        <Button
+                        <button
                             class="start"
                             onClick={handleOnSave2}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {publicButton}
-                        </Button>
+                        </button>
                     </Grid>
                 </Grid>
             </>
