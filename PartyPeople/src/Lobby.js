@@ -258,7 +258,7 @@ function Lobby(props) {
                                     style={{ width: '70%', height:'100%' }}
                                     readOnly
                                 />
-                                <SnackbarProvider maxSnack={5}>
+                                <SnackbarProvider maxSnack={1}>
                                     <SnackAlertBtn
                                         class="btn btn-warning"
                                         severity="success"

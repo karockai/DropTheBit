@@ -100,7 +100,7 @@ export default function ChatRoom(props) {
         // author와 쌍으로 저장된 메시지
         [
             {
-                author: 'SERVER',
+                author: '[SYSTEM]',
                 message: '게임이 시작됩니다.',
             },
         ]
@@ -113,7 +113,7 @@ export default function ChatRoom(props) {
     };
 
     useEffect(() => {
-        if (messages.length >= 100) messages.shift();
+        if (messages.length >= 50) messages.shift();
         setMessages([...messages, resMsg]);
         scrollToBottom();
     }, [resMsg]);
@@ -227,6 +227,38 @@ export default function ChatRoom(props) {
                     {messages.map((message) => {
                         // console.log(messages);
                         if (message === '') return;
+                        else if (message.author === '[SERVER]') {
+                            return (
+                                <Grid
+                                item
+                                style={{
+                                    color: '#aaff00',
+                                    shadow: '0.5vh 0.5vw 0.5vh 0.5vw',
+                                    width: '100%',
+                                    padding: '1vh 0 0 0 ',
+                                    fontSize: '1vw',
+                                }}
+                            >
+                                {message.author+ " "}  {message.message}
+                            </Grid>
+                            );
+                        }
+                        else if (message.author === '[SYSTEM]') {
+                            return (
+                                <Grid
+                                item
+                                style={{
+                                    color: '#00ffdd',
+                                    shadow: '0.5vh 0.5vw 0.5vh 0.5vw',
+                                    width: '100%',
+                                    padding: '1vh 0 0 0 ',
+                                    fontSize: '1vw',
+                                }}
+                            >
+                                {message.author+ " "}  {message.message}
+                            </Grid>
+                            );
+                        }
                         return (
                             <Grid
                                 item

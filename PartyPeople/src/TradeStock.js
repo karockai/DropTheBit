@@ -87,7 +87,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 export default function TradeStock(props) {
     const classes = useStyles();
     const [currentBid, SetBid] = useState(0);
@@ -193,7 +192,7 @@ export default function TradeStock(props) {
             //     message:"호가 및 수량이 부적절합니다. (ex. '0') 😱"
             // })
             props.socket.once('buyDone', (bbid) => {
-                if(bbid.type === "실패") {
+                if (bbid.type === '실패') {
                     return {
                         status: 'invalid',
                         val: bid,
@@ -222,7 +221,7 @@ export default function TradeStock(props) {
         });
         props.socket.once('buyDone', (bbid) => {
             // console.log(bbid);
-            if(bbid.type === "실패") {
+            if (bbid.type === '실패') {
                 return {
                     status: 'invalid',
                     val: bid,
@@ -251,7 +250,7 @@ export default function TradeStock(props) {
         }
         if (myWallet.myCoin < volume) {
             props.socket.once('sellDone', (bbid) => {
-                if(bbid.type === "실패") {
+                if (bbid.type === '실패') {
                     return {
                         status: 'invalid',
                         val: bid,
@@ -280,7 +279,7 @@ export default function TradeStock(props) {
         //@ 중복 문제가 발생한다.
         props.socket.once('sellDone', (sbid) => {
             // console.log(sbid);
-            if(sbid.type === "실패") {
+            if (sbid.type === '실패') {
                 return {
                     status: 'invalid',
                     val: bid,
@@ -586,21 +585,21 @@ export default function TradeStock(props) {
                     justify="space-between"
                     alignItems="flex-end"
                 >
-                <button
-                            class="arrow"
-                            className={
-                                classes.arrow
-                                }
-                            onClick={(e) => {
-                                clickButton(e);
-                                new Audio(PriceDown).play();
-                                BidDown();
-                            }}
-                            id="ArrowDown"
-                        >
-                            ▼
-                        </button>
-                        
+                    <Button
+                        class="arrow"
+                        className={classes.arrow}
+                        onClick={(e) => {
+                            clickButton(e);
+                            let tmpAudio = new Audio(PriceDown);
+                            tmpAudio.play();
+                            tmpAudio.remove();
+                            BidDown();
+                        }}
+                        id="ArrowDown"
+                    >
+                        ▼
+                    </Button>
+
                     <CssTextField
                         className={classes.input}
                         id="custom-css-standard-input"
@@ -610,18 +609,19 @@ export default function TradeStock(props) {
                         onChange={handleBidChange}
                         disabled
                     />
-                    <button
-                            class="arrow"
-                            onClick={(e) => {
-                                clickButton(e);
-                                new Audio(PriceUp).play();
-                                BidUp();
-                            }}
-                            id="ArrowUp"
-                        >
-                            ▲
-                        </button>
-                        
+                    <Button
+                        class="arrow"
+                        onClick={(e) => {
+                            clickButton(e);
+                            let tmpAudio = new Audio(PriceUp).play();
+                            tmpAudio.play();
+                            tmpAudio.remove();
+                            BidUp();
+                        }}
+                        id="ArrowUp"
+                    >
+                        ▲
+                    </Button>
                 </Grid>
                 <span className={classes.small_text}>수량</span>
                 <Grid
@@ -635,7 +635,9 @@ export default function TradeStock(props) {
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
-                            new Audio(VolDown).play();
+                            let tmpAudio = new Audio(VolDown).play();
+                            tmpAudio.play();
+                            tmpAudio.remove();
                             VolumeDown(currentVolume);
                         }}
                         id="ArrowLeft"
@@ -654,7 +656,9 @@ export default function TradeStock(props) {
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
-                            new Audio(VolUp).play();
+                            let tmpAudio = new Audio(VolUp).play();
+                            tmpAudio.play();
+                            tmpAudio.remove();
                             VolumeUp(currentVolume);
                         }}
                         id="ArrowRight"
@@ -662,40 +666,35 @@ export default function TradeStock(props) {
                         ▶
                     </button>
                 </Grid>
-                <Grid
-                    container
-                    item
-                    direction={'column'}
-                    justify="center"
-                >
-                    <Grid
-                        container
-                        direction={'row'}
-                        justify="space-between"
-                    >
+                <Grid container item direction={'column'} justify="center">
+                    <Grid container direction={'row'} justify="space-between">
                         <button
                             style={{ width: '45%' }}
                             class="buy_max"
                             onClick={(e) => {
                                 clickButton(e);
-                                new Audio(BuyMax).play();
+                                let tmpAudio = new Audio(BuyMax).play();
+                                tmpAudio.play();
+                                tmpAudio.remove();
                                 SetBuyMaxCount();
                             }}
                             id="a"
                         >
-                            [A] 매수 MAX
+                            [A] 매수량 MAX
                         </button>
                         <button
                             style={{ width: '45%' }}
                             class="sell_max"
                             onClick={(e) => {
                                 clickButton(e);
-                                new Audio(SellMax).play();
+                                let tmpAudio = new Audio(SellMax).play();
+                                tmpAudio.play();
+                                tmpAudio.remove();
                                 SetSellMaxCount();
                             }}
                             id="s"
                         >
-                            [S] 매도 MAX
+                            [S] 매도량 MAX
                         </button>
                     </Grid>
                     <Grid
@@ -709,24 +708,28 @@ export default function TradeStock(props) {
                             class="buy"
                             onClick={(e) => {
                                 clickButton(e);
-                                new Audio(Check).play();
+                                let tmpAudio = new Audio(BuyConfirm).play();
+                                tmpAudio.play();
+                                tmpAudio.remove();
                                 setBuyStatus(Buy(currentBid, currentVolume));
                             }}
                             id="z"
                         >
-                            [Z] 매수
+                            [Z] 매수 확정
                         </button>
                         <button
                             style={{ width: '45%' }}
                             class="sell"
                             onClick={(e) => {
                                 clickButton(e);
-                                new Audio(Check).play();
+                                let tmpAudio = new Audio(SellConfirm).play();
+                                tmpAudio.play();
+                                tmpAudio.remove();
                                 setSellStatus(Sell(currentBid, currentVolume));
                             }}
                             id="x"
                         >
-                            [X] 매도
+                            [X] 매도 확정
                         </button>
                     </Grid>
                     <Grid
@@ -740,7 +743,9 @@ export default function TradeStock(props) {
                             class="space"
                             onClick={(e) => {
                                 clickButton(e);
-                                new Audio(CurPrice).play();
+                                let tmpAudio = new Audio(CurPrice).play();
+                                tmpAudio.play();
+                                tmpAudio.remove();
                                 RefreshBid_Req();
                             }}
                             id=" "
@@ -748,7 +753,6 @@ export default function TradeStock(props) {
                             [SPACE] 현재가로 갱신
                         </button>
                     </Grid>
-
                 </Grid>
             </Grid>
         </>
