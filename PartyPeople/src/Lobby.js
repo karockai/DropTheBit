@@ -182,7 +182,7 @@ function Lobby(props) {
                                     <MenuIcon />
                                     <span style={{ fontSize: '2vw' }}>
                                         {props.roomInfo[props.roomInfo['roomLeader']]['playerID'] +
-                                            ' 님의 단타방 🎲'}
+                                            ' 님의 단타방 📊'}
                                     </span>
                                 </IconButton>
                             </Grid>

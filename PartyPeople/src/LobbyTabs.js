@@ -12,6 +12,7 @@ import { Typography, Switch } from '@material-ui/core';
 import KeyMapTemp from './images/KeyMap.png';
 import MusicLeader from './MusicLeader';
 import MusicMember from './MusicMember';
+import LobbyTutorial from './LobbyTutorial';    
 import { PurpleButton, PurpleSwitch } from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,7 +42,7 @@ function LobbyMusicOnOff(props) {
     };
 
     return (
-        <FormGroup style={{padding:'0.8vh 0 0 0.8vw'}}>
+        <FormGroup style={{ padding: '0.8vh 0 0 0.8vw' }}>
             <FormControlLabel
                 control={
                     <PurpleSwitch
@@ -95,7 +96,7 @@ export default function LobbyTabs(props) {
 
     const handleSelectTuto = (event) => {
         setTutoToggle(true);
-    }
+    };
 
     const handleClose = () => {
         setKeymap(null);
@@ -149,13 +150,17 @@ export default function LobbyTabs(props) {
     // console.log(selectMusic, openSelect);
     return (
         <>
-                                    
-            <Grid container style={{padding:'0 1vw 0 1vw'}} justify={'space-around'} alignItems={'center'}>
+            <Grid
+                container
+                style={{ padding: '0 1vw 0 1vw' }}
+                justify={'space-around'}
+                alignItems={'center'}
+            >
                 <button
                     class="tutorial"
                     id="tutorials"
                     onClick={handleSelectTuto}
-                    style={{padding:'1vh 1vw 1vh 1vw'}}
+                    style={{ padding: '1vh 1vw 1vh 1vw' }}
                     size="large"
                 >
                     ?
@@ -164,7 +169,7 @@ export default function LobbyTabs(props) {
                     class="arrow"
                     id="key_map"
                     onClick={handleKeymap}
-                    style={{padding:'1vh 1vw 1vh 1vw'}}
+                    style={{ padding: '1vh 1vw 1vh 1vw' }}
                     size="large"
                 >
                     KEY MAP
@@ -173,7 +178,7 @@ export default function LobbyTabs(props) {
                     class="arrow"
                     id="select_music"
                     onClick={handleSelectMusic}
-                    style={{padding:'1vh 1vw 1vh 1vw'}}
+                    style={{ padding: '1vh 1vw 1vh 1vw' }}
                     size="large"
                 >
                     SELECT MUSIC
@@ -193,7 +198,6 @@ export default function LobbyTabs(props) {
                     horizontal: 'right',
                 }}
             >
-
                 <Typography className={classes.typography}>
                     <img src={KeyMapTemp} style={{ width: '50vw' }} />
                 </Typography>
@@ -210,7 +214,9 @@ export default function LobbyTabs(props) {
                     vertical: 'top',
                     horizontal: 'center',
                 }}
-            >살려주세요.... 기묘..ㅇ기가 절..</Popover>
+            >
+                보지마세요 부끄러워요..<LobbyTutorial></LobbyTutorial>
+            </Popover>
             <Popover
                 open={openSelect}
                 anchorEl={selectMusic}
