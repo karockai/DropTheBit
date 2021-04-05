@@ -73,9 +73,7 @@ class Game {
 
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
         if (cash < reqPrice * reqVol){
-            
-            
-            
+            console.log('buy 실패 :', reqJson);            
         }
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
@@ -181,9 +179,7 @@ class Game {
 
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
         if (coinVol < reqVol){
-            
-            
-            
+            console.log('sell 실패 :', reqJson);            
         }
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
