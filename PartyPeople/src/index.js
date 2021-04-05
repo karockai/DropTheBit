@@ -5,11 +5,13 @@ import reportWebVitals from './reportWebVitals';
 import GameManager from './GameManager';
 import Test from './Test';
 import GameOverModal from './GameOverModal';
+import LoadingScreen from './LoadingScreen';
 
 
 ReactDOM.render(
     <div className='GameManager'>
         <GameManager/>
+        {/* <LoadingScreen justifyItems = 'center'/> */}
         {/* <ShiningButton/> */}
         {/* <Test/> */}
     </div>,

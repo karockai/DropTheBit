@@ -143,13 +143,13 @@ function SetPlayerName(props) {
                     </Grid>
 
                     <Grid item container direction="column" justify="center" alignItems="center">
-                        <Button
+                        <button
                             variant="contained"
                             onClick={handleOnSave}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {buttonMsg}
-                        </Button>
+                        </button>
                     </Grid>
                 </Grid>
             </>
@@ -193,23 +193,23 @@ function SetPlayerName(props) {
                     </Grid>
 
                     <Grid item container direction="column" justify="center" alignItems="center">
-                        <Button
+                        <button
                             class="start"
                             onClick={handleOnSave}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {buttonMsg}
-                        </Button>
+                        </button>
                         <Grid style={{padding:"0.3vh"}}>    
                         </Grid>
 
-                        <Button
+                        <button
                             class="start"
                             onClick={handleOnSave2}
                             style={{ width: '50vh', height: '7vh' }}
                         >
                             {publicButton}
-                        </Button>
+                        </button>
                     </Grid>
                 </Grid>
             </>

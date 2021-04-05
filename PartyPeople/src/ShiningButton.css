@@ -138,6 +138,12 @@ button, .start {
   opacity: 0.6;
 }
 
+/* button:hover, button:focus { */
+button:focus {
+    border-color: var(--hover);
+    color: #fff;
+    opacity: 1;
+  }
 
 /* button:hover, button:focus { */
 button:hover, button:focus, button.pressed {

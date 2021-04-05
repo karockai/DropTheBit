@@ -155,6 +155,7 @@ export default function LobbyTabs(props) {
                     class="tutorial"
                     id="tutorials"
                     onClick={handleSelectTuto}
+                    style={{padding:'1vh 1vw 1vh 1vw'}}
                     size="large"
                 >
                     ?
@@ -163,7 +164,7 @@ export default function LobbyTabs(props) {
                     class="arrow"
                     id="key_map"
                     onClick={handleKeymap}
-                    style={{padding:'1vw'}}
+                    style={{padding:'1vh 1vw 1vh 1vw'}}
                     size="large"
                 >
                     KEY MAP
@@ -172,6 +173,7 @@ export default function LobbyTabs(props) {
                     class="arrow"
                     id="select_music"
                     onClick={handleSelectMusic}
+                    style={{padding:'1vh 1vw 1vh 1vw'}}
                     size="large"
                 >
                     SELECT MUSIC

@@ -105,7 +105,7 @@ export default function GameOverModal(props) {
                     </Button>
                     <h2
                         id="transition-modal-title"
-                        style={{ textAlign: 'center', margin:'0 0 5vh 0', fontSize:'3vw' }}
+                        style={{ textAlign: 'center', margin:'0 0 5vh 0', fontSize:'2vw' }}
                     >
                         🌠Game Finished🌠
                     </h2>
