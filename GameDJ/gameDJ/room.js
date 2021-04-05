@@ -118,7 +118,6 @@ class Room {
         });
         let message = playerID + '님이 들어오셨습니다.';
         io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
-        console.log(message);
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -163,7 +162,6 @@ class Room {
 
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
-            console.log(message);
         }
     }
 
@@ -219,7 +217,6 @@ class Room {
         roomList[roomID] = roomInfo;
         let message = playerID + '님이 들어오셨습니다.';
         io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
-        console.log(message);
     }
     
 }
