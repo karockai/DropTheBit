@@ -34,6 +34,7 @@ export default {
                 // 링크 받아서 들어온 사람
                 // console.log("참가자 연결");
                 // roomID에 해당하는 주소를 받아와서 연결한다.
+                console.log(roomID);
                 let response = await dbhmget(roomID, 'ip', 'name');
                 let ipAddress = response[0];
                 let name = response[1];
