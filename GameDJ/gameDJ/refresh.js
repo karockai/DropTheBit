@@ -1,15 +1,5 @@
 import {
-    dbset,
     dbget,
-    dbhset,
-    dbhget,
-    dbhexi,
-    dbhgetall,
-    dbrpush,
-    dblpush,
-    dblrem,
-    dblrange,
-    dbllen,
 } from './redis.js';
 import Game from './game.js';
 
@@ -25,8 +15,9 @@ class Refresh {
         //     // '----------------------renewalCurCoin------------------------'
         //     ();
         // 1. bidList 불러옴
-        curCoin = JSON.parse(await dbget('curCoin'));
-        if (!curCoin) return false;
+        let updateCurCoin = JSON.parse(await dbget('curCoin'));
+        if (!updateCurCoin) return false;
+        curCoin = updateCurCoin
         io.emit('chart', curCoin);
         let curPrice = curCoin['curPrice'];
         console.log(curPrice);
@@ -187,7 +178,7 @@ class Refresh {
             let roomInfo = roomList[roomID];
             let rankList = [];
 
-            if (priceChange) {
+            if (priceChange && roomInfo['gaming']) {
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;
@@ -236,7 +227,7 @@ class Refresh {
             }
 
             // 공방 startGame logic
-            if (roomInfo.hasOwnProperty('readyTime') && roomInfo['readyTime'] > 0) {
+            if (roomInfo.hasOwnProperty('readyTime') && roomInfo['readyTime'] > 0 && roomInfo['roomLeader'] !== 0) {
                 roomList[roomID]['readyTime']--;
                 io.to(roomID).emit(
                     'restReadyTime',
@@ -266,10 +257,6 @@ class Refresh {
                 this.gameOver(roomID);
             }
         }
-        // console
-        //     .log
-        //     // '----------------------renewalInfo End------------------------'
-        //     ();
     }
 
     gameOver(roomID) {
@@ -308,7 +295,9 @@ class Refresh {
         if (roomInfo['gameTime'] < 0) {
             roomInfo['gameTime'] = 0;
             roomInfo['music'] = 'Random_Music';
-            roomInfo['roomLeader'] = 0;
+            if (roomID === publicRoomID){
+                roomInfo['roomLeader'] = 0;
+            }
             roomInfo['gaming'] = false;
             if (roomInfo.hasOwnProperty('readyTime')) {
                 roomInfo['readyTime'] = 5;

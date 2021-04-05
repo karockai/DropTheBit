@@ -7,12 +7,7 @@ let client = redis.createClient({ host: '3.34.156.16' });
 client.on('error', function (error) {
     console.error(error);
 });
-const dbget = util.promisify(client.get).bind(client);
-const dbset = util.promisify(client.set).bind(client);
-const dbhset = util.promisify(client.hset).bind(client);
-const dbhmset = util.promisify(client.hmset).bind(client);
 const dbhmget = util.promisify(client.hmget).bind(client);
-const dbhget = util.promisify(client.hget).bind(client);
 const dbhincrby = util.promisify(client.hincrby).bind(client);
 const dbhgetall = util.promisify(client.hgetall).bind(client);
 
@@ -34,6 +29,7 @@ export default {
                 // 링크 받아서 들어온 사람
                 // console.log("참가자 연결");
                 // roomID에 해당하는 주소를 받아와서 연결한다.
+                console.log(roomID);
                 let response = await dbhmget(roomID, 'ip', 'name');
                 let ipAddress = response[0];
                 let name = response[1];
@@ -56,12 +52,13 @@ export default {
                     connectionInfo = await dbhgetall(serverList[idx]);
                     // console.log(connectionInfo);
                     // console.log(connectionInfo['room']);
-                    numConnected = Number(connectionInfo['room']) * 5 + Number(connectionInfo['player']);
+                    numConnected = Number(connectionInfo['player']);
                     if (numConnected < minConnected){
                         minConnected = numConnected;
                         ipAddress = connectionInfo['ip'];
                     }
                 }
+                
                 // console.log(ipAddress);
                 if(ipAddress){
                     console.log("새로운 방 생성", ipAddress);

@@ -1,22 +1,3 @@
-import {
-    POINT_CONVERSION_COMPRESSED,
-    SSL_OP_SSLEAY_080_CLIENT_DH_BUG,
-} from 'constants';
-import {
-    dbset,
-    dbget,
-    dbhset,
-    dbhget,
-    dbhexi,
-    dbhgetall,
-    dbrpush,
-    dblpush,
-    dblrem,
-    dblrange,
-    dbllen,
-    dbwatch,
-    dbhdel,
-} from './redis.js';
 
 class Game {
     constructor(io, socket) {
@@ -38,8 +19,6 @@ class Game {
             roomList[roomID]['music'] = musicData['musicName'];
             roomList[roomID]['gameTime'] = musicData['gameTime'];
         }
-        console.log('startgamee---------');
-        console.log(roomList[roomID]);
         io.to(roomID).emit('chartData', { chartData: chartData });
         io.to(roomID).emit('startGame_Res', {
             gameTime: roomList[roomID]['gameTime'],
@@ -57,8 +36,6 @@ class Game {
             roomList[roomID]['gameTime'] += 3;
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
-            console.log('------real Start');
-            console.log(roomList[roomID]);
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
 
@@ -92,6 +69,15 @@ class Game {
         let cash = playerInfo['cash'];
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
+
+
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
+        if (cash < reqPrice * reqVol){
+            
+            
+            
+        }
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
         // 5. 구매 처리 및 asset 정보 emit
 
@@ -193,6 +179,14 @@ class Game {
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
 
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
+        if (coinVol < reqVol){
+            
+            
+            
+        }
+        // ! 실수로 잘못된 값이 들어온 경우 처리하기
+
         // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
         if (reqPrice <= curPrice) {
             // 6-1. cash, coin 갯수 갱신
@@ -292,7 +286,6 @@ class Game {
         delete playerInfo['bid'][bidPrice];
         roomList[roomID][socketID] = playerInfo;
 
-        // 매수 취소 완료 Response 필요
         this.refreshWallet(
             socketID,
             'cancelBid',
@@ -301,7 +294,6 @@ class Game {
             playerInfo['asset'],
             playerInfo['avgPrice']
         );
-        // console.log("매수 취소 후", bidList);
 
         this.sendBidTable(reqJson);
     }
@@ -341,8 +333,6 @@ class Game {
             playerInfo['avgPrice']
         );
 
-        // console.log("매도 취소 후", askList);
-        // 매수 취소 완료 Response 필요
         this.sendAskTable(reqJson);
     }
 

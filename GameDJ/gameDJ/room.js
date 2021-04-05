@@ -1,22 +1,10 @@
 import {
-    dbset,
-    dbget,
-    dbhset,
     dbhget,
     dbhmset,
-    dbhgetall,
-    dbrpush,
-    dblpush,
-    dblrem,
-    dblrange,
-    dbllen,
     dbhincrby,
 } from './redis.js';
 import { nanoid } from 'nanoid';
-import fs from 'fs';
-import { publicDecrypt } from 'crypto';
 import dotenv from 'dotenv';
-import { RSA_PKCS1_PADDING } from 'constants';
 
 class Room {
     constructor(io, socket) {
@@ -51,11 +39,13 @@ class Room {
         const roomID = nanoid(15);
         const socketID = socket.id;
         dotenv.config();
-        let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
-        console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
-        console.log(ipAddress);
         dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
-        dbhincrby(process.env.SERVERNAME, 'player', 1);
+        let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
+        if(ipAddress){
+            console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
+            console.log(ipAddress);
+            dbhincrby(process.env.SERVERNAME, 'player', 1);
+        }
         let playerID = data.playerID;
         let playerInfo = {
             playerID: playerID,
@@ -150,6 +140,11 @@ class Room {
                 askVol: 0,
             };
 
+            // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
+            if (roomInfo['roomLeader'] === 0){
+                roomInfo['roomLeader'] = socket.id;
+            }
+
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
 
@@ -204,24 +199,14 @@ class Room {
             bidCash: 0,
             askVol: 0,
         };
+
+        // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함. 
+        // 방장이 설정된 후부터 ready time이 줄어들도록 함
         if (roomInfo['roomLeader'] === 0){
             roomInfo['roomLeader'] = socket.id;
         }
         roomInfo[socketID] = playerInfo;
-
-        // 방 정보가 초기화되어있지 않으면
-        // if (roomInfo['gameTime'] < 0) {
-        //     roomInfo['gameTime'] = 0;
-        //     roomInfo['music'] = 'Random_Music';
-        //     roomInfo['roomLeader'] = socketID;
-        //     roomInfo['gaming'] = false;
-        //     if (roomInfo.hasOwnProperty('readyTime')) {
-        //         roomInfo['readyTime'] = 5;
-        //     }
-        // }
         roomList[roomID] = roomInfo;
-        console.log('---------------roomReinit--------------');
-        console.log(roomList[roomID]);
     }
     
 }

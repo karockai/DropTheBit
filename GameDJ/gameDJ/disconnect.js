@@ -1,16 +1,4 @@
 import {
-    dbset,
-    dbget,
-    dbhset,
-    dbhget,
-    dbhgetall,
-    dbrpush,
-    dblpush,
-    dblrem,
-    dblrange,
-    dbllen,
-    dbdel,
-    dbhdel,
     dbhincrby,
 } from './redis.js';
 import dotenv from 'dotenv'
