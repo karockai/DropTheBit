@@ -6,12 +6,7 @@ class Game {
 
     startGame(musicData) {
         const { io, socket } = this;
-        let roomID = 0;
-        if (socket.roomID) {
-            roomID = socket.roomID;
-        } else {
-            roomID = publicRoomID;
-        }
+        let roomID = socket.roomID;
 
         if (roomList[roomID]['gaming'] === false) {
             roomList[roomID]['gaming'] = true;
@@ -27,12 +22,7 @@ class Game {
         io.to(roomID).emit('update', {message : message, author : '[SYSTEM]'});
 
         function realStart() {
-            let roomID = 0;
-            if (socket.roomID) {
-                roomID = socket.roomID;
-            } else {
-                roomID = publicRoomID;
-            }
+            let roomID = socket.roomID;
             let dataForStart = {};
             if (roomList[roomID]['roomLeader'] === socket.id){
                 roomList[roomID]['gameTime'] += 3;
