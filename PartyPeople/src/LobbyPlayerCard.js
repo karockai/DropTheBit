@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Avatars from '@dicebear/avatars';
-import sprites from '@dicebear/avatars-male-sprites';
+import sprites from '@dicebear/avatars-human-sprites';
 
 // const theme = createMuiTheme({
 //   palette: {
