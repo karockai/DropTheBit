@@ -1,8 +1,8 @@
 config:
-  target: "http://dropthebit.club"
+  target: "http://13.209.194.13:5000" # 방이 있는 서버
   socketio:
     transports: ["websocket"]
-    query: "id=3zVFUZQ34H4FI-3"
+    query: "id=fHHgLIots0qNWDo"
   phases:
     - duration: 20
       arrivalRate: 5
@@ -14,14 +14,14 @@ scenarios:
           channel: "joinRoom_Req"
           data:
             "playerID": "{{$randomString()}}"
-            "roomID": "3zVFUZQ34H4FI-3"
+            "roomID": "fHHgLIots0qNWDo"
 
-      - think: 25
+      - think: 30
       - loop:
         - emit:
             channel: "buy_Req"
             data:
-              "roomID": "3zVFUZQ34H4FI-3"
+              "roomID": "fHHgLIots0qNWDo"
               "socketID": 0
               "currentBid": 10000
               "currentVolume": 10000
@@ -29,12 +29,20 @@ scenarios:
         - emit:
             channel: "sell_Req"
             data:
-                "roomID": "3zVFUZQ34H4FI-3"
+                "roomID": "fHHgLIots0qNWDo"
                 "socketID": 0
                 "currentBid": 1000
                 "currentVolume": 10000
         - think: 2
-      - think: 45
+        - emit:
+            channel: "message"
+            data:
+                "roomID": "fHHgLIots0qNWDo"
+                "socketID": 0
+                "message": "저는 봇입니다"
+                "author" : 0
+        - think: 2
+      - think: 150
 
   # - name: "Connect and join Room"
   #   engine: "socketio"
