@@ -8,7 +8,7 @@ import {
     TextareaAutosize,
 } from '@material-ui/core';
 import { propTypes } from 'react-bootstrap/esm/Image';
-import {ExpBySymbol, parseWonToStr} from './parseMoney';
+import {SplitByThree, ExpBySymbol, parseWonToStr} from './parseMoney';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -87,15 +87,17 @@ export default function MyAsset(props) {
         }
     }, [isInit]);
 
-    function SplitByThree(value) {
-        if (!value) return 'Something wrong.';
-        if (value.length <= 3) return value;
-        return (
-            SplitByThree(value.substring(0, value.length - 3)) +
-            ',' +
-            value.substring(value.length - 3, value.length)
-        );
-    }
+
+    // // ! 1000단위 , 붙이기
+    // function SplitByThree(value) {
+    //     if (!value) return 'Something wrong.';
+    //     if (value.length <= 3) return value;
+    //     return (
+    //         SplitByThree(value.substring(0, value.length - 3)) +
+    //         ',' +
+    //         value.substring(value.length - 3, value.length)
+    //     );
+    // }
 
     // const parseWonToStr = (won) => {
     //     if (typeof won == 'number') won = won.toString();
@@ -153,7 +155,7 @@ export default function MyAsset(props) {
                     style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
                 >
                     <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
-                        보유 코인 수 (개)<h3 id="changeAsset" style={{ height: '100%', fontSize: '1.5vw' }}>{myWallet.myCoin}</h3>
+                        보유 코인 수 (개)<h3 id="changeAsset" style={{ height: '100%', fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
                     </Paper>
                 </Grid>
             </Grid>

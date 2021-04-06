@@ -8,6 +8,7 @@ class Game {
         const { io, socket } = this;
         let roomID = socket.roomID;
 
+        // 공방이 아닐 때, 방장만 노래를 바꿀 수 있도록 함
         if (roomList[roomID]['gaming'] === false) {
             roomList[roomID]['gaming'] = true;
             roomList[roomID]['music'] = musicData['musicName'];
@@ -24,6 +25,7 @@ class Game {
         function realStart() {
             let roomID = socket.roomID;
             let dataForStart = {};
+            // 방장이 시작하는 경우에만 3,2,1 추가되도록함 (중간유저 입장 시 3초 추가 안되도록)
             if (roomList[roomID]['roomLeader'] === socket.id){
                 roomList[roomID]['gameTime'] += 3;
             }
@@ -31,7 +33,7 @@ class Game {
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
-
+         //!  확인 필요
         let gameSchedule1 = setTimeout(realStart, 3000);
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
@@ -54,9 +56,6 @@ class Game {
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
 
-        // console.log('---------------------------------------------------');
-        // console.log('---------------------------------------------------');
-
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
@@ -67,10 +66,8 @@ class Game {
         if (cash < reqPrice * reqVol) {
             console.log('buy 실패 :', reqJson);
         }
-        // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
         // 5. 구매 처리 및 asset 정보 emit
-
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
             if (playerInfo['avgPrice'] === 0) {

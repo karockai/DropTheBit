@@ -27,8 +27,6 @@ export default {
         // curPrice refresh --------------------------------- <<
 
         io.on('connection', (socket) => {
-            // console.log('USER Connected : ', socket.id);
-
             socket.on('createPrivateRoom_Req', (playerID) => {
                 new Room(io, socket).createPrivateRoom(playerID);
             });
@@ -46,7 +44,7 @@ export default {
             });
             socket.on('backToLobby', (roomID) => {
                 if (roomList[roomID]['gaming'] === false){
-                    new Room(io, socket).roomReinit(roomID);
+                    new Room(io, socket).playerReinit(roomID);
                 }
                 else{
                     new Room(io, socket).joinRoom({roomID : roomID, playerID : roomList[roomID][socket.id]['playerID']});
