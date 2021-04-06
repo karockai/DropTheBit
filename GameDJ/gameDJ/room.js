@@ -147,8 +147,10 @@ class Room {
             
             socket.roomID = roomID;
             socket.join(roomID);
-
+            
+            // for stress test
             playerStress++;
+
             io.to(roomID).emit('joinRoom_Res', {
                 roomID: roomID,
                 roomInfo: roomInfo,
@@ -176,7 +178,6 @@ class Room {
 
         roomList[roomID]['gameTime'] = musicTime;
         roomList[roomID]['music'] = musicName;
-        console.log((roomList[roomID]['music'] = musicName));
 
         io.to(roomID).emit('settingsUpdate_Res', {
             musicName: musicName,

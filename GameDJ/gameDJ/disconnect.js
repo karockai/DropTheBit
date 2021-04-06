@@ -23,6 +23,8 @@ class Disconnect {
             //ask, bid 지우기
             //성현 추가(210403) 서버 인원 감소시키기
             dbhincrby(process.env.SERVERNAME, 'player', -1);
+
+            // ask, bid List에서 해당 player 삭제
             for (let bid in playerInfo['bid']){
                 for (let id  in bidList[bid]){
                     if (socket.id === id){
@@ -30,7 +32,6 @@ class Disconnect {
                     }
                 }
             }
-
             for (let ask in playerInfo['ask']){
                 for (let id  in askList[ask]){
                     if (socket.id === id){
@@ -40,6 +41,8 @@ class Disconnect {
             }
 
             delete roomList[roomID][socket.id];
+
+            // 방에 사람 수 세기
             for (const [key, value] of Object.entries(roomInfo)) {
                 if (key.length === 20) {
                     playerCnt++;
@@ -65,7 +68,6 @@ class Disconnect {
                     }
                 }
                 io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
-                console.log(message);
             }
             io.to(roomID).emit('disconnect', roomInfo);
         }
