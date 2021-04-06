@@ -31,10 +31,7 @@ import SellMax from './audios/effect/SellMax.wav';
 import SellConfirm from './audios/effect/SellConfirm.wav';
 import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
-
-// Module
-
-// 음악
+import {SplitByThree} from './parseMoney';
 
 const CssTextField = withStyles({
     root: {
@@ -450,15 +447,6 @@ export default function TradeStock(props) {
         SetVolume(Math.floor(myWallet.myCash / currentBid));
     }
 
-    function SplitByThree(value) {
-        if (!value) return 'Something wrong.';
-        if (value.length <= 3) return value;
-        return (
-            SplitByThree(value.substring(0, value.length - 3)) +
-            ',' +
-            value.substring(value.length - 3, value.length)
-        );
-    }
 
     const parseWonToStr = (won) => {
         if (typeof won == 'number') won = won.toString();
@@ -500,6 +488,7 @@ export default function TradeStock(props) {
         }, eventTime);
     };
 
+    // console.log(SplitByThree(String(currentBid)));
     return (
         <>
             <SnackbarProvider maxSnack={15}>
@@ -616,7 +605,7 @@ export default function TradeStock(props) {
                         id="custom-css-standard-input"
                         size="small"
                         style={{ width: '50%' }}
-                        value={currentBid}
+                        value={SplitByThree(String(currentBid))}
                         onChange={handleBidChange}
                         disabled
                     />
@@ -624,7 +613,7 @@ export default function TradeStock(props) {
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
-                            let tmpAudio = new Audio(PriceUp).play();
+                            let tmpAudio = new Audio(PriceUp);
                             tmpAudio.play();
                             tmpAudio.remove();
                             BidUp();
@@ -646,7 +635,7 @@ export default function TradeStock(props) {
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
-                            let tmpAudio = new Audio(VolDown).play();
+                            let tmpAudio = new Audio(VolDown)
                             tmpAudio.play();
                             tmpAudio.remove();
                             VolumeDown(currentVolume);
@@ -659,7 +648,7 @@ export default function TradeStock(props) {
                         className="count"
                         id="outlined-required"
                         style={{ width: '50%', fontSize: 20 }}
-                        value={currentVolume}
+                        value={SplitByThree(String(currentVolume))}
                         onChange={handleVolumeChange}
                         disabled
                     />
@@ -667,7 +656,7 @@ export default function TradeStock(props) {
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
-                            let tmpAudio = new Audio(VolUp).play();
+                            let tmpAudio = new Audio(VolUp)
                             tmpAudio.play();
                             tmpAudio.remove();
                             VolumeUp(currentVolume);
@@ -684,7 +673,7 @@ export default function TradeStock(props) {
                             class="buy_max"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(BuyMax).play();
+                                let tmpAudio = new Audio(BuyMax)
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 SetBuyMaxCount();
@@ -698,7 +687,7 @@ export default function TradeStock(props) {
                             class="sell_max"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(SellMax).play();
+                                let tmpAudio = new Audio(SellMax)
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 SetSellMaxCount();
@@ -719,7 +708,7 @@ export default function TradeStock(props) {
                             class="buy"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(BuyConfirm).play();
+                                let tmpAudio = new Audio(BuyConfirm)
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 setBuyStatus(Buy(currentBid, currentVolume));
@@ -733,7 +722,7 @@ export default function TradeStock(props) {
                             class="sell"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(SellConfirm).play();
+                                let tmpAudio = new Audio(SellConfirm)
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 setSellStatus(Sell(currentBid, currentVolume));
@@ -754,7 +743,7 @@ export default function TradeStock(props) {
                             class="space"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(CurPrice).play();
+                                let tmpAudio = new Audio(CurPrice)
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 RefreshBid_Req();
