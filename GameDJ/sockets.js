@@ -27,8 +27,6 @@ export default {
         // curPrice refresh --------------------------------- <<
 
         io.on('connection', (socket) => {
-            // console.log('USER Connected : ', socket.id);
-
             socket.on('createPrivateRoom_Req', (playerID) => {
                 new Room(io, socket).createPrivateRoom(playerID);
             });

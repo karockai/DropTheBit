@@ -31,7 +31,7 @@ class Game {
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
-
+         //!  확인 필요
         let gameSchedule1 = setTimeout(realStart, 3000);
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
@@ -54,9 +54,6 @@ class Game {
         // 2. curPrice 가져오기
         let curPrice = curCoin['curPrice'];
 
-        // console.log('---------------------------------------------------');
-        // console.log('---------------------------------------------------');
-
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
@@ -67,10 +64,8 @@ class Game {
         if (cash < reqPrice * reqVol) {
             console.log('buy 실패 :', reqJson);
         }
-        // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
         // 5. 구매 처리 및 asset 정보 emit
-
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
             if (playerInfo['avgPrice'] === 0) {
