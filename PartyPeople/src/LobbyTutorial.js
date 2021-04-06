@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         textAlign: 'center',
-        backgroundColor: '#2D4053',
+        backgroundColor: '#0C151C',
         color: 'white',
         margin: '1vh 0 0 0'
     },

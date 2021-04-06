@@ -17,7 +17,7 @@ cur_price = 0
 
 try:
     conn = redis.StrictRedis(
-        host='3.34.156.16',
+        host='',
         port=6379,
         db=0)
     # print("hmset", conn.set("curCoin", "hihhihihi"))
