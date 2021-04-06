@@ -2,7 +2,7 @@ config:
   target: "http://13.209.194.13:5000" # 방이 있는 서버
   socketio:
     transports: ["websocket"]
-    query: "id=fHHgLIots0qNWDo"
+    query: "id=9U8QQIo9PGmrWJw"
   phases:
     - duration: 20
       arrivalRate: 5
@@ -14,14 +14,13 @@ scenarios:
           channel: "joinRoom_Req"
           data:
             "playerID": "{{$randomString()}}"
-            "roomID": "fHHgLIots0qNWDo"
-
-      - think: 30
+            "roomID": "9U8QQIo9PGmrWJw"
+      - think: 40
       - loop:
         - emit:
             channel: "buy_Req"
             data:
-              "roomID": "fHHgLIots0qNWDo"
+              "roomID": "9U8QQIo9PGmrWJw"
               "socketID": 0
               "currentBid": 10000
               "currentVolume": 10000
@@ -29,7 +28,7 @@ scenarios:
         - emit:
             channel: "sell_Req"
             data:
-                "roomID": "fHHgLIots0qNWDo"
+                "roomID": "9U8QQIo9PGmrWJw"
                 "socketID": 0
                 "currentBid": 1000
                 "currentVolume": 10000
@@ -37,12 +36,14 @@ scenarios:
         - emit:
             channel: "message"
             data:
-                "roomID": "fHHgLIots0qNWDo"
+                "roomID": "9U8QQIo9PGmrWJw"
                 "socketID": 0
                 "message": "저는 봇입니다"
                 "author" : 0
         - think: 2
-      - think: 150
+        count: 20
+
+
 
   # - name: "Connect and join Room"
   #   engine: "socketio"
