@@ -1,5 +1,6 @@
 import {
     dbhincrby,
+    dbdel
 } from './redis.js';
 import dotenv from 'dotenv'
 dotenv.config();
@@ -52,6 +53,7 @@ class Disconnect {
             // 방에 사람이 0명이 되면 방을 지운다
             if (playerCnt === 0) {
                 delete roomList[roomID];
+                dbdel(roomID);
                 playerStress = 0;
             } 
             else {
