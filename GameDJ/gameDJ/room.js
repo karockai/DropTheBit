@@ -187,7 +187,7 @@ class Room {
     }
 
     // 게임 한판 끝나고 로비로 돌아왔을때 유저 정보 초기화 (방 정보는 gameOver시 초기화)
-    roomReinit(roomID) {
+    playerReinit(roomID) {
         const { io, socket } = this;
         const socketID = socket.id;
         let roomInfo = roomList[roomID];

@@ -230,13 +230,8 @@ class Refresh {
                 );
             }
 
-            if (
-                roomInfo['readyTime'] === 0 &&
-                roomList[roomID]['gaming'] === false
-            ) {
+            if (roomInfo['readyTime'] === 0 && roomList[roomID]['gaming'] === false) {
                 roomList[roomID]['gaming'] = true;
-                console.log('publicstart------------');
-                console.log(roomList[roomID]);
                 io.to(roomInfo['roomLeader']).emit('publicGameStart');
             }
 
@@ -303,22 +298,20 @@ class Refresh {
             }
         }
         todayRank.splice(10);
+        io.to(roomID).emit('gameOver', leaderBoard);
 
-        // back to lobby 를 위한 수정
-        // 방 정보가 초기화되어있지 않으면
+        // back to lobby 전에 미리 방 정보 초기화
         if (roomInfo['gameTime'] < 0) {
             roomInfo['gameTime'] = 0;
             roomInfo['music'] = 'Random_Music';
             if (roomID === publicRoomID) {
                 roomInfo['roomLeader'] = 0;
             }
-            roomInfo['gaming'] = false;
             if (roomInfo.hasOwnProperty('readyTime')) {
                 roomInfo['readyTime'] = 5;
             }
         }
         roomList[roomID] = roomInfo;
-        io.to(roomID).emit('gameOver', leaderBoard);
     }
 
     // refreshBid 갱신

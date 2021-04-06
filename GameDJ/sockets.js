@@ -44,7 +44,7 @@ export default {
             });
             socket.on('backToLobby', (roomID) => {
                 if (roomList[roomID]['gaming'] === false){
-                    new Room(io, socket).roomReinit(roomID);
+                    new Room(io, socket).playerReinit(roomID);
                 }
                 else{
                     new Room(io, socket).joinRoom({roomID : roomID, playerID : roomList[roomID][socket.id]['playerID']});
