@@ -36,10 +36,12 @@ export default {
             });
             // data : {roomID : roomID, playerID : name}
             socket.on('joinRoom_Req', (data) => {
+                if (!roomList.hasOwnProperty(data.roomID)) return 0;
                 new Room(io, socket).joinRoom(data);
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
             socket.on('settingsUpdate_Req', (data) => {
+                if (!roomList[socket.roomID]) return 0;
                 new Room(io, socket).updateSettings(data);
             });
             socket.on('backToLobby', (roomID) => {
