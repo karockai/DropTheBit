@@ -1,7 +1,7 @@
 .blinking {
-    -webkit-animation: blink 1s ease-in-out  alternate;
-    -moz-animation: blink 1s ease-in-out  alternate;
-    animation: blink 1s ease-in-out  alternate;
+    -webkit-animation: blink 1s ease-in-out  ;
+    -moz-animation: blink 1s ease-in-out  ;
+    animation: blink 1s ease-in-out  ;
 }
 @-webkit-keyframes blink {
     0% {

@@ -48,6 +48,11 @@ export default function MyAsset(props) {
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
+    const [upDown, SetUpDown] = useState(0);
+    
+
+
+
     let color = 'white';
     useLayoutEffect(() => {
         if (props.socket == null) {
@@ -57,17 +62,26 @@ export default function MyAsset(props) {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
                 // console.log(data.type + '으로 인해서 발생함.');
-                const currentCash = data.cash;
-                const currentAsset = data.asset;
-                const currentCoin = data.coinVol;
-                const currentAvg = data.avgPrice;
+
+                const refreshWallet = data.refreshWallet;
+                const bfrWallet = data.bfrWallet;
+
+                const bfrCash = bfrWallet.cash;
+                const bfrAsset = bfrWallet.asset;
+                const bfrCoin = bfrWallet.coinVol;
+
+                const currentCash = refreshWallet.cash;
+                const currentAsset = refreshWallet.asset;
+                const currentCoin = refreshWallet.coinVol;
+                const currentAvg = refreshWallet.avgPrice;
+
                 
-                const asset = document.getElementById('changeAsset');
-                console.log(asset);
-                if (asset) asset.classList.add('blinking');
-                setTimeout(function () {
-                    if (asset) asset.classList.remove('blinking');
-                }, 700);
+                // const asset = document.getElementById('changeAsset');
+                // console.log(asset);
+                // if (asset) asset.classList.add('blinking');
+                // setTimeout(function () {
+                //     if (asset) asset.classList.remove('blinking');
+                // }, 700);
                 // if (currentAsset > myAsset) {
                 //     color = 'red';
                 // }
