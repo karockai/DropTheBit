@@ -49,6 +49,12 @@ export default function StartGame(props) {
     const [gameMusic, SetGameMusic] = useState(props.gameMusic);
 
     useEffect(() => {
+        props.socket.once('publicGameStart', () => {
+            StartGameReq();
+        });
+    }, []);
+
+    useEffect(() => {
         props.socket.on('settingsUpdate_Res', (data) => {
             SetGameMusic(data.musicName);
         });
