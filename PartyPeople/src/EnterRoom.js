@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, } from 'react';
+import './App.css';
 import {
     Button,
     Fab,
@@ -11,7 +12,7 @@ import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 // import Sound from './Sound';
-import backgroundImg from './videos/LobbyImage3.gif';
+import backgroundImg from './videos/LobbyVideo1.mp4';
 import LobbyMusic from './audios/music/Tetris99.mp3';
 export default function EnterRoom(props) {
     // const history = useHistory();
@@ -93,21 +94,14 @@ export default function EnterRoom(props) {
     }
     return (
         <>
-            <div
-                class="img"
-                style={{
-                    backgroundImage: `url(${backgroundImg})`,
-                    backgroundSize: 'cover',
-                }}
-            >
-                {
-                    <SetPlayerName
-                        onSave={handleOnSave}
-                        name={name}
-                        setName={setName}
-                    />
-                }
-            </div>
+            <video className="videoTag" autoPlay loop muted>
+                <source src={backgroundImg} type='video/mp4'/>
+            </video>
+            <SetPlayerName
+                style={{position:'fixed'}}
+                onSave={handleOnSave}
+                name={name}
+                setName={setName}/>
         </>
     );
 }

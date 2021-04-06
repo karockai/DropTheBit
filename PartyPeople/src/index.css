@@ -18,10 +18,11 @@ code {
   background-color: #060c10;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-  overflow: hidden; 
-  touch-action: none;
+  /* overflow: hidden;  */
   position: relative;
+  z-index: 0;
 }
+
 
 .title {
   font-family: 'Fugaz One', cursive;

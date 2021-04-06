@@ -10,10 +10,12 @@ import LoadingScreen from './LoadingScreen';
 
 ReactDOM.render(
     <div className='GameManager'>
-        <GameManager/>
+        <div className='main'>
+            <GameManager/>
         {/* <LoadingScreen justifyItems = 'center'/> */}
         {/* <ShiningButton/> */}
         {/* <Test/> */}
+        </div>
     </div>,
     document.getElementById('root')
 );

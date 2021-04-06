@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import './App.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import {
     AppBar,
@@ -28,7 +29,7 @@ import { ChatFeed, Message } from 'react-chat-ui';
 import LobbyTabs from './LobbyTabs';
 import './Lobby.css';
 import StartGame from './StartGame';
-import backgroundImg from './videos/LobbyImage3.gif';
+import backgroundImg from './videos/LobbyVideo1.mp4';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -148,12 +149,10 @@ function Lobby(props) {
         return playerList;
     }
     return (
-        <div
-            style={{
-                backgroundImage: `url(${backgroundImg})`,
-                backgroundSize: 'cover',
-            }}
-        >
+  <>
+              <video className="videoTag" autoPlay loop muted>
+                <source src={backgroundImg} type='video/mp4'/>
+            </video>
             <Grid
                 className="전체그리드"
                 container
@@ -420,7 +419,7 @@ function Lobby(props) {
                     </Grid>
                 </Grid>
             </Grid> */}
-        </div>
+        </>
     );
 }
 
