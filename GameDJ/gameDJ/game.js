@@ -20,21 +20,28 @@ class Game {
             musicName: roomList[roomID]['music'],
         });
         let message = '게임이 시작됩니다.';
-        io.to(roomID).emit('update', {message : message, author : '[SYSTEM]'});
+        io.to(roomID).emit('update', { message: message, author: '[SYSTEM]' });
 
         function realStart() {
             let roomID = socket.roomID;
             let dataForStart = {};
             // 방장이 시작하는 경우에만 3,2,1 추가되도록함 (중간유저 입장 시 3초 추가 안되도록)
-            if (roomList[roomID]['roomLeader'] === socket.id){
+            if (roomList[roomID]['roomLeader'] === socket.id) {
                 roomList[roomID]['gameTime'] += 3;
             }
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
+
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
-         //!  확인 필요
+        //!  확인 필요
         let gameSchedule1 = setTimeout(realStart, 3000);
+
+        let bfrWallet = {};
+        bfrWallet['coinVol'] = 0;
+        bfrWallet['cash'] = 100000000;
+        bfrWallet['asset'] = 100000000;
+
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
         refreshWallet['type'] = 'initialize';
@@ -42,7 +49,8 @@ class Game {
         refreshWallet['cash'] = 100000000;
         refreshWallet['asset'] = 100000000;
         refreshWallet['avgPrice'] = 0;
-        io.to(roomID).emit('refreshWallet', refreshWallet);
+
+        this.refreshWallet(socketID, refreshWallet, bfrWallet);
     }
 
     buy(reqJson) {
@@ -61,6 +69,11 @@ class Game {
         let cash = playerInfo['cash'];
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
+
+        let bfrWallet = {};
+        bfrWallet['coinVol'] = playerInfo['coinVol'];
+        bfrWallet['cash'] = playerInfo['cash'];
+        bfrWallet['asset'] = playerInfo['asset'];
 
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
         if (cash < reqPrice * reqVol) {
@@ -129,21 +142,21 @@ class Game {
                 price: reqPrice,
             };
             // console.log('호가 등록 완료', playerInfo);
-            socket.emit('bidDone', bidDone);
-            console.log('roomID:', roomID);
             io.to(roomID).emit('bidDone_Room', bidDone);
             // console.log("호가 등록 완료", bidList);
             this.sendBidTable(reqJson);
         }
+
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 'buy';
+        refreshWallet['coinVol'] = playerInfo['coinVol'];
+        refreshWallet['cash'] = playerInfo['cash'];
+        refreshWallet['asset'] = playerInfo['asset'];
+        refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
         // 6-3. refreshWallet update & emit
-        this.refreshWallet(
-            socketID,
-            'buy',
-            playerInfo['coinVol'],
-            playerInfo['cash'],
-            playerInfo['asset'],
-            playerInfo['avgPrice']
-        );
+        this.refreshWallet(socketID, refreshWallet, bfrWallet);
         // console.log('-------BUY END-------------');
     }
 
@@ -165,6 +178,11 @@ class Game {
         let cash = playerInfo['cash'];
         let coinVol = playerInfo['coinVol'];
         let playerID = playerInfo['playerID'];
+
+        let bfrWallet = {};
+        bfrWallet['coinVol'] = playerInfo['coinVol'];
+        bfrWallet['cash'] = playerInfo['cash'];
+        bfrWallet['asset'] = playerInfo['asset'];
 
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
         if (coinVol < reqVol) {
@@ -230,20 +248,20 @@ class Game {
                 price: reqPrice,
             };
 
-            socket.emit('askDone', askDone);
             io.to(roomID).emit('askDone_Room', askDone);
             // console.log("호가 등록 완료", askList);
             this.sendAskTable(reqJson);
         }
 
-        this.refreshWallet(
-            socketID,
-            'sell',
-            playerInfo['coinVol'],
-            playerInfo['cash'],
-            playerInfo['asset'],
-            playerInfo['avgPrice']
-        );
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 'sell';
+        refreshWallet['coinVol'] = playerInfo['coinVol'];
+        refreshWallet['cash'] = playerInfo['cash'];
+        refreshWallet['asset'] = playerInfo['asset'];
+        refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+        this.refreshWallet(socketID, refreshWallet, bfrWallet);
         // console.log('-----------Sell End-----------');
     }
 
@@ -265,20 +283,27 @@ class Game {
         let playerInfo = roomList[roomID][socketID];
         let cash = playerInfo['cash'];
         let bidVol = playerInfo['bid'][bidPrice];
+
+        let bfrWallet = {};
+        bfrWallet['coinVol'] = playerInfo['coinVol'];
+        bfrWallet['cash'] = playerInfo['cash'];
+        bfrWallet['asset'] = playerInfo['asset'];
+
         cash += bidVol * bidPrice;
         playerInfo['cash'] = cash;
         playerInfo['bidCash'] -= bidVol * bidPrice;
         delete playerInfo['bid'][bidPrice];
         roomList[roomID][socketID] = playerInfo;
 
-        this.refreshWallet(
-            socketID,
-            'cancelBid',
-            playerInfo['coinVol'],
-            playerInfo['cash'],
-            playerInfo['asset'],
-            playerInfo['avgPrice']
-        );
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 'cancelBid';
+        refreshWallet['coinVol'] = playerInfo['coinVol'];
+        refreshWallet['cash'] = playerInfo['cash'];
+        refreshWallet['asset'] = playerInfo['asset'];
+        refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+        this.refreshWallet(socketID, refreshWallet, bfrWallet);
 
         this.sendBidTable(reqJson);
     }
@@ -303,20 +328,26 @@ class Game {
         let coinVol = playerInfo['coinVol'];
         let askVol = playerInfo['ask'][askPrice];
 
+        let bfrWallet = {};
+        bfrWallet['coinVol'] = playerInfo['coinVol'];
+        bfrWallet['cash'] = playerInfo['cash'];
+        bfrWallet['asset'] = playerInfo['asset'];
+
         coinVol += askVol;
         playerInfo['coinVol'] = coinVol;
         playerInfo['askVol'] -= askVol;
         delete playerInfo['ask'][askPrice];
         roomList[roomID][socketID] = playerInfo;
 
-        this.refreshWallet(
-            socketID,
-            'cancelAsk',
-            playerInfo['coinVol'],
-            playerInfo['cash'],
-            playerInfo['asset'],
-            playerInfo['avgPrice']
-        );
+        let refreshWallet = {};
+        refreshWallet['result'] = 'success';
+        refreshWallet['type'] = 'cancelAsk';
+        refreshWallet['coinVol'] = playerInfo['coinVol'];
+        refreshWallet['cash'] = playerInfo['cash'];
+        refreshWallet['asset'] = playerInfo['asset'];
+        refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+        this.refreshWallet(socketID, walletInfo, bfrWallet);
 
         this.sendAskTable(reqJson);
     }
@@ -369,16 +400,26 @@ class Game {
         io.to(socketID).emit('askTable_Res', askTable_Res);
     }
 
-    async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
+    refreshWallet(socketID, refreshWallet, bfrWallet) {
         const { io } = this;
-        let refreshWallet = {};
-        refreshWallet['result'] = 'success';
-        refreshWallet['type'] = type;
-        refreshWallet['coinVol'] = coinVol;
-        refreshWallet['cash'] = cash;
-        refreshWallet['asset'] = asset;
-        refreshWallet['avgPrice'] = avgPrice;
-        io.to(socketID).emit('refreshWallet', refreshWallet);
+        walletInfo = {
+            refreshWallet: refreshWallet,
+            bfrWallet: bfrWallet,
+        };
+
+        io.to(socketID).emit('refreshWallet', walletInfo);
     }
+
+    // async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
+    //     const { io } = this;
+    //     let refreshWallet = {};
+    //     refreshWallet['result'] = 'success';
+    //     refreshWallet['type'] = type;
+    //     refreshWallet['coinVol'] = coinVol;
+    //     refreshWallet['cash'] = cash;
+    //     refreshWallet['asset'] = asset;
+    //     refreshWallet['avgPrice'] = avgPrice;
+    //     io.to(socketID).emit('refreshWallet', refreshWallet);
+    // }
 }
 export default Game;
