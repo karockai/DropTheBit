@@ -43,6 +43,12 @@ class Refresh {
                     let cash = playerInfo['cash'];
                     let askVol = playerInfo['ask'][askPrice];
                     let coinVol = playerInfo['coinVol'];
+
+                    let bfrWallet = {};
+                    bfrWallet['coinVol'] = coinVol;
+                    bfrWallet['cash'] = playerInfo['cash'];
+                    bfrWallet['asset'] = playerInfo['asset'];
+
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
                     playerInfo['askVol'] -= askVol;
@@ -54,13 +60,19 @@ class Refresh {
                         cash +
                         playerInfo['bidCash'] +
                         curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(
+
+                    let refreshWallet = {};
+                    refreshWallet['result'] = 'success';
+                    refreshWallet['type'] = 'refreshCurCoin-Sell';
+                    refreshWallet['coinVol'] = playerInfo['coinVol'];
+                    refreshWallet['cash'] = playerInfo['cash'];
+                    refreshWallet['asset'] = playerInfo['asset'];
+                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+                    new Game(io, socketID).refreshWallet(
                         socketID,
-                        'refreshCurCoin-Sell',
-                        playerInfo['coinVol'],
-                        playerInfo['cash'],
-                        playerInfo['asset'],
-                        playerInfo['avgPrice']
+                        refreshWallet,
+                        bfrWallet
                     );
 
                     // sellDone
@@ -72,9 +84,8 @@ class Refresh {
                         vol: askVol,
                         price: askPrice,
                     };
-                    io.to(socketID).emit('sellDone', sellDone);
                     io.to(roomID).emit('sellDone_Room', sellDone);
-                    await new Game(io, socketID).sendAskTable({
+                    new Game(io, socketID).sendAskTable({
                         roomID: roomID,
                         socketID: socketID,
                     });
@@ -99,6 +110,10 @@ class Refresh {
                     let bidVol = playerInfo['bid'][bidPrice];
                     let cash = playerInfo['cash'];
 
+                    bfrWallet['coinVol'] = playerInfo['coinVol'];
+                    bfrWallet['cash'] = playerInfo['cash'];
+                    bfrWallet['asset'] = playerInfo['asset'];
+
                     if (playerInfo['avgPrice'] === 0) {
                         playerInfo['avgPrice'] = bidPrice;
                     } else {
@@ -116,14 +131,21 @@ class Refresh {
                         cash +
                         playerInfo['bidCash'] +
                         curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(
+
+                    let refreshWallet = {};
+                    refreshWallet['result'] = 'success';
+                    refreshWallet['type'] = 'refreshCurCoin-Buy';
+                    refreshWallet['coinVol'] = playerInfo['coinVol'];
+                    refreshWallet['cash'] = playerInfo['cash'];
+                    refreshWallet['asset'] = playerInfo['asset'];
+                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+                    new Game(io, socketID).refreshWallet(
                         socketID,
-                        'refreshCurCoin-Buy',
-                        playerInfo['coinVol'],
-                        playerInfo['cash'],
-                        playerInfo['asset'],
-                        playerInfo['avgPrice']
+                        refreshWallet,
+                        bfrWallet
                     );
+
                     // console.log('매수 체결', bidPrice, playerInfo['bid'][bidPrice])
                     delete playerInfo['bid'][bidPrice];
                     roomList[roomID][socketID] = playerInfo;
@@ -138,9 +160,9 @@ class Refresh {
                         vol: bidVol,
                         price: bidPrice,
                     };
-                    io.to(socketID).emit('buyDone', buyDone);
+
                     io.to(roomID).emit('buyDone_Room', buyDone);
-                    await new Game(io, socketID).sendBidTable({
+                    new Game(io, socketID).sendBidTable({
                         roomID: roomID,
                         socketID: socketID,
                     });
@@ -179,27 +201,39 @@ class Refresh {
                     if (socketID.length !== 20) continue;
 
                     let playerInfo = roomInfo[socketID];
+
+                    let bfrWallet = {};
+
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
                     let bidCash = playerInfo['bidCash'];
                     let askVol = playerInfo['askVol'];
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
-                    let asset = playerInfo['asset'];
 
-                    await new Game(io, socketID).refreshWallet(
+                    bfrWallet['coinVol'] = playerInfo['coinVol'];
+                    bfrWallet['cash'] = playerInfo['cash'];
+                    bfrWallet['asset'] =
+                        cash + bidCash + prePrice * (askVol + coinVol);
+
+                    let refreshWallet = {};
+                    refreshWallet['result'] = 'success';
+                    refreshWallet['type'] = 'renewalInfo';
+                    refreshWallet['coinVol'] = playerInfo['coinVol'];
+                    refreshWallet['cash'] = playerInfo['cash'];
+                    refreshWallet['asset'] = playerInfo['asset'];
+                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+                    new Game(io, socketID).refreshWallet(
                         socketID,
-                        'renewalInfo',
-                        playerInfo['coinVol'],
-                        playerInfo['cash'],
-                        playerInfo['asset'],
-                        playerInfo['avgPrice']
+                        refreshWallet,
+                        bfrWallet
                     );
 
                     // rankObj 삽입
                     let rankObj = {
                         playerID: playerInfo['playerID'],
-                        asset: asset,
+                        asset: playerInfo['asset'],
                         socketID: socketID,
                     };
                     rankList.push(rankObj);
@@ -230,7 +264,10 @@ class Refresh {
                 );
             }
 
-            if (roomInfo['readyTime'] === 0 && roomList[roomID]['gaming'] === false) {
+            if (
+                roomInfo['readyTime'] === 0 &&
+                roomList[roomID]['gaming'] === false
+            ) {
                 roomList[roomID]['gaming'] = true;
                 io.to(roomInfo['roomLeader']).emit('publicGameStart');
             }
