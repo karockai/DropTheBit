@@ -11,7 +11,7 @@ class Disconnect {
         this.socket = socket;
     }
 
-    async onDisconnect() {
+    onDisconnect() {
         const { io, socket } = this;
         const { roomID } = socket;
 

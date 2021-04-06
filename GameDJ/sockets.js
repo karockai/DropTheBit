@@ -73,21 +73,21 @@ export default {
                 if (!roomList[socket.roomID]) return 0;
                 new Game(io, socket).sell(reqJson);
             });
-            socket.on('cancelBid_Req', async (reqJson) => {
+            socket.on('cancelBid_Req', (reqJson) => {
                 if (!roomList[socket.roomID]) return 0;
-                await new Game(io, socket).cancelBid(reqJson);
+                new Game(io, socket).cancelBid(reqJson);
             });
-            socket.on('cancelAsk_Req', async (reqJson) => {
+            socket.on('cancelAsk_Req', (reqJson) => {
                 if (!roomList[socket.roomID]) return 0;
-                await new Game(io, socket).cancelAsk(reqJson);
+                new Game(io, socket).cancelAsk(reqJson);
             });
-            socket.on('bidTable_Req', async (reqJson) => {
+            socket.on('bidTable_Req', (reqJson) => {
                 if (!roomList[socket.roomID]) return 0;
-                await new Game(io, socket).sendBidTable(reqJson);
+                new Game(io, socket).sendBidTable(reqJson);
             });
-            socket.on('askTable_Req', async (reqJson) => {
+            socket.on('askTable_Req', (reqJson) => {
                 if (!roomList[socket.roomID]) return 0;
-                await new Game(io, socket).sendAskTable(reqJson);
+                new Game(io, socket).sendAskTable(reqJson);
             });
             socket.on('RefreshBid_Req', () => {
                 if (!roomList[socket.roomID]) return 0;

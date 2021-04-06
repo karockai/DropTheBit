@@ -54,7 +54,7 @@ class Refresh {
                         cash +
                         playerInfo['bidCash'] +
                         curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(
+                    new Game(io, socketID).refreshWallet(
                         socketID,
                         'refreshCurCoin-Sell',
                         playerInfo['coinVol'],
@@ -74,7 +74,7 @@ class Refresh {
                     };
                     io.to(socketID).emit('sellDone', sellDone);
                     io.to(roomID).emit('sellDone_Room', sellDone);
-                    await new Game(io, socketID).sendAskTable({
+                    new Game(io, socketID).sendAskTable({
                         roomID: roomID,
                         socketID: socketID,
                     });
@@ -116,7 +116,7 @@ class Refresh {
                         cash +
                         playerInfo['bidCash'] +
                         curPrice * (playerInfo['askVol'] + coinVol);
-                    await new Game(io, socketID).refreshWallet(
+                    new Game(io, socketID).refreshWallet(
                         socketID,
                         'refreshCurCoin-Buy',
                         playerInfo['coinVol'],
@@ -140,7 +140,7 @@ class Refresh {
                     };
                     io.to(socketID).emit('buyDone', buyDone);
                     io.to(roomID).emit('buyDone_Room', buyDone);
-                    await new Game(io, socketID).sendBidTable({
+                    new Game(io, socketID).sendBidTable({
                         roomID: roomID,
                         socketID: socketID,
                     });
@@ -156,7 +156,7 @@ class Refresh {
         prePrice = curPrice;
     }
 
-    async renewalInfo() {
+    renewalInfo() {
         // console
         //     .log
         //     // '----------------------renewalInfo Start------------------------'
@@ -187,7 +187,7 @@ class Refresh {
                         cash + bidCash + curPrice * (askVol + coinVol);
                     let asset = playerInfo['asset'];
 
-                    await new Game(io, socketID).refreshWallet(
+                    new Game(io, socketID).refreshWallet(
                         socketID,
                         'renewalInfo',
                         playerInfo['coinVol'],

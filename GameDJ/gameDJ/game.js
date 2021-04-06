@@ -134,7 +134,6 @@ class Game {
                 price: reqPrice,
             };
             // console.log('호가 등록 완료', playerInfo);
-            socket.emit('bidDone', bidDone);
             console.log('roomID:', roomID);
             io.to(roomID).emit('bidDone_Room', bidDone);
             // console.log("호가 등록 완료", bidList);
@@ -235,7 +234,6 @@ class Game {
                 price: reqPrice,
             };
 
-            socket.emit('askDone', askDone);
             io.to(roomID).emit('askDone_Room', askDone);
             // console.log("호가 등록 완료", askList);
             this.sendAskTable(reqJson);
@@ -253,7 +251,7 @@ class Game {
     }
 
     // 매수 요청 취소
-    async cancelBid(reqJson) {
+    cancelBid(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let bidPrice = reqJson['reqPrice'];
@@ -289,7 +287,7 @@ class Game {
     }
 
     // 매도 요청 취소
-    async cancelAsk(reqJson) {
+    cancelAsk(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let askPrice = reqJson['reqPrice'];
@@ -326,10 +324,11 @@ class Game {
         this.sendAskTable(reqJson);
     }
 
-    async sendBidTable(reqJson) {
-        const { io } = this;
+    sendBidTable(reqJson) {
+        const { io, socket } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
+        // let socketID = socket.id;
         let playerInfo = roomList[roomID][socketID];
 
         let bidTable = playerInfo['bid'];
@@ -350,10 +349,11 @@ class Game {
         io.to(socketID).emit('bidTable_Res', bidTable_Res);
     }
 
-    async sendAskTable(reqJson) {
-        const { io } = this;
+    sendAskTable(reqJson) {
+        const { io, socket } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
+        // let socketID = socket.id;
         let playerInfo = roomList[roomID][socketID];
 
         let askTable = playerInfo['ask'];
@@ -374,7 +374,7 @@ class Game {
         io.to(socketID).emit('askTable_Res', askTable_Res);
     }
 
-    async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
+    refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
         const { io } = this;
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
