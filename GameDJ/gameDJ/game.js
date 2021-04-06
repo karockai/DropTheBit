@@ -26,11 +26,7 @@ class Game {
             let roomID = socket.roomID;
             let dataForStart = {};
             // 방장이 시작하는 경우에만 3,2,1 추가되도록함 (중간유저 입장 시 3초 추가 안되도록)
-<<<<<<< HEAD
-            if (roomList[roomID]['roomLeader'] === socket.id) {
-=======
             if (roomList[roomID].hasOwnProperty('roomLeader') && roomList[roomID]['roomLeader'] === socket.id){
->>>>>>> 6e9f9f19905e6926c062f5993d0c5618401284de
                 roomList[roomID]['gameTime'] += 3;
             }
             dataForStart['musicName'] = roomList[roomID]['music'];
@@ -159,6 +155,7 @@ class Game {
                 price: reqPrice,
             };
             // console.log('호가 등록 완료', playerInfo);
+            // console.log('roomID:', roomID);
             io.to(roomID).emit('bidDone_Room', bidDone);
             // console.log("호가 등록 완료", bidList);
             this.sendBidTable(reqJson);
@@ -283,7 +280,7 @@ class Game {
     }
 
     // 매수 요청 취소
-    async cancelBid(reqJson) {
+    cancelBid(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let bidPrice = reqJson['reqPrice'];
@@ -326,7 +323,7 @@ class Game {
     }
 
     // 매도 요청 취소
-    async cancelAsk(reqJson) {
+    cancelAsk(reqJson) {
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
         let askPrice = reqJson['reqPrice'];
@@ -369,10 +366,11 @@ class Game {
         this.sendAskTable(reqJson);
     }
 
-    async sendBidTable(reqJson) {
-        const { io } = this;
+    sendBidTable(reqJson) {
+        const { io, socket } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
+        // let socketID = socket.id;
         let playerInfo = roomList[roomID][socketID];
 
         let bidTable = playerInfo['bid'];
@@ -393,10 +391,11 @@ class Game {
         io.to(socketID).emit('bidTable_Res', bidTable_Res);
     }
 
-    async sendAskTable(reqJson) {
-        const { io } = this;
+    sendAskTable(reqJson) {
+        const { io, socket } = this;
         let roomID = reqJson['roomID'];
         let socketID = reqJson['socketID'];
+        // let socketID = socket.id;
         let playerInfo = roomList[roomID][socketID];
 
         let askTable = playerInfo['ask'];
@@ -417,7 +416,11 @@ class Game {
         io.to(socketID).emit('askTable_Res', askTable_Res);
     }
 
+<<<<<<< HEAD
     refreshWallet(socketID, refreshWallet, bfrWallet) {
+=======
+    refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
+>>>>>>> c2ec726ddf8bb30a67329471f6702a70c74b68b4
         const { io } = this;
         let walletInfo = {
             refreshWallet: refreshWallet,

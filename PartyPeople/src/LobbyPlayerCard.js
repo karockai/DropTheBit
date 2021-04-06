@@ -25,6 +25,7 @@ const useStyles = makeStyles((cnt) => ({
         height: '100%',
         margin: '0 2vh 2vh 2vh',
         color: '#CDD7E0',
+        opacity: 1,
         backgroundColor: '#0C151C',
     },
     bullet: {

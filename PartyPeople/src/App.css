@@ -24,6 +24,18 @@
   color: white;
 }
 
+.videoTag{
+  /* display: none; */
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 1;
+  object-fit: fill;
+}
+
 .App-link {
   color: #61dafb;
 }
