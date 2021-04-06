@@ -7,7 +7,8 @@ class Chat {
     // data : {roomID : roomID, message:message, author : playerID}
     messageReq(data) {
         const { io, socket } = this;
-        io.to(data.roomID).emit('update', {message : data.message, author : data.author});
+        let writer = roomList[data.roomID][socket.id]['playerID'];
+        io.to(data.roomID).emit('update', {message : data.message, author : writer});
     };
 
 

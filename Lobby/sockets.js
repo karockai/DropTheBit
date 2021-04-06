@@ -28,15 +28,15 @@ export default {
                 // 링크 받아서 들어온 사람
                 // console.log("참가자 연결");
                 // roomID에 해당하는 주소를 받아와서 연결한다.
-                console.log(roomID);
-                let response = await dbhmget(roomID, 'ip', 'name');
+                let response = await dbhgetall(roomID);
+                console.log(roomID, response);
                 //이상한 방으로 접속을 시도할 경우 Home으로 Redirect한다.
                 if (!response){
                     socket.emit('roomConnectErr');
                     return
                 }
-                let ipAddress = response[0];
-                let name = response[1];
+                let ipAddress = response['ip'];
+                let name = response['name'];
                 console.log("기존 방에 접속", name, ipAddress);
                 dbhincrby(name, 'player', 1);
                 socket.emit('ipToConnect', ipAddress);

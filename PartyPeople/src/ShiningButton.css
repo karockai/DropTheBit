@@ -125,6 +125,12 @@
   --hover: rgb(206, 206, 48);
 }
 
+.tutorialMove {
+  border: 0px none;
+  --color: white;
+  --hover: #333333;
+}
+
 
 /* // Now every button will have different colors as set above. We get to use the same structure, only changing the custom properties. */
 button {
