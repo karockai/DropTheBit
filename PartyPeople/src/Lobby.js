@@ -149,9 +149,9 @@ function Lobby(props) {
         return playerList;
     }
     return (
-  <>
-              <video className="videoTag" autoPlay loop muted>
-                <source src={backgroundImg} type='video/mp4'/>
+        <>
+            <video className="videoTag" autoPlay loop muted>
+                <source src={backgroundImg} type="video/mp4" />
             </video>
             <Grid
                 className="전체그리드"
@@ -285,32 +285,65 @@ function Lobby(props) {
                         </Grid>
                     </Grid>
                     <Grid
-                        className="채팅창"
+                        className="우측레이아웃"
+                        container
+                        item
+                        xs={4}
                         style={{
                             width: '100%',
                             height: '90vh',
-                            padding: '1vw 1vw 1vw 1vw',
-                            opacity: '0.8',
+                            padding: '1vh 1vw 1vh 1vw',
                         }}
-                        item
-                        xs={4}
+                        direction={'column'}
                     >
-                        <Paper
-                            className={classes.paper}
+                        <Grid
+                            className="방랭킹창"
                             style={{
                                 width: '100%',
-                                height: '100%',
-                                padding: '1vw 1vw 1vw 1vw',
+                                height: '60%',
+                                opacity: '0.8',
+                                padding: '1vh 1vw 1vh 1vw',
                             }}
+                            item
                         >
-                            <ChatRoom
-                                SetInputCtrl={SetInputCtrl}
-                                roomInfo={props.roomInfo}
-                                roomID={props.roomID}
-                                socket={props.socket}
-                                chat={props.chat}
-                            />
-                        </Paper>
+                            <Paper
+                                className={classes.paper}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    padding: '1vw 1vw 1vw 1vw',
+                                }}
+                            >
+                                최근 게임 기록
+                            </Paper>
+                        </Grid>
+                        <Grid
+                            className="채팅창"
+                            style={{
+                                width: '100%',
+                                height: '40%',
+                                opacity: '0.8',
+                                padding: '1vh 1vw 1vh 1vw',
+                            }}
+                            item
+                        >
+                            <Paper
+                                className={classes.paper}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    padding: '1vw 1vw 1vw 1vw',
+                                }}
+                            >
+                                <ChatRoom
+                                    SetInputCtrl={SetInputCtrl}
+                                    roomInfo={props.roomInfo}
+                                    roomID={props.roomID}
+                                    socket={props.socket}
+                                    chat={props.chat}
+                                />
+                            </Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
