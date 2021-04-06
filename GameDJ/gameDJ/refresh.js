@@ -237,6 +237,8 @@ class Refresh {
                 roomList[roomID]['gaming'] === false
             ) {
                 roomList[roomID]['gaming'] = true;
+                console.log('publicstart------------');
+                console.log(roomList[roomID]);
                 io.to(roomInfo['roomLeader']).emit('publicGameStart');
             }
 
