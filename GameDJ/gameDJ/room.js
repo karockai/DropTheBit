@@ -1,8 +1,4 @@
-import {
-    dbhget,
-    dbhmset,
-    dbhincrby,
-} from './redis.js';
+import { dbhget, dbhmset, dbhincrby } from './redis.js';
 import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
 
@@ -35,12 +31,12 @@ class Room {
 
     // 사방 : data : {playerID : name}
     async createPrivateRoom(data) {
-        const { socket } = this;
+        const { io, socket } = this;
         const roomID = nanoid(15);
         const socketID = socket.id;
         dotenv.config();
         let ipAddress = await dbhget(process.env.SERVERNAME, 'ip');
-        if(ipAddress){
+        if (ipAddress) {
             console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
             console.log(ipAddress);
             dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
@@ -71,18 +67,18 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPrivateRoom_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            // musicList: musicList,
         });
+        let message = playerID + '님이 들어오셨습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }
 
     // 공방 : data : {roomID : roomID, playerID : name}
     createPublicRoom(data) {
-        const { socket } = this;
+        const { io, socket } = this;
         const roomID = data.roomID;
         const socketID = socket.id;
         let playerID = data.playerID;
@@ -111,13 +107,13 @@ class Room {
 
         socket.roomID = roomID;
         socket.join(roomID);
-        // let musicList = ['Deja_Vu', 'King_Conga', 'Mausoleum_Mash'];
 
         socket.emit('createPublic_Res', {
             roomInfo: roomInfo,
             roomID: roomID,
-            // musicList: musicList,
         });
+        let message = playerID + '님이 들어오셨습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -126,10 +122,11 @@ class Room {
         if (data.playerID) {
             const roomID = data.roomID;
             let roomInfo = roomList[roomID];
+            let playerID = data.playerID;
             let socketID = socket.id;
 
             let playerInfo = {
-                playerID: data['playerID'],
+                playerID: playerID,
                 cash: 100000000,
                 asset: 100000000,
                 coinVol: 0,
@@ -141,23 +138,25 @@ class Room {
             };
 
             // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
-            if (roomInfo['roomLeader'] === 0){
+            if (roomInfo['roomLeader'] === 0) {
                 roomInfo['roomLeader'] = socket.id;
             }
 
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
             
-            // if (!socket.roomID){
-                socket.roomID = roomID;
-                socket.join(roomID);
-            // }
+            socket.roomID = roomID;
+            socket.join(roomID);
+
             playerStress++;
             io.to(roomID).emit('joinRoom_Res', {
                 roomID: roomID,
                 roomInfo: roomInfo,
                 socketID: socket.id,
             });
+
+            let message = playerID + '님이 들어오셨습니다.';
+            io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
         }
     }
 
@@ -177,13 +176,16 @@ class Room {
 
         roomList[roomID]['gameTime'] = musicTime;
         roomList[roomID]['music'] = musicName;
+        console.log((roomList[roomID]['music'] = musicName));
 
         io.to(roomID).emit('settingsUpdate_Res', {
             musicName: musicName,
             musicTime: musicTime,
         });
+        let message = '배경음악이 "' + musicName + '"로 변경되었습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SYSTEM]'});
     }
-    
+
     // 게임 한판 끝나고 로비로 돌아왔을때 유저 정보 초기화 (방 정보는 gameOver시 초기화)
     roomReinit(roomID) {
         const { io, socket } = this;
@@ -202,15 +204,16 @@ class Room {
             askVol: 0,
         };
 
-        // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함. 
+        // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함.
         // 방장이 설정된 후부터 ready time이 줄어들도록 함
-        if (roomInfo['roomLeader'] === 0){
+        if (roomInfo['roomLeader'] === 0) {
             roomInfo['roomLeader'] = socket.id;
         }
         roomInfo[socketID] = playerInfo;
         roomList[roomID] = roomInfo;
+        let message = playerID + '님이 들어오셨습니다.';
+        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }
-    
 }
 
 export default Room;

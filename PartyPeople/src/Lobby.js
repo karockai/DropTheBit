@@ -147,7 +147,6 @@ function Lobby(props) {
         }
         return playerList;
     }
-    console.log(props.roomInfo);
     return (
         <div
             style={{
@@ -181,8 +180,9 @@ function Lobby(props) {
                                 >
                                     <MenuIcon />
                                     <span style={{ fontSize: '2vw' }}>
-                                        {props.roomInfo[props.roomInfo['roomLeader']]['playerID'] +
-                                            ' 님의 단타방 📊'}
+                                        {props.roomInfo[
+                                            props.roomInfo['roomLeader']
+                                        ]['playerID'] + ' 님의 단타방 📊'}
                                     </span>
                                 </IconButton>
                             </Grid>
@@ -203,11 +203,7 @@ function Lobby(props) {
                         </Toolbar>
                     </AppBar>
                 </Grid>
-                <Grid
-                    className="하단컨텐츠그리드"
-                    container
-                    direction={'row'}
-                >
+                <Grid className="하단컨텐츠그리드" container direction={'row'}>
                     <Grid
                         className="채팅창제외좌측그리드"
                         item
@@ -255,7 +251,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '70%', height:'100%' }}
+                                    style={{ width: '70%', height: '100%' }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={1}>
@@ -292,7 +288,7 @@ function Lobby(props) {
                     <Grid
                         className="채팅창"
                         style={{
-                            width:'100%',
+                            width: '100%',
                             height: '90vh',
                             padding: '1vw 1vw 1vw 1vw',
                             opacity: '0.8',
@@ -303,7 +299,7 @@ function Lobby(props) {
                         <Paper
                             className={classes.paper}
                             style={{
-                                width:'100%',
+                                width: '100%',
                                 height: '100%',
                                 padding: '1vw 1vw 1vw 1vw',
                             }}

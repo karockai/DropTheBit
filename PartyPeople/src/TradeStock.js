@@ -94,6 +94,7 @@ export default function TradeStock(props) {
     const [currentVolume, SetVolume] = useState(1);
     const [newVolume, SetNewVolume] = useState(1);
     const [unitBid, SetUnit] = useState(0); // props.APIdata.priceUnit
+    const [unitVolume, SetUnitVolume] = useState(1);
     const [isBind, SetBind] = useState(false);
     const [isFocus, SetFocus] = useState(false);
     const [sellStatus, setSellStatus] = useState({
@@ -139,24 +140,32 @@ export default function TradeStock(props) {
     }, [isInit]);
 
     function VolumeUp(volume) {
+        //myWallet.myCoin == 매도 가능한 최대 코인수
+        //Math.floor(myWallet.myCash / currentBid) == 매수 가능한 최대코인수
+        const maxVol = Math.max(myWallet.myCoin,Math.floor(myWallet.myCash / currentBid));
+        if ( maxVol < volume + unitVolume) {
+            SetNewVolume( maxVol );
+            return;
+        }
         // if (
         //     volume + Math.floor((myWallet.myCash / currentBid) * 0.1) >
         //     Math.floor(myWallet.myCash / currentBid)
         // )
         //     return;555
-        SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
+        // SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
+        SetNewVolume(volume + unitVolume);
     }
     function VolumeDown(volume) {
-        if (volume - Math.floor((myWallet.myCash / currentBid) * 0.1) <= 0) {
+        if (volume - unitVolume <= 0) {
             SetNewVolume(1);
             return;
         }
-        SetNewVolume(
-            volume - Math.floor((myWallet.myCash / currentBid) * 0.1 + 1)
-        );
+        // SetNewVolume(
+        //     volume - Math.floor((myWallet.myCash / currentBid) * 0.1 + 1)
+        // );
+        SetNewVolume(volume - unitVolume);
     }
     function BidUp() {
-        console.log('hi');
         SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
@@ -375,6 +384,8 @@ export default function TradeStock(props) {
         props.socket.once('chart', (data) => {
             // coinName 추가
             SetUnit(data.priceUnit);
+            SetUnitVolume(data.volUnit);
+            console.log(data.volUnit);
             SetBid(data.curPrice);
         });
     }, []);

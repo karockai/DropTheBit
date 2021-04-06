@@ -1,5 +1,3 @@
-from websocket import WebSocketApp
-from threading import Thread
 import json
 import time, datetime
 import redis, copy
@@ -21,7 +19,7 @@ hoka_result = dict()
 
 try:
     conn = redis.StrictRedis(
-        host='3.34.156.16',
+        host='',
         port=6379,
         db=0)
 
@@ -34,6 +32,7 @@ last = len(dummyJuka_Hoka2.juka_list)
 while True:
     juka_result = dummyJuka_Hoka2.juka_list[i]
     hoka_result = dummyJuka_Hoka2.hoka_list[i]
+    juka_result['volUnit'] = 10000
     juka_result = json.dumps(juka_result, ensure_ascii=False)
     hoka_result = json.dumps(hoka_result, ensure_ascii=False)
     conn.set("curCoin", juka_result)
