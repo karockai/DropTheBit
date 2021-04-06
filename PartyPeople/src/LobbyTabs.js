@@ -24,6 +24,13 @@ const useStyles = makeStyles((theme) => ({
     typography: {
         padding: theme.spacing(2),
     },
+    paper: {
+        textAlign: 'center',
+        padding: theme.spacing(1),
+        textAlign: 'left',
+        color: '#000000',
+        backgroundColor: '#0C151C',
+    },
 }));
 
 function LobbyMusicOnOff(props) {
@@ -230,7 +237,7 @@ export default function LobbyTabs(props) {
                     horizontal: 'right',
                 }}
             >
-                <Typography className={classes.typography}>
+                <Typography className={classes.paper}>
                     <CheckLeader />
                 </Typography>
             </Popover>

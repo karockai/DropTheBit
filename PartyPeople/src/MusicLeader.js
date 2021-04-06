@@ -10,6 +10,7 @@ import {
     Grid,
     Paper,
     makeStyles,
+    withStyles,
     TextField,
 } from '@material-ui/core';
 
@@ -38,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
+    },
+    select: {
+        '&:before': {
+            borderColor: 'red',
+        },
+    },
+    icon: {
+        fill: 'red',
     },
 }));
 
@@ -84,11 +93,22 @@ export default function MusicLeader(props) {
         return (
             <div>
                 <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">
+                    <InputLabel
+                        style={{ color: '#fff' }}
+                        id="demo-simple-select-label"
+                    >
                         Select Music
                         {/* {props.music} */}
                     </InputLabel>
                     <Select
+                    className={classes.select}
+                        inputProps={{
+                            classes: {
+                                select: classes.select,
+                                icon: classes.icon,
+                            },
+                        }}
+                        style={{ color: '#ffffff' }}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={props.music}
@@ -143,11 +163,15 @@ export default function MusicLeader(props) {
             <form className={classes.root} noValidate autoComplete="off">
                 <div>
                     <TextField
+                        InputLabelProps={{
+                            style: { color: '#fff' },
+                        }}
                         id="standard-read-only-input"
                         label="Play Time"
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
+                            style: { color: '#fff' },
                         }}
                     />
                 </div>
