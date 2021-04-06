@@ -12,7 +12,7 @@ import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 // import Sound from './Sound';
-import backgroundImg from './videos/LobbyVideo1.mp4';
+import backgroundImg from './videos/LobbyVideo2.mp4';
 import LobbyMusic from './audios/music/Tetris99.mp3';
 export default function EnterRoom(props) {
     // const history = useHistory();

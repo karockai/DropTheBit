@@ -29,7 +29,7 @@ import { ChatFeed, Message } from 'react-chat-ui';
 import LobbyTabs from './LobbyTabs';
 import './Lobby.css';
 import StartGame from './StartGame';
-import backgroundImg from './videos/LobbyVideo1.mp4';
+import backgroundImg from './videos/LobbyVideo2.mp4';
 
 const useStyles = makeStyles((theme) => ({
     root: {
