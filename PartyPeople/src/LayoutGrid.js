@@ -171,7 +171,7 @@ export default function LayoutGrid(props) {
                             className ="지갑컴퍼넌트"
                                 style={{
                                     width: '100%',
-                                    height: '50%',
+                                    height: '60%',
                                 }}
                                 container
                                 item
@@ -190,7 +190,7 @@ export default function LayoutGrid(props) {
                             className="거래내역컴퍼넌트"
                                 style={{
                                     width: '100%',
-                                    height: '50%',
+                                    height: '40%',
                                     padding:'0.3vh 0.3vw 0.3vh 0.3vw'
                                 }}
                                 item

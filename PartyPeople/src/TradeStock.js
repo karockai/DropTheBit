@@ -124,9 +124,10 @@ export default function TradeStock(props) {
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
-                const currentCash = data.cash;
-                const currentAsset = data.asset;
-                const currentCoin = data.coinVol;
+                const refreshWallet = data.refreshWallet;
+                const currentCash = refreshWallet.cash;
+                const currentAsset = refreshWallet.asset;
+                const currentCoin = refreshWallet.coinVol;
                 setWallet({
                     myCash: currentCash,
                     myAsset: currentAsset,

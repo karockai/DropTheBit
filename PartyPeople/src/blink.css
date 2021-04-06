@@ -1,35 +1,74 @@
 .blinking {
-    -webkit-animation: blink 1s ease-in-out  ;
-    -moz-animation: blink 1s ease-in-out  ;
-    animation: blink 1s ease-in-out  ;
+    -webkit-animation: blink 1s ease-out;
+    -moz-animation: blink 1s ease-out;
+    animation: blink 1s ease-out;
 }
+
+.plus {
+    --color: red;
+}
+
+.minus {
+    --color: #0088ff;
+}
+
+.default {
+    opacity: 0;
+}
+
 @-webkit-keyframes blink {
     0% {
-        /* opacity: 0; */
-        background-color: none;
+        opacity: 1;
+        background-color: var(--color);
     }
     100% {
-        /* opacity: 1; */
-        background-color: purple;
+        opacity: 0;
+        background-color: none;
     }
 }
 @-moz-keyframes blink {
     0% {
-        /* opacity: 0; */
-        background-color: none;
+        opacity: 1;
+        background-color: var(--color);
     }
     100% {
-        /* opacity: 1; */
-        background-color: purple;
+        opacity: 0;
+        background-color: none;
     }
 }
 @keyframes blink {
     0% {
-        /* opacity: 0; */
-        background-color: none;
+        opacity: 1;
+        background-color: var(--color);
     }
     100% {
-        /* opacity: 1; */
-        background-color: purple;
+        opacity: 0;
+        background-color: none;
     }
 }
+/* @-webkit-keyframes fadeout {
+    0% {
+        opacity: 0;
+        background-color: var(--color);
+    }
+    100% {
+        opacity: 1;
+        background-color: none;
+    }
+}
+@-moz-keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes fadeout {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+} */

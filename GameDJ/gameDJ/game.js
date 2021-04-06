@@ -50,7 +50,11 @@ class Game {
         refreshWallet['asset'] = 100000000;
         refreshWallet['avgPrice'] = 0;
 
-        this.refreshWallet(socketID, refreshWallet, bfrWallet);
+        let walletInfo = {
+            refreshWallet:refreshWallet,
+            bfrWallet:bfrWallet,
+        };
+        io.to(roomID).emit('refreshWallet', walletInfo);
     }
 
     buy(reqJson) {
@@ -402,7 +406,7 @@ class Game {
 
     refreshWallet(socketID, refreshWallet, bfrWallet) {
         const { io } = this;
-        walletInfo = {
+        let walletInfo = {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };

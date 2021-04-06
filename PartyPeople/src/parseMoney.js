@@ -45,4 +45,47 @@ function SplitByThree(value) {
     );
 }
 
-export {ExpBySymbol, parseWonToStr, SplitByThree};
+// * 이전 값과 현재 값을 비교해서
+//*  +/-에 맞는 색으로 출력. 값이 같다면 출력하지 않는다.
+function showProfit(id , diff) {
+    console.log(diff);
+    // const asset = document.getElementById();
+    // let diff = curValue - bfValue; 
+    let result = '';
+    let color = '';
+
+    if (diff === 0) {
+        return result;
+    }
+    const asset = document.getElementById(id);
+    if (asset) asset.classList.remove('default');
+    
+    if(diff > 0) {     // ! 흑자
+        if (asset) asset.classList.add('plus');
+        result += '+';
+        color = 'red';
+    }
+    else {                  // ? 적자
+        if (asset) asset.classList.add('minus');
+        color = 'blue';
+    }
+    
+    
+    if (asset) asset.classList.add('blinking');
+    setTimeout(function () {
+        if (asset) asset.classList.remove('blinking');
+        if (asset) asset.classList.remove('plus');
+        if (asset) asset.classList.remove('minus');  
+        if (asset) asset.classList.add('default');
+    }, 500);
+    // document.getElementById(id).fadeOut(1000);
+
+
+
+    result += ExpBySymbol(parseWonToStr(diff));
+    // console.log(result);
+    return (result);
+}
+// {ExpBySymbol(parseWonToStr(myWallet.myCash))}
+
+export {ExpBySymbol, parseWonToStr, SplitByThree ,showProfit};
