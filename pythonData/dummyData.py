@@ -4,6 +4,12 @@ import redis, copy
 import coinName
 import dummyJuka_Hoka1
 import dummyJuka_Hoka2
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+redisIP = os.environ.get("REDIS")
+redisPWD = os.environ.get("REDIS_PASSWORD")
 
 start = 0
 end = 0
@@ -19,7 +25,8 @@ hoka_result = dict()
 
 try:
     conn = redis.StrictRedis(
-        host='',
+        host=redisIP,
+        password=redisPWD,
         port=6379,
         db=0)
 

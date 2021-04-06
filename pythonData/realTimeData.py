@@ -9,6 +9,7 @@ import os
 
 load_dotenv()
 redisIP = os.environ.get("REDIS")
+redisPWD = os.environ.get("REDIS_PASSWORD")
 start = 0
 end = 0
 data_make = []
@@ -26,6 +27,7 @@ try:
     conn = redis.StrictRedis(
         host=redisIP,
         port=6379,
+        password=redisPWD,
         db=0)
     # print("hmset", conn.set("curCoin", "hihhihihi"))
     # print("hgetall", conn.get("curCoin"))

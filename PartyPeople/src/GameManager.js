@@ -68,22 +68,27 @@ class GameManager extends React.Component {
                             })
                             socket.emit('disconnect');
                         })
-            });
-            const setSocket = (socket) => {
-                this.setState({ socketId: socket });
-            };
-            const addSocket = () => {
-                if (this.socketId === null) {
-                    this.setState({ socketId: this.socket });
-                }
-            };
-            const addMessage = (data) => {
-                this.setState({ messages: [...this.state.messages, data] });
-            };
-                // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
-                // 이 자리에 들어가면 될거같아요
-                // room, start 버튼 도입하면 해결될 문제 !
-            });
+                    });
+                    //여기서 roomID 이상한 주소로 들어온 경우 처리해줘야 한다.
+                    socket.on('roomConnectErr', ()=>{
+
+                    })
+                
+                    const setSocket = (socket) => {
+                        this.setState({ socketId: socket });
+                    };
+                    const addSocket = () => {
+                        if (this.socketId === null) {
+                            this.setState({ socketId: this.socket });
+                        }
+                    };
+                    const addMessage = (data) => {
+                        this.setState({ messages: [...this.state.messages, data] });
+                    };
+                        // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
+                        // 이 자리에 들어가면 될거같아요
+                        // room, start 버튼 도입하면 해결될 문제 !
+                });
         }
         else{
             this.socket = io(process.env.REACT_APP_SERVER);
