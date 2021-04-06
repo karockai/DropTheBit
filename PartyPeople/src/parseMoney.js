@@ -35,4 +35,14 @@ const parseWonToStr = (won) => {
     return won;
 };
 
-export {ExpBySymbol, parseWonToStr};
+function SplitByThree(value) {
+    if (!value) return 'Something wrong.';
+    if (value.length <= 3) return value;
+    return (
+        SplitByThree(value.substring(0, value.length - 3)) +
+        ',' +
+        value.substring(value.length - 3, value.length)
+    );
+}
+
+export {ExpBySymbol, parseWonToStr, SplitByThree};

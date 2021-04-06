@@ -19,6 +19,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, Grid, GridList} from '@material-ui/core';
+import {ExpBySymbol, parseWonToStr} from './parseMoney';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     tableBodyText : {
         fontSize: '1.0vw',
         color:'white'
+    },
+    container : {
+        maxHeight: 440,
     }
 }));
 
@@ -73,6 +77,40 @@ export default function GameOverModal(props) {
 
     const handleClose = () => {
         setOpen(false);
+    };
+    const showScore = (score) => {
+        console.log(score);
+        let result = ''
+        if (score  == 1) result += '🥇 ';
+        if (score  == 2) result += '🥈 ';
+        if (score  == 3) result += '🥉 ';
+        else result += '  ';
+
+        result += String(score);
+        return (
+            <span>
+            {result}
+            </span>
+        );
+
+        
+    }
+
+    const showAsset = (asset) => {
+
+        let result = asset -100000000;
+        let color = 'white';
+        if (result > 0) color= 'red';
+        if (result < 0) color= '#1e88e5';
+        return(
+            <TableCell style={{fontSize:'2vh', color:color}} align="right">
+                {
+                    ExpBySymbol(parseWonToStr(result))+' 원'
+                }
+            </TableCell>
+            
+        );
+
     };
 
     console.log(props.leaderBoard);
@@ -101,7 +139,7 @@ export default function GameOverModal(props) {
                         🌠Game Finished🌠
                     </h2>
                     <Grid container direction={'column'} alignItems={'center'}>
-                        <TableContainer component={Paper}>
+                        <TableContainer id ="테이블 컨테이너" component={Paper} className={classes.container}>
                             <Table
                                 className={classes.table}
                                 aria-label="simple table"
@@ -113,44 +151,31 @@ export default function GameOverModal(props) {
                                             Player ID
                                         </TableCell>
                                         <TableCell className={classes.tableHead} align="right">
-                                            최종 평가 자산
+                                            최종 수익
                                         </TableCell>
                                         {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                <GridList>
-                                {/* <Grid> */}
                                         {rows.map((row, idx) => (
-                                            <TableRow key={row.playerID} className={classes.tableBody}>
+                                            <TableRow key={row.playerID} id ="테이블셀로우" className={classes.tableBody}>
                                                 <TableCell
                                                     component="th"
                                                     scope="row"
                                                     className={classes.tableBodyText} 
+                                                    style={{width:'12%'}}
+                                                    align="right"
                                                 >
-                                                    {idx + 1}
+                                                {showScore(idx+1)}
                                                 </TableCell>
                                                 <TableCell className={classes.tableBodyText}  align="right">
                                                     {row.playerID}
                                                 </TableCell>
-                                                {   (() => {
-                                                    let result = row.asset -100000000;
-                                                    let color = 'white';
-                                                    if (result > 0) color= 'red';
-                                                    if (result < 0) color= 'blue';
-                                                        return(
-                                                        <TableCell style={{fontSize:'1vh', color:color}} align="right">
-                                                            {
-                                                                result
-                                                            }
-                                                        </TableCell>
-                                                        );
-                                                    })
+                                                {
+                                                    showAsset(row.asset)
                                                 }
                                             </TableRow>
                                         ))}
-                                        {/* </Grid> */}
-                                        </GridList>
                                     </TableBody>
                             </Table>
                         </TableContainer>
