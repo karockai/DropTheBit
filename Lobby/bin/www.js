@@ -7,7 +7,7 @@ import redis from 'redis';
 import util from 'util';
 import dotenv from 'dotenv';
 dotenv.config();
-let client = redis.createClient({ host: process.env.REDIS });
+let client = redis.createClient({ host: process.env.REDIS, password: process.env.REDIS_PASSWORD});
 client.on('error', function (error) {
     console.error(error);
 });
