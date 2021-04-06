@@ -68,8 +68,7 @@ export default function MyAsset(props) {
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
-                // console.log(data.type + '으로 인해서 발생함.');
-                // const refreshWallet = data;
+
                 const refreshWallet = data.refreshWallet;
                 const bfrWallet = data.bfrWallet;
 
@@ -78,30 +77,12 @@ export default function MyAsset(props) {
                 const currentCoin = refreshWallet.coinVol;
                 const currentAvg = refreshWallet.avgPrice;
 
-                // console.log(bfrWallet.asset);
-                // console.log(typeof(bfrWallet.asset));
-                // console.log(currentAsset);
-                // console.log(typeof(currentAsset));
 
-                const diffAsset = bfrWallet.asset - currentAsset;
+                const diffAsset = currentAsset - bfrWallet.asset;
                 
                 const diffCash = currentCash - bfrWallet.cash;
                 const diffCoin = currentCoin - bfrWallet.coinVol;   
-                // const asset = document.getElementById('changeAsset');
-                // console.log(asset);
-                // if (asset) asset.classList.add('blinking');
-                // setTimeout(function () {
-                //     if (asset) asset.classList.remove('blinking');
-                // }, 700);
-                // if (currentAsset > myAsset) {
-                //     color = 'red';
-                // }
-                // else if (currentAsset < myAsset) {
-                //     color = 'blue';
-                // }
-                // console.log(currentAsset);
-                // console.log(myAsset);
-                // console.log(color);
+
                 setDiffWallet({
                     diffCash: diffCash,
                     diffAsset: diffAsset,
@@ -113,18 +94,6 @@ export default function MyAsset(props) {
                     myCoin: currentCoin,
                     myAvg: currentAvg,
                 });
-
-                // const asset = document.getElementById();
-                // if (asset) asset.classList.add('blinking');
-                // setTimeout(function () {
-                //     if (asset) asset.classList.remove('blinking');
-                // }, 700);
-                
-                // const key = document.getElementById(e.key);
-                // if (key) key.classList.add('pressed');
-                // setTimeout(function () {
-                //     if (key) key.classList.remove('pressed');
-                // }, eventTime);
             });
         }
     }, [isInit]);
@@ -192,8 +161,8 @@ export default function MyAsset(props) {
                         <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))}
                         </h5>
-                        <div id="diffCash" class="default" style={{ fontWeight: 'bold', fontSize: '1vw',}}>
-                            {' '}{showProfit('diffCash', diffWallet.diffCash)}
+                        <div id="diffCash" class="default" style={{ fontWeight: 'bold', fontSize: '1vw', textAlign:'right' , padding:'0 10% 0 0'}}>
+                            {showProfit('diffCash', diffWallet.diffCash)}{' '}
                         </div>
                         
                     </Paper>
@@ -205,7 +174,7 @@ export default function MyAsset(props) {
                     <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
                         보유 코인 수 (개)
                         <h3 style={{ fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
-                        <h3 id="diffCoin" class="default" style={{ fontSize: '1vw' }}>{' '}{showProfit('diffCoin', diffWallet.diffCoin)}</h3>
+                        <h3 id="diffCoin" class="default" style={{ fontSize: '1vw' ,textAlign:'right' , padding:'0 10% 0 0'}}>{showProfit('diffCoin', diffWallet.diffCoin)}{' '}</h3>
                     </Paper>
                 </Grid>
             </Grid>
@@ -230,8 +199,8 @@ export default function MyAsset(props) {
                         <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
                             {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
                         </h2>
-                        <h2 id="diffAsset" class="default" style={{ fontWeight: 'bold', fontSize: '1.5vw', color: color}}>
-                            {' '}{showProfit('diffAsset',diffWallet.diffAsset)}
+                        <h2 id="diffAsset" class="default" style={{ fontWeight: 'bold', fontSize: '1.5vw', color: color, textAlign:'right', padding:'0 10% 0 0'}}>
+                            {showProfit('diffAsset',diffWallet.diffAsset)}{' '}
                         </h2>
                     </Paper>
                 </Grid>

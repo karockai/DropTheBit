@@ -77,8 +77,8 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
-    console.log(props.roomInfo);
-    console.log(props.roomInfo.gaming);
+    // console.log(props.roomInfo);
+    // console.log(props.roomInfo.gaming);
     return (
         <>
             {over && (

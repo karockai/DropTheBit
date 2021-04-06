@@ -65,7 +65,7 @@ export default function EnterRoom(props) {
             props.socket.emit('createPrivateRoom_Req', { playerID: name });
             props.socket.on('createPrivateRoom_Res', (data) => {
                 props.SetRoomIdAndInfo(data);
-                console.log(data);
+                // console.log(data);
             });
         } else {
             // flag === 1, joinPublic

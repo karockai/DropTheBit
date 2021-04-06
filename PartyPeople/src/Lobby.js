@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Lobby(props) {
-    console.log(props.roomInfo);
+    // console.log(props.roomInfo);
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;

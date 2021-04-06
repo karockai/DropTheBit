@@ -32,6 +32,7 @@ import SellConfirm from './audios/effect/SellConfirm.wav';
 import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
 import {SplitByThree} from './parseMoney';
+import './blink.css';
 
 const CssTextField = withStyles({
     root: {
@@ -303,6 +304,34 @@ export default function TradeStock(props) {
         SetBind(true);
         return status;
     }
+    const changeEffect = (id)=> {
+
+        if (id === 'ArrowDown' || id === 'ArrowUp') {
+            const target_class = document.getElementById('bidInput');
+            if (id === 'ArrowUp') target_class.classList.add('plus');
+            else target_class.classList.add('minus');
+            target_class.classList.add('font_blinking');
+            
+            setTimeout(function () {
+                if (id === 'ArrowUp') target_class.classList.remove('plus');
+                else target_class.classList.remove('minus');
+                target_class.classList.remove('font_blinking');
+            }, 100);
+        }
+        else if (id === 'ArrowLeft' ||id === 'ArrowRight') {
+            const target_class = document.getElementById('countInput');
+            if (id === 'ArrowRight') target_class.classList.add('plus');
+            else target_class.classList.add('minus');
+            target_class.classList.add('font_blinking');
+
+            setTimeout(function () {
+                if (id === 'ArrowRight') target_class.classList.remove('plus');
+                else target_class.classList.remove('minus');
+                target_class.classList.remove('font_blinking');
+            }, 100);
+        }
+
+    };
 
     function HandleKeyUp(e) {
         if (props.inputCtrl) return;
@@ -319,28 +348,28 @@ export default function TradeStock(props) {
             RefreshBid_Req();
         } else if (e.keyCode === 37) {
             //_ LEFT ARROW
+            changeEffect('ArrowLeft');
             let tmpAudio = new Audio(VolDown);
             tmpAudio.play();
             tmpAudio.remove();
             VolumeDown(currentVolume);
         } else if (e.keyCode === 39) {
             //_ RIGHT ARROW
+            changeEffect('ArrowRight');
             let tmpAudio = new Audio(VolUp);
             tmpAudio.play();
             tmpAudio.remove();
             VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
+            changeEffect('ArrowUp');
             let tmpAudio = new Audio(PriceUp);
             tmpAudio.play();
             tmpAudio.remove();
             BidUp();
-
-            // console.log(e.key);
-            // const key = document.getElementById(e.key);
-            // if (key) key.classList.add("pressed");
         } else if (e.keyCode === 40) {
             //_ DOWN ARROW
+            changeEffect('ArrowDown');
             let tmpAudio = new Audio(PriceDown);
             tmpAudio.play();
             tmpAudio.remove();
@@ -383,7 +412,6 @@ export default function TradeStock(props) {
             // coinName 추가
             SetUnit(data.priceUnit);
             SetUnitVolume(data.volUnit);
-            console.log(data.volUnit);
             SetBid(data.curPrice);
         });
     }, []);
@@ -421,13 +449,17 @@ export default function TradeStock(props) {
     }, [buyStatus]);
 
     function handleVolumeChange(e) {
-        if (e.target.id === 'outlined-required') {
+        if (e.target.id === 'countInput') {
             SetVolume(e.target.value);
             SetFocus(true);
         }
+
+
     }
+
     function handleBidChange(e) {
-        if (e.target.id === 'outlined-required') {
+        if (e.target.id === 'bidInput') {
+
             SetBid(e.target.value);
             SetFocus(true);
         }
@@ -481,6 +513,9 @@ export default function TradeStock(props) {
         '.' +
         dateString.getMilliseconds() +
         ') ';
+
+
+
     const clickButton = (e) => {
         if (e.target) e.target.classList.add('clicked');
 
@@ -488,6 +523,8 @@ export default function TradeStock(props) {
             if (e.target) e.target.classList.remove('clicked');
         }, eventTime);
     };
+
+    
 
     // console.log(SplitByThree(String(currentBid)));
     return (
@@ -591,6 +628,7 @@ export default function TradeStock(props) {
                         className={classes.arrow}
                         onClick={(e) => {
                             clickButton(e);
+                            changeEffect(e.target.id);
                             let tmpAudio = new Audio(PriceDown);
                             tmpAudio.play();
                             tmpAudio.remove();
@@ -601,19 +639,20 @@ export default function TradeStock(props) {
                         ▼
                     </Button>
 
-                    <CssTextField
-                        className={classes.input}
-                        id="custom-css-standard-input"
-                        size="small"
-                        style={{ width: '50%' }}
-                        value={SplitByThree(String(currentBid))}
-                        onChange={handleBidChange}
-                        disabled
-                    />
+                    {/* <CssTextField */}
+                    <h5
+                        id="bidInput"
+                        style={{ width: '50%', fontSize: '2.5vw', }}
+                        // value={SplitByThree(String(currentBid))}
+                        onChange={handleBidChange}>
+                    {SplitByThree(String(currentBid))}
+                    </h5>
+
                     <Button
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
+                            changeEffect(e.target.id);
                             let tmpAudio = new Audio(PriceUp);
                             tmpAudio.play();
                             tmpAudio.remove();
@@ -636,6 +675,7 @@ export default function TradeStock(props) {
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
+                            changeEffect(e.target.id);
                             let tmpAudio = new Audio(VolDown)
                             tmpAudio.play();
                             tmpAudio.remove();
@@ -645,18 +685,19 @@ export default function TradeStock(props) {
                     >
                         ◀
                     </button>
-                    <CssTextField
-                        className="count"
-                        id="outlined-required"
-                        style={{ width: '50%', fontSize: 20 }}
-                        value={SplitByThree(String(currentVolume))}
+                    <h5
+                        id="countInput"
+                        style={{ width: '50%', fontSize: '2.5vw', }}
                         onChange={handleVolumeChange}
                         disabled
-                    />
+                    >
+                        {SplitByThree(String(currentVolume))}
+                    </h5>
                     <button
                         class="arrow"
                         onClick={(e) => {
                             clickButton(e);
+                            changeEffect(e.target.id);
                             let tmpAudio = new Audio(VolUp)
                             tmpAudio.play();
                             tmpAudio.remove();

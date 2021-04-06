@@ -1,7 +1,12 @@
 .blinking {
-    -webkit-animation: blink 1s ease-out;
-    -moz-animation: blink 1s ease-out;
-    animation: blink 1s ease-out;
+    -webkit-animation: blink 1s ease-in;
+    -moz-animation: blink 1s ease-in;
+    animation: blink 1s ease-in;
+}
+.font_blinking {
+    -webkit-animation: font_blink 1s ease-in;
+    -moz-animation: font_blink 1s ease-in;
+    animation: font_blink 1s ease-in;
 }
 
 .plus {
@@ -15,6 +20,9 @@
 .default {
     opacity: 0;
 }
+
+
+/*  background blink*/
 
 @-webkit-keyframes blink {
     0% {
@@ -46,29 +54,30 @@
         background-color: none;
     }
 }
-/* @-webkit-keyframes fadeout {
+
+/*  font blink */
+
+@-webkit-keyframes font_blink {
     0% {
-        opacity: 0;
-        background-color: var(--color);
+        color: var(--color);
     }
     100% {
-        opacity: 1;
-        background-color: none;
+        color: white;
     }
 }
-@-moz-keyframes fadeout {
+@-moz-keyframes font_blink {
     0% {
-        opacity: 1;
+        color: var(--color);
     }
     100% {
-        opacity: 0;
+        color: white;
     }
 }
-@keyframes fadeout {
+@keyframes font_blink {
     0% {
-        opacity: 0;
+        color: var(--color);
     }
     100% {
-        opacity: 1;
+        color: white;
     }
-} */
+}
