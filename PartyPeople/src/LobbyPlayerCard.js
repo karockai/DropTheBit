@@ -79,10 +79,10 @@ export default function LobbyPlayerCard(props) {
     else {
       playerInfo = (
         <>
-        <Grid item style={{ fontSize: 3 / ratio + 'vw' }}>
+        <Grid item style={{ fontSize: 3 / ratio + 'vw', height:'30%' }}>
         {isLeader}
     </Grid>
-    <Grid item style={{ fontSize: 5 / ratio + 'vw' }}>
+    <Grid item style={{ fontSize: 5 / ratio * (3 / props.playerID.length) + 'vw',  height:'70%' , padding: (props.playerID.length / 3) + 'vh'}}>
         {props.playerID}
     </Grid>
     </>
@@ -94,7 +94,7 @@ export default function LobbyPlayerCard(props) {
         <Grid
             style={{
                 width: 50 / ratio + '%',
-                height: 100 / ratio + '%',
+                height: 50 / ratio + '%',
                 padding: 1 / ratio + 'vh ' + 1 / ratio + 'vw',
             }}
         >
@@ -114,8 +114,8 @@ export default function LobbyPlayerCard(props) {
                             item
                             xs={8}
                             direction={'column'}
-                            justify={'flex-start'}
-                            alignItems={'flex-end'}
+                            justify={'center'}
+                            alignItems={'flex-start'}
                         >
                             {playerInfo}
                         </Grid>

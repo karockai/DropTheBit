@@ -223,16 +223,15 @@ export default function StartGame(props) {
                     )}
                     {!props.isLeader && (
                         <Button
-                            class="start"
                             style={{
                                 width: '80%',
                                 height: '17vh',
-                                fontSize: '10vh',
+                                fontSize: '5vh',
                             }}
                             text
                             disabled
                         >
-                            {'Waiting to Start'}
+                            {'방장이 게임을 시작합니다.'}
                         </Button>
                     )}
                 </>
