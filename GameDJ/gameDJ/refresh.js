@@ -1,6 +1,4 @@
-import {
-    dbget,
-} from './redis.js';
+import { dbget } from './redis.js';
 import Game from './game.js';
 
 class Refresh {
@@ -14,7 +12,7 @@ class Refresh {
         // 1. bidList 불러옴
         let updateCurCoin = JSON.parse(await dbget('curCoin'));
         if (!updateCurCoin) return false;
-        curCoin = updateCurCoin
+        curCoin = updateCurCoin;
         io.emit('chart', curCoin);
         let curPrice = curCoin['curPrice'];
         console.log(curPrice);
@@ -260,6 +258,7 @@ class Refresh {
         const { io } = this;
         let roomInfo = roomList[roomID];
         let leaderBoard = [];
+
         for (let socketID in roomInfo) {
             if (socketID.length < 15) continue;
             let playerInfo = roomInfo[socketID];
@@ -287,12 +286,28 @@ class Refresh {
             return b['asset'] - a['asset'];
         });
 
+        // 랭크 갱신
+        for (let i = 0; i <= leaderBoard.length - 1; i++) {
+            let newRankIdx = -1;
+            for (let j = 9; j >= 0; j--) {
+                if (todayRank[j]['asset'] < leaderBoard[i]['asset']) {
+                    newRankIdx = j;
+                } else break;
+            }
+            if (newRankIdx === -1) {
+                break;
+            } else {
+                todayRank.splice(newRankIdx, 0, leaderBoard[i]);
+            }
+        }
+        todayRank.splice(10);
+
         // back to lobby 를 위한 수정
         // 방 정보가 초기화되어있지 않으면
         if (roomInfo['gameTime'] < 0) {
             roomInfo['gameTime'] = 0;
             roomInfo['music'] = 'Random_Music';
-            if (roomID === publicRoomID){
+            if (roomID === publicRoomID) {
                 roomInfo['roomLeader'] = 0;
             }
             roomInfo['gaming'] = false;
