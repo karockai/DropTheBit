@@ -5,6 +5,7 @@
 ### Node ###
 # Logs
 hax0r-report*
+report*
 logs
 *.log
 npm-debug.log*
