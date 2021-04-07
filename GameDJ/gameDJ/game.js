@@ -432,7 +432,6 @@ class Game {
     sendBidTab(reqJson) {
         const { io } = this;
         let socketID = reqJson['socketID'];
-        console.log('ho');
         io.to(socketID).emit('refreshBid', exList);
     }
 }
