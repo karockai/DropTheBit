@@ -77,19 +77,19 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', (reqJson) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList[socket.roomID]['gaming']) return 0;
                 new Game(io, socket).buy(reqJson);
             });
             socket.on('sell_Req', (reqJson) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList[socket.roomID]['gaming']) return 0;
                 new Game(io, socket).sell(reqJson);
             });
             socket.on('cancelBid_Req', (reqJson) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList[socket.roomID]['gaming']) return 0;
                 new Game(io, socket).cancelBid(reqJson);
             });
             socket.on('cancelAsk_Req', (reqJson) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList[socket.roomID]['gaming']) return 0;
                 new Game(io, socket).cancelAsk(reqJson);
             });
             socket.on('bidTab_Req', (reqJson) => {

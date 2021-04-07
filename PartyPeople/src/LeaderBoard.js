@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tableBodyText: {
         fontFamily: 'NEXON Lv1 Gothic OTF',
-        fontSize: '0.7vw',
+        fontSize: '1vw',
         color: 'white',
     },
     container: {
@@ -164,7 +164,7 @@ export default function LeaderBoard(props) {
                                             component="th"
                                             scope="row"
                                             className={classes.tableBodyText}
-                                            style={{ width: '15%' }}
+                                            style={{ width: '20%' }}
                                             align="left"
                                         >
                                             {showScore(idx + 1)}

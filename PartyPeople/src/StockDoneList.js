@@ -6,7 +6,12 @@ import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import ExEnroll from './audios/effect/ExEnroll.wav';
 import BuyDone from './audios/effect/BuyDone.wav';
 import SellDone from './audios/effect/SellDone.wav';
-import {ExpBySymbol, parseWonToStr, SplitByThree ,showProfit} from './parseMoney';
+import {
+    ExpBySymbol,
+    parseWonToStr,
+    SplitByThree,
+    showProfit,
+} from './parseMoney';
 
 const defaultTextStyle = {
     color: '#DCDCDC',
@@ -92,13 +97,17 @@ export default function StockDoneList(props) {
                     <Grid style={{ fontSize: '1.05vw' }}>
                         <pre style={defaultTextStyle} key={idx}>
                             <span style={highlightTextStyle}>
-                                {props.isMine ? ' ' : done.playerID}님
+                                {props.isMine ? ' ' : done.playerID + '님'}
                             </span>
-                            {props.isMine ? '' : '님이 '}
-                            <span style={highlightTextStyle}>{SplitByThree(String(done.price))}</span>
-                            원에{' '}
-                            <span style={highlightTextStyle}>{SplitByThree(String(done.vol))}</span>
-                            개를 <span style={buySellColor}>{done.type}.</span>
+                            {props.isMine ? '' : '이 '}
+                            <span style={highlightTextStyle}>
+                                {SplitByThree(String(done.price)) + '원'}
+                            </span>
+                            에{' '}
+                            <span style={highlightTextStyle}>
+                                {SplitByThree(String(done.vol)) + '개'}
+                            </span>
+                            를 <span style={buySellColor}>{done.type}.</span>
                         </pre>
                     </Grid>
                 );

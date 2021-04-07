@@ -35,7 +35,6 @@ class Game {
             }
             dataForStart['musicName'] = roomList[roomID]['music'];
             dataForStart['gameTime'] = roomList[roomID]['gameTime'];
-
             io.to(roomID).emit('startGame_Real', dataForStart);
         }
         //!  확인 필요
