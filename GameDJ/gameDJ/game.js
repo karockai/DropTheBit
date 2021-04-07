@@ -26,7 +26,10 @@ class Game {
             let roomID = socket.roomID;
             let dataForStart = {};
             // 방장이 시작하는 경우에만 3,2,1 추가되도록함 (중간유저 입장 시 3초 추가 안되도록)
-            if (roomList[roomID].hasOwnProperty('roomLeader') && roomList[roomID]['roomLeader'] === socket.id){
+            if (
+                roomList[roomID].hasOwnProperty('roomLeader') &&
+                roomList[roomID]['roomLeader'] === socket.id
+            ) {
                 roomList[roomID]['gameTime'] += 3;
             }
             dataForStart['musicName'] = roomList[roomID]['music'];
@@ -51,8 +54,8 @@ class Game {
         refreshWallet['avgPrice'] = 0;
 
         let walletInfo = {
-            refreshWallet:refreshWallet,
-            bfrWallet:bfrWallet,
+            refreshWallet: refreshWallet,
+            bfrWallet: bfrWallet,
         };
         io.to(roomID).emit('refreshWallet', walletInfo);
     }
@@ -92,39 +95,39 @@ class Game {
             } else {
                 playerInfo['avgPrice'] = Math.round(
                     (coinVol * playerInfo['avgPrice'] + reqVol * curPrice) /
-                    (coinVol + reqVol)
-                    );
-                }
-                
-                // ! 실수로 잘못된 값이 들어온 경우 처리하기
-                if (cash < curPrice * reqVol) {
-                    console.log('Buy 이상한 입력이 감지되었다 :', reqJson);
-                }
-                
-                // 6-1. cash, coin 갯수 갱신
-                cash -= curPrice * reqVol;
-                coinVol += reqVol;
-                
-                // 6-2. playerInfo Update
-                playerInfo['cash'] = cash;
-                playerInfo['coinVol'] = coinVol;
-                
-                roomList[roomID][socketID] = playerInfo;
-                
-                // 6-4. buyDone
-                let buyDone = {
-                    type: '매수 완료',
-                    // 6-3. refreshWallet update & emit
-                    socketID: socketID,
-                    playerID: playerID,
-                    vol: reqVol,
-                    price: curPrice,
-                };
-                io.to(roomID).emit('buyDone_Room', buyDone);
-                
-                // console.log('현재가로 구매 완료 :', playerInfo);
-                // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
-            } else {
+                        (coinVol + reqVol)
+                );
+            }
+
+            // ! 실수로 잘못된 값이 들어온 경우 처리하기
+            if (cash < curPrice * reqVol) {
+                console.log('Buy 이상한 입력이 감지되었다 :', reqJson);
+            }
+
+            // 6-1. cash, coin 갯수 갱신
+            cash -= curPrice * reqVol;
+            coinVol += reqVol;
+
+            // 6-2. playerInfo Update
+            playerInfo['cash'] = cash;
+            playerInfo['coinVol'] = coinVol;
+
+            roomList[roomID][socketID] = playerInfo;
+
+            // 6-4. buyDone
+            let buyDone = {
+                type: '매수 완료',
+                // 6-3. refreshWallet update & emit
+                socketID: socketID,
+                playerID: playerID,
+                vol: reqVol,
+                price: curPrice,
+            };
+            io.to(roomID).emit('buyDone_Room', buyDone);
+
+            // console.log('현재가로 구매 완료 :', playerInfo);
+            // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
+        } else {
             // ! 실수로 잘못된 값이 들어온 경우 처리하기
             if (cash < reqPrice * reqVol) {
                 console.log('Buy 호가등록 이상한 입력이 감지되었다 :', reqJson);
