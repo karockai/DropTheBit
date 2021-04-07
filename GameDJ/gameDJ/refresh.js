@@ -345,7 +345,7 @@ class Refresh {
                 roomInfo['roomLeader'] = 0;
             }
             if (roomInfo.hasOwnProperty('readyTime')) {
-                roomInfo['readyTime'] = 5;
+                roomInfo['readyTime'] = 10;
             }
         }
         roomList[roomID] = roomInfo;
