@@ -280,14 +280,14 @@ export default function ChatRoom(props) {
                 item
                 container
                 dirction="row"
-                justify = "flex-start"
+                // justify = "flex-start"
                 style={{ width: '100%', height: '10%' }}
             >
-                <Grid item style={{ width: '80%', height: '100%' }}>
+                <Grid item style={{ width: '80%', height: '100%' }} justify="center">
                     <CssTextField
                         style={{ width: '100%', height: '100%' }}
                         id="standard-basic"
-                        placeholder="메세지 보내기 (Enter)"
+                        placeholder="메시지 보내기 (Enter)"
                         inputRef={textInput}
                         onFocus={() => {
                             isFocus = true;
@@ -310,6 +310,7 @@ export default function ChatRoom(props) {
                     <button
                         style={{
                             padding: '0',
+                            marigin: '0',
                             width: '100%',
                             height: '100%',
                             backgroundColor: '#635ee7', 
