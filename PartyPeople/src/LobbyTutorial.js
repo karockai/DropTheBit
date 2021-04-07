@@ -51,11 +51,17 @@ function TutorialPage(props) {
             <Grid
                 item
                 className="tuto-title"
+                container
+                direction='row'
+                justify='space-between'
                 style={{ width: '100%', height: '10%' }}
             >
-                <h1 align="left" style={{ padding: '1vh 1vw' }}>
+                <h1 align="left" style={{ padding: '1vh 1vw', width:'50%' }}>
                     {props.title}
                 </h1>
+                <div align="right" onClick={props.onClose} style={{ padding: '1vh 1vw' , fontSize:'2vw', cursor:'pointer'}}>
+                    ❌
+                </div>
             </Grid>
 
             <Grid
@@ -125,17 +131,17 @@ export default function LobbyTutorial(props) {
         // } else
         if (indexMap[pageIndex] === '게임 화면') {
             return (
-                <TutorialPage title="게임 화면" img={GameWindow} content="게임 플레이 화면입니다." />
+                <TutorialPage title="게임 화면" img={GameWindow} content="게임 플레이 화면입니다." onClose={props.onClose} />
             );
         } else if (indexMap[pageIndex] === '자산 화면') {
-            return <TutorialPage title="자산 화면" img={Wallet} content="" />;
+            return <TutorialPage title="자산 화면" img={Wallet} content="" onClose={props.onClose} />;
         } else if (indexMap[pageIndex] === '매매 화면') {
             return (
-                <TutorialPage title="매매 화면" img={TradeWindow} content="" />
+                <TutorialPage title="매매 화면" img={TradeWindow} content="" onClose={props.onClose} />
             );
         } else if (indexMap[pageIndex] === '내 주문 목록') {
             return (
-                <TutorialPage title="내 주문 목록" img={MyList} content="" />
+                <TutorialPage title="내 주문 목록" img={MyList} content="" onClose={props.onClose} />
             );
         } else {
             return <>무언가 문제가 생겼군요.</>;
@@ -153,6 +159,7 @@ export default function LobbyTutorial(props) {
                 className="튜토리얼그리드"
                 style={{ height: '100%', width: '100%' }}
             >
+                {/* <button>❌</button> */}
                 <Zoom
                     in={() => {
                         if (step !== activeStep) {

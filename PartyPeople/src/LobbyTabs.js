@@ -222,7 +222,7 @@ export default function LobbyTabs(props) {
                     horizontal: 'center',
                 }}
             >
-                <LobbyTutorial></LobbyTutorial>
+                <LobbyTutorial onClose={handleClose}></LobbyTutorial>
             </Popover>
             <Popover
                 open={openSelect}
