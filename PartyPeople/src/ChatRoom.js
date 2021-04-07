@@ -291,11 +291,11 @@ export default function ChatRoom(props) {
                         inputRef={textInput}
                         onFocus={() => {
                             isFocus = true;
-                            props.SetInputCtrl(true);
+                            if(props.SetInputCtrl) props.SetInputCtrl(true);
                         }}
                         onBlur={() => {
                             isFocus = false;
-                            props.SetInputCtrl(false);
+                            if(props.SetInputCtrl) props.SetInputCtrl(false);
                         }}
                         onChange={handleOnChange}
                         variant="outlined"

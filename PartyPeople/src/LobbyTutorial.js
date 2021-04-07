@@ -61,29 +61,29 @@ function TutorialPage(props) {
             <Grid
                 item
                 className="tuto-image"
-                style={{ width: '100%', height: '55%' }}
+                style={{ width: '100%', height: props.hasContent ? '65%' : '80%' }}
             >
                 <img
                     src={props.img}
                     style={{
                         height: '100%',
-                        width: '60%',
-                        padding: '2vh 0 0 0',
+                        width:  props.hasContent ? '60%' : '96%',
+                        padding: '5vh 0 0 0',
                     }}
                 />
             </Grid>
-
+            {props.hasContent ?       
             <Grid
                 item
                 className="tuto-content"
                 style={{
                     width: '100%',
-                    height: '25%',
-                    padding: '5vh 1vw 1vh 1vw',
+                    height: props.hasContent ? '15%' : '5%',
+                    padding: '5vh 10vw 1vh 10vw',
                 }}
-            >
+            > 
                 {props.content}
-            </Grid>
+            </Grid> : <></>}
         </>
     );
 }
@@ -105,7 +105,6 @@ export default function LobbyTutorial(props) {
     };
 
     const indexMap = [
-        '소개',
         '게임 화면',
         '자산 화면',
         '매매 화면',
@@ -114,17 +113,19 @@ export default function LobbyTutorial(props) {
     const maxIndex = indexMap.length;
 
     let currentPage = (pageIndex) => {
-        if (indexMap[pageIndex] === '소개') {
+        // if (indexMap[pageIndex] === '소개') {
+        //     return (
+        //         <TutorialPage
+        //             title="게임 소개"
+        //             img={GrapMoneyPNG}
+        //             content="게임의 목적은 단 시간에 최대한 많은 수익을 올리는 것입니다. 낮은 가격에 코인을 구매하고 높은 가격에 판매하여 현금으로 환전하면 됩니다."
+        //             hasContent
+        //         />
+        //     );
+        // } else
+        if (indexMap[pageIndex] === '게임 화면') {
             return (
-                <TutorialPage
-                    title="게임 소개"
-                    img={GrapMoneyPNG}
-                    content="게임의 목적은 단 시간에 최대한 많은 수익을 올리는 것입니다. 낮은 가격에 코인을 구매하고 높은 가격에 판매하여 현금으로 환전하면 됩니다."
-                />
-            );
-        } else if (indexMap[pageIndex] === '게임 화면') {
-            return (
-                <TutorialPage title="게임 화면" img={GameWindow} content="" />
+                <TutorialPage title="게임 화면" img={GameWindow} content="게임 플레이 화면입니다." />
             );
         } else if (indexMap[pageIndex] === '자산 화면') {
             return <TutorialPage title="자산 화면" img={Wallet} content="" />;
@@ -144,7 +145,7 @@ export default function LobbyTutorial(props) {
     return (
         <Paper
             className={classes.paper}
-            style={{ height: '90vh', width: '40vw', padding: '2vh 0 2vh 0' }}
+            style={{ height: '90vh', width: '60vw', padding: '2vh 0 2vh 0' }}
         >
             <Grid
                 container
