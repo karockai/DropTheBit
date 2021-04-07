@@ -84,9 +84,9 @@ class Game {
         bfrWallet['asset'] = playerInfo['asset'];
 
         // ! 음수 값 처리
-        if (reqVol * reqPrice <= 0){
+        if (reqVol * reqPrice <= 0) {
             console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
-            return
+            return;
         }
 
         // 5. 구매 처리 및 asset 정보 emit
@@ -94,8 +94,13 @@ class Game {
         if (reqPrice >= curPrice) {
             // ! 잘못된 값이 들어온 경우 처리하기
             if (cash < curPrice * reqVol) {
-                console.log('Buy 자산을 초과하는 요청이 감지되었다 :', reqJson, 'cash', playerInfo['cash']);
-                return
+                console.log(
+                    'Buy 자산을 초과하는 요청이 감지되었다 :',
+                    reqJson,
+                    'cash',
+                    playerInfo['cash']
+                );
+                return;
             }
 
             if (playerInfo['avgPrice'] === 0) {
@@ -106,7 +111,6 @@ class Game {
                         (coinVol + reqVol)
                 );
             }
-
 
             // 6-1. cash, coin 갯수 갱신
             cash -= curPrice * reqVol;
@@ -134,8 +138,13 @@ class Game {
         } else {
             // ! 실수로 잘못된 값이 들어온 경우 처리하기
             if (cash < reqPrice * reqVol) {
-                console.log('Buy 자산을 초과하는 요청이 감지되었다 :', reqJson, 'cash', playerInfo['cash']);
-                return
+                console.log(
+                    'Buy 자산을 초과하는 요청이 감지되었다 :',
+                    reqJson,
+                    'cash',
+                    playerInfo['cash']
+                );
+                return;
             }
 
             // 7-1. cash 갱신
@@ -210,7 +219,7 @@ class Game {
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
         if (reqVol <= 0 || coinVol < reqVol) {
             console.log('Sell 이상한 요청이 감지되었다', reqJson);
-            return
+            return;
         }
 
         // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
@@ -431,6 +440,10 @@ class Game {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };
+        console.log('----');
+        console.log(bfrWallet['asset']);
+        console.log(refreshWallet['asset']);
+        console.log('----');
 
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
