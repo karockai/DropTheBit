@@ -64,7 +64,7 @@ class Disconnect {
                     for (const [key, value] of Object.entries(roomInfo)) {
                         if (key.length === 20) {
                             roomInfo['roomLeader'] = key;
-                            message += '[SERVER] : ' + roomInfo[key]['playerID'] + '님으로 방장이 변경되었습니다.';
+                            message += ' ' + roomInfo[key]['playerID'] + '님으로 방장이 변경되었습니다.';
                             break;
                         }
                     }
