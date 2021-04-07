@@ -6,6 +6,7 @@ import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import ExEnroll from './audios/effect/ExEnroll.wav';
 import BuyDone from './audios/effect/BuyDone.wav';
 import SellDone from './audios/effect/SellDone.wav';
+import {ExpBySymbol, parseWonToStr, SplitByThree ,showProfit} from './parseMoney';
 
 const defaultTextStyle = {
     color: '#444444',
@@ -94,9 +95,9 @@ export default function StockDoneList(props) {
                                 {props.isMine ? '' : done.playerID}
                             </span>
                             {props.isMine ? '' : '님이 '}
-                            <span style={highlightTextStyle}>{done.price}</span>
+                            <span style={highlightTextStyle}>{SplitByThree(String(done.price))}</span>
                             원에{' '}
-                            <span style={highlightTextStyle}>{done.vol}</span>
+                            <span style={highlightTextStyle}>{SplitByThree(String(done.vol))}</span>
                             개를 <span style={buySellColor}>{done.type}.</span>
                         </pre>
                     </Grid>

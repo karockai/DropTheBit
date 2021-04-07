@@ -3,6 +3,9 @@ import { Grid, Paper, makeStyles } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 
+// 숫자 파싱
+import {SplitByThree} from './parseMoney';
+
 const greenTheme = createMuiTheme({
     palette: {
         primary: green,
@@ -66,13 +69,13 @@ export default function BidEntity(props) {
                         style={{ width: '40%',}}
                         className="price"
                     >
-                        {props.price}
+                        {SplitByThree(String(props.price))}
                     </Grid>
                     <Grid
                         style={{ width: '40%', }}
                         className="vol"
                     >
-                        {props.vol}
+                        {SplitByThree(String(props.vol))}
                     </Grid>
                 </Grid>
             </Paper>

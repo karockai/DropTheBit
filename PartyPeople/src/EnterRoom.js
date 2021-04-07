@@ -13,6 +13,7 @@ import SetPlayerName from './setPlayerName';
 import Lobby from './Lobby';
 // import Sound from './Sound';
 import backgroundImg from './videos/LobbyVideo2.mp4';
+// import backgroundImg from './videos/LobbyImage3.gif';
 import LobbyMusic from './audios/music/Tetris99.mp3';
 export default function EnterRoom(props) {
     // const history = useHistory();
