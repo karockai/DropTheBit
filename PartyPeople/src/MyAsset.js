@@ -80,7 +80,7 @@ export default function MyAsset(props) {
                 const currentAvg = refreshWallet.avgPrice;
 
                 const diffAsset = currentAsset - bfrWallet.asset;
-
+                // console.log(currentAsset, bfrWallet.asset);
                 const diffCash = currentCash - bfrWallet.cash;
                 const diffCoin = currentCoin - bfrWallet.coinVol;
 

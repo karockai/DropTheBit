@@ -14,7 +14,7 @@ import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
 import { PurpleButton } from './PurpleComponent';
 import './ShiningButton.css';
-import './index.css'
+import './index.css';
 
 const CssTextField = withStyles({
     root: {
@@ -173,12 +173,12 @@ function SetPlayerName(props) {
                     style={{ width: '100vw', height: '100vh' }}
                 >
                     <Grid style={{ position: 'relative'}}>
-                        <div class="title">
+                        {/* <div class="title">
                         {title}
-                        </div>
-                        <div class="title_overlay">
+                        </div> */}
+                        {/* <div class="title_overlay">
                         {title}
-                        </div>
+                        </div> */}
                         <div class="title_overlay2">
                         {title}
                         </div>

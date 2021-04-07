@@ -247,10 +247,9 @@ class Refresh {
                     io.to(rankList[idx]['socketID']).emit(
                         'MyRank',
                         rankList[idx],
-                        idx + 1
+                        parseInt(idx) + 1
                     );
                 }
-
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
             }

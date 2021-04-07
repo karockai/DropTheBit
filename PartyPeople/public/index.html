@@ -29,6 +29,40 @@
     <title>돈이복사가된다GO!</title>
     <style>
     </style>
+
+    <!-- <script>
+      document.onmousedown=disableclick;
+      status="Right click is not available.";
+          
+      function disableclick(event){
+          if (event.button==2) {
+              alert(status);
+              return false;
+          }
+      }
+
+      // 개발자 도구(F12) 방지
+      $(function(){
+          $(document).bind('keydown',function(e){
+              if ( e.keyCode == 123 /* F12 */) {
+                  e.preventDefault();
+                  e.returnValue = false;
+              }
+          });
+      });
+
+      var element = new Image;
+      var devtoolsOpen = false;
+      element.__defineGetter__("id", function() {
+          devtoolsOpen = true; // This only executes when devtools is open.
+          window.location.href = "//google.com";
+      });
+      setInterval(function() {
+          devtoolsOpen = false;
+          console.log(element);
+      }, 1000);
+
+</script> -->
   </head>
   <body>
     <div id="root">

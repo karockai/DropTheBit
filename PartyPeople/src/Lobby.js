@@ -34,7 +34,7 @@ import LeaderBoard from './LeaderBoard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '0vh 0vw 2vh 0vw',
+        padding: '0vh 0vw 3vh 0vw',
     },
 
     paper: {

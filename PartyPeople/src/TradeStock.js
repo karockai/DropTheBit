@@ -189,14 +189,19 @@ export default function TradeStock(props) {
     // }
 
     function Buy(bid, volume) {
+        console.log(bid , volume);
         let status = '';
-        if (bid <= 0 || volume <= 0) {
+        if (bid < 0) bid = 0;
+        if (volume < 0) volume = 0;
+        if (bid  === 0 || volume === 0) {
+            console.log(bid , volume);
             return {
                 status: 'invalid',
                 val: bid,
                 vol: volume,
             };
         }
+
         if (bid * volume > myWallet.myCash) {
             // SnackAlertFunc({
             //     severity:"error",
@@ -640,7 +645,6 @@ export default function TradeStock(props) {
                     >
                         {SplitByThree(String(currentBid))}
                     </h5>
-
                     <Button
                         class="arrow"
                         onClick={(e) => {
@@ -746,6 +750,7 @@ export default function TradeStock(props) {
                                 let tmpAudio = new Audio(BuyConfirm);
                                 tmpAudio.play();
                                 tmpAudio.remove();
+                                console.log(currentBid, currentVolume);
                                 setBuyStatus(Buy(currentBid, currentVolume));
                             }}
                             id="z"

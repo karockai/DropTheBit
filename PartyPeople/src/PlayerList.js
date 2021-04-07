@@ -131,32 +131,32 @@ export default function PlayerList(props) {
                     style={{
                         height: '90%',
                         border: 'solid',
-                        borderColor: '#0066bb',
+                        borderColor: '#2D4053',
                         margin: '0 0 10px 0',
-                        boxShadow: '12px 12px 2px 1px #ffffff',
+                        padding: "2%"
+                        // boxShadow: '12px 12px 2px 1px #ffffff',
                     }}
                 >
                     <Grid container direction="row" alignItems="center">
                         <Grid
-                            style={{ width: '20%', height: '100%' }}
+                            style={{ fontSize: '1vw', width: '30%', height: '100%', padding:'2%' }}
                             className="score"
+                            item
                         >
-                            {'현재 '}
-                            {myRank}
+                            <span style={{fontSize:'1.5vw'}}>{myRank}</span>
                             {'위'}
                         </Grid>
                         <Grid
-                            style={{ width: '80%', height: '100%' }}
+                            item
+                            style={{ fontSize: '1vw', width: '70%', height: '100%',padding: "2%" }}
                             container
                             direction="column"
                             className="score"
                         >
-                            <Grid alignItems="right">
-                                {/* {myRankPage.playerID} */}
-                            </Grid>
-                            <Grid alignItems="right">
-                                {/* {ExpBySymbol(parseWonToStr(myRankPage.asset))} */}
-                                {myRankPage.asset}
+                            <Grid alignItems="right" style={{padding:'2%'}}>{myRankPage.playerID}</Grid>
+                            <Grid alignItems="right" style={{padding:'2%'}}>
+                                {ExpBySymbol(parseWonToStr(myRankPage.asset))}
+                                {/* {myRankPage.asset} */}{' 원'}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -168,51 +168,6 @@ export default function PlayerList(props) {
     return (
         <>
             {MyRank()}
-
-            {/* {players.map((player, index) => {
-                if (player.socketID === props.socket.id) {
-                    return (
-                        <div>
-                            <Paper
-                                className={classes.paper}
-                                style={{
-                                    height: '90%',
-                                    border: 'solid',
-                                    borderColor: '#2D4053',
-                                    margin: '0 0 10px 0',
-                                    // boxShadow: '12px 12px 2px 1px #ffffff',
-                                }}
-                            >
-                                <Grid
-                                    container
-                                    direction="row"
-                                    alignItems="center"
-                                >
-                                    <Grid
-                                        style={{ fontSize: '1vw', width: '20%', height: '100%' }}
-                                        className="score"
-                                        item
-                                    >
-                                        {index + 1}
-                                        {'위'}
-                                    </Grid>
-                                    <Grid
-                                        item
-                                        style={{ fontSize: '1vw', width: '80%', height: '100%' }}
-                                        container
-                                        direction="column"
-                                        className="score"
-                                    >
-                                        <Grid alignItems="right">{player.playerID}</Grid>
-                                        <Grid alignItems="right">{ExpBySymbol(parseWonToStr(player.asset))}{' '} 원</Grid>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                        </div>
-                    );
-                }
-            })} */}
-
             <Grid
                 wrap="wrap"
                 container
@@ -232,11 +187,13 @@ export default function PlayerList(props) {
                         <Grid item>
                             <Paper
                                 style={{
-                                    height: '9.8vh',
                                     backgroundColor: myColor,
                                     fontWeight: myFont,
+                                    padding: "4% 2% 4% 2%",
+                                    margin: "3% 0 3% 0%"
                                 }}
                                 className={classes.paper}
+                                align ="center"
                             >
                                 <Grid
                                     container
@@ -246,28 +203,30 @@ export default function PlayerList(props) {
                                     <Grid
                                         style={{
                                             fontSize: '1vw',
-                                            width: '20%',
+                                            width: '30%',
                                             height: '100%',
+                                            padding:'2%'
                                         }}
                                         className="score"
                                     >
-                                        {index + 1}
+                                        
+                                        <span style={{fontSize:'1.5vw'}}>{index + 1}</span>
                                         {'위'}
                                     </Grid>
                                     <Grid
                                         style={{
                                             fontSize: '1vw',
-                                            width: '80%',
+                                            width: '70%',
                                             height: '100%',
                                         }}
                                         container
                                         direction="column"
                                         className="score"
                                     >
-                                        <Grid alignItems="right">
+                                        <Grid alignItems="right" style={{padding:'2%'}}>
                                             {player.playerID}
                                         </Grid>
-                                        <Grid alignItems="right">
+                                        <Grid alignItems="right" style={{padding:'2%'}}>
                                             {ExpBySymbol(
                                                 parseWonToStr(player.asset)
                                             )}{' '}

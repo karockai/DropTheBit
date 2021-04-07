@@ -41,12 +41,15 @@ const useStyles = makeStyles((theme) => ({
         // minWidth: 650,
     },
     tableHead: {
+        fontFamily: 'NEXON Lv1 Gothic OTF',
         fontSize: '1vw',
     },
     tableBody: {
+        fontFamily: 'NEXON Lv1 Gothic OTF',
         background: '#212529',
     },
     tableBodyText: {
+        fontFamily: 'NEXON Lv1 Gothic OTF',
         fontSize: '0.7vw',
         color: 'white',
     },
@@ -66,7 +69,6 @@ export default function LeaderBoard(props) {
         //Client
         props.socket.emit('lobbyBoard', 'lobbyBoard Request.');
         props.socket.once('lobbyBoard', (gameResult) => {
-            console.log('lobbyBoard', gameResult);
             if (gameResult) {
                 setBoard(gameResult);
             }
@@ -80,7 +82,6 @@ export default function LeaderBoard(props) {
     }, []);
 
     const showScore = (score) => {
-        console.log(score);
         let result = '';
         if (score == 1) result += '🥇 ';
         if (score == 2) result += '🥈 ';
