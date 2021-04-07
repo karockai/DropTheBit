@@ -31,7 +31,7 @@ import SellMax from './audios/effect/SellMax.wav';
 import SellConfirm from './audios/effect/SellConfirm.wav';
 import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
-import {SplitByThree} from './parseMoney';
+import { SplitByThree } from './parseMoney';
 import './blink.css';
 
 const CssTextField = withStyles({
@@ -141,9 +141,12 @@ export default function TradeStock(props) {
     function VolumeUp(volume) {
         //myWallet.myCoin == 매도 가능한 최대 코인수
         //Math.floor(myWallet.myCash / currentBid) == 매수 가능한 최대코인수
-        const maxVol = Math.max(myWallet.myCoin,Math.floor(myWallet.myCash / currentBid));
-        if ( maxVol < volume + unitVolume) {
-            SetNewVolume( maxVol );
+        const maxVol = Math.max(
+            myWallet.myCoin,
+            Math.floor(myWallet.myCash / currentBid)
+        );
+        if (maxVol < volume + unitVolume) {
+            SetNewVolume(maxVol);
             return;
         }
         // if (
@@ -304,21 +307,19 @@ export default function TradeStock(props) {
         SetBind(true);
         return status;
     }
-    const changeEffect = (id)=> {
-
+    const changeEffect = (id) => {
         if (id === 'ArrowDown' || id === 'ArrowUp') {
             const target_class = document.getElementById('bidInput');
             if (id === 'ArrowUp') target_class.classList.add('plus');
             else target_class.classList.add('minus');
             target_class.classList.add('font_blinking');
-            
+
             setTimeout(function () {
                 if (id === 'ArrowUp') target_class.classList.remove('plus');
                 else target_class.classList.remove('minus');
                 target_class.classList.remove('font_blinking');
             }, 100);
-        }
-        else if (id === 'ArrowLeft' ||id === 'ArrowRight') {
+        } else if (id === 'ArrowLeft' || id === 'ArrowRight') {
             const target_class = document.getElementById('countInput');
             if (id === 'ArrowRight') target_class.classList.add('plus');
             else target_class.classList.add('minus');
@@ -330,7 +331,6 @@ export default function TradeStock(props) {
                 target_class.classList.remove('font_blinking');
             }, 100);
         }
-
     };
 
     function HandleKeyUp(e) {
@@ -453,13 +453,10 @@ export default function TradeStock(props) {
             SetVolume(e.target.value);
             SetFocus(true);
         }
-
-
     }
 
     function handleBidChange(e) {
         if (e.target.id === 'bidInput') {
-
             SetBid(e.target.value);
             SetFocus(true);
         }
@@ -479,7 +476,6 @@ export default function TradeStock(props) {
     function SetBuyMaxCount() {
         SetVolume(Math.floor(myWallet.myCash / currentBid));
     }
-
 
     const parseWonToStr = (won) => {
         if (typeof won == 'number') won = won.toString();
@@ -514,8 +510,6 @@ export default function TradeStock(props) {
         dateString.getMilliseconds() +
         ') ';
 
-
-
     const clickButton = (e) => {
         if (e.target) e.target.classList.add('clicked');
 
@@ -523,8 +517,6 @@ export default function TradeStock(props) {
             if (e.target) e.target.classList.remove('clicked');
         }, eventTime);
     };
-
-    
 
     // console.log(SplitByThree(String(currentBid)));
     return (
@@ -642,10 +634,11 @@ export default function TradeStock(props) {
                     {/* <CssTextField */}
                     <h5
                         id="bidInput"
-                        style={{ width: '50%', fontSize: '2.5vw', }}
+                        style={{ width: '50%', fontSize: '2.5vw' }}
                         // value={SplitByThree(String(currentBid))}
-                        onChange={handleBidChange}>
-                    {SplitByThree(String(currentBid))}
+                        onChange={handleBidChange}
+                    >
+                        {SplitByThree(String(currentBid))}
                     </h5>
 
                     <Button
@@ -676,7 +669,7 @@ export default function TradeStock(props) {
                         onClick={(e) => {
                             clickButton(e);
                             changeEffect(e.target.id);
-                            let tmpAudio = new Audio(VolDown)
+                            let tmpAudio = new Audio(VolDown);
                             tmpAudio.play();
                             tmpAudio.remove();
                             VolumeDown(currentVolume);
@@ -687,7 +680,7 @@ export default function TradeStock(props) {
                     </button>
                     <h5
                         id="countInput"
-                        style={{ width: '50%', fontSize: '2.5vw', }}
+                        style={{ width: '50%', fontSize: '2.5vw' }}
                         onChange={handleVolumeChange}
                         disabled
                     >
@@ -698,7 +691,7 @@ export default function TradeStock(props) {
                         onClick={(e) => {
                             clickButton(e);
                             changeEffect(e.target.id);
-                            let tmpAudio = new Audio(VolUp)
+                            let tmpAudio = new Audio(VolUp);
                             tmpAudio.play();
                             tmpAudio.remove();
                             VolumeUp(currentVolume);
@@ -715,7 +708,7 @@ export default function TradeStock(props) {
                             class="buy_max"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(BuyMax)
+                                let tmpAudio = new Audio(BuyMax);
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 SetBuyMaxCount();
@@ -729,7 +722,7 @@ export default function TradeStock(props) {
                             class="sell_max"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(SellMax)
+                                let tmpAudio = new Audio(SellMax);
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 SetSellMaxCount();
@@ -750,7 +743,7 @@ export default function TradeStock(props) {
                             class="buy"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(BuyConfirm)
+                                let tmpAudio = new Audio(BuyConfirm);
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 setBuyStatus(Buy(currentBid, currentVolume));
@@ -764,7 +757,7 @@ export default function TradeStock(props) {
                             class="sell"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(SellConfirm)
+                                let tmpAudio = new Audio(SellConfirm);
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 setSellStatus(Sell(currentBid, currentVolume));
@@ -785,14 +778,14 @@ export default function TradeStock(props) {
                             class="space"
                             onClick={(e) => {
                                 clickButton(e);
-                                let tmpAudio = new Audio(CurPrice)
+                                let tmpAudio = new Audio(CurPrice);
                                 tmpAudio.play();
                                 tmpAudio.remove();
                                 RefreshBid_Req();
                             }}
                             id=" "
                         >
-                            [SPACE] 현재가로 갱신
+                            [Space] 현재가로 갱신
                         </button>
                     </Grid>
                 </Grid>

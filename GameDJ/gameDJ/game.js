@@ -364,7 +364,7 @@ class Game {
         refreshWallet['asset'] = playerInfo['asset'];
         refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
-        this.refreshWallet(socketID, walletInfo, bfrWallet);
+        this.refreshWallet(socketID, refreshWallet, bfrWallet);
 
         this.sendAskTable(reqJson);
     }
