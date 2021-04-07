@@ -12,6 +12,13 @@ import TradeOrderTablePNG from './images/tutorial/내주문목록.png';
 import TradeHokaTablePNG from './images/tutorial/호가테이블.png';
 import GrapMoneyPNG from './images/tutorial/0.png';
 import InGamePNG from './images/tutorial/인게임화면.png';
+
+// 튜토리얼 개선
+import GameWindow from './images/tutorial/게임화면.png';
+import Wallet from './images/tutorial/내자산.png';
+import TradeWindow from './images/tutorial/매매창.png';
+import MyList from './images/tutorial/호가창.png';
+
 import './ShiningButton.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +104,13 @@ export default function LobbyTutorial(props) {
         setPage(value);
     };
 
-    const indexMap = ['소개', '게임목적', '게임원리', '게임조작1','게임조작2','게임조작3', '결과'];
+    const indexMap = [
+        '소개',
+        '게임 화면',
+        '자산 화면',
+        '매매 화면',
+        '내 주문 목록',
+    ];
     const maxIndex = indexMap.length;
 
     let currentPage = (pageIndex) => {
@@ -109,53 +122,19 @@ export default function LobbyTutorial(props) {
                     content="게임의 목적은 단 시간에 최대한 많은 수익을 올리는 것입니다. 낮은 가격에 코인을 구매하고 높은 가격에 판매하여 현금으로 환전하면 됩니다."
                 />
             );
-        } else if (indexMap[pageIndex] === '게임목적') {
+        } else if (indexMap[pageIndex] === '게임 화면') {
             return (
-                <TutorialPage
-                    title="게임 목적"
-                    img={InGamePNG}
-                    content="게임의 인게임 화면입니다. 어려워 보이죠 ? 맞아요. 대부분 잘 못하더라구요. 드랍더비트는 주식이나 코인 거래를 경험하지 못한 플레이어가 이러한 화면이 편하고 익숙해지는 데 목적이 있습니다."
-                />
+                <TutorialPage title="게임 화면" img={GameWindow} content="" />
             );
-        } else if (indexMap[pageIndex] === '게임원리') {
+        } else if (indexMap[pageIndex] === '자산 화면') {
+            return <TutorialPage title="자산 화면" img={Wallet} content="" />;
+        } else if (indexMap[pageIndex] === '매매 화면') {
             return (
-                <TutorialPage
-                    title="게임 흐름"
-                    img={TradeControllPNG}
-                    content='게임에서 코인을 구매하는 행위를 "매수"라고 표현합니다. 반대로 코인을 판매하는 행위를 "매도"라고 합니다. 드랍더비트는 실제 코인의 가격과 호가를 이용해 매수 및 매도를 진행하지만, 코인의 거래가 이루어지지 않습니다. 드랍더비트는 원하는 가격에 원하는 양의 매도와 매수 주문을 요청할 수 있습니다. 이것은 수량을 기다려야 하는 실제 코인 거래와는 조금 다릅니다.'
-                />
+                <TutorialPage title="매매 화면" img={TradeWindow} content="" />
             );
-        } else if (indexMap[pageIndex] === '게임조작1') {
+        } else if (indexMap[pageIndex] === '내 주문 목록') {
             return (
-                <TutorialPage
-                    title="조작법 1"
-                    img={TradeOrderTablePNG}
-                    content="게임은 마우스 혹은 키보드를 이용해 진행할 수 있습니다. 빠르게 수익을 올리기 위해 키보드 사용을 권장합니다."
-                />
-            );
-        } else if (indexMap[pageIndex] === '게임조작2') {
-            return (
-                <TutorialPage
-                    title="조작법 2"
-                    img={TradeControllPNG}
-                    content="마우스 혹은 방향키를 사용하여 원하는 호가와 수량을 결정합니다"
-                />
-            );
-        } else if (indexMap[pageIndex] === '게임조작3') {
-            return (
-                <TutorialPage
-                    title="조작법 3"
-                    img={TradeOrderTablePNG}
-                    content="원하는 옵션을 설정하고 매수 혹은 매도 버튼을 눌러 주문을 요청합니다. 더 자세한 조작법은 우측의 [KEYMAP] 버튼을 눌러 확인하세요!"
-                />
-            );
-        } else if (indexMap[pageIndex] === '결과') {
-            return (
-                <TutorialPage
-                    title="게임결과"
-                    img={TradeOrderTablePNG}
-                    content="현재 코인 가격이 나의 주문 가격과 같을 때 주문이 체결되고 코인을 얻거나 현금을 얻게됩니다. 효율적인 거래를 이루었다면 총 평가 자산이 늘어나고 이를 이용해 플레이어간 순위를 결정합니다. 요령이 있는 플레이어는 차트와 호가 수량을 확인하고 흐름을 유추하여 더 좋은 수익을 낼 것입니다."
-                />
+                <TutorialPage title="내 주문 목록" img={MyList} content="" />
             );
         } else {
             return <>무언가 문제가 생겼군요.</>;
@@ -173,11 +152,16 @@ export default function LobbyTutorial(props) {
                 className="튜토리얼그리드"
                 style={{ height: '100%', width: '100%' }}
             >
-                <Zoom in={()=>{if(step!==activeStep){
-                    step = activeStep;
-                    return true;
-                }else return false;
-                }}>{currentPage(activeStep)}</Zoom>
+                <Zoom
+                    in={() => {
+                        if (step !== activeStep) {
+                            step = activeStep;
+                            return true;
+                        } else return false;
+                    }}
+                >
+                    {currentPage(activeStep)}
+                </Zoom>
                 <Grid
                     item
                     className="tuto-pagenation"

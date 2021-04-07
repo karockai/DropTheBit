@@ -20,6 +20,7 @@
         "gameTime" : "Number",
         "music" : "String",
         "roomLeader" : "String",
-        "gaming" : "Bool"
+        "gaming" : "Bool",
+        "leaderBoard" : "List"
     }
 }
