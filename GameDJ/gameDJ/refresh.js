@@ -14,9 +14,11 @@ class Refresh {
         if (!updateCurCoin) return false;
         curCoin = updateCurCoin;
         io.emit('chart', curCoin);
-        let curPrice = curCoin['curPrice'];
+        curPrice = curCoin['curPrice'];
         console.log(curPrice);
-        if (curPrice == prePrice) return false;
+        if (curPrice === prePrice) {
+            return false;
+        }
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
@@ -176,7 +178,7 @@ class Refresh {
         //     .log
         //     // '----------------------renewalCurCoin End------------------------'
         //     ();
-        prePrice = curPrice;
+        // this.renewalInfo();
     }
 
     renewalInfo() {
@@ -185,8 +187,8 @@ class Refresh {
         //     // '----------------------renewalInfo Start------------------------'
         //     ();
         const { io } = this;
-        let curPrice = curCoin['curPrice'];
-        let prePrice = curCoin['prePrice'];
+        // let curPrice = curCoin['curPrice'];
+        // let prePrice = curCoin['prePrice'];
         let priceChange = curPrice - prePrice;
         // console.log(curPrice);
         // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
