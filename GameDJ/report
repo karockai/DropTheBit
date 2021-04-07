@@ -1,0 +1,83 @@
+{
+  "aggregate": {
+    "timestamp": "2021-04-07T05:43:08.931Z",
+    "scenariosCreated": 45,
+    "scenariosCompleted": 0,
+    "requestsCompleted": 0,
+    "latency": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "rps": {
+      "count": 0,
+      "mean": null
+    },
+    "scenarioDuration": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "scenarioCounts": {
+      "Connect and join Room": 45
+    },
+    "errors": {
+      "Error: websocket error": 45
+    },
+    "codes": {},
+    "matches": 0,
+    "customStats": {},
+    "counters": {},
+    "scenariosAvoided": 0,
+    "phases": [
+      {
+        "duration": 3,
+        "arrivalRate": 15
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2021-04-07T05:43:08.928Z",
+      "scenariosCreated": 45,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 0,
+        "mean": null
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "Connect and join Room": 45
+      },
+      "errors": {
+        "Error: websocket error": 45
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "counters": {},
+      "concurrency": 0,
+      "pendingRequests": 0,
+      "scenariosAvoided": 0
+    }
+  ]
+}
