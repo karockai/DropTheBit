@@ -26,11 +26,17 @@ function createData(sell, price, buy) {
 }
 
 export default function BidTab(props) {
-    const [isInit, setInit] = useState(false);
     const [currentBids, SetBid] = useState([]);
+    const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
+        let reqJson = {
+            socketID: props.socket.id,
+            roomID: props.roomID,
+        };
+        props.socket.emit('bidTab_Req', reqJson);
+
         if (props.socket == null) {
             // props.requestSocket('BidTab', props.socket);
             // setInit(true);
@@ -73,7 +79,9 @@ export default function BidTab(props) {
             justify="center"
             direction="column"
         >
-            <TableContainer style={{ height: '100%', padding:'2vh 2vw 2vh 2vw' }}>
+            <TableContainer
+                style={{ height: '100%', padding: '2vh 2vw 2vh 2vw' }}
+            >
                 <StyledTable
                     className={classes.table}
                     size="small"

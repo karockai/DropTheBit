@@ -9,7 +9,12 @@ import {
     Divider,
 } from '@material-ui/core';
 import { propTypes } from 'react-bootstrap/esm/Image';
-import {SplitByThree, ExpBySymbol, parseWonToStr, showProfit} from './parseMoney';
+import {
+    SplitByThree,
+    ExpBySymbol,
+    parseWonToStr,
+    showProfit,
+} from './parseMoney';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -56,9 +61,6 @@ export default function MyAsset(props) {
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
     const [upDown, SetUpDown] = useState(0);
-    
-
-
 
     let color = 'white';
     useLayoutEffect(() => {
@@ -77,11 +79,10 @@ export default function MyAsset(props) {
                 const currentCoin = refreshWallet.coinVol;
                 const currentAvg = refreshWallet.avgPrice;
 
-
                 const diffAsset = currentAsset - bfrWallet.asset;
-                
+
                 const diffCash = currentCash - bfrWallet.cash;
-                const diffCoin = currentCoin - bfrWallet.coinVol;   
+                const diffCoin = currentCoin - bfrWallet.coinVol;
 
                 setDiffWallet({
                     diffCash: diffCash,
@@ -97,7 +98,6 @@ export default function MyAsset(props) {
             });
         }
     }, [isInit]);
-
 
     // // ! 1000단위 , 붙이기
     // function SplitByThree(value) {
@@ -143,38 +143,74 @@ export default function MyAsset(props) {
                 wrap="wrap"
                 justify="stretch"
                 style={{
-                        height: '40%',
-                    }}
+                    height: '40%',
+                }}
             >
                 <Grid
                     style={{
                         width: '60%',
                         height: '100%',
-                        padding:'0.3vh 0.3vw 0.3vh 0.3vw'
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                     }}
                     item
                 >
-                    <Paper className={classes.paper} style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
-                        <span>
-                        보유 현금 (KRW)
-                        </span>
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}
-                        </h5>
-                        <div id="diffCash" class="default" style={{ fontWeight: 'bold', fontSize: '1vw', textAlign:'right' , padding:'0 10% 0 0'}}>
+                    <Paper
+                        className={classes.paper}
+                        style={{
+                            height: '100%',
+                            fontSize: '1vw',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                    >
+                        <span>보유 현금 (KRW)</span>
+                        <h3 style={{ fontWeight: 'bold', fontSize: '1.5vw' }}>
+                            {ExpBySymbol(parseWonToStr(myWallet.myCash))} 원
+                        </h3>
+                        <div
+                            id="diffCash"
+                            class="default"
+                            style={{
+                                fontWeight: 'bold',
+                                fontSize: '1vw',
+                                textAlign: 'right',
+                                padding: '0 10% 0 0',
+                            }}
+                        >
                             {showProfit('diffCash', diffWallet.diffCash)}{' '}
                         </div>
-                        
                     </Paper>
                 </Grid>
                 <Grid
                     item
-                    style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
+                    style={{
+                        width: '40%',
+                        height: '100%',
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                    }}
                 >
-                    <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
-                        보유 코인 수 (개)
-                        <h3 style={{ fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
-                        <h3 id="diffCoin" class="default" style={{ fontSize: '1vw' ,textAlign:'right' , padding:'0 10% 0 0'}}>{showProfit('diffCoin', diffWallet.diffCoin)}{' '}</h3>
+                    <Paper
+                        className={classes.paper}
+                        style={{
+                            height: '100%',
+                            fontSize: '1vw',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                    >
+                        보유 코인 수
+                        <h3 style={{ fontSize: '1.5vw' }}>
+                            {SplitByThree(String(myWallet.myCoin))} 개
+                        </h3>
+                        <h3
+                            id="diffCoin"
+                            class="default"
+                            style={{
+                                fontSize: '1vw',
+                                textAlign: 'right',
+                                padding: '0 10% 0 0',
+                            }}
+                        >
+                            {showProfit('diffCoin', diffWallet.diffCoin)}{' '}
+                        </h3>
                     </Paper>
                 </Grid>
             </Grid>
@@ -186,21 +222,51 @@ export default function MyAsset(props) {
                 alignItems="stretch"
                 display="flex"
                 style={{
-                        height: '60%',
-                    }}
+                    height: '60%',
+                }}
             >
-                <Grid item style={{ width: '100%', height: '100%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
-                    <Paper className={classes.paper} style={{ height: '100%',fontSize: '1.5vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}>
-                        총 평가 자산 (KRW)
+                <Grid
+                    item
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                    }}
+                >
+                    <Paper
+                        className={classes.paper}
+                        style={{
+                            height: '100%',
+                            fontSize: '1.5vw',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                    >
+                        총 자산 (KRW)
                         {/* <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +
                                 ' 원'}
                         </h2> */}
-                        <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
+                        <h2
+                            style={{
+                                fontWeight: 'bold',
+                                fontSize: '2.2vw',
+                                color: color,
+                            }}
+                        >
+                            {ExpBySymbol(parseWonToStr(myWallet.myAsset))} 원
                         </h2>
-                        <h2 id="diffAsset" class="default" style={{ fontWeight: 'bold', fontSize: '1.5vw', color: color, textAlign:'right', padding:'0 10% 0 0'}}>
-                            {showProfit('diffAsset',diffWallet.diffAsset)}{' '}
+                        <h2
+                            id="diffAsset"
+                            class="default"
+                            style={{
+                                fontWeight: 'bold',
+                                fontSize: '1.5vw',
+                                color: color,
+                                textAlign: 'right',
+                                padding: '0 10% 0 0',
+                            }}
+                        >
+                            {showProfit('diffAsset', diffWallet.diffAsset)}{' '}
                         </h2>
                     </Paper>
                 </Grid>

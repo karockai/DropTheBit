@@ -247,10 +247,9 @@ class Refresh {
                     io.to(rankList[idx]['socketID']).emit(
                         'MyRank',
                         rankList[idx],
-                        idx + 1
+                        parseInt(idx) + 1
                     );
                 }
-
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
             }
@@ -335,6 +334,9 @@ class Refresh {
             }
         }
         todayRank.splice(10);
+
+        // 추가
+        io.emit('lobbyBoard', leaderBoard);
         io.to(roomID).emit('gameOver', leaderBoard);
 
         // back to lobby 전에 미리 방 정보 초기화
@@ -357,7 +359,7 @@ class Refresh {
         let exTable = JSON.parse(await dbget('bidTable'));
         if (!exTable) return false;
 
-        let exList = [];
+        exList = [];
 
         let bidObject4 = {
             price: exTable.bid_price4,

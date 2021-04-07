@@ -9,7 +9,7 @@ import SellDone from './audios/effect/SellDone.wav';
 import {ExpBySymbol, parseWonToStr, SplitByThree ,showProfit} from './parseMoney';
 
 const defaultTextStyle = {
-    color: '#444444',
+    color: '#DCDCDC',
 };
 const highlightTextStyle = {
     color: 'white',
@@ -92,7 +92,7 @@ export default function StockDoneList(props) {
                     <Grid style={{ fontSize: '1.05vw' }}>
                         <pre style={defaultTextStyle} key={idx}>
                             <span style={highlightTextStyle}>
-                                {props.isMine ? '' : done.playerID}
+                                {props.isMine ? ' ' : done.playerID}님
                             </span>
                             {props.isMine ? '' : '님이 '}
                             <span style={highlightTextStyle}>{SplitByThree(String(done.price))}</span>
