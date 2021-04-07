@@ -178,8 +178,7 @@ class Refresh {
         //     .log
         //     // '----------------------renewalCurCoin End------------------------'
         //     ();
-        this.renewalInfo();
-        prePrice = curPrice;
+        // this.renewalInfo();
     }
 
     renewalInfo() {
