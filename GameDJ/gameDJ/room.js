@@ -99,7 +99,7 @@ class Room {
             music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
-            readyTime: 5, // 디버깅 위해 10초로 (원래 30초)
+            readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
         };
 
         roomInfo[socketID] = playerInfo;
