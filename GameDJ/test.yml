@@ -1,12 +1,12 @@
 config:
-  # target: "http://13.209.194.13:5000" # 방이 있는 서버(오 or 황)
-  target: "http://localhost:5000"
+  target: "http://3.34.72.206:5000" # 방이 있는 서버(오 or 황)
+  # target: "http://localhost:5000"
   socketio:
     transports: ["websocket"]
     query: "id=EnjoyPublicGame" # 매번 방 바꿔줘야함
   phases:
-    - duration: 3
-      arrivalRate: 15
+    - duration: 5
+      arrivalRate: 10
 scenarios:
   - name: "Connect and join Room"
     engine: "socketio"
@@ -16,22 +16,22 @@ scenarios:
           data:
             "playerID": "{{$randomString()}}"
             "roomID": "EnjoyPublicGame"
-      - think: 15
+      - think: 20
       - loop:
         - emit:
             channel: "buy_Req"
             data:
               "roomID": "EnjoyPublicGame"
               "socketID": 0
-              "currentBid": 200000
-              "currentVolume": 100
+              "currentBid": 2000
+              "currentVolume": 1000
         - think: 1
         - emit:
             channel: "sell_Req"
             data:
                 "roomID": "EnjoyPublicGame"
                 "socketID": 0
-                "currentBid": 10000
+                "currentBid": 100
                 "currentVolume": 1000
         - think: 1
         - emit:
