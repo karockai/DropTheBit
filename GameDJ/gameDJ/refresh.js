@@ -335,6 +335,9 @@ class Refresh {
             }
         }
         todayRank.splice(10);
+
+        // 추가
+        io.emit('lobbyBoard', leaderBoard);
         io.to(roomID).emit('gameOver', leaderBoard);
 
         // back to lobby 전에 미리 방 정보 초기화
