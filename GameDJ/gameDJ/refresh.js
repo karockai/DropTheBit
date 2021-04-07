@@ -60,7 +60,6 @@ class Refresh {
                         cash +
                         playerInfo['bidCash'] +
                         curPrice * (playerInfo['askVol'] + coinVol);
-<<<<<<< HEAD
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -70,8 +69,6 @@ class Refresh {
                     refreshWallet['asset'] = playerInfo['asset'];
                     refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
-=======
->>>>>>> c2ec726ddf8bb30a67329471f6702a70c74b68b4
                     new Game(io, socketID).refreshWallet(
                         socketID,
                         refreshWallet,
@@ -134,7 +131,6 @@ class Refresh {
                         cash +
                         playerInfo['bidCash'] +
                         curPrice * (playerInfo['askVol'] + coinVol);
-<<<<<<< HEAD
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -144,8 +140,6 @@ class Refresh {
                     refreshWallet['asset'] = playerInfo['asset'];
                     refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
-=======
->>>>>>> c2ec726ddf8bb30a67329471f6702a70c74b68b4
                     new Game(io, socketID).refreshWallet(
                         socketID,
                         refreshWallet,
@@ -217,7 +211,6 @@ class Refresh {
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
 
-<<<<<<< HEAD
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] =
@@ -231,8 +224,6 @@ class Refresh {
                     refreshWallet['asset'] = playerInfo['asset'];
                     refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
-=======
->>>>>>> c2ec726ddf8bb30a67329471f6702a70c74b68b4
                     new Game(io, socketID).refreshWallet(
                         socketID,
                         refreshWallet,
