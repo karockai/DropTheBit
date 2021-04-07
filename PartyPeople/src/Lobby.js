@@ -61,9 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Lobby(props) {
     // const his = useHistory();
-    // console.log(props.history);
-    // props.history.pushState(null,null,'/');
-    // his.pushState(null,null,'/');
+
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;
@@ -117,7 +115,7 @@ function Lobby(props) {
             }
             // let wid = val + '%'
             return (
-                <>
+                <>  
                     {tmparr.map(([socketID, player]) => {
                         return (
                             <>

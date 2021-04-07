@@ -30,39 +30,14 @@
     <style>
     </style>
 
-    <!-- <script>
-      document.onmousedown=disableclick;
-      status="Right click is not available.";
-          
-      function disableclick(event){
-          if (event.button==2) {
-              alert(status);
-              return false;
-          }
+    <script>
+
+      window.onpopstate = function(event) {
+        history.pushState(null,null,'/');   //history에 현재 위치 한번 더 푸시
+        alert('비정상적인 접근입니다.');
+        location.reload();
       }
-
-      // 개발자 도구(F12) 방지
-      $(function(){
-          $(document).bind('keydown',function(e){
-              if ( e.keyCode == 123 /* F12 */) {
-                  e.preventDefault();
-                  e.returnValue = false;
-              }
-          });
-      });
-
-      var element = new Image;
-      var devtoolsOpen = false;
-      element.__defineGetter__("id", function() {
-          devtoolsOpen = true; // This only executes when devtools is open.
-          window.location.href = "//google.com";
-      });
-      setInterval(function() {
-          devtoolsOpen = false;
-          console.log(element);
-      }, 1000);
-
-</script> -->
+    </script>
   </head>
   <body>
     <div id="root">
