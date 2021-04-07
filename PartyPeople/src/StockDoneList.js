@@ -56,8 +56,6 @@ export default function StockDoneList(props) {
             });
             props.socket.on('askDone_Room', (done) => {
                 if (done['socketID'] === props.socket.id) {
-                    console.log('props.socket:', props.socket.id);
-                    console.log('data.socket:', done['socketID']);
                     let tmpAudio = new Audio(ExEnroll);
                     tmpAudio.play();
                     tmpAudio.remove();

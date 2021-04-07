@@ -55,7 +55,6 @@ function showProfit(id , diff) {
     if (diff === 0) {
         return result;
     }
-    console.log(diff);
     const asset = document.getElementById(id);
     if (asset) asset.classList.remove('default');
     
