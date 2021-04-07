@@ -60,6 +60,7 @@ class Room {
             music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
+            leaderBoard: 0,
         };
 
         roomInfo[socketID] = playerInfo;
@@ -99,6 +100,7 @@ class Room {
             music: 'Random_Music',
             roomLeader: socket.id,
             gaming: false,
+            leaderBoard: 0,
             readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
         };
 
@@ -212,6 +214,7 @@ class Room {
         }
         roomInfo[socketID] = playerInfo;
         roomList[roomID] = roomInfo;
+
         let message = playerID + '님이 들어오셨습니다.';
         io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
     }

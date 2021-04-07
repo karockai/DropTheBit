@@ -25,7 +25,7 @@ export default {
         }, 1000);
 
         // curPrice refresh --------------------------------- <<
-
+        // Room event ------------------------------------------ >>
         io.on('connection', (socket) => {
             socket.on('createPrivateRoom_Req', (playerID) => {
                 new Room(io, socket).createPrivateRoom(playerID);
@@ -52,7 +52,12 @@ export default {
                     new Room(io, socket).joinRoom({roomID : roomID, playerID : roomList[roomID][socket.id]['playerID']});
                 }
             });
+            socket.on('lobbyBoard', (data)=>{
+                if (!roomList[socket.roomID]) return 0;
+                socket.emit('lobbyBoard', roomList[socket.roomID]['leaderBoard']);
+            })
             socket.on('startGame_Req', (musicData) => {
+                if (!roomList[socket.roomID]) return 0;
                 new Game(io, socket).startGame(musicData);
             });
             socket.on('disconnect', () =>

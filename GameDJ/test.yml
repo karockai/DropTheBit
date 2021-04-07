@@ -1,6 +1,6 @@
 config:
-  target: "http://13.209.194.13:5000" # 방이 있는 서버(오 or 황)
-  # target: "http://localhost:5000"
+  # target: "http://13.209.194.13:5000" # 방이 있는 서버(오 or 황)
+  target: "http://localhost:5000"
   socketio:
     transports: ["websocket"]
     query: "id=EnjoyPublicGame" # 매번 방 바꿔줘야함
@@ -16,7 +16,7 @@ scenarios:
           data:
             "playerID": "{{$randomString()}}"
             "roomID": "EnjoyPublicGame"
-      - think: 10
+      - think: 15
       - loop:
         - emit:
             channel: "buy_Req"
@@ -42,7 +42,7 @@ scenarios:
                 "message": "저는 봇입니다"
                 "author" : 0
         - think: 1
-      #   count: 20
+        count: 10
       # # 매도, 매수, 채팅을 20번씩하고 나가도록 함
       # - emit:
       #     channel: "disconnect"
