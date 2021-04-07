@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         color: 'white',
+        backgroundColor: 'black',
+        opacity: 0.6
     },
     menuButton: {
         marginRight: theme.spacing(2),

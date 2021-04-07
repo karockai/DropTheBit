@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tableBodyText: {
         fontFamily: 'NEXON Lv1 Gothic OTF',
-        fontSize: '0.7vw',
+        fontSize: '1vw',
         color: 'white',
     },
     container: {
@@ -78,7 +78,6 @@ export default function LeaderBoard(props) {
         //     props.socket.emit('lobbyBoard', Object(gameResult));
         // });
         //Object 형식은 'leaderBoard' 와 같이.
-
     }, []);
 
     const showScore = (score) => {
@@ -112,7 +111,9 @@ export default function LeaderBoard(props) {
                 alignItems={'center'}
                 style={{ width: '100%', height: '100%' }}
             >
-                {console.log(board) && <Paper>'게임이 진행되지 않았습니다.'</Paper>}
+                {console.log(board) && (
+                    <Paper>'게임이 진행되지 않았습니다.'</Paper>
+                )}
                 <TableContainer
                     id="테이블 컨테이너"
                     component={Paper}
@@ -130,19 +131,23 @@ export default function LeaderBoard(props) {
                                     className={classes.tableHead}
                                     align="left"
                                 >
-                                    {Array.isArray(board) ? '순위': '아직 게임이 진행 되지 않았습니다.' }
+                                    {Array.isArray(board)
+                                        ? '순위'
+                                        : '게임이 끝나면 순위가 표시됩니다.'}
                                 </TableCell>
                                 <TableCell
                                     className={classes.tableHead}
                                     align="right"
                                 >
-                                    {Array.isArray(board) ? '플레이어 이름': '' }
+                                    {Array.isArray(board)
+                                        ? '플레이어 이름'
+                                        : ''}
                                 </TableCell>
                                 <TableCell
                                     className={classes.tableHead}
                                     align="right"
                                 >
-                                    {Array.isArray(board) ? '최종 수익': '' }
+                                    {Array.isArray(board) ? '최종 수익' : ''}
                                 </TableCell>
                                 {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
                             </TableRow>
@@ -159,7 +164,7 @@ export default function LeaderBoard(props) {
                                             component="th"
                                             scope="row"
                                             className={classes.tableBodyText}
-                                            style={{ width: '15%' }}
+                                            style={{ width: '20%' }}
                                             align="left"
                                         >
                                             {showScore(idx + 1)}

@@ -14,6 +14,7 @@ global.askList = {};
 global.roomList = {};
 global.curCoin = {};
 global.exTable = {};
+global.curPrice = 0;
 global.prePrice = 0;
 global.exList = [];
 global.todayRank = [

@@ -11,7 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { blue, red } from '@material-ui/core/colors';
 // 숫자 파싱
-import {SplitByThree} from './parseMoney';
+import { SplitByThree } from './parseMoney';
 
 const useStyles = makeStyles({
     table: {},
@@ -82,7 +82,7 @@ export default function BidTab(props) {
             direction="column"
         >
             <TableContainer
-                style={{ height: '100%',  }} //padding: '2vh 2vw 2vh 2vw'
+                style={{ height: '100%' }} //padding: '2vh 2vw 2vh 2vw'
             >
                 <StyledTable
                     className={classes.table}

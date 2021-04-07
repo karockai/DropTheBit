@@ -41,7 +41,7 @@ export function SnackAlertBtn(props) {
         <>
             <button
                 class='start'
-                style={{padding:'0.5vw'}}
+                style={{padding:'0.4vh'}}
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}
