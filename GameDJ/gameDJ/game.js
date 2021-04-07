@@ -26,6 +26,7 @@ class Game {
             let roomID = socket.roomID;
             let dataForStart = {};
             // 방장이 시작하는 경우에만 3,2,1 추가되도록함 (중간유저 입장 시 3초 추가 안되도록)
+            if (!roomList[roomID]) return 0;
             if (
                 roomList[roomID].hasOwnProperty('roomLeader') &&
                 roomList[roomID]['roomLeader'] === socket.id
