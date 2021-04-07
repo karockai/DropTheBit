@@ -15,7 +15,6 @@ class Refresh {
         curCoin = updateCurCoin;
         io.emit('chart', curCoin);
         curPrice = curCoin['curPrice'];
-        console.log('curPrice: ', curPrice);
         if (curPrice === prePrice) {
             return false;
         }
