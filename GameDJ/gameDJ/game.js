@@ -416,11 +416,7 @@ class Game {
         io.to(socketID).emit('askTable_Res', askTable_Res);
     }
 
-<<<<<<< HEAD
     refreshWallet(socketID, refreshWallet, bfrWallet) {
-=======
-    refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
->>>>>>> c2ec726ddf8bb30a67329471f6702a70c74b68b4
         const { io } = this;
         let walletInfo = {
             refreshWallet: refreshWallet,
