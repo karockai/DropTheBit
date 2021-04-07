@@ -179,7 +179,7 @@ function Lobby(props) {
                                     color="inherit"
                                     aria-label="menu"
                                 >
-                                    <MenuIcon />
+                                    {/* <MenuIcon /> */}
                                     <span style={{ fontSize: '2vw' }}>
                                         {props.roomInfo[
                                             props.roomInfo['roomLeader']
