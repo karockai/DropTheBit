@@ -22,8 +22,8 @@ export default function Timer(props) {
         second = second >= 10 ? String(second) : '0' + String(second);
         if (time < 60) {
             if (time <= 0) {
-                minute = '00';
-                second = '00';
+                minute = '--';
+                second = '--';
             }
             return (
                 <h2
