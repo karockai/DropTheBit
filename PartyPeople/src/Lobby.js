@@ -67,11 +67,6 @@ function Lobby(props) {
     // console.log(props);
     const classes = useStyles();
 
-    const [inputCtrl, setInputCtrl] = useState(false);
-    const SetInputCtrl = (isChat) => {
-        setInputCtrl(isChat);
-    };
-
     function CopyURL() {
         var copyText = document.getElementById('gameLink');
         copyText.select();
@@ -337,7 +332,6 @@ function Lobby(props) {
                                 }}
                             >
                                 <ChatRoom
-                                    SetInputCtrl={SetInputCtrl}
                                     roomInfo={props.roomInfo}
                                     roomID={props.roomID}
                                     socket={props.socket}
