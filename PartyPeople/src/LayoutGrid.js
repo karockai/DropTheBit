@@ -13,7 +13,7 @@ import ChartTitle from './ChartTitle';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
-import ThreeSecTimer from './ThreeSecTimer';
+import ThreeSecTimer from './';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
@@ -77,8 +77,8 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
-    // console.log(props.roomInfo);
-    // console.log(props.roomInfo.gaming);
+    console.log(props.roomInfo);
+    console.log(props.roomInfo.gaming);
     return (
         <>
             {over && (
@@ -93,7 +93,7 @@ export default function LayoutGrid(props) {
             )}
 
             <Grid
-            className="전체그리드"
+                className="전체그리드"
                 style={{
                     padding: '3vh 3vw 3vh 3vw',
                     width: '100vw',
@@ -112,7 +112,7 @@ export default function LayoutGrid(props) {
                     style={{
                         width: '100%',
                         height: '100%',
-                        padding:'0.3vh 0.3vw 0.3vh 0.3vw'
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                     }}
                 >
                     <PlayerList
@@ -132,7 +132,15 @@ export default function LayoutGrid(props) {
                     alignItems="stretch"
                     justify="space-between"
                 >
-                    <Grid className="차트컴퍼넌트" item style={{ width: '100%', height: '50%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
+                    <Grid
+                        className="차트컴퍼넌트"
+                        item
+                        style={{
+                            width: '100%',
+                            height: '50%',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                    >
                         <Paper
                             style={{ height: '100%' }}
                             className={classes.paper}
@@ -150,9 +158,9 @@ export default function LayoutGrid(props) {
                         </Paper>
                     </Grid>
                     <Grid
-                        className ="지갑및호가거래"
+                        className="지갑및호가거래"
                         container
-                        style={{ width: '100%', height: '50%', }}
+                        style={{ width: '100%', height: '50%' }}
                         item
                         wrap="wrap"
                         direction="row"
@@ -168,7 +176,7 @@ export default function LayoutGrid(props) {
                             justify="flex-start"
                         >
                             <Grid
-                            className ="지갑컴퍼넌트"
+                                className="지갑컴퍼넌트"
                                 style={{
                                     width: '100%',
                                     height: '60%',
@@ -187,11 +195,11 @@ export default function LayoutGrid(props) {
                                 />
                             </Grid>
                             <Grid
-                            className="거래내역컴퍼넌트"
+                                className="거래내역컴퍼넌트"
                                 style={{
                                     width: '100%',
                                     height: '40%',
-                                    padding:'0.3vh 0.3vw 0.3vh 0.3vw'
+                                    padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                                 }}
                                 item
                             >
@@ -210,7 +218,11 @@ export default function LayoutGrid(props) {
                             className="주식거래컴퍼넌트"
                             container
                             item
-                            style={{ height: '100%', width: '50%', padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}
+                            style={{
+                                height: '100%',
+                                width: '50%',
+                                padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                            }}
                         >
                             <Grid
                                 style={{ height: '100%' }}
@@ -249,13 +261,25 @@ export default function LayoutGrid(props) {
                     className="매수매도호가및채팅"
                     item
                     xs={rightSm}
-                    style={{ height: '100%', width: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}
+                    style={{
+                        height: '100%',
+                        width: '100%',
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                    }}
                     alignItems="flex-end"
                     container
                     direction="column"
                     justify="space-between"
                 >
-                    <Grid className="매수매도호가테이블" style={{ height: '50%', width: '100%' ,padding:'0.3vh 0.3vw 0.3vh 0.3vw' }} item>
+                    <Grid
+                        className="매수매도호가테이블"
+                        style={{
+                            height: '50%',
+                            width: '100%',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                        item
+                    >
                         <Paper
                             className={classes.paper}
                             style={{ height: '100%', width: '100%' }}
@@ -268,7 +292,15 @@ export default function LayoutGrid(props) {
                             />
                         </Paper>
                     </Grid>
-                    <Grid className="채팅방" style={{ height: '50%', width: '100%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }} item>
+                    <Grid
+                        className="채팅방"
+                        style={{
+                            height: '50%',
+                            width: '100%',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                        item
+                    >
                         <Paper
                             className={classes.paper}
                             style={{ height: '100%', width: '100%' }}

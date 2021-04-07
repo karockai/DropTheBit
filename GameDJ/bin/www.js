@@ -15,6 +15,7 @@ global.roomList = {};
 global.curCoin = {};
 global.exTable = {};
 global.prePrice = 0;
+global.exList = [];
 global.todayRank = [
     {
         playerID: 'Hello',
