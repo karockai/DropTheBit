@@ -20,7 +20,7 @@ export default {
         // curPrice refresh --------------------------------- >>
         setInterval(async () => {
             new Refresh(io).renewalCurCoin(io);
-            new Refresh(io).renewalInfo(io);
+            // new Refresh(io).renewalInfo(io);
             new Refresh(io).refreshBid(io);
         }, 1000);
 
@@ -54,10 +54,13 @@ export default {
                     });
                 }
             });
-            socket.on('lobbyBoard', (data)=>{
+            socket.on('lobbyBoard', (data) => {
                 if (!roomList[socket.roomID]) return 0;
-                socket.emit('lobbyBoard', roomList[socket.roomID]['leaderBoard']);
-            })
+                socket.emit(
+                    'lobbyBoard',
+                    roomList[socket.roomID]['leaderBoard']
+                );
+            });
             socket.on('startGame_Req', (musicData) => {
                 if (!roomList[socket.roomID]) return 0;
                 new Game(io, socket).startGame(musicData);
@@ -102,7 +105,7 @@ export default {
             });
             socket.on('RefreshBid_Req', () => {
                 if (!roomList[socket.roomID]) return 0;
-                let curPrice = curCoin['curPrice'];
+                // let curPrice = curCoin['curPrice'];
                 socket.emit('RefreshBid_Res', curPrice);
             });
             // In-game event << -----------------------------------------

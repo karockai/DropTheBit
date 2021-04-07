@@ -70,7 +70,7 @@ class Game {
         let reqVol = Number(reqJson['currentVolume']);
 
         // 2. curPrice 가져오기
-        let curPrice = curCoin['curPrice'];
+        // let curPrice = curCoin['curPrice'];
 
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
@@ -203,7 +203,7 @@ class Game {
         let reqVol = Number(reqJson['currentVolume']);
 
         // 2. curPrice 가져오기
-        let curPrice = curCoin['curPrice'];
+        // let curPrice = curCoin['curPrice'];
 
         // 3. player_info 가져오기
         let playerInfo = roomList[roomID][socketID];
@@ -440,10 +440,6 @@ class Game {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };
-        console.log('----');
-        console.log(bfrWallet['asset']);
-        console.log(refreshWallet['asset']);
-        console.log('----');
 
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
