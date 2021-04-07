@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './index.css';
 import {
     BrowserRouter as Router,
     Route,
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
         padding: '5vh 2vw 5vh 2vw',
     },
     paper: {
+        fontFamily:'NEXON Lv1 Gothic OTF',
         backgroundColor: '#0C151C',
         border: '2px solid #000',
         // borderRadius: '3rem',
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tableBody: {
         background: '#212529',
+        fontFamily:'NEXON Lv1 Gothic OTF',
     },
     tableBodyText : {
         fontSize: '1.0vw',
@@ -103,7 +106,7 @@ export default function GameOverModal(props) {
         if (result > 0) color= 'red';
         if (result < 0) color= '#1e88e5';
         return(
-            <TableCell style={{fontSize:'2vh', color:color}} align="right">
+            <TableCell style={{fontSize:'2vh', color:color,fontFamily:'NEXON Lv1 Gothic OTF'}} align="right">
                 {
                     ExpBySymbol(parseWonToStr(result))+' 원'
                 }
@@ -136,7 +139,7 @@ export default function GameOverModal(props) {
                         id="transition-modal-title"
                         style={{ textAlign: 'center', margin:'0 0 5vh 0', fontSize:'3vw' }}
                     >
-                        🌠Game Finished🌠
+                        🌠 Game Finished 🌠
                     </h2>
                     <Grid container direction={'column'} alignItems={'center'}>
                         <TableContainer id ="테이블 컨테이너" component={Paper} className={classes.container}>
@@ -146,11 +149,11 @@ export default function GameOverModal(props) {
                             >
                                 <TableHead>
                                     <TableRow className={classes.tableHead}>
-                                        <TableCell className={classes.tableHead}>순위</TableCell>
-                                        <TableCell className={classes.tableHead} align="right">
+                                        <TableCell className={classes.tableHead} style={{fontFamily:'NEXON Lv1 Gothic OTF'}}>순위</TableCell>
+                                        <TableCell className={classes.tableHead} style={{fontFamily:'NEXON Lv1 Gothic OTF'}} align="right">
                                             Player ID
                                         </TableCell>
-                                        <TableCell className={classes.tableHead} align="right">
+                                        <TableCell className={classes.tableHead} style={{fontFamily:'NEXON Lv1 Gothic OTF'}} align="right">
                                             최종 수익
                                         </TableCell>
                                         {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
@@ -163,14 +166,14 @@ export default function GameOverModal(props) {
                                                     component="th"
                                                     scope="row"
                                                     className={classes.tableBodyText} 
-                                                    style={{width:'12%'}}
-                                                    align="right"
+                                                    style={{width:'12%',fontFamily:'NEXON Lv1 Gothic OTF'}}
+                                                    align="left"
                                                 >
                                                 {showScore(idx+1)}
                                                 </TableCell>
-                                                <TableCell className={classes.tableBodyText}  align="right">
+                                                <TableCell className={classes.tableBodyText} style={{fontFamily:'NEXON Lv1 Gothic OTF'}} align="right">
                                                     {row.playerID}
-                                                </TableCell>
+                                                </TableCell >
                                                 {
                                                     showAsset(row.asset)
                                                 }
@@ -182,13 +185,15 @@ export default function GameOverModal(props) {
                     </Grid>
                     <Button
                         style={{
+                            fontFamily:'NEXON Lv1 Gothic OTF',
+                            color: '#ffffff',
                             textShadow:
                                 '-1px -1px 0 #aaa,1px -1px 0 #aaa,-1px 1px 0 #aaa,1px 1px 0 #aaa',
                         }}
                         onClick={BackToLobby}
                     >
                         {' '}
-                        Back to Lobby{' '}
+                        Back to Lobby{' 🚀'}
                     </Button>
                 </div>
                 {/* </Fade> */}

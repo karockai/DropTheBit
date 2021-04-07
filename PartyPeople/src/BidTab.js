@@ -102,6 +102,7 @@ export default function BidTab(props) {
                                     color: 'white',
                                     fontWeight: 'bold',
                                     fontSize: '0.9vw',
+                                    fontFamily:'NEXON Lv1 Gothic OTF'
                                 }}
                                 align="center"
                             >
@@ -112,6 +113,7 @@ export default function BidTab(props) {
                                     color: 'white',
                                     fontWeight: 'bold',
                                     fontSize: '0.9vw',
+                                    fontFamily:'NEXON Lv1 Gothic OTF'
                                 }}
                                 align="center"
                             >
@@ -135,6 +137,7 @@ export default function BidTab(props) {
                                                   ],
                                         opacity: 1,
                                         width: '100%',
+                                        fontFamily:'NEXON Lv1 Gothic OTF'
                                     }}
                                     key={row.price}
                                 >
@@ -142,6 +145,7 @@ export default function BidTab(props) {
                                         style={{
                                             fontSize: '0.9vw',
                                             opacity: 1,
+                                            fontFamily:'NEXON Lv1 Gothic OTF'
                                         }}
                                         align="center"
                                     >
@@ -150,7 +154,7 @@ export default function BidTab(props) {
                                     <TableCell
                                         style={
                                             (boldIndex(index),
-                                            { fontSize: '0.9vw', opacity: 1 })
+                                            { fontSize: '0.9vw', opacity: 1, fontFamily:'NEXON Lv1 Gothic OTF' })
                                         }
                                         align="center"
                                     >

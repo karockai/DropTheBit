@@ -151,21 +151,21 @@ export default function BidTable(props) {
                             <TableCell
                                 style={{ align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
+                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     취소[1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
+                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     매수 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', minWidth:'20%', height:'100%'}}
                             >
-                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
+                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     매수 수량
                                 </span>
                             </TableCell>
