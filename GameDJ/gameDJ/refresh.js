@@ -359,7 +359,7 @@ class Refresh {
         let exTable = JSON.parse(await dbget('bidTable'));
         if (!exTable) return false;
 
-        let exList = [];
+        exList = [];
 
         let bidObject4 = {
             price: exTable.bid_price4,

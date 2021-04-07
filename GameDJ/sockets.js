@@ -45,11 +45,13 @@ export default {
                 new Room(io, socket).updateSettings(data);
             });
             socket.on('backToLobby', (roomID) => {
-                if (roomList[roomID]['gaming'] === false){
+                if (roomList[roomID]['gaming'] === false) {
                     new Room(io, socket).playerReinit(roomID);
-                }
-                else{
-                    new Room(io, socket).joinRoom({roomID : roomID, playerID : roomList[roomID][socket.id]['playerID']});
+                } else {
+                    new Room(io, socket).joinRoom({
+                        roomID: roomID,
+                        playerID: roomList[roomID][socket.id]['playerID'],
+                    });
                 }
             });
             socket.on('lobbyBoard', (data)=>{
@@ -85,6 +87,10 @@ export default {
             socket.on('cancelAsk_Req', (reqJson) => {
                 if (!roomList[socket.roomID]) return 0;
                 new Game(io, socket).cancelAsk(reqJson);
+            });
+            socket.on('bidTab_Req', (reqJson) => {
+                if (!roomList[socket.roomID]) return 0;
+                new Game(io, socket).sendBidTab(reqJson);
             });
             socket.on('bidTable_Req', (reqJson) => {
                 if (!roomList[socket.roomID]) return 0;

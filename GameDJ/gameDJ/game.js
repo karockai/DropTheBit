@@ -82,14 +82,21 @@ class Game {
         bfrWallet['cash'] = playerInfo['cash'];
         bfrWallet['asset'] = playerInfo['asset'];
 
-        // ! 실수로 잘못된 값이 들어온 경우 처리하기
-        if (cash < reqPrice * reqVol) {
-            console.log('buy 실패 :', reqJson);
+        // ! 음수 값 처리
+        if (reqVol * reqPrice <= 0){
+            console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
+            return
         }
 
         // 5. 구매 처리 및 asset 정보 emit
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
+            // ! 잘못된 값이 들어온 경우 처리하기
+            if (cash < curPrice * reqVol) {
+                console.log('Buy 자산을 초과하는 요청이 감지되었다 :', reqJson, 'cash', playerInfo['cash']);
+                return
+            }
+
             if (playerInfo['avgPrice'] === 0) {
                 playerInfo['avgPrice'] = curPrice;
             } else {
@@ -99,10 +106,6 @@ class Game {
                 );
             }
 
-            // ! 실수로 잘못된 값이 들어온 경우 처리하기
-            if (cash < curPrice * reqVol) {
-                console.log('Buy 이상한 입력이 감지되었다 :', reqJson);
-            }
 
             // 6-1. cash, coin 갯수 갱신
             cash -= curPrice * reqVol;
@@ -130,8 +133,10 @@ class Game {
         } else {
             // ! 실수로 잘못된 값이 들어온 경우 처리하기
             if (cash < reqPrice * reqVol) {
-                console.log('Buy 호가등록 이상한 입력이 감지되었다 :', reqJson);
+                console.log('Buy 자산을 초과하는 요청이 감지되었다 :', reqJson, 'cash', playerInfo['cash']);
+                return
             }
+
             // 7-1. cash 갱신
             cash -= reqPrice * reqVol;
             playerInfo['cash'] = cash;
@@ -202,10 +207,10 @@ class Game {
         bfrWallet['asset'] = playerInfo['asset'];
 
         // ! 실수로 잘못된 값이 들어온 경우 처리하기
-        if (coinVol < reqVol) {
-            console.log('Sell 이상한 입력이 감지되었다', reqJson);
+        if (reqVol <= 0 || coinVol < reqVol) {
+            console.log('Sell 이상한 요청이 감지되었다', reqJson);
+            return
         }
-        // ! 실수로 잘못된 값이 들어온 경우 처리하기
 
         // 6. 요청가 <= 현재가 : 거래 체결 후 결과 송신(asset, sell_res("체결"))
         if (reqPrice <= curPrice) {
@@ -364,7 +369,7 @@ class Game {
         refreshWallet['asset'] = playerInfo['asset'];
         refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
-        this.refreshWallet(socketID, walletInfo, bfrWallet);
+        this.refreshWallet(socketID, refreshWallet, bfrWallet);
 
         this.sendAskTable(reqJson);
     }
@@ -429,16 +434,10 @@ class Game {
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
 
-    // async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
-    //     const { io } = this;
-    //     let refreshWallet = {};
-    //     refreshWallet['result'] = 'success';
-    //     refreshWallet['type'] = type;
-    //     refreshWallet['coinVol'] = coinVol;
-    //     refreshWallet['cash'] = cash;
-    //     refreshWallet['asset'] = asset;
-    //     refreshWallet['avgPrice'] = avgPrice;
-    //     io.to(socketID).emit('refreshWallet', refreshWallet);
-    // }
+    sendBidTab(reqJson) {
+        const { io } = this;
+        let socketID = reqJson['socketID'];
+        io.to(socketID).emit('refreshBid', exList);
+    }
 }
 export default Game;

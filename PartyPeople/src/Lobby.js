@@ -30,6 +30,7 @@ import LobbyTabs from './LobbyTabs';
 import './Lobby.css';
 import StartGame from './StartGame';
 import backgroundImg from './videos/LobbyVideo2.mp4';
+import LeaderBoard from './LeaderBoard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -314,7 +315,7 @@ function Lobby(props) {
                                     padding: '1vw 1vw 1vw 1vw',
                                 }}
                             >
-                                최근 게임 기록
+                                <LeaderBoard socket={props.socket}/>
                             </Paper>
                         </Grid>
                         <Grid
