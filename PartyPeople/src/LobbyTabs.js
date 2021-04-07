@@ -12,7 +12,7 @@ import { Typography, Switch } from '@material-ui/core';
 import KeyMapTemp from './images/KeyMap.png';
 import MusicLeader from './MusicLeader';
 import MusicMember from './MusicMember';
-import LobbyTutorial from './LobbyTutorial';    
+import LobbyTutorial from './LobbyTutorial';
 import { PurpleButton, PurpleSwitch } from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -170,7 +170,7 @@ export default function LobbyTabs(props) {
                     style={{ padding: '1vh 1vw 1vh 1vw' }}
                     size="large"
                 >
-                    ?
+                    Tutorial
                 </button>
                 <button
                     class="arrow"
@@ -222,7 +222,7 @@ export default function LobbyTabs(props) {
                     horizontal: 'center',
                 }}
             >
-               <LobbyTutorial></LobbyTutorial>
+                <LobbyTutorial></LobbyTutorial>
             </Popover>
             <Popover
                 open={openSelect}
