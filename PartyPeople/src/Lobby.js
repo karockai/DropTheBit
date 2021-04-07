@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import {
@@ -59,7 +60,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Lobby(props) {
-    // console.log(props.roomInfo);
+    // const his = useHistory();
+    // console.log(props.history);
+    // props.history.pushState(null,null,'/');
+    // his.pushState(null,null,'/');
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;
