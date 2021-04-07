@@ -310,7 +310,7 @@ export default function ChatRoom(props) {
                     <button
                         style={{
                             padding: '0',
-                            marigin: '0',
+                            margin: '0',
                             width: '100%',
                             height: '100%',
                             backgroundColor: '#635ee7', 

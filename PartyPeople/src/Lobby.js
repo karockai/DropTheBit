@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import {
@@ -59,7 +60,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Lobby(props) {
-    // console.log(props.roomInfo);
+    // const his = useHistory();
+    // console.log(props.history);
+    // props.history.pushState(null,null,'/');
+    // his.pushState(null,null,'/');
     let leftSm = 3;
     let middleSm = 5;
     let rightSm = 3;
@@ -168,7 +172,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid xs={8} align="left">
+                            <Grid xs={7} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -183,7 +187,7 @@ function Lobby(props) {
                                     </span>
                                 </IconButton>
                             </Grid>
-                            <Grid xs={4}>
+                            <Grid xs={5}>
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
@@ -235,10 +239,15 @@ function Lobby(props) {
                             alignItmes={'stretch'}
                         >
                             <Grid
-                                alignItems="center"
+                                contianer
+                                direction='row'
+                                alignItems="flex-end"
+                                justify="center"
+                                
                                 className="게임방메타데이터"
                                 item
                                 xs={5}
+                                style={{height: '30%'}}
                             >
                                 <TextField
                                     type="text"
@@ -248,7 +257,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '70%', height: '100%' }}
+                                    style={{ width: '70%',  }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={1}>

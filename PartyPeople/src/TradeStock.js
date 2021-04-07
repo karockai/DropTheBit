@@ -189,12 +189,10 @@ export default function TradeStock(props) {
     // }
 
     function Buy(bid, volume) {
-        console.log(bid , volume);
         let status = '';
         if (bid < 0) bid = 0;
         if (volume < 0) volume = 0;
         if (bid  === 0 || volume === 0) {
-            console.log(bid , volume);
             return {
                 status: 'invalid',
                 val: bid,

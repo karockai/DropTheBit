@@ -189,7 +189,7 @@ export default function PlayerList(props) {
                                 style={{
                                     backgroundColor: myColor,
                                     fontWeight: myFont,
-                                    padding: "4% 2% 4% 2%",
+                                    padding: "1vh 1vw",
                                     margin: "3% 0 3% 0%"
                                 }}
                                 className={classes.paper}
