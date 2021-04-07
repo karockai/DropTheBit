@@ -110,6 +110,7 @@ class Refresh {
                     let bidVol = playerInfo['bid'][bidPrice];
                     let cash = playerInfo['cash'];
 
+                    let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] = playerInfo['asset'];
@@ -202,8 +203,6 @@ class Refresh {
 
                     let playerInfo = roomInfo[socketID];
 
-                    let bfrWallet = {};
-
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
                     let bidCash = playerInfo['bidCash'];
@@ -211,6 +210,7 @@ class Refresh {
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
 
+                    let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] =
@@ -247,10 +247,9 @@ class Refresh {
                     io.to(rankList[idx]['socketID']).emit(
                         'MyRank',
                         rankList[idx],
-                        idx + 1
+                        parseInt(idx) + 1
                     );
                 }
-
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
             }

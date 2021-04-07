@@ -24,6 +24,7 @@ const useStyles = makeStyles((cnt) => ({
         width: '100%',
         height: '100%',
         margin: '0 2vh 2vh 2vh',
+        padding:'0.5vh 0.5vw 0.5vh 0.5vw',
         color: '#CDD7E0',
         opacity: 1,
         backgroundColor: '#0C151C',
@@ -71,7 +72,9 @@ export default function LobbyPlayerCard(props) {
     }
     let avatars = new Avatars(sprites, options);
     let svg = avatars.create(props.playerID);
-
+    let maxFontSize = 1.5
+    const compFontSize = 5 / ratio * (5 / (props.playerID.length >= 5 ? 5 : props.playerID.length));
+    maxFontSize = maxFontSize < compFontSize ? maxFontSize : compFontSize;
     let playerInfo = null;
     if(ratio > 8){
       playerInfo = (<></>)
@@ -79,10 +82,10 @@ export default function LobbyPlayerCard(props) {
     else {
       playerInfo = (
         <>
-        <Grid item style={{ fontSize: 3 / ratio + 'vw', height:'30%' }}>
+        <Grid item style={{ fontSize: 3 / ratio + 'vw', height:'30%', padding:'1vh 0 0 1vw'}}>
         {isLeader}
     </Grid>
-    <Grid item style={{ fontSize: 5 / ratio * (3 / props.playerID.length) + 'vw',  height:'70%' , padding: (props.playerID.length / 3) + 'vh'}}>
+    <Grid item style={{ fontSize:  maxFontSize + 'vw', height:'70%' , padding:  '1vh', }}>
         {props.playerID}
     </Grid>
     </>

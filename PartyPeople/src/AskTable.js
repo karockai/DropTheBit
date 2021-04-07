@@ -175,21 +175,21 @@ export default function AskTable(props) {
                             <TableCell
                                 style={{ align: 'center', height:'100%', width: '20%' }}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF' }}>
                                     취소[1]~[8]
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF' }}>
                                     매도 가격
                                 </span>
                             </TableCell>
                             <TableCell
                                 style={{ align: 'center', width: '20%' }}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw'}}>
+                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw', fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     매도 수량
                                 </span>
                             </TableCell>

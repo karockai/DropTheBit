@@ -44,6 +44,7 @@ const StyledTabs = withStyles({
       textTransform: "none",
       color: "#fff",
       fontWeight: theme.typography.fontWeightRegular,
+      fontFamily:'NEXON Lv1 Gothic OTF',
       fontSize: '0.8vw',
       alignItems: 'center',
       wrapped:'false',
@@ -147,7 +148,7 @@ export default function TabControl(props) {
 
     return (
         <div className={classes.demo2}  style={{height:'100%', width: '100%'}}>
-            <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%', alignItems:'stretch'}}>
+            <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%', alignItems:'stretch',}}>
                 {/* <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} /> */}
                 <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} />
                 <StyledTab label="[W] 매도 주문" {...a11yProps(1)} />

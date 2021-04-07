@@ -10,6 +10,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { blue, red } from '@material-ui/core/colors';
+// 숫자 파싱
+import {SplitByThree} from './parseMoney';
 
 const useStyles = makeStyles({
     table: {},
@@ -80,7 +82,7 @@ export default function BidTab(props) {
             direction="column"
         >
             <TableContainer
-                style={{ height: '100%', padding: '2vh 2vw 2vh 2vw' }}
+                style={{ height: '100%',  }} //padding: '2vh 2vw 2vh 2vw'
             >
                 <StyledTable
                     className={classes.table}
@@ -100,8 +102,9 @@ export default function BidTab(props) {
                                     color: 'white',
                                     fontWeight: 'bold',
                                     fontSize: '0.9vw',
+                                    fontFamily:'NEXON Lv1 Gothic OTF'
                                 }}
-                                align="left"
+                                align="center"
                             >
                                 거래량
                             </TableCell>
@@ -110,8 +113,9 @@ export default function BidTab(props) {
                                     color: 'white',
                                     fontWeight: 'bold',
                                     fontSize: '0.9vw',
+                                    fontFamily:'NEXON Lv1 Gothic OTF'
                                 }}
-                                align="left"
+                                align="center"
                             >
                                 거래가
                             </TableCell>
@@ -133,6 +137,7 @@ export default function BidTab(props) {
                                                   ],
                                         opacity: 1,
                                         width: '100%',
+                                        fontFamily:'NEXON Lv1 Gothic OTF'
                                     }}
                                     key={row.price}
                                 >
@@ -140,17 +145,20 @@ export default function BidTab(props) {
                                         style={{
                                             fontSize: '0.9vw',
                                             opacity: 1,
+                                            fontFamily:'NEXON Lv1 Gothic OTF'
                                         }}
+                                        align="center"
                                     >
-                                        {row.buy}
+                                        {SplitByThree(String(row.buy))}
                                     </TableCell>
                                     <TableCell
                                         style={
                                             (boldIndex(index),
-                                            { fontSize: '0.9vw', opacity: 1 })
+                                            { fontSize: '0.9vw', opacity: 1, fontFamily:'NEXON Lv1 Gothic OTF' })
                                         }
+                                        align="center"
                                     >
-                                        {row.price}
+                                        {SplitByThree(String(row.price))}
                                     </TableCell>
                                 </TableRow>
                             );

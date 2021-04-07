@@ -34,7 +34,7 @@ import LeaderBoard from './LeaderBoard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '0vh 0vw 2vh 0vw',
+        padding: '0vh 0vw 3vh 0vw',
     },
 
     paper: {
@@ -66,11 +66,6 @@ function Lobby(props) {
     // console.log(props.socket.id);
     // console.log(props);
     const classes = useStyles();
-
-    const [inputCtrl, setInputCtrl] = useState(false);
-    const SetInputCtrl = (isChat) => {
-        setInputCtrl(isChat);
-    };
 
     function CopyURL() {
         var copyText = document.getElementById('gameLink');
@@ -337,7 +332,6 @@ function Lobby(props) {
                                 }}
                             >
                                 <ChatRoom
-                                    SetInputCtrl={SetInputCtrl}
                                     roomInfo={props.roomInfo}
                                     roomID={props.roomID}
                                     socket={props.socket}

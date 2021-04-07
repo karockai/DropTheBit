@@ -10,6 +10,12 @@ import Without_Me from './audios/music/Without_Me.mp3';
 import StormRoad from './audios/music/질풍가도.mp3';
 import Beethven_Virus from './audios/music/Beethven_Virus.mp3';
 import The_Wight_to_Remain from './audios/music/The_Wight_to_Remain.mp3';
+import Gaza from './audios/music/Gaza.mp3';
+import Another_One_Bites_The_Dust from './audios/music/Another_One_Bites_The_Dust.mp3';
+import Can_You_Dig_It from './audios/music/Can_You_Dig_It.mp3';
+import Csikos_Post from './audios/music/Csikos_Post.mp3';
+import Dont_Stop_Me from './audios/music/날_막지마.mp3';
+
 import TestMusic from './audios/music/TestMusic.mp3';
 
 export default function GameMusic(props) {
@@ -26,6 +32,11 @@ export default function GameMusic(props) {
         질풍가도: StormRoad,
         Beethven_Virus: Beethven_Virus,
         The_Wight_to_Remain: The_Wight_to_Remain,
+        가즈아: Gaza,
+        Another_One_Bites_The_Dust: Another_One_Bites_The_Dust,
+        Can_You_Dig_It: Can_You_Dig_It,
+        우편마차: Csikos_Post,
+        날_막지마: Dont_Stop_Me,
         TestMusic: TestMusic,
     };
 
