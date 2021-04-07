@@ -15,7 +15,6 @@ class Refresh {
         curCoin = updateCurCoin;
         io.emit('chart', curCoin);
         curPrice = curCoin['curPrice'];
-        console.log(curPrice);
         if (curPrice === prePrice) {
             return false;
         }
@@ -49,8 +48,6 @@ class Refresh {
                     // 평단가 로직
                     if (coinVol === 0){
                         playerInfo['avgPrice'] = 0
-                        console.log('------', playerInfo['playerID'], '평단가-----');
-                        console.log(playerInfo['avgPrice']);
                     }
 
                     let bfrWallet = {};
@@ -133,8 +130,6 @@ class Refresh {
                                 (coinVol + bidVol)
                         );
                     }
-                    console.log('------', playerInfo['playerID'], '평단가-----');
-                    console.log(playerInfo['avgPrice']);
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;

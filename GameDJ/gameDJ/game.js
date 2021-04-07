@@ -111,8 +111,6 @@ class Game {
                         (coinVol + reqVol)
                 );
             }
-            console.log('------', playerID, '평단가-----');
-            console.log(playerInfo['avgPrice']);
 
             // 6-1. cash, coin 갯수 갱신
             cash -= curPrice * reqVol;
@@ -234,8 +232,6 @@ class Game {
             // 평단가 로직
             if (coinVol === 0){
                 playerInfo['avgPrice'] = 0
-                console.log('------', playerID, '평단가-----');
-                console.log(playerInfo['avgPrice']);
             }
 
             // 6-3. playerInfo Update
