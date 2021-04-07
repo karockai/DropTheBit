@@ -110,6 +110,7 @@ class Refresh {
                     let bidVol = playerInfo['bid'][bidPrice];
                     let cash = playerInfo['cash'];
 
+                    let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] = playerInfo['asset'];
@@ -202,8 +203,6 @@ class Refresh {
 
                     let playerInfo = roomInfo[socketID];
 
-                    let bfrWallet = {};
-
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
                     let bidCash = playerInfo['bidCash'];
@@ -211,6 +210,7 @@ class Refresh {
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
 
+                    let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] =
