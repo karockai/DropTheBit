@@ -429,16 +429,11 @@ class Game {
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
 
-    // async refreshWallet(socketID, type, coinVol, cash, asset, avgPrice) {
-    //     const { io } = this;
-    //     let refreshWallet = {};
-    //     refreshWallet['result'] = 'success';
-    //     refreshWallet['type'] = type;
-    //     refreshWallet['coinVol'] = coinVol;
-    //     refreshWallet['cash'] = cash;
-    //     refreshWallet['asset'] = asset;
-    //     refreshWallet['avgPrice'] = avgPrice;
-    //     io.to(socketID).emit('refreshWallet', refreshWallet);
-    // }
+    sendBidTab(reqJson) {
+        const { io } = this;
+        let socketID = reqJson['socketID'];
+        console.log('ho');
+        io.to(socketID).emit('refreshBid', exList);
+    }
 }
 export default Game;

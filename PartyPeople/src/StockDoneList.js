@@ -8,7 +8,7 @@ import BuyDone from './audios/effect/BuyDone.wav';
 import SellDone from './audios/effect/SellDone.wav';
 
 const defaultTextStyle = {
-    color: '#444444',
+    color: '#DCDCDC',
 };
 const highlightTextStyle = {
     color: 'white',
@@ -91,13 +91,15 @@ export default function StockDoneList(props) {
                     <Grid style={{ fontSize: '1.05vw' }}>
                         <pre style={defaultTextStyle} key={idx}>
                             <span style={highlightTextStyle}>
-                                {props.isMine ? '' : done.playerID}
+                                {props.isMine ? ' ' : done.playerID}님
                             </span>
-                            {props.isMine ? '' : '님이 '}
-                            <span style={highlightTextStyle}>{done.price}</span>
-                            원에{' '}
-                            <span style={highlightTextStyle}>{done.vol}</span>
-                            개를 <span style={buySellColor}>{done.type}.</span>
+                            {props.isMine ? '' : '이 '}
+                            <span style={highlightTextStyle}>
+                                {done.price}원
+                            </span>
+                            에{' '}
+                            <span style={highlightTextStyle}>{done.vol}개</span>
+                            를 <span style={buySellColor}>{done.type}.</span>
                         </pre>
                     </Grid>
                 );

@@ -163,9 +163,9 @@ export default function MyAsset(props) {
                         }}
                     >
                         <span>보유 현금 (KRW)</span>
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw' }}>
+                        <h3 style={{ fontWeight: 'bold', fontSize: '1.5vw' }}>
                             {ExpBySymbol(parseWonToStr(myWallet.myCash))} 원
-                        </h5>
+                        </h3>
                         <div
                             id="diffCash"
                             class="default"
