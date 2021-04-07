@@ -166,7 +166,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid xs={8} align="left">
+                            <Grid xs={7} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -181,7 +181,7 @@ function Lobby(props) {
                                     </span>
                                 </IconButton>
                             </Grid>
-                            <Grid xs={4}>
+                            <Grid xs={5}>
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
@@ -233,10 +233,15 @@ function Lobby(props) {
                             alignItmes={'stretch'}
                         >
                             <Grid
-                                alignItems="center"
+                                contianer
+                                direction='row'
+                                alignItems="flex-end"
+                                justify="center"
+                                
                                 className="게임방메타데이터"
                                 item
                                 xs={5}
+                                style={{height: '30%'}}
                             >
                                 <TextField
                                     type="text"
@@ -246,7 +251,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '70%', height: '100%' }}
+                                    style={{ width: '70%',  }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={1}>
