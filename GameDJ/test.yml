@@ -1,12 +1,12 @@
 config:
-  # target: "http://3.34.72.206:5000" # 방이 있는 서버(오 or 황)
-  target: "http://localhost:5000"
+  target: "http://3.34.72.206:5000" # 방이 있는 서버(오 or 황)
+  # target: "http://localhost:5000"
   socketio:
     transports: ["websocket"]
-    query: "id=EnjoyPublicGame" # 매번 방 바꿔줘야함
+    query: "id=Xs5QF4OpkHC3_my" # 매번 방 바꿔줘야함
   phases:
-    - duration: 5
-      arrivalRate: 10
+    - duration: 10
+      arrivalRate: 20 
 scenarios:
   - name: "Connect and join Room"
     engine: "socketio"
@@ -15,13 +15,13 @@ scenarios:
           channel: "joinRoom_Req"
           data:
             "playerID": "{{$randomString()}}"
-            "roomID": "EnjoyPublicGame"
-      - think: 5
+            "roomID": "Xs5QF4OpkHC3_my"
+      - think: 20
       - loop:
         - emit:
             channel: "buy_Req"
             data:
-              "roomID": "EnjoyPublicGame"
+              "roomID": "Xs5QF4OpkHC3_my"
               "socketID": 0
               "currentBid": 2000
               "currentVolume": 1000
@@ -29,7 +29,7 @@ scenarios:
         - emit:
             channel: "sell_Req"
             data:
-                "roomID": "EnjoyPublicGame"
+                "roomID": "Xs5QF4OpkHC3_my"
                 "socketID": 0
                 "currentBid": 100
                 "currentVolume": 1000
@@ -37,12 +37,12 @@ scenarios:
         - emit:
             channel: "message"
             data:
-                "roomID": "EnjoyPublicGame"
+                "roomID": "Xs5QF4OpkHC3_my"
                 "socketID": 0
                 "message": "저는 봇입니다"
                 "author" : 0
         - think: 1
-        count: 20
+        # count: 20
       # # 매도, 매수, 채팅을 20번씩하고 나가도록 함
       # - emit:
       #     channel: "disconnect"

@@ -46,6 +46,13 @@ class Refresh {
                     let askVol = playerInfo['ask'][askPrice];
                     let coinVol = playerInfo['coinVol'];
 
+                    // 평단가 로직
+                    if (coinVol === 0){
+                        playerInfo['avgPrice'] = 0
+                        console.log('------', playerInfo['playerID'], '평단가-----');
+                        console.log(playerInfo['avgPrice']);
+                    }
+
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = coinVol;
                     bfrWallet['cash'] = playerInfo['cash'];
@@ -126,6 +133,8 @@ class Refresh {
                                 (coinVol + bidVol)
                         );
                     }
+                    console.log('------', playerInfo['playerID'], '평단가-----');
+                    console.log(playerInfo['avgPrice']);
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
