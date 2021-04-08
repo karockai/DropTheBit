@@ -38,7 +38,7 @@ export default {
                 let ipAddress = response['ip'];
                 let name = response['name'];
                 console.log("기존 방에 접속", name, ipAddress);
-                dbhincrby(name, 'player', 1);
+                await dbhincrby(name, 'player', 1);
                 socket.emit('ipToConnect', ipAddress);
             } else {
                 // 방장

@@ -18,6 +18,7 @@ class Refresh {
         if (curPrice === prePrice) {
             return false;
         }
+        console.log(curPrice);
 
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
@@ -263,6 +264,8 @@ class Refresh {
             // 공방 startGame logic
             if (roomInfo['readyTime'] > 0 && roomInfo['roomLeader']) {
                 roomList[roomID]['readyTime']--;
+                console.log('readyTime :', roomList[roomID]['readyTime']);
+                console.log('gaming :', roomList[roomID]['gaming']);
                 io.to(roomID).emit(
                     'restReadyTime',
                     roomList[roomID]['readyTime']
@@ -273,6 +276,7 @@ class Refresh {
                 roomInfo['readyTime'] === 0 &&
                 roomList[roomID]['gaming'] === false
             ) {
+                console.log('여기로 들어옵니까?');
                 roomList[roomID]['gaming'] = true;
                 io.to(roomInfo['roomLeader']).emit('publicGameStart');
             }
@@ -280,7 +284,7 @@ class Refresh {
             // gameOver logic
             if (roomInfo['gaming']) {
                 roomList[roomID]['gameTime']--;
-                console.log(roomList[roomID]['gameTime']);
+                console.log('gameTime: ', roomList[roomID]['gameTime']);
                 io.to(roomID).emit(
                     'restGameTime',
                     roomList[roomID]['gameTime']
