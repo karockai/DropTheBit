@@ -11,7 +11,7 @@ class Disconnect {
         this.socket = socket;
     }
 
-    onDisconnect() {
+    async onDisconnect() {
         const { io, socket } = this;
         const { roomID } = socket;
 
@@ -23,7 +23,7 @@ class Disconnect {
             let playerInfo = roomInfo[socket.id];
             //ask, bid 지우기
             //성현 추가(210403) 서버 인원 감소시키기
-            dbhincrby(process.env.SERVERNAME, 'player', -1);
+            await dbhincrby(process.env.SERVERNAME, 'player', -1);
 
             // ask, bid List에서 해당 player 삭제
             for (let bid in playerInfo['bid']){
@@ -53,7 +53,7 @@ class Disconnect {
             // 방에 사람이 0명이 되면 방을 지운다
             if (playerCnt === 0) {
                 delete roomList[roomID];
-                dbdel(roomID);
+                await dbdel(roomID);
                 playerStress = 0;
             } 
             else {

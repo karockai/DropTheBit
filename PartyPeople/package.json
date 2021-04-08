@@ -43,7 +43,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "buildDocker": "rm -rf ../nginx/build && react-scripts build && mv build ../nginx",
+    "buildDocker": "rm -rf /mnt/c/Users/sungh/Desktop/build && react-scripts build && mv build /mnt/c/Users/sungh/Desktop",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
