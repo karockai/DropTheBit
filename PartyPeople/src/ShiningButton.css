@@ -127,8 +127,8 @@
   /* --color: #635ee7; */
 
     /* --color: #635ee7; */
-    background: red;
-    /* --color: #e53935; */
+    /* background: red; */
+    --color: #fff073;
     /* --color: white; */
     --hover: red;
 }
