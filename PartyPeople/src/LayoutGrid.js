@@ -24,6 +24,7 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
+
 import TabPanel from './TabControl';
 
 const useStyles = makeStyles((theme) => ({
@@ -136,7 +137,7 @@ export default function LayoutGrid(props) {
                         item
                         style={{
                             width: '100%',
-                            height: '50%',
+                            height: '100%',
                             padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                         }}
                     >
