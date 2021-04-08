@@ -3,10 +3,10 @@ config:
   # target: "http://localhost:5000"
   socketio:
     transports: ["websocket"]
-    query: "id=rYwxAfEcf4f849T" # 매번 방 바꿔줘야함
+    query: "id=BgFmyjpI1bGj7Ys" # 매번 방 바꿔줘야함
   phases:
-    - duration: 20
-      arrivalRate: 5
+    - duration: 50
+      arrivalRate: 2
 scenarios:
   - name: "Connect and join Room"
     engine: "socketio"
@@ -15,13 +15,13 @@ scenarios:
           channel: "joinRoom_Req"
           data:
             "playerID": "{{$randomString()}}"
-            "roomID": "rYwxAfEcf4f849T"
-      - think: 30
+            "roomID": "BgFmyjpI1bGj7Ys"
+      - think: 70
       - loop:
         - emit:
             channel: "buy_Req"
             data:
-              "roomID": "rYwxAfEcf4f849T"
+              "roomID": "BgFmyjpI1bGj7Ys"
               "socketID": 0
               "currentBid": 200000
               "currentVolume": 100
@@ -29,7 +29,7 @@ scenarios:
         - emit:
             channel: "sell_Req"
             data:
-                "roomID": "rYwxAfEcf4f849T"
+                "roomID": "BgFmyjpI1bGj7Ys"
                 "socketID": 0
                 "currentBid": 100000
                 "currentVolume": 100
@@ -37,15 +37,15 @@ scenarios:
         - emit:
             channel: "message"
             data:
-                "roomID": "rYwxAfEcf4f849T"
+                "roomID": "BgFmyjpI1bGj7Ys"
                 "socketID": 0
                 "message": "저는 봇입니다"
                 "author" : 0
         - think: 1
-        count: 20
+        # count: 20
       # # 매도, 매수, 채팅을 20번씩하고 나가도록 함
-      - emit:
-          channel: "disconnect"
+      # - emit:
+      #     channel: "disconnect"
       # - think: 100
 
 

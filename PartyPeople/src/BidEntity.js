@@ -1,10 +1,10 @@
 import React, { useState, makeStyle, useLayoutEffect, useEffect } from 'react';
-import { Grid, Paper, makeStyles } from '@material-ui/core';
+import { Grid, Paper, makeStyles, TableCell } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 
 // 숫자 파싱
-import {SplitByThree} from './parseMoney';
+import { SplitByThree } from './parseMoney';
 
 const greenTheme = createMuiTheme({
     palette: {
@@ -18,9 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         textAlign: 'center',
-        backgroundColor: '#2D4053',
+        backgroundColor: '#aa2211',
         color: 'white',
-        margin: '1vh 0 0 0'
     },
     score: {},
 }));
@@ -42,14 +41,15 @@ export default function BidEntity(props) {
     };
     return (
         <Grid
+            style={{ height: '100%', width: '100%' }}
             wrap="wrap"
             container
             direction="column"
-            justify="center"
-            alignItems="stretch"
+            justifyItems="center"
+            alignItems="center"
         >
             <Paper
-                style={{ height: '10%', width: '100%' }}
+                style={{ height: '100%', width: '100%' }}
                 className={classes.paper}
                 onClick={bidCancel}
             >
@@ -58,22 +58,33 @@ export default function BidEntity(props) {
                     direction="row"
                     justifyItems="center"
                     alignItems="center"
+                    style={{ height: '100%' }}
                 >
                     <Grid
-                        style={{ width: '20%', fontStyle: 'italic' }}
+                        style={{
+                            width: '33%',
+                            height: '100%',
+                            fontStyle: 'italic',
+                        }}
                         className="price"
+                        justifyItems="center"
+                        item
                     >
                         [{props.index}]
                     </Grid>
                     <Grid
-                        style={{ width: '40%',}}
+                        style={{ width: '33%', height: '100%' }}
                         className="price"
+                        justifyItems="center"
+                        item
                     >
                         {SplitByThree(String(props.price))}
                     </Grid>
                     <Grid
-                        style={{ width: '40%', }}
+                        style={{ width: '33%', height: '100%' }}
                         className="vol"
+                        justifyItems="center"
+                        item
                     >
                         {SplitByThree(String(props.vol))}
                     </Grid>

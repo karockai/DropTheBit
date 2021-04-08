@@ -70,7 +70,8 @@ export default function MyAsset(props) {
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
-
+                console.log('refreshWallet');
+                console.log(data);
                 const refreshWallet = data.refreshWallet;
                 const bfrWallet = data.bfrWallet;
 
@@ -99,121 +100,9 @@ export default function MyAsset(props) {
         }
     }, [isInit]);
 
-    // // ! 1000단위 , 붙이기
-    // function SplitByThree(value) {
-    //     if (!value) return 'Something wrong.';
-    //     if (value.length <= 3) return value;
-    //     return (
-    //         SplitByThree(value.substring(0, value.length - 3)) +
-    //         ',' +
-    //         value.substring(value.length - 3, value.length)
-    //     );
-    // }
-
-    // const parseWonToStr = (won) => {
-    //     if (typeof won == 'number') won = won.toString();
-    //     return won;
-    // };
-
-    // function ExpBySymbol(value) {
-    //     // console.log(value);
-    //     if (!value) return 'Something wrong.';
-    //     let ret = '';
-    //     if (value.length >= 9) {
-    //         // 199489230 -> 1억 9948만 9230
-    //         ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
-    //         value = value.substring(value.length - 9 + 1);
-    //     }
-    //     if (value.length >= 5) {
-    //         // value 99489230
-    //         ret += value.substring(0, value.length - 5 + 1) + '만 '; // 9948만
-    //         value = value.substring(value.length - 5 + 1);
-    //     }
-    //     ret += value;
-    //     return ret + '원';
-    // }
 
     return (
         <>
-            <Grid
-                container
-                item
-                direction="row"
-                alignItems="flex-start"
-                wrap="wrap"
-                justify="stretch"
-                style={{
-                    height: '40%',
-                }}
-            >
-                <Grid
-                    style={{
-                        width: '60%',
-                        height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                    }}
-                    item
-                >
-                    <Paper
-                        className={classes.paper}
-                        style={{
-                            height: '100%',
-                            fontSize: '1vw',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                        }}
-                    >
-                        <span>보유 현금 (KRW)</span>
-                        <h3 style={{ fontWeight: 'bold', fontSize: '1.5vw' }}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myCash))} 원
-                        </h3>
-                        <div
-                            id="diffCash"
-                            class="default"
-                            style={{
-                                fontWeight: 'bold',
-                                fontSize: '1vw',
-                                textAlign: 'right',
-                                padding: '0 10% 0 0',
-                            }}
-                        >
-                            {showProfit('diffCash', diffWallet.diffCash)}{' '}
-                        </div>
-                    </Paper>
-                </Grid>
-                <Grid
-                    item
-                    style={{
-                        width: '40%',
-                        height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                    }}
-                >
-                    <Paper
-                        className={classes.paper}
-                        style={{
-                            height: '100%',
-                            fontSize: '1vw',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                        }}
-                    >
-                        보유 코인 수
-                        <h3 style={{ fontSize: '1.5vw' }}>
-                            {SplitByThree(String(myWallet.myCoin))} 개
-                        </h3>
-                        <h3
-                            id="diffCoin"
-                            class="default"
-                            style={{
-                                fontSize: '1vw',
-                                textAlign: 'right',
-                                padding: '0 10% 0 0',
-                            }}
-                        >
-                            {showProfit('diffCoin', diffWallet.diffCoin)}{' '}
-                        </h3>
-                    </Paper>
-                </Grid>
-            </Grid>
             <Grid
                 container
                 item
@@ -249,7 +138,7 @@ export default function MyAsset(props) {
                         <h2
                             style={{
                                 fontWeight: 'bold',
-                                fontSize: '2.2vw',
+                                fontSize: '2.5vw',
                                 color: color,
                             }}
                         >
@@ -271,6 +160,86 @@ export default function MyAsset(props) {
                     </Paper>
                 </Grid>
             </Grid>
+            <Grid
+                container
+                item
+                direction="row"
+                alignItems="flex-start"
+                wrap="wrap"
+                justify="stretch"
+                style={{
+                    height: '40%',
+                }}
+            >
+                <Grid
+                    style={{
+                        width: '60%',
+                        height: '100%',
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                    }}
+                    item
+                >
+                    <Paper
+                        className={classes.paper}
+                        style={{
+                            height: '100%',
+                            fontSize: '1vw',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                    >
+                        <span>보유 현금 (KRW)</span>
+                        <h3 style={{ fontWeight: 'bold', fontSize: '1.8vw' }}>
+                            {ExpBySymbol(parseWonToStr(myWallet.myCash))} 원
+                        </h3>
+                        <div
+                            id="diffCash"
+                            class="default"
+                            style={{
+                                fontWeight: 'bold',
+                                fontSize: '1vw',
+                                textAlign: 'right',
+                                padding: '0 10% 0 0',
+                            }}
+                        >
+                            {showProfit('diffCash', diffWallet.diffCash)}{' '}
+                        </div>
+                    </Paper>
+                </Grid>
+                <Grid
+                    item
+                    style={{
+                        width: '40%',
+                        height: '100%',
+                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                    }}
+                >
+                    <Paper
+                        className={classes.paper}
+                        style={{
+                            height: '100%',
+                            fontSize: '1vw',
+                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                    >
+                        보유 코인 수
+                        <h3 style={{ fontSize: '1.8vw' }}>
+                            {SplitByThree(String(myWallet.myCoin))} 개
+                        </h3>
+                        <h3
+                            id="diffCoin"
+                            class="default"
+                            style={{
+                                fontSize: '1vw',
+                                textAlign: 'right',
+                                padding: '0 10% 0 0',
+                            }}
+                        >
+                            {showProfit('diffCoin', diffWallet.diffCoin)}{' '}
+                        </h3>
+                    </Paper>
+                </Grid>
+            </Grid>
+
         </>
     );
 }

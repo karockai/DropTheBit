@@ -4,7 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 
 // 숫자 파싱
-import {SplitByThree} from './parseMoney';
+import { SplitByThree } from './parseMoney';
 const greenTheme = createMuiTheme({
     palette: {
         primary: green,
@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         textAlign: 'center',
-        backgroundColor: '#2D4053',
+        backgroundColor: '#1122aa',
         color: 'white',
-        margin: '1vh 0 0 0'
+        
     },
     score: {},
 }));
@@ -41,34 +41,48 @@ export default function AskEntity(props) {
     };
     return (
         <Grid
+            style={{  width: '100%', height:'25%',  fontSize: '1.2vw', }}
             wrap="wrap"
             container
+            item
             direction="column"
-            justify="center"
+            justifyItems="center"
             alignItems="stretch"
         >
             <Paper
-                style={{ height: '10%', width: '100%' }}
+                style={{ height: '100%', width: '100%' }}
                 className={classes.paper}
                 onClick={askCancel}
             >
-                <Grid container direction="row"                     justifyItems="center"
-                    alignItems="center">
+                <Grid
+                    container
+                    direction="row"
+                    justifyItems="center"
+                    alignItems="center"
+                    style={{ height: '100%' }}
+                >
                     <Grid
-                        style={{ width: '20%',fontStyle: 'italic'  }}
+                        style={{
+                            width: '30%',
+                            height: '100%',
+                            fontStyle: 'italic',
+                        }}
                         className="price"
+                        item
                     >
                         [{props.index}]
                     </Grid>
                     <Grid
-                        style={{ width: '40%', }}
+                        style={{ width: '33%', height: '100%' }}
                         className="price"
+                        item
                     >
                         {SplitByThree(String(props.price))}
                     </Grid>
                     <Grid
-                        style={{ width: '40%', }}
+                        style={{ width: '33%', height: '100%' }}
                         className="vol"
+                        item
                     >
                         {SplitByThree(String(props.vol))}
                     </Grid>

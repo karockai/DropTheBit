@@ -51,14 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StartGame(props) {
     const classes = useStyles();
-    const [restReadyTime, SetRestTime] = useState(null);
     const [gameMusic, SetGameMusic] = useState(props.gameMusic);
-
-    useEffect(() => {
-        props.socket.once('publicGameStart', () => {
-            StartGameReq();
-        });
-    }, []);
 
     useEffect(() => {
         props.socket.on('settingsUpdate_Res', (data) => {
@@ -146,63 +139,17 @@ export default function StartGame(props) {
     }, []);
 
     useEffect(() => {
-        props.socket.on('restReadyTime', (restTime) => {
-            SetRestTime(restTime);
-        });
-    });
-
-    useEffect(() => {
         props.socket.once('settingsUpdate_Res', (data) => {
             SetGameMusic(data['musicName']);
         });
     }, []);
 
-    // Step1. 공개 방이 경우
-    if (props.roomID === 'EnjoyPublicGame') {
-        // Step1-1.방이 게임 중이 아닌 경우
-        if (props.roomOnGame === false) {
-            return (
-                <>
-                    {props.isLeader && (
-                        <Button
-                            class="start"
-                            variant="contained"
-                            style={{
-                                width: '80%',
-                                height: '17vh',
-                                fontSize: '10vh',
-                            }}
-                            text
-                        >
-                            {' '}
-                            {restReadyTime}
-                        </Button>
-                    )}
-                    {!props.isLeader && (
-                        <Button
-                            class="start"
-                            variant="contained"
-                            style={{
-                                width: '80%',
-                                height: '17vh',
-                                fontSize: '10vh',
-                            }}
-                            text
-                        >
-                            {' '}
-                            {restReadyTime}
-                        </Button>
-                    )}
-                </>
-            );
-        }
-        // Step1-2. 방이 게임 중인 경우
-        else {
-            return (
-                <>
+    if (props.roomOnGame === false) {
+        return (
+            <>
+                {props.isLeader && (
                     <Button
                         class="start"
-                        variant="contained"
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
@@ -213,65 +160,41 @@ export default function StartGame(props) {
                     >
                         {'START'}
                     </Button>
-                </>
-            );
-        }
-    }
-    // Step2. 사설 방인 경우
-    else {
-        // Step2-1. 방이 게임 중이 아닌 경우
-        if (props.roomOnGame === false) {
-            return (
-                <>
-                    {props.isLeader && (
-                        <Button
-                            class="start"
-                            onClick={StartGameReq}
-                            style={{
-                                width: '80%',
-                                height: '17vh',
-                                fontSize: '10vh',
-                            }}
-                            text
-                        >
-                            {'START'}
-                        </Button>
-                    )}
-                    {!props.isLeader && (
-                        <button
-                            style={{
-                                width: '90%',
-                                height: '17vh',
-                                fontSize: '5vh',
-                            }}
-                            text
-                            disabled
-                        >
-                            {'방장이 게임을 시작합니다.'}
-                        </button>
-                    )}
-                </>
-            );
-        }
-
-        // Step2-2. 방이 게임 중인 경우
-        else {
-            return (
-                <>
-                    <Button
-                        class="start"
-                        onClick={StartGameReq}
+                )}
+                {!props.isLeader && (
+                    <button
                         style={{
-                            width: '80%',
-                            height: '18vh',
-                            fontSize: '10vh',
+                            width: '90%',
+                            height: '17vh',
+                            fontSize: '5vh',
                         }}
                         text
+                        disabled
                     >
-                        {'START'}
-                    </Button>
-                </>
-            );
-        }
+                        {'방장이 게임을 시작합니다.'}
+                    </button>
+                )}
+            </>
+        );
+    }
+
+    // Step2-2. 방이 게임 중인 경우
+    else {
+        return (
+            <>
+                <Button
+                    class="start"
+                    onClick={StartGameReq}
+                    style={{
+                        width: '80%',
+                        height: '18vh',
+                        fontSize: '10vh',
+                    }}
+                    text
+                >
+                    {'START'}
+                </Button>
+            </>
+        );
     }
 }
