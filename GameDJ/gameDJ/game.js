@@ -8,7 +8,7 @@ class Game {
         const { io, socket } = this;
         let roomID = socket.roomID;
 
-        // 공방이 아닐 때, 방장만 노래를 바꿀 수 있도록 함
+        // 방장만 노래를 바꿀 수 있도록 함
         if (roomList[roomID]['gaming'] === false) {
             roomList[roomID]['gaming'] = true;
             roomList[roomID]['music'] = musicData['musicName'];
