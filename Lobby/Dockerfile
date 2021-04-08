@@ -8,10 +8,10 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-RUN npm install && npm cache clean --force
+RUN npm install && npm cache clean --force && npm install -g pm2
 
 COPY . .
 
 EXPOSE 5000
 
-CMD node ./bin/www.js
+CMD pm2-runtime start ./bin/www.js

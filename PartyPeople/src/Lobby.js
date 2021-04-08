@@ -14,6 +14,7 @@ import {
     Typography,
     Container,
     TextField,
+    Popover,
 } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
@@ -52,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
     input: {
         color: 'white',
         backgroundColor: 'black',
-        opacity: 0.6
+        opacity: 0.6,
+        // width: '4vw', 
+        height:'5vh'
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -103,6 +106,74 @@ function Lobby(props) {
             });
         }
     });
+    const [selectMusic, setSelectMusic] = React.useState(null);
+    var tmp_music = props.roomInfo['music'];
+    var tmp_time = props.roomInfo['gameTime'];
+
+    var minute = parseInt(tmp_time / 60);
+    var second = tmp_time % 60;
+    minute = minute >= 10 ? String(minute) : '0' + String(minute);
+    second = second >= 10 ? String(second) : '0' + String(second);
+    const [music, setMusic] = React.useState(tmp_music);
+    const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
+    const [time, setTime] = React.useState(props.musicTime);
+    const setMusicTime = (music, time) => {
+        setMusic(music);
+        var minute = parseInt(time / 60);
+        var second = time % 60;
+        strSetTime(String(minute) + ' : ' + String(second));
+        setTime(time);
+    };
+
+    const handleSelectMusic = (event) => {
+        // console.log(event.currentTarget);
+        setSelectMusic(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setSelectMusic(null);
+    };
+
+    const openSelect = Boolean(selectMusic);
+
+    const CheckLeader = () => {
+        // console.log(props.socket);
+        if (props.roomInfo['roomLeader'] === props.socket.id) {
+            return (
+                <>
+                    <MusicLeader
+                        musicList={props.musicList}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                        socket={props.socket}
+                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                        history={props.history}
+                        music={music}
+                        strTime={strTime}
+                        time={time}
+                        setMusicTime={setMusicTime}
+                    />
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <MusicMember
+                        musicList={props.musicList}
+                        roomID={props.roomID}
+                        roomInfo={props.roomInfo}
+                        socket={props.socket}
+                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+                        history={props.history}
+                        music={music}
+                        strTime={strTime}
+                        time={time}
+                        setMusicTime={setMusicTime}
+                    />
+                </>
+            );
+        }
+    };
 
     function PutNewCard(props) {
         // console.log(props.roomInfo);
@@ -170,7 +241,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid xs={7} align="left">
+                            <Grid xs={3} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -185,7 +256,33 @@ function Lobby(props) {
                                     </span>
                                 </IconButton>
                             </Grid>
-                            <Grid xs={5}>
+                            <Grid xs={5} contianer justify="center" alignItems="center" style={{ padding: '0 1vw 0 1vw' }}>
+                                <TextField
+                                    type="text"
+                                    id="gameLink"
+                                    className="form-control text-center fw-bold bg-transparent"
+                                    // className= {classes.input}
+                                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
+                                    InputProps={{
+                                        className: classes.input,
+                                    }}
+                                    style={{ width: '50%', margin:'1vw', padding:'0' }}
+                                    readOnly
+                                />
+                                <SnackbarProvider maxSnack={1}>
+                                    <SnackAlertBtn
+                                        class="btn btn-warning"
+                                        severity="success"
+                                        message="링크가 복사됐어요! 😚"
+                                        label="Invitation LINK"
+                                        onAlert={true}
+                                        type="button"
+                                        onClick={CopyURL}
+                                        id="copy"
+                                    />
+                                </SnackbarProvider>
+                            </Grid>
+                            <Grid xs={4}>
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
@@ -239,37 +336,55 @@ function Lobby(props) {
                             <Grid
                                 contianer
                                 direction='row'
-                                alignItems="flex-end"
                                 justify="center"
-                                
-                                className="게임방메타데이터"
+                                alignItems="flex-end"
+                                // className="게임방메타데이터"
+                                className='음악선택창'
                                 item
                                 xs={5}
-                                style={{height: '30%'}}
+                                style={{
+                                width: '100%',
+                                height: '19vh',
+                                opacity: '0.8',
+                                padding: '1vh 1vw',
+                            }}
                             >
-                                <TextField
-                                    type="text"
-                                    id="gameLink"
-                                    className="form-control text-center fw-bold bg-transparent"
-                                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                    InputProps={{
-                                        className: classes.input,
+                                <Paper 
+                                className={classes.paper}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    padding: '1vw 1vw 1vw 1vw',
+                                    margin: '0vw 2vw 2vw 2vw',
+                                }}
+                                >
+                                <button
+                                    class="arrow"
+                                    id="select_music"
+                                    onClick={handleSelectMusic}
+                                    style={{ padding: '1vh 1vw 1vh 1vw' }}
+                                    size="large"
+                                >
+                                    SELECT MUSIC
+                                </button>
+                                 <Popover
+                                    open={openSelect}
+                                    anchorEl={selectMusic}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'right',
                                     }}
-                                    style={{ width: '70%',  }}
-                                    readOnly
-                                />
-                                <SnackbarProvider maxSnack={1}>
-                                    <SnackAlertBtn
-                                        class="btn btn-warning"
-                                        severity="success"
-                                        message="링크가 복사됐어요! 😚"
-                                        label="LINK"
-                                        onAlert={true}
-                                        type="button"
-                                        onClick={CopyURL}
-                                        id="copy"
-                                    />
-                                </SnackbarProvider>
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                >
+                                    <Typography className={classes.paper}>
+                                        <CheckLeader />
+                                    </Typography>
+                                </Popover>
+                                </Paper>
                             </Grid>
                             <Grid className="스타트버튼" item xs={7}>
                                 {' '}

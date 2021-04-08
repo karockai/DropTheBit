@@ -69,26 +69,26 @@ export default function LobbyTabs(props) {
     // const keyMapButton = () => {<Button id="key_map" size="large">KEY MAP</Button>}
     const [keymap, setKeymap] = React.useState(null);
     // const [keymap, setKeymap] = React.useState(props.roomLeader ? null : 'key_map');
-    const [selectMusic, setSelectMusic] = React.useState(null);
+    // const [selectMusic, setSelectMusic] = React.useState(null);
     const [tutoToggle, setTutoToggle] = React.useState(null);
-    var tmp_music = props.roomInfo['music'];
-    var tmp_time = props.roomInfo['gameTime'];
+    // var tmp_music = props.roomInfo['music'];
+    // var tmp_time = props.roomInfo['gameTime'];
 
-    var minute = parseInt(tmp_time / 60);
-    var second = tmp_time % 60;
-    minute = minute >= 10 ? String(minute) : '0' + String(minute);
-    second = second >= 10 ? String(second) : '0' + String(second);
-    const [music, setMusic] = React.useState(tmp_music);
-    const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
-    const [time, setTime] = React.useState(props.musicTime);
+    // var minute = parseInt(tmp_time / 60);
+    // var second = tmp_time % 60;
+    // minute = minute >= 10 ? String(minute) : '0' + String(minute);
+    // second = second >= 10 ? String(second) : '0' + String(second);
+    // const [music, setMusic] = React.useState(tmp_music);
+    // const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
+    // const [time, setTime] = React.useState(props.musicTime);
 
-    const setMusicTime = (music, time) => {
-        setMusic(music);
-        var minute = parseInt(time / 60);
-        var second = time % 60;
-        strSetTime(String(minute) + ' : ' + String(second));
-        setTime(time);
-    };
+    // const setMusicTime = (music, time) => {
+    //     setMusic(music);
+    //     var minute = parseInt(time / 60);
+    //     var second = time % 60;
+    //     strSetTime(String(minute) + ' : ' + String(second));
+    //     setTime(time);
+    // };
 
     const handleKeymap = (event) => {
         // console.log(event.currentTarget);
@@ -96,10 +96,10 @@ export default function LobbyTabs(props) {
         // console.log(keymap);
     };
 
-    const handleSelectMusic = (event) => {
-        // console.log(event.currentTarget);
-        setSelectMusic(event.currentTarget);
-    };
+    // const handleSelectMusic = (event) => {
+    //     // console.log(event.currentTarget);
+    //     setSelectMusic(event.currentTarget);
+    // };
 
     const handleSelectTuto = (event) => {
         setTutoToggle(true);
@@ -107,52 +107,52 @@ export default function LobbyTabs(props) {
 
     const handleClose = () => {
         setKeymap(null);
-        setSelectMusic(null);
+        // setSelectMusic(null);
         setTutoToggle(null);
     };
 
     const openKey = Boolean(keymap);
-    const openSelect = Boolean(selectMusic);
+    // const openSelect = Boolean(selectMusic);dd
     const openTuto = Boolean(tutoToggle);
 
-    const CheckLeader = () => {
-        // console.log(props.socket);
-        if (props.roomLeader === props.socketId) {
-            return (
-                <>
-                    <MusicLeader
-                        musicList={props.musicList}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                        socket={props.socket}
-                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                        history={props.history}
-                        music={music}
-                        strTime={strTime}
-                        time={time}
-                        setMusicTime={setMusicTime}
-                    />
-                </>
-            );
-        } else {
-            return (
-                <>
-                    <MusicMember
-                        musicList={props.musicList}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                        socket={props.socket}
-                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                        history={props.history}
-                        music={music}
-                        strTime={strTime}
-                        time={time}
-                        setMusicTime={setMusicTime}
-                    />
-                </>
-            );
-        }
-    };
+    // const CheckLeader = () => {
+    //     // console.log(props.socket);
+    //     if (props.roomLeader === props.socketId) {
+    //         return (
+    //             <>
+    //                 <MusicLeader
+    //                     musicList={props.musicList}
+    //                     roomID={props.roomID}
+    //                     roomInfo={props.roomInfo}
+    //                     socket={props.socket}
+    //                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+    //                     history={props.history}
+    //                     music={music}
+    //                     strTime={strTime}
+    //                     time={time}
+    //                     setMusicTime={setMusicTime}
+    //                 />
+    //             </>
+    //         );
+    //     } else {
+    //         return (
+    //             <>
+    //                 <MusicMember
+    //                     musicList={props.musicList}
+    //                     roomID={props.roomID}
+    //                     roomInfo={props.roomInfo}
+    //                     socket={props.socket}
+    //                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
+    //                     history={props.history}
+    //                     music={music}
+    //                     strTime={strTime}
+    //                     time={time}
+    //                     setMusicTime={setMusicTime}
+    //                 />
+    //             </>
+    //         );
+    //     }
+    // };
     // console.log(keymap, openKey);
     // console.log(selectMusic, openSelect);
     return (
@@ -181,7 +181,7 @@ export default function LobbyTabs(props) {
                 >
                     KEY MAP
                 </button>
-                <button
+                {/* <button
                     class="arrow"
                     id="select_music"
                     onClick={handleSelectMusic}
@@ -189,7 +189,7 @@ export default function LobbyTabs(props) {
                     size="large"
                 >
                     SELECT MUSIC
-                </button>
+                </button> */}
                 <LobbyMusicOnOff lobbyAudio={props.lobbyAudio} />
             </Grid>
             <Popover
@@ -224,7 +224,7 @@ export default function LobbyTabs(props) {
             >
                 <LobbyTutorial onClose={handleClose}></LobbyTutorial>
             </Popover>
-            <Popover
+            {/* <Popover
                 open={openSelect}
                 anchorEl={selectMusic}
                 onClose={handleClose}
@@ -240,7 +240,7 @@ export default function LobbyTabs(props) {
                 <Typography className={classes.paper}>
                     <CheckLeader />
                 </Typography>
-            </Popover>
+            </Popover> */}
         </>
     );
 }

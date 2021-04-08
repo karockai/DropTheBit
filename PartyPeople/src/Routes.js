@@ -55,13 +55,11 @@ export default function Routes(props) {
                             return isValid() ? (
                                 <Lobby
                                     socket={props.socket}
-                                    // history={history}
                                     roomID={props.roomID}
                                     roomInfo={props.roomInfo}
                                     SetRoomIdAndInfo={props.SetRoomIdAndInfo}
                                     lobbyAudio={lobbyAudio}
-                                    // MusicPause= {MusicPause}
-                                    // MusicStart={MusicStart}
+
                                 />
                             ) : (
                                 <Redirect to="/" />

@@ -273,9 +273,9 @@ export default function LayoutGrid(props) {
                     <Grid
                         className="매수매도호가테이블"
                         style={{
-                            height: '50%',
+                            height: '60%',
                             width: '100%',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                            padding: '0.3vh 0.3vw 0.5vh 0.3vw',
                         }}
                         item
                     >
@@ -294,9 +294,9 @@ export default function LayoutGrid(props) {
                     <Grid
                         className="채팅방"
                         style={{
-                            height: '50%',
+                            height: '40%',
                             width: '100%',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                            padding: '0.5vh 0.3vw 0.3vh 0.3vw',
                         }}
                         item
                     >
