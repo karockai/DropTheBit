@@ -84,31 +84,6 @@ export default {
                 if (!roomList[reqJson['roomID']]['gaming']) return 0;
                 new Game(io, socket).sell(reqJson);
             });
-            socket.on('cancelBid_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]['gaming']) return 0;
-                new Game(io, socket).cancelBid(reqJson);
-            });
-            socket.on('cancelAsk_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]['gaming']) return 0;
-                new Game(io, socket).cancelAsk(reqJson);
-            });
-            socket.on('bidTab_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]) return 0;
-                new Game(io, socket).sendBidTab(reqJson);
-            });
-            socket.on('bidTable_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]) return 0;
-                new Game(io, socket).sendBidTable(reqJson);
-            });
-            socket.on('askTable_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]) return 0;
-                new Game(io, socket).sendAskTable(reqJson);
-            });
-            socket.on('RefreshBid_Req', () => {
-                if (!roomList[socket.roomID]) return 0;
-                // let curPrice = curCoin['curPrice'];
-                socket.emit('RefreshBid_Res', curPrice);
-            });
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>
             socket.on('message', (data) =>
