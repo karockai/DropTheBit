@@ -192,7 +192,7 @@ export default function TradeStock(props) {
         let status = '';
         if (bid < 0) bid = 0;
         if (volume < 0) volume = 0;
-        if (bid  === 0 || volume === 0) {
+        if (bid === 0 || volume === 0) {
             return {
                 status: 'invalid',
                 val: bid,
@@ -605,11 +605,8 @@ export default function TradeStock(props) {
                 container
                 direction="column"
                 alignItems="flex-start"
-                style={{ fontSize: '1rem,' }}
+                style={{ fontSize: '1rem', height : '100%' }}
             >
-                <Grid container item direction="row" justify="space-between">
-                    <span className={classes.small_text}>매매호가</span>
-                </Grid>
                 <Grid
                     container
                     item
@@ -617,7 +614,9 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
+                    style={{height: "25%"}}
                 >
+                    <div className={classes.small_text}>매매호가</div>
                     <Button
                         class="arrow"
                         className={classes.arrow}
@@ -658,14 +657,15 @@ export default function TradeStock(props) {
                         ▲
                     </Button>
                 </Grid>
-                <span className={classes.small_text}>수량</span>
                 <Grid
                     container
                     item
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
+                    style={{height: "25%"}}
                 >
+                    <div className={classes.small_text}>수량</div>
                     <button
                         class="arrow"
                         onClick={(e) => {
@@ -703,8 +703,29 @@ export default function TradeStock(props) {
                         ▶
                     </button>
                 </Grid>
-                <Grid container item direction={'column'} justify="center">
-                    <Grid container direction={'row'} justify="space-between">
+                <Grid
+                    container
+                    item
+                    direction={'column'}
+                    justify="center"
+                    style={{ width: '100%', height: '50%' }}
+                >
+                    <button
+                        style={{ width: '100%', height: '100%' }}
+                        class="buy"
+                        onClick={(e) => {
+                            clickButton(e);
+                            let tmpAudio = new Audio(BuyConfirm);
+                            tmpAudio.play();
+                            tmpAudio.remove();
+                            console.log(currentBid, currentVolume);
+                            setBuyStatus(Buy(currentBid, currentVolume));
+                        }}
+                        id="z"
+                    >
+                        [Z] 매수 확정
+                    </button>
+                    {/* <Grid container direction={'row'} justify="space-between">
                         <button
                             style={{ width: '45%' }}
                             class="buy_max"
@@ -790,7 +811,7 @@ export default function TradeStock(props) {
                         >
                             [Space] 현재가로 갱신
                         </button>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Grid>
         </>
