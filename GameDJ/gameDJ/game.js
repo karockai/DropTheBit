@@ -8,7 +8,7 @@ class Game {
         const { io, socket } = this;
         let roomID = socket.roomID;
 
-        // 공방이 아닐 때, 방장만 노래를 바꿀 수 있도록 함
+        // 방장만 노래를 바꿀 수 있도록 함
         if (roomList[roomID]['gaming'] === false) {
             roomList[roomID]['gaming'] = true;
             roomList[roomID]['music'] = musicData['musicName'];
@@ -27,6 +27,9 @@ class Game {
             let dataForStart = {};
             // 방장이 시작하는 경우에만 3,2,1 추가되도록함 (중간유저 입장 시 3초 추가 안되도록)
             if (!roomList[roomID]) return 0;
+            console.log('realstart--------');
+            console.log(roomList[roomID]);
+            console.log('socket: ', socket.id);
             if (
                 roomList[roomID].hasOwnProperty('roomLeader') &&
                 roomList[roomID]['roomLeader'] === socket.id
