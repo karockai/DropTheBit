@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
+import { Button, Grid, Paper, makeStyles,TextField} from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -25,6 +25,7 @@ import {
     useHistory,
 } from 'react-router-dom';
 import TabPanel from './TabControl';
+import './ShiningButton.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -172,8 +173,55 @@ export default function LayoutGrid(props) {
                     direction="column"
                     justify="space-between"
                 >
-                </Grid>
+                <Grid
+                className="지갑컴퍼넌트"
+                style={{
+                    width: '100%',
+                    height: '60%',
+                }}
+                container
+                item
+                alignItems="stretch"
+                justify="flex-start"
+                wrap="wrap"
+                direction="row"
+            >
+                <MyAsset
+                    roomID={props.roomID}
+                    socket={props.socket}
+                    requestSocket={props.requestSocket}
+                />
             </Grid>
+            <Grid
+                className="평균매매단가"
+                style={{
+                    width: '100%',
+                    height: '10%',
+                    // align: 'flex'
+                }}>
+
+                <h5>
+                    내가산가격
+                </h5>
+                <h5>
+                    내가판가격
+                </h5>
+            </Grid>
+            <Grid
+            className="산다"
+            style={{
+                width: '100%',
+                height: '30%'
+            }}
+            >
+                <TradeStock
+                    socket={props.socket}
+                    requestSocket={props.requestSocket}
+                    roomID={props.roomID}
+                />
+            </Grid>
+            </Grid>
+        </Grid>
         </>
     );
 }

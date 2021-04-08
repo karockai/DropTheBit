@@ -71,25 +71,7 @@ export default function StockCtrl(props) {
             alignItems="stretch"
             justify="flex-start"
         >
-            <Grid
-                className="지갑컴퍼넌트"
-                style={{
-                    width: '100%',
-                    height: '60%',
-                }}
-                container
-                item
-                alignItems="stretch"
-                justify="flex-start"
-                wrap="wrap"
-                direction="row"
-            >
-                <MyAsset
-                    roomID={props.roomID}
-                    socket={props.socket}
-                    requestSocket={props.requestSocket}
-                />
-            </Grid>
+            
             <Grid
                 className="거래내역컴퍼넌트"
                 style={{
