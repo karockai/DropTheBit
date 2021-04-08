@@ -10,6 +10,7 @@ import {
     GridList,
     Paper,
     makeStyles,
+    TableBody,
 } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
@@ -99,27 +100,28 @@ export default function BidTable(props) {
             //_ 3
             new Audio(Cancel3).play();
             CancelBid(2, BidTable);
-        } else if (e.keyCode === 52 && BidTable.length >= 4) {
-            //_ 4
-            new Audio(Cancel4).play();
-            CancelBid(3, BidTable);
-        } else if (e.keyCode === 53 && BidTable.length >= 5) {
-            //_ 5
-            new Audio(Cancel5).play();
-            CancelBid(4, BidTable);
-        } else if (e.keyCode === 54 && BidTable.length >= 6) {
-            //_ 6
-            new Audio(Cancel6).play();
-            CancelBid(5, BidTable);
-        } else if (e.keyCode === 55 && BidTable.length >= 7) {
-            //_ 7
-            new Audio(Cancel7).play();
-            CancelBid(6, BidTable);
-        } else if (e.keyCode === 56 && BidTable.length >= 8) {
-            //_ 8
-            new Audio(Cancel8).play();
-            CancelBid(7, BidTable);
         }
+        //  else if (e.keyCode === 52 && BidTable.length >= 4) {
+        //     //_ 4
+        //     new Audio(Cancel4).play();
+        //     CancelBid(3, BidTable);
+        // } else if (e.keyCode === 53 && BidTable.length >= 5) {
+        //     //_ 5
+        //     new Audio(Cancel5).play();
+        //     CancelBid(4, BidTable);
+        // } else if (e.keyCode === 54 && BidTable.length >= 6) {
+        //     //_ 6
+        //     new Audio(Cancel6).play();
+        //     CancelBid(5, BidTable);
+        // } else if (e.keyCode === 55 && BidTable.length >= 7) {
+        //     //_ 7
+        //     new Audio(Cancel7).play();
+        //     CancelBid(6, BidTable);
+        // } else if (e.keyCode === 56 && BidTable.length >= 8) {
+        //     //_ 8
+        //     new Audio(Cancel8).play();
+        //     CancelBid(7, BidTable);
+        // }
     }
 
     useEffect(() => {
@@ -136,52 +138,57 @@ export default function BidTable(props) {
         <Grid
             wrap="wrap"
             container
-            direction="row"
-            justify="center"
+            direction="column"
+            justify="flex-start"
             alignItems="stretch"
+            style = {{
+                height: '50%'
+            }}
         >
             <TableContainer>
                 <Table
+                    stickyHeader
+                    style={{backgroundColor: '#000000'}}
                     className={classes.table}
                     size="small"
                     aria-label="a dense table"
+
                 >
                     <TableHead>
                         <TableRow >
                             <TableCell
-                                style={{ align: 'center', minWidth:'20%'}}
+                                style={{ backgroundColor: '#0C151C', align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
+                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '1vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     취소버튼
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', minWidth:'20%'}}
+                                style={{ backgroundColor: '#0C151C', align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
+                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '1vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     매수 가격
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', minWidth:'20%', height:'100%'}}
+                                style={{ backgroundColor: '#0C151C', align: 'center', minWidth:'20%', height:'100%'}}
                             >
-                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
+                                <span style={{  color: 'white', fontWeight: 'bold' , fontSize: '1vw',fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     매수 수량
                                 </span>
                             </TableCell>
                         </TableRow>
                     </TableHead>
-                </Table>
-            </TableContainer>
-
-            <GridList wrap="wrap" style={{ width: '100%', height: '100%' }}>
+                    </Table>
+                </TableContainer>
+                          <GridList style={{ width: '100%', height:'80%'}}>      
                     {BidTable.map((bidElem, index, BidTable) => {
                         return (
-                            <Grid style={{ height:'10%', fontSize: '1vw', }} item xs={testXs}>
+                            <Grid style={{ width: '100%', height:'25%', fontSize: '1.2vw', }} item >
                                 <BidEntity
                                     price={bidElem.price}
                                     vol={bidElem.vol}
-                                    index={index + 1}
+                                    index={index < 3 ? index + 1 : '?'}
                                     socket={props.socket}
                                     requestSocket={props.requestSocket}
                                     roomID={props.roomID}
@@ -189,7 +196,7 @@ export default function BidTable(props) {
                             </Grid>
                         );
                     })}
-            </GridList>
+                    </GridList>
         </Grid>
     );
 }
