@@ -54,7 +54,8 @@ class Room {
             cash: 100000000,
             asset: 100000000,
             coinVol: 0,
-            preExPrice: 0,
+            buyPrice: 0,
+            sellPrice: 0,
         };
 
         let roomInfo = {
@@ -90,7 +91,8 @@ class Room {
             cash: 100000000,
             asset: 100000000,
             coinVol: 0,
-            preExPrice: 0,
+            buyPrice: 0,
+            sellPrice: 0,
         };
 
         let roomInfo = {
@@ -130,7 +132,8 @@ class Room {
                 cash: 100000000,
                 asset: 100000000,
                 coinVol: 0,
-                preExPrice: 0,
+                buyPrice: 0,
+                sellPrice: 0,
             };
 
             // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
@@ -197,7 +200,8 @@ class Room {
             cash: 100000000,
             asset: 100000000,
             coinVol: 0,
-            preExPrice: 0,
+            buyPrice: 0,
+            sellPrice: 0,
         };
 
         // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함.

@@ -73,7 +73,7 @@ class Game {
 
         let bfrWallet = {};
         bfrWallet['cash'] = playerInfo['cash'];
-        bfrWallet['coinVol'] = playerInfo['coinVol'];
+        bfrWallet['coinVol'] = 0;
         bfrWallet['asset'] = playerInfo['asset'];
 
         let coinVol = parseInt(cash / curPrice);
@@ -81,6 +81,7 @@ class Game {
 
         playerInfo['cash'] = cash;
         playerInfo['coinVol'] = coinVol;
+        playerInfo['buyPrice'] = curPrice;
 
         // 6-4. buyDone
         let buyDone = {
@@ -89,7 +90,7 @@ class Game {
             socketID: socketID,
             playerID: playerID,
             vol: coinVol,
-            preExPrice: curPrice,
+            buyPrice: curPrice,
         };
         io.to(roomID).emit('buyDone_Room', buyDone);
 
@@ -99,7 +100,7 @@ class Game {
         refreshWallet['coinVol'] = playerInfo['coinVol'];
         refreshWallet['cash'] = playerInfo['cash'];
         refreshWallet['asset'] = playerInfo['asset'];
-        refreshWallet['preExPrice'] = curPrice;
+        refreshWallet['buyPrice'] = curPrice;
 
         this.refreshWallet(socketID, refreshWallet, bfrWallet);
     }
@@ -126,13 +127,14 @@ class Game {
 
         playerInfo['cash'] = cash;
         playerInfo['coinVol'] = 0;
+        playerInfo['sellPrice'] = curPrice;
 
         let sellDone = {
             type: '매도 완료',
             socketID: socketID,
             playerID: playerID,
             vol: 0,
-            preExPrice: curPrice,
+            sellPrice: curPrice,
         };
 
         io.to(roomID).emit('sellDone_Room', sellDone);
@@ -143,7 +145,7 @@ class Game {
         refreshWallet['coinVol'] = 0;
         refreshWallet['cash'] = playerInfo['cash'];
         refreshWallet['asset'] = playerInfo['asset'];
-        refreshWallet['preExPrice'] = curPrice;
+        refreshWallet['sellPrice'] = curPrice;
 
         this.refreshWallet(socketID, refreshWallet, bfrWallet);
     }

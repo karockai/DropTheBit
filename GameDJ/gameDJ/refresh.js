@@ -13,7 +13,7 @@ class Refresh {
         let updateCurCoin = JSON.parse(await dbget('curCoin'));
         if (!updateCurCoin) return false;
         curCoin = updateCurCoin;
-        io.emit('chart', curCoin);
+        // io.emit('chart', curCoin);
         curPrice = curCoin['curPrice'];
         if (curPrice === prePrice) {
             return false;
@@ -29,13 +29,12 @@ class Refresh {
 
     renewalInfo() {
         const { io } = this;
-        let priceChange = curPrice - prePrice;
 
         for (let roomID in roomList) {
             let roomInfo = roomList[roomID];
             let rankList = [];
 
-            if (priceChange && roomInfo['gaming']) {
+            if (roomInfo['gaming']) {
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;
@@ -74,6 +73,8 @@ class Refresh {
                     };
                     rankList.push(rankObj);
                     roomList[roomID][socketID] = playerInfo;
+
+                    let a_curCoin = io.to(socketID).emit('chart', curCoin);
                 }
                 rankList.sort(function (a, b) {
                     return b['asset'] - a['asset'];
