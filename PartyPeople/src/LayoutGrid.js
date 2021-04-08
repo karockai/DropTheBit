@@ -48,7 +48,7 @@ export default function LayoutGrid(props) {
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
     const [inputCtrl, setInputCtrl] = useState(false);
-
+    const [isSell, setIsSell] = useState(false);
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
     };
@@ -78,6 +78,7 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
+
 
     return (
         <>
@@ -200,12 +201,16 @@ export default function LayoutGrid(props) {
                     // align: 'flex'
                 }}>
 
-                <h5>
-                    내가산가격
-                </h5>
-                <h5>
-                    내가판가격
-                </h5>
+                {isSell && 
+                    <h5>
+                        내가산가격
+                    </h5>
+                }
+                {!isSell &&
+                    <h5>
+                        내가판가격
+                    </h5>
+                }
             </Grid>
             <Grid
             className="산다"

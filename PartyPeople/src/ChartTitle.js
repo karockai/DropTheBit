@@ -87,6 +87,7 @@ function ChartTitle(props) {
         return won;
     };
 
+    console.log(currentWon);
     return (
         <>
             <div className="ChartTitle" style={{width:'100%'}}>
