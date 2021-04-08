@@ -52,7 +52,9 @@ const useStyles = makeStyles((theme) => ({
     input: {
         color: 'white',
         backgroundColor: 'black',
-        opacity: 0.6
+        opacity: 0.6,
+        width: '4vw', 
+        height:'5vh'
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -239,23 +241,24 @@ function Lobby(props) {
                             <Grid
                                 contianer
                                 direction='row'
-                                alignItems="flex-end"
                                 justify="center"
-                                
+                                alignItems="flex-end"
                                 className="게임방메타데이터"
                                 item
                                 xs={5}
                                 style={{height: '30%'}}
                             >
-                                <TextField
+                                {/* <TextField */}
+                                <input
                                     type="text"
                                     id="gameLink"
-                                    className="form-control text-center fw-bold bg-transparent"
+                                    // className="form-control text-center fw-bold bg-transparent"
+                                    className= {classes.input}
                                     value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                    InputProps={{
-                                        className: classes.input,
-                                    }}
-                                    style={{ width: '70%',  }}
+                                    // InputProps={{
+                                    //     className: classes.input,
+                                    // }}
+                                    style={{ width: '70%', margin:'0.5vw', padding:'0' }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={1}>

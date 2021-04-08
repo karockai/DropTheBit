@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
-import {PurpleButton, PurpleSwitch} from './PurpleComponent';
+import {RedButton,PurpleButton, PurpleSwitch} from './PurpleComponent';
 import './ShiningButton.css';
 //@ 5 params
 //? ------- props -----------------------------
@@ -40,8 +40,8 @@ export function SnackAlertBtn(props) {
     return (
         <>
             <button
-                class='start'
-                style={{padding:'0.4vh'}}
+                class='link'
+                style={{padding:'1.2vh', margin:'0.5vw', width: '4vw'}} //height: '5vh'
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}

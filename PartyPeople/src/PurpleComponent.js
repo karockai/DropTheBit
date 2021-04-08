@@ -16,6 +16,18 @@ const PurpleButton = withStyles((theme) => ({
   },
 }))(Button);
 
+const RedButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(purple[500]),
+    // backgroundColor: purple[500],
+    backgroundColor: 'rgba(232, 41, 35, 0.37)',
+    '&:hover': {
+      // color: theme.palette.getContrastText(purple[500]),
+      backgroundColor: 'rgba(255, 8, 0, 0.37)',
+    },
+  },
+}))(Button);
+
 const PurpleSwitch = withStyles({
   switchBase: {
     color: yellow[300],
@@ -30,4 +42,4 @@ const PurpleSwitch = withStyles({
   track: {},
 })(Switch);
 
-export {PurpleButton, PurpleSwitch};
+export {RedButton, PurpleButton, PurpleSwitch};

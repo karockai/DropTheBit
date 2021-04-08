@@ -123,9 +123,18 @@
   --color: #ffffff;
   --hover: #bf50ff;
 }
+.link {
+  /* --color: #635ee7; */
+
+    /* --color: #635ee7; */
+    background: red;
+    /* --color: #e53935; */
+    /* --color: white; */
+    --hover: red;
+}
 
 .tutorial {
-  --color: rgb(255, 87, 87);
+  --color: rgb(255, 8, 0);
   --hover: rgb(206, 206, 48);
 }
 
@@ -143,10 +152,11 @@ button {
   transition: 0.25s;
 }
 
-button, .start {
+.start{
   background-color: #17181c;
   opacity: 0.6;
 }
+
 
 /* button:hover, button:focus { */
 button:focus {
