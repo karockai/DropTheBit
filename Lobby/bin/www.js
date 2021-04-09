@@ -13,16 +13,6 @@ client.on('error', function (error) {
 });
 const dbhset = util.promisify(client.hset).bind(client);
 
-global.chartData = [];
-global.bidList = {};
-global.askList = {};
-global.roomList = {};
-global.curCoin = {};
-global.exTable = {};
-global.prePrice = 0;
-
-// 차트를 바로 그리기 위한 curCoin 50개 리스트
-// for stress test
 global.playercnt = 0;
 // for 공방
 global.publicRoom = false;

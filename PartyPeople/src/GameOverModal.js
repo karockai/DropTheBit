@@ -67,11 +67,13 @@ export default function GameOverModal(props) {
     const history = useHistory();
     const BackToLobby = () => {
         props.socket.emit('backToLobby', props.roomID);
-        props.setLeaderBoard(false);
-        let path = '/lobby';
-        history.push(path);
-        props.lobbyAudio.currentTime = 0;
-        props.lobbyAudio.play();
+        props.socket.on('backToLobby_Res', () => {
+            props.setLeaderBoard(false);
+            let path = '/lobby';
+            history.push(path);
+            props.lobbyAudio.currentTime = 0;
+            props.lobbyAudio.play();
+        });
     };
 
     const handleOpen = () => {

@@ -18,7 +18,7 @@ class Refresh {
         if (curPrice === prePrice) {
             return false;
         }
-
+        console.log(curPrice);
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
         if (chartData.length > 100) {
@@ -330,7 +330,6 @@ class Refresh {
     async refreshBid() {
         const { io } = this;
         let bidObj = JSON.parse(await dbget('bidTable'));
-
         let totalAsk = bidObj['total_ask_size'];
         let totalBid = bidObj['total_bid_size'];
         let total = totalAsk + totalBid;
@@ -342,7 +341,6 @@ class Refresh {
             askPercent: askPercent,
             bidPercent: bidPercent,
         };
-
         io.emit('refreshExList', exList);
     }
 }

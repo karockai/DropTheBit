@@ -17,10 +17,9 @@ import ThreeSecTimer from './';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
-import HorizontalBarChart from './BidGraph';
-import { getData } from "./utils"
-import { TypeChooser } from "react-stockcharts/lib/helper";
 
+
+import RefreshGraph from './RefreshGraph';
 
 import {
     BrowserRouter as Router,
@@ -58,14 +57,6 @@ export default function LayoutGrid(props) {
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
     };
-
-    useEffect(() => {
-        // console.log('layoutGrid rendered....!');
-        getData().then(data => {
-            console.log(data);
-			setBidData(data);
-		})
-    });
 
     const [over, setOver] = useState(false);
 
@@ -294,7 +285,13 @@ export default function LayoutGrid(props) {
                     >
                         <Paper
                             className={classes.paper}
-                            style={{ height: '100%', width: '100%' }}
+                            style={{ height: '50%', padding: '2vh', width: '100%' }}
+                        >
+                        <RefreshGraph socket={props.socket}/>
+                        </Paper>
+                        <Paper
+                            className={classes.paper}
+                            style={{ height: '50%', margin: '1vh 0px 0px 0px', width: '100%' }}
                         >
                             {/* <TabPanel
                                 inputCtrl={inputCtrl}
@@ -303,10 +300,6 @@ export default function LayoutGrid(props) {
                                 requestSocket={props.requestSocket}
                             /> */}
 
-                            {bidData && 
-                                <TypeChooser>
-                                {type => <HorizontalBarChart type={type} data={bidData} />}
-                                </TypeChooser>}
                         </Paper>
                     </Grid>
                     <Grid
