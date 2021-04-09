@@ -12,6 +12,7 @@ import {
     makeStyles,
 } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';
+import Timer from './Timer';
 
 const greenTheme = createMuiTheme({
     palette: {
@@ -167,6 +168,9 @@ export default function PlayerList(props) {
 
     return (
         <>
+            <Grid>
+               {props.isStart && <Timer socket={props.socket} />}
+            </Grid>
             {MyRank()}
             <Grid
                 wrap="wrap"

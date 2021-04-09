@@ -8,7 +8,7 @@ class Game {
         const { io, socket } = this;
         let roomID = socket.roomID;
 
-        // 공방이 아닐 때, 방장만 노래를 바꿀 수 있도록 함
+        // 방장만 노래를 바꿀 수 있도록 함
         if (roomList[roomID]['gaming'] === false) {
             roomList[roomID]['gaming'] = true;
             roomList[roomID]['music'] = musicData['musicName'];
@@ -61,7 +61,7 @@ class Game {
         refreshWallet['coinVol'] = 0;
         refreshWallet['cash'] = 100000000;
         refreshWallet['asset'] = 100000000;
-        refreshWallet['avgPrice'] = 0;
+        refreshWallet['preExPrice'] = 0;
 
         let walletInfo = {
             refreshWallet: refreshWallet,
@@ -90,6 +90,7 @@ class Game {
         let bfrWallet = {};
         bfrWallet['coinVol'] = 0;
         bfrWallet['cash'] = playerInfo['cash'];
+        bfrWallet['coinVol'] = 0;
         bfrWallet['asset'] = playerInfo['asset'];
 
         // ! 음수 값 처리
@@ -179,16 +180,13 @@ class Game {
         refreshWallet['cash'] = playerInfo['cash'];
         refreshWallet['asset'] = playerInfo['asset'];
 
-        // 6-3. refreshWallet update & emit
         this.refreshWallet(socketID, refreshWallet, bfrWallet);
-        // console.log('-------BUY END-------------');
     }
 
     // 매도 요청 등록
     sell(reqJson) {
         const { io, socket } = this;
         // 1. reqJson setting
-        // console.log('-----------Sell -----------', reqJson);
         let roomID = reqJson['roomID'];
         let socketID = socket.id;
         let reqPrice = Number(reqJson['currentBid']);
@@ -204,7 +202,6 @@ class Game {
         let playerID = playerInfo['playerID'];
 
         let bfrWallet = {};
-        bfrWallet['coinVol'] = playerInfo['coinVol'];
         bfrWallet['cash'] = playerInfo['cash'];
         bfrWallet['asset'] = playerInfo['asset'];
 
@@ -308,7 +305,6 @@ class Game {
 
         let bfrWallet = {};
         bfrWallet['coinVol'] = playerInfo['coinVol'];
-        bfrWallet['cash'] = playerInfo['cash'];
         bfrWallet['asset'] = playerInfo['asset'];
 
         cash += bidVol * bidPrice;
@@ -359,8 +355,8 @@ class Game {
 
         let refreshWallet = {};
         refreshWallet['result'] = 'success';
-        refreshWallet['type'] = 'cancelAsk';
-        refreshWallet['coinVol'] = playerInfo['coinVol'];
+        refreshWallet['type'] = 'sell';
+        refreshWallet['coinVol'] = 0;
         refreshWallet['cash'] = playerInfo['cash'];
         refreshWallet['asset'] = playerInfo['asset'];
 
@@ -428,12 +424,6 @@ class Game {
         };
 
         io.to(socketID).emit('refreshWallet', walletInfo);
-    }
-
-    sendBidTab(reqJson) {
-        const { io } = this;
-        let socketID = reqJson['socketID'];
-        io.to(socketID).emit('refreshBid', exList);
     }
 }
 export default Game;

@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StartGame(props) {
     const classes = useStyles();
-    const [restReadyTime, SetRestTime] = useState(null);
     const [gameMusic, SetGameMusic] = useState(props.gameMusic);
 
     useEffect(() => {
@@ -138,12 +137,6 @@ export default function StartGame(props) {
             isSetUp = true;
         }
     }, []);
-
-    useEffect(() => {
-        props.socket.on('restReadyTime', (restTime) => {
-            SetRestTime(restTime);
-        });
-    });
 
     useEffect(() => {
         props.socket.once('settingsUpdate_Res', (data) => {

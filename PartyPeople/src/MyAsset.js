@@ -9,12 +9,8 @@ import {
     Divider,
 } from '@material-ui/core';
 import { propTypes } from 'react-bootstrap/esm/Image';
-import {
-    SplitByThree,
-    ExpBySymbol,
-    parseWonToStr,
-    showProfit,
-} from './parseMoney';
+// import {SplitByThree, ExpBySymbol, parseWonToStr} from './parseMoney';
+import {SplitByThree, ExpBySymbol, parseWonToStr, showProfit} from './parseMoney';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -61,7 +57,7 @@ export default function MyAsset(props) {
     if (!isInit) setInit(true);
     //@ 가정 => props에 socket이 전달되었어야함.
     const [upDown, SetUpDown] = useState(0);
-
+    
     let color = 'white';
     useLayoutEffect(() => {
         if (props.socket == null) {
@@ -70,20 +66,45 @@ export default function MyAsset(props) {
         } else {
             props.socket.on('refreshWallet', (data) => {
                 //@ buyreq
+                // console.log(data.type + '으로 인해서 발생함.');
 
+                // const refreshWallet = data;
                 const refreshWallet = data.refreshWallet;
                 const bfrWallet = data.bfrWallet;
+
+                const bfrCash = bfrWallet.cash;
+                const bfrAsset = bfrWallet.asset;
+                const bfrCoin = bfrWallet.coinVol;
 
                 const currentCash = refreshWallet.cash;
                 const currentAsset = refreshWallet.asset;
                 const currentCoin = refreshWallet.coinVol;
                 const currentAvg = refreshWallet.avgPrice;
 
-                const diffAsset = currentAsset - bfrWallet.asset;
-                // console.log(currentAsset, bfrWallet.asset);
-                const diffCash = currentCash - bfrWallet.cash;
-                const diffCoin = currentCoin - bfrWallet.coinVol;
+                // console.log(bfrWallet.asset);
+                // console.log(typeof(bfrWallet.asset));
+                // console.log(currentAsset);
+                // console.log(typeof(currentAsset));
 
+                const diffAsset = bfrWallet.asset - currentAsset;
+
+                const diffCash = currentCash - bfrWallet.cash;
+                const diffCoin = currentCoin - bfrWallet.coinVol;   
+                // const asset = document.getElementById('changeAsset');
+                // console.log(asset);
+                // if (asset) asset.classList.add('blinking');
+                // setTimeout(function () {
+                //     if (asset) asset.classList.remove('blinking');
+                // }, 700);
+                // if (currentAsset > myAsset) {
+                //     color = 'red';
+                // }
+                // else if (currentAsset < myAsset) {
+                //     color = 'blue';
+                // }
+                // console.log(currentAsset);
+                // console.log(myAsset);
+                // console.log(color);
                 setDiffWallet({
                     diffCash: diffCash,
                     diffAsset: diffAsset,
@@ -95,10 +116,21 @@ export default function MyAsset(props) {
                     myCoin: currentCoin,
                     myAvg: currentAvg,
                 });
+
+                // const asset = document.getElementById();
+                // if (asset) asset.classList.add('blinking');
+                // setTimeout(function () {
+                //     if (asset) asset.classList.remove('blinking');
+                // }, 700);
+
+                // const key = document.getElementById(e.key);
+                // if (key) key.classList.add('pressed');
+                // setTimeout(function () {
+                //     if (key) key.classList.remove('pressed');
+                // }, eventTime);
             });
         }
     }, [isInit]);
-
     // // ! 1000단위 , 붙이기
     // function SplitByThree(value) {
     //     if (!value) return 'Something wrong.';
@@ -109,12 +141,10 @@ export default function MyAsset(props) {
     //         value.substring(value.length - 3, value.length)
     //     );
     // }
-
     // const parseWonToStr = (won) => {
     //     if (typeof won == 'number') won = won.toString();
     //     return won;
     // };
-
     // function ExpBySymbol(value) {
     //     // console.log(value);
     //     if (!value) return 'Something wrong.';
@@ -132,7 +162,6 @@ export default function MyAsset(props) {
     //     ret += value;
     //     return ret + '원';
     // }
-
     return (
         <>
             <Grid
@@ -142,75 +171,41 @@ export default function MyAsset(props) {
                 alignItems="flex-start"
                 wrap="wrap"
                 justify="stretch"
+                // display="flex"
                 style={{
-                    height: '40%',
-                }}
+                        height: '40%',
+                    }}
             >
                 <Grid
                     style={{
                         width: '60%',
                         height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        padding:'0.3vh 0.3vw 0.3vh 0.3vw'
                     }}
                     item
                 >
-                    <Paper
-                        className={classes.paper}
-                        style={{
-                            height: '100%',
-                            fontSize: '1vw',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                        }}
-                    >
-                        <span>보유 현금 (KRW)</span>
-                        <h3 style={{ fontWeight: 'bold', fontSize: '1.5vw' }}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myCash))} 원
-                        </h3>
-                        <div
-                            id="diffCash"
-                            class="default"
-                            style={{
-                                fontWeight: 'bold',
-                                fontSize: '1vw',
-                                textAlign: 'right',
-                                padding: '0 10% 0 0',
-                            }}
-                        >
-                            {showProfit('diffCash', diffWallet.diffCash)}{' '}
+                    <Paper className={classes.paper} style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
+                        <span>
+                        보유 현금 (KRW)
+                        </span>
+                        {/* <h5 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}> */}
+                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
+                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}
+                        </h5>
+                        <div id="diffCash" class="default" style={{ fontWeight: 'bold', fontSize: '1vw',}}>
+                            {' '}{showProfit('diffCash', diffWallet.diffCash)}
                         </div>
                     </Paper>
                 </Grid>
                 <Grid
                     item
-                    style={{
-                        width: '40%',
-                        height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                    }}
+                    style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
                 >
-                    <Paper
-                        className={classes.paper}
-                        style={{
-                            height: '100%',
-                            fontSize: '1vw',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                        }}
-                    >
-                        보유 코인 수
-                        <h3 style={{ fontSize: '1.5vw' }}>
-                            {SplitByThree(String(myWallet.myCoin))} 개
-                        </h3>
-                        <h3
-                            id="diffCoin"
-                            class="default"
-                            style={{
-                                fontSize: '1vw',
-                                textAlign: 'right',
-                                padding: '0 10% 0 0',
-                            }}
-                        >
-                            {showProfit('diffCoin', diffWallet.diffCoin)}{' '}
-                        </h3>
+                    <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
+                        보유 코인 수 (개)<h3 id="changeAsset" style={{ height: '100%', fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
+                        보유 코인 수 (개)
+                        <h3 style={{ fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
+                        <h3 id="diffCoin" class="default" style={{ fontSize: '1vw' }}>{' '}{showProfit('diffCoin', diffWallet.diffCoin)}</h3>
                     </Paper>
                 </Grid>
             </Grid>
@@ -222,51 +217,22 @@ export default function MyAsset(props) {
                 alignItems="stretch"
                 display="flex"
                 style={{
-                    height: '60%',
-                }}
-            >
-                <Grid
-                    item
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        height: '60%',
                     }}
-                >
-                    <Paper
-                        className={classes.paper}
-                        style={{
-                            height: '100%',
-                            fontSize: '1.5vw',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
-                        }}
-                    >
-                        총 자산 (KRW)
+            >
+                <Grid item style={{ width: '100%', height: '100%',padding:'0.3vh 0.3vw 0.3vh 0.3vw' }}>
+                    <Paper className={classes.paper} style={{ height: '100%',fontSize: '1.5vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}>
+                        총 평가 자산 (KRW)
                         {/* <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
                             {SplitByThree(parseWonToStr(myWallet.myAsset)) +
                                 ' 원'}
                         </h2> */}
-                        <h2
-                            style={{
-                                fontWeight: 'bold',
-                                fontSize: '2.2vw',
-                                color: color,
-                            }}
-                        >
-                            {ExpBySymbol(parseWonToStr(myWallet.myAsset))} 원
+                        {/* <h2 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}> */}
+                        <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
+                            {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
                         </h2>
-                        <h2
-                            id="diffAsset"
-                            class="default"
-                            style={{
-                                fontWeight: 'bold',
-                                fontSize: '1.5vw',
-                                color: color,
-                                textAlign: 'right',
-                                padding: '0 10% 0 0',
-                            }}
-                        >
-                            {showProfit('diffAsset', diffWallet.diffAsset)}{' '}
+                        <h2 id="diffAsset" class="default" style={{ fontWeight: 'bold', fontSize: '1.5vw', color: color}}>
+                            {' '}{showProfit('diffAsset',diffWallet.diffAsset)}
                         </h2>
                     </Paper>
                 </Grid>

@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     },
     small_text: {
         margin: '1 0.5vw -0.5vh 0.5vw',
-        fontSize: '2.5vh',
+        fontSize: '1.5vw',
         padding: '0.5vh 0.5vw 0.5vh 0.5vw',
     },
 }));
@@ -175,8 +175,6 @@ export default function TradeStock(props) {
     }
     function BidDown() {
         SetBid(Number(currentBid) - Number(unitBid));
-        //!
-        props.SetBid(Number(currentBid) - Number(unitBid))
     }
 
     function RefreshBid_Req() {
@@ -184,7 +182,6 @@ export default function TradeStock(props) {
         props.socket.once('RefreshBid_Res', (curPrice) => {
             // console.log('RefreshBid_Req');
             SetBid(curPrice);
-            props.SetBid(curPrice)
         });
     }
 
@@ -615,6 +612,7 @@ export default function TradeStock(props) {
             >
                 <Grid container item direction="row" justify="space-between">
                     <span className={classes.small_text}>매매호가</span>
+                    <span className={classes.small_text}>[C]:취소</span>
                 </Grid>
                 <Grid
                     container
@@ -664,7 +662,7 @@ export default function TradeStock(props) {
                         ▲
                     </Button>
                 </Grid>
-                <span className={classes.small_text}>수량</span>
+                {/* <span className={classes.small_text}>수량</span>
                 <Grid
                     container
                     item
@@ -708,9 +706,9 @@ export default function TradeStock(props) {
                     >
                         ▶
                     </button>
-                </Grid>
-                <Grid container item direction={'column'} justify="center">
-                    <Grid container direction={'row'} justify="space-between">
+                </Grid> */}
+                <Grid container item direction={'column'} justify="center" alignItems="stretch">
+                    {/* <Grid container direction={'row'} justify="space-between">
                         <button
                             style={{ width: '45%' }}
                             class="buy_max"
@@ -739,15 +737,15 @@ export default function TradeStock(props) {
                         >
                             [S] 매도량 MAX
                         </button>
-                    </Grid>
+                    </Grid> */}
                     <Grid
                         container
                         direction={'row'}
                         justify="space-between"
-                        style={{ width: '100%', margin: '0 10 0 1' }}
+                        style={{ width: '100%',  margin: '0 10 0 1' }}
                     >
                         <button
-                            style={{ width: '45%' }}
+                            style={{ width: '45%' , fontSize:'2.3vw'}}
                             class="buy"
                             onClick={(e) => {
                                 clickButton(e);
@@ -759,10 +757,10 @@ export default function TradeStock(props) {
                             }}
                             id="z"
                         >
-                            [Z] 매수 확정
+                            [Z] 매수
                         </button>
                         <button
-                            style={{ width: '45%' }}
+                            style={{ width: '45%', fontSize:'2.3vw' }}
                             class="sell"
                             onClick={(e) => {
                                 clickButton(e);
@@ -773,10 +771,10 @@ export default function TradeStock(props) {
                             }}
                             id="x"
                         >
-                            [X] 매도 확정
+                            [X] 매도
                         </button>
                     </Grid>
-                    <Grid
+                    {/* <Grid
                         container
                         direction={'row'}
                         justify="space-between"
@@ -796,7 +794,7 @@ export default function TradeStock(props) {
                         >
                             [Space] 현재가로 갱신
                         </button>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </Grid>
         </>

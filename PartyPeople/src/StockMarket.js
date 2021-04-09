@@ -319,6 +319,7 @@ function PurchaseModal(props) {
                 onClick={() => {
                     Buy(props.stock_name);
                 }}
+                style={{fontSize: '5vw'}}
             >
                 매수
             </Button>
@@ -328,6 +329,7 @@ function PurchaseModal(props) {
                 onClick={() => {
                     Sell(props.stock_name);
                 }}
+                style={{fontSize: '5vw'}}
             >
                 매도
             </Button>
