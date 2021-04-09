@@ -289,7 +289,6 @@ class Refresh {
 
     gameOver(roomID) {
         try{
-
             const { io } = this;
             let roomInfo = roomList[roomID];
             let leaderBoard = [];
