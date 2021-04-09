@@ -53,6 +53,9 @@ class Refresh {
 
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
+                    playerInfo['actionRestTime'] = 5;
+                    playerInfo['recentAction'] = 1;
+
                     // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
@@ -113,6 +116,8 @@ class Refresh {
 
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
+                    playerInfo['actionRestTime'] = 5;
+                    playerInfo['recentAction'] = 0;
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -160,23 +165,15 @@ class Refresh {
     }
 
     renewalInfo() {
-        // console
-        //     .log
-        //     // '----------------------renewalInfo Start------------------------'
-        //     ();
         const { io } = this;
-        // let curPrice = curCoin['curPrice'];
-        // let prePrice = curCoin['prePrice'];
-        let priceChange = curPrice - prePrice;
-        // console.log(curPrice);
-        // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
-        // redis 순회하면서 roomInfo 가져옴
-        // console.log("priceChange", priceChange);
+
         for (let roomID in roomList) {
             let roomInfo = roomList[roomID];
             let rankList = [];
 
-            if (priceChange && roomInfo['gaming']) {
+            if (roomInfo['gaming']) {
+                roomInfo['recentBuy'] = 0;
+                roomInfo['recentSell'] = 0;
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;
@@ -189,6 +186,15 @@ class Refresh {
                     let askVol = playerInfo['askVol'];
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
+
+                    if (playerInfo['actionRestTime'] > 0) {
+                        playerInfo['actionRestTime']--;
+                        if (playerInfo['recentAction']) {
+                            roomInfo['recentBuy']++;
+                        } else {
+                            roomInfo['recentSell']++;
+                        }
+                    }
 
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
@@ -217,6 +223,7 @@ class Refresh {
                         socketID: socketID,
                     };
                     rankList.push(rankObj);
+
                     roomList[roomID][socketID] = playerInfo;
                 }
                 rankList.sort(function (a, b) {
@@ -232,8 +239,13 @@ class Refresh {
                 }
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
-            }
 
+                let roomAction = {
+                    rececntBuy: roomInfo['recentBuy'],
+                    rececntSell: roomInfo['recentSell'],
+                };
+                io.to(roomID).emit('roomAction', roomAction);
+            }
 
             // gameOver logic
             if (roomInfo['gaming']) {

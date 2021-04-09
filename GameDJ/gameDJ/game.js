@@ -91,7 +91,6 @@ class Game {
         // 5. 구매 처리 및 asset 정보 emit
         // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
         if (reqPrice >= curPrice) {
-
             // 평단가 로직
             // if (playerInfo['avgPrice'] === 0) {
             //     playerInfo['avgPrice'] = curPrice;
@@ -111,6 +110,8 @@ class Game {
             // 6-2. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
+            playerInfo['actionRestTime'] = 5;
+            playerInfo['recentAction'] = 1;
 
             roomList[roomID][socketID] = playerInfo;
 
@@ -128,7 +129,6 @@ class Game {
             // console.log('현재가로 구매 완료 :', playerInfo);
             // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
         } else {
-            
             let reqVol = Math.floor(cash / reqPrice);
 
             // 7-1. cash 갱신
@@ -215,7 +215,9 @@ class Game {
             // 6-3. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-            // playerInfo['asset'] = asset;
+            playerInfo['actionRestTime'] = 5;
+            playerInfo['recentAction'] = 0;
+
             roomList[roomID][socketID] = playerInfo;
 
             // 6-4. sellDone
@@ -231,9 +233,8 @@ class Game {
             // console.log('현재가로 판매 완료 :', playerInfo);
             // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
         } else {
-
             let reqVol = coinVol;
-            coinVol -= reqVol; 
+            coinVol -= reqVol;
             // asset = cash + coinVol * curPrice;
 
             playerInfo['cash'] = cash;
@@ -248,7 +249,7 @@ class Game {
                 askList[reqPrice] = {};
             }
             askList[reqPrice][socketID] = roomID;
-            
+
             roomList[roomID][socketID] = playerInfo;
 
             // console.log('호가 등록 완료', playerInfo);
