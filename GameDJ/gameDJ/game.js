@@ -119,6 +119,8 @@ class Game {
             // 6-2. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
+            playerInfo['actionRestTime'] = 5;
+            playerInfo['recentAction'] = 1;
 
             roomList[roomID][socketID] = playerInfo;
 
@@ -230,14 +232,16 @@ class Game {
             // asset = cash + coinVol * curPrice;
 
             // 평단가 로직
-            if (coinVol === 0){
-                playerInfo['avgPrice'] = 0
+            if (coinVol === 0) {
+                playerInfo['avgPrice'] = 0;
             }
 
             // 6-3. playerInfo Update
             playerInfo['cash'] = cash;
             playerInfo['coinVol'] = coinVol;
-            // playerInfo['asset'] = asset;
+            playerInfo['actionRestTime'] = 5;
+            playerInfo['recentAction'] = 0;
+
             roomList[roomID][socketID] = playerInfo;
 
             // 6-4. sellDone
@@ -253,7 +257,7 @@ class Game {
             // console.log('현재가로 판매 완료 :', playerInfo);
             // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
         } else {
-            coinVol -= reqVol; 
+            coinVol -= reqVol;
             // asset = cash + coinVol * curPrice;
 
             playerInfo['cash'] = cash;
