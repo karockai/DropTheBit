@@ -46,11 +46,6 @@ class Refresh {
                     let askVol = playerInfo['ask'][askPrice];
                     let coinVol = playerInfo['coinVol'];
 
-                    // 평단가 로직
-                    if (coinVol === 0){
-                        playerInfo['avgPrice'] = 0
-                    }
-
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = coinVol;
                     bfrWallet['cash'] = playerInfo['cash'];
@@ -58,15 +53,10 @@ class Refresh {
 
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
-                    playerInfo['askVol'] -= askVol;
                     // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -74,7 +64,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -122,23 +111,8 @@ class Refresh {
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] = playerInfo['asset'];
 
-                    if (playerInfo['avgPrice'] === 0) {
-                        playerInfo['avgPrice'] = bidPrice;
-                    } else {
-                        playerInfo['avgPrice'] = Math.round(
-                            (coinVol * playerInfo['avgPrice'] +
-                                bidVol * bidPrice) /
-                                (coinVol + bidVol)
-                        );
-                    }
-
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-                    playerInfo['bidCash'] -= bidPrice * bidVol;
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -146,7 +120,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
