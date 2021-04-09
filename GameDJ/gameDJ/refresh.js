@@ -245,7 +245,6 @@ class Refresh {
     
                         let a_curCoin = io.to(socketID).emit('chart', curCoin);
                     }
-<<<<<<< HEAD
                     rankList.sort(function (a, b) {
                         return b['asset'] - a['asset'];
                     });
@@ -264,33 +263,6 @@ class Refresh {
                         rececntBuy: roomInfo['recentBuy'],
                         rececntSell: roomInfo['recentSell'],
                         recentNothing: roomInfo['recentNothing'],
-=======
-
-                    let bfrWallet = {};
-                    bfrWallet['coinVol'] = playerInfo['coinVol'];
-                    bfrWallet['cash'] = playerInfo['cash'];
-                    bfrWallet['asset'] =
-                        cash + bidCash + prePrice * (askVol + coinVol);
-
-                    let refreshWallet = {};
-                    refreshWallet['result'] = 'success';
-                    refreshWallet['type'] = 'renewalInfo';
-                    refreshWallet['coinVol'] = playerInfo['coinVol'];
-                    refreshWallet['cash'] = playerInfo['cash'];
-                    refreshWallet['asset'] = playerInfo['asset'];
-
-                    new Game(io, socketID).refreshWallet(
-                        socketID,
-                        refreshWallet,
-                        bfrWallet
-                    );
-
-                    // rankObj 삽입
-                    let rankObj = {
-                        playerID: playerInfo['playerID'],
-                        asset: playerInfo['asset'],
-                        socketID: socketID,
->>>>>>> 7e725bb4446c1952381938a32d905c76e1b4c795
                     };
                     io.to(roomID).emit('roomAction', roomAction);
                 }
@@ -317,7 +289,6 @@ class Refresh {
 
     gameOver(roomID) {
         try{
-
             const { io } = this;
             let roomInfo = roomList[roomID];
             let leaderBoard = [];
