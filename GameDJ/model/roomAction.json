@@ -1,5 +1,5 @@
 {
-    "rececntBuy": "Number",
-    "rececntSell": "Number",
+    "recentBuy": "Number",
+    "recentSell": "Number",
     "recentNothing": "Number"
 }
