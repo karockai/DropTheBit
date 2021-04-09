@@ -10,6 +10,7 @@ import {
     GridList,
     Paper,
     makeStyles,
+    TableBody
 } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
@@ -45,12 +46,12 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
+        color: '#0033dd',
         textAlign: 'center',
-        color: theme.palette.primary,
+        
     },
     score: {},
     table: {
-        color: '#2D4053',
         spacing: 1,
     },
 }));
@@ -123,27 +124,28 @@ export default function AskTable(props) {
             //_ 3
             new Audio(Cancel3).play();
             CancelAsk(2, AskTable);
-        } else if (e.keyCode === 52 && AskTable.length >= 4) {
-            //_ 4
-            new Audio(Cancel4).play();
-            CancelAsk(3, AskTable);
-        } else if (e.keyCode === 53 && AskTable.length >= 5) {
-            //_ 5
-            new Audio(Cancel5).play();
-            CancelAsk(4, AskTable);
-        } else if (e.keyCode === 54 && AskTable.length >= 6) {
-            //_ 6
-            new Audio(Cancel6).play();
-            CancelAsk(5, AskTable);
-        } else if (e.keyCode === 55 && AskTable.length >= 7) {
-            //_ 7
-            new Audio(Cancel7).play();
-            CancelAsk(6, AskTable);
-        } else if (e.keyCode === 56 && AskTable.length >= 8) {
-            //_ 8
-            new Audio(Cancel8).play();
-            CancelAsk(7, AskTable);
-        }
+        } 
+        // else if (e.keyCode === 52 && AskTable.length >= 4) {
+        //     //_ 4
+        //     new Audio(Cancel4).play();
+        //     CancelAsk(3, AskTable);
+        // } else if (e.keyCode === 53 && AskTable.length >= 5) {
+        //     //_ 5
+        //     new Audio(Cancel5).play();
+        //     CancelAsk(4, AskTable);
+        // } else if (e.keyCode === 54 && AskTable.length >= 6) {
+        //     //_ 6
+        //     new Audio(Cancel6).play();
+        //     CancelAsk(5, AskTable);
+        // } else if (e.keyCode === 55 && AskTable.length >= 7) {
+        //     //_ 7
+        //     new Audio(Cancel7).play();
+        //     CancelAsk(6, AskTable);
+        // } else if (e.keyCode === 56 && AskTable.length >= 8) {
+        //     //_ 8
+        //     new Audio(Cancel8).play();
+        //     CancelAsk(7, AskTable);
+        // }
     }
 
     useEffect(() => {
@@ -161,60 +163,61 @@ export default function AskTable(props) {
             wrap="wrap"
             container
             direction="column"
-            justify="center"
+            justify="flex-start"
             alignItems="stretch"
+            style = {{
+                height: '50%'
+            }}
         >
             <TableContainer>
                 <Table
+                    stickyHeader
+                    style={{}}
                     className={classes.table}
                     size="small"
                     aria-label="a dense table"
                 >
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                             <TableCell
-                                style={{ align: 'center', height:'100%', width: '20%' }}
+                                style={{ backgroundColor: '#0C151C', align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '1vw',fontFamily:'NEXON Lv1 Gothic OTF' }}>
                                     취소버튼
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', width: '20%' }}
+                                style={{ backgroundColor: '#0C151C', align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '0.8vw',fontFamily:'NEXON Lv1 Gothic OTF' }}>
+                                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '1vw',fontFamily:'NEXON Lv1 Gothic OTF' }}>
                                     매도 가격
                                 </span>
                             </TableCell>
                             <TableCell
-                                style={{ align: 'center', width: '20%' }}
+                                style={{ backgroundColor: '#0C151C', align: 'center', minWidth:'20%'}}
                             >
-                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '0.8vw', fontFamily:'NEXON Lv1 Gothic OTF'}}>
+                                <span style={{ color: 'white', fontWeight: 'bold' , fontSize: '1vw', fontFamily:'NEXON Lv1 Gothic OTF'}}>
                                     매도 수량
                                 </span>
                             </TableCell>
                         </TableRow>
                     </TableHead>
-                </Table>
-            </TableContainer>
-            <GridList wrap="wrap" style={{ width: '100%', height: '100%' }}>
-                <Grid style={{ width: '100%' }}>
+                        </Table>
+                    </TableContainer>
+                    <GridList style={{ width: '100%', height:'80%'}}>
                     {AskTable.map((askElem, index, AskTable) => {
                         return (
-                            <Grid  item xs={testXs}>
                                 <AskEntity
                                     price={askElem.price}
                                     vol={askElem.vol}
-                                    index={index + 1}
+                                    index={index < 3 ? index + 1 : '?'}
                                     socket={props.socket}
                                     requestSocket={props.requestSocket}
                                     roomID={props.roomID}
                                 />
-                            </Grid>
                         );
                     })}
-                </Grid>
-            </GridList>
+                    </GridList>
         </Grid>
     );
 }

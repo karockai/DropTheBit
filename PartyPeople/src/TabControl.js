@@ -16,49 +16,47 @@ import BidTableSound from './audios/effect/BidTable.wav';
 import AskTableSound from './audios/effect/AskTable.wav';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-
 function SimpleMediaQuery() {
     const matches = useMediaQuery('(min-width:100px)');
-  
+
     return <span>{`(min-width:100px) matches: ${matches}`}</span>;
-  }
+}
 
 const StyledTabs = withStyles({
     indicator: {
-        width:'100%',
-      display: "flex",
-      justifyContent: "center",
-      alignContent: "center",
-      backgroundColor: "transparent",
-      "& > span": {
-        width: "100%",
-        backgroundColor: "#635ee7"
-      }
-    }
-//   })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
-  })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
-  
-  const StyledTab = withStyles((theme) => ({
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor: 'transparent',
+        '& > span': {
+            width: '100%',
+            backgroundColor: '#635ee7',
+        },
+    },
+    //   })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+})((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
+
+const StyledTab = withStyles((theme) => ({
     root: {
         padding: '0 0 0 0',
-      textTransform: "none",
-      color: "#fff",
-      fontWeight: theme.typography.fontWeightRegular,
-      fontFamily:'NEXON Lv1 Gothic OTF',
-      fontSize: '0.8vw',
-      alignItems: 'center',
-      wrapped:'false',
-      minWidth: '33%',
-      "&:focus": {
-        opacity: 1
-      }
+        textTransform: 'none',
+        color: '#fff',
+        fontWeight: theme.typography.fontWeightRegular,
+        fontFamily: 'NEXON Lv1 Gothic OTF',
+        fontSize: '1.2vw',
+        alignItems: 'center',
+        wrapped: 'false',
+        minWidth: '50%',
+        '&:focus': {
+            opacity: 1,
+        },
     },
-    '& .MuiButtonBase-root': {
-    },
+    '& .MuiButtonBase-root': {},
     // "& .MuiTab-root": {
     //     minWidth: '2vw'
     // }
-  }))((props) => <Tab disableRipple {...props} />);
+}))((props) => <Tab disableRipple {...props} />);
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -72,7 +70,10 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3} style={{padding: '0', width:'100%', height:'100%'}}>
+                <Box
+                    p={2}
+                    style={{ padding: '0', width: '100%', height: '100%' }}
+                >
                     {children}
                 </Box>
             )}
@@ -95,17 +96,16 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
-      },
-      padding: {
-      },
-      demo1: {
-        backgroundColor: theme.palette.background.paper
-      },
-      demo2: {
-        backgroundColor: "#0C151C"
-      }
-    }));
+        flexGrow: 1,
+    },
+    padding: {},
+    demo1: {
+        backgroundColor: theme.palette.background.paper,
+    },
+    demo2: {
+        backgroundColor: '#0C151C',
+    },
+}));
 
 export default function TabControl(props) {
     const classes = useStyles();
@@ -130,10 +130,6 @@ export default function TabControl(props) {
             //_ W
             new Audio(AskTableSound).play();
             setValue(1);
-        } else if (e.keyCode === 69) {
-            //_ E
-            new Audio(ExTable).play();
-            setValue(2);
         }
     }
 
@@ -147,32 +143,36 @@ export default function TabControl(props) {
     });
 
     return (
-        <div className={classes.demo2}  style={{height:'100%', width: '100%'}}>
-            <StyledTabs value={value} onChange={handleChange} style={{height:'10%', width:'100%', alignItems:'stretch',}}>
+        <div
+            className={classes.demo2}
+            style={{ height: '100%', width: '100%' }}
+        >
+            <StyledTabs
+                value={value}
+                onChange={handleChange}
+                style={{ height: '10%', width: '100%', alignItems: 'stretch' }}
+            >
                 {/* <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} /> */}
-                <StyledTab label="[Q] 매수 주문" {...a11yProps(0)} />
-                <StyledTab label="[W] 매도 주문" {...a11yProps(1)} />
-                <StyledTab label="[E] 호가" {...a11yProps(2)} />
+                <StyledTab label="[Q] 주문 현황" {...a11yProps(0)} />
+                <StyledTab label="[W] 호가" {...a11yProps(1)} />
             </StyledTabs>
-            <TabPanel value={value} index={0} style={{height:'90%'}}>
+            <TabPanel value={value} index={0} style={{ height: '90%' }}>
                 <BidTable
                     roomID={props.roomID}
                     socket={props.socket}
                     requestSocket={props.requestSocket}
                 />
-            </TabPanel>
-            <TabPanel value={value} index={1} style={{height:'90%'}}>
                 <AskTable
                     roomID={props.roomID}
                     socket={props.socket}
                     requestSocket={props.requestSocket}
                 />
             </TabPanel>
-            <TabPanel value={value} index={2} style={{height:'90%'}}>
+            <TabPanel value={value} index={1} style={{ height: '90%' }}>
                 <BidTab
                     socket={props.socket}
                     requestSocket={props.requestSocket}
-                    style={{height: '100%'}}
+                    style={{ height: '100%' }}
                 />
             </TabPanel>
         </div>
