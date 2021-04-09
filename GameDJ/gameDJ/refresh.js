@@ -169,7 +169,7 @@ class Refresh {
     renewalInfo() {
         try {
             const { io } = this;
-
+            
             for (let roomID in roomList) {
                 let roomInfo = roomList[roomID];
                 let rankList = [];
