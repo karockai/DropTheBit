@@ -47,13 +47,6 @@ function ChartTitle(props) {
             SetYield(yid);
             SetBullIcon(icon);
             setBullColor({ color: color });
-            // console.log({
-            //     before : beforeWon,
-            //     current : currentWon,
-            //     updown : upDown,
-            //     icon : isBullIcon,
-            //     textColor : textColor,
-            // });
         };
     }, [props.data]);
 
@@ -100,9 +93,7 @@ function ChartTitle(props) {
                         </strong>
                         <span style={{color: 'white', fontSize: '1vw'}} >{' ' + unit}</span>
                     </Grid>
-                    <Grid item>
-                        {props.isStart && <Timer socket={props.socket} />}
-                    </Grid>
+
                 </Grid>
                 <Grid container direction={'row'} justify={'space-between'} alignItems={'flex-start'}>
                 

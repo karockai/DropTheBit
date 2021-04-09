@@ -28,7 +28,7 @@ export default function Timer(props) {
             return (
                 <h2
                     style={{
-                        fontSize: '2.7vw',
+                        fontSize: '4vw',
                         color: 'red',
                         fontWeight: 'bold',
                     }}
@@ -37,7 +37,7 @@ export default function Timer(props) {
                 </h2>
             );
         } else {
-            return <h2 style={{ fontSize: 40 }}>{minute + ' : ' + second}</h2>;
+            return <h5 style={{ fontSize: '4vw' }}>{minute + ' : ' + second}</h5>;
         }
     };
 

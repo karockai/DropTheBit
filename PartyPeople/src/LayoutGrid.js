@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Paper, makeStyles,TextField} from '@material-ui/core';
+import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +17,10 @@ import ThreeSecTimer from './';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
+import HorizontalBarChart from './BidGraph';
+import { getData } from "./utils"
+import { TypeChooser } from "react-stockcharts/lib/helper";
+
 
 import {
     BrowserRouter as Router,
@@ -24,9 +28,7 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
-
 import TabPanel from './TabControl';
-import './ShiningButton.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,12 +53,18 @@ export default function LayoutGrid(props) {
     const [inputCtrl, setInputCtrl] = useState(false);
     const [bid, SetBid] = useState(0);
 
+
+    const [bidData, setBidData] = useState();
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
     };
 
     useEffect(() => {
         // console.log('layoutGrid rendered....!');
+        getData().then(data => {
+            console.log(data);
+			setBidData(data);
+		})
     });
 
     const [over, setOver] = useState(false);
@@ -80,7 +88,6 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
-
 
     return (
         <>
@@ -119,6 +126,7 @@ export default function LayoutGrid(props) {
                     }}
                 >
                     <PlayerList
+                        isStart={props.isStart}
                         socket={props.socket}
                         requestSocket={props.requestSocket}
                         roomID={props.roomID}
@@ -140,7 +148,7 @@ export default function LayoutGrid(props) {
                         item
                         style={{
                             width: '100%',
-                            height: '100%',
+                            height: '70%',
                             padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                         }}
                     >
@@ -154,7 +162,6 @@ export default function LayoutGrid(props) {
                                 setAPIData={setCurrentAPIData}
                                 APIdata={APIdata}
                                 display="flex"
-                                // time={props.time}
                                 isStart={props.isStart}
                                 time={timerTime}
                                 bid={bid}
@@ -164,7 +171,7 @@ export default function LayoutGrid(props) {
                     <Grid
                         className="지갑및호가거래"
                         container
-                        style={{ width: '100%', height: '50%' }}
+                        style={{ width: '100%', height: '30%' }}
                         item
                         wrap="wrap"
                         direction="row"
@@ -183,7 +190,7 @@ export default function LayoutGrid(props) {
                                 className="지갑컴퍼넌트"
                                 style={{
                                     width: '100%',
-                                    height: '60%',
+                                    height: '100%',
                                 }}
                                 container
                                 item
@@ -198,7 +205,7 @@ export default function LayoutGrid(props) {
                                     requestSocket={props.requestSocket}
                                 />
                             </Grid>
-                            <Grid
+                            {/* <Grid
                                 className="거래내역컴퍼넌트"
                                 style={{
                                     width: '100%',
@@ -216,7 +223,7 @@ export default function LayoutGrid(props) {
                                         requestSocket={props.requestSocket}
                                     />
                                 </Paper>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                         <Grid
                             className="주식거래컴퍼넌트"
@@ -276,59 +283,54 @@ export default function LayoutGrid(props) {
                     direction="column"
                     justify="space-between"
                 >
-                <Grid
-                className="지갑컴퍼넌트"
-                style={{
-                    width: '100%',
-                    height: '60%',
-                }}
-                container
-                item
-                alignItems="stretch"
-                justify="flex-start"
-                wrap="wrap"
-                direction="row"
-            >
-                <MyAsset
-                    roomID={props.roomID}
-                    socket={props.socket}
-                    requestSocket={props.requestSocket}
-                />
+                    <Grid
+                        className="매수매도호가테이블"
+                        style={{
+                            height: '60%',
+                            width: '100%',
+                            padding: '0.3vh 0.3vw 0.5vh 0.3vw',
+                        }}
+                        item
+                    >
+                        <Paper
+                            className={classes.paper}
+                            style={{ height: '100%', width: '100%' }}
+                        >
+                            {/* <TabPanel
+                                inputCtrl={inputCtrl}
+                                roomID={props.roomID}
+                                socket={props.socket}
+                                requestSocket={props.requestSocket}
+                            /> */}
+                            {/* <TypeChooser>
+                                {type => <HorizontalBarChart type={type} data={bidData} />}
+                            </TypeChooser> */}
+                        </Paper>
+                    </Grid>
+                    <Grid
+                        className="채팅방"
+                        style={{
+                            height: '40%',
+                            width: '100%',
+                            padding: '0.5vh 0.3vw 0.3vh 0.3vw',
+                        }}
+                        item
+                    >
+                        <Paper
+                            className={classes.paper}
+                            style={{ height: '100%', width: '100%' }}
+                        >
+                            <ChatRoom
+                                SetInputCtrl={SetInputCtrl}
+                                roomInfo={props.roomInfo}
+                                roomID={props.roomID}
+                                socket={props.socket}
+                                chat={props.chat}
+                            />
+                        </Paper>
+                    </Grid>
+                </Grid>
             </Grid>
-            <Grid
-                className="평균매매단가"
-                style={{
-                    width: '100%',
-                    height: '10%',
-                    // align: 'flex'
-                }}>
-
-                {isSell && 
-                    <h5>
-                        내가산가격
-                    </h5>
-                }
-                {!isSell &&
-                    <h5>
-                        내가판가격
-                    </h5>
-                }
-            </Grid>
-            <Grid
-            className="산다"
-            style={{
-                width: '100%',
-                height: '30%'
-            }}
-            >
-                <TradeStock
-                    socket={props.socket}
-                    requestSocket={props.requestSocket}
-                    roomID={props.roomID}
-                />
-            </Grid>
-            </Grid>
-        </Grid>
         </>
     );
 }

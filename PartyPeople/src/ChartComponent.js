@@ -7,7 +7,7 @@ import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
 import { CircularProgress, Grid } from '@material-ui/core';
-import Timer from './Timer';
+
 
 class ChartComponent extends React.Component {
     constructor(props) {

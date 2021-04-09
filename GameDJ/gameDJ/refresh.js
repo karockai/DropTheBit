@@ -182,10 +182,6 @@ class Refresh {
 
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
-<<<<<<< HEAD
-
-                    playerInfo['asset'] = cash + curPrice * coinVol;
-=======
                     let bidCash = 0;
                     let askVol = 0;
                     let playerBid = Object.keys(playerInfo['bid']);
@@ -199,7 +195,6 @@ class Refresh {
 
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
->>>>>>> c5174772ea255a3a838927791f6430bc0cd2ad74
 
                     if (playerInfo['actionRestTime'] > 0) {
                         playerInfo['actionRestTime']--;
@@ -223,10 +218,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-<<<<<<< HEAD
-                    refreshWallet['preExPrice'] = playerInfo['preExPrice'];
-=======
->>>>>>> c5174772ea255a3a838927791f6430bc0cd2ad74
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -332,8 +323,6 @@ class Refresh {
         roomInfo['leaderBoard'] = leaderBoard;
         roomList[roomID] = roomInfo;
     }
-<<<<<<< HEAD
-=======
 
     // refreshBid 갱신
     //! 차트 만들기 되면 front 데이터 형식 받고 수정 !
@@ -407,6 +396,5 @@ class Refresh {
 
         io.emit('refreshBid', exList);
     }
->>>>>>> c5174772ea255a3a838927791f6430bc0cd2ad74
 }
 export default Refresh;
