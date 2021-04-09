@@ -10,9 +10,13 @@
             },
             "askList": {
                 "price": "Vol"
-            }
+            },
+            "recentAction": "Bool",
+            "actionRestTime": "Number"
         },
         "timeCount": "Number",
-        "music": "Link?"
+        "music": "Link?",
+        "recentBuy": "Number",
+        "recentSell": "Number"
     }
 }

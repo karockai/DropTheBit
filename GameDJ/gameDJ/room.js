@@ -39,7 +39,13 @@ class Room {
         if (ipAddress) {
             console.log(process.env.SERVERNAME, typeof process.env.SERVERNAME);
             console.log(ipAddress);
-            await dbhmset(roomID, 'name', process.env.SERVERNAME, 'ip', ipAddress);
+            await dbhmset(
+                roomID,
+                'name',
+                process.env.SERVERNAME,
+                'ip',
+                ipAddress
+            );
             await dbhincrby(process.env.SERVERNAME, 'player', 1);
         }
         let playerID = data.playerID;
@@ -53,6 +59,8 @@ class Room {
             ask: {},
             bidCash: 0,
             askVol: 0,
+            actionRestTime: 0,
+            recentAction: 0,
         };
 
         let roomInfo = {
@@ -61,6 +69,9 @@ class Room {
             roomLeader: socket.id,
             gaming: false,
             leaderBoard: 0,
+            recentBuy: 0,
+            recentSell: 0,
+            recentNothing: 0,
         };
 
         roomInfo[socketID] = playerInfo;
@@ -74,7 +85,7 @@ class Room {
             roomID: roomID,
         });
         let message = playerID + '님이 들어오셨습니다.';
-        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
+        io.to(roomID).emit('update', { message: message, author: '[SERVER]' });
     }
 
     // 공방 : data : {roomID : roomID, playerID : name}
@@ -93,6 +104,8 @@ class Room {
             ask: {},
             bidCash: 0,
             askVol: 0,
+            actionRestTime: 0,
+            recentAction: 0,
         };
 
         let roomInfo = {
@@ -101,6 +114,9 @@ class Room {
             roomLeader: socket.id,
             gaming: false,
             leaderBoard: 0,
+            recentBuy: 0,
+            recentSell: 0,
+            recentNothing: 0,
         };
 
         roomInfo[socketID] = playerInfo;
@@ -114,7 +130,7 @@ class Room {
             roomID: roomID,
         });
         let message = playerID + '님이 들어오셨습니다.';
-        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
+        io.to(roomID).emit('update', { message: message, author: '[SERVER]' });
     }
 
     // data : {roomID : roomID, playerID : name}
@@ -136,6 +152,8 @@ class Room {
                 ask: {},
                 bidCash: 0,
                 askVol: 0,
+                actionRestTime: 0,
+                recentAction: 0,
             };
 
             // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
@@ -145,10 +163,10 @@ class Room {
 
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
-            
+
             socket.roomID = roomID;
             socket.join(roomID);
-            
+
             // for stress test
             playerStress++;
 
@@ -159,7 +177,10 @@ class Room {
             });
 
             let message = playerID + '님이 들어오셨습니다.';
-            io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
+            io.to(roomID).emit('update', {
+                message: message,
+                author: '[SERVER]',
+            });
         }
     }
 
@@ -185,7 +206,7 @@ class Room {
             musicTime: musicTime,
         });
         let message = '배경음악이 "' + musicName + '"로 변경되었습니다.';
-        io.to(roomID).emit('update', {message : message, author : '[SYSTEM]'});
+        io.to(roomID).emit('update', { message: message, author: '[SYSTEM]' });
     }
 
     // 게임 한판 끝나고 로비로 돌아왔을때 유저 정보 초기화 (방 정보는 gameOver시 초기화)
@@ -204,6 +225,8 @@ class Room {
             ask: {},
             bidCash: 0,
             askVol: 0,
+            actionRestTime: 0,
+            recentAction: 0,
         };
 
         // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함.
@@ -215,7 +238,7 @@ class Room {
         roomList[roomID] = roomInfo;
 
         let message = playerID + '님이 들어오셨습니다.';
-        io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
+        io.to(roomID).emit('update', { message: message, author: '[SERVER]' });
     }
 }
 
