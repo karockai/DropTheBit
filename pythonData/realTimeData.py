@@ -93,11 +93,11 @@ def on_message(ws, msg):
         hoka_result['date'] = str(datetime.datetime.fromtimestamp(msg['tms'] / 1000))
         hoka_result['total_ask_size'] = msg['tas']
         hoka_result['total_bid_size'] = msg['tbs']
-        for i in range(5):
-            hoka_result[f'ask_price{i}'] = msg['obu'][i]['ap']
-            hoka_result[f'bid_price{i}'] = msg['obu'][i]['bp']
-            hoka_result[f'ask_size{i}'] = msg['obu'][i]['as']
-            hoka_result[f'bid_size{i}'] = msg['obu'][i]['bs']
+        # for i in range(5):
+        #     hoka_result[f'ask_price{i}'] = msg['obu'][i]['ap']
+        #     hoka_result[f'bid_price{i}'] = msg['obu'][i]['bp']
+        #     hoka_result[f'ask_size{i}'] = msg['obu'][i]['as']
+        #     hoka_result[f'bid_size{i}'] = msg['obu'][i]['bs']
         # print(hoka_result)
 
     if (juka_result):
