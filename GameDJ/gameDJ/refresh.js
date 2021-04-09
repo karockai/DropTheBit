@@ -18,7 +18,7 @@ class Refresh {
         if (curPrice === prePrice) {
             return false;
         }
-
+        console.log(curPrice);
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
         chartData.push(curCoin);
         if (chartData.length > 100) {

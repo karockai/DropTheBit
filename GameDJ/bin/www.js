@@ -10,6 +10,8 @@ dotenv.config();
 
 global.chartData = [];
 global.roomList = {};
+global.askList = {};
+global.bidList = {};
 global.curCoin = {};
 global.curPrice = 0;
 global.prePrice = 0;
