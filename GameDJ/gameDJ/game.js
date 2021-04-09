@@ -20,12 +20,17 @@ class Game {
             io.to(roomID).emit('chartData', { chartData: chartData });
     
             if (roomList[roomID]['roomLeader'] === socket.id){
+                console.log(roomList[roomID]);
+                console.log('나 : ', socket.id);
                 io.to(roomID).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
             }
             else{
+                console.log('여기 아니야ㅠ');
+                console.log(roomList[roomID]);
+                console.log('나 : ', socket.id);
                 io.to(socket.id).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
