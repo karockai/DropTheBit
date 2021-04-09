@@ -1,6 +1,6 @@
 {
     "roomID": "String",
     "socketID": "String",
-    "currentBid": "Number",
-    "currentVol": "Number"
+    "currentBid": "Number"
+    // "currentVol": "Number"
 }

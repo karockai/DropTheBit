@@ -25,6 +25,169 @@ class Refresh {
             chartData.shift();
         }
         // 시작하자마자 차트를 그리기 위한 배열 ----------------------- <<
+
+        // 2. prePrice랑 curPrice를 비교
+        // 2-1. curPrice === prePrice면 아무것도 하지않는다.
+        // 2-2. curPrice >= prePrice면, askPrice에서 curPrice보다 낮은 호가를 처리한다.
+        if (curPrice > prePrice) {
+            // askPrice가 curPrice보다 낮은지 확인
+            for (let askPrice in askList) {
+                // console.log(askPrice, curPrice);
+                // console.log(askPrice < curPrice);
+                // console.log(Number(askPrice) < curPrice);
+                if (Number(askPrice) > curPrice) continue;
+
+                // 낮다면 거래를 체결한다.
+                for (let socketID in askList[askPrice]) {
+                    let roomID = askList[askPrice][socketID];
+                    let playerInfo = roomList[roomID][socketID];
+                    let cash = playerInfo['cash'];
+                    let askVol = playerInfo['ask'][askPrice];
+                    let coinVol = playerInfo['coinVol'];
+
+                    // 평단가 로직
+                    if (coinVol === 0) {
+                        playerInfo['avgPrice'] = 0;
+                    }
+
+                    let bfrWallet = {};
+                    bfrWallet['coinVol'] = coinVol;
+                    bfrWallet['cash'] = playerInfo['cash'];
+                    bfrWallet['asset'] = playerInfo['asset'];
+
+                    cash += askVol * askPrice;
+                    playerInfo['cash'] = cash;
+                    playerInfo['askVol'] -= askVol;
+                    playerInfo['actionRestTime'] = 5;
+                    playerInfo['recentAction'] = 1;
+
+                    // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
+                    delete playerInfo['ask'][askPrice];
+                    roomList[roomID][socketID] = playerInfo;
+                    delete askList[askPrice][socketID];
+                    playerInfo['asset'] =
+                        cash +
+                        playerInfo['bidCash'] +
+                        curPrice * (playerInfo['askVol'] + coinVol);
+
+                    let refreshWallet = {};
+                    refreshWallet['result'] = 'success';
+                    refreshWallet['type'] = 'refreshCurCoin-Sell';
+                    refreshWallet['coinVol'] = playerInfo['coinVol'];
+                    refreshWallet['cash'] = playerInfo['cash'];
+                    refreshWallet['asset'] = playerInfo['asset'];
+                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+                    new Game(io, socketID).refreshWallet(
+                        socketID,
+                        refreshWallet,
+                        bfrWallet
+                    );
+
+                    // sellDone
+                    let playerID = playerInfo['playerID'];
+                    let sellDone = {
+                        type: '매도 주문 체결',
+                        socketID: socketID,
+                        playerID: playerID,
+                        vol: askVol,
+                        price: askPrice,
+                    };
+                    io.to(roomID).emit('sellDone_Room', sellDone);
+                    new Game(io, socketID).sendAskTable({
+                        roomID: roomID,
+                        socketID: socketID,
+                    });
+                }
+                delete askList[askPrice];
+            }
+        }
+
+        // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
+        else if (curPrice < prePrice) {
+            // bidPrice가 curPrice보다 높은지 확인
+            for (let bidPrice in bidList) {
+                // console.log(bidPrice, curPrice);
+                // console.log(bidPrice < curPrice);
+                // console.log(Number(bidPrice) < curPrice);
+                if (Number(bidPrice) < curPrice) continue;
+                // 높다면 거래를 체결한다.
+                for (let socketID in bidList[bidPrice]) {
+                    let roomID = bidList[bidPrice][socketID];
+                    let playerInfo = roomList[roomID][socketID];
+                    let coinVol = playerInfo['coinVol'];
+                    let bidVol = playerInfo['bid'][bidPrice];
+                    let cash = playerInfo['cash'];
+
+                    let bfrWallet = {};
+                    bfrWallet['coinVol'] = playerInfo['coinVol'];
+                    bfrWallet['cash'] = playerInfo['cash'];
+                    bfrWallet['asset'] = playerInfo['asset'];
+
+                    if (playerInfo['avgPrice'] === 0) {
+                        playerInfo['avgPrice'] = bidPrice;
+                    } else {
+                        playerInfo['avgPrice'] = Math.round(
+                            (coinVol * playerInfo['avgPrice'] +
+                                bidVol * bidPrice) /
+                                (coinVol + bidVol)
+                        );
+                    }
+
+                    coinVol += bidVol;
+                    playerInfo['coinVol'] = coinVol;
+                    playerInfo['bidCash'] -= bidPrice * bidVol;
+                    playerInfo['asset'] =
+                        cash +
+                        playerInfo['bidCash'] +
+                        curPrice * (playerInfo['askVol'] + coinVol);
+                    playerInfo['actionRestTime'] = 5;
+                    playerInfo['recentAction'] = 0;
+
+                    let refreshWallet = {};
+                    refreshWallet['result'] = 'success';
+                    refreshWallet['type'] = 'refreshCurCoin-Buy';
+                    refreshWallet['coinVol'] = playerInfo['coinVol'];
+                    refreshWallet['cash'] = playerInfo['cash'];
+                    refreshWallet['asset'] = playerInfo['asset'];
+                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
+
+                    new Game(io, socketID).refreshWallet(
+                        socketID,
+                        refreshWallet,
+                        bfrWallet
+                    );
+
+                    // console.log('매수 체결', bidPrice, playerInfo['bid'][bidPrice])
+                    delete playerInfo['bid'][bidPrice];
+                    roomList[roomID][socketID] = playerInfo;
+                    delete bidList[bidPrice][socketID];
+
+                    // buyDone
+                    let playerID = playerInfo['playerID'];
+                    let buyDone = {
+                        type: '매수 주문 체결',
+                        socketID: socketID,
+                        playerID: playerID,
+                        vol: bidVol,
+                        price: bidPrice,
+                    };
+
+                    io.to(roomID).emit('buyDone_Room', buyDone);
+                    new Game(io, socketID).sendBidTable({
+                        roomID: roomID,
+                        socketID: socketID,
+                    });
+                }
+                delete bidList[bidPrice];
+            }
+        }
+
+        // console
+        //     .log
+        //     // '----------------------renewalCurCoin End------------------------'
+        //     ();
+        // this.renewalInfo();
     }
 
     renewalInfo() {
@@ -35,6 +198,9 @@ class Refresh {
             let rankList = [];
 
             if (roomInfo['gaming']) {
+                roomInfo['recentBuy'] = 0;
+                roomInfo['recentSell'] = 0;
+                roomInfo['recentNothing'] = 0;
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;
@@ -45,6 +211,17 @@ class Refresh {
                     let coinVol = playerInfo['coinVol'];
 
                     playerInfo['asset'] = cash + curPrice * coinVol;
+
+                    if (playerInfo['actionRestTime'] > 0) {
+                        playerInfo['actionRestTime']--;
+                        if (playerInfo['recentAction']) {
+                            roomInfo['recentBuy']++;
+                        } else {
+                            roomInfo['recentSell']++;
+                        }
+                    } else {
+                        roomInfo['recentNothing']++;
+                    }
 
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
@@ -72,6 +249,7 @@ class Refresh {
                         socketID: socketID,
                     };
                     rankList.push(rankObj);
+
                     roomList[roomID][socketID] = playerInfo;
 
                     let a_curCoin = io.to(socketID).emit('chart', curCoin);
@@ -89,27 +267,14 @@ class Refresh {
                 }
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
+
+                let roomAction = {
+                    rececntBuy: roomInfo['recentBuy'],
+                    rececntSell: roomInfo['recentSell'],
+                    recentNothing: roomInfo['recentNothing'],
+                };
+                io.to(roomID).emit('roomAction', roomAction);
             }
-
-            // 공방 startGame logic
-            // if (roomInfo['readyTime'] > 0 && roomInfo['roomLeader']) {
-            //     roomList[roomID]['readyTime']--;
-            //     console.log('readyTime :', roomList[roomID]['readyTime']);
-            //     console.log('gaming :', roomList[roomID]['gaming']);
-            //     io.to(roomID).emit(
-            //         'restReadyTime',
-            //         roomList[roomID]['readyTime']
-            //     );
-            // }
-
-            // if (
-            //     roomInfo['readyTime'] === 0 &&
-            //     roomList[roomID]['gaming'] === false
-            // ) {
-            //     console.log('여기로 들어옵니까?');
-            //     roomList[roomID]['gaming'] = true;
-            //     io.to(roomInfo['roomLeader']).emit('publicGameStart');
-            // }
 
             // gameOver logic
             if (roomInfo['gaming']) {
