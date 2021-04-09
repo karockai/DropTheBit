@@ -66,7 +66,7 @@ global.publicRoomID = 'EnjoyPublicGame';
 const server = app.listen(process.env.PORT, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
     // Send the notification
-    webhook.sendMessage(`서버를 시작합니다.`)
+    webhook.sendMessage(`시작합니다. 삐빅`)
 });
 
 sockets.init(server);
