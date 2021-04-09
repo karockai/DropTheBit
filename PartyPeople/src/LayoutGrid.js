@@ -47,6 +47,7 @@ export default function LayoutGrid(props) {
     const gameTime = location.state.gameTime;
     const [timerTime, setTimerTime] = useState(gameTime);
     const [inputCtrl, setInputCtrl] = useState(false);
+    const [bid, SetBid] = useState(0);
 
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
@@ -153,6 +154,7 @@ export default function LayoutGrid(props) {
                                 // time={props.time}
                                 isStart={props.isStart}
                                 time={timerTime}
+                                bid={bid}
                             />
                         </Paper>
                     </Grid>
@@ -244,6 +246,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <TradeStock
+                                            SetBid = {SetBid}
                                             inputCtrl={inputCtrl}
                                             roomID={props.roomID}
                                             APIdata={APIdata}
