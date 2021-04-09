@@ -101,13 +101,13 @@ class ChartComponent extends React.Component {
                         if(this.props.socket.id !== data.socketID) return;
                         this.doneSell = data.price;
                     });
-                    this.props.socket.on('buyCancel', (data) => {
+                    this.props.socket.on('cancelBid_Res', (data) => {
                         if(this.props.socket.id !== data.socketID) return;
-                        this.currentBuy = data.price;
+                        this.currentBuy = 0;
                     });
-                    this.props.socket.on('sellCancel', (data) => {
+                    this.props.socket.on('cancelAsk_Res', (data) => {
                         if(this.props.socket.id !== data.socketID) return;
-                        this.currentSell = data.price
+                        this.currentSell = 0;
                     });
                 });
                 this.setup = false;

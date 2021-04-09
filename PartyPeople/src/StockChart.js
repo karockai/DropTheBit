@@ -157,7 +157,7 @@ class StockChart extends React.Component {
                     fill="green"
                     textFill="#fff"
                     lineStroke="green"
-                    strokeDasharray="Dot"
+                    strokeDasharray="ShortDot"
                 
                     arrowWidth={3}
                     displayFormat={format('.2f')}
@@ -181,10 +181,10 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.currentSell}
-                        stroke="blue"
+                        stroke="#0088ff"
                         strokeWidth={2}
                         fill="transperent"
-                        lineStroke="blue"
+                        lineStroke="#0088ff"
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Dot"
@@ -211,8 +211,8 @@ class StockChart extends React.Component {
                         price={this.props.doneSell}
                         stroke="white"
                         strokeWidth={2}
-                        fill="blue"
-                        lineStroke="blue"
+                        fill="#0088ff"
+                        lineStroke="#0088ff"
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Solid"

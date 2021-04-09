@@ -5,3 +5,5 @@
 찐배경 #060c10
 theme #635ee7
 light-theme(명도up / 버튼에 적용) #7974f2
+red #ff0000
+blue #0088ff
