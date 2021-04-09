@@ -7,7 +7,6 @@
             "cash" : "Number",
             "asset" : "Number",
             "coinVol" : "Number",
-            "avgPrice" : "Number",
             "bid" :
             {
                 "price" : "vol"

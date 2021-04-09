@@ -101,7 +101,6 @@ class Room {
             roomLeader: socket.id,
             gaming: false,
             leaderBoard: 0,
-            readyTime: 10, // 디버깅 위해 10초로 (원래 30초)
         };
 
         roomInfo[socketID] = playerInfo;
