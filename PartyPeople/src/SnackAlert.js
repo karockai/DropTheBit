@@ -76,8 +76,8 @@ export function SnackAlertFunc(props) {
         enqueueSnackbar(parseMsg, {
             variant: props.severity,
             anchorOrigin: {
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: 'top',
+                horizontal: 'center',
             },
             autoHideDuration: 1500,
             preventDuplicate: true,

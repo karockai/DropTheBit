@@ -85,22 +85,23 @@ class ChartComponent extends React.Component {
                     this.props.socket.on('chart', (data) => {
                         this.addCandleData(data);
                     });
-                    this.props.socket.on('bidDone', (data) => {
-                        this.currentBuy = data.exPrice;
+                    this.props.socket.on('bidDone_Room', (data) => {
+                        this.currentBuy = data.price;
                     });
-                    this.props.socket.on('buyDone', (data) => {
-                        this.doneBuy = data.exPrice
+                    this.props.socket.on('buyDone_Room', (data) => {
+                        this.doneBuy = data.price
                     });
-                    this.props.socket.on('askDone', (data) => {
-                        this.currentSell = data.exPrice;
+                    this.props.socket.on('askDone_Room', (data) => {
+                        this.currentSell = data.price;
                     });
-                    this.props.socket.on('sellDone', (data) => {
-                        this.doneSell = data.exPrice;
+                    this.props.socket.on('sellDone_Room', (data) => {
+                        this.doneSell = data.price;
                     });
                     this.props.socket.on('buyCancel', (data) => {
+                        this.currentBuy = data.price;
                     });
                     this.props.socket.on('sellCancel', (data) => {
-
+                        this.currentSell = data.price
                     });
                 });
                 this.setup = false;

@@ -171,7 +171,7 @@ export default function TradeStock(props) {
         SetBid(Number(currentBid) + Number(unitBid));
         //!
         console.log('bidUp', currentBid);
-        props.SetBid(Number(currentBid) - Number(unitBid))
+        props.SetBid(Number(currentBid) + Number(unitBid))
     }
     function BidDown() {
         SetBid(Number(currentBid) - Number(unitBid));
