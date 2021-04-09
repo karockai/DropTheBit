@@ -467,5 +467,19 @@ class Game {
 
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
+
+    timerSet() {
+        const { socket } = this;
+        const roomID = socket.roomID;
+
+        let timerSetData = {
+            timerSet: true,
+            isPlaying: true,
+            initGameTime: roomList[roomID]['initGameTime'],
+            gameTime: roomList[roomID]['gameTime'],
+        };
+
+        socket.emit('timerSet_Res', timerSetData);
+    }
 }
 export default Game;

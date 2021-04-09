@@ -66,6 +66,10 @@ export default {
                 if (!roomList.hasOwnProperty(socket.roomID)) return 0;
                 new Game(io, socket).startGame(musicData);
             });
+            socket.on('timerSet_Req', () => {
+                if (!roomList.hasOwnProperty(socket.roomID)) return 0;
+                new Game(io, socket).timerSet();
+            });
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()
             );
@@ -76,22 +80,34 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', (reqJson) => {
-                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
+                if (
+                    roomList.hasOwnProperty(reqJson['roomID']) &&
+                    roomList[reqJson['roomID']]['gaming'] === true
+                ) {
                     new Game(io, socket).buy(reqJson);
                 }
             });
             socket.on('sell_Req', (reqJson) => {
-                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
+                if (
+                    roomList.hasOwnProperty(reqJson['roomID']) &&
+                    roomList[reqJson['roomID']]['gaming'] === true
+                ) {
                     new Game(io, socket).sell(reqJson);
                 }
             });
             socket.on('cancelBid_Req', (reqJson) => {
-                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
+                if (
+                    roomList.hasOwnProperty(reqJson['roomID']) &&
+                    roomList[reqJson['roomID']]['gaming'] === true
+                ) {
                     new Game(io, socket).cancelBid(reqJson);
                 }
             });
             socket.on('cancelAsk_Req', (reqJson) => {
-                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
+                if (
+                    roomList.hasOwnProperty(reqJson['roomID']) &&
+                    roomList[reqJson['roomID']]['gaming'] === true
+                ) {
                     new Game(io, socket).cancelAsk(reqJson);
                 }
             });
@@ -116,7 +132,7 @@ export default {
             // Chat event ------------------------------------------ >>
             socket.on('message', (data) => {
                 if (!roomList[socket.roomID]) return 0;
-                new Chat(io, socket).messageReq(data)
+                new Chat(io, socket).messageReq(data);
             });
             // In-game event << -----------------------------------------
         });

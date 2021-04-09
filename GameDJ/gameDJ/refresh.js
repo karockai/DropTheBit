@@ -264,7 +264,13 @@ class Refresh {
                 // gameOver logic
                 if (roomInfo['gaming']) {
                     roomList[roomID]['gameTime']--;
-                    console.log('gameTime: ', roomList[roomID]['gameTime']);
+
+                    // let gameTimeData = {
+                    //     timerSet: true,
+                    //     isPlaying: true,
+                    //     gameTime: roomList[roomID]['gameTime'],
+                    // };
+
                     io.to(roomID).emit(
                         'restGameTime',
                         roomList[roomID]['gameTime']
