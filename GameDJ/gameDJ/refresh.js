@@ -46,11 +46,6 @@ class Refresh {
                     let askVol = playerInfo['ask'][askPrice];
                     let coinVol = playerInfo['coinVol'];
 
-                    // 평단가 로직
-                    if (coinVol === 0) {
-                        playerInfo['avgPrice'] = 0;
-                    }
-
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = coinVol;
                     bfrWallet['cash'] = playerInfo['cash'];
@@ -58,7 +53,6 @@ class Refresh {
 
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
-                    playerInfo['askVol'] -= askVol;
                     playerInfo['actionRestTime'] = 5;
                     playerInfo['recentAction'] = 1;
 
@@ -66,10 +60,6 @@ class Refresh {
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -77,7 +67,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -125,23 +114,8 @@ class Refresh {
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] = playerInfo['asset'];
 
-                    if (playerInfo['avgPrice'] === 0) {
-                        playerInfo['avgPrice'] = bidPrice;
-                    } else {
-                        playerInfo['avgPrice'] = Math.round(
-                            (coinVol * playerInfo['avgPrice'] +
-                                bidVol * bidPrice) /
-                                (coinVol + bidVol)
-                        );
-                    }
-
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-                    playerInfo['bidCash'] -= bidPrice * bidVol;
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
                     playerInfo['actionRestTime'] = 5;
                     playerInfo['recentAction'] = 0;
 
@@ -151,7 +125,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -210,8 +183,17 @@ class Refresh {
 
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
-                    let bidCash = playerInfo['bidCash'];
-                    let askVol = playerInfo['askVol'];
+                    let bidCash = 0;
+                    let askVol = 0;
+                    let playerBid = Object.keys(playerInfo['bid']);
+                    let playerAsk = Object.keys(playerInfo['ask'])
+                    if (playerBid.length > 0){
+                        bidCash = playerBid[0] * playerInfo['bid'][playerBid[0]];
+                    }
+                    if (playerAsk.length > 0){
+                        askVol = playerInfo['ask'][playerAsk[0]];
+                    }
+
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
 
@@ -238,7 +220,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -357,6 +338,7 @@ class Refresh {
     }
 
     // refreshBid 갱신
+    //! 차트 만들기 되면 front 데이터 형식 받고 수정 !
     async refreshBid() {
         const { io } = this;
         let exTable = JSON.parse(await dbget('bidTable'));

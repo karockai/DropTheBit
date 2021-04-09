@@ -169,9 +169,14 @@ export default function TradeStock(props) {
     }
     function BidUp() {
         SetBid(Number(currentBid) + Number(unitBid));
+        //!
+        console.log('bidUp', currentBid);
+        props.SetBid(Number(currentBid) + Number(unitBid))
     }
     function BidDown() {
         SetBid(Number(currentBid) - Number(unitBid));
+        //!
+        props.SetBid(Number(currentBid) - Number(unitBid))
     }
 
     function RefreshBid_Req() {
@@ -179,6 +184,7 @@ export default function TradeStock(props) {
         props.socket.once('RefreshBid_Res', (curPrice) => {
             // console.log('RefreshBid_Req');
             SetBid(curPrice);
+            props.SetBid(curPrice)
         });
     }
 

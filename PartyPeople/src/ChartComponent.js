@@ -14,8 +14,13 @@ class ChartComponent extends React.Component {
         super(props);
         this.state = {
             data: [],
-            coinName : '',
+            coinName: '',
         };
+        this.currentBuy = 0;
+        this.currentSell = 0;
+        this.doneBuy = 0;
+        this.doneSell = 0;
+
     }
     componentDidUpdate() {}
     componentWillMount() {
@@ -35,7 +40,7 @@ class ChartComponent extends React.Component {
         }
         const coinName = data.coinName;
         // const date = data.date.split('.')[0];
-        
+
         // let date = data.date;
         // console.log(date);
         // if (typeof(date)==='object') {
@@ -51,7 +56,11 @@ class ChartComponent extends React.Component {
             this.setAPI = true;
         }
         if (this.state.data.length >= 150) this.state.data.shift();
-        this.setState({ data: [...this.state.data, data],coinName: coinName, date: tmp_date[1]});
+        this.setState({
+            data: [...this.state.data, data],
+            coinName: coinName,
+            date: tmp_date[1],
+        });
         // console.log(this.state.datas);
         // getData(this.state.datas).then(data => {
         // })
@@ -75,6 +84,24 @@ class ChartComponent extends React.Component {
                     });
                     this.props.socket.on('chart', (data) => {
                         this.addCandleData(data);
+                    });
+                    this.props.socket.on('bidDone_Room', (data) => {
+                        this.currentBuy = data.price;
+                    });
+                    this.props.socket.on('buyDone_Room', (data) => {
+                        this.doneBuy = data.price
+                    });
+                    this.props.socket.on('askDone_Room', (data) => {
+                        this.currentSell = data.price;
+                    });
+                    this.props.socket.on('sellDone_Room', (data) => {
+                        this.doneSell = data.price;
+                    });
+                    this.props.socket.on('buyCancel', (data) => {
+                        this.currentBuy = data.price;
+                    });
+                    this.props.socket.on('sellCancel', (data) => {
+                        this.currentSell = data.price
                     });
                 });
                 this.setup = false;
@@ -101,20 +128,28 @@ class ChartComponent extends React.Component {
                 <Grid
                     container
                     // justify={'space-between'}
-                    style={{ padding: '1vh', width:'100%' }}
+                    style={{ padding: '1vh', width: '100%' }}
                 >
-                    <ChartTitle 
-                        data={this.state.data} 
-                        coinName = {this.state.coinName} 
+                    <ChartTitle
+                        data={this.state.data}
+                        coinName={this.state.coinName}
                         date={this.state.date}
-                        time={this.props.time} 
-                        isStart={this.props.isStart} 
+                        time={this.props.time}
+                        isStart={this.props.isStart}
                         socket={this.props.socket}
                     />
                     {/* {this.props.isStart && <Timer socket={this.props.socket} />} */}
                     {/* <h2>출처</h2> */}
                 </Grid>
-                <StockChart type={'hybrid'} data={this.state.data} />
+                <StockChart
+                    type={'hybrid'}
+                    data={this.state.data}
+                    bid={this.props.bid}
+                    doneBuy={this.doneBuy}
+                    doneSell={this.doneSell}
+                    currentBuy={this.currentBuy}
+                    currentSell={this.currentSell}
+                />
             </>
         );
     }
