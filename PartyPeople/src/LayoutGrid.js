@@ -54,18 +54,9 @@ export default function LayoutGrid(props) {
     const [bid, SetBid] = useState(0);
 
 
-    const [bidData, setBidData] = useState();
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
     };
-
-    useEffect(() => {
-        // console.log('layoutGrid rendered....!');
-        getData().then(data => {
-            console.log(data);
-			setBidData(data);
-		})
-    });
 
     const [over, setOver] = useState(false);
 

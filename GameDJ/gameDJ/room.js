@@ -1,6 +1,7 @@
 import { dbhget, dbhmset, dbhincrby } from './redis.js';
 import { nanoid } from 'nanoid';
 import dotenv from 'dotenv';
+import webhook from '../slack.js';
 
 class Room {
     constructor(io, socket) {
@@ -32,6 +33,7 @@ class Room {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -96,7 +98,7 @@ class Room {
             io.to(roomID).emit('update', { message: message, author: '[SERVER]' });
         }
         catch(err){
-            console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -148,6 +150,7 @@ class Room {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -205,6 +208,7 @@ class Room {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -216,6 +220,7 @@ class Room {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -240,6 +245,7 @@ class Room {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -277,6 +283,7 @@ class Room {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 }
