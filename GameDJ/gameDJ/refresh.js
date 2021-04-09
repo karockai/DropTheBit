@@ -253,8 +253,8 @@ class Refresh {
                 io.to(roomID).emit('roomRank', rankList2);
 
                 let roomAction = {
-                    rececntBuy: roomInfo['recentBuy'],
-                    rececntSell: roomInfo['recentSell'],
+                    recentBuy: roomInfo['recentBuy'],
+                    recentSell: roomInfo['recentSell'],
                     recentNothing: roomInfo['recentNothing'],
                 };
                 io.to(roomID).emit('roomAction', roomAction);
