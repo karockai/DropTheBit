@@ -201,6 +201,7 @@ class Refresh {
             if (roomInfo['gaming']) {
                 roomInfo['recentBuy'] = 0;
                 roomInfo['recentSell'] = 0;
+                roomInfo['recentNothing'] = 0;
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;
@@ -221,6 +222,8 @@ class Refresh {
                         } else {
                             roomInfo['recentSell']++;
                         }
+                    } else {
+                        roomInfo['recentNothing']++;
                     }
 
                     let bfrWallet = {};
@@ -270,6 +273,7 @@ class Refresh {
                 let roomAction = {
                     rececntBuy: roomInfo['recentBuy'],
                     rececntSell: roomInfo['recentSell'],
+                    recentNothing: roomInfo['recentNothing'],
                 };
                 io.to(roomID).emit('roomAction', roomAction);
             }
