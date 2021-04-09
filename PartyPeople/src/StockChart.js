@@ -158,6 +158,7 @@ class StockChart extends React.Component {
                     textFill="#fff"
                     lineStroke="green"
                     strokeDasharray="Dot"
+                
                     arrowWidth={3}
                     displayFormat={format('.2f')}
                     />
