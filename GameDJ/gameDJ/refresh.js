@@ -186,11 +186,12 @@ class Refresh {
                     let bidCash = 0;
                     let askVol = 0;
                     let playerBid = Object.keys(playerInfo['bid']);
-                    let playerAsk = Object.keys(playerInfo['ask'])
-                    if (playerBid.length > 0){
-                        bidCash = playerBid[0] * playerInfo['bid'][playerBid[0]];
+                    let playerAsk = Object.keys(playerInfo['ask']);
+                    if (playerBid.length > 0) {
+                        bidCash =
+                            playerBid[0] * playerInfo['bid'][playerBid[0]];
                     }
-                    if (playerAsk.length > 0){
+                    if (playerAsk.length > 0) {
                         askVol = playerInfo['ask'][playerAsk[0]];
                     }
 
@@ -223,7 +224,7 @@ class Refresh {
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
-                        refreshWallet,5
+                        refreshWallet,
                         bfrWallet
                     );
 
@@ -341,71 +342,19 @@ class Refresh {
     //! 차트 만들기 되면 front 데이터 형식 받고 수정 !
     async refreshBid() {
         const { io } = this;
-        let exTable = JSON.parse(await dbget('bidTable'));
-        if (!exTable) return false;
+        let bidObj = JSON.parse(await dbget('bidTable'));
 
-        exList = [];
+        let totalAsk = bidObj['total_ask_size'];
+        let totalBid = bidObj['total_bid_size'];
+        let total = totalAsk + totalBid;
 
-        let bidObject4 = {
-            price: exTable.bid_price4,
-            buy: parseInt(exTable.bid_size4),
+        let askPercent = (totalAsk / total) * 100;
+        let bidPercent = 100 - askPercent;
+
+        let exList = {
+            askPercent: askPercent,
+            bidPercent: bidPercent,
         };
-
-        let bidObject3 = {
-            price: exTable.bid_price3,
-            buy: parseInt(exTable.bid_size3),
-        };
-
-        let bidObject2 = {
-            price: exTable.bid_price2,
-            buy: parseInt(exTable.bid_size2),
-        };
-
-        let bidObject1 = {
-            price: exTable.bid_price1,
-            buy: parseInt(exTable.bid_size1),
-        };
-
-        let bidObject0 = {
-            price: exTable.bid_price0,
-            buy: parseInt(exTable.bid_size0),
-        };
-
-        let askObject0 = {
-            price: exTable.ask_price0,
-            buy: parseInt(exTable.ask_size0),
-        };
-
-        let askObject1 = {
-            price: exTable.ask_price1,
-            buy: parseInt(exTable.ask_size1),
-        };
-
-        let askObject2 = {
-            price: exTable.ask_price2,
-            buy: parseInt(exTable.ask_size2),
-        };
-
-        let askObject3 = {
-            price: exTable.ask_price3,
-            buy: parseInt(exTable.ask_size3),
-        };
-
-        let askObject4 = {
-            price: exTable.ask_price4,
-            buy: parseInt(exTable.ask_size4),
-        };
-
-        exList.push(askObject4);
-        exList.push(askObject3);
-        exList.push(askObject2);
-        exList.push(askObject1);
-        exList.push(askObject0);
-        exList.push(bidObject0);
-        exList.push(bidObject1);
-        exList.push(bidObject2);
-        exList.push(bidObject3);
-        exList.push(bidObject4);
 
         io.emit('refreshBid', exList);
     }
