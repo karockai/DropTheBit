@@ -34,6 +34,7 @@ export default function RoomAction (props) {
             })
         })
     }, [])
+    // const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
     const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
       return (
         <div className={classes.root}>
@@ -41,7 +42,7 @@ export default function RoomAction (props) {
             peopleTrade.red > 0 && 
             [...Array(peopleTrade.red)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'red', fontSize: 2 / ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'red', margin: 1/ ratio + 'vw' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
@@ -49,7 +50,7 @@ export default function RoomAction (props) {
             peopleTrade.grey > 0 && 
             [...Array(peopleTrade.grey)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'grey', fontSize: 2 / ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'grey',  margin: 1/ ratio + 'vw' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
@@ -57,7 +58,7 @@ export default function RoomAction (props) {
             peopleTrade.blue > 0 && 
             [...Array(peopleTrade.blue)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'blue', fontSize: 2 / ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'blue',  margin: 1/ ratio + 'vw' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
