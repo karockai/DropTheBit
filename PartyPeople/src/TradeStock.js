@@ -380,6 +380,7 @@ export default function TradeStock(props) {
             tmpAudio.play();
             tmpAudio.remove();
             BidDown();
+            // setBuyStatus(Buy(currentBid, Math.floor(myWallet.myCash / currentBid)));
         } else if (e.keyCode === 65) {
             //_ 'A' :
             let tmpAudio = new Audio(BuyMax);
@@ -397,13 +398,13 @@ export default function TradeStock(props) {
             let tmpAudio = new Audio(BuyConfirm);
             tmpAudio.play();
             tmpAudio.remove();
-            setBuyStatus(Buy(currentBid, currentVolume));
+            setBuyStatus(Buy(currentBid, Math.floor(myWallet.myCash / currentBid)));
         } else if (e.keyCode === 88) {
             //_ 'X'
             let tmpAudio = new Audio(SellConfirm);
             tmpAudio.play();
             tmpAudio.remove();
-            setSellStatus(Sell(currentBid, currentVolume));
+            setSellStatus(Sell(currentBid, myWallet.myCoin));
         }
         // console.log(e);
         const key = document.getElementById(e.key);
@@ -752,8 +753,7 @@ export default function TradeStock(props) {
                                 let tmpAudio = new Audio(BuyConfirm);
                                 tmpAudio.play();
                                 tmpAudio.remove();
-                                console.log(currentBid, currentVolume);
-                                setBuyStatus(Buy(currentBid, currentVolume));
+                                setBuyStatus(Buy(currentBid, Math.floor(myWallet.myCash / currentBid)));
                             }}
                             id="z"
                         >
@@ -767,7 +767,7 @@ export default function TradeStock(props) {
                                 let tmpAudio = new Audio(SellConfirm);
                                 tmpAudio.play();
                                 tmpAudio.remove();
-                                setSellStatus(Sell(currentBid, currentVolume));
+                                setSellStatus(Sell(currentBid, myWallet.myCoin));
                             }}
                             id="x"
                         >

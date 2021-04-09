@@ -302,9 +302,11 @@ export default function LayoutGrid(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                             /> */}
-                            {/* <TypeChooser>
+
+                            {bidData && 
+                                <TypeChooser>
                                 {type => <HorizontalBarChart type={type} data={bidData} />}
-                            </TypeChooser> */}
+                                </TypeChooser>}
                         </Paper>
                     </Grid>
                     <Grid
