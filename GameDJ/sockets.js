@@ -41,10 +41,11 @@ export default {
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함
             socket.on('settingsUpdate_Req', (data) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList.hasOwnProperty(data.roomID)) return 0;
                 new Room(io, socket).updateSettings(data);
             });
             socket.on('backToLobby', (roomID) => {
+                if (!roomList.hasOwnProperty(roomID)) return 0;
                 if (roomList[roomID]['gaming'] === false) {
                     new Room(io, socket).playerReinit(roomID);
                 } else {
@@ -55,20 +56,19 @@ export default {
                 }
             });
             socket.on('lobbyBoard', (data) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList.hasOwnProperty(socket.roomID)) return 0;
                 socket.emit(
                     'lobbyBoard',
                     roomList[socket.roomID]['leaderBoard']
                 );
             });
             socket.on('startGame_Req', (musicData) => {
-                if (!roomList[socket.roomID]) return 0;
+                if (!roomList.hasOwnProperty(socket.roomID)) return 0;
                 new Game(io, socket).startGame(musicData);
             });
             socket.on('disconnect', () =>
                 new Disconnect(io, socket).onDisconnect()
             );
-
             socket.on('chartData_Req', () =>
                 new Room(io, socket).sendChartData()
             );
@@ -76,18 +76,48 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]['gaming']) return 0;
-                new Game(io, socket).buy(reqJson);
+                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                    new Game(io, socket).buy(reqJson);
+                }
             });
             socket.on('sell_Req', (reqJson) => {
-                if (!roomList[reqJson['roomID']]['gaming']) return 0;
-                new Game(io, socket).sell(reqJson);
+                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                    new Game(io, socket).sell(reqJson);
+                }
+            });
+            socket.on('cancelBid_Req', (reqJson) => {
+                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                    new Game(io, socket).cancelBid(reqJson);
+                }
+            });
+            socket.on('cancelAsk_Req', (reqJson) => {
+                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                    new Game(io, socket).cancelAsk(reqJson);
+                }
+            });
+            socket.on('bidTab_Req', (reqJson) => {
+                if (!roomList[reqJson['roomID']]) return 0;
+                new Game(io, socket).sendBidTab(reqJson);
+            });
+            socket.on('bidTable_Req', (reqJson) => {
+                if (!roomList[reqJson['roomID']]) return 0;
+                new Game(io, socket).sendBidTable(reqJson);
+            });
+            socket.on('askTable_Req', (reqJson) => {
+                if (!roomList[reqJson['roomID']]) return 0;
+                new Game(io, socket).sendAskTable(reqJson);
+            });
+            socket.on('RefreshBid_Req', () => {
+                if (!roomList[socket.roomID]) return 0;
+                // let curPrice = curCoin['curPrice'];
+                socket.emit('RefreshBid_Res', curPrice);
             });
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>
-            socket.on('message', (data) =>
+            socket.on('message', (data) => {
+                if (!roomList[socket.roomID]) return 0;
                 new Chat(io, socket).messageReq(data)
-            );
+            });
             // In-game event << -----------------------------------------
         });
     },

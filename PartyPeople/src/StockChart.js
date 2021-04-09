@@ -78,7 +78,7 @@ class StockChart extends React.Component {
 
         const start = xAccessor(last(data));
         const close = last(data);
-        const end = xAccessor(data[Math.max(0, data.length - 50)]);
+        const end = xAccessor(data[Math.max(0, data.length - 100)]);
         const xExtents = [start, end];
         this.dataHigh =
             last(data).high > this.dataHigh ? last(data).high : this.dataHigh;
@@ -109,7 +109,8 @@ class StockChart extends React.Component {
                 {/* <Chart id={1} yExtents={[(d) => [d.high + 0.5, d.low - 0.5]]}> */}
                 <Chart
                     id={1}
-                    yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
+                    // yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
+                    yExtents={d=> [d.high * 1.001, d.low * 0.999]}
                 >
                     <XAxis axisAt="bottom" orient="bottom" />
                     <YAxis axisAt="right" orient="right" ticks={5} />
@@ -148,17 +149,28 @@ class StockChart extends React.Component {
                     /> */}
                     <CandlestickSeries {...candlesAppearance} />
                     <PriceCoordinate
+                    className="현재가격"
+                    at="right"
+                    orient="right"
+                    price={last(data).close}
+                    stroke="#7974f2"
+                    fill="green"
+                    textFill="#fff"
+                    arrowWidth={3}
+                    displayFormat={format('.2f')}
+                    />
+                                        <PriceCoordinate
                         className="매수주문"
                         at="right"
                         orient="right"
                         price={this.props.currentBuy}
-                        stroke="#3490DC"
+                        stroke="red"
                         strokeWidth={2}
-                        fill="red"
+                        fill="transperent"
                         lineStroke="red"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="Solid"
+                        strokeDasharray="Dot"
                         displayFormat={format('.2f')}
                     />
                                         <PriceCoordinate
@@ -166,7 +178,35 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.currentSell}
-                        stroke="#3490DC"
+                        stroke="blue"
+                        strokeWidth={2}
+                        fill="transperent"
+                        lineStroke="blue"
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="Dot"
+                        displayFormat={format('.2f')}
+                    />
+                                        <PriceCoordinate
+                        className="매수체결"
+                        at="right"
+                        orient="right"
+                        price={this.props.doneBuy}
+                        stroke="white"
+                        strokeWidth={2}
+                        fill="red"
+                        lineStroke="red"
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
+                    />
+                                        <PriceCoordinate
+                        className="매도체결"
+                        at="right"
+                        orient="right"
+                        price={this.props.doneSell}
+                        stroke="white"
                         strokeWidth={2}
                         fill="blue"
                         lineStroke="blue"
@@ -175,45 +215,8 @@ class StockChart extends React.Component {
                         strokeDasharray="Solid"
                         displayFormat={format('.2f')}
                     />
-                                        <PriceCoordinate
-                        className="매수체결"
-                        at="right"
-                        orient="right"
-                        price={this.props.doneBuy}
-                        stroke="#3490DC"
-                        strokeWidth={2}
-                        fill="red"
-                        lineStroke="red"
-                        textFill="#fff"
-                        arrowWidth={7}
-                        strokeDasharray="ShortDash"
-                        displayFormat={format('.2f')}
-                    />
-                                        <PriceCoordinate
-                        className="매도체결"
-                        at="right"
-                        orient="right"
-                        price={this.props.doneSell}
-                        stroke="#3490DC"
-                        strokeWidth={2}
-                        fill="blue"
-                        lineStroke="blue"
-                        textFill="#fff"
-                        arrowWidth={7}
-                        strokeDasharray="ShortDash"
-                        displayFormat={format('.2f')}
-                    />
-                                            <PriceCoordinate
-                    className="현재가격"
-                    at="right"
-                    orient="right"
-                    price={last(data).close}
-                    stroke="#7974f2"
-                    fill="grey"
-                    textFill="#fff"
-                    arrowWidth={3}
-                    displayFormat={format('.2f')}
-                    />
+
+
                                                            <PriceCoordinate
                         className="나의호가"
                         at="right"
@@ -224,7 +227,7 @@ class StockChart extends React.Component {
                         fill="#635ee7"
                         lineStroke="white"
                         textFill="#fff"
-                        arrowWidth={3}
+                        arrowWidth={6}
                         strokeDasharray="ShortDot"
                         displayFormat={format('.2f')}
                     />
