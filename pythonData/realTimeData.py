@@ -129,7 +129,7 @@ def on_message(ws, msg):
             
             juka_result['volUnit'] = (100000000 / price_max) * 0.1
             juka_result['coinName'] = coinName.coinList[coin_name]
-            hoka_result['coinName'] = coinName.coinList[coin_name]
+            # hoka_result['coinName'] = coinName.coinList[coin_name]
   
             juka_result = json.dumps(juka_result, ensure_ascii=False)
             hoka_result = json.dumps(hoka_result, ensure_ascii=False)
