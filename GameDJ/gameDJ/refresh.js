@@ -57,8 +57,8 @@ class Refresh {
                         playerInfo['actionRestTime'] = 5;
                         playerInfo['recentAction'] = 0;
                         //? 예은 디버깅
-                        if (playerID.length === 2){
-                            console.log('sell 호가 등록---------');
+                        if (playerInfo['playerID'].length === 2){
+                            console.log('sell 호가 체결---------');
                             console.log(playerInfo);
                             console.log(askList);
                         }
