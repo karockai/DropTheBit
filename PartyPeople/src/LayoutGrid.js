@@ -20,7 +20,7 @@ import Result from './audios/effect/Result.mp3';
 import HorizontalBarChart from './BidGraph';
 import { getData } from "./utils"
 import { TypeChooser } from "react-stockcharts/lib/helper";
-
+import RoomAction from "./RoomAction";
 
 import {
     BrowserRouter as Router,
@@ -302,6 +302,8 @@ export default function LayoutGrid(props) {
                             className={classes.paper}
                             style={{ height: '50%', margin: '1vh 0px 0px 0px', width: '100%' }}
                         >
+                            방 매매 현황
+                            <RoomAction socket={props.socket}/>
                         </Paper>
                     </Grid>
                     <Grid
