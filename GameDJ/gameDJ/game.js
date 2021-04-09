@@ -16,19 +16,18 @@ class Game {
         }
         io.to(roomID).emit('chartData', { chartData: chartData });
 
-        if (roomList[roomID]['roomLeader'] === socket.id){
+        if (roomList[roomID]['roomLeader'] === socket.id) {
             io.to(roomID).emit('startGame_Res', {
                 gameTime: roomList[roomID]['gameTime'],
                 musicName: roomList[roomID]['music'],
             });
-        }
-        else{
+        } else {
             io.to(socket.id).emit('startGame_Res', {
                 gameTime: roomList[roomID]['gameTime'],
                 musicName: roomList[roomID]['music'],
             });
         }
-        
+
         let message = '게임이 시작됩니다.';
         io.to(roomID).emit('update', { message: message, author: '[SYSTEM]' });
 
@@ -417,6 +416,7 @@ class Game {
     //! --------------------------------------
 
     refreshWallet(socketID, refreshWallet, bfrWallet) {
+        console.log('refreshWallet');
         const { io } = this;
         let walletInfo = {
             refreshWallet: refreshWallet,

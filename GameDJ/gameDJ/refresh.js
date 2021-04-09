@@ -211,7 +211,8 @@ class Refresh {
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
                     bfrWallet['cash'] = playerInfo['cash'];
-                    bfrWallet['asset'] = cash + prePrice * coinVol;
+                    bfrWallet['asset'] =
+                        cash + bidCash + prePrice * (askVol + coinVol);
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
