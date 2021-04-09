@@ -20,17 +20,17 @@ class Game {
             io.to(roomID).emit('chartData', { chartData: chartData });
     
             if (roomList[roomID]['roomLeader'] === socket.id){
-                console.log(roomList[roomID]);
-                console.log('나 : ', socket.id);
+                // console.log(roomList[roomID]);
+                // console.log('나 : ', socket.id);
                 io.to(roomID).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
             }
             else{
-                console.log('여기 아니야ㅠ');
-                console.log(roomList[roomID]);
-                console.log('나 : ', socket.id);
+                // console.log('여기 아니야ㅠ');
+                // console.log(roomList[roomID]);
+                // console.log('나 : ', socket.id);
                 io.to(socket.id).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
@@ -147,7 +147,7 @@ class Game {
                     socketID: socketID,
                     playerID: playerID,
                     vol: reqVol,
-                    price: curPrice,
+                    price: curPrice, 
                 };
                 io.to(roomID).emit('buyDone_Room', buyDone);
     
@@ -280,7 +280,14 @@ class Game {
                 askList[reqPrice][socketID] = roomID;
     
                 roomList[roomID][socketID] = playerInfo;
-    
+                
+                //? 예은 디버깅
+                if (playerID.length === 2){
+                    console.log('sell 호가 등록---------');
+                    console.log(playerInfo);
+                    console.log(askList);
+                }
+
                 // console.log('호가 등록 완료', playerInfo);
                 let askDone = {
                     type: '매도 주문',
@@ -470,7 +477,7 @@ class Game {
     //! --------------------------------------
 
     refreshWallet(socketID, refreshWallet, bfrWallet) {
-        console.log('refreshWallet');
+        // console.log('refreshWallet');
         const { io } = this;
         let walletInfo = {
             refreshWallet: refreshWallet,
