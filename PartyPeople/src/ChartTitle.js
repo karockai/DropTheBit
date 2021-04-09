@@ -14,41 +14,28 @@ import Timer from './Timer';
 function ChartTitle(props) {
     const subtit = '이전대비';
     const unit = 'KRW';
-    const isBullMarket = true;
-    const [textColor, setBullColor] = useState({
-        color: isBullMarket ? red[600] : blue[600],
-    });
-    const [isBullIcon, SetBullIcon] = useState('▲');
-    const [wonYield, SetYield] = useState('+' + 1.33 + '%');
-    const [beforeWon, SetWonBefore] = useState();
-    const [currentWon, SetWonCurrent] = useState(0);
-    const [upDown, SetUpDown] = useState(0);
-    const [coinName, SetName] = useState(props.coinName);
+    const datas = props.data;
+    const length = props.data.length;
+    const before = datas[length - 2].close;
+    const current = datas[length - 1].close;
+    const sub = current - before;
+    const yid =
+        (sub >= 0 ? '+' : '') +
+        ((sub / current) * 100).toFixed(2) +
+        '%';
+    const icon = sub >= 0 ? '▲' : '▼';
+    const color =  {color: sub >= 0 ? red[600] : blue[600]};
 
-    useEffect(() => {
-        return () => {
-            const datas = props.data;
-            // const name = props.data.coin;
-            // console.log(datas);
-            // SetName(datas.coinName);
-            const length = props.data.length;
-            const before = datas[length - 2].close;
-            const current = datas[length - 1].close;
-            const sub = current - before;
-            const yid =
-                (sub >= 0 ? '+' : '') +
-                ((sub / current) * 100).toFixed(2) +
-                '%';
-            const icon = sub >= 0 ? '▲' : '▼';
-            const color = sub >= 0 ? red[600] : blue[600];
-            SetWonBefore(before);
-            SetWonCurrent(current);
-            SetUpDown(sub);
-            SetYield(yid);
-            SetBullIcon(icon);
-            setBullColor({ color: color });
-        };
-    }, [props.data]);
+    // useEffect(() => {
+    //     return () => {
+    //         SetWonBefore(before);
+    //         SetWonCurrent(current);
+    //         SetUpDown(sub);
+    //         SetYield(yid);
+    //         SetBullIcon(icon);
+    //         setBullColor({ color: color });
+    //     };
+    // }, [props.data]);
 
 
     function SplitByThree(value) {
@@ -80,16 +67,15 @@ function ChartTitle(props) {
         return won;
     };
 
-    console.log(currentWon);
     return (
         <>
             <div className="ChartTitle" style={{width:'100%'}}>
                 {/* <span style={{ display: 'block' }}> */}
                 {/* <Grid container direction={'row'} justify={'space-between'}> */}
                 <Grid container direction={'row'} justify={'space-between'}>
-                    <Grid item style={textColor}>
+                    <Grid item style={color}>
                         <strong style={{ fontSize: '3vw' }}>
-                            {SplitByThree(parseWonToStr(currentWon))}
+                            {SplitByThree(parseWonToStr(props.data[length - 1].close))}
                         </strong>
                         <span style={{color: 'white', fontSize: '1vw'}} >{' ' + unit}</span>
                     </Grid>
@@ -108,12 +94,12 @@ function ChartTitle(props) {
                     >
                         {subtit}
                     </p>
-                    <span style={textColor}>
+                    <span style={color}>
                         <strong style={{ fontSize: '1vw', display: 'inline' }}>
-                            {'   ' + wonYield + '  '}
+                            {'   ' + yid + '  '}
                         </strong>
                         <strong style={{ fontSize: '1vw', display: 'inline' }}>
-                            {' ' + isBullIcon + ' ' + parseWonToStr(upDown)}
+                            {' ' + icon + ' ' + parseWonToStr(sub)}
                         </strong>
                     </span>
                     </span>
@@ -123,7 +109,7 @@ function ChartTitle(props) {
                 </Grid>
                 <Grid>
                     <span style={{color: 'gray'}}>{props.date}</span>
-                    <span>{' '}{coinName}</span>
+                    <span>{' '}{props.coinName}</span>
                     </Grid>
                 </Grid>
                 {/* </span> */}
