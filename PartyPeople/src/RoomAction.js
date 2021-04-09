@@ -23,7 +23,6 @@ export default function RoomAction (props) {
         blue: 0,
         grey: 0,
     });
-    let ratio = 1;
     useEffect(() => {
         props.socket.on('roomAction', (data) => {
             const tot = data.recentBuy + data.recentSell + data.recentNothing;
@@ -33,22 +32,16 @@ export default function RoomAction (props) {
                 blue : data.recentSell,
                 grey : data.recentNothing
             })
-            if(tot > 15) {
-                ratio = 2;
-            }
-            else if(tot > 60){
-                ratio = 3;
-            }
         })
     }, [])
-
+    const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
       return (
         <div className={classes.root}>
           {
             peopleTrade.red > 0 && 
             [...Array(peopleTrade.red)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'red', fontSize: 2/ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'red', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
@@ -56,7 +49,7 @@ export default function RoomAction (props) {
             peopleTrade.grey > 0 && 
             [...Array(peopleTrade.grey)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'grey', fontSize: 2/ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'grey', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
@@ -64,7 +57,7 @@ export default function RoomAction (props) {
             peopleTrade.blue > 0 && 
             [...Array(peopleTrade.blue)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'blue', fontSize: 2/ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'blue', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
