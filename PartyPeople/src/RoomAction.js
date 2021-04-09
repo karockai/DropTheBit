@@ -23,15 +23,22 @@ export default function RoomAction (props) {
         blue: 0,
         grey: 0,
     });
-
+    let ratio = 1;
     useEffect(() => {
         props.socket.on('roomAction', (data) => {
+            const tot = data.recentBuy + data.recentSell + data.recentNothing;
             setPeople({
-                total : data.recentBuy + data.recentSell + data.recentNothing,
+                total : tot,
                 red : data.recentBuy,
                 blue : data.recentSell,
                 grey : data.recentNothing
             })
+            if(tot > 15) {
+                ratio = 2;
+            }
+            else if(tot > 60){
+                ratio = 3;
+            }
         })
     }, [])
 
@@ -41,7 +48,7 @@ export default function RoomAction (props) {
             peopleTrade.red > 0 && 
             [...Array(peopleTrade.red)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'red'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'red', fontSize: 2/ratio + 'vw'}}/>
                 )
             })
           }
@@ -49,7 +56,7 @@ export default function RoomAction (props) {
             peopleTrade.grey > 0 && 
             [...Array(peopleTrade.grey)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'grey'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'grey', fontSize: 2/ratio + 'vw'}}/>
                 )
             })
           }
@@ -57,7 +64,7 @@ export default function RoomAction (props) {
             peopleTrade.blue > 0 && 
             [...Array(peopleTrade.blue)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'blue'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'blue', fontSize: 2/ratio + 'vw'}}/>
                 )
             })
           }
