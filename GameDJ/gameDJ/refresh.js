@@ -356,7 +356,7 @@ class Refresh {
             bidPercent: bidPercent,
         };
 
-        io.emit('refreshBid', exList);
+        io.emit('refreshExList', exList);
     }
 }
 export default Refresh;
