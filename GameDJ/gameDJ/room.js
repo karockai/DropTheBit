@@ -12,7 +12,6 @@ class Room {
     // joinPublic 에서 최초의 유저인지 아닌지 확인
     checkPublic(playerID) {
         try{
-            console.log('checkpublic-----');
             let data = {
                 roomID: publicRoomID,
                 playerID: playerID.playerID,
@@ -277,9 +276,12 @@ class Room {
             }
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
+            console.log('playerReinit----------');
+            console.log(roomInfo);
     
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', { message: message, author: '[SERVER]' });
+            io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
         }
         catch(err){
             console.error(err);
