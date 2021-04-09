@@ -1,3 +1,5 @@
+import webhook from '../slack.js';
+
 class Game {
     constructor(io, socket) {
         this.io = io;
@@ -72,6 +74,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -190,6 +193,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -297,6 +301,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -342,6 +347,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -389,6 +395,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -420,6 +427,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -451,6 +459,7 @@ class Game {
         }
         catch(err){
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
     //! --------------------------------------
