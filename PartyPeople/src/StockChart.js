@@ -109,7 +109,8 @@ class StockChart extends React.Component {
                 {/* <Chart id={1} yExtents={[(d) => [d.high + 0.5, d.low - 0.5]]}> */}
                 <Chart
                     id={1}
-                    yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
+                    // yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
+                    yExtents={d=> [d.high * 1.001, d.low * 0.999]}
                 >
                     <XAxis axisAt="bottom" orient="bottom" />
                     <YAxis axisAt="right" orient="right" ticks={5} />
@@ -152,13 +153,13 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.currentBuy}
-                        stroke="#3490DC"
+                        stroke="red"
                         strokeWidth={2}
-                        fill="red"
+                        fill="transperent"
                         lineStroke="red"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="Solid"
+                        strokeDasharray="Dot"
                         displayFormat={format('.2f')}
                     />
                                         <PriceCoordinate
@@ -166,13 +167,13 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.currentSell}
-                        stroke="#3490DC"
+                        stroke="blue"
                         strokeWidth={2}
-                        fill="blue"
+                        fill="transperent"
                         lineStroke="blue"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="Solid"
+                        strokeDasharray="Dot"
                         displayFormat={format('.2f')}
                     />
                                         <PriceCoordinate
@@ -180,13 +181,13 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.doneBuy}
-                        stroke="#3490DC"
+                        stroke="white"
                         strokeWidth={2}
                         fill="red"
                         lineStroke="red"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="ShortDash"
+                        strokeDasharray="Solid"
                         displayFormat={format('.2f')}
                     />
                                         <PriceCoordinate
@@ -194,13 +195,13 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.doneSell}
-                        stroke="#3490DC"
+                        stroke="white"
                         strokeWidth={2}
                         fill="blue"
                         lineStroke="blue"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="ShortDash"
+                        strokeDasharray="Solid"
                         displayFormat={format('.2f')}
                     />
                                             <PriceCoordinate
@@ -224,7 +225,7 @@ class StockChart extends React.Component {
                         fill="#635ee7"
                         lineStroke="white"
                         textFill="#fff"
-                        arrowWidth={3}
+                        arrowWidth={6}
                         strokeDasharray="ShortDot"
                         displayFormat={format('.2f')}
                     />
