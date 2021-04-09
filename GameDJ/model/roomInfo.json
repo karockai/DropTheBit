@@ -7,7 +7,6 @@
             "cash" : "Number",
             "asset" : "Number",
             "coinVol" : "Number",
-            "avgPrice" : "Number",
             "bid" :
             {
                 "price" : "vol"
@@ -15,12 +14,17 @@
             "ask" :
             {
                 "price" : "vol"
-            }
+            },
+            "recentAction": "Bool",
+            "actionRestTime": "Number"
         },
         "gameTime" : "Number",
         "music" : "String",
         "roomLeader" : "String",
         "gaming" : "Bool",
-        "leaderBoard" : "List"
+        "leaderBoard" : "List",
+        "recentBuy" : "Number",
+        "recentSell" : "Number",
+        "recentNothing" : "Number"
     }
 }

@@ -46,11 +46,6 @@ class Refresh {
                     let askVol = playerInfo['ask'][askPrice];
                     let coinVol = playerInfo['coinVol'];
 
-                    // 평단가 로직
-                    if (coinVol === 0){
-                        playerInfo['avgPrice'] = 0
-                    }
-
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = coinVol;
                     bfrWallet['cash'] = playerInfo['cash'];
@@ -58,15 +53,13 @@ class Refresh {
 
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
-                    playerInfo['askVol'] -= askVol;
+                    playerInfo['actionRestTime'] = 5;
+                    playerInfo['recentAction'] = 1;
+
                     // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -74,7 +67,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -122,23 +114,10 @@ class Refresh {
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] = playerInfo['asset'];
 
-                    if (playerInfo['avgPrice'] === 0) {
-                        playerInfo['avgPrice'] = bidPrice;
-                    } else {
-                        playerInfo['avgPrice'] = Math.round(
-                            (coinVol * playerInfo['avgPrice'] +
-                                bidVol * bidPrice) /
-                                (coinVol + bidVol)
-                        );
-                    }
-
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-                    playerInfo['bidCash'] -= bidPrice * bidVol;
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
+                    playerInfo['actionRestTime'] = 5;
+                    playerInfo['recentAction'] = 0;
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -146,7 +125,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -187,23 +165,16 @@ class Refresh {
     }
 
     renewalInfo() {
-        // console
-        //     .log
-        //     // '----------------------renewalInfo Start------------------------'
-        //     ();
         const { io } = this;
-        // let curPrice = curCoin['curPrice'];
-        // let prePrice = curCoin['prePrice'];
-        let priceChange = curPrice - prePrice;
-        // console.log(curPrice);
-        // 해야할 것. 방을 돌면서 현재 가격에 맞게 갱신시켜준다.
-        // redis 순회하면서 roomInfo 가져옴
-        // console.log("priceChange", priceChange);
+
         for (let roomID in roomList) {
             let roomInfo = roomList[roomID];
             let rankList = [];
 
-            if (priceChange && roomInfo['gaming']) {
+            if (roomInfo['gaming']) {
+                roomInfo['recentBuy'] = 0;
+                roomInfo['recentSell'] = 0;
+                roomInfo['recentNothing'] = 0;
                 // roomInfo 순회하면서 playerInfo 가져옴
                 for (let socketID in roomInfo) {
                     if (socketID.length !== 20) continue;
@@ -212,10 +183,30 @@ class Refresh {
 
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
-                    let bidCash = playerInfo['bidCash'];
-                    let askVol = playerInfo['askVol'];
+                    let bidCash = 0;
+                    let askVol = 0;
+                    let playerBid = Object.keys(playerInfo['bid']);
+                    let playerAsk = Object.keys(playerInfo['ask'])
+                    if (playerBid.length > 0){
+                        bidCash = playerBid[0] * playerInfo['bid'][playerBid[0]];
+                    }
+                    if (playerAsk.length > 0){
+                        askVol = playerInfo['ask'][playerAsk[0]];
+                    }
+
                     playerInfo['asset'] =
                         cash + bidCash + curPrice * (askVol + coinVol);
+
+                    if (playerInfo['actionRestTime'] > 0) {
+                        playerInfo['actionRestTime']--;
+                        if (playerInfo['recentAction']) {
+                            roomInfo['recentBuy']++;
+                        } else {
+                            roomInfo['recentSell']++;
+                        }
+                    } else {
+                        roomInfo['recentNothing']++;
+                    }
 
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = playerInfo['coinVol'];
@@ -229,7 +220,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -244,6 +234,7 @@ class Refresh {
                         socketID: socketID,
                     };
                     rankList.push(rankObj);
+
                     roomList[roomID][socketID] = playerInfo;
                 }
                 rankList.sort(function (a, b) {
@@ -259,26 +250,13 @@ class Refresh {
                 }
                 let rankList2 = rankList.slice(0, 7);
                 io.to(roomID).emit('roomRank', rankList2);
-            }
 
-            // 공방 startGame logic
-            if (roomInfo['readyTime'] > 0 && roomInfo['roomLeader']) {
-                roomList[roomID]['readyTime']--;
-                console.log('readyTime :', roomList[roomID]['readyTime']);
-                console.log('gaming :', roomList[roomID]['gaming']);
-                io.to(roomID).emit(
-                    'restReadyTime',
-                    roomList[roomID]['readyTime']
-                );
-            }
-
-            if (
-                roomInfo['readyTime'] === 0 &&
-                roomList[roomID]['gaming'] === false
-            ) {
-                console.log('여기로 들어옵니까?');
-                roomList[roomID]['gaming'] = true;
-                io.to(roomInfo['roomLeader']).emit('publicGameStart');
+                let roomAction = {
+                    rececntBuy: roomInfo['recentBuy'],
+                    rececntSell: roomInfo['recentSell'],
+                    recentNothing: roomInfo['recentNothing'],
+                };
+                io.to(roomID).emit('roomAction', roomAction);
             }
 
             // gameOver logic
@@ -354,15 +332,13 @@ class Refresh {
             if (roomID === publicRoomID) {
                 roomInfo['roomLeader'] = 0;
             }
-            if (roomInfo.hasOwnProperty('readyTime')) {
-                roomInfo['readyTime'] = 10;
-            }
         }
         roomInfo['leaderBoard'] = leaderBoard;
         roomList[roomID] = roomInfo;
     }
 
     // refreshBid 갱신
+    //! 차트 만들기 되면 front 데이터 형식 받고 수정 !
     async refreshBid() {
         const { io } = this;
         let exTable = JSON.parse(await dbget('bidTable'));
