@@ -6,7 +6,6 @@ class Game {
 
     startGame(musicData) {
         try{
-
             const { io, socket } = this;
             let roomID = socket.roomID;
     
@@ -457,6 +456,7 @@ class Game {
     //! --------------------------------------
 
     refreshWallet(socketID, refreshWallet, bfrWallet) {
+        console.log('refreshWallet');
         const { io } = this;
         let walletInfo = {
             refreshWallet: refreshWallet,

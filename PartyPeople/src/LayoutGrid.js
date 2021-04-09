@@ -294,17 +294,14 @@ export default function LayoutGrid(props) {
                     >
                         <Paper
                             className={classes.paper}
-                            style={{ height: '100%', width: '100%' }}
+                            style={{ height: '50%', margin: '0px 0px 1vh 0px', width: '100%' }}
                         >
-                            {/* <TabPanel
-                                inputCtrl={inputCtrl}
-                                roomID={props.roomID}
-                                socket={props.socket}
-                                requestSocket={props.requestSocket}
-                            /> */}
-                            {/* <TypeChooser>
-                                {type => <HorizontalBarChart type={type} data={bidData} />}
-                            </TypeChooser> */}
+                            {/* 여기야 */}
+                        </Paper>
+                        <Paper
+                            className={classes.paper}
+                            style={{ height: '50%', margin: '1vh 0px 0px 0px', width: '100%' }}
+                        >
                         </Paper>
                     </Grid>
                     <Grid
