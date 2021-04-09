@@ -56,7 +56,12 @@ class Refresh {
                         playerInfo['cash'] = cash;
                         playerInfo['actionRestTime'] = 5;
                         playerInfo['recentAction'] = 0;
-
+                        //? 예은 디버깅
+                        if (playerInfo['playerID'].length === 2){
+                            console.log('sell 호가 체결---------');
+                            console.log(playerInfo);
+                            console.log(askList);
+                        }
                         // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                         delete playerInfo['ask'][askPrice];
                         roomList[roomID][socketID] = playerInfo;
