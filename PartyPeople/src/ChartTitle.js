@@ -32,8 +32,8 @@ function ChartTitle(props) {
             // console.log(datas);
             // SetName(datas.coinName);
             const length = props.data.length;
-            const before = datas[length - 2].curPrice;
-            const current = datas[length - 1].curPrice;
+            const before = datas[length - 2].close;
+            const current = datas[length - 1].close;
             const sub = current - before;
             const yid =
                 (sub >= 0 ? '+' : '') +
@@ -87,6 +87,7 @@ function ChartTitle(props) {
         return won;
     };
 
+    console.log(currentWon);
     return (
         <>
             <div className="ChartTitle" style={{width:'100%'}}>
