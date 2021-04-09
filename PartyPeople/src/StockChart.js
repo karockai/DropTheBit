@@ -153,9 +153,11 @@ class StockChart extends React.Component {
                     at="right"
                     orient="right"
                     price={last(data).close}
-                    stroke="#7974f2"
+                    stroke="green"
                     fill="green"
                     textFill="#fff"
+                    lineStroke="green"
+                    strokeDasharray="Dot"
                     arrowWidth={3}
                     displayFormat={format('.2f')}
                     />
