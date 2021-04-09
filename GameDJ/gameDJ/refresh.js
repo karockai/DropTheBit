@@ -1,5 +1,6 @@
 import { dbget } from './redis.js';
 import Game from './game.js';
+import webhook from '../slack.js';
 
 class Refresh {
     constructor(io) {
@@ -158,12 +159,8 @@ class Refresh {
             }
         } catch (err) {
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
-        // console
-        //     .log
-        //     // '----------------------renewalCurCoin End------------------------'
-        //     ();
-        // this.renewalInfo();
     }
 
     renewalInfo() {
@@ -299,6 +296,7 @@ class Refresh {
             }
         } catch (err) {
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -352,6 +350,7 @@ class Refresh {
             roomList[roomID] = roomInfo;
         } catch (err) {
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 
@@ -377,6 +376,7 @@ class Refresh {
             io.emit('refreshExList', exList);
         } catch (err) {
             console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
 }

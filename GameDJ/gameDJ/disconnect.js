@@ -2,7 +2,7 @@ import {
     dbhincrby,
     dbdel
 } from './redis.js';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 dotenv.config();
 
 class Disconnect {
