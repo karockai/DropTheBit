@@ -242,7 +242,7 @@ class Refresh {
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
-                        refreshWallet,
+                        refreshWallet,5
                         bfrWallet
                     );
 
