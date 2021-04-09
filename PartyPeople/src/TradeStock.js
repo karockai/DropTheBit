@@ -145,13 +145,35 @@ export default function TradeStock(props) {
         // )
         //     return;555
         // SetNewVolume(volume + Math.floor((myWallet.myCash / currentBid) * 0.1));
-    //     SetNewVolume(volume + unitVolume);
-    // }
+        SetNewVolume(volume + unitVolume);
+    }
+    function VolumeDown(volume) {
+        if (volume - unitVolume <= 0) {
+            SetNewVolume(1);
+            return;
+        }
+        // SetNewVolume(
+        //     volume - Math.floor((myWallet.myCash / currentBid) * 0.1 + 1)
+        // );
+        SetNewVolume(volume - unitVolume);
+    }
+    function BidUp() {
+        SetBid(Number(currentBid) + Number(unitBid));
+        //!
+        console.log('bidUp', currentBid);
+        props.SetBid(Number(currentBid) - Number(unitBid))
+    }
+    function BidDown() {
+        SetBid(Number(currentBid) - Number(unitBid));
+        //!
+        props.SetBid(Number(currentBid) - Number(unitBid))
+    }
 
     function RefreshBid_Req() {
         props.socket.emit('RefreshBid_Req');
         props.socket.once('RefreshBid_Res', (curPrice) => {
             SetBid(curPrice);
+            props.SetBid(curPrice)
         });
     }
 

@@ -45,11 +45,6 @@ class Refresh {
                     let askVol = playerInfo['ask'][askPrice];
                     let coinVol = playerInfo['coinVol'];
 
-                    // 평단가 로직
-                    if (coinVol === 0) {
-                        playerInfo['avgPrice'] = 0;
-                    }
-
                     let bfrWallet = {};
                     bfrWallet['coinVol'] = coinVol;
                     bfrWallet['cash'] = playerInfo['cash'];
@@ -57,7 +52,6 @@ class Refresh {
 
                     cash += askVol * askPrice;
                     playerInfo['cash'] = cash;
-                    playerInfo['askVol'] -= askVol;
                     playerInfo['actionRestTime'] = 5;
                     playerInfo['recentAction'] = 1;
 
@@ -65,10 +59,6 @@ class Refresh {
                     delete playerInfo['ask'][askPrice];
                     roomList[roomID][socketID] = playerInfo;
                     delete askList[askPrice][socketID];
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
 
                     let refreshWallet = {};
                     refreshWallet['result'] = 'success';
@@ -76,7 +66,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -124,23 +113,8 @@ class Refresh {
                     bfrWallet['cash'] = playerInfo['cash'];
                     bfrWallet['asset'] = playerInfo['asset'];
 
-                    if (playerInfo['avgPrice'] === 0) {
-                        playerInfo['avgPrice'] = bidPrice;
-                    } else {
-                        playerInfo['avgPrice'] = Math.round(
-                            (coinVol * playerInfo['avgPrice'] +
-                                bidVol * bidPrice) /
-                                (coinVol + bidVol)
-                        );
-                    }
-
                     coinVol += bidVol;
                     playerInfo['coinVol'] = coinVol;
-                    playerInfo['bidCash'] -= bidPrice * bidVol;
-                    playerInfo['asset'] =
-                        cash +
-                        playerInfo['bidCash'] +
-                        curPrice * (playerInfo['askVol'] + coinVol);
                     playerInfo['actionRestTime'] = 5;
                     playerInfo['recentAction'] = 0;
 
@@ -150,7 +124,6 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
-                    refreshWallet['avgPrice'] = playerInfo['avgPrice'];
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -209,8 +182,24 @@ class Refresh {
 
                     let cash = playerInfo['cash'];
                     let coinVol = playerInfo['coinVol'];
+<<<<<<< HEAD
 
                     playerInfo['asset'] = cash + curPrice * coinVol;
+=======
+                    let bidCash = 0;
+                    let askVol = 0;
+                    let playerBid = Object.keys(playerInfo['bid']);
+                    let playerAsk = Object.keys(playerInfo['ask'])
+                    if (playerBid.length > 0){
+                        bidCash = playerBid[0] * playerInfo['bid'][playerBid[0]];
+                    }
+                    if (playerAsk.length > 0){
+                        askVol = playerInfo['ask'][playerAsk[0]];
+                    }
+
+                    playerInfo['asset'] =
+                        cash + bidCash + curPrice * (askVol + coinVol);
+>>>>>>> c5174772ea255a3a838927791f6430bc0cd2ad74
 
                     if (playerInfo['actionRestTime'] > 0) {
                         playerInfo['actionRestTime']--;
@@ -234,7 +223,10 @@ class Refresh {
                     refreshWallet['coinVol'] = playerInfo['coinVol'];
                     refreshWallet['cash'] = playerInfo['cash'];
                     refreshWallet['asset'] = playerInfo['asset'];
+<<<<<<< HEAD
                     refreshWallet['preExPrice'] = playerInfo['preExPrice'];
+=======
+>>>>>>> c5174772ea255a3a838927791f6430bc0cd2ad74
 
                     new Game(io, socketID).refreshWallet(
                         socketID,
@@ -340,5 +332,81 @@ class Refresh {
         roomInfo['leaderBoard'] = leaderBoard;
         roomList[roomID] = roomInfo;
     }
+<<<<<<< HEAD
+=======
+
+    // refreshBid 갱신
+    //! 차트 만들기 되면 front 데이터 형식 받고 수정 !
+    async refreshBid() {
+        const { io } = this;
+        let exTable = JSON.parse(await dbget('bidTable'));
+        if (!exTable) return false;
+
+        exList = [];
+
+        let bidObject4 = {
+            price: exTable.bid_price4,
+            buy: parseInt(exTable.bid_size4),
+        };
+
+        let bidObject3 = {
+            price: exTable.bid_price3,
+            buy: parseInt(exTable.bid_size3),
+        };
+
+        let bidObject2 = {
+            price: exTable.bid_price2,
+            buy: parseInt(exTable.bid_size2),
+        };
+
+        let bidObject1 = {
+            price: exTable.bid_price1,
+            buy: parseInt(exTable.bid_size1),
+        };
+
+        let bidObject0 = {
+            price: exTable.bid_price0,
+            buy: parseInt(exTable.bid_size0),
+        };
+
+        let askObject0 = {
+            price: exTable.ask_price0,
+            buy: parseInt(exTable.ask_size0),
+        };
+
+        let askObject1 = {
+            price: exTable.ask_price1,
+            buy: parseInt(exTable.ask_size1),
+        };
+
+        let askObject2 = {
+            price: exTable.ask_price2,
+            buy: parseInt(exTable.ask_size2),
+        };
+
+        let askObject3 = {
+            price: exTable.ask_price3,
+            buy: parseInt(exTable.ask_size3),
+        };
+
+        let askObject4 = {
+            price: exTable.ask_price4,
+            buy: parseInt(exTable.ask_size4),
+        };
+
+        exList.push(askObject4);
+        exList.push(askObject3);
+        exList.push(askObject2);
+        exList.push(askObject1);
+        exList.push(askObject0);
+        exList.push(bidObject0);
+        exList.push(bidObject1);
+        exList.push(bidObject2);
+        exList.push(bidObject3);
+        exList.push(bidObject4);
+
+        io.emit('refreshBid', exList);
+    }
+>>>>>>> c5174772ea255a3a838927791f6430bc0cd2ad74
 }
 export default Refresh;
