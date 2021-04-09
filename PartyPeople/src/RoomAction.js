@@ -23,25 +23,26 @@ export default function RoomAction (props) {
         blue: 0,
         grey: 0,
     });
-
     useEffect(() => {
         props.socket.on('roomAction', (data) => {
+            const tot = data.recentBuy + data.recentSell + data.recentNothing;
             setPeople({
-                total : data.recentBuy + data.recentSell + data.recentNothing,
+                total : tot,
                 red : data.recentBuy,
                 blue : data.recentSell,
                 grey : data.recentNothing
             })
         })
     }, [])
-
+    // const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
+    const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
       return (
         <div className={classes.root}>
           {
             peopleTrade.red > 0 && 
             [...Array(peopleTrade.red)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'red'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'red', margin: 1/ ratio + 'vw' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
@@ -49,7 +50,7 @@ export default function RoomAction (props) {
             peopleTrade.grey > 0 && 
             [...Array(peopleTrade.grey)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'grey'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'grey',  margin: 1/ ratio + 'vw' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
@@ -57,7 +58,7 @@ export default function RoomAction (props) {
             peopleTrade.blue > 0 && 
             [...Array(peopleTrade.blue)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'blue'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'blue',  margin: 1/ ratio + 'vw' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
