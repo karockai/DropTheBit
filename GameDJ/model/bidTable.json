@@ -3,27 +3,6 @@
     {
         "date": "str",
         "total_ask_size": "Num",
-        "total_bid_size": "Num",
-        "ask_price0": "Num",
-        "bid_price0": "Num",
-        "ask_size0": "Num",
-        "bid_size0": "Num",
-        "ask_price1": "Num",
-        "bid_price1": "Num",
-        "ask_size1": "Num",
-        "bid_size1": "Num",
-        "ask_price2": "Num",
-        "bid_price2": "Num",
-        "ask_size2": "Num",
-        "bid_size2": "Num",
-        "ask_price3": "Num",
-        "bid_price3": "Num",
-        "ask_size3": "Num",
-        "bid_size3": "Num",
-        "ask_price4": "Num",
-        "bid_price4": "Num",
-        "ask_size4": "Num",
-        "bid_size4": "Num",
-        "coinName": "String"
+        "total_bid_size": "Num"
     }
 }
