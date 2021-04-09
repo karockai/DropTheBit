@@ -190,7 +190,7 @@ export default function MyAsset(props) {
                         </span>
                         {/* <h5 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}> */}
                         <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}
+                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}{' 원'}
                         </h5>
                         <div id="diffCash" class="default" style={{ fontWeight: 'bold', fontSize: '1vw',}}>
                             {' '}{showProfit('diffCash', diffWallet.diffCash)}
@@ -202,9 +202,8 @@ export default function MyAsset(props) {
                     style={{ width: '40%',height: '100%', padding:'0.3vh 0.3vw 0.3vh 0.3vw'}}
                 >
                     <Paper className={classes.paper}  style={{ height: '100%', fontSize: '1vw',padding:'0.3vh 0.3vw 0.3vh 0.3vw'  }}>
-                        보유 코인 수 (개)<h3 id="changeAsset" style={{ height: '100%', fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
-                        보유 코인 수 (개)
-                        <h3 style={{ fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))}</h3>
+                        보유 코인 수
+                        <h3 id="changeAsset" style={{fontSize: '1.5vw' }}>{SplitByThree(String(myWallet.myCoin))} {' 개'}</h3>
                         <h3 id="diffCoin" class="default" style={{ fontSize: '1vw' }}>{' '}{showProfit('diffCoin', diffWallet.diffCoin)}</h3>
                     </Paper>
                 </Grid>
@@ -229,7 +228,7 @@ export default function MyAsset(props) {
                         </h2> */}
                         {/* <h2 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}> */}
                         <h2 style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myAsset))}
+                            {ExpBySymbol(parseWonToStr(myWallet.myAsset))}{' 원'}
                         </h2>
                         <h2 id="diffAsset" class="default" style={{ fontWeight: 'bold', fontSize: '1.5vw', color: color}}>
                             {' '}{showProfit('diffAsset',diffWallet.diffAsset)}

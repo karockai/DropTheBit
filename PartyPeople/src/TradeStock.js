@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     button_layer: {
         // width:
         minWidth: '100%',
-        maxHeight: '18%',
+        // maxHeight: '18%',
     },
     input: {
         color: '#CDD7E0',
@@ -190,6 +190,15 @@ export default function TradeStock(props) {
     //         SetBid(curPrice);
     //     });
     // }
+    function CancelBid(num, table) {
+        let reqJson = {
+            socketID: props.socket.id,
+            roomID: props.roomID,
+            reqPrice: table[num]['price'],
+            reqVol: table[num]['vol'],
+        };
+        props.socket.emit('cancelBid_Req', reqJson);
+    }
 
     function Buy(bid, volume) {
         let status = '';
@@ -352,20 +361,6 @@ export default function TradeStock(props) {
             tmpAudio.play();
             tmpAudio.remove();
             RefreshBid_Req();
-        } else if (e.keyCode === 37) {
-            //_ LEFT ARROW
-            changeEffect('ArrowLeft');
-            let tmpAudio = new Audio(VolDown);
-            tmpAudio.play();
-            tmpAudio.remove();
-            VolumeDown(currentVolume);
-        } else if (e.keyCode === 39) {
-            //_ RIGHT ARROW
-            changeEffect('ArrowRight');
-            let tmpAudio = new Audio(VolUp);
-            tmpAudio.play();
-            tmpAudio.remove();
-            VolumeUp(currentVolume);
         } else if (e.keyCode === 38) {
             //_ UP ARROW
             changeEffect('ArrowUp');
@@ -380,19 +375,6 @@ export default function TradeStock(props) {
             tmpAudio.play();
             tmpAudio.remove();
             BidDown();
-            // setBuyStatus(Buy(currentBid, Math.floor(myWallet.myCash / currentBid)));
-        } else if (e.keyCode === 65) {
-            //_ 'A' :
-            let tmpAudio = new Audio(BuyMax);
-            tmpAudio.play();
-            tmpAudio.remove();
-            SetBuyMaxCount();
-        } else if (e.keyCode === 83) {
-            //_ 'S'
-            let tmpAudio = new Audio(SellMax);
-            tmpAudio.play();
-            tmpAudio.remove();
-            SetSellMaxCount();
         } else if (e.keyCode === 90) {
             //_ 'Z'
             let tmpAudio = new Audio(BuyConfirm);
@@ -405,8 +387,23 @@ export default function TradeStock(props) {
             tmpAudio.play();
             tmpAudio.remove();
             setSellStatus(Sell(currentBid, myWallet.myCoin));
+        } else if (e.keyCode === 67) {
+            //_ 'C' 
+            let tmpAudio = new Audio(SellConfirm);
+            tmpAudio.play();
+            tmpAudio.remove();
+            // CancelBid(currentBid, );
+            // function CancelBid(num, table) {
+            //     let reqJson = {
+            //         socketID: props.socket.id,
+            //         roomID: props.roomID,
+            //         reqPrice: table[num]['price'],
+            //         reqVol: table[num]['vol'],
+            //     };
+            //     props.socket.emit('cancelBid_Req', reqJson);
+            // }
+            
         }
-        // console.log(e);
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');
         setTimeout(function () {
@@ -609,9 +606,9 @@ export default function TradeStock(props) {
                 container
                 direction="column"
                 alignItems="flex-start"
-                style={{ fontSize: '1rem,' }}
+                style={{height: '100%', fontSize: '1rem', margin: '0' }}
             >
-                <Grid container item direction="row" justify="space-between">
+                <Grid container item direction="row" justify="space-between" style={{ height: '20%'}}>
                     <span className={classes.small_text}>매매호가</span>
                     <span className={classes.small_text}>[C]:취소</span>
                 </Grid>
@@ -621,33 +618,38 @@ export default function TradeStock(props) {
                     className={classes.button_layer}
                     direction="row"
                     justify="space-between"
-                    alignItems="flex-end"
+                    // alignItems="flex-end"
+                    style={{ height: '30%'}}
                 >
-                    <Button
-                        class="arrow"
-                        className={classes.arrow}
-                        onClick={(e) => {
-                            clickButton(e);
-                            changeEffect(e.target.id);
-                            let tmpAudio = new Audio(PriceDown);
-                            tmpAudio.play();
-                            tmpAudio.remove();
-                            BidDown();
-                        }}
-                        id="ArrowDown"
-                    >
-                        ▼
-                    </Button>
-
-                    {/* <CssTextField */}
-                    <h5
-                        id="bidInput"
-                        style={{ width: '50%', fontSize: '2.5vw' }}
-                        // value={SplitByThree(String(currentBid))}
-                        onChange={handleBidChange}
-                    >
-                        {SplitByThree(String(currentBid))}
-                    </h5>
+                    <Grid style={{ width: '20%'}}>
+                        <Button
+                            class="arrow"
+                            className={classes.arrow}
+                            onClick={(e) => {
+                                clickButton(e);
+                                changeEffect(e.target.id);
+                                let tmpAudio = new Audio(PriceDown);
+                                tmpAudio.play();
+                                tmpAudio.remove();
+                                BidDown();
+                            }}
+                            id="ArrowDown"
+                        >
+                            ▼
+                        </Button>
+                    </Grid>
+                    <Grid
+                    style={{ width: '60%'}}
+                    align='left'>
+                        <h5
+                            id="bidInput"
+                            style={{fontSize: '2.5vw' }}
+                            onChange={handleBidChange}
+                        >
+                            {SplitByThree(String(currentBid))}
+                        </h5>
+                    </Grid>
+                    <Grid style={{ width: '20%',}} align='right'>
                     <Button
                         class="arrow"
                         onClick={(e) => {
@@ -662,91 +664,18 @@ export default function TradeStock(props) {
                     >
                         ▲
                     </Button>
+                    </Grid>
                 </Grid>
-                {/* <span className={classes.small_text}>수량</span>
-                <Grid
-                    container
-                    item
-                    direction="row"
-                    justify="space-between"
-                    alignItems="flex-end"
-                >
-                    <button
-                        class="arrow"
-                        onClick={(e) => {
-                            clickButton(e);
-                            changeEffect(e.target.id);
-                            let tmpAudio = new Audio(VolDown);
-                            tmpAudio.play();
-                            tmpAudio.remove();
-                            VolumeDown(currentVolume);
-                        }}
-                        id="ArrowLeft"
-                    >
-                        ◀
-                    </button>
-                    <h5
-                        id="countInput"
-                        style={{ width: '50%', fontSize: '2.5vw' }}
-                        onChange={handleVolumeChange}
-                        disabled
-                    >
-                        {SplitByThree(String(currentVolume))}
-                    </h5>
-                    <button
-                        class="arrow"
-                        onClick={(e) => {
-                            clickButton(e);
-                            changeEffect(e.target.id);
-                            let tmpAudio = new Audio(VolUp);
-                            tmpAudio.play();
-                            tmpAudio.remove();
-                            VolumeUp(currentVolume);
-                        }}
-                        id="ArrowRight"
-                    >
-                        ▶
-                    </button>
-                </Grid> */}
-                <Grid container item direction={'column'} justify="center" alignItems="stretch">
-                    {/* <Grid container direction={'row'} justify="space-between">
-                        <button
-                            style={{ width: '45%' }}
-                            class="buy_max"
-                            onClick={(e) => {
-                                clickButton(e);
-                                let tmpAudio = new Audio(BuyMax);
-                                tmpAudio.play();
-                                tmpAudio.remove();
-                                SetBuyMaxCount();
-                            }}
-                            id="a"
-                        >
-                            [A] 매수량 MAX
-                        </button>
-                        <button
-                            style={{ width: '45%' }}
-                            class="sell_max"
-                            onClick={(e) => {
-                                clickButton(e);
-                                let tmpAudio = new Audio(SellMax);
-                                tmpAudio.play();
-                                tmpAudio.remove();
-                                SetSellMaxCount();
-                            }}
-                            id="s"
-                        >
-                            [S] 매도량 MAX
-                        </button>
-                    </Grid> */}
+                <Grid container item direction={'column'} justify="center" alignItems="stretch" style={{ height: '50%'}}>
                     <Grid
                         container
                         direction={'row'}
                         justify="space-between"
-                        style={{ width: '100%',  margin: '0 10 0 1' }}
+                        style={{ width: '100%' ,height: '100%', }}
                     >
+                    <Grid style={{ width: '50%' ,height: '100%', }}>
                         <button
-                            style={{ width: '45%' , fontSize:'2.3vw'}}
+                            style={{ width: '95%' , height: '95%',fontSize:'2.3vw' }}
                             class="buy"
                             onClick={(e) => {
                                 clickButton(e);
@@ -759,8 +688,10 @@ export default function TradeStock(props) {
                         >
                             [Z] 매수
                         </button>
+                    </Grid>
+                    <Grid style={{ width: '50%',  height: '100%',}} align="right">
                         <button
-                            style={{ width: '45%', fontSize:'2.3vw' }}
+                            style={{ width: '95%', height: '95%', fontSize:'2.3vw'}}
                             class="sell"
                             onClick={(e) => {
                                 clickButton(e);
@@ -773,6 +704,23 @@ export default function TradeStock(props) {
                         >
                             [X] 매도
                         </button>
+                    </Grid>
+                        {/* <Grid style={{ width: '100%',}}>
+                            <button
+                                style={{ width: '100%',height:'20%',fontSize:'2.3vw'}}
+                                class="sell"
+                                onClick={(e) => {
+                                    clickButton(e);
+                                    let tmpAudio = new Audio(SellConfirm);
+                                    tmpAudio.play();
+                                    tmpAudio.remove();
+                                    setSellStatus(Sell(currentBid, myWallet.myCoin));
+                                }}
+                                id="x"
+                            >
+                                [SPACE]
+                            </button>
+                        </Grid> */}
                     </Grid>
                     {/* <Grid
                         container
