@@ -54,7 +54,7 @@ class Refresh {
                         cash += askVol * askPrice;
                         playerInfo['cash'] = cash;
                         playerInfo['actionRestTime'] = 5;
-                        playerInfo['recentAction'] = 1;
+                        playerInfo['recentAction'] = 0;
 
                         // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                         delete playerInfo['ask'][askPrice];
@@ -117,7 +117,7 @@ class Refresh {
                         coinVol += bidVol;
                         playerInfo['coinVol'] = coinVol;
                         playerInfo['actionRestTime'] = 5;
-                        playerInfo['recentAction'] = 0;
+                        playerInfo['recentAction'] = 1;
 
                         let refreshWallet = {};
                         refreshWallet['result'] = 'success';
