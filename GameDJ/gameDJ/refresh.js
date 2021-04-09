@@ -169,7 +169,7 @@ class Refresh {
     renewalInfo() {
         try {
             const { io } = this;
-            
+
             for (let roomID in roomList) {
                 let roomInfo = roomList[roomID];
                 let rankList = [];
@@ -273,29 +273,11 @@ class Refresh {
                         roomList[roomID]['gameTime']
                     );
                 }
-                let rankList2 = rankList.slice(0, 7);
-                io.to(roomID).emit('roomRank', rankList2);
 
-                let roomAction = {
-                    recentBuy: roomInfo['recentBuy'],
-                    recentSell: roomInfo['recentSell'],
-                    recentNothing: roomInfo['recentNothing'],
-                };
-                io.to(roomID).emit('roomAction', roomAction);
-            }
-
-            // gameOver logic
-            if (roomInfo['gaming']) {
-                roomList[roomID]['gameTime']--;
-                console.log('gameTime: ', roomList[roomID]['gameTime']);
-                io.to(roomID).emit(
-                    'restGameTime',
-                    roomList[roomID]['gameTime']
-                );
-            }
-            if (roomInfo['gameTime'] === -1) {
-                roomList[roomID]['gaming'] = false;
-                this.gameOver(roomID);
+                if (roomInfo['gameTime'] === -1) {
+                    roomList[roomID]['gaming'] = false;
+                    this.gameOver(roomID);
+                }
             }
         } catch (err) {
             console.error(err);
