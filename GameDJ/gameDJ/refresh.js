@@ -52,7 +52,7 @@ class Refresh {
                         bfrWallet['cash'] = playerInfo['cash'];
                         bfrWallet['asset'] = playerInfo['asset'];
 
-                        cash += askVol * askPrice;
+                        cash += askVol * Number(askPrice);
                         playerInfo['cash'] = cash;
                         playerInfo['actionRestTime'] = 5;
                         playerInfo['recentAction'] = 0;

@@ -104,7 +104,6 @@ class Game {
             let bfrWallet = {};
             bfrWallet['coinVol'] = 0;
             bfrWallet['cash'] = playerInfo['cash'];
-            bfrWallet['coinVol'] = 0;
             bfrWallet['asset'] = playerInfo['asset'];
     
             // ! 음수 값 처리
@@ -116,16 +115,6 @@ class Game {
             // 5. 구매 처리 및 asset 정보 emit
             // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
             if (reqPrice >= curPrice) {
-                // 평단가 로직
-                // if (playerInfo['avgPrice'] === 0) {
-                //     playerInfo['avgPrice'] = curPrice;
-                // } else {
-                //     playerInfo['avgPrice'] = Math.round(
-                //         (coinVol * playerInfo['avgPrice'] + reqVol * curPrice) /
-                //             (coinVol + reqVol)
-                //     );
-                // }
-    
                 let reqVol = Math.floor(cash / curPrice);
     
                 // 6-1. cash, coin 갯수 갱신
@@ -161,16 +150,12 @@ class Game {
                 playerInfo['cash'] = cash;
                 playerInfo['coinVol'] = coinVol;
                 // 4-3. player 호가 목록 등록
-                if (playerInfo['bid'].hasOwnProperty(reqPrice)) {
-                    playerInfo['bid'][reqPrice] =
-                        playerInfo['bid'][reqPrice] + reqVol;
-                } else {
-                    playerInfo['bid'][reqPrice] = reqVol;
-                    if (!bidList.hasOwnProperty(reqPrice)) {
-                        bidList[reqPrice] = {};
-                    }
-                    bidList[reqPrice][socketID] = roomID;
+                
+                playerInfo['bid'][reqPrice] = reqVol;
+                if (!bidList.hasOwnProperty(reqPrice)) {
+                    bidList[reqPrice] = {};
                 }
+                bidList[reqPrice][socketID] = roomID;
                 roomList[roomID][socketID] = playerInfo;
     
                 let bidDone = {
@@ -184,7 +169,7 @@ class Game {
                 // console.log('roomID:', roomID);
                 io.to(roomID).emit('bidDone_Room', bidDone);
                 // console.log("호가 등록 완료", bidList);
-                this.sendBidTable(reqJson);
+                // this.sendBidTable(reqJson);
             }
     
             let refreshWallet = {};
@@ -299,7 +284,7 @@ class Game {
     
                 io.to(roomID).emit('askDone_Room', askDone);
                 // console.log("호가 등록 완료", askList);
-                this.sendAskTable(reqJson);
+                // this.sendAskTable(reqJson);
             }
     
             let refreshWallet = {};
@@ -322,8 +307,9 @@ class Game {
         try{
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
-            let bidPrice = reqJson['reqPrice'];
-    
+            // let bidPrice = reqJson['reqPrice'];
+            let bidPrice = Object.keys(roomList[roomID][socketID]['bid'])[0];
+
             // bidList의 Length가 1이면 가격 자체를 지워버린다.
             if (!bidList[bidPrice]) return false;
             // console.log("매수 취소 전", bidList);
@@ -368,7 +354,8 @@ class Game {
         try{
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
-            let askPrice = reqJson['reqPrice'];
+            // let askPrice = reqJson['reqPrice'];
+            let askPrice = Object.keys(roomList[roomID][socketID]['ask'])[0];
     
             // 취소 요청한 가격에 해당하는 목록을 불러온다
             // askList의 Length가 1이면 가격 자체를 지워버린다.
