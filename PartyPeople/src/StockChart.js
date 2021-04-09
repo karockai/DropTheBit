@@ -78,7 +78,7 @@ class StockChart extends React.Component {
 
         const start = xAccessor(last(data));
         const close = last(data);
-        const end = xAccessor(data[Math.max(0, data.length - 50)]);
+        const end = xAccessor(data[Math.max(0, data.length - 100)]);
         const xExtents = [start, end];
         this.dataHigh =
             last(data).high > this.dataHigh ? last(data).high : this.dataHigh;
@@ -149,6 +149,17 @@ class StockChart extends React.Component {
                     /> */}
                     <CandlestickSeries {...candlesAppearance} />
                     <PriceCoordinate
+                    className="현재가격"
+                    at="right"
+                    orient="right"
+                    price={last(data).close}
+                    stroke="#7974f2"
+                    fill="green"
+                    textFill="#fff"
+                    arrowWidth={3}
+                    displayFormat={format('.2f')}
+                    />
+                                        <PriceCoordinate
                         className="매수주문"
                         at="right"
                         orient="right"
@@ -204,17 +215,8 @@ class StockChart extends React.Component {
                         strokeDasharray="Solid"
                         displayFormat={format('.2f')}
                     />
-                                            <PriceCoordinate
-                    className="현재가격"
-                    at="right"
-                    orient="right"
-                    price={last(data).close}
-                    stroke="#7974f2"
-                    fill="grey"
-                    textFill="#fff"
-                    arrowWidth={3}
-                    displayFormat={format('.2f')}
-                    />
+
+
                                                            <PriceCoordinate
                         className="나의호가"
                         at="right"
