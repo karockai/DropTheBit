@@ -182,12 +182,11 @@ export default function PlayerList(props) {
     return (
         <>
             <Grid>
-                {props.isStart && (
+                {/* {props.isStart && (
                     <Timer
                         socket={props.socket}
-                        gameTime={props.roomInfo['gameTime']}
                     />
-                )}
+                )} */}
             </Grid>
             {MyRank()}
             <Grid
