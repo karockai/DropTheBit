@@ -219,6 +219,7 @@ class Game {
     
             let bfrWallet = {};
             bfrWallet['cash'] = playerInfo['cash'];
+            bfrWallet['coinVol'] = playerInfo['coinVol'];
             bfrWallet['asset'] = playerInfo['asset'];
     
             // ! 실수로 잘못된 값이 들어온 경우 처리하기
@@ -295,7 +296,6 @@ class Game {
             refreshWallet['coinVol'] = playerInfo['coinVol'];
             refreshWallet['cash'] = playerInfo['cash'];
             refreshWallet['asset'] = playerInfo['asset'];
-    
             this.refreshWallet(socketID, refreshWallet, bfrWallet);
             // console.log('-----------Sell End-----------');
         }
