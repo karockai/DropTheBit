@@ -16,27 +16,34 @@ class HorizontalBarChart extends React.Component {
         super(props);
         this.state = {
             height: window.innerHeight * 0.2,
-            // width: window.innerWidth * 0.4,
+            width: window.innerWidth * 0.2,
         };
     }
 
 
     render() {
+
         const { data, type, width, ratio } = this.props;
 		return (
-			<ChartCanvas ratio={ratio} width={width} height={this.state.height}
+			<ChartCanvas ratio={ratio} width={this.state.width} height={this.state.height}
 					margin={{ left: 90, right: 10, top: 20, bottom: 30 }} type={type}
-					xExtents={data => [0, max(data, d => d.x)]}
+					xExtents={data => [0, 100]}
 					data={data}
-					xScale={scaleLinear()} flipXScale={false}
+					xScale={scaleLinear()} 
+                    flipXScale={false}
 					useCrossHairStyleCursor={false}>
 				<Chart id={1}
 						yExtents={data.map(d => d.y)}
 						yScale={scalePoint()}
-						padding={.5}>
+						padding={.5}
+                        >
+                        
 					<XAxis axisAt="bottom" orient="bottom" />
 					<YAxis axisAt="left" orient="left" />
-					<BarSeries yAccessor={d => d.y} xAccessor={d => d.x}  color={"green"} swapScales />
+					<BarSeries yAccessor={d => d.y === '매수' && d.y} xAccessor={d =>  d.y === '매수' && d.x} fill="red" textFill="#fff" swapScales/>
+					<BarSeries yAccessor={d => d.y === '매도' && d.y} xAccessor={d =>  d.y === '매도' && d.x} fill="#017de9" textFill="#fff" swapScales/>
+					{/* <BarSeries yAccessor={d => d.y === '매도'} xAccessor={d => d.x} fill="blue" textFill="#fff" swapScales/> */}
+					{/* <BarSeries yAccessor={d => d.y} xAccessor={d => d.x} fill="red" textFill="#fff" swapScales/> */}
 					{/* <BarSeries {...barSeries}/> */}
 				</Chart>
 			</ChartCanvas>

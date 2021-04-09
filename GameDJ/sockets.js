@@ -77,22 +77,22 @@ export default {
 
             // In-game event ------------------------------------------ >>
             socket.on('buy_Req', (reqJson) => {
-                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
                     new Game(io, socket).buy(reqJson);
                 }
             });
             socket.on('sell_Req', (reqJson) => {
-                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
                     new Game(io, socket).sell(reqJson);
                 }
             });
             socket.on('cancelBid_Req', (reqJson) => {
-                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
                     new Game(io, socket).cancelBid(reqJson);
                 }
             });
             socket.on('cancelAsk_Req', (reqJson) => {
-                if (roomList[reqJson['roomID']]['gaming'] === true) {
+                if (roomList.hasOwnProperty(reqJson['roomID']) && roomList[reqJson['roomID']]['gaming'] === true) {
                     new Game(io, socket).cancelAsk(reqJson);
                 }
             });

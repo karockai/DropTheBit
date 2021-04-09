@@ -134,30 +134,43 @@ export default function PlayerList(props) {
                         border: 'solid',
                         borderColor: '#2D4053',
                         margin: '0 0 10px 0',
-                        padding: "2%"
+                        padding: '2%',
                         // boxShadow: '12px 12px 2px 1px #ffffff',
                     }}
                 >
                     <Grid container direction="row" alignItems="center">
                         <Grid
-                            style={{ fontSize: '1vw', width: '30%', height: '100%', padding:'2%' }}
+                            style={{
+                                fontSize: '1vw',
+                                width: '30%',
+                                height: '100%',
+                                padding: '2%',
+                            }}
                             className="score"
                             item
                         >
-                            <span style={{fontSize:'1.5vw'}}>{myRank}</span>
+                            <span style={{ fontSize: '1.5vw' }}>{myRank}</span>
                             {'위'}
                         </Grid>
                         <Grid
                             item
-                            style={{ fontSize: '1vw', width: '70%', height: '100%',padding: "2%" }}
+                            style={{
+                                fontSize: '1vw',
+                                width: '70%',
+                                height: '100%',
+                                padding: '2%',
+                            }}
                             container
                             direction="column"
                             className="score"
                         >
-                            <Grid alignItems="right" style={{padding:'2%'}}>{myRankPage.playerID}</Grid>
-                            <Grid alignItems="right" style={{padding:'2%'}}>
+                            <Grid alignItems="right" style={{ padding: '2%' }}>
+                                {myRankPage.playerID}
+                            </Grid>
+                            <Grid alignItems="right" style={{ padding: '2%' }}>
                                 {ExpBySymbol(parseWonToStr(myRankPage.asset))}
-                                {/* {myRankPage.asset} */}{' 원'}
+                                {/* {myRankPage.asset} */}
+                                {' 원'}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -169,7 +182,11 @@ export default function PlayerList(props) {
     return (
         <>
             <Grid>
-               {props.isStart && <Timer socket={props.socket} />}
+                {/* {props.isStart && (
+                    <Timer
+                        socket={props.socket}
+                    />
+                )} */}
             </Grid>
             {MyRank()}
             <Grid
@@ -193,11 +210,11 @@ export default function PlayerList(props) {
                                 style={{
                                     backgroundColor: myColor,
                                     fontWeight: myFont,
-                                    padding: "1vh 1vw",
-                                    margin: "3% 0 3% 0%"
+                                    padding: '1vh 1vw',
+                                    margin: '3% 0 3% 0%',
                                 }}
                                 className={classes.paper}
-                                align ="center"
+                                align="center"
                             >
                                 <Grid
                                     container
@@ -209,12 +226,13 @@ export default function PlayerList(props) {
                                             fontSize: '1vw',
                                             width: '30%',
                                             height: '100%',
-                                            padding:'2%'
+                                            padding: '2%',
                                         }}
                                         className="score"
                                     >
-                                        
-                                        <span style={{fontSize:'1.5vw'}}>{index + 1}</span>
+                                        <span style={{ fontSize: '1.5vw' }}>
+                                            {index + 1}
+                                        </span>
                                         {'위'}
                                     </Grid>
                                     <Grid
@@ -227,10 +245,16 @@ export default function PlayerList(props) {
                                         direction="column"
                                         className="score"
                                     >
-                                        <Grid alignItems="right" style={{padding:'2%'}}>
+                                        <Grid
+                                            alignItems="right"
+                                            style={{ padding: '2%' }}
+                                        >
                                             {player.playerID}
                                         </Grid>
-                                        <Grid alignItems="right" style={{padding:'2%'}}>
+                                        <Grid
+                                            alignItems="right"
+                                            style={{ padding: '2%' }}
+                                        >
                                             {ExpBySymbol(
                                                 parseWonToStr(player.asset)
                                             )}{' '}

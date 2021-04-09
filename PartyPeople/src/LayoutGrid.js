@@ -18,6 +18,10 @@ import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
 
+import HorizontalBarChart from './BidGraph';
+import { getData } from "./utils"
+import { TypeChooser } from "react-stockcharts/lib/helper";
+import RoomAction from "./RoomAction";
 
 import RefreshGraph from './RefreshGraph';
 
@@ -53,7 +57,6 @@ export default function LayoutGrid(props) {
     const [bid, SetBid] = useState(0);
 
 
-    const [bidData, setBidData] = useState();
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
     };
@@ -300,6 +303,8 @@ export default function LayoutGrid(props) {
                                 requestSocket={props.requestSocket}
                             /> */}
 
+                            방 매매 현황
+                            <RoomAction socket={props.socket}/>
                         </Paper>
                     </Grid>
                     <Grid
