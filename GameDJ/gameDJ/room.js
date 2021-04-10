@@ -281,8 +281,8 @@ class Room {
             }
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
-            // console.log('playerReinit----------');
-            // console.log(roomInfo);
+            console.log('playerReinit----------');
+            console.log(roomInfo);
 
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', {
@@ -290,6 +290,62 @@ class Room {
                 author: '[SERVER]',
             });
             io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
+            // io.to(socketID).emit('backToLobby_Res', roomInfo);    커밋할때 이걸로 해야함
+        } catch (err) {
+            console.error(err);
+            webhook.sendMessage(`에러 발생 : ${error}`);
+        }
+    }
+
+    // data : {roomID : roomID, playerID : name}
+    backJoinRoom(data) {
+        try {
+            const { io, socket } = this;
+            if (data.playerID) {
+                console.log('joinroom?----');
+                const roomID = data.roomID;
+                let roomInfo = roomList[roomID];
+                let playerID = data.playerID;
+                let socketID = socket.id;
+
+                let playerInfo = {
+                    playerID: playerID,
+                    cash: 100000000,
+                    asset: 100000000,
+                    coinVol: 0,
+                    avgPrice: 0,
+                    bid: {},
+                    ask: {},
+                    bidCash: 0,
+                    askVol: 0,
+                    actionRestTime: 0,
+                    recentAction: 0,
+                };
+
+                // 공방에서 아무도 back to lobby 안했는데 새 유저가 들어온 경우, 새 유저를 방장으로 지정
+                if (roomInfo['roomLeader'] === 0) {
+                    roomInfo['roomLeader'] = socket.id;
+                }
+
+                roomInfo[socketID] = playerInfo;
+                roomList[roomID] = roomInfo;
+
+                socket.roomID = roomID;
+                socket.join(roomID);
+
+                // for stress test
+                // playerStress++;
+                console.log(roomInfo);
+
+                io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
+                // io.to(socketID).emit('backToLobby_Res', roomInfo);    커밋할때 이걸로 해야함
+
+                let message = playerID + '님이 들어오셨습니다.';
+                io.to(roomID).emit('update', {
+                    message: message,
+                    author: '[SERVER]',
+                });
+            }
         } catch (err) {
             console.error(err);
             webhook.sendMessage(`에러 발생 : ${error}`);

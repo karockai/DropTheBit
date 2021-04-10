@@ -91,17 +91,17 @@ def on_message(ws, msg):
     elif (msg['ty'] == 'orderbook'):
         hoka_result = {}
         hoka_result['date'] = str(datetime.datetime.fromtimestamp(msg['tms'] / 1000))
-        # 매수 1호가, 매도 1호가의 사이즈로 변경함
-        hoka_result['total_ask_size'] = msg['obu'][0]['as']
-        hoka_result['total_bid_size'] = msg['obu'][0]['bs']
         # hoka_result['total_ask_size'] = msg['tas']
         # hoka_result['total_bid_size'] = msg['tbs']
-        # for i in range(5):
-        #     hoka_result[f'ask_price{i}'] = msg['obu'][i]['ap']
-        #     hoka_result[f'bid_price{i}'] = msg['obu'][i]['bp']
-        #     hoka_result[f'ask_size{i}'] = msg['obu'][i]['as']
-        #     hoka_result[f'bid_size{i}'] = msg['obu'][i]['bs']
+        ask_sum = 0
+        bid_sum = 0
+        for i in range(2):
+            ask_sum += msg['obu'][i]['as']
+            bid_sum += msg['obu'][i]['bs']
         # print(hoka_result)
+        # 매수 1호가, 매도 1호가의 사이즈로 변경함
+        hoka_result['total_ask_size'] = ask_sum
+        hoka_result['total_bid_size'] = bid_sum
 
     if (juka_result):
         cur_price = juka_result['curPrice']
