@@ -30,6 +30,7 @@ import {
     useHistory,
 } from 'react-router-dom';
 import TabPanel from './TabControl';
+import RacingLeaderBoard from './RacingLeaderBoard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -119,13 +120,14 @@ export default function LayoutGrid(props) {
                     <Grid>
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <PlayerList
+                    <RacingLeaderBoard/>
+                    {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
                         requestSocket={props.requestSocket}
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
-                    />
+                    /> */}
                 </Grid>
                 <Grid
                     className="차트및거래및지갑"

@@ -318,6 +318,7 @@ function Lobby(props) {
                             item
                             direction={'row'}
                             justify={'flex-start'}
+                            alignItems={'stretch'}
                         >
                             {' '}
                             <PutNewCard
