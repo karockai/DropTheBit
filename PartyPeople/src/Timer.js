@@ -79,7 +79,7 @@ export default function Timer(props) {
                         color: 'white',
                     }}
                 >
-                    게임 종료까지
+                    남은 시간
                 </div>
                 <div className="value">{remainingTime}</div>
             </div>
