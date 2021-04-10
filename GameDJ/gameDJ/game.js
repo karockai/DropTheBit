@@ -477,8 +477,8 @@ class Game {
         let timerSetData = {
             timerSet: true,
             isPlaying: true,
-            initGameTime: roomList[roomID]['initGameTime'],
-            gameTime: roomList[roomID]['gameTime'],
+            initGameTime: roomList[roomID]['initGameTime'] + 1,
+            gameTime: roomList[roomID]['gameTime'] + 1,
         };
 
         socket.emit('timerSet_Res', timerSetData);
