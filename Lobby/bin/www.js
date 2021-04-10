@@ -35,8 +35,10 @@ async function serverInfo(){
             let memStat = response.data['memUsed'];
             console.log(`response from ${ip}/status`, response, cpuStat, memStat);
             messages.push(`
-                SERVERNAME : ${name} IP : ${ip}
-                방 개수 : ${room} 접속자수 : ${player}
+                서버 : ${name} 
+                IP : ${ip}
+                방 개수 : ${room} 
+                접속자수 : ${player}
                 CPU 사용량 : ${cpuStat}% 
                 메모리 사용량 : ${memStat}%
             `)
@@ -46,7 +48,7 @@ async function serverInfo(){
 }
 
 app.post('/status', async (req,res)=>{
-    if (req.body.event.text === "서버상태"){
+    if (req.body.event.text === "모니터링"){
         console.log(req.body.event.text);
         let roomNum = [];
         let playerNum = [];

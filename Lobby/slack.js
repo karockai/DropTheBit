@@ -8,7 +8,7 @@ const webhook = new slack.IncomingWebhook(process.env.SLACK);
 webhook.sendMessage = async function(msg){
   if(process.env.PRODUCTION){
     await webhook.send({
-      text: `서버 : ${process.env.SERVERNAME} \n ${msg}`,
+      text: `${msg}`,
     });
   }
 };
