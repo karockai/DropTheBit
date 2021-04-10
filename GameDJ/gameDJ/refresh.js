@@ -57,7 +57,7 @@ class Refresh {
                         playerInfo['actionRestTime'] = 5;
                         playerInfo['recentAction'] = 0;
                         //? 예은 디버깅
-                        if (playerInfo['playerID'].length === 2){
+                        if (playerInfo['playerID'].length === 2) {
                             console.log('sell 호가 체결---------');
                             console.log(playerInfo);
                             console.log(askList);
@@ -280,6 +280,7 @@ class Refresh {
                         'restGameTime',
                         roomList[roomID]['gameTime']
                     );
+                    console.log('gameTime:', roomList[roomID]['gameTime']);
                 }
 
                 if (roomInfo['gameTime'] === -1) {

@@ -46,18 +46,16 @@ export default function Timer(props) {
     // }
     useEffect(() => {
         props.socket.once('restGameTime', (curTimeData) => {
-            if (curTimeData >= 0) {
-                setCurTime(curTimeData);
-            }
+            setCurTime(curTimeData);
         });
     });
 
     const renderTime = (remainingTime) => {
-        if (0 < remainingTime && remainingTime <= 5) {
+        console.log('remainingTime :', remainingTime);
+        if (0 <= remainingTime && remainingTime <= 5) {
             timeAudio.play();
-        } else if (remainingTime === 0) {
-            timeAudio.play();
-            timeAudio.remove();
+        } else if (remainingTime < 0) {
+            console.log('hi');
             timerSwitch = false;
             return (
                 <div
