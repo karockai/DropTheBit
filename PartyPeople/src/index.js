@@ -6,7 +6,7 @@ import GameManager from './GameManager';
 import Test from './Test';
 import GameOverModal from './GameOverModal';
 import LoadingScreen from './LoadingScreen';
-
+import RacingLeaderBoard from './RacingLeaderBoard';
 
 ReactDOM.render(
     <div className='GameManager'>

@@ -191,6 +191,7 @@ export default function PlayerList(props) {
                 spacing={1}
             >
                 {players.map((player, index) => {
+                    if (index >= 6) return <></>
                     const myColor =
                         player.socketID === props.socket.id
                             ? '#2D4053'
