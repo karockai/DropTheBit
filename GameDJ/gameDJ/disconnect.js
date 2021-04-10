@@ -56,7 +56,7 @@ class Disconnect {
                 if (playerCnt === 0) {
                     delete roomList[roomID];
                     await dbdel(roomID);
-                    playerStress = 0;
+                    // playerStress = 0;
                 } 
                 else {
                     let message = playerInfo['playerID'] + '님이 나가셨습니다.\n';

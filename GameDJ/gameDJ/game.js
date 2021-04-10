@@ -20,15 +20,15 @@ class Game {
             }
             io.to(roomID).emit('chartData', { chartData: chartData });
 
+            // 방장이면 룸 전체를 시작하게 함
             if (roomList[roomID]['roomLeader'] === socket.id) {
                 io.to(roomID).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
-            } else {
-                // console.log('여기 아니야ㅠ');
-                // console.log(roomList[roomID]);
-                // console.log('나 : ', socket.id);
+            } 
+            // 방장이 아니면 자기만 시작함
+            else {
                 io.to(socket.id).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
@@ -91,12 +91,8 @@ class Game {
             let roomID = reqJson['roomID'];
             let socketID = socket.id;
             let reqPrice = Number(reqJson['currentBid']);
-            // let reqVol = Number(reqJson['currentVolume']);
 
-            // 2. curPrice 가져오기
-            // let curPrice = curCoin['curPrice'];
-
-            // 3. player_info 가져오기
+            // 2. player_info 가져오기
             let playerInfo = roomList[roomID][socketID];
             let cash = playerInfo['cash'];
             let coinVol = 0;
@@ -149,7 +145,7 @@ class Game {
                 // 7-1. cash 갱신
                 cash -= reqPrice * reqVol;
                 playerInfo['cash'] = cash;
-                playerInfo['coinVol'] = coinVol;
+                
                 // 4-3. player 호가 목록 등록
 
                 playerInfo['bid'][reqPrice] = reqVol;
@@ -195,12 +191,8 @@ class Game {
             let roomID = reqJson['roomID'];
             let socketID = socket.id;
             let reqPrice = Number(reqJson['currentBid']);
-            // let reqVol = Number(reqJson['currentVolume']);
 
-            // 2. curPrice 가져오기
-            // let curPrice = curCoin['curPrice'];
-
-            // 3. player_info 가져오기
+            // 2. player_info 가져오기
             let playerInfo = roomList[roomID][socketID];
             let cash = playerInfo['cash'];
             let coinVol = playerInfo['coinVol'];
@@ -248,9 +240,7 @@ class Game {
             } else {
                 let reqVol = coinVol;
                 coinVol -= reqVol;
-                // asset = cash + coinVol * curPrice;
 
-                playerInfo['cash'] = cash;
                 playerInfo['coinVol'] = coinVol;
                 // playerInfo['asset'] = asset;
                 // 4-3. player 호가 목록 등록
@@ -305,7 +295,6 @@ class Game {
         try {
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
-            // let bidPrice = reqJson['reqPrice'];
             let bidPrice = Object.keys(roomList[roomID][socketID]['bid'])[0];
 
             // bidList의 Length가 1이면 가격 자체를 지워버린다.
@@ -351,13 +340,11 @@ class Game {
         try {
             let roomID = reqJson['roomID'];
             let socketID = reqJson['socketID'];
-            // let askPrice = reqJson['reqPrice'];
             let askPrice = Object.keys(roomList[roomID][socketID]['ask'])[0];
 
             // 취소 요청한 가격에 해당하는 목록을 불러온다
             // askList의 Length가 1이면 가격 자체를 지워버린다.
             if (!askList[askPrice]) return false;
-            // console.log("매도 취소 전", askList);
             if (Object.keys(askList[askPrice]).length === 1) {
                 delete askList[askPrice];
             } else {
@@ -393,71 +380,6 @@ class Game {
             webhook.sendMessage(`에러 발생 : ${error}`);
         }
     }
-
-    //! refactoring 필요
-    // sendBidTable(reqJson) {
-    //     try{
-    //         const { io, socket } = this;
-    //         let roomID = reqJson['roomID'];
-    //         let socketID = reqJson['socketID'];
-    //         // let socketID = socket.id;
-    //         let playerInfo = roomList[roomID][socketID];
-
-    //         let bidTable = playerInfo['bid'];
-    //         let bidTable_Res = [];
-
-    //         for (let key in bidTable) {
-    //             let temp = {};
-    //             temp['price'] = key;
-    //             temp['vol'] = bidTable[key];
-
-    //             bidTable_Res.push(temp);
-    //         }
-
-    //         bidTable_Res.sort(function (a, b) {
-    //             return b['price'] - a['price'];
-    //         });
-
-    //         io.to(socketID).emit('bidTable_Res', bidTable_Res);
-    //     }
-    //     catch(err){
-    //         console.error(err);
-    //         webhook.sendMessage(`에러 발생 : ${error}`);
-    //     }
-    // }
-
-    // sendAskTable(reqJson) {
-    //     try{
-
-    //         const { io, socket } = this;
-    //         let roomID = reqJson['roomID'];
-    //         let socketID = reqJson['socketID'];
-    //         // let socketID = socket.id;
-    //         let playerInfo = roomList[roomID][socketID];
-
-    //         let askTable = playerInfo['ask'];
-    //         let askTable_Res = [];
-
-    //         for (let key in askTable) {
-    //             let temp = {};
-    //             temp['price'] = key;
-    //             temp['vol'] = askTable[key];
-
-    //             askTable_Res.push(temp);
-    //         }
-
-    //         askTable_Res.sort(function (a, b) {
-    //             return b['price'] - a['price'];
-    //         });
-
-    //         io.to(socketID).emit('askTable_Res', askTable_Res);
-    //     }
-    //     catch(err){
-    //         console.error(err);
-    //         webhook.sendMessage(`에러 발생 : ${error}`);
-    //     }
-    // }
-    //! --------------------------------------
 
     refreshWallet(socketID, refreshWallet, bfrWallet) {
         // console.log('refreshWallet');

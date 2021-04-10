@@ -61,7 +61,7 @@ global.todayRank = [
 
 // 차트를 바로 그리기 위한 curCoin 50개 리스트
 // for stress test
-global.playerStress = 0;
+// global.playerStress = 0;
 global.publicRoomID = 'EnjoyPublicGame';
 const server = app.listen(process.env.PORT, process.env.IP, () => {
     console.log(`Server listening on port ${server.address().port}`);
