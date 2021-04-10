@@ -18,6 +18,7 @@
             "recentAction": "Bool",
             "actionRestTime": "Number"
         },
+        "initGameTime": "Number",
         "gameTime" : "Number",
         "music" : "String",
         "roomLeader" : "String",

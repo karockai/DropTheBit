@@ -181,13 +181,6 @@ export default function PlayerList(props) {
 
     return (
         <>
-            <Grid>
-                {/* {props.isStart && (
-                    <Timer
-                        socket={props.socket}
-                    />
-                )} */}
-            </Grid>
             {MyRank()}
             <Grid
                 wrap="wrap"
