@@ -340,6 +340,22 @@ class Refresh {
 
     // refreshBid 갱신
     async refreshBid() {
+// <<<<<<< HEAD
+//         const { io } = this;
+//         let bidObj = JSON.parse(await dbget('bidTable'));
+//         let totalAsk = bidObj['total_ask_size'];
+//         let totalBid = bidObj['total_bid_size'];
+//         let total = totalAsk + totalBid;
+
+//         let askPercent = (totalAsk / total) * 100;
+//         let bidPercent = 100 - askPercent;
+
+//         let exList = {
+//             askPercent: askPercent,
+//             bidPercent: bidPercent,
+//         };
+//         io.emit('refreshExList', exList);
+// =======
         try {
             const { io } = this;
             let bidObj = JSON.parse(await dbget('bidTable'));

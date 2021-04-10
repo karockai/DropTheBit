@@ -165,7 +165,7 @@ class Game {
                 // console.log('호가 등록 완료', playerInfo);
                 // console.log('roomID:', roomID);
                 io.to(roomID).emit('bidDone_Room', bidDone);
-                // console.log("호가 등록 완료", bidList);
+                console.log("호가 등록 완료", bidList);
                 // this.sendBidTable(reqJson);
             }
 

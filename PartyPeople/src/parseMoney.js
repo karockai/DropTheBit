@@ -77,7 +77,8 @@ function showProfit(id , diff) {
     // document.getElementById(id).fadeOut(1000);
 
     result += ExpBySymbol(parseWonToStr(diff));
-    result += ' 원';
+    const unit = id != 'diffCoin' ? ' 원' : ' 개';
+    result += unit;
     // console.log(result);
     return (result);
 }

@@ -49,5 +49,6 @@ export function getData() {
 		.then(response => response.json())
 		.then(barData => barData.map(({ x, y }) => ({ x: y, y: x })));
 
-	return promiseBarData;
+    return promiseBarData;
+    
 }
