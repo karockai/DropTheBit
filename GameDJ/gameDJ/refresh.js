@@ -30,7 +30,7 @@ class Refresh {
 
             // 2. prePrice랑 curPrice를 비교
             // 2-1. curPrice === prePrice면 아무것도 하지않는다.
-            // 2-2. curPrice >= prePrice면, askPrice에서 curPrice보다 낮은 호가를 처리한다.
+            // 2-2. curPrice >= prePrice면, askPrice에서 curPrice보다 낮은 호가를 처리한다. (매도)
             if (curPrice > prePrice) {
                 // askPrice가 curPrice보다 낮은지 확인
                 for (let askPrice in askList) {
@@ -45,10 +45,9 @@ class Refresh {
                         let playerInfo = roomList[roomID][socketID];
                         let cash = playerInfo['cash'];
                         let askVol = playerInfo['ask'][askPrice];
-                        let coinVol = playerInfo['coinVol'];
 
                         let bfrWallet = {};
-                        bfrWallet['coinVol'] = coinVol;
+                        bfrWallet['coinVol'] = playerInfo['coinVol'];
                         bfrWallet['cash'] = playerInfo['cash'];
                         bfrWallet['asset'] = playerInfo['asset'];
 
@@ -90,16 +89,12 @@ class Refresh {
                             price: askPrice,
                         };
                         io.to(roomID).emit('sellDone_Room', sellDone);
-                        new Game(io, socketID).sendAskTable({
-                            roomID: roomID,
-                            socketID: socketID,
-                        });
                     }
                     delete askList[askPrice];
                 }
             }
 
-            // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다.
+            // 2-3. curPrice < prePrice면, bidPrice에서 curPrice보다 높은 호가를 처리한다. (매수)
             else if (curPrice < prePrice) {
                 // bidPrice가 curPrice보다 높은지 확인
                 for (let bidPrice in bidList) {
@@ -113,7 +108,6 @@ class Refresh {
                         let playerInfo = roomList[roomID][socketID];
                         let coinVol = playerInfo['coinVol'];
                         let bidVol = playerInfo['bid'][bidPrice];
-                        let cash = playerInfo['cash'];
 
                         let bfrWallet = {};
                         bfrWallet['coinVol'] = playerInfo['coinVol'];
@@ -154,10 +148,6 @@ class Refresh {
                         };
 
                         io.to(roomID).emit('buyDone_Room', buyDone);
-                        new Game(io, socketID).sendBidTable({
-                            roomID: roomID,
-                            socketID: socketID,
-                        });
                     }
                     delete bidList[bidPrice];
                 }
@@ -349,7 +339,6 @@ class Refresh {
     }
 
     // refreshBid 갱신
-    //! 차트 만들기 되면 front 데이터 형식 받고 수정 !
     async refreshBid() {
 // <<<<<<< HEAD
 //         const { io } = this;
