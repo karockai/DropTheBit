@@ -32,6 +32,7 @@ import SellConfirm from './audios/effect/SellConfirm.wav';
 import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
 import { SplitByThree } from './parseMoney';
+// import {CancelBid} from './BidTable';
 import './blink.css';
 
 const CssTextField = withStyles({
@@ -117,6 +118,7 @@ export default function TradeStock(props) {
     //@ 가정 => props에 socket이 전달되었어야함.
 
     const eventTime = 300;
+    let tradeMode = 'nothing'; // nothing / bid / ask
 
     useLayoutEffect(() => {
         if (props.socket == null) {
@@ -190,15 +192,15 @@ export default function TradeStock(props) {
     //         SetBid(curPrice);
     //     });
     // }
-    function CancelBid(num, table) {
-        let reqJson = {
-            socketID: props.socket.id,
-            roomID: props.roomID,
-            reqPrice: table[num]['price'],
-            reqVol: table[num]['vol'],
-        };
-        props.socket.emit('cancelBid_Req', reqJson);
-    }
+    // function CancelBid(num, table) {
+    //     let reqJson = {
+    //         socketID: props.socket.id,
+    //         roomID: props.roomID,
+    //         reqPrice: table[num]['price'],
+    //         reqVol: table[num]['vol'],
+    //     };
+    //     props.socket.emit('cancelBid_Req', reqJson);
+    // }
 
     function Buy(bid, volume) {
         let status = '';
@@ -233,6 +235,7 @@ export default function TradeStock(props) {
                 vol: volume,
             };
         }
+        tradeMode = 'buy';
         status = {
             status: 'request',
             val: bid,
@@ -291,6 +294,7 @@ export default function TradeStock(props) {
                 vol: volume,
             };
         }
+        tradeMode = 'sell';
         status = {
             status: 'request',
             val: bid,
@@ -392,17 +396,22 @@ export default function TradeStock(props) {
             let tmpAudio = new Audio(SellConfirm);
             tmpAudio.play();
             tmpAudio.remove();
-            // CancelBid(currentBid, );
-            // function CancelBid(num, table) {
-            //     let reqJson = {
-            //         socketID: props.socket.id,
-            //         roomID: props.roomID,
-            //         reqPrice: table[num]['price'],
-            //         reqVol: table[num]['vol'],
-            //     };
-            //     props.socket.emit('cancelBid_Req', reqJson);
-            // }
-            
+
+            // 거래 취소
+            // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
+            // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
+            const reqJson = 
+            {
+                socketID: props.socket.id,
+                roomID: props.roomID,
+            }
+            if (tradeMode === 'buy' && buyStatus.status === 'request') {      // 직전거래 buy 
+                props.socket.emit('cancelBid_Req',reqJson);
+                console.log('buy_cancel');
+            }
+            else if (tradeMode === 'sell' && sellStatus.status === 'request') {     // 직전거래 sell
+                props.socket.emit('cancelAsk_Req',reqJson);
+            }
         }
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');
@@ -522,7 +531,7 @@ export default function TradeStock(props) {
         }, eventTime);
     };
 
-    // console.log(SplitByThree(String(currentBid)));
+
     return (
         <>
             <SnackbarProvider maxSnack={15}>

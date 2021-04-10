@@ -73,12 +73,12 @@ export default function BidTable(props) {
         }
     }, [isInit]);
 
-    function CancelBid(num, table) {
+    function CancelBid(num) {
         let reqJson = {
             socketID: props.socket.id,
             roomID: props.roomID,
-            reqPrice: table[num]['price'],
-            reqVol: table[num]['vol'],
+            reqPrice: BidTable[num]['price'],
+            reqVol: BidTable[num]['vol'],
         };
         props.socket.emit('cancelBid_Req', reqJson);
     }
@@ -133,7 +133,7 @@ export default function BidTable(props) {
             document.removeEventListener('keyup', CancelBidByKey);
         };
     });
-
+    
     return (
         <Grid
             wrap="wrap"

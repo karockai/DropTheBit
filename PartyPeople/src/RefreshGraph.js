@@ -11,8 +11,10 @@ const [askPercent, setAskPercent] = useState('');
 const [bidPercent, setBidPercent] = useState('');
 
 props.socket.on('refreshExList', (exList) => {
-    setAskPercent(exList.askPercent);
-    setBidPercent(exList.bidPercent);
+    if(exList.askPercent) {
+        setAskPercent(exList.askPercent);
+        setBidPercent(exList.bidPercent);
+    }
 });
 
 return (
@@ -26,7 +28,8 @@ return (
         // label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
         label={({ dataEntry }) => dataEntry.title}
         /> */}
-        {askPercent &&
+        {
+            askPercent &&
             <HorizontalBarChart 
             data={[{x:bidPercent, y: '매도'},{x:askPercent, y:'매수'}]}
             />
