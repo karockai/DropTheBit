@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import { Router, Route, Switch, Redirect, useHistory,useLocation } from 'react-router-dom';
 import './App.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import {
@@ -72,6 +72,11 @@ function Lobby(props) {
     // const [socketId, setSocketId] = useState(props.socket.id);
     // console.log(props.socket.id);
     // console.log(props);
+    const location = useLocation();
+    const roomLeader = location.state.roomLeader;
+
+
+
     const classes = useStyles();
 
     function CopyURL() {
@@ -136,6 +141,11 @@ function Lobby(props) {
 
     const openSelect = Boolean(selectMusic);
 
+    if (roomLeader != null && roomLeader != props.roomInfo['roomLeader']) {
+        const tmp_roomInfo = props.roomInfo;
+        tmp_roomInfo['roomLeader'] = roomLeader;
+        props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo : tmp_roomInfo});
+    }
     const CheckLeader = () => {
         // console.log(props.socket);
         if (props.roomInfo['roomLeader'] === props.socket.id) {

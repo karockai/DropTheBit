@@ -162,7 +162,7 @@ class StockChart extends React.Component {
                     arrowWidth={3}
                     displayFormat={format('.2f')}
                     />
-                                        <PriceCoordinate
+                    <PriceCoordinate
                         className="매수주문"
                         at="right"
                         orient="right"
@@ -176,7 +176,7 @@ class StockChart extends React.Component {
                         strokeDasharray="Dot"
                         displayFormat={format('.2f')}
                     />
-                                        <PriceCoordinate
+                        <PriceCoordinate
                         className="매도주문"
                         at="right"
                         orient="right"
@@ -190,7 +190,7 @@ class StockChart extends React.Component {
                         strokeDasharray="Dot"
                         displayFormat={format('.2f')}
                     />
-                                        <PriceCoordinate
+                        <PriceCoordinate
                         className="매수체결"
                         at="right"
                         orient="right"
@@ -204,7 +204,7 @@ class StockChart extends React.Component {
                         strokeDasharray="Solid"
                         displayFormat={format('.2f')}
                     />
-                                        <PriceCoordinate
+                        <PriceCoordinate
                         className="매도체결"
                         at="right"
                         orient="right"
@@ -220,7 +220,7 @@ class StockChart extends React.Component {
                     />
 
 
-                                                           <PriceCoordinate
+                        <PriceCoordinate
                         className="나의호가"
                         at="right"
                         orient="right"

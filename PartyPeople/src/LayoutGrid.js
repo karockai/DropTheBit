@@ -17,11 +17,14 @@ import ThreeSecTimer from './';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
+
 import HorizontalBarChart from './BidGraph';
 import { getData } from './utils';
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import RoomAction from './RoomAction';
 import Timer from './Timer';
+
+import RefreshGraph from './RefreshGraph';
 
 import {
     BrowserRouter as Router,
@@ -120,14 +123,14 @@ export default function LayoutGrid(props) {
                     <Grid>
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <RacingLeaderBoard/>
-                    {/* <PlayerList
+                    {/* <RacingLeaderBoard/> */}
+                    <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
                         requestSocket={props.requestSocket}
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
-                    /> */}
+                    />
                 </Grid>
                 <Grid
                     className="차트및거래및지갑"
@@ -290,13 +293,9 @@ export default function LayoutGrid(props) {
                     >
                         <Paper
                             className={classes.paper}
-                            style={{
-                                height: '50%',
-                                margin: '0px 0px 1vh 0px',
-                                width: '100%',
-                            }}
+                            style={{ height: '50%', padding: '2vh', width: '100%' }}
                         >
-                            {/* 여기야 */}
+                        <RefreshGraph socket={props.socket}/>
                         </Paper>
                         <Paper
                             className={classes.paper}
@@ -306,6 +305,13 @@ export default function LayoutGrid(props) {
                                 width: '100%',
                             }}
                         >
+                            {/* <TabPanel
+                                inputCtrl={inputCtrl}
+                                roomID={props.roomID}
+                                socket={props.socket}
+                                requestSocket={props.requestSocket}
+                            /> */}
+
                             방 매매 현황
                             <RoomAction socket={props.socket} />
                         </Paper>

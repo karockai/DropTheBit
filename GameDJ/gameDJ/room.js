@@ -195,7 +195,7 @@ class Room {
                 socket.join(roomID);
 
                 // for stress test
-                playerStress++;
+                // playerStress++;
 
                 io.to(roomID).emit('joinRoom_Res', {
                     roomID: roomID,
@@ -281,8 +281,8 @@ class Room {
             }
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
-            console.log('playerReinit----------');
-            console.log(roomInfo);
+            // console.log('playerReinit----------');
+            // console.log(roomInfo);
 
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', {

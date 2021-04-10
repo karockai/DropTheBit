@@ -199,9 +199,8 @@ export default function MyAsset(props) {
                     >
                         <span>보유 현금</span>
                         {/* <h5 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}> */}
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw' }}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myCash)) +
-                                ' 원'}
+                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
+                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}{' 원'}
                         </h5>
                         <div
                             id="diffCash"
@@ -273,11 +272,6 @@ export default function MyAsset(props) {
                         }}
                     >
                         총 평가 자산
-                        {/* <h2 style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
-                            {SplitByThree(parseWonToStr(myWallet.myAsset)) +
-                                ' 원'}
-                        </h2> */}
-                        {/* <h2 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '2.2vw', color: color}}> */}
                         <h2
                             style={{
                                 fontWeight: 'bold',

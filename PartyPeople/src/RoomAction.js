@@ -42,7 +42,7 @@ export default function RoomAction (props) {
             peopleTrade.red > 0 && 
             [...Array(peopleTrade.red)].map((n) => {
                 return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'red', margin: 1/ ratio + 'vw '+  1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
+                    <PersonSharpIcon className={classes.icon} style={{color: 'red', margin: 1/ ratio + 'vw ' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
                 )
             })
           }
