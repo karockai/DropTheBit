@@ -19,9 +19,10 @@ import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
 
 import HorizontalBarChart from './BidGraph';
-import { getData } from "./utils"
-import { TypeChooser } from "react-stockcharts/lib/helper";
-import RoomAction from "./RoomAction";
+import { getData } from './utils';
+import { TypeChooser } from 'react-stockcharts/lib/helper';
+import RoomAction from './RoomAction';
+import Timer from './Timer';
 
 import RefreshGraph from './RefreshGraph';
 
@@ -55,7 +56,6 @@ export default function LayoutGrid(props) {
     const [timerTime, setTimerTime] = useState(gameTime);
     const [inputCtrl, setInputCtrl] = useState(false);
     const [bid, SetBid] = useState(0);
-
 
     const SetInputCtrl = (isChat) => {
         setInputCtrl(isChat);
@@ -119,6 +119,9 @@ export default function LayoutGrid(props) {
                         padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                     }}
                 >
+                    <Grid>
+                        {props.isStart && <Timer socket={props.socket} />}
+                    </Grid>
                     <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
@@ -250,7 +253,7 @@ export default function LayoutGrid(props) {
                                         className={classes.paper}
                                     >
                                         <TradeStock
-                                            SetBid = {SetBid}
+                                            SetBid={SetBid}
                                             inputCtrl={inputCtrl}
                                             roomID={props.roomID}
                                             APIdata={APIdata}
@@ -294,7 +297,11 @@ export default function LayoutGrid(props) {
                         </Paper>
                         <Paper
                             className={classes.paper}
-                            style={{ height: '50%', margin: '1vh 0px 0px 0px', width: '100%' }}
+                            style={{
+                                height: '50%',
+                                margin: '1vh 0px 0px 0px',
+                                width: '100%',
+                            }}
                         >
                             {/* <TabPanel
                                 inputCtrl={inputCtrl}
@@ -304,7 +311,7 @@ export default function LayoutGrid(props) {
                             /> */}
 
                             방 매매 현황
-                            <RoomAction socket={props.socket}/>
+                            <RoomAction socket={props.socket} />
                         </Paper>
                     </Grid>
                     <Grid

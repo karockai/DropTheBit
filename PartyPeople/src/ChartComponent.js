@@ -92,6 +92,7 @@ class ChartComponent extends React.Component {
                     this.props.socket.on('buyDone_Room', (data) => {
                         if(this.props.socket.id !== data.socketID) return;
                         this.doneBuy = data.price
+                        this.currentBuy = 0
                     });
                     this.props.socket.on('askDone_Room', (data) => {
                         if(this.props.socket.id !== data.socketID) return;
@@ -100,14 +101,15 @@ class ChartComponent extends React.Component {
                     this.props.socket.on('sellDone_Room', (data) => {
                         if(this.props.socket.id !== data.socketID) return;
                         this.doneSell = data.price;
+                        this.currentSell = 0;
                     });
-                    this.props.socket.on('buyCancel', (data) => {
-                        if(this.props.socket.id !== data.socketID) return;
-                        this.currentBuy = data.price;
+                    this.props.socket.on('cancelBid_Res', (data) => {
+                        // if(this.props.socket.id !== data.socketID) return;
+                        this.currentBuy = 0;
                     });
-                    this.props.socket.on('sellCancel', (data) => {
-                        if(this.props.socket.id !== data.socketID) return;
-                        this.currentSell = data.price
+                    this.props.socket.on('cancelAsk_Res', (data) => {
+                        // if(this.props.socket.id !== data.socketID) return;
+                        this.currentSell = 0;
                     });
                 });
                 this.setup = false;

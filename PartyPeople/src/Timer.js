@@ -1,90 +1,110 @@
-// import { red } from '@material-ui/core/colors';
-// import React, { useEffect, useState } from 'react';
-// import fiveSecLeft from './audios/effect/5secLeft.wav';
+import React, { useEffect, useState } from 'react';
+import fiveSecLeft from './audios/effect/5secLeft.wav';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
-// import ReactDOM from 'react-dom';
-// import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import './Timer.css';
 
-// import './Timer.css';
+const timeAudio = new Audio(fiveSecLeft);
+let timerSwitch = false;
 
-// const timeAudio = new Audio(fiveSecLeft);
+export default function Timer(props) {
+    const [curTime, setCurTime] = useState(-1);
+    const [timerSet, setTimerSet] = useState({
+        timerSet: false,
+        isPlaying: false,
+        initGameTime: 0,
+        gameTime: 0,
+    });
 
-// export default function Timer(props) {
-//     const [timerSound] = useState(timeAudio);
-//     const [time, setTime] = useState(-1);
-//     console.log('@Timer // time:', time);
+    useEffect(() => {
+        if (timerSwitch === false) {
+            props.socket.emit('timerSet_Req');
+        }
+        props.socket.once('timerSet_Res', (timerSetData) => {
+            setTimerSet(timerSetData);
+            setCurTime(timerSetData['gameTime']);
+            timerSwitch = true;
+        });
+    }, []);
 
-//     const renderTime = ({ remainingTime }) => {
-//         if (remainingTime === 0) {
-//             return <div className="timer">게임 종료</div>;
-//         }
+    // if (timerSet['timerSet'] && 0 <= timerSet['gameTime'] && timerSet['gameTime'] <= 5) {
+    //     timeAudio.play();
+    // }
 
-//         return (
-//             <div className="timer">
-//                 <div className="text">게임 종료까지</div>
-//                 <div className="value">{time}</div>
-//             </div>
-//         );
-//     };
+    // if (!gameOver && timerSet['timerSet'] && timerSet['gameTime'] <= 0) {
+    //     gameOver = true;
+    //     let gameOverTime = {
+    //         timerSet: true,
+    //         isPlaying: false,
+    //         initGameTime: 0,
+    //         gameTime: 0,
+    //     };
+    //     setTimerSet(gameOverTime);
+    // }
+    useEffect(() => {
+        props.socket.once('restGameTime', (curTimeData) => {
+            setCurTime(curTimeData);
+        });
+    });
 
-//     return (
-//         <div className="App">
-//             <div className="timer-wrapper">
-//                 <CountdownCircleTimer
-//                     isPlaying
-//                     duration={props.gameTime}
-//                     colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
-//                     onComplete={() => [true, 1000]}
-//                 >
-//                     {renderTime}
-//                 </CountdownCircleTimer>
-//             </div>
-//             <p className="info">
-//                 Change component properties in the code filed on the right to
-//                 try difference functionalities
-//             </p>
-//         </div>
-//     );
-// }
+    const renderTime = (remainingTime) => {
+        console.log('remainingTime :', remainingTime);
+        if (0 <= remainingTime && remainingTime <= 5) {
+            timeAudio.play();
+        } else if (remainingTime < 0) {
+            console.log('hi');
+            timerSwitch = false;
+            return (
+                <div
+                    className="timer"
+                    style={{ fontWeight: 'bold', fontSize: '1.5vw' }}
+                >
+                    게임 종료
+                </div>
+            );
+        }
 
-// // export default function Timer(props) {
-// //     const [timerSound] = useState(timeAudio);
-// //     const [time, setTime] = useState(-1);
+        return (
+            <div className="timer">
+                <div
+                    className="text"
+                    style={{
+                        fontWeight: 'bold',
+                        fontSize: '1.5vw',
+                        color: 'white',
+                    }}
+                >
+                    남은 시간
+                </div>
+                <div className="value">{remainingTime}</div>
+            </div>
+        );
+    };
 
-// //     props.socket.on('restGameTime', (restGameTime) => {
-// //         setTime(restGameTime);
-// //     });
+    const countdownTimer = (timerSet) => {
+        return (
+            <CountdownCircleTimer
+                isPlaying={timerSet['isPlaying']}
+                duration={timerSet['initGameTime']}
+                initialRemainingTime={timerSet['gameTime']}
+                colors={[
+                    ['#2478FF', 0.25],
+                    ['#1DDB16', 0.25],
+                    ['#FFF136', 0.25],
+                    ['#FFBB00', 0.25],
+                    ['#B70000'],
+                ]}
+            >
+                {renderTime(curTime)}
+            </CountdownCircleTimer>
+        );
+    };
 
-// //     const ShowTime = () => {
-// //         if (0 <= time && time <= 5) {
-// //             timerSound.play();
-// //         }
-// //         var minute = parseInt(time / 60);
-// //         var second = time - minute * 60;
-// //         minute = minute >= 10 ? String(minute) : '0' + String(minute);
-// //         second = second >= 10 ? String(second) : '0' + String(second);
-// //         if (time < 60) {
-// //             if (time <= 0) {
-// //                 minute = '--';
-// //                 second = '--';
-// //             }
-// //             return (
-// //                 <h2
-// //                     style={{
-// //                         fontSize: '4vw',
-// //                         color: 'red',
-// //                         fontWeight: 'bold',
-// //                     }}
-// //                 >
-// //                     {minute + ' : ' + second}
-// //                 </h2>
-// //             );
-// //         } else {
-// //             return (
-// //                 <h5 style={{ fontSize: '4vw' }}>{minute + ' : ' + second}</h5>
-// //             );
-// //         }
-// //     };
-
-// //     return ShowTime();
-// // }
+    return (
+        <div className="App">
+            <div className="timer-wrapper">
+                {timerSet['timerSet'] ? countdownTimer(timerSet) : ''}
+            </div>
+        </div>
+    );
+}
