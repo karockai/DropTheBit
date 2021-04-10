@@ -91,8 +91,11 @@ def on_message(ws, msg):
     elif (msg['ty'] == 'orderbook'):
         hoka_result = {}
         hoka_result['date'] = str(datetime.datetime.fromtimestamp(msg['tms'] / 1000))
-        hoka_result['total_ask_size'] = msg['tas']
-        hoka_result['total_bid_size'] = msg['tbs']
+        # 매수 1호가, 매도 1호가의 사이즈로 변경함
+        hoka_result['total_ask_size'] = msg['obu'][0]['as']
+        hoka_result['total_bid_size'] = msg['obu'][0]['bs']
+        # hoka_result['total_ask_size'] = msg['tas']
+        # hoka_result['total_bid_size'] = msg['tbs']
         # for i in range(5):
         #     hoka_result[f'ask_price{i}'] = msg['obu'][i]['ap']
         #     hoka_result[f'bid_price{i}'] = msg['obu'][i]['bp']
@@ -163,7 +166,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BTG"]},{"type": "orderbook", "codes": ["KRW-BTG.5"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BTG"]},{"type": "orderbook", "codes": ["KRW-BTG.2"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)

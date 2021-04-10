@@ -90,10 +90,10 @@ class Refresh {
                             price: askPrice,
                         };
                         io.to(roomID).emit('sellDone_Room', sellDone);
-                        new Game(io, socketID).sendAskTable({
-                            roomID: roomID,
-                            socketID: socketID,
-                        });
+                        // new Game(io, socketID).sendAskTable({
+                        //     roomID: roomID,
+                        //     socketID: socketID,
+                        // });
                     }
                     delete askList[askPrice];
                 }
@@ -154,10 +154,10 @@ class Refresh {
                         };
 
                         io.to(roomID).emit('buyDone_Room', buyDone);
-                        new Game(io, socketID).sendBidTable({
-                            roomID: roomID,
-                            socketID: socketID,
-                        });
+                        // new Game(io, socketID).sendBidTable({
+                        //     roomID: roomID,
+                        //     socketID: socketID,
+                        // });
                     }
                     delete bidList[bidPrice];
                 }
