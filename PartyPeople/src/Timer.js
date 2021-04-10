@@ -1,8 +1,5 @@
-import { red } from '@material-ui/core/colors';
 import React, { useEffect, useState } from 'react';
 import fiveSecLeft from './audios/effect/5secLeft.wav';
-
-import ReactDOM from 'react-dom';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 import './Timer.css';
