@@ -47,11 +47,11 @@ export default function LobbyPlayerCard(props) {
     const classes = useStyles(props.playerCount);
     const playerCount = props.playerCount;
     let index = 1;
-    for (let interval = 3; ; interval += 2, index++) {
+    for (let interval = 4; ; interval += 2, index++) {
         const comp = Math.pow(2, interval);
         if (comp >= playerCount) break;
     }
-    const ratio = Math.pow(2, index); // playerCount ~2^1일때 1, ~8 2^3일때 2, ~32 2^5일때 4, ~128 2^7일때, 8
+    const ratio = Math.pow(2, index); // playerCount ~2^1일때 1, ~16 2^3일때 2, ~64 2^5일때 4, ~256 2^7일때, 8
     const isLeader = props.roomLeader === props.socketID ? '👑 방장' : '게스트';
     let options = null;
     if(ratio > 8) {
@@ -72,7 +72,7 @@ export default function LobbyPlayerCard(props) {
     }
     let avatars = new Avatars(sprites, options);
     let svg = avatars.create(props.playerID);
-    let maxFontSize = 1.5
+    let maxFontSize = 1.2
     const compFontSize = 5 / ratio * (5 / (props.playerID.length >= 5 ? 5 : props.playerID.length));
     maxFontSize = maxFontSize < compFontSize ? maxFontSize : compFontSize;
     let playerInfo = null;
@@ -82,7 +82,7 @@ export default function LobbyPlayerCard(props) {
     else {
       playerInfo = (
         <>
-        <Grid item style={{ fontSize: 3 / ratio + 'vw', height:'30%', padding:'2vh 1vw'}}>
+        <Grid item style={{ fontSize: maxFontSize + 'vw', height:'30%', padding:'2vh 1vw'}}>
         {isLeader}
     </Grid>
     <Grid item style={{ fontSize:  maxFontSize + 'vw', height:'70%' , padding:  '2vh 1vw', }}>
@@ -95,6 +95,7 @@ export default function LobbyPlayerCard(props) {
 
     return (
         <Grid
+            item
             style={{
                 width: 50 / ratio + '%',
                 height: 50 / ratio + '%',
