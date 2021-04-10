@@ -256,7 +256,7 @@ export default function TradeStock(props) {
 
         props.socket.on('bidDone_Room', (data) => {
             // if(this.props.socket.id !== data.socketID) return;
-            console.log('bidDone_Room');
+            // console.log('bidDone_Room');
             setPrevStatus({
                 status: 'buy_bid',
             });
@@ -418,7 +418,7 @@ export default function TradeStock(props) {
             // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
             // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
             // console.log('tradeMode',tradeMode);
-            console.log('prevStatus.status', prevStatus.status);
+            // console.log('prevStatus.status', prevStatus.status);
             const reqJson = 
             {
                 socketID: props.socket.id,

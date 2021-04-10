@@ -1,4 +1,5 @@
 function ExpBySymbol(value) {
+    if (value === null) return '';
     let ret = value;
     let length = ret.length;
     let isPlus = true;
