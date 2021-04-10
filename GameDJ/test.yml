@@ -5,8 +5,8 @@ config:
     transports: ["websocket"]
     query: "id=EnjoyPublicGame" # 매번 방 바꿔줘야함
   phases:
-    - duration: 30
-      arrivalRate: 3
+    - duration: 10
+      arrivalRate: 2
 scenarios:
   - name: "Connect and join Room"
     engine: "socketio"
@@ -16,7 +16,7 @@ scenarios:
           data:
             "playerID": "{{$randomString()}}"
             "roomID": "EnjoyPublicGame"
-      - think: 40
+      - think: 20
       - loop:
         - emit:
             channel: "buy_Req"
