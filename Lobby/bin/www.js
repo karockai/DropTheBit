@@ -43,11 +43,12 @@ async function serverInfo(){
                         //     "text": {
                         //         "type": "mrkdwn",
                         //         "text": 
-                                `서버:\t${name}(${ip})
-                                 방 개수: \t${room}
-                                 접속자 수:\t${player}
-                                 CPU 사용량:\t${cpuStat}%
-                                 메모리 사용량:\t${memStat}%`
+`서버:\t${name} (${ip})
+    방 개수: \t${room}
+    접속자 수:\t${player}
+    CPU 사용량:\t${cpuStat}%
+    메모리 사용량:\t${memStat}%
+`
                         //     },
                         //     "accessory": {
                         //         "type": "image",
