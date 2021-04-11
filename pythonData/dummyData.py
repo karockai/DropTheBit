@@ -38,7 +38,18 @@ last = len(dummyJuka_Hoka2.juka_list)
 
 while True:
     juka_result = dummyJuka_Hoka2.juka_list[i]
-    hoka_result = dummyJuka_Hoka2.hoka_list[i]
+    hoka_result = dict()
+    ask_sum = 0
+    bid_sum = 0
+    for j in range(1):
+        ask_sum += dummyJuka_Hoka2.hoka_list[i][f'ask_size{j}']
+        bid_sum += dummyJuka_Hoka2.hoka_list[i][f'ask_size{j}']
+    # print(dummyJuka_Hoka2.hoka_list[i]['date'])
+    hoka_result['date'] = dummyJuka_Hoka2.hoka_list[i]['date']
+    hoka_result['total_ask_size'] = ask_sum
+    hoka_result['total_bid_size'] = bid_sum
+    hoka_result['ask_price'] = dummyJuka_Hoka2.hoka_list[i]['ask_price0']
+    hoka_result['bid_price'] = dummyJuka_Hoka2.hoka_list[i]['bid_price0']
     juka_result['volUnit'] = 10000
     juka_result = json.dumps(juka_result, ensure_ascii=False)
     hoka_result = json.dumps(hoka_result, ensure_ascii=False)
