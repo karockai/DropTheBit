@@ -74,7 +74,7 @@ class Game {
             this.refreshWallet(roomID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -168,7 +168,7 @@ class Game {
             this.refreshWallet(socketID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -262,7 +262,7 @@ class Game {
             this.refreshWallet(socketID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -308,7 +308,7 @@ class Game {
             // this.sendBidTable(reqJson);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -354,7 +354,7 @@ class Game {
             // this.sendAskTable(reqJson);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
