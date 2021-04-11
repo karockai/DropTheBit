@@ -13,7 +13,7 @@ const [askPercent, setAskPercent] = useState('');
 const [bidPercent, setBidPercent] = useState('');
 
 props.socket.on('refreshExList', (exList) => {
-    console.log(exList);
+    // console.log(exList);
     if(exList.askPercent) {
         setAskPrice(SplitByThree(String(exList.askPrice)));
         setBidPrice(SplitByThree(String(exList.bidPrice)));
