@@ -179,12 +179,16 @@ export default function TradeStock(props) {
         SetNewVolume(volume - unitVolume);
     }
     function BidUp() {
-        SetBid(Number(currentBid) + Number(unitBid));
-        props.SetBid(Number(currentBid) + Number(unitBid));
+        let newPrice = Number(currentBid) + Number(unitBid);
+        SetBid(newPrice);
+        // props.SetBid(Number(currentBid) + Number(unitBid));
+        props.socket.emit('chartMyPrice_Req', newPrice);
     }
     function BidDown() {
-        SetBid(Number(currentBid) - Number(unitBid));
-        props.SetBid(Number(currentBid) - Number(unitBid));
+        let newPrice = Number(currentBid) - Number(unitBid);
+        SetBid(newPrice);
+        // props.SetBid(Number(currentBid) - Number(unitBid));
+        props.socket.emit('chartMyPrice_Req', newPrice);
     }
 
     function RefreshBid_Req() {

@@ -8,7 +8,6 @@ import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
 import { CircularProgress, Grid } from '@material-ui/core';
 
-
 class ChartComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +19,6 @@ class ChartComponent extends React.Component {
         this.currentSell = 0;
         this.doneBuy = 0;
         this.doneSell = 0;
-
     }
     componentDidUpdate() {}
     componentWillMount() {
@@ -86,22 +84,22 @@ class ChartComponent extends React.Component {
                         this.addCandleData(data);
                     });
                     this.props.socket.on('bidDone_Room', (data) => {
-                        if(this.props.socket.id !== data.socketID) return;
+                        if (this.props.socket.id !== data.socketID) return;
                         this.currentBuy = data.price;
-                        this.doneBuy = 0
+                        this.doneBuy = 0;
                     });
                     this.props.socket.on('buyDone_Room', (data) => {
-                        if(this.props.socket.id !== data.socketID) return;
-                        this.doneBuy = data.price
-                        this.currentBuy = 0
+                        if (this.props.socket.id !== data.socketID) return;
+                        this.doneBuy = data.price;
+                        this.currentBuy = 0;
                     });
                     this.props.socket.on('askDone_Room', (data) => {
-                        if(this.props.socket.id !== data.socketID) return;
+                        if (this.props.socket.id !== data.socketID) return;
                         this.currentSell = data.price;
-                        this.doneSell = 0
+                        this.doneSell = 0;
                     });
                     this.props.socket.on('sellDone_Room', (data) => {
-                        if(this.props.socket.id !== data.socketID) return;
+                        if (this.props.socket.id !== data.socketID) return;
                         this.doneSell = data.price;
                         this.currentSell = 0;
                     });
@@ -113,6 +111,7 @@ class ChartComponent extends React.Component {
                         // if(this.props.socket.id !== data.socketID) return;
                         this.currentSell = 0;
                     });
+                    this.props.socket.on('chartMyPrice_Res', (data) => {});
                 });
                 this.setup = false;
             }
