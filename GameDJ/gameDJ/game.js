@@ -95,7 +95,7 @@ class Game {
             // 2. player_info 가져오기
             let playerInfo = roomList[roomID][socketID];
             let cash = playerInfo['cash'];
-            let coinVol = 0;
+            let coinVol = playerInfo['coinVol'];
             let playerID = playerInfo['playerID'];
 
             let bfrWallet = {};
@@ -104,7 +104,7 @@ class Game {
             bfrWallet['asset'] = playerInfo['asset'];
 
             // ! 음수 값 처리
-            if (reqPrice <= 0) {
+            if (reqPrice <= 0 || reqPrice > cash) {
                 console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
                 return;
             }
@@ -113,7 +113,6 @@ class Game {
             // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
             if (reqPrice >= curPrice) {
                 let reqVol = Math.floor(cash / curPrice);
-
                 // 6-1. cash, coin 갯수 갱신
                 cash -= curPrice * reqVol;
                 coinVol += reqVol;
