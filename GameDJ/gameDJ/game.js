@@ -165,7 +165,7 @@ class Game {
                 // console.log('호가 등록 완료', playerInfo);
                 // console.log('roomID:', roomID);
                 io.to(roomID).emit('bidDone_Room', bidDone);
-                console.log('호가 등록 완료', bidList);
+                // console.log('호가 등록 완료', bidList);
                 // this.sendBidTable(reqJson);
             }
 
@@ -308,7 +308,7 @@ class Game {
             bfrWallet['cash'] = playerInfo['cash'];
             bfrWallet['asset'] = playerInfo['asset'];
 
-            cash += bidVol * bidPrice;
+            cash += bidVol * Number(bidPrice);
             playerInfo['cash'] = cash;
             delete playerInfo['bid'][bidPrice];
             roomList[roomID][socketID] = playerInfo;

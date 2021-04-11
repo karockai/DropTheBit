@@ -73,7 +73,7 @@ export function SnackAlertFunc(props) {
     }
 
     const callback = () => {
-        enqueueSnackbar(parseMsg, {
+        enqueueSnackbar(props.message, {
             variant: props.severity,
             anchorOrigin: {
                 vertical: 'top',

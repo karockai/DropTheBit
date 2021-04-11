@@ -110,7 +110,11 @@ export default function LayoutGrid(props) {
             >
                 <Grid
                     className="플레이어리스트그리드"
+                    container
                     item
+                    direction ='column'
+                    justify="flex-start"
+                    alignItems="flex-start"
                     xs={leftSm}
                     style={{
                         width: '100%',
@@ -118,10 +122,24 @@ export default function LayoutGrid(props) {
                         padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                     }}
                 >
-                    <Grid>
+                    <Grid
+                    item
+                        style={{
+                            width: '100%',
+                            height: '30%',
+                        }}
+                    >
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <RacingLeaderBoard socket={props.socket} />
+                    <Grid
+                    item
+                        style={{
+                            width: '100%',
+                            height: '70%',
+                        }}
+                    >
+                        <RacingLeaderBoard socket={props.socket} />
+                    </Grid>
                     {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}

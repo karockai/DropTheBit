@@ -193,7 +193,7 @@ export default function StartGame(props) {
                     }}
                     text
                 >
-                    {'START'}
+                    {'Join Game'}
                 </Button>
             </>
         );
