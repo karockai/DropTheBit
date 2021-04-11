@@ -20,8 +20,6 @@ export default function MyAsset(props) {
     const classes = useStyles();
     const [myAsset, setAsset] = useState(100000000);
     const [diffAsset, setDiffAsset] = useState(0);
-    console.log('myAsset:', myAsset);
-    console.log('diffAsset:', diffAsset);
 
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);

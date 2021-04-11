@@ -430,7 +430,6 @@ export default function TradeStock(props) {
             // 거래 취소
             // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
             // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
-            console.log('prevStatus.status', prevStatus.status);
             const reqJson = {
                 socketID: props.socket.id,
                 roomID: props.roomID,
