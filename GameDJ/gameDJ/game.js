@@ -351,7 +351,7 @@ class Game {
             let refreshWallet = {};
             refreshWallet['result'] = 'success';
             refreshWallet['type'] = 'sell';
-            refreshWallet['coinVol'] = 0;
+            refreshWallet['coinVol'] = playerInfo['coinVol'];
             refreshWallet['cash'] = playerInfo['cash'];
             refreshWallet['asset'] = playerInfo['asset'];
 
