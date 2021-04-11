@@ -206,16 +206,14 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList cellHeight='auto' className="채팅창그리드리스트" style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
+            <GridList className="채팅창그리드리스트" style={{ width: '100%', height: '85%' }} wrap={'wrap'}>
                 <Grid
                     container
-                    item
                     direction={'column'}
                     justify={'flex-start'}
-                    alignItems={'stretch'}
                     style={{
                         width: '100%',
-                        // height: '90vh',
+                        // height: '0%',
                         padding: '1vw 1vw 1vw 1vw',
                     }}
                 >
@@ -230,7 +228,7 @@ export default function ChatRoom(props) {
                                     color: '#aaff00',
                                     shadow: '0.5vh 0.5vw 0.5vh 0.5vw',
                                     width: '100%',
-                                    // padding: '1vh 0 0 0 ',
+                                    padding: '1vh 0 0 0 ',
                                     fontSize: '1vw',
                                 }}
                             >
@@ -260,8 +258,8 @@ export default function ChatRoom(props) {
                                 style={{
                                     color: 'white',
                                     width: '100%',
-                                    height: '100%',
                                     padding: '1vh 0 0 0 ',
+                                    shadow: '0.5vh 0.5vw 0.5vh 0.5vw',
                                     fontSize: '1vw',
                                 }}
                             >
