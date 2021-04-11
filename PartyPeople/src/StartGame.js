@@ -154,7 +154,7 @@ export default function StartGame(props) {
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '17vh',
+                            height: '13vh',
                             fontSize: '10vh',
                         }}
                         text
@@ -166,7 +166,7 @@ export default function StartGame(props) {
                     <button
                         style={{
                             width: '90%',
-                            height: '17vh',
+                            height: '13vh',
                             fontSize: '5vh',
                         }}
                         text
@@ -188,7 +188,7 @@ export default function StartGame(props) {
                     onClick={StartGameReq}
                     style={{
                         width: '80%',
-                        height: '18vh',
+                        height: '13vh',
                         fontSize: '10vh',
                     }}
                     text

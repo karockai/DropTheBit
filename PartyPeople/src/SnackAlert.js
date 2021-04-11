@@ -42,7 +42,7 @@ export function SnackAlertBtn(props) {
             <button
                 class="link"
                 // style={{padding:'1.2vh', margin:'0.5vw', width: '4vw'}} //height: '5vh'
-                style={{ margin:'0vw',padding: '1vh 1.5vw' }}
+                style={{ margin:'0vw',padding: '1vh 1.5vw', }}
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}
