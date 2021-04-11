@@ -56,12 +56,12 @@ function TutorialPage(props) {
                 justify='space-between'
                 style={{ width: '100%', height: '10%' }}
             >
-                <h1 align="left" style={{ padding: '1vh 1vw', width:'50%' }}>
+                <h1 align="left" style={{ padding: '1vh 1vw', width:'50%', textAlign:'left', fontWeight:'bold' }}>
                     {props.title}
                 </h1>
-                {/* <div align="right" onClick={props.onClose} style={{ padding: '1vh 1vw' , fontSize:'2vw', cursor:'pointer'}}>
+                <div align="right" onClick={props.onClose} style={{ padding: '1vh 1vw' , fontSize:'2vw', cursor:'pointer'}}>
                     ❌
-                </div> */}
+                </div>
             </Grid>
 
             <Grid
@@ -73,8 +73,8 @@ function TutorialPage(props) {
                     src={props.img}
                     style={{
                         height: '100%',
-                        width:  props.hasContent ? '60%' : '96%',
-                        padding: '5vh 0 0 0',
+                        width:  props.hasContent ? '60%' : '60%',
+                        padding: '0 0 5vh 0',
                     }}
                 />
             </Grid>
@@ -151,7 +151,7 @@ export default function LobbyTutorial(props) {
     return (
         <Paper
             className={classes.paper}
-            style={{ height: '100%', width: '100%', padding: '2vh 0 2vh 0' }}
+            style={{ height: '95vh', width: '90vw', padding: '2vh 0 2vh 0' }}
         >
             <Grid
                 container
