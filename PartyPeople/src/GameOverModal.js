@@ -67,15 +67,15 @@ export default function GameOverModal(props) {
     const history = useHistory();
     const BackToLobby = () => {
         props.socket.emit('backToLobby', props.roomID);
-        props.socket.on('backToLobby_Res', (roomLeader) => {    //roomInfo gaming flase => 지금처럼 true => 로비, 버튼이 join
+        props.socket.on('backToLobby_Res', (roomInfo) => {    //roomInfo gaming flase => 지금처럼 true => 로비, 버튼이 join
             props.setLeaderBoard(false);
             let path = '/lobby';
             history.push({
                 pathname: path,
                 state: {
-                    roomLeader: roomLeader,
-                    // roomLeader: roomInfo.roomLeader,[', k]
-                    // gaming : roomInfo.
+                    // roomLeader: roomLeader,
+                    roomLeader: roomInfo.roomLeader,
+                    gaming : roomInfo.gaming,
                     
                 },
             });

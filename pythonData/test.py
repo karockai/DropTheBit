@@ -95,15 +95,13 @@ def on_message(ws, msg):
         # hoka_result['total_bid_size'] = msg['tbs']
         ask_sum = 0
         bid_sum = 0
-        for i in range(1):
+        for i in range(2):
             ask_sum += msg['obu'][i]['as']
             bid_sum += msg['obu'][i]['bs']
         # print(hoka_result)
         # 매수 1호가, 매도 1호가의 사이즈로 변경함
         hoka_result['total_ask_size'] = ask_sum
         hoka_result['total_bid_size'] = bid_sum
-        hoka_result['ask_price'] = msg['obu'][0]['ap']
-        hoka_result['bid_price'] = msg['obu'][0]['bp']
 
     if (juka_result):
         cur_price = juka_result['curPrice']
@@ -135,15 +133,14 @@ def on_message(ws, msg):
             juka_result['volUnit'] = (100000000 / price_max) * 0.1
             juka_result['coinName'] = coinName.coinList[coin_name]
             # hoka_result['coinName'] = coinName.coinList[coin_name]
-
-            if type(juka_result) != str:
-                juka_result = json.dumps(juka_result, ensure_ascii=False)
-            if type(hoka_result) != str:
-                hoka_result = json.dumps(hoka_result, ensure_ascii=False)
+  
+            juka_result = json.dumps(juka_result, ensure_ascii=False)
+            hoka_result = json.dumps(hoka_result, ensure_ascii=False)
+            print(type(hoka_result))
 
             if (juka_result and hoka_result):
-                conn.set("curCoin", juka_result)
-                conn.set("bidTable", hoka_result)
+                # conn.set("curCoin", juka_result)
+                # conn.set("bidTable", hoka_result)
                 print(juka_result)
                 print(hoka_result)
             pre_price = cur_price
@@ -170,7 +167,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-XRP"]},{"type": "orderbook", "codes": ["KRW-XRP.2"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-IOST"]},{"type": "orderbook", "codes": ["KRW-IOST.2"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)

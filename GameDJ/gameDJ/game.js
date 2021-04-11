@@ -26,7 +26,7 @@ class Game {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
-            } 
+            }
             // 방장이 아니면 자기만 시작함
             else {
                 io.to(socket.id).emit('startGame_Res', {
@@ -145,7 +145,7 @@ class Game {
                 // 7-1. cash 갱신
                 cash -= reqPrice * reqVol;
                 playerInfo['cash'] = cash;
-                
+
                 // 4-3. player 호가 목록 등록
 
                 playerInfo['bid'][reqPrice] = reqVol;
@@ -165,7 +165,7 @@ class Game {
                 // console.log('호가 등록 완료', playerInfo);
                 // console.log('roomID:', roomID);
                 io.to(roomID).emit('bidDone_Room', bidDone);
-                console.log("호가 등록 완료", bidList);
+                console.log('호가 등록 완료', bidList);
                 // this.sendBidTable(reqJson);
             }
 
@@ -255,12 +255,6 @@ class Game {
 
                 roomList[roomID][socketID] = playerInfo;
 
-                //? 예은 디버깅
-                if (playerInfo['playerID'].length === 2) {
-                    console.log('sell 호가 등록---------');
-                    console.log(playerInfo);
-                    console.log(askList);
-                }
 
                 // console.log('호가 등록 완료', playerInfo);
                 let askDone = {
@@ -312,6 +306,7 @@ class Game {
 
             let bfrWallet = {};
             bfrWallet['coinVol'] = playerInfo['coinVol'];
+            bfrWallet['cash'] = playerInfo['cash'];
             bfrWallet['asset'] = playerInfo['asset'];
 
             cash += bidVol * bidPrice;

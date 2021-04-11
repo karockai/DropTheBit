@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
-import { PieChart } from 'react-minimal-pie-chart';
 // import BidGraph from './BidGraph';
 import HorizontalBarChart from './BidGraph';
 import { TypeChooser } from "react-stockcharts/lib/helper";

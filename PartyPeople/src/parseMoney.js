@@ -57,23 +57,20 @@ function showProfit(id , diff) {
         return result;
     }
     const asset = document.getElementById(id);
-    if (asset) asset.classList.remove('default');
-    
+    if (asset.classList.contains('default')) asset.classList.remove('default');
     if(diff > 0) {     // ! 흑자
-        if (asset) asset.classList.add('plus');
+        // if (!asset.classList.contains('plus')) asset.classList.add('plus');
+        asset.className = 'plus';
         result += '+';
     }
     else {                  // ? 적자
-        if (asset) asset.classList.add('minus');
+        // if (!asset.classList.contains('minus')) asset.classList.add('minus');
+        asset.className = 'minus';
     }
-    
-    
     if (asset) asset.classList.add('blinking');
+    
     setTimeout(function () {
-        if (asset) asset.classList.remove('blinking');
-        if (asset) asset.classList.remove('plus');
-        if (asset) asset.classList.remove('minus');  
-        if (asset) asset.classList.add('default');
+        asset.className = 'default';
     }, 700);
     // document.getElementById(id).fadeOut(1000);
 
