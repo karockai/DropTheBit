@@ -95,7 +95,7 @@ def on_message(ws, msg):
         # hoka_result['total_bid_size'] = msg['tbs']
         ask_sum = 0
         bid_sum = 0
-        for i in range(2):
+        for i in range(1):
             ask_sum += msg['obu'][i]['as']
             bid_sum += msg['obu'][i]['bs']
         # print(hoka_result)
@@ -166,7 +166,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BTG"]},{"type": "orderbook", "codes": ["KRW-BTG.2"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-XRP"]},{"type": "orderbook", "codes": ["KRW-XRP.2"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)

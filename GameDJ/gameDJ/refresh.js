@@ -20,7 +20,8 @@ class Refresh {
             if (curPrice === prePrice) {
                 return false;
             }
-            console.log(curPrice);
+            // console.log(curCoin['date'], ' RE');
+            // console.log(curPrice);
             // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
             chartData.push(curCoin);
             if (chartData.length > 100) {
@@ -207,7 +208,8 @@ class Refresh {
                         let bfrWallet = {};
                         bfrWallet['coinVol'] = playerInfo['coinVol'];
                         bfrWallet['cash'] = playerInfo['cash'];
-                        bfrWallet['asset'] = cash + prePrice * coinVol;
+                        bfrWallet['asset'] =
+                            cash + bidCash + prePrice * (askVol + coinVol);
 
                         let refreshWallet = {};
                         refreshWallet['result'] = 'success';
@@ -340,25 +342,27 @@ class Refresh {
 
     // refreshBid 갱신
     async refreshBid() {
-// <<<<<<< HEAD
-//         const { io } = this;
-//         let bidObj = JSON.parse(await dbget('bidTable'));
-//         let totalAsk = bidObj['total_ask_size'];
-//         let totalBid = bidObj['total_bid_size'];
-//         let total = totalAsk + totalBid;
+        // <<<<<<< HEAD
+        //         const { io } = this;
+        //         let bidObj = JSON.parse(await dbget('bidTable'));
+        //         let totalAsk = bidObj['total_ask_size'];
+        //         let totalBid = bidObj['total_bid_size'];
+        //         let total = totalAsk + totalBid;
 
-//         let askPercent = (totalAsk / total) * 100;
-//         let bidPercent = 100 - askPercent;
+        //         let askPercent = (totalAsk / total) * 100;
+        //         let bidPercent = 100 - askPercent;
 
-//         let exList = {
-//             askPercent: askPercent,
-//             bidPercent: bidPercent,
-//         };
-//         io.emit('refreshExList', exList);
-// =======
+        //         let exList = {
+        //             askPercent: askPercent,
+        //             bidPercent: bidPercent,
+        //         };
+        //         io.emit('refreshExList', exList);
+        // =======
         try {
             const { io } = this;
             let bidObj = JSON.parse(await dbget('bidTable'));
+            console.log(bidObj);
+            // console.log(bidObj['date'], ' TAB');
 
             let totalAsk = bidObj['total_ask_size'];
             let totalBid = bidObj['total_bid_size'];
