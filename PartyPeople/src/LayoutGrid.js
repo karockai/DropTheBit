@@ -131,7 +131,15 @@ export default function LayoutGrid(props) {
                     >
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <RacingLeaderBoard socket={props.socket} />
+                    <Grid
+                    item
+                        style={{
+                            width: '100%',
+                            height: '70%',
+                        }}
+                    >
+                        <RacingLeaderBoard socket={props.socket} />
+                    </Grid>
                     {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
