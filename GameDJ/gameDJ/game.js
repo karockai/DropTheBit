@@ -95,7 +95,7 @@ class Game {
             // 2. player_info 가져오기
             let playerInfo = roomList[roomID][socketID];
             let cash = playerInfo['cash'];
-            let coinVol = 0;
+            let coinVol = playerInfo['coinVol'];
             let playerID = playerInfo['playerID'];
 
             let bfrWallet = {};
@@ -104,7 +104,7 @@ class Game {
             bfrWallet['asset'] = playerInfo['asset'];
 
             // ! 음수 값 처리
-            if (reqPrice <= 0) {
+            if (reqPrice <= 0 || cash < reqPrice) {
                 console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
                 return;
             }
@@ -113,6 +113,7 @@ class Game {
             // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
             if (reqPrice >= curPrice) {
                 let reqVol = Math.floor(cash / curPrice);
+                console.log('reqVol:', reqVol);
 
                 // 6-1. cash, coin 갯수 갱신
                 cash -= curPrice * reqVol;
@@ -141,7 +142,7 @@ class Game {
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
                 let reqVol = Math.floor(cash / reqPrice);
-
+                console.log('@bid // reqVol:', reqVol);
                 // 7-1. cash 갱신
                 cash -= reqPrice * reqVol;
                 playerInfo['cash'] = cash;
@@ -309,7 +310,9 @@ class Game {
             bfrWallet['asset'] = playerInfo['asset'];
 
             cash += bidVol * Number(bidPrice);
+            console.log('@cancelBid // bidVol: ', bidVol);
             playerInfo['cash'] = cash;
+
             delete playerInfo['bid'][bidPrice];
             roomList[roomID][socketID] = playerInfo;
 
@@ -381,8 +384,8 @@ class Game {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };
-        console.log('bfr:', bfrWallet);
-        console.log('cur:', refreshWallet);
+        console.log('bfrWallet:', bfrWallet);
+        console.log('refreshWallet:', refreshWallet);
 
         if (bfrWallet['cash'] !== refreshWallet['cash']) {
             io.to(socketID).emit('refreshCash', walletInfo);

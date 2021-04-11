@@ -28,10 +28,8 @@ export default function MyCoin(props) {
                 const curCoin = data.refreshWallet.coinVol;
                 const diffCoin = curCoin - bfrCoin;
 
-                if (diffCoin) {
-                    setCoin(curCoin);
-                    setDiffCoin(diffCoin);
-                }
+                setCoin(curCoin);
+                setDiffCoin(diffCoin);
             });
         }
     }, [isInit]);

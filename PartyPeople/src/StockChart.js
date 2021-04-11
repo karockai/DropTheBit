@@ -81,7 +81,7 @@ class StockChart extends React.Component {
 
         const start = xAccessor(last(data));
         const close = last(data);
-        const end = xAccessor(data[Math.max(0, data.length - 100)]);
+        const end = xAccessor(data[Math.max(0, data.length - 50)]);
         const xExtents = [start, end];
         this.dataHigh =
             last(data).high > this.dataHigh ? last(data).high : this.dataHigh;
