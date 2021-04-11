@@ -59,9 +59,9 @@ function TutorialPage(props) {
                 <h1 align="left" style={{ padding: '1vh 1vw', width:'50%' }}>
                     {props.title}
                 </h1>
-                <div align="right" onClick={props.onClose} style={{ padding: '1vh 1vw' , fontSize:'2vw', cursor:'pointer'}}>
+                {/* <div align="right" onClick={props.onClose} style={{ padding: '1vh 1vw' , fontSize:'2vw', cursor:'pointer'}}>
                     ❌
-                </div>
+                </div> */}
             </Grid>
 
             <Grid
@@ -151,7 +151,7 @@ export default function LobbyTutorial(props) {
     return (
         <Paper
             className={classes.paper}
-            style={{ height: '90vh', width: '60vw', padding: '2vh 0 2vh 0' }}
+            style={{ height: '100%', width: '100%', padding: '2vh 0 2vh 0' }}
         >
             <Grid
                 container

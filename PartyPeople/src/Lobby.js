@@ -232,9 +232,9 @@ function Lobby(props) {
     console.log(gaming);
     return (
         <>
-            <video className="videoTag" autoPlay loop muted>
+            {/* <video className="videoTag" autoPlay loop muted>
                 <source src={backgroundImg} type="video/mp4" />
-            </video>
+            </video> */}
             <Grid
                 className="전체그리드"
                 container
@@ -252,7 +252,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid xs={3} align="left">
+                            <Grid xs={4} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -260,14 +260,14 @@ function Lobby(props) {
                                     aria-label="menu"
                                 >
                                     {/* <MenuIcon /> */}
-                                    <span style={{ fontSize: '2vw' }}>
+                                    <span style={{ fontSize: '2vw', fontWeight:'bold' }}>
                                         {props.roomInfo[
                                             props.roomInfo['roomLeader']
                                         ]['playerID'] + ' 님의 단타방 📊'}
                                     </span>
                                 </IconButton>
                             </Grid>
-                            <Grid xs={5} contianer justify="center" alignItems="center" style={{ padding: '0 1vw 0 1vw' }}>
+                            <Grid xs={8} direction={'row'} contianer justify="flex-start" alignItems="flex-start" style={{ padding: '0 1vw 0 1vw', textAlign: 'right' }}>
                                 <TextField
                                     type="text"
                                     id="gameLink"
@@ -277,7 +277,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '50%', margin:'1vw', padding:'0' }}
+                                    style={{ width: '30%',height:'100%',  padding:'0.5vw' }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={1}>
@@ -292,8 +292,6 @@ function Lobby(props) {
                                         id="copy"
                                     />
                                 </SnackbarProvider>
-                            </Grid>
-                            <Grid xs={4}>
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
@@ -307,6 +305,7 @@ function Lobby(props) {
                                     lobbyAudio={props.lobbyAudio}
                                 />
                             </Grid>
+
                         </Toolbar>
                     </AppBar>
                 </Grid>

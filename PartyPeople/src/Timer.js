@@ -74,7 +74,7 @@ export default function Timer(props) {
                 >
                     남은 시간
                 </div>
-                <div className="value">{remainingTime}</div>
+                <div className="value" >{remainingTime}</div>
             </div>
         );
     };
@@ -100,7 +100,7 @@ export default function Timer(props) {
 
     return (
         <div className="App">
-            <div className="timer-wrapper">
+            <div className="timer-wrapper" style={{height:'100%', width:'100%'}}>
                 {timerSet['timerSet'] ? countdownTimer(timerSet) : ''}
             </div>
         </div>

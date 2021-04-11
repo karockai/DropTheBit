@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         textAlign: 'center',
         padding: theme.spacing(1),
-        textAlign: 'left',
         color: '#000000',
         backgroundColor: '#0C151C',
     },
@@ -49,18 +48,16 @@ function LobbyMusicOnOff(props) {
     };
 
     return (
-        <FormGroup style={{ padding: '0.8vh 0 0 0.8vw' }}>
-            <FormControlLabel
-                control={
-                    <PurpleSwitch
-                        checked={state}
-                        onChange={handleChange}
-                        name="checkedA"
-                    />
-                }
-                //   label="Custom color"
-            />
-        </FormGroup>
+        <FormControlLabel
+            control={
+                <PurpleSwitch
+                    checked={state}
+                    onChange={handleChange}
+                    name="checkedA"
+                />
+            }
+            //   label="Custom color"
+        />
     );
 }
 
@@ -157,13 +154,13 @@ export default function LobbyTabs(props) {
     // console.log(selectMusic, openSelect);
     return (
         <>
-            <Grid
+            {/* <Grid
                 container
                 style={{ padding: '0 1vw 0 1vw' }}
                 justify={'space-around'}
                 alignItems={'center'}
-            >
-                <button
+            > */}
+            {/* <button
                     class="tutorial"
                     id="tutorials"
                     onClick={handleSelectTuto}
@@ -171,12 +168,12 @@ export default function LobbyTabs(props) {
                     size="large"
                 >
                     Tutorial
-                </button>
+                </button> */}
                 <button
                     class="arrow"
                     id="key_map"
                     onClick={handleKeymap}
-                    style={{ padding: '1vh 1vw 1vh 1vw' }}
+                    style={{ padding: '1vh 1vw 1vh 1vw', margin: '0.5vw' }}
                     size="large"
                 >
                     KEY MAP
@@ -191,7 +188,7 @@ export default function LobbyTabs(props) {
                     SELECT MUSIC
                 </button> */}
                 <LobbyMusicOnOff lobbyAudio={props.lobbyAudio} />
-            </Grid>
+            {/* </Grid> */}
             <Popover
                 open={openKey}
                 anchorEl={keymap}
@@ -241,6 +238,6 @@ export default function LobbyTabs(props) {
                     <CheckLeader />
                 </Typography>
             </Popover> */}
-        </>
+            </>
     );
 }
