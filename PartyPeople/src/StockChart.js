@@ -162,6 +162,7 @@ class StockChart extends React.Component {
                         lineStroke="green"
                         strokeDasharray="ShortDash"
                         arrowWidth={3}
+                        displayFormat={format('.2f')}
                     />
 
                     <PriceCoordinate
@@ -177,6 +178,7 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매도체결"
@@ -191,6 +193,7 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
                     />
                     <CandlestickSeries {...candlesAppearance} />
                     <PriceCoordinate
@@ -204,6 +207,7 @@ class StockChart extends React.Component {
                         lineStroke="green"
                         strokeDasharray="ShortDash"
                         arrowWidth={3}
+                        displayFormat={format('.2f')}
                     />
 
                     <PriceCoordinate
@@ -219,6 +223,7 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매도체결"
@@ -233,12 +238,13 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매수주문"
                         at="right"
                         orient="right"
-                        price={this.props.currentBuy*1.000001}
+                        price={this.props.currentBuy*1.000004}
                         stroke="red"
                         strokeWidth={2}
                         fill="transperent"
@@ -247,12 +253,13 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매수주문"
                         at="right"
                         orient="right"
-                        price={this.props.currentBuy*0.999999}
+                        price={this.props.currentBuy*1.000002}
                         stroke="red"
                         strokeWidth={2}
                         fill="transperent"
@@ -261,6 +268,37 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        className="매수주문"
+                        at="right"
+                        orient="right"
+                        price={this.props.currentBuy*0.999998}
+                        stroke="red"
+                        strokeWidth={2}
+                        fill="transperent"
+                        lineStroke="red"
+                        opacity={1}
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        className="매수주문"
+                        at="right"
+                        orient="right"
+                        price={this.props.currentBuy*0.999996}
+                        stroke="red"
+                        strokeWidth={2}
+                        fill="transperent"
+                        lineStroke="red"
+                        opacity={1}
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매수주문"
@@ -275,12 +313,13 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매도주문"
                         at="right"
                         orient="right"
-                        price={this.props.currentSell*1.000001}
+                        price={this.props.currentSell*1.000004}
                         stroke="#007bff"
                         strokeWidth={2}
                         opacity={1}
@@ -289,12 +328,13 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매도주문"
                         at="right"
                         orient="right"
-                        price={this.props.currentSell*0.999999}
+                        price={this.props.currentSell*1.000002}
                         stroke="#007bff"
                         strokeWidth={2}
                         opacity={1}
@@ -303,6 +343,37 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        className="매도주문"
+                        at="right"
+                        orient="right"
+                        price={this.props.currentSell*0.999998}
+                        stroke="#007bff"
+                        strokeWidth={2}
+                        opacity={1}
+                        fill="transperent"
+                        lineStroke="#007bff"
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        className="매도주문"
+                        at="right"
+                        orient="right"
+                        price={this.props.currentSell*0.999996}
+                        stroke="#007bff"
+                        strokeWidth={2}
+                        opacity={1}
+                        fill="transperent"
+                        lineStroke="#007bff"
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="매도주문"
@@ -317,12 +388,13 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="나의호가"
                         at="right"
                         orient="right"
-                        price={this.props.bid*1.000001}
+                        price={this.props.bid*1.000004}
                         stroke="white"
                         opacity={1}
                         strokeWidth={1}
@@ -331,12 +403,13 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={12}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="나의호가"
                         at="right"
                         orient="right"
-                        price={this.props.bid*0.999999}
+                        price={this.props.bid*1.000002}
                         stroke="white"
                         opacity={1}
                         strokeWidth={1}
@@ -345,6 +418,37 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={12}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        className="나의호가"
+                        at="right"
+                        orient="right"
+                        price={this.props.bid*0.999996}
+                        stroke="white"
+                        opacity={1}
+                        strokeWidth={1}
+                        fill="#635ee7"
+                        lineStroke="white"
+                        textFill="#fff"
+                        arrowWidth={12}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
+                        className="나의호가"
+                        at="right"
+                        orient="right"
+                        price={this.props.bid*0.999998}
+                        stroke="white"
+                        opacity={1}
+                        strokeWidth={1}
+                        fill="#635ee7"
+                        lineStroke="white"
+                        textFill="#fff"
+                        arrowWidth={12}
+                        strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
                         className="나의호가"
@@ -359,6 +463,7 @@ class StockChart extends React.Component {
                         textFill="#fff"
                         arrowWidth={12}
                         strokeDasharray="ShortDash"
+                        displayFormat={format('.2f')}
                     />
                     {/* <OHLCTooltip forChart={1} origin={[-40, 0]} /> */}
 
