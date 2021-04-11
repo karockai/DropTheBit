@@ -126,7 +126,7 @@ export default function LayoutGrid(props) {
                         item
                         style={{
                             width: '100%',
-                            height: '30%',
+                            height: '25%',
                         }}
                     >
                         {props.isStart && <Timer socket={props.socket} />}
@@ -135,7 +135,7 @@ export default function LayoutGrid(props) {
                         item
                         style={{
                             width: '100%',
-                            height: '70%',
+                            height: '75%',
                         }}
                     >
                         <RacingLeaderBoard socket={props.socket} />

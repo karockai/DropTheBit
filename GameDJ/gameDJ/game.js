@@ -393,9 +393,9 @@ class Game {
         if (bfrWallet['coinVol'] !== refreshWallet['coinVol']) {
             io.to(socketID).emit('refreshCoin', walletInfo);
         }
-        if (bfrWallet['asset'] !== refreshWallet['asset']) {
-            io.to(socketID).emit('refreshAsset', walletInfo);
-        }
+        // if (bfrWallet['asset'] !== refreshWallet['asset']) {
+        io.to(socketID).emit('refreshAsset', walletInfo);
+        // }
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
 

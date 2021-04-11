@@ -56,9 +56,7 @@ function showProfit(id, diff, setDefault) {
         return result;
     }
     const asset = document.getElementById(id);
-    if (asset.classList.contains('default')) asset.classList.remove('default');
-    if (diff > 0) {
-        // ! 흑자
+    if(diff > 0) {     // ! 흑자
         // if (!asset.classList.contains('plus')) asset.classList.add('plus');
         asset.className = 'plus';
         result += '+';
@@ -75,7 +73,6 @@ function showProfit(id, diff, setDefault) {
         }
         asset.className = 'default';
     }, 700);
-    // document.getElementById(id).fadeOut(1000);
 
     result += ExpBySymbol(parseWonToStr(diff));
     const unit = id != 'diffCoin' ? ' 원' : ' 개';
@@ -83,6 +80,6 @@ function showProfit(id, diff, setDefault) {
     // console.log(result);
     return result;
 }
-// {ExpBySymbol(parseWonToStr(myWallet.myCash))}
+// {ExpBySymbol(parseWonToStr(myWallet.myCash))}ss
 
 export { ExpBySymbol, parseWonToStr, SplitByThree, showProfit };

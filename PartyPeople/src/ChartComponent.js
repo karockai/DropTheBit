@@ -92,6 +92,7 @@ class ChartComponent extends React.Component {
                     });
                     this.props.socket.on('buyDone_Room', (data) => {
                         if (this.props.socket.id !== data.socketID) return;
+
                         this.doneBuy = data.price;
                         this.currentBuy = 0;
                     });
