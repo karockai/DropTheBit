@@ -320,8 +320,11 @@ export default function LayoutGrid(props) {
                             className={classes.paper}
                             style={{
                                 height: '50%',
-                                margin: '1vh 0px 0px 0px',
+                                // margin: '1vh 0px 0px 0px',
+                                padding: '2vh',
                                 width: '100%',
+                                fontSize: '1.2vw'
+                                
                             }}
                         >
                             {/* <TabPanel
