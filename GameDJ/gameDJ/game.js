@@ -106,6 +106,7 @@ class Game {
             // ! 음수 값 처리
             if (reqPrice <= 0 || cash < reqPrice) {
                 console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
+                console.log('cash :', cash, ' reqPrice : ', reqPrice);
                 return;
             }
 
