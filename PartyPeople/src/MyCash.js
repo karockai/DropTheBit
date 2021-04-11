@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyCash(props) {
     const classes = useStyles();
-    const [myCash, setCash] = useState(0);
+    const [myCash, setCash] = useState(100000000);
     const [diffCash, setDiffCash] = useState(0);
 
     const [isInit, setInit] = useState(false);
@@ -25,13 +25,15 @@ export default function MyCash(props) {
     useEffect(() => {
         if (props.socket == null) {
         } else {
-            props.socket.on('refreshWallet', (data) => {
+            props.socket.on('refreshCash', (data) => {
                 const bfrCash = data.bfrWallet.cash;
                 const curCash = data.refreshWallet.cash;
                 const diffCash = curCash - bfrCash;
 
-                setCash(curCash);
-                setDiffCash(diffCash);
+                if (diffCash) {
+                    setCash(curCash);
+                    setDiffCash(diffCash);
+                }
             });
         }
     }, [isInit]);
@@ -56,7 +58,7 @@ export default function MyCash(props) {
                 style={{ fontWeight: 'bold', fontSize: '1vw' }}
             >
                 {' '}
-                {showProfit('diffCash', diffCash)}
+                {showProfit('diffCash', diffCash, setDiffCash)}
             </div>
         </Paper>
     );

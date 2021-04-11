@@ -41,11 +41,9 @@ export default function GameMusic(props) {
     };
 
     useEffect(() => {
-        console.log('ho');
         props.socket.on('startGame_Real', (dataForStart) => {
             setGameTime(dataForStart['gameTime']);
             setAudio(new Audio(musicList[dataForStart['musicName']]));
-            console.log('gameMusic:', dataForStart);
             // props.socket.off('startGame_Real');
         });
     }, []);

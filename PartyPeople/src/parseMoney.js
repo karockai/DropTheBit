@@ -2,11 +2,11 @@ function ExpBySymbol(value) {
     let ret = value;
     let length = ret.length;
     let isPlus = true;
-    if (ret.charAt() === '-'){
-        ret = ret.substring(1,length);
+    if (ret.charAt() === '-') {
+        ret = ret.substring(1, length);
         length -= 1;
-        isPlus =false;
-    } 
+        isPlus = false;
+    }
     // let color = isPlus ?  '#e53935' : '#1e88e5';
     let color = 'white';
     let ans = '';
@@ -14,17 +14,16 @@ function ExpBySymbol(value) {
         // 199489230 -> 1억 9948만 9230
         ans += ret.substring(0, ret.length - 9 + 1) + '억 '; // 1억
         ret = ret.substring(ret.length - 9 + 1);
-        
     }
     if (length >= 5) {
         // value 99489230
         ans += ret.substring(0, ret.length - 5 + 1) + '만 '; // 9948만
         ret = ret.substring(ret.length - 5 + 1);
     }
-    ans+=ret;
+    ans += ret;
     let minus = isPlus ? '' : '-';
-    ans = minus+ans;
-    return (ans);
+    ans = minus + ans;
+    return ans;
 }
 
 const parseWonToStr = (won) => {
@@ -47,32 +46,35 @@ function SplitByThree(value) {
 
 // * 이전 값과 현재 값을 비교해서
 //*  +/-에 맞는 색으로 출력. 값이 같다면 출력하지 않는다.
-function showProfit(id , diff) {
+function showProfit(id, diff, setDefault) {
     // const asset = document.getElementById();
-    // let diff = curValue - bfValue; 
+    // let diff = curValue - bfValue;
     let result = '';
-    
+
     if (diff === 0) {
         return result;
     }
     const asset = document.getElementById(id);
     if (asset) asset.classList.remove('default');
-    
-    if(diff > 0) {     // ! 흑자
+
+    if (diff > 0) {
+        // ! 흑자
         if (asset) asset.classList.add('plus');
         result += '+';
-    }
-    else {                  // ? 적자
+    } else {
+        // ? 적자
         if (asset) asset.classList.add('minus');
     }
-    
-    
+
     if (asset) asset.classList.add('blinking');
     setTimeout(function () {
         if (asset) asset.classList.remove('blinking');
         if (asset) asset.classList.remove('plus');
-        if (asset) asset.classList.remove('minus');  
+        if (asset) asset.classList.remove('minus');
         if (asset) asset.classList.add('default');
+        if (setDefault) {
+            setDefault(0);
+        }
     }, 700);
     // document.getElementById(id).fadeOut(1000);
 
@@ -80,8 +82,8 @@ function showProfit(id , diff) {
     const unit = id != 'diffCoin' ? ' 원' : ' 개';
     result += unit;
     // console.log(result);
-    return (result);
+    return result;
 }
 // {ExpBySymbol(parseWonToStr(myWallet.myCash))}
 
-export {ExpBySymbol, parseWonToStr, SplitByThree ,showProfit};
+export { ExpBySymbol, parseWonToStr, SplitByThree, showProfit };

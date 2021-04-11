@@ -73,11 +73,11 @@ class Game {
             refreshWallet['asset'] = 100000000;
             refreshWallet['preExPrice'] = 0;
 
-            let walletInfo = {
-                refreshWallet: refreshWallet,
-                bfrWallet: bfrWallet,
-            };
-            io.to(roomID).emit('refreshWallet', walletInfo);
+            // let walletInfo = {
+            //     refreshWallet: refreshWallet,
+            //     bfrWallet: bfrWallet,
+            // };
+            this.refreshWallet(roomID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
             webhook.sendMessage(`에러 발생 : ${error}`);
@@ -255,7 +255,6 @@ class Game {
 
                 roomList[roomID][socketID] = playerInfo;
 
-
                 // console.log('호가 등록 완료', playerInfo);
                 let askDone = {
                     type: '매도 주문',
@@ -377,13 +376,23 @@ class Game {
     }
 
     refreshWallet(socketID, refreshWallet, bfrWallet) {
-        // console.log('refreshWallet');
         const { io } = this;
         let walletInfo = {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };
+        console.log('bfr:', bfrWallet);
+        console.log('cur:', refreshWallet);
 
+        if (bfrWallet['cash'] !== refreshWallet['cash']) {
+            io.to(socketID).emit('refreshCash', walletInfo);
+        }
+        if (bfrWallet['coinVol'] !== refreshWallet['coinVol']) {
+            io.to(socketID).emit('refreshCoin', walletInfo);
+        }
+        if (bfrWallet['asset'] !== refreshWallet['asset']) {
+            io.to(socketID).emit('refreshAsset', walletInfo);
+        }
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
 

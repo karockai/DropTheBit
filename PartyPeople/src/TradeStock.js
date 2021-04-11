@@ -176,11 +176,11 @@ export default function TradeStock(props) {
     }
     function BidUp() {
         SetBid(Number(currentBid) + Number(unitBid));
-        props.SetBid(Number(currentBid) + Number(unitBid))
+        props.SetBid(Number(currentBid) + Number(unitBid));
     }
     function BidDown() {
         SetBid(Number(currentBid) - Number(unitBid));
-        props.SetBid(Number(currentBid) - Number(unitBid))
+        props.SetBid(Number(currentBid) - Number(unitBid));
     }
 
     function RefreshBid_Req() {
@@ -211,7 +211,7 @@ export default function TradeStock(props) {
         let status = '';
         if (bid < 0) bid = 0;
         if (volume < 0) volume = 0;
-        if (bid  === 0 || volume === 0) {
+        if (bid === 0 || volume === 0) {
             return {
                 status: 'invalid',
                 val: bid,
@@ -306,7 +306,7 @@ export default function TradeStock(props) {
                 val: bid,
                 vol: volume,
             };
-        };
+        }
         status = {
             status: 'request',
             val: bid,
@@ -401,7 +401,9 @@ export default function TradeStock(props) {
             let tmpAudio = new Audio(BuyConfirm);
             tmpAudio.play();
             tmpAudio.remove();
-            setBuyStatus(Buy(currentBid, Math.floor(myWallet.myCash / currentBid)));
+            setBuyStatus(
+                Buy(currentBid, Math.floor(myWallet.myCash / currentBid))
+            );
         } else if (e.keyCode === 88) {
             //_ 'X'
             let tmpAudio = new Audio(SellConfirm);
@@ -409,7 +411,7 @@ export default function TradeStock(props) {
             tmpAudio.remove();
             setSellStatus(Sell(currentBid, myWallet.myCoin));
         } else if (e.keyCode === 67) {
-            //_ 'C' 
+            //_ 'C'
             let tmpAudio = new Audio(SellConfirm);
             tmpAudio.play();
             tmpAudio.remove();
@@ -419,16 +421,16 @@ export default function TradeStock(props) {
             // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
             // console.log('tradeMode',tradeMode);
             console.log('prevStatus.status', prevStatus.status);
-            const reqJson = 
-            {
+            const reqJson = {
                 socketID: props.socket.id,
                 roomID: props.roomID,
-            }
-            if (prevStatus.status === 'buy_bid') {      // 직전거래 buy 
-                props.socket.emit('cancelBid_Req',reqJson);
-            }
-            else if (prevStatus.status === 'sell_bid') {     // 직전거래 sell
-                props.socket.emit('cancelAsk_Req',reqJson);
+            };
+            if (prevStatus.status === 'buy_bid') {
+                // 직전거래 buy
+                props.socket.emit('cancelBid_Req', reqJson);
+            } else if (prevStatus.status === 'sell_bid') {
+                // 직전거래 sell
+                props.socket.emit('cancelAsk_Req', reqJson);
             }
         }
         const key = document.getElementById(e.key);
@@ -530,7 +532,7 @@ export default function TradeStock(props) {
         ret += value;
         return ret + '원';
     }
-    
+
     let dateString = new Date();
     dateString =
         '(' +
@@ -548,7 +550,6 @@ export default function TradeStock(props) {
             if (e.target) e.target.classList.remove('clicked');
         }, eventTime);
     };
-
 
     return (
         <>
@@ -633,9 +634,15 @@ export default function TradeStock(props) {
                 container
                 direction="column"
                 alignItems="flex-start"
-                style={{height: '100%', fontSize: '1rem', margin: '0' }}
+                style={{ height: '100%', fontSize: '1rem', margin: '0' }}
             >
-                <Grid container item direction="row" justify="space-between" style={{ height: '20%'}}>
+                <Grid
+                    container
+                    item
+                    direction="row"
+                    justify="space-between"
+                    style={{ height: '20%' }}
+                >
                     <span className={classes.small_text}>매매호가</span>
                     <span className={classes.small_text}>[C]:취소</span>
                 </Grid>
@@ -646,9 +653,9 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     // alignItems="flex-end"
-                    style={{ height: '30%'}}
+                    style={{ height: '30%' }}
                 >
-                    <Grid style={{ width: '20%'}}>
+                    <Grid style={{ width: '20%' }}>
                         <Button
                             class="arrow"
                             className={classes.arrow}
@@ -665,73 +672,98 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid
-                    style={{ width: '60%'}}
-                    align='left'>
+                    <Grid style={{ width: '60%' }} align="left">
                         <h5
                             id="bidInput"
-                            style={{fontSize: '2.5vw' }}
+                            style={{ fontSize: '2.5vw' }}
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
                         </h5>
                     </Grid>
-                    <Grid style={{ width: '20%',}} align='right'>
-                    <Button
-                        class="arrow"
-                        onClick={(e) => {
-                            clickButton(e);
-                            changeEffect(e.target.id);
-                            let tmpAudio = new Audio(PriceUp);
-                            tmpAudio.play();
-                            tmpAudio.remove();
-                            BidUp();
-                        }}
-                        id="ArrowUp"
-                    >
-                        ▲
-                    </Button>
+                    <Grid style={{ width: '20%' }} align="right">
+                        <Button
+                            class="arrow"
+                            onClick={(e) => {
+                                clickButton(e);
+                                changeEffect(e.target.id);
+                                let tmpAudio = new Audio(PriceUp);
+                                tmpAudio.play();
+                                tmpAudio.remove();
+                                BidUp();
+                            }}
+                            id="ArrowUp"
+                        >
+                            ▲
+                        </Button>
                     </Grid>
                 </Grid>
-                <Grid container item direction={'column'} justify="center" alignItems="stretch" style={{ height: '50%'}}>
+                <Grid
+                    container
+                    item
+                    direction={'column'}
+                    justify="center"
+                    alignItems="stretch"
+                    style={{ height: '50%' }}
+                >
                     <Grid
                         container
                         direction={'row'}
                         justify="space-between"
-                        style={{ width: '100%' ,height: '100%', }}
+                        style={{ width: '100%', height: '100%' }}
                     >
-                    <Grid style={{ width: '50%' ,height: '100%', }}>
-                        <button
-                            style={{ width: '95%' , height: '95%',fontSize:'2.3vw' }}
-                            class="buy"
-                            onClick={(e) => {
-                                clickButton(e);
-                                let tmpAudio = new Audio(BuyConfirm);
-                                tmpAudio.play();
-                                tmpAudio.remove();
-                                setBuyStatus(Buy(currentBid, Math.floor(myWallet.myCash / currentBid)));
-                            }}
-                            id="z"
+                        <Grid style={{ width: '50%', height: '100%' }}>
+                            <button
+                                style={{
+                                    width: '95%',
+                                    height: '95%',
+                                    fontSize: '2.3vw',
+                                }}
+                                class="buy"
+                                onClick={(e) => {
+                                    clickButton(e);
+                                    let tmpAudio = new Audio(BuyConfirm);
+                                    tmpAudio.play();
+                                    tmpAudio.remove();
+                                    setBuyStatus(
+                                        Buy(
+                                            currentBid,
+                                            Math.floor(
+                                                myWallet.myCash / currentBid
+                                            )
+                                        )
+                                    );
+                                }}
+                                id="z"
+                            >
+                                [Z] 매수
+                            </button>
+                        </Grid>
+                        <Grid
+                            style={{ width: '50%', height: '100%' }}
+                            align="right"
                         >
-                            [Z] 매수
-                        </button>
-                    </Grid>
-                    <Grid style={{ width: '50%',  height: '100%',}} align="right">
-                        <button
-                            style={{ width: '95%', height: '95%', fontSize:'2.3vw'}}
-                            class="sell"
-                            onClick={(e) => {
-                                clickButton(e);
-                                let tmpAudio = new Audio(SellConfirm);
-                                tmpAudio.play();
-                                tmpAudio.remove();
-                                setSellStatus(Sell(currentBid, myWallet.myCoin));
-                            }}
-                            id="x"
-                        >
-                            [X] 매도
-                        </button>
-                    </Grid>
+                            <button
+                                style={{
+                                    width: '95%',
+                                    height: '95%',
+                                    fontSize: '2.3vw',
+                                }}
+                                class="sell"
+                                onClick={(e) => {
+                                    clickButton(e);
+                                    let tmpAudio = new Audio(SellConfirm);
+                                    tmpAudio.play();
+                                    tmpAudio.remove();
+                                    setSellStatus(
+                                        Sell(currentBid, myWallet.myCoin)
+                                    );
+                                }}
+                                id="x"
+                            >
+                                [X] 매도
+                            </button>
+                        </Grid>
                         {/* <Grid style={{ width: '100%',}}>
                             <button
                                 style={{ width: '100%',height:'20%',fontSize:'2.3vw'}}

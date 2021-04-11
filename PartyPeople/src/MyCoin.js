@@ -23,13 +23,15 @@ export default function MyCoin(props) {
     useEffect(() => {
         if (props.socket == null) {
         } else {
-            props.socket.on('refreshWallet', (data) => {
+            props.socket.on('refreshCoin', (data) => {
                 const bfrCoin = data.bfrWallet.coinVol;
                 const curCoin = data.refreshWallet.coinVol;
                 const diffCoin = curCoin - bfrCoin;
 
-                setCoin(curCoin);
-                setDiffCoin(diffCoin);
+                if (diffCoin) {
+                    setCoin(curCoin);
+                    setDiffCoin(diffCoin);
+                }
             });
         }
     }, [isInit]);
@@ -53,7 +55,7 @@ export default function MyCoin(props) {
                 style={{ fontWeight: 'bold', fontSize: '1vw' }}
             >
                 {' '}
-                {showProfit('diffCoin', diffCoin)}
+                {showProfit('diffCoin', diffCoin, setDiffCoin)}
             </h3>
         </Paper>
     );
