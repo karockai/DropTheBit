@@ -123,14 +123,14 @@ export default function LayoutGrid(props) {
                     <Grid>
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    {/* <RacingLeaderBoard/> */}
-                    <PlayerList
+                    <RacingLeaderBoard socket={props.socket}/>
+                    {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
                         requestSocket={props.requestSocket}
                         roomID={props.roomID}
                         roomInfo={props.roomInfo}
-                    />
+                    /> */}
                 </Grid>
                 <Grid
                     className="차트및거래및지갑"
