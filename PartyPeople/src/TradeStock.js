@@ -106,7 +106,11 @@ export default function TradeStock(props) {
         val: 0,
         vol: 0,
     });
-    const [isCancle, setCancle] = useState(false);
+    const [isCancle, setCancle] = useState({
+        status: '',
+        val: 0,
+        vol: 0,
+    });
     const [prevStatus, setPrevStatus] = useState({
         status: '',
         val: 0,
