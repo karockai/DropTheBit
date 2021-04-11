@@ -139,7 +139,7 @@ class Refresh {
             }
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -266,7 +266,7 @@ class Refresh {
             }
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -320,7 +320,7 @@ class Refresh {
             roomList[roomID] = roomInfo;
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -348,7 +348,7 @@ class Refresh {
             io.emit('refreshExList', exList);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 }
