@@ -375,6 +375,9 @@ class Refresh {
                 askPercent: askPercent,
                 bidPercent: bidPercent,
             };
+            console.log(bidObj);
+            console.log(typeof(bidObj));
+            console.log(exList);
 
             io.emit('refreshExList', exList);
         } catch (err) {
