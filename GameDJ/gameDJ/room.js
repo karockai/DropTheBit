@@ -281,7 +281,6 @@ class Room {
             }
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
-            console.log('playerReinit----------');
 
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', {
@@ -303,7 +302,6 @@ class Room {
         try {
             const { io, socket } = this;
             if (data.playerID) {
-                console.log('joinroom?----');
                 const roomID = data.roomID;
                 let roomInfo = roomList[roomID];
                 let playerID = data.playerID;

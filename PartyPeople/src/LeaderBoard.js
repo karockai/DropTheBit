@@ -20,6 +20,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button, Grid, GridList } from '@material-ui/core';
 import { ExpBySymbol, parseWonToStr } from './parseMoney';
+import LobbyTutorial from './LobbyTutorial';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tableBodyText: {
         fontFamily: 'NEXON Lv1 Gothic OTF',
+        background: '#212529',
         fontSize: '1vw',
         color: 'white',
     },
@@ -153,7 +155,7 @@ export default function LeaderBoard(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Array.isArray(board) &&
+                            {Array.isArray(board) ? (
                                 board.map((row, idx) => (
                                     <TableRow
                                         key={row.playerID}
@@ -177,7 +179,15 @@ export default function LeaderBoard(props) {
                                         </TableCell>
                                         {showAsset(row.asset)}
                                     </TableRow>
-                                ))}
+                                ))
+                            ) : (
+                                <TableRow
+                                    id="테이블셀로우"
+                                    className={classes.tableBody}
+                                >
+                                    <LobbyTutorial />
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
