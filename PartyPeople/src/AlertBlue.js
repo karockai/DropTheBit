@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     card: {
-        backgroundColor: '#7673f2',
+        backgroundColor: '#1e88e5',
         width: '100%',
     },
     typography: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const SnackMessage = forwardRef((props, ref) => {
+const AlertBlue = forwardRef((props, ref) => {
     const classes = useStyles();
     const { closeSnackbar } = useSnackbar();
     const [expanded, setExpanded] = useState(false);
@@ -81,4 +81,4 @@ const SnackMessage = forwardRef((props, ref) => {
     );
 });
 
-export default SnackMessage;
+export default AlertBlue;

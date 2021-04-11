@@ -186,7 +186,6 @@ function Lobby(props) {
     };
 
     function PutNewCard(props) {
-        // console.log(props.roomInfo);
         if (props.roomInfo !== '') {
             let PlayerList = getPlayersList(props.roomInfo);
             const playerCount = Object.keys(PlayerList).length;
@@ -229,7 +228,6 @@ function Lobby(props) {
         }
         return playerList;
     }
-    console.log(gaming);
     return (
         <>
             <video className="videoTag" autoPlay loop muted>

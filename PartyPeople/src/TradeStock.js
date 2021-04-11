@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { grey, red } from '@material-ui/core/colors';
 import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
 // import {YellowShiningButton} from './ShiningButton';
@@ -33,7 +32,25 @@ import VolDown from './audios/effect/VolDown.wav';
 import VolUp from './audios/effect/VolUp.wav';
 import { SplitByThree } from './parseMoney';
 // import {CancelBid} from './BidTable';
+// import { createMuiTheme,ThemeProvider  } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import {red, blue, purple, grey} from '@material-ui/core/colors';
 import './blink.css';
+
+import MuiAlert from '@material-ui/lab/Alert';
+import { useSnackbar } from 'notistack';
+import AlertPurple from './AlertPurple';
+import AlertRed from './AlertRed';
+import AlertYellow from './AlertYellow';
+import AlertBlue from './AlertBlue';
+
+const styles = {
+    success: { backgroundColor: purple },
+    error: { backgroundColor: 'blue' },
+    warning: { backgroundColor: 'green' },
+    info: { backgroundColor: 'yellow' },
+};
 
 const CssTextField = withStyles({
     root: {
@@ -63,6 +80,10 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -84,6 +105,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.5vw',
         padding: '0.5vh 0.5vw 0.5vh 0.5vw',
     },
+
+
 }));
 
 export default function TradeStock(props) {
@@ -570,10 +593,73 @@ export default function TradeStock(props) {
             if (e.target) e.target.classList.remove('clicked');
         }, eventTime);
     };
-
     return (
         <>
-            <SnackbarProvider maxSnack={5}>
+            <SnackbarProvider
+             maxSnack={5}
+            content={(key, message) => (
+                <AlertBlue id={key} message={message}/>
+            )}
+             >
+                {sellStatus && sellStatus.status === 'done' && (
+                    <SnackAlertFunc
+                        severity="info"
+                        message={'[매도] 주문 체결 💸'}
+                    />
+                )}
+            </SnackbarProvider>
+            <SnackbarProvider
+             maxSnack={5}
+            content={(key, message) => (
+                <AlertRed id={key} message={message}/>
+            )}
+             >
+                {buyStatus && buyStatus.status === 'done' && (
+                    <SnackAlertFunc
+                        color="error"
+                        message={'[매수] 주문 체결! 🎁'}
+                    />
+                )}
+            </SnackbarProvider>
+
+            <SnackbarProvider
+             maxSnack={5}
+            content={(key, message) => (
+                <AlertPurple id={key} message={message}/>
+            )}
+             >
+                {buyStatus && buyStatus.status === 'request' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={'[매수] 주문! 📈'}
+                    />
+
+                )}
+                {buyStatus && buyStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={'[매수] 주문 취소!'}
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'request' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={'[매도] 주문 📉'}
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={'[매도] 주문 취소!'}
+                    />
+                )}
+            </SnackbarProvider>
+            <SnackbarProvider
+             maxSnack={5}
+            content={(key, message) => (
+                <AlertYellow id={key} message={message}/>
+            )}
+             >
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -582,26 +668,8 @@ export default function TradeStock(props) {
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
-                        severity="error"
+                        severity="warning"
                         message={' 유효하지 않은 값입니다.'}
-                    />
-                )}
-                {buyStatus && buyStatus.status === 'request' && (
-                    <SnackAlertFunc
-                        severity="info"
-                        message={'[매수] 주문! 📈'}
-                    />
-                )}
-                {buyStatus && buyStatus.status === 'done' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'[매수] 주문 체결! 🎁'}
-                    />
-                )}
-                {buyStatus && buyStatus.status === 'cancel' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'[매수] 주문 취소!'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
@@ -612,41 +680,12 @@ export default function TradeStock(props) {
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
-                        severity="error"
+                        severity="warning"
                         message={'유효하지 않은 값입니다.'}
                     />
                 )}
-                {sellStatus && sellStatus.status === 'request' && (
-                    <SnackAlertFunc
-                        severity="info"
-                        message={'[매도] 주문 📉'}
-                    />
-                )}
-                {sellStatus && sellStatus.status === 'done' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'[매도] 주문 체결 💸'}
-                    />
-                )}
-                {/* {isCancle && isCancle.status === 'done' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'주문이 취소되었어요! 🥺'}
-                    />
-                )} */}
-                {/* {isCancle && isCancle.status === 'done' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'호가를 현재가로 갱신합니다. '}
-                    />
-                )} */}
-                {sellStatus && sellStatus.status === 'cancel' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'[매도] 주문 취소!'}
-                    />
-                )}
             </SnackbarProvider>
+
             <Grid
                 wrap="wrap"
                 className={classes.paper}

@@ -12,7 +12,6 @@ import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
-import { red } from '@material-ui/core/colors';
 import ThreeSecTimer from './';
 import GameMusicStart from './MusicStart';
 import { Howl, Howler } from 'howler';
@@ -25,7 +24,9 @@ import RoomAction from './RoomAction';
 import Timer from './Timer';
 
 import RefreshGraph from './RefreshGraph';
-
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import {red, blue, purple, grey} from '@material-ui/core/colors';
 import {
     BrowserRouter as Router,
     Switch,
@@ -45,6 +46,16 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#0C151C',
     },
 }));
+
+const theme = createMuiTheme({
+    palette: {
+        
+        primary: blue,
+        // secondary: red,
+
+    },
+  });
+
 
 export default function LayoutGrid(props) {
     const classes = useStyles();
@@ -81,6 +92,7 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
+    
 
     return (
         <>
@@ -269,7 +281,9 @@ export default function LayoutGrid(props) {
                                         style={{ height: '100%' }}
                                         className={classes.paper}
                                     >
+                                     {/* <ThemeProvider theme={theme}> */}
                                         <TradeStock
+                                            // theme={theme}
                                             SetBid={SetBid}
                                             inputCtrl={inputCtrl}
                                             roomID={props.roomID}
@@ -277,6 +291,7 @@ export default function LayoutGrid(props) {
                                             socket={props.socket}
                                             requestSocket={props.requestSocket}
                                         />
+                                        {/* </ThemeProvider> */}
                                     </Paper>
                                 </Grid>
                             </Grid>
