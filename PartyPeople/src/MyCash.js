@@ -30,10 +30,10 @@ export default function MyCash(props) {
                 const curCash = data.refreshWallet.cash;
                 const diffCash = curCash - bfrCash;
 
-                if (diffCash) {
-                    setCash(curCash);
-                    setDiffCash(diffCash);
-                }
+                
+                setCash(curCash);
+                setDiffCash(diffCash);
+                
             });
         }
     }, [isInit]);

@@ -357,7 +357,7 @@ class Refresh {
                 askPrice: askPrice,
                 bidPrice: bidPrice,
             };
-            console.log(exList);
+            // console.log(exList);
             io.emit('refreshExList', exList);
         } catch (err) {
             console.error(err);

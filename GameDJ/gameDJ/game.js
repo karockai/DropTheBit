@@ -381,8 +381,8 @@ class Game {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };
-        console.log('bfr:', bfrWallet);
-        console.log('cur:', refreshWallet);
+        // console.log('bfr:', bfrWallet);
+        // console.log('cur:', refreshWallet);
 
         if (bfrWallet['cash'] !== refreshWallet['cash']) {
             io.to(socketID).emit('refreshCash', walletInfo);
