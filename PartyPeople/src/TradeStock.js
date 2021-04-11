@@ -123,7 +123,6 @@ export default function TradeStock(props) {
     //@ 가정 => props에 socket이 전달되었어야함.
 
     const eventTime = 300;
-    const [tradeMode, setTradeMode] = useState('nothing'); // nothing / bid / ask
 
     useLayoutEffect(() => {
         if (props.socket == null) {
@@ -240,7 +239,6 @@ export default function TradeStock(props) {
                 vol: volume,
             };
         }
-        setTradeMode('buy');
         status = {
             status: 'request',
             val: bid,
@@ -261,25 +259,26 @@ export default function TradeStock(props) {
                 status: 'buy_bid',
             });
         });
-        props.socket.once('buyDone_Room', (bbid) => {
-            // console.log(bbid);
-            if (bbid.type === '실패') {
-                return {
-                    status: 'invalid',
-                    val: bid,
-                    vol: volume,
-                };
-            }
-            SetNewBid(bbid.price);
-            setBuyStatus({
-                status: 'done',
-                val: bid,
-                vol: volume,
-            });
-        });
+        
         SetBind(true);
         return status;
     }
+    props.socket.off('buyDone_Room').once('buyDone_Room', (bbid) => {
+        console.log('buyDone_Room');
+        // if (bbid.type === '실패') {
+        //     return {
+        //         status: 'invalid',
+        //         val: bid,
+        //         vol: volume,
+        //     };
+        // }
+        SetNewBid(bbid.price);
+        setBuyStatus({
+            status: 'done',
+            val: bbid.price,
+            vol: bbid.vol,
+        });
+    });
 
     function Sell(bid, volume) {
         let status = '';
@@ -324,25 +323,28 @@ export default function TradeStock(props) {
                 status: 'sell_bid',
             });
         });
-        props.socket.once('sellDone_Room', (sbid) => {
-            // console.log(sbid);
-            if (sbid.type === '실패') {
-                return {
-                    status: 'invalid',
-                    val: bid,
-                    vol: volume,
-                };
-            }
-            SetNewBid(sbid.price);
-            setSellStatus({
-                status: 'done',
-                val: bid,
-                vol: volume,
-            });
-        });
+
         SetBind(true);
         return status;
     }
+
+    props.socket.off('sellDone_Room').once('sellDone_Room', (sbid) => {
+        console.log('sellDone_Room');
+        // if (sbid.type === '실패') {
+        //     return {
+        //         status: 'invalid',
+        //         val: bid,
+        //         vol: volume,
+        //     };
+        // }
+        SetNewBid(sbid.price);
+        setSellStatus({
+            status: 'done',
+            val: sbid.price,
+            vol: sbid.vol,
+        });
+    });
+
     const changeEffect = (id) => {
         if (id === 'ArrowDown' || id === 'ArrowUp') {
             const target_class = document.getElementById('bidInput');
@@ -417,8 +419,7 @@ export default function TradeStock(props) {
             // 거래 취소
             // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
             // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
-            // console.log('tradeMode',tradeMode);
-            // console.log('prevStatus.status', prevStatus.status);
+            console.log('prevStatus.status', prevStatus.status);
             const reqJson = 
             {
                 socketID: props.socket.id,

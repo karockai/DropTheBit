@@ -86,30 +86,14 @@ export default function MyAsset(props) {
                 const currentCoin = refreshWallet.coinVol;
                 const currentAvg = refreshWallet.avgPrice;
 
-                // console.log(bfrWallet.asset);
-                // console.log(typeof(bfrWallet.asset));
-                // console.log(currentAsset);
-                // console.log(typeof(currentAsset));
+                console.log('asset',bfrWallet.asset);
+                console.log('asset',currentAsset);
 
                 const diffAsset = currentAsset - bfrWallet.asset;
 
                 const diffCash = currentCash - bfrWallet.cash;
                 const diffCoin = currentCoin - bfrWallet.coinVol;
-                // const asset = document.getElementById('changeAsset');
-                // console.log(asset);
-                // if (asset) asset.classList.add('blinking');
-                // setTimeout(function () {
-                //     if (asset) asset.classList.remove('blinking');
-                // }, 700);
-                // if (currentAsset > myAsset) {
-                //     color = 'red';
-                // }
-                // else if (currentAsset < myAsset) {
-                //     color = 'blue';
-                // }
-                // console.log(currentAsset);
-                // console.log(myAsset);
-                // console.log(color);
+
                 setDiffWallet({
                     diffCash: diffCash,
                     diffAsset: diffAsset,
