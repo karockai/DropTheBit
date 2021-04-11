@@ -337,8 +337,8 @@ class Room {
                 // playerStress++;
                 console.log(roomInfo);
 
-                io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
-                // io.to(socketID).emit('backToLobby_Res', roomInfo);    커밋할때 이걸로 해야함
+                // io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
+                io.to(socketID).emit('backToLobby_Res', roomInfo);    
 
                 let message = playerID + '님이 들어오셨습니다.';
                 io.to(roomID).emit('update', {
