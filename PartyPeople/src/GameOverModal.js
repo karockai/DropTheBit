@@ -76,10 +76,8 @@ export default function GameOverModal(props) {
             history.push({
                 pathname: path,
                 state: {
-                    // roomLeader: roomLeader,
                     roomLeader: roomInfo.roomLeader,
                     gaming : roomInfo.gaming,
-                    
                 },
             });
 

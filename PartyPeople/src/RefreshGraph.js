@@ -6,11 +6,16 @@ import { TypeChooser } from "react-stockcharts/lib/helper";
 import { getData } from "./utils"
 
 export default function RefreshGraph(props) {
+const [askPrice, setAskPrice] = useState('');
+const [bidPrice, setBidPrice] = useState('');
 const [askPercent, setAskPercent] = useState('');
 const [bidPercent, setBidPercent] = useState('');
 
 props.socket.on('refreshExList', (exList) => {
+    console.log(exList);
     if(exList.askPercent) {
+        setAskPrice(exList.askPrice);
+        setBidPrice(exList.bidPrice);
         setAskPercent(exList.askPercent);
         setBidPercent(exList.bidPercent);
     }
@@ -30,7 +35,10 @@ return (
         {
             askPercent &&
             <HorizontalBarChart 
-            data={[{x:bidPercent, y: '매도'},{x:askPercent, y:'매수'}]}
+            // data={[{x:bidPercent, y: '매도'},{x:askPercent, y:'매수'}]}
+            data={[{x:bidPercent, y: bidPrice},{x:askPercent, y:askPrice}]}
+            bidPrice = {bidPrice}
+            askPrice = {askPrice}
             />
     }
     </>
