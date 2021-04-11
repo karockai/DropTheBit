@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import './blink.css';
 
 import Timer from './Timer';
+import Order from './Order';
 //@ won -> string (4자리 단위로 ',' 끊어주기)
 //@ isBullMarket에 따른 color 변경
 //@ TimeChecker랑 병렬로 놓게 될 것 고려
@@ -20,11 +21,9 @@ function ChartTitle(props) {
     const current = datas[length - 1].close;
     const sub = current - before;
     const yid =
-        (sub >= 0 ? '+' : '') +
-        ((sub / current) * 100).toFixed(2) +
-        '%';
+        (sub >= 0 ? '+' : '') + ((sub / current) * 100).toFixed(2) + '%';
     const icon = sub >= 0 ? '▲' : '▼';
-    const color =  {color: sub >= 0 ? red[600] : blue[600]};
+    const color = { color: sub >= 0 ? red[600] : blue[600] };
 
     // useEffect(() => {
     //     return () => {
@@ -37,7 +36,6 @@ function ChartTitle(props) {
     //     };
     // }, [props.data]);
 
-
     function SplitByThree(value) {
         if (value.length <= 3) return value;
         return (
@@ -47,15 +45,16 @@ function ChartTitle(props) {
         );
     }
 
-
     function ExpBySymbol(value) {
         let ret = '';
-        if (value.length >= 9) { // 199489230 -> 1억 9948만 9230
-            ret += ( value.substring(0, value.length - 9 + 1)  + '억 ' ) // 1억
+        if (value.length >= 9) {
+            // 199489230 -> 1억 9948만 9230
+            ret += value.substring(0, value.length - 9 + 1) + '억 '; // 1억
             value = value.substring(value.length - 9 + 1);
         }
-        if (value.length >= 5) { // value 99489230
-            ret += ( value.substring(0, value.length - 5 + 1)  + '만 ' )  // 9948만
+        if (value.length >= 5) {
+            // value 99489230
+            ret += value.substring(0, value.length - 5 + 1) + '만 '; // 9948만
             value = value.substring(value.length - 5 + 1);
         }
         ret += value;
@@ -69,51 +68,68 @@ function ChartTitle(props) {
 
     return (
         <>
-            <div className="ChartTitle" style={{width:'100%'}}>
+            <div className="ChartTitle" style={{ width: '100%' }}>
                 {/* <span style={{ display: 'block' }}> */}
                 {/* <Grid container direction={'row'} justify={'space-between'}> */}
                 <Grid container direction={'row'} justify={'space-between'}>
                     <Grid item style={color}>
                         <strong style={{ fontSize: '3vw' }}>
-                            {SplitByThree(parseWonToStr(props.data[length - 1].close))}
+                            {SplitByThree(
+                                parseWonToStr(props.data[length - 1].close)
+                            )}
                         </strong>
-                        <span style={{color: 'white', fontSize: '1vw'}} >{' ' + unit}</span>
+                        <span style={{ color: 'white', fontSize: '1vw' }}>
+                            {' ' + unit}
+                        </span>
                     </Grid>
-
+                    <Grid item>
+                        <Order socket={props.socket} />
+                    </Grid>
                 </Grid>
-                <Grid container direction={'row'} justify={'space-between'} alignItems={'flex-start'}>
-                
-                <Grid>
-                    <span>
-                    <p
-                        style={{
-                            fontSize: '0.8vw',
-                            color: '#ffffff',
-                            display: 'inline-block',
-                        }}
-                    >
-                        {subtit}
-                    </p>
-                    <span style={color}>
-                        <strong style={{ fontSize: '1vw', display: 'inline' }}>
-                            {'   ' + yid + '  '}
-                        </strong>
-                        <strong style={{ fontSize: '1vw', display: 'inline' }}>
-                            {' ' + icon + ' ' + parseWonToStr(sub)}
-                        </strong>
-                    </span>
-                    </span>
-                    <span>
-                        {/* {name} */}
-                    </span>
-                </Grid>
-                <Grid>
-                    <span style={{color: 'gray'}}>{props.date}</span>
-                    <span>{' '}{props.coinName}</span>
+                <Grid
+                    container
+                    direction={'row'}
+                    justify={'space-between'}
+                    alignItems={'flex-start'}
+                >
+                    <Grid>
+                        <span>
+                            <p
+                                style={{
+                                    fontSize: '0.8vw',
+                                    color: '#ffffff',
+                                    display: 'inline-block',
+                                }}
+                            >
+                                {subtit}
+                            </p>
+                            <span style={color}>
+                                <strong
+                                    style={{
+                                        fontSize: '1vw',
+                                        display: 'inline',
+                                    }}
+                                >
+                                    {'   ' + yid + '  '}
+                                </strong>
+                                <strong
+                                    style={{
+                                        fontSize: '1vw',
+                                        display: 'inline',
+                                    }}
+                                >
+                                    {' ' + icon + ' ' + parseWonToStr(sub)}
+                                </strong>
+                            </span>
+                        </span>
+                        <span>{/* {name} */}</span>
+                    </Grid>
+                    <Grid>
+                        <span style={{ color: 'gray' }}>{props.date}</span>
+                        <span> {props.coinName}</span>
                     </Grid>
                 </Grid>
                 {/* </span> */}
-                
             </div>
         </>
     );
