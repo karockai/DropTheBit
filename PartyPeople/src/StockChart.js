@@ -177,6 +177,37 @@ class StockChart extends React.Component {
                     arrowWidth={3}
                     displayFormat={format('.2f')}
                     />
+
+                        <PriceCoordinate
+                        className="매수체결"
+                        at="right"
+                        orient="right"
+                        opacity={1}
+                        price={this.props.doneBuy}
+                        stroke="white"
+                        strokeWidth={2}
+                        fill="red"
+                        lineStroke="red"
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
+                    />
+                        <PriceCoordinate
+                        className="매도체결"
+                        at="right"
+                        orient="right"
+                        price={this.props.doneSell}
+                        stroke="white"
+                        strokeWidth={2}
+                        opacity={1}
+                        fill="#007bff"
+                        lineStroke="#007bff"
+                        textFill="#fff"
+                        arrowWidth={7}
+                        strokeDasharray="Solid"
+                        displayFormat={format('.2f')}
+                    />
                     <PriceCoordinate
                         className="매수주문"
                         at="right"
@@ -208,37 +239,6 @@ class StockChart extends React.Component {
                         strokeDasharray="ShortDot"
                         displayFormat={format('.2f')}
                     />
-                        <PriceCoordinate
-                        className="매수체결"
-                        at="right"
-                        orient="right"
-                        opacity={1}
-                        price={this.props.doneBuy}
-                        stroke="white"
-                        strokeWidth={2}
-                        fill="red"
-                        lineStroke="red"
-                        textFill="#fff"
-                        arrowWidth={7}
-                        strokeDasharray="Solid"
-                        displayFormat={format('.2f')}
-                    />
-                        <PriceCoordinate
-                        className="매도체결"
-                        at="right"
-                        orient="right"
-                        price={this.props.doneSell}
-                        stroke="white"
-                        strokeWidth={2}
-                        opacity={1}
-                        fill="#007bff"
-                        lineStroke="#007bff"
-                        textFill="#fff"
-                        arrowWidth={7}
-                        strokeDasharray="Solid"
-                        displayFormat={format('.2f')}
-                    />
-
 
       
                     
