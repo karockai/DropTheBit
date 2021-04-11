@@ -112,7 +112,7 @@ export default function LayoutGrid(props) {
                     className="플레이어리스트그리드"
                     container
                     item
-                    direction ='column'
+                    direction="column"
                     justify="flex-start"
                     alignItems="flex-start"
                     xs={leftSm}
@@ -123,7 +123,7 @@ export default function LayoutGrid(props) {
                     }}
                 >
                     <Grid
-                    item
+                        item
                         style={{
                             width: '100%',
                             height: '25%',
@@ -132,7 +132,7 @@ export default function LayoutGrid(props) {
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
                     <Grid
-                    item
+                        item
                         style={{
                             width: '100%',
                             height: '75%',
@@ -320,9 +320,11 @@ export default function LayoutGrid(props) {
                             className={classes.paper}
                             style={{
                                 height: '50%',
-                                margin: '1vh 0px 0px 0px',
-                                padding: '1vw',
+                                // margin: '1vh 0px 0px 0px',
+                                padding: '2vh',
                                 width: '100%',
+                                fontSize: '1.2vw'
+                                
                             }}
                         >
                             {/* <TabPanel
@@ -331,7 +333,7 @@ export default function LayoutGrid(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                             /> */}
-                            <h5>방 매매 현황</h5>
+                            플레이어들의 행동
                             <RoomAction socket={props.socket} />
                         </Paper>
                     </Grid>

@@ -19,11 +19,17 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
             width: '25ch',
+            // width: '10vw',
+        },
+        '& .MuiInputBase-root': {
+            // margin: theme.spacing(1),
+            // width: '25ch',
+            fontSize: '1.5vw',
         },
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        width: '90%',
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -36,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         fill: 'red',
     },
-
 }));
 export default function MusicMember(props) {
     const classes = useStyles();
@@ -52,13 +57,34 @@ export default function MusicMember(props) {
     
     function MusicInput() {
         return (
-            <div>
+            <Grid style={{width: '70%'}}>
                 <FormControl className={classes.formControl} disabled>
-                    <InputLabel label="음악 제목" id="demo-simple-select-label" style={{ color: '#fff' }}>
+                    <TextField
+                        // className={classes.formControl}
+                        // style={{width:'5vw', }}
+                        InputLabelProps={{
+                            style: { color: '#fff' },
+                        }}
+                        label='Selected Music'
+                        defaultValue={props.music}
+                        InputProps={{
+                            readOnly: true,
+                            style: { color: '#fff',fontSize:'1.5vw'  },
+                        }}
+                    />
+                    {/* <InputLabel label="음악 제목" id="demo-simple-select-label" style={{ color: '#fff' }}>
                         {props.music}
-                    </InputLabel>
-                    <Select
-                        style={{ color: '#fff' }}
+                    </InputLabel> */}
+                    {/* <Select
+                         className={classes.select}
+                         inputProps={{
+                            classes: {
+                                select: classes.select,
+                                icon: classes.icon,
+                            },
+                            style: { color: '#fff' },
+                        }}
+                        style={{ color: '#ffffff', fontSize:'1.5vw' }}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                     >
@@ -69,9 +95,9 @@ export default function MusicMember(props) {
                             Mausoleum_Mash.mp3
                         </MenuItem>
                         <MenuItem value={'Deja_Vu.mp3'}>Deja_Vu.mp3</MenuItem>
-                    </Select>
+                    </Select> */}
                 </FormControl>
-            </div>
+                </Grid>
         );
     }
 
@@ -89,21 +115,21 @@ export default function MusicMember(props) {
             });
         }, []);
         return (
-            <form className={classes.root} noValidate autoComplete="off">
-                <div>
+                    <Grid style={{width:"30%"}}> 
                     <TextField
-                                            InputLabelProps={{
-                                                style: { color: '#fff' },
-                                            }}
-                        label='게임 플레이 시간'
+                        className={classes.formControl}
+                        style={{width:'5vw', }}
+                        InputLabelProps={{
+                            style: { color: '#fff' },
+                        }}
+                        label='Play Time'
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
-                            style: { color: '#fff' },
+                            style: { color: '#fff',fontSize:'1.5vw'  },
                         }}
                     />
-                </div>
-            </form>
+                    </Grid>
         );
     }
     // let isSetUp = false;
@@ -121,16 +147,11 @@ export default function MusicMember(props) {
     // }, []);
     return (
         <>
-            <Grid>
+            <h5>게임 플레이 시간</h5>
+            <Grid container direction={'row'} justify={'space-between'}>
+                <ShowMusic />
                 <MusicInput />
             </Grid>
-            <Grid>
-                <ShowMusic />
-            </Grid>
-            {/* <Button variant="contained" color="primary" disabled>
-                {' '}
-                StartGame{' '}
-            </Button> */}
         </>
     );
 }

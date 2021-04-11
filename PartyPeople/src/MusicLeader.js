@@ -37,11 +37,17 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiTextField-root': {
             margin: theme.spacing(1),
             width: '25ch',
+            // width: '10vw',
+        },
+        '& .MuiInputBase-root': {
+            // margin: theme.spacing(1),
+            // width: '25ch',
+            fontSize: '1.5vw',
         },
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        width: '90%',
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -101,14 +107,33 @@ export default function MusicLeader(props) {
         };
 
         return (
-            <div>
-                <FormControl className={classes.formControl}>
+            // <div>
+            // <TextField 
+            // className={classes.formControl}
+            //     style={{width:'5vw', }}
+            //     InputLabelProps={{
+            //         style: { color: '#fff', },
+            //     }}
+            //     id="standard-read-only-input"
+            //     label="Play Time"
+            //     defaultValue={props.strTime}
+            //     InputProps={{
+            //         readOnly: true,
+            //         style: { color: '#fff',fontSize:'1.5vw' },
+            //     }}
+            // />
+
+
+            <Grid style={{width: '70%'}}>
+                <FormControl className={classes.formControl} >
                     <InputLabel
                         style={{ color: '#fff' }}
                         id="demo-simple-select-label"
+                        InputLabelProps={{
+                            style: { color: '#fff', },
+                        }}
                     >
                         Select Music
-                        {/* {props.music} */}
                     </InputLabel>
                     <Select
                         className={classes.select}
@@ -117,8 +142,9 @@ export default function MusicLeader(props) {
                                 select: classes.select,
                                 icon: classes.icon,
                             },
+                            style: { color: '#fff' },
                         }}
-                        style={{ color: '#ffffff' }}
+                        style={{ color: '#ffffff', fontSize:'1.5vw' }}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={props.music}
@@ -163,7 +189,8 @@ export default function MusicLeader(props) {
               </> */}
                     </Select>
                 </FormControl>
-            </div>
+                </Grid>
+            // </div>
         );
     }
     function ShowMusic() {
@@ -180,22 +207,26 @@ export default function MusicLeader(props) {
         }, []);
         // }
         return (
-            <form className={classes.root} noValidate autoComplete="off">
-                <div>
-                    <TextField
+            // <form noValidate autoComplete="off">
+                <>
+                <Grid style={{width:"30%"}}> 
+                    <TextField 
+                    className={classes.formControl}
+                        // style={{width:'30%', }}
                         InputLabelProps={{
-                            style: { color: '#fff' },
+                            style: { color: '#fff', },
                         }}
                         id="standard-read-only-input"
                         label="Play Time"
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
-                            style: { color: '#fff' },
+                            style: { color: '#fff',fontSize:'1.5vw' },
                         }}
                     />
-                </div>
-            </form>
+                    </Grid>
+                    </>
+            // {/* </form> */}d
         );
     }
     // const StartGameReq = () => {
@@ -221,12 +252,14 @@ export default function MusicLeader(props) {
     // }, []);
     return (
         <>
-            <Grid>
+            <h5>음악을 선택해주세요</h5>
+            <Grid container direction={'row'} justify={'space-between'}>
+                <ShowMusic />
                 <MusicInput />
             </Grid>
-            <Grid>
+            {/* <Grid>
                 <ShowMusic />
-            </Grid>
+            </Grid> */}
             {/* <Button variant="contained" color="primary" onClick={StartGameReq}>
                 {' '}
                 StartGame{' '}

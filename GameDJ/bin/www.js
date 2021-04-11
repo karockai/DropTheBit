@@ -11,7 +11,12 @@ import webhook from '../slack.js';
 import si from 'systeminformation';
 
 global.chartData = [];
+
+// Server가 다운된 경우 이전에 저장된 데이터를 불러온다.
+// roomID : roomInfo로 저장되어
+
 global.roomList = {};
+
 global.askList = {};
 global.bidList = {};
 global.curCoin = {};

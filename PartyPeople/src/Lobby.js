@@ -148,7 +148,6 @@ function Lobby(props) {
         props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo : tmp_roomInfo});
     }
     const CheckLeader = () => {
-        // console.log(props.socket);
         if (props.roomInfo['roomLeader'] === props.socket.id) {
             return (
                 <>
@@ -370,7 +369,7 @@ function Lobby(props) {
                                     margin: '0vw 2vw 2vw 2vw',
                                 }}
                                 >
-                                <button
+                                {/* <button
                                     class="arrow"
                                     id="select_music"
                                     onClick={handleSelectMusic}
@@ -392,10 +391,10 @@ function Lobby(props) {
                                         horizontal: 'right',
                                     }}
                                 >
-                                    <Typography className={classes.paper}>
+                                    <Typography className={classes.paper}> */}
                                         <CheckLeader />
-                                    </Typography>
-                                </Popover>
+                                    {/* </Typography>
+                                </Popover> */}
                                 </Paper>
                             </Grid>
                             <Grid className="스타트버튼" item xs={7}>
