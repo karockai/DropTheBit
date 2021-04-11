@@ -160,15 +160,15 @@ export default function LobbyTabs(props) {
                 justify={'space-around'}
                 alignItems={'center'}
             > */}
-            {/* <button
+            <button
                     class="tutorial"
                     id="tutorials"
                     onClick={handleSelectTuto}
-                    style={{ padding: '1vh 1vw 1vh 1vw' }}
+                    style={{ padding: '1vh 1vw 1vh 1vw', margin:'0.5vw' }}
                     size="large"
                 >
                     Tutorial
-                </button> */}
+                </button>
                 <button
                     class="arrow"
                     id="key_map"
