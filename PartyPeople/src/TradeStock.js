@@ -576,55 +576,46 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message={' 보유 금액이 부족해요 😨'}
+                        message={'보유 금액 부족'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="error"
-                        message={' 유효하지 않은 값입니다.'}
+                        message={'잘못된 입력입니다.'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'request' && (
-                    <SnackAlertFunc
-                        severity="info"
-                        message={'[매수] 주문! 📈'}
-                    />
+                    <SnackAlertFunc severity="info" message={'매수 주문'} />
                 )}
                 {buyStatus && buyStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매수] 주문 체결! 🎁'}
+                        message={'매수 주문 체결'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매수] 주문 취소!'}
+                        message={'매수 주문 취소'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
-                    <SnackAlertFunc
-                        severity="warning"
-                        message={'코인이 없는걸요? 😨'}
-                    />
+                    <SnackAlertFunc severity="warning" message={'코인 부족'} />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="error"
-                        message={'유효하지 않은 값입니다.'}
+                        message={'잘못된 입력입니다.'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
-                    <SnackAlertFunc
-                        severity="info"
-                        message={'[매도] 주문 📉'}
-                    />
+                    <SnackAlertFunc severity="info" message={'매도 주문'} />
                 )}
                 {sellStatus && sellStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매도] 주문 체결 💸'}
+                        message={'매도 주문 체결'}
                     />
                 )}
                 {/* {isCancle && isCancle.status === 'done' && (
@@ -642,7 +633,7 @@ export default function TradeStock(props) {
                 {sellStatus && sellStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매도] 주문 취소!'}
+                        message={'매도 주문 취소'}
                     />
                 )}
             </SnackbarProvider>
@@ -755,7 +746,7 @@ export default function TradeStock(props) {
                                 }}
                                 id="z"
                             >
-                                [Z] 매수
+                                [Z] 전량 매수
                             </button>
                         </Grid>
                         <Grid
@@ -780,7 +771,7 @@ export default function TradeStock(props) {
                                 }}
                                 id="x"
                             >
-                                [X] 매도
+                                [X] 전량 매도
                             </button>
                         </Grid>
                         {/* <Grid style={{ width: '100%',}}>
