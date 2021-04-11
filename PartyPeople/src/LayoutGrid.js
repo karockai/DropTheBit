@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TradeStock from './TradeStock';
-import MyAsset from './MyAsset';
+import MyWallet from './MyWallet';
 import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
@@ -53,8 +53,6 @@ export default function LayoutGrid(props) {
     let rightSm = 3;
 
     const location = useLocation();
-    const gameTime = location.state.gameTime;
-    const [timerTime, setTimerTime] = useState(gameTime);
     const [inputCtrl, setInputCtrl] = useState(false);
     const [bid, SetBid] = useState(0);
 
@@ -133,15 +131,7 @@ export default function LayoutGrid(props) {
                     >
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <Grid
-                    item
-                        style={{
-                            width: '100%',
-                            height: '70%',
-                        }}
-                    >
-                        <RacingLeaderBoard socket={props.socket} />
-                    </Grid>
+                    <RacingLeaderBoard socket={props.socket} />
                     {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
@@ -180,7 +170,6 @@ export default function LayoutGrid(props) {
                                 APIdata={APIdata}
                                 display="flex"
                                 isStart={props.isStart}
-                                time={timerTime}
                                 bid={bid}
                             />
                         </Paper>
@@ -216,7 +205,7 @@ export default function LayoutGrid(props) {
                                 wrap="wrap"
                                 direction="row"
                             >
-                                <MyAsset
+                                <MyWallet
                                     roomID={props.roomID}
                                     socket={props.socket}
                                     requestSocket={props.requestSocket}

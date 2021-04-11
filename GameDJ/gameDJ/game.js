@@ -165,7 +165,7 @@ class Game {
                 // console.log('호가 등록 완료', playerInfo);
                 // console.log('roomID:', roomID);
                 io.to(roomID).emit('bidDone_Room', bidDone);
-                console.log('호가 등록 완료', bidList);
+                // console.log('호가 등록 완료', bidList);
                 // this.sendBidTable(reqJson);
             }
 
@@ -255,12 +255,6 @@ class Game {
 
                 roomList[roomID][socketID] = playerInfo;
 
-                //? 예은 디버깅
-                if (playerInfo['playerID'].length === 2) {
-                    console.log('sell 호가 등록---------');
-                    console.log(playerInfo);
-                    console.log(askList);
-                }
 
                 // console.log('호가 등록 완료', playerInfo);
                 let askDone = {
@@ -315,7 +309,7 @@ class Game {
             bfrWallet['cash'] = playerInfo['cash'];
             bfrWallet['asset'] = playerInfo['asset'];
 
-            cash += bidVol * bidPrice;
+            cash += bidVol * Number(bidPrice);
             playerInfo['cash'] = cash;
             delete playerInfo['bid'][bidPrice];
             roomList[roomID][socketID] = playerInfo;

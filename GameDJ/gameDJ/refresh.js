@@ -56,12 +56,6 @@ class Refresh {
                         playerInfo['cash'] = cash;
                         playerInfo['actionRestTime'] = 5;
                         playerInfo['recentAction'] = 0;
-                        //? 예은 디버깅
-                        if (playerInfo['playerID'].length === 2) {
-                            console.log('sell 호가 체결---------');
-                            console.log(playerInfo);
-                            console.log(askList);
-                        }
                         // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                         delete playerInfo['ask'][askPrice];
                         roomList[roomID][socketID] = playerInfo;
@@ -342,26 +336,10 @@ class Refresh {
 
     // refreshBid 갱신
     async refreshBid() {
-        // <<<<<<< HEAD
-        //         const { io } = this;
-        //         let bidObj = JSON.parse(await dbget('bidTable'));
-        //         let totalAsk = bidObj['total_ask_size'];
-        //         let totalBid = bidObj['total_bid_size'];
-        //         let total = totalAsk + totalBid;
-
-        //         let askPercent = (totalAsk / total) * 100;
-        //         let bidPercent = 100 - askPercent;
-
-        //         let exList = {
-        //             askPercent: askPercent,
-        //             bidPercent: bidPercent,
-        //         };
-        //         io.emit('refreshExList', exList);
-        // =======
         try {
             const { io } = this;
             let bidObj = JSON.parse(await dbget('bidTable'));
-            console.log(bidObj);
+            // console.log(bidObj);
             // console.log(bidObj['date'], ' TAB');
 
             let totalAsk = bidObj['total_ask_size'];
@@ -370,14 +348,15 @@ class Refresh {
 
             let askPercent = (totalAsk / total) * 100;
             let bidPercent = 100 - askPercent;
+            let askPrice = bidObj['askPrice'];
+            let bidPrice = bidObj['bidPrice'];
 
             let exList = {
                 askPercent: askPercent,
                 bidPercent: bidPercent,
+                askPrice: askPrice,
+                bidPrice: bidPrice,
             };
-            console.log(bidObj);
-            console.log(typeof(bidObj));
-            console.log(exList);
 
             io.emit('refreshExList', exList);
         } catch (err) {
