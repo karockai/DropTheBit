@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TradeStock from './TradeStock';
-import MyAsset from './MyAsset';
+import MyWallet from './MyWallet';
 import ChatRoom from './ChatRoom';
 import PlayerList from './PlayerList';
 import ChartComponent from './ChartComponent';
@@ -53,8 +53,6 @@ export default function LayoutGrid(props) {
     let rightSm = 3;
 
     const location = useLocation();
-    const gameTime = location.state.gameTime;
-    const [timerTime, setTimerTime] = useState(gameTime);
     const [inputCtrl, setInputCtrl] = useState(false);
     const [bid, SetBid] = useState(0);
 
@@ -123,7 +121,7 @@ export default function LayoutGrid(props) {
                     <Grid>
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <RacingLeaderBoard socket={props.socket}/>
+                    <RacingLeaderBoard socket={props.socket} />
                     {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
@@ -162,7 +160,6 @@ export default function LayoutGrid(props) {
                                 APIdata={APIdata}
                                 display="flex"
                                 isStart={props.isStart}
-                                time={timerTime}
                                 bid={bid}
                             />
                         </Paper>
@@ -198,7 +195,7 @@ export default function LayoutGrid(props) {
                                 wrap="wrap"
                                 direction="row"
                             >
-                                <MyAsset
+                                <MyWallet
                                     roomID={props.roomID}
                                     socket={props.socket}
                                     requestSocket={props.requestSocket}
@@ -293,9 +290,13 @@ export default function LayoutGrid(props) {
                     >
                         <Paper
                             className={classes.paper}
-                            style={{ height: '50%', padding: '2vh', width: '100%' }}
+                            style={{
+                                height: '50%',
+                                padding: '2vh',
+                                width: '100%',
+                            }}
                         >
-                        <RefreshGraph socket={props.socket}/>
+                            <RefreshGraph socket={props.socket} />
                         </Paper>
                         <Paper
                             className={classes.paper}
@@ -311,7 +312,6 @@ export default function LayoutGrid(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                             /> */}
-
                             방 매매 현황
                             <RoomAction socket={props.socket} />
                         </Paper>
