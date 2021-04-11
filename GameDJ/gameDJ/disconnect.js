@@ -43,15 +43,15 @@ class Disconnect {
                     }
                 }
     
-                delete roomList[roomID][socket.id];
-    
                 // 방에 사람 수 세기
                 for (const [key, value] of Object.entries(roomInfo)) {
                     if (key.length === 20) {
                         playerCnt++;
                     }
                 }
-    
+                
+                playerCnt--;
+                console.log('player:-------------', playerCnt);
                 // 방에 사람이 0명이 되면 방을 지운다
                 if (playerCnt === 0) {
                     delete roomList[roomID];
@@ -64,7 +64,7 @@ class Disconnect {
                     // 나간 사람이 방장이라면 다음 사람으로 방장을 변경한다
                     if (roomInfo['roomLeader'] == socket.id) {
                         for (const [key, value] of Object.entries(roomInfo)) {
-                            if (key.length === 20) {
+                            if (key.length === 20 && key !== socket.id) {
                                 roomInfo['roomLeader'] = key;
                                 message += ' ' + roomInfo[key]['playerID'] + '님으로 방장이 변경되었습니다.';
                                 break;
@@ -72,7 +72,9 @@ class Disconnect {
                         }
                     }
                     io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
+                    delete roomList[roomID][socket.id];
                 }
+
                 io.to(roomID).emit('disconnect', roomInfo);
             }
         }
