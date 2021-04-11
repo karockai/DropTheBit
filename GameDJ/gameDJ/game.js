@@ -255,12 +255,6 @@ class Game {
 
                 roomList[roomID][socketID] = playerInfo;
 
-                //? 예은 디버깅
-                if (playerInfo['playerID'].length === 2) {
-                    console.log('sell 호가 등록---------');
-                    console.log(playerInfo);
-                    console.log(askList);
-                }
 
                 // console.log('호가 등록 완료', playerInfo);
                 let askDone = {
