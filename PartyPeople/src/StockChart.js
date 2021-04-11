@@ -110,7 +110,7 @@ class StockChart extends React.Component {
                 <Chart
                     id={1}
                     // yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
-                    yExtents={d=> [d.high * 1.001, d.low * 0.999]}
+                    yExtents={d=> [d.high * 1.005, d.low * 0.995]}
                 >
                     <XAxis axisAt="bottom" orient="bottom" />
                     <YAxis axisAt="right" orient="right" ticks={5} />
@@ -149,6 +149,21 @@ class StockChart extends React.Component {
                     /> */}
                     <CandlestickSeries {...candlesAppearance} />
                     <PriceCoordinate
+                        className="나의호가"
+                        at="right"
+                        orient="right"
+                        price={this.props.bid}
+                        stroke="#7974f2"
+                        opacity={1}
+                        strokeWidth={1}
+                        fill="#635ee7"
+                        lineStroke="white"
+                        textFill="#fff"
+                        arrowWidth={22}
+                        strokeDasharray="ShortDot"
+                        displayFormat={format('.2f')}
+                    />
+                    <PriceCoordinate
                     className="현재가격"
                     at="right"
                     orient="right"
@@ -171,29 +186,33 @@ class StockChart extends React.Component {
                         strokeWidth={2}
                         fill="transperent"
                         lineStroke="red"
+                        opacity={1}
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="Dot"
+                        strokeDasharray="ShortDot"
                         displayFormat={format('.2f')}
+                        
                     />
                         <PriceCoordinate
                         className="매도주문"
                         at="right"
                         orient="right"
                         price={this.props.currentSell}
-                        stroke="#0088ff"
+                        stroke="#007bff"
                         strokeWidth={2}
+                        opacity={1}
                         fill="transperent"
-                        lineStroke="#0088ff"
+                        lineStroke="#007bff"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="Dot"
+                        strokeDasharray="ShortDot"
                         displayFormat={format('.2f')}
                     />
                         <PriceCoordinate
                         className="매수체결"
                         at="right"
                         orient="right"
+                        opacity={1}
                         price={this.props.doneBuy}
                         stroke="white"
                         strokeWidth={2}
@@ -211,8 +230,9 @@ class StockChart extends React.Component {
                         price={this.props.doneSell}
                         stroke="white"
                         strokeWidth={2}
-                        fill="#0088ff"
-                        lineStroke="#0088ff"
+                        opacity={1}
+                        fill="#007bff"
+                        lineStroke="#007bff"
                         textFill="#fff"
                         arrowWidth={7}
                         strokeDasharray="Solid"
@@ -220,20 +240,7 @@ class StockChart extends React.Component {
                     />
 
 
-                        <PriceCoordinate
-                        className="나의호가"
-                        at="right"
-                        orient="right"
-                        price={this.props.bid}
-                        stroke="#7974f2"
-                        strokeWidth={1}
-                        fill="#635ee7"
-                        lineStroke="white"
-                        textFill="#fff"
-                        arrowWidth={6}
-                        strokeDasharray="ShortDot"
-                        displayFormat={format('.2f')}
-                    />
+      
                     
                     {/* <OHLCTooltip forChart={1} origin={[-40, 0]} /> */}
                     

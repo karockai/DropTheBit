@@ -112,7 +112,11 @@ export default function LayoutGrid(props) {
             >
                 <Grid
                     className="플레이어리스트그리드"
+                    container
                     item
+                    direction ='column'
+                    justify="flex-start"
+                    alignItems="flex-start"
                     xs={leftSm}
                     style={{
                         width: '100%',
@@ -120,10 +124,24 @@ export default function LayoutGrid(props) {
                         padding: '0.3vh 0.3vw 0.3vh 0.3vw',
                     }}
                 >
-                    <Grid>
+                    <Grid
+                    item
+                        style={{
+                            width: '100%',
+                            height: '30%',
+                        }}
+                    >
                         {props.isStart && <Timer socket={props.socket} />}
                     </Grid>
-                    <RacingLeaderBoard socket={props.socket}/>
+                    <Grid
+                    item
+                        style={{
+                            width: '100%',
+                            height: '70%',
+                        }}
+                    >
+                        <RacingLeaderBoard socket={props.socket} />
+                    </Grid>
                     {/* <PlayerList
                         isStart={props.isStart}
                         socket={props.socket}
@@ -293,9 +311,13 @@ export default function LayoutGrid(props) {
                     >
                         <Paper
                             className={classes.paper}
-                            style={{ height: '50%', padding: '2vh', width: '100%' }}
+                            style={{
+                                height: '50%',
+                                padding: '2vh',
+                                width: '100%',
+                            }}
                         >
-                        <RefreshGraph socket={props.socket}/>
+                            <RefreshGraph socket={props.socket} />
                         </Paper>
                         <Paper
                             className={classes.paper}
@@ -311,7 +333,6 @@ export default function LayoutGrid(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                             /> */}
-
                             방 매매 현황
                             <RoomAction socket={props.socket} />
                         </Paper>
