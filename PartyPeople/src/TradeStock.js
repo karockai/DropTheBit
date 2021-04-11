@@ -573,7 +573,7 @@ export default function TradeStock(props) {
 
     return (
         <>
-            <SnackbarProvider maxSnack={5}>
+            <SnackbarProvider maxSnack={1}>
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"

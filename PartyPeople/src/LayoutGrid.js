@@ -321,6 +321,7 @@ export default function LayoutGrid(props) {
                             style={{
                                 height: '50%',
                                 margin: '1vh 0px 0px 0px',
+                                padding: '1vw',
                                 width: '100%',
                             }}
                         >
@@ -330,7 +331,7 @@ export default function LayoutGrid(props) {
                                 socket={props.socket}
                                 requestSocket={props.requestSocket}
                             /> */}
-                            방 매매 현황
+                            <h5>방 매매 현황</h5>
                             <RoomAction socket={props.socket} />
                         </Paper>
                     </Grid>
