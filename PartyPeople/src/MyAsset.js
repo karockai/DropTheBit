@@ -91,7 +91,7 @@ export default function MyAsset(props) {
                 // console.log(currentAsset);
                 // console.log(typeof(currentAsset));
 
-                const diffAsset = bfrWallet.asset - currentAsset;
+                const diffAsset = currentAsset - bfrWallet.asset;
 
                 const diffCash = currentCash - bfrWallet.cash;
                 const diffCoin = currentCoin - bfrWallet.coinVol;
@@ -199,8 +199,9 @@ export default function MyAsset(props) {
                     >
                         <span>보유 현금</span>
                         {/* <h5 id="changeAsset" style={{ fontWeight: 'bold', fontSize: '1.2vw',}}> */}
-                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw',}}>
-                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}{' 원'}
+                        <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw' }}>
+                            {ExpBySymbol(parseWonToStr(myWallet.myCash))}
+                            {' 원'}
                         </h5>
                         <div
                             id="diffCash"

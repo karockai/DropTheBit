@@ -48,9 +48,11 @@ export default {
             socket.on('backToLobby', (roomID) => {
                 if (!roomList.hasOwnProperty(roomID)) return 0;
                 if (roomList[roomID]['gaming'] === false) {
+                    console.log('gaming false?----');
                     new Room(io, socket).playerReinit(roomID);
                 } else {
-                    new Room(io, socket).joinRoom({
+                    console.log('gaming true ? ----');
+                    new Room(io, socket).backJoinRoom({
                         roomID: roomID,
                         playerID: roomList[roomID][socket.id]['playerID'],
                     });

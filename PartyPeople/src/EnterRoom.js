@@ -71,7 +71,6 @@ export default function EnterRoom(props) {
             });
         } else {
             // flag === 1, joinPublic
-
             props.socket.emit('joinPublic_Req', { playerID: name });
             props.socket.on('createPublic_Res', (data) => {
                 props.SetRoomIdAndInfo(data);
