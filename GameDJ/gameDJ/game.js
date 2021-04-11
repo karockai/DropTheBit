@@ -95,7 +95,7 @@ class Game {
             // 2. player_info 가져오기
             let playerInfo = roomList[roomID][socketID];
             let cash = playerInfo['cash'];
-            let coinVol = 0;
+            let coinVol = playerInfo['coinVol'];
             let playerID = playerInfo['playerID'];
 
             let bfrWallet = {};
@@ -104,7 +104,7 @@ class Game {
             bfrWallet['asset'] = playerInfo['asset'];
 
             // ! 음수 값 처리
-            if (reqPrice <= 0) {
+            if (reqPrice <= 0 || cash < reqPrice) {
                 console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
                 return;
             }
@@ -113,7 +113,6 @@ class Game {
             // 6. 요청가 >= 현재가 : 거래 체결 후 결과 송신(asset, buy_res("체결"))
             if (reqPrice >= curPrice) {
                 let reqVol = Math.floor(cash / curPrice);
-
                 // 6-1. cash, coin 갯수 갱신
                 cash -= curPrice * reqVol;
                 coinVol += reqVol;
@@ -137,11 +136,9 @@ class Game {
                 };
                 io.to(roomID).emit('buyDone_Room', buyDone);
 
-                // console.log('현재가로 구매 완료 :', playerInfo);
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
                 let reqVol = Math.floor(cash / reqPrice);
-
                 // 7-1. cash 갱신
                 cash -= reqPrice * reqVol;
                 playerInfo['cash'] = cash;
@@ -162,10 +159,7 @@ class Game {
                     vol: reqVol,
                     price: reqPrice,
                 };
-                // console.log('호가 등록 완료', playerInfo);
-                // console.log('roomID:', roomID);
                 io.to(roomID).emit('bidDone_Room', bidDone);
-                // console.log('호가 등록 완료', bidList);
                 // this.sendBidTable(reqJson);
             }
 
@@ -235,7 +229,6 @@ class Game {
                 };
 
                 io.to(roomID).emit('sellDone_Room', sellDone);
-                // console.log('현재가로 판매 완료 :', playerInfo);
                 // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
             } else {
                 let reqVol = coinVol;
@@ -244,8 +237,6 @@ class Game {
                 playerInfo['coinVol'] = coinVol;
                 // playerInfo['asset'] = asset;
                 // 4-3. player 호가 목록 등록
-                // console.log(playerInfo);
-                // console.log(playerInfo['ask']);
 
                 playerInfo['ask'][reqPrice] = reqVol;
                 if (!askList.hasOwnProperty(reqPrice)) {
@@ -255,7 +246,6 @@ class Game {
 
                 roomList[roomID][socketID] = playerInfo;
 
-                // console.log('호가 등록 완료', playerInfo);
                 let askDone = {
                     type: '매도 주문',
                     socketID: socketID,
@@ -265,7 +255,6 @@ class Game {
                 };
 
                 io.to(roomID).emit('askDone_Room', askDone);
-                // console.log("호가 등록 완료", askList);
                 // this.sendAskTable(reqJson);
             }
 
@@ -276,7 +265,6 @@ class Game {
             refreshWallet['cash'] = playerInfo['cash'];
             refreshWallet['asset'] = playerInfo['asset'];
             this.refreshWallet(socketID, refreshWallet, bfrWallet);
-            // console.log('-----------Sell End-----------');
         } catch (err) {
             console.error(err);
             webhook.sendMessage(`에러 발생 : ${error}`);
@@ -292,7 +280,6 @@ class Game {
 
             // bidList의 Length가 1이면 가격 자체를 지워버린다.
             if (!bidList[bidPrice]) return false;
-            // console.log("매수 취소 전", bidList);
             if (Object.keys(bidList[bidPrice]).length === 1) {
                 delete bidList[bidPrice];
             } else {
@@ -310,6 +297,7 @@ class Game {
 
             cash += bidVol * Number(bidPrice);
             playerInfo['cash'] = cash;
+
             delete playerInfo['bid'][bidPrice];
             roomList[roomID][socketID] = playerInfo;
 
@@ -381,8 +369,6 @@ class Game {
             refreshWallet: refreshWallet,
             bfrWallet: bfrWallet,
         };
-        console.log('bfr:', bfrWallet);
-        console.log('cur:', refreshWallet);
 
         if (bfrWallet['cash'] !== refreshWallet['cash']) {
             io.to(socketID).emit('refreshCash', walletInfo);
@@ -390,9 +376,9 @@ class Game {
         if (bfrWallet['coinVol'] !== refreshWallet['coinVol']) {
             io.to(socketID).emit('refreshCoin', walletInfo);
         }
-        if (bfrWallet['asset'] !== refreshWallet['asset']) {
-            io.to(socketID).emit('refreshAsset', walletInfo);
-        }
+        // if (bfrWallet['asset'] !== refreshWallet['asset']) {
+        io.to(socketID).emit('refreshAsset', walletInfo);
+        // }
         io.to(socketID).emit('refreshWallet', walletInfo);
     }
 

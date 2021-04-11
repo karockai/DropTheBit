@@ -6,16 +6,16 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
         fontSize: '2vw',
-      '& > svg': {
-        margin: theme.spacing(2),
-      },
+        '& > svg': {
+            margin: theme.spacing(2),
+        },
     },
-    icon : {
+    icon: {
         fontSize: '2vw',
-    }
-  }));
-  
-export default function RoomAction (props) {
+    },
+}));
+
+export default function RoomAction(props) {
     const classes = useStyles();
     const [peopleTrade, setPeople] = useState({
         total: 0,
@@ -27,46 +27,64 @@ export default function RoomAction (props) {
         props.socket.on('roomAction', (data) => {
             const tot = data.recentBuy + data.recentSell + data.recentNothing;
             setPeople({
-                total : tot,
-                red : data.recentBuy,
-                blue : data.recentSell,
-                grey : data.recentNothing
-            })
-        })
-    }, [])
+                total: tot,
+                red: data.recentBuy,
+                blue: data.recentSell,
+                grey: data.recentNothing,
+            });
+        });
+    }, []);
     // const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
-    const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
-      return (
-          <>
-        <span style ={{color : 'red'}}>{' ( '+peopleTrade.red+' / '}</span>
-        <span style ={{color : 'grey'}}>{peopleTrade.grey+' / '}</span>
-        <span style ={{color : 'blue'}}>{peopleTrade.blue+' )'}</span>
-        <div className={classes.root}>
-          {
-            peopleTrade.red > 0 && 
-            [...Array(peopleTrade.red)].map((n) => {
-                return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'red', margin: 1/ ratio + 'vw ' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
-                )
-            })
-          }
-                    {
-            peopleTrade.grey > 0 && 
-            [...Array(peopleTrade.grey)].map((n) => {
-                return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'grey',  margin: 1/ ratio + 'vw ' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
-                )
-            })
-          }
-                    {
-            peopleTrade.blue > 0 && 
-            [...Array(peopleTrade.blue)].map((n) => {
-                return (
-                    <PersonSharpIcon className={classes.icon} style={{color: 'blue',  margin: 1/ ratio + 'vw ' + 1 /ratio + 'vw', fontSize: 2 / ratio + 'vw'}}/>
-                )
-            })
-          }
-        </div>
+    const ratio = peopleTrade.total > 60 ? 3 : peopleTrade.total > 15 ? 2 : 1;
+    return (
+        <>
+            <span style={{ color: 'red' }}>{' ( 매수 / '}</span>
+            <span style={{ color: 'blue' }}>{'매도 / '}</span>
+            <span style={{ color: 'grey' }}>{'보류 )'}</span>
+            <div className={classes.root}>
+                {peopleTrade.red > 0 &&
+                    [...Array(peopleTrade.red)].map((n) => {
+                        return (
+                            <PersonSharpIcon
+                                className={classes.icon}
+                                style={{
+                                    color: 'red',
+                                    margin:
+                                        1 / ratio + 'vw ' + 1 / ratio + 'vw',
+                                    fontSize: 2 / ratio + 'vw',
+                                }}
+                            />
+                        );
+                    })}
+                {peopleTrade.blue > 0 &&
+                    [...Array(peopleTrade.blue)].map((n) => {
+                        return (
+                            <PersonSharpIcon
+                                className={classes.icon}
+                                style={{
+                                    color: 'blue',
+                                    margin:
+                                        1 / ratio + 'vw ' + 1 / ratio + 'vw',
+                                    fontSize: 2 / ratio + 'vw',
+                                }}
+                            />
+                        );
+                    })}
+                {peopleTrade.grey > 0 &&
+                    [...Array(peopleTrade.grey)].map((n) => {
+                        return (
+                            <PersonSharpIcon
+                                className={classes.icon}
+                                style={{
+                                    color: 'grey',
+                                    margin:
+                                        1 / ratio + 'vw ' + 1 / ratio + 'vw',
+                                    fontSize: 2 / ratio + 'vw',
+                                }}
+                            />
+                        );
+                    })}
+            </div>
         </>
-      );
+    );
 }

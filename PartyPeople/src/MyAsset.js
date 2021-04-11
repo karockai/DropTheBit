@@ -35,10 +35,8 @@ export default function MyAsset(props) {
                 const curAsset = data.refreshWallet.asset;
                 const diffAsset = curAsset - bfrAsset;
 
-                if (diffAsset) {
-                    setAsset(curAsset);
-                    setDiffAsset(diffAsset);
-                }
+                setAsset(curAsset);
+                setDiffAsset(diffAsset);
             });
         }
     }, [isInit]);
