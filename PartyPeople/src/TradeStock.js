@@ -272,22 +272,22 @@ export default function TradeStock(props) {
         SetBind(true);
         return status;
     }
-    props.socket.off('buyDone_Room').once('buyDone_Room', (bbid) => {
-        console.log('buyDone_Room');
-        // if (bbid.type === '실패') {
-        //     return {
-        //         status: 'invalid',
-        //         val: bid,
-        //         vol: volume,
-        //     };
-        // }
-        SetNewBid(bbid.price);
-        setBuyStatus({
-            status: 'done',
-            val: bbid.price,
-            vol: bbid.vol,
-        });
-    });
+    // props.socket.off('buyDone_Room').once('buyDone_Room', (bbid) => {
+    //     console.log('buyDone_Room');
+    //     // if (bbid.type === '실패') {
+    //     //     return {
+    //     //         status: 'invalid',
+    //     //         val: bid,
+    //     //         vol: volume,
+    //     //     };
+    //     // }
+    //     SetNewBid(bbid.price);
+    //     setBuyStatus({
+    //         status: 'done',
+    //         val: bbid.price,
+    //         vol: bbid.vol,
+    //     });
+    // });
 
     function Sell(bid, volume) {
         let status = '';
@@ -337,22 +337,22 @@ export default function TradeStock(props) {
         return status;
     }
 
-    props.socket.off('sellDone_Room').once('sellDone_Room', (sbid) => {
-        console.log('sellDone_Room');
-        // if (sbid.type === '실패') {
-        //     return {
-        //         status: 'invalid',
-        //         val: bid,
-        //         vol: volume,
-        //     };
-        // }
-        SetNewBid(sbid.price);
-        setSellStatus({
-            status: 'done',
-            val: sbid.price,
-            vol: sbid.vol,
-        });
-    });
+    // props.socket.off('sellDone_Room').once('sellDone_Room', (sbid) => {
+    //     console.log('sellDone_Room');
+    //     // if (sbid.type === '실패') {
+    //     //     return {
+    //     //         status: 'invalid',
+    //     //         val: bid,
+    //     //         vol: volume,
+    //     //     };
+    //     // }
+    //     SetNewBid(sbid.price);
+    //     setSellStatus({
+    //         status: 'done',
+    //         val: sbid.price,
+    //         vol: sbid.vol,
+    //     });
+    // });
 
     const changeEffect = (id) => {
         if (id === 'ArrowDown' || id === 'ArrowUp') {
