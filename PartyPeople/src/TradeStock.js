@@ -573,7 +573,7 @@ export default function TradeStock(props) {
 
     return (
         <>
-            <SnackbarProvider maxSnack={15}>
+            <SnackbarProvider maxSnack={5}>
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -589,19 +589,19 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="info"
-                        message={'[매수] 주문했어요! 📈'}
+                        message={'[매수] 주문! 📈'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매수] 주문이 체결되었어요! 🎁'}
+                        message={'[매수] 주문 체결! 🎁'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[호가 매수] 주문 취소!'}
+                        message={'[매수] 주문 취소!'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
@@ -619,13 +619,13 @@ export default function TradeStock(props) {
                 {sellStatus && sellStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="info"
-                        message={'[매도] 주문했어요! 📉'}
+                        message={'[매도] 주문 📉'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매도] 주문이 체결되었어요! 💸'}
+                        message={'[매도] 주문 체결 💸'}
                     />
                 )}
                 {/* {isCancle && isCancle.status === 'done' && (
@@ -643,7 +643,7 @@ export default function TradeStock(props) {
                 {sellStatus && sellStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[호가 매도] 주문 취소!'}
+                        message={'[매도] 주문 취소!'}
                     />
                 )}
             </SnackbarProvider>
