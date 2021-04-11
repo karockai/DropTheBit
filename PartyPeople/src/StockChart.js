@@ -113,7 +113,7 @@ class StockChart extends React.Component {
                 <Chart
                     id={1}
                     // yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
-                    yExtents={(d) => [d.high * 1.005, d.low * 0.995]}
+                    yExtents={(d) => [d.high * 1.001, d.low * 0.999]}
                 >
                     <XAxis axisAt="bottom" orient="bottom" />
                     <YAxis axisAt="right" orient="right" ticks={5} />
