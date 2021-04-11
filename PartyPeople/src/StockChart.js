@@ -153,14 +153,14 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         price={this.props.bid}
-                        stroke="#7974f2"
+                        stroke="white"
                         opacity={1}
                         strokeWidth={1}
                         fill="#635ee7"
                         lineStroke="white"
                         textFill="#fff"
-                        arrowWidth={22}
-                        strokeDasharray="ShortDot"
+                        arrowWidth={12}
+                        strokeDasharray="ShortDash"
                         displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
@@ -172,7 +172,7 @@ class StockChart extends React.Component {
                     fill="green"
                     textFill="#fff"
                     lineStroke="green"
-                    strokeDasharray="ShortDot"
+                    strokeDasharray="ShortDash"
                 
                     arrowWidth={3}
                     displayFormat={format('.2f')}
@@ -220,7 +220,7 @@ class StockChart extends React.Component {
                         opacity={1}
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="ShortDot"
+                        strokeDasharray="ShortDash"
                         displayFormat={format('.2f')}
                         
                     />
@@ -236,7 +236,7 @@ class StockChart extends React.Component {
                         lineStroke="#007bff"
                         textFill="#fff"
                         arrowWidth={7}
-                        strokeDasharray="ShortDot"
+                        strokeDasharray="ShortDash"
                         displayFormat={format('.2f')}
                     />
 
