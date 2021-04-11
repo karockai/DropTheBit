@@ -124,7 +124,6 @@ export default function StartGame(props) {
     useEffect(() => {
         if (!isSetUp) {
             props.socket.off('startGame_Res').on('startGame_Res', (data) => {
-                console.log('다시게임으로간다');
                 props.lobbyAudio.pause();
                 props.lobbyAudio.currentTime = 0;
                 props.history.push({
@@ -194,7 +193,7 @@ export default function StartGame(props) {
                     }}
                     text
                 >
-                    {'START'}
+                    {'Join Game'}
                 </Button>
             </>
         );

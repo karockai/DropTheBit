@@ -70,6 +70,9 @@ export default function GameOverModal(props) {
         props.socket.on('backToLobby_Res', (roomInfo) => {    //roomInfo gaming flase => 지금처럼 true => 로비, 버튼이 join
             props.setLeaderBoard(false);
             let path = '/lobby';
+            
+            console.log(roomInfo);
+            console.log(typeof(roomInfo));
             history.push({
                 pathname: path,
                 state: {
