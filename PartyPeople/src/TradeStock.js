@@ -427,10 +427,23 @@ export default function TradeStock(props) {
             }
             if (prevStatus.status === 'buy_bid') {      // 직전거래 buy 
                 props.socket.emit('cancelBid_Req',reqJson);
+                props.socket.once('cancelBid_Res', (data) => {
+                    const tmp_buyStatus = {...buyStatus};
+                    tmp_buyStatus.status = 'cancel';
+                    console.log(tmp_buyStatus);
+                    setBuyStatus(tmp_buyStatus);
+                });
+
             }
             else if (prevStatus.status === 'sell_bid') {     // 직전거래 sell
                 props.socket.emit('cancelAsk_Req',reqJson);
+                props.socket.once('cancelAsk_Res', (data) => {
+                    const tmp_sellStatus = {...sellStatus};
+                    tmp_sellStatus.status = 'cancel';
+                    setSellStatus(tmp_sellStatus);
+                });
             }
+
         }
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');
@@ -590,6 +603,18 @@ export default function TradeStock(props) {
                         }
                     />
                 )}
+                {buyStatus && buyStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={
+                            dateString +
+                            buyStatus.val +
+                            ',' +
+                            buyStatus.vol +
+                            ' [호가 매수] 주문이 취소되었어요!'
+                        }
+                    />
+                )}
                 {sellStatus && sellStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -624,6 +649,12 @@ export default function TradeStock(props) {
                             sellStatus.vol +
                             ' [매도] 주문이 체결되었어요! 💸'
                         }
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={dateString + ' 호가 매도가 취소되었어요.'}
                     />
                 )}
             </SnackbarProvider>
