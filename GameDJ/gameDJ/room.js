@@ -282,15 +282,16 @@ class Room {
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
             console.log('playerReinit----------');
-            console.log(roomInfo);
 
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', {
                 message: message,
                 author: '[SERVER]',
             });
-            io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
-            // io.to(socketID).emit('backToLobby_Res', roomInfo);    커밋할때 이걸로 해야함
+            console.log(roomInfo);
+            // io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
+            io.to(socketID).emit('backToLobby_Res', roomInfo);    //커밋할때 이걸로 해야함
+        
         } catch (err) {
             console.error(err);
             webhook.sendMessage(`에러 발생 : ${error}`);
@@ -338,7 +339,7 @@ class Room {
                 console.log(roomInfo);
 
                 // io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
-                io.to(socketID).emit('backToLobby_Res', roomInfo);    
+                io.to(socketID).emit('backToLobby_Res', roomInfo); //   커밋할때 이걸로 해야함
 
                 let message = playerID + '님이 들어오셨습니다.';
                 io.to(roomID).emit('update', {

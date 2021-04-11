@@ -74,6 +74,7 @@ function Lobby(props) {
     // console.log(props);
     const location = useLocation();
     const roomLeader = location.state.roomLeader;
+    const gaming = location.state.gaming;
 
 
 
@@ -229,6 +230,7 @@ function Lobby(props) {
         }
         return playerList;
     }
+    console.log(gaming);
     return (
         <>
             <video className="videoTag" autoPlay loop muted>
@@ -405,7 +407,7 @@ function Lobby(props) {
                                     socket={props.socket}
                                     history={props.history}
                                     lobbyAudio={props.lobbyAudio}
-                                    roomOnGame={props.roomInfo['gaming']}
+                                    roomOnGame={gaming ? gaming : props.roomInfo['gaming']}
                                     gameMusic={props.roomInfo['music']}
                                     isLeader={
                                         props.roomInfo['roomLeader'] ===

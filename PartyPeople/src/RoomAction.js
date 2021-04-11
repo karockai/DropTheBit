@@ -37,6 +37,10 @@ export default function RoomAction (props) {
     // const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
     const ratio = peopleTrade.total > 60 ? 3 : (peopleTrade.total > 15 ? 2 : 1);
       return (
+          <>
+        <span style ={{color : 'red'}}>{' ( '+peopleTrade.red+' / '}</span>
+        <span style ={{color : 'grey'}}>{peopleTrade.grey+' / '}</span>
+        <span style ={{color : 'blue'}}>{peopleTrade.blue+' )'}</span>
         <div className={classes.root}>
           {
             peopleTrade.red > 0 && 
@@ -63,5 +67,6 @@ export default function RoomAction (props) {
             })
           }
         </div>
+        </>
       );
 }

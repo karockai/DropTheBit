@@ -106,7 +106,11 @@ export default function TradeStock(props) {
         val: 0,
         vol: 0,
     });
-    const [isCancle, setCancle] = useState(false);
+    const [isCancle, setCancle] = useState({
+        status: '',
+        val: 0,
+        vol: 0,
+    });
     const [prevStatus, setPrevStatus] = useState({
         status: '',
         val: 0,
@@ -124,7 +128,6 @@ export default function TradeStock(props) {
     //@ 가정 => props에 socket이 전달되었어야함.
 
     const eventTime = 300;
-    const [tradeMode, setTradeMode] = useState('nothing'); // nothing / bid / ask
 
     useLayoutEffect(() => {
         if (props.socket == null) {
@@ -241,7 +244,6 @@ export default function TradeStock(props) {
                 vol: volume,
             };
         }
-        setTradeMode('buy');
         status = {
             status: 'request',
             val: bid,
@@ -257,30 +259,31 @@ export default function TradeStock(props) {
 
         props.socket.on('bidDone_Room', (data) => {
             // if(this.props.socket.id !== data.socketID) return;
-            console.log('bidDone_Room');
+            // console.log('bidDone_Room');
             setPrevStatus({
                 status: 'buy_bid',
             });
         });
-        props.socket.once('buyDone_Room', (bbid) => {
-            // console.log(bbid);
-            if (bbid.type === '실패') {
-                return {
-                    status: 'invalid',
-                    val: bid,
-                    vol: volume,
-                };
-            }
-            SetNewBid(bbid.price);
-            setBuyStatus({
-                status: 'done',
-                val: bid,
-                vol: volume,
-            });
-        });
+        
         SetBind(true);
         return status;
     }
+    props.socket.off('buyDone_Room').once('buyDone_Room', (bbid) => {
+        console.log('buyDone_Room');
+        // if (bbid.type === '실패') {
+        //     return {
+        //         status: 'invalid',
+        //         val: bid,
+        //         vol: volume,
+        //     };
+        // }
+        SetNewBid(bbid.price);
+        setBuyStatus({
+            status: 'done',
+            val: bbid.price,
+            vol: bbid.vol,
+        });
+    });
 
     function Sell(bid, volume) {
         let status = '';
@@ -325,25 +328,28 @@ export default function TradeStock(props) {
                 status: 'sell_bid',
             });
         });
-        props.socket.once('sellDone_Room', (sbid) => {
-            // console.log(sbid);
-            if (sbid.type === '실패') {
-                return {
-                    status: 'invalid',
-                    val: bid,
-                    vol: volume,
-                };
-            }
-            SetNewBid(sbid.price);
-            setSellStatus({
-                status: 'done',
-                val: bid,
-                vol: volume,
-            });
-        });
+
         SetBind(true);
         return status;
     }
+
+    props.socket.off('sellDone_Room').once('sellDone_Room', (sbid) => {
+        console.log('sellDone_Room');
+        // if (sbid.type === '실패') {
+        //     return {
+        //         status: 'invalid',
+        //         val: bid,
+        //         vol: volume,
+        //     };
+        // }
+        SetNewBid(sbid.price);
+        setSellStatus({
+            status: 'done',
+            val: sbid.price,
+            vol: sbid.vol,
+        });
+    });
+
     const changeEffect = (id) => {
         if (id === 'ArrowDown' || id === 'ArrowUp') {
             const target_class = document.getElementById('bidInput');
@@ -420,19 +426,30 @@ export default function TradeStock(props) {
             // 거래 취소
             // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
             // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
-            // console.log('tradeMode',tradeMode);
             console.log('prevStatus.status', prevStatus.status);
             const reqJson = {
                 socketID: props.socket.id,
                 roomID: props.roomID,
-            };
-            if (prevStatus.status === 'buy_bid') {
-                // 직전거래 buy
-                props.socket.emit('cancelBid_Req', reqJson);
-            } else if (prevStatus.status === 'sell_bid') {
-                // 직전거래 sell
-                props.socket.emit('cancelAsk_Req', reqJson);
             }
+            if (prevStatus.status === 'buy_bid') {      // 직전거래 buy 
+                props.socket.emit('cancelBid_Req',reqJson);
+                props.socket.once('cancelBid_Res', (data) => {
+                    const tmp_buyStatus = {...buyStatus};
+                    tmp_buyStatus.status = 'cancel';
+                    console.log(tmp_buyStatus);
+                    setBuyStatus(tmp_buyStatus);
+                });
+
+            }
+            else if (prevStatus.status === 'sell_bid') {     // 직전거래 sell
+                props.socket.emit('cancelAsk_Req',reqJson);
+                props.socket.once('cancelAsk_Res', (data) => {
+                    const tmp_sellStatus = {...sellStatus};
+                    tmp_sellStatus.status = 'cancel';
+                    setSellStatus(tmp_sellStatus);
+                });
+            }
+
         }
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');
@@ -579,6 +596,18 @@ export default function TradeStock(props) {
                         message={'[매수] 주문이 체결되었어요! 🎁'}
                     />
                 )}
+                {buyStatus && buyStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={
+                            dateString +
+                            buyStatus.val +
+                            ',' +
+                            buyStatus.vol +
+                            ' [호가 매수] 주문이 취소되었어요!'
+                        }
+                    />
+                )}
                 {sellStatus && sellStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -613,6 +642,12 @@ export default function TradeStock(props) {
                     <SnackAlertFunc
                         severity="success"
                         message={'호가를 현재가로 갱신합니다. '}
+                    />
+                )}
+                {sellStatus && sellStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={dateString + ' 호가 매도가 취소되었어요.'}
                     />
                 )}
             </SnackbarProvider>
