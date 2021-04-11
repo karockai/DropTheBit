@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import TradeStock from './TradeStock';
 import MyWallet from './MyWallet';
 import ChatRoom from './ChatRoom';
-import PlayerList from './PlayerList';
+import MyRank from './MyRank';
 import ChartComponent from './ChartComponent';
 import ChartTitle from './ChartTitle';
 import GameOverModal from './GameOverModal';
@@ -138,15 +138,15 @@ export default function LayoutGrid(props) {
                             height: '75%',
                         }}
                     >
+                        <MyRank
+                            isStart={props.isStart}
+                            socket={props.socket}
+                            requestSocket={props.requestSocket}
+                            roomID={props.roomID}
+                            roomInfo={props.roomInfo}
+                        />
                         <RacingLeaderBoard socket={props.socket} />
                     </Grid>
-                    {/* <PlayerList
-                        isStart={props.isStart}
-                        socket={props.socket}
-                        requestSocket={props.requestSocket}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                    /> */}
                 </Grid>
                 <Grid
                     className="차트및거래및지갑"
@@ -323,8 +323,7 @@ export default function LayoutGrid(props) {
                                 // margin: '1vh 0px 0px 0px',
                                 padding: '2vh',
                                 width: '100%',
-                                fontSize: '1.2vw'
-                                
+                                fontSize: '1.2vw',
                             }}
                         >
                             {/* <TabPanel

@@ -23,7 +23,7 @@ export default function RefreshGraph(props) {
 
     return (
         <>
-            <h5>호가 거래 비율</h5>
+            <h5>매수/매도 비율</h5>
             {/* <PieChart
         data={[
             { title: '매도', value: bidPercent, color: '#1e88e5' },
