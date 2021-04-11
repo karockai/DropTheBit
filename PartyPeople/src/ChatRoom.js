@@ -206,14 +206,12 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList className="채팅창그리드리스트" style={{ width: '100%', height: '85%' }} wrap={'wrap'}>
+            <GridList className="채팅창그리드리스트" style={{ width: '100%', height:'100%'}} wrap={'wrap'}>
                 <Grid
-                    container
                     direction={'column'}
                     justify={'flex-start'}
                     style={{
                         width: '100%',
-                        // height: '0%',
                         padding: '1vw 1vw 1vw 1vw',
                     }}
                 >
