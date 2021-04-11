@@ -19,6 +19,7 @@ class ChartComponent extends React.Component {
         this.currentSell = 0;
         this.doneBuy = 0;
         this.doneSell = 0;
+        this.bid = 0;
     }
     componentDidUpdate() {}
     componentWillMount() {
@@ -58,6 +59,7 @@ class ChartComponent extends React.Component {
             data: [...this.state.data, data],
             coinName: coinName,
             date: tmp_date[1],
+            bid: this.state.bid
         });
         // console.log(this.state.datas);
         // getData(this.state.datas).then(data => {
@@ -111,7 +113,15 @@ class ChartComponent extends React.Component {
                         // if(this.props.socket.id !== data.socketID) return;
                         this.currentSell = 0;
                     });
-                    this.props.socket.on('chartMyPrice_Res', (data) => {});
+                    this.props.socket.on('chartMyPrice_Res', (data) => {
+                        this.bid = data;
+                        this.setState({
+                            data: this.state.data,
+                            coinName: this.state.coinName,
+                            date: this.state.date,
+                            bid: data,
+                        });
+                    });
                 });
                 this.setup = false;
             }
@@ -153,7 +163,7 @@ class ChartComponent extends React.Component {
                 <StockChart
                     type={'hybrid'}
                     data={this.state.data}
-                    bid={this.props.bid}
+                    bid={this.bid}
                     doneBuy={this.doneBuy}
                     doneSell={this.doneSell}
                     currentBuy={this.currentBuy}

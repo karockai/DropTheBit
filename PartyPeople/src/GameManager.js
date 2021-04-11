@@ -66,7 +66,7 @@ class GameManager extends React.Component {
                             this.socket.on('update_users', function (data, user_count) {
                                 user_cnt = user_count;
                             })
-                            socket.emit('disconnect');
+                            socket.disconnect();
                         })
                     });
                     //여기서 roomID 이상한 주소로 들어온 경우 처리해줘야 한다.

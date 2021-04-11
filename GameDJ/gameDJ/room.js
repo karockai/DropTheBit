@@ -288,7 +288,7 @@ class Room {
                 message: message,
                 author: '[SERVER]',
             });
-            console.log(roomInfo);
+            // console.log(roomInfo);
             // io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
             io.to(socketID).emit('backToLobby_Res', roomInfo);    //커밋할때 이걸로 해야함
         
@@ -336,7 +336,7 @@ class Room {
 
                 // for stress test
                 // playerStress++;
-                console.log(roomInfo);
+                // console.log(roomInfo);
 
                 // io.to(socketID).emit('backToLobby_Res', roomInfo['roomLeader']);
                 io.to(socketID).emit('backToLobby_Res', roomInfo); //   커밋할때 이걸로 해야함
