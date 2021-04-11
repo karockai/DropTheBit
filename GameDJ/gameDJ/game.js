@@ -35,12 +35,6 @@ class Game {
                 });
             }
 
-            let message = '게임이 시작됩니다.';
-            io.to(roomID).emit('update', {
-                message: message,
-                author: '[SYSTEM]',
-            });
-
             function realStart() {
                 let roomID = socket.roomID;
                 let dataForStart = {};
@@ -351,7 +345,7 @@ class Game {
             let refreshWallet = {};
             refreshWallet['result'] = 'success';
             refreshWallet['type'] = 'sell';
-            refreshWallet['coinVol'] = 0;
+            refreshWallet['coinVol'] = playerInfo['coinVol'];
             refreshWallet['cash'] = playerInfo['cash'];
             refreshWallet['asset'] = playerInfo['asset'];
 
