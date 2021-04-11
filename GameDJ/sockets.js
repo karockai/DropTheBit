@@ -79,6 +79,9 @@ export default {
             socket.on('chartData_Req', () =>
                 new Room(io, socket).sendChartData()
             );
+            socket.on('chartMyPrice_Req', (price) => {
+                socket.emit('chartMyPrice_Res', price);
+            });
             // room event << -----------------------------------------
 
             // In-game event ------------------------------------------ >>

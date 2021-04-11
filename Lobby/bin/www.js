@@ -23,40 +23,56 @@ let serverList = (process.env.SERVERS).split(' ');
 let ipList = (process.env.IPS).split(' ');
 
 async function serverInfo(){
-    let messages = [];
+    let block = [];
+    // let response = {};
     for(let idx=0; idx<serverList.length; idx++){
         let name = serverList[idx];
         let ip = ipList[idx];
         let serverData = await dbhgetall(name);
         let room = serverData['room'];
         let player = serverData['player'];
+        // console.log("HI");
         await axios.get('http://' + ip + '/status').then(response=>{
             let cpuStat = response.data['cpuLoad'];
             let memStat = response.data['memUsed'];
-            console.log(`response from ${ip}/status`, response, cpuStat, memStat);
-            messages.push(`
-                서버 : ${name} 
-                IP : ${ip}
-                방 개수 : ${room} 
-                접속자수 : ${player}
-                CPU 사용량 : ${cpuStat}% 
-                메모리 사용량 : ${memStat}%
-            `)
+            // console.log(`response from ${ip}/status`, response, cpuStat, memStat);
+
+            block.push(
+                        // {
+                        //     "type": "section",
+                        //     "text": {
+                        //         "type": "mrkdwn",
+                        //         "text": 
+                                `서버:\t${name}(${ip})
+                                 방 개수: \t${room}
+                                 접속자 수:\t${player}
+                                 CPU 사용량:\t${cpuStat}%
+                                 메모리 사용량:\t${memStat}%`
+                        //     },
+                        //     "accessory": {
+                        //         "type": "image",
+                        //         "image_url": "https://api.slack.com/img/blocks/bkb_template_images/approvalsNewDevice.png",
+                        //         "alt_text": "computer thumbnail"
+                        //     }
+                        // }
+                
+                )
         })
     }
-    return messages;
+    // response['blocks'] = block;
+    return block;
 }
 
 app.post('/status', async (req,res)=>{
     if (req.body.event.text === "모니터링"){
-        console.log(req.body.event.text);
+        // console.log(req.body.event.text);
         let roomNum = [];
         let playerNum = [];
         let cpuStat = 0;
         let memStat = 0;
         serverInfo().then((messages)=>{
             console.log("message received");
-            // res.send({'challenge':req.body.challenge});
+            res.send({'challenge':req.body.challenge});
             webhook.sendMessage(messages);
         });
     }
