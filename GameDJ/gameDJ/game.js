@@ -35,12 +35,6 @@ class Game {
                 });
             }
 
-            let message = '게임이 시작됩니다.';
-            io.to(roomID).emit('update', {
-                message: message,
-                author: '[SYSTEM]',
-            });
-
             function realStart() {
                 let roomID = socket.roomID;
                 let dataForStart = {};
