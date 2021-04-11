@@ -3,6 +3,8 @@
     {
         "date": "str",
         "total_ask_size": "Num",
-        "total_bid_size": "Num"
+        "total_bid_size": "Num",
+        "ask_price": "Num",
+        "bid_price": "Num"
     }
 }
