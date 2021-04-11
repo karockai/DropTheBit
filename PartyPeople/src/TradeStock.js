@@ -179,12 +179,16 @@ export default function TradeStock(props) {
         SetNewVolume(volume - unitVolume);
     }
     function BidUp() {
-        SetBid(Number(currentBid) + Number(unitBid));
-        props.SetBid(Number(currentBid) + Number(unitBid));
+        let newPrice = Number(currentBid) + Number(unitBid);
+        SetBid(newPrice);
+        // props.SetBid(Number(currentBid) + Number(unitBid));
+        props.socket.emit('chartMyPrice_Req', newPrice);
     }
     function BidDown() {
-        SetBid(Number(currentBid) - Number(unitBid));
-        props.SetBid(Number(currentBid) - Number(unitBid));
+        let newPrice = Number(currentBid) - Number(unitBid);
+        SetBid(newPrice);
+        // props.SetBid(Number(currentBid) - Number(unitBid));
+        props.socket.emit('chartMyPrice_Req', newPrice);
     }
 
     function RefreshBid_Req() {
@@ -264,7 +268,7 @@ export default function TradeStock(props) {
                 status: 'buy_bid',
             });
         });
-        
+
         SetBind(true);
         return status;
     }
@@ -430,25 +434,24 @@ export default function TradeStock(props) {
             const reqJson = {
                 socketID: props.socket.id,
                 roomID: props.roomID,
-            }
-            if (prevStatus.status === 'buy_bid') {      // 직전거래 buy 
-                props.socket.emit('cancelBid_Req',reqJson);
+            };
+            if (prevStatus.status === 'buy_bid') {
+                // 직전거래 buy
+                props.socket.emit('cancelBid_Req', reqJson);
                 props.socket.once('cancelBid_Res', (data) => {
-                    const tmp_buyStatus = {...buyStatus};
+                    const tmp_buyStatus = { ...buyStatus };
                     tmp_buyStatus.status = 'cancel';
                     setBuyStatus(tmp_buyStatus);
                 });
-
-            }
-            else if (prevStatus.status === 'sell_bid') {     // 직전거래 sell
-                props.socket.emit('cancelAsk_Req',reqJson);
+            } else if (prevStatus.status === 'sell_bid') {
+                // 직전거래 sell
+                props.socket.emit('cancelAsk_Req', reqJson);
                 props.socket.once('cancelAsk_Res', (data) => {
-                    const tmp_sellStatus = {...sellStatus};
+                    const tmp_sellStatus = { ...sellStatus };
                     tmp_sellStatus.status = 'cancel';
                     setSellStatus(tmp_sellStatus);
                 });
             }
-
         }
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');

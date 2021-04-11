@@ -48,11 +48,9 @@ export default function Timer(props) {
     });
 
     const renderTime = (remainingTime) => {
-        // console.log('remainingTime :', remainingTime);
         if (0 <= remainingTime && remainingTime <= 5) {
             timeAudio.play();
         } else if (remainingTime < 0) {
-            console.log('hi');
             timerSwitch = false;
             return (
                 <div

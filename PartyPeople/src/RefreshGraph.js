@@ -3,7 +3,8 @@ import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 // import BidGraph from './BidGraph';
 import HorizontalBarChart from './BidGraph';
 import { TypeChooser } from "react-stockcharts/lib/helper";
-import { getData } from "./utils"
+import { getData } from "./utils";
+import { SplitByThree } from './parseMoney';
 
 export default function RefreshGraph(props) {
 const [askPrice, setAskPrice] = useState('');
@@ -14,8 +15,8 @@ const [bidPercent, setBidPercent] = useState('');
 props.socket.on('refreshExList', (exList) => {
     console.log(exList);
     if(exList.askPercent) {
-        setAskPrice(exList.askPrice);
-        setBidPrice(exList.bidPrice);
+        setAskPrice(SplitByThree(String(exList.askPrice)));
+        setBidPrice(SplitByThree(String(exList.bidPrice)));
         setAskPercent(exList.askPercent);
         setBidPercent(exList.bidPercent);
     }

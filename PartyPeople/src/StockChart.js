@@ -6,11 +6,15 @@ import { timeFormat } from 'd3-time-format';
 
 import { ChartCanvas, Chart } from 'react-stockcharts';
 import { PriceCoordinate } from 'react-stockcharts/lib/coordinates';
-import { BarSeries, CandlestickSeries,    LineSeries,
+import {
+    BarSeries,
+    CandlestickSeries,
+    LineSeries,
     ScatterSeries,
     CircleMarker,
     SquareMarker,
-    TriangleMarker, } from 'react-stockcharts/lib/series';
+    TriangleMarker,
+} from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
 import {
     CrossHairCursor,
@@ -35,7 +39,6 @@ const candlesAppearance = {
     opacity: 0.3,
 };
 
-
 class StockChart extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +54,7 @@ class StockChart extends React.Component {
         this.current = 0;
     }
 
-    handleResize = () => { 
+    handleResize = () => {
         this.setState({
             height: window.innerHeight * 0.5,
             width: window.innerWidth * 0.4,
@@ -89,9 +92,9 @@ class StockChart extends React.Component {
         this.currentSell = last(data).sell;
         this.currentBuy = last(data).buy;
 
-        // chart 
+        // chart
         // 6가지의 소켓통신을 받도록해야함
-        
+
         return (
             <ChartCanvas
                 height={this.state.height}
@@ -110,7 +113,7 @@ class StockChart extends React.Component {
                 <Chart
                     id={1}
                     // yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
-                    yExtents={d=> [d.high * 1.005, d.low * 0.995]}
+                    yExtents={(d) => [d.high * 1.001, d.low * 0.999]}
                 >
                     <XAxis axisAt="bottom" orient="bottom" />
                     <YAxis axisAt="right" orient="right" ticks={5} />
@@ -164,21 +167,20 @@ class StockChart extends React.Component {
                         displayFormat={format('.2f')}
                     />
                     <PriceCoordinate
-                    className="현재가격"
-                    at="right"
-                    orient="right"
-                    price={last(data).close}
-                    stroke="green"
-                    fill="green"
-                    textFill="#fff"
-                    lineStroke="green"
-                    strokeDasharray="ShortDash"
-                
-                    arrowWidth={3}
-                    displayFormat={format('.2f')}
+                        className="현재가격"
+                        at="right"
+                        orient="right"
+                        price={last(data).close}
+                        stroke="green"
+                        fill="green"
+                        textFill="#fff"
+                        lineStroke="green"
+                        strokeDasharray="ShortDash"
+                        arrowWidth={3}
+                        displayFormat={format('.2f')}
                     />
 
-                        <PriceCoordinate
+                    <PriceCoordinate
                         className="매수체결"
                         at="right"
                         orient="right"
@@ -193,7 +195,7 @@ class StockChart extends React.Component {
                         strokeDasharray="Solid"
                         displayFormat={format('.2f')}
                     />
-                        <PriceCoordinate
+                    <PriceCoordinate
                         className="매도체결"
                         at="right"
                         orient="right"
@@ -222,9 +224,8 @@ class StockChart extends React.Component {
                         arrowWidth={7}
                         strokeDasharray="ShortDash"
                         displayFormat={format('.2f')}
-                        
                     />
-                        <PriceCoordinate
+                    <PriceCoordinate
                         className="매도주문"
                         at="right"
                         orient="right"
@@ -240,18 +241,16 @@ class StockChart extends React.Component {
                         displayFormat={format('.2f')}
                     />
 
-      
-                    
                     {/* <OHLCTooltip forChart={1} origin={[-40, 0]} /> */}
-                    
+
                     <LineSeries
-                        yAccessor={close => close.close}
-                        stroke='#00ff00'
+                        yAccessor={(close) => close.close}
+                        stroke="#00ff00"
                         strokeWidth={1.5}
                         strokeDasharray="solid"
                     />
                     <ScatterSeries
-                        yAccessor={close => close.close}
+                        yAccessor={(close) => close.close}
                         marker={SquareMarker}
                         markerProps={{
                             width: 3,

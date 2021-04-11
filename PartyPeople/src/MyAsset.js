@@ -18,8 +18,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyAsset(props) {
     const classes = useStyles();
-    const [myAsset, setAsset] = useState(0);
+    const [myAsset, setAsset] = useState(100000000);
     const [diffAsset, setDiffAsset] = useState(0);
+    console.log('myAsset:', myAsset);
+    console.log('diffAsset:', diffAsset);
 
     const [isInit, setInit] = useState(false);
     if (!isInit) setInit(true);
@@ -28,13 +30,15 @@ export default function MyAsset(props) {
     useEffect(() => {
         if (props.socket == null) {
         } else {
-            props.socket.on('refreshWallet', (data) => {
+            props.socket.on('refreshAsset', (data) => {
                 const bfrAsset = data.bfrWallet.asset;
                 const curAsset = data.refreshWallet.asset;
                 const diffAsset = curAsset - bfrAsset;
 
-                setAsset(curAsset);
-                setDiffAsset(diffAsset);
+                if (diffAsset) {
+                    setAsset(curAsset);
+                    setDiffAsset(diffAsset);
+                }
             });
         }
     }, [isInit]);
@@ -68,7 +72,7 @@ export default function MyAsset(props) {
                 }}
             >
                 {' '}
-                {showProfit('diffAsset', diffAsset)}
+                {showProfit('diffAsset', diffAsset, setDiffAsset)}
             </h2>
         </Paper>
     );

@@ -26,7 +26,7 @@ class HorizontalBarChart extends React.Component {
         const { data, type, width, ratio,askPrice,bidPrice } = this.props;
 		return (
 			<ChartCanvas ratio={ratio} width={this.state.width} height={this.state.height}
-					margin={{ left:70, right: 10, top: 20, bottom: 30 }} 
+					margin={{ left:100, right: 10, top: 20, bottom: 30 }} 
                     type={type}
 					xExtents={data => [0, 100]}
 					data={data}
@@ -40,8 +40,8 @@ class HorizontalBarChart extends React.Component {
                         >
 					{/* <XAxis axisAt="bottom" orient="bottom" /> */}
 					<YAxis axisAt="left" orient="left" />
-					<BarSeries yAccessor={d => d.y === bidPrice && d.y} xAccessor={d =>  d.y === bidPrice && d.x} fill="red" textFill="#fff" swapScales/>
-					<BarSeries yAccessor={d => d.y === askPrice && d.y} xAccessor={d =>  d.y === askPrice && d.x} fill="#017de9" textFill="#fff" swapScales/>
+					<BarSeries yAccessor={d => d.y === bidPrice && d.y} xAccessor={d =>  d.y === bidPrice && d.x} fill="red" swapScales/>
+					<BarSeries yAccessor={d => d.y === askPrice && d.y} xAccessor={d =>  d.y === askPrice && d.x} fill="#017de9" swapScales/>
 				</Chart>
 			</ChartCanvas>
 		);

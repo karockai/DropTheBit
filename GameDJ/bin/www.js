@@ -71,8 +71,8 @@ app.get('/status', (req,res)=>{
         si.mem().then(memData=>{
             let status = {};
             status['cpuLoad'] = cpuData.currentLoad;
-            status['memUsed'] = memData.used / memData.total * 100;
-            console.log(status, "Return");
+            status['memUsed'] = memData.available / memData.total * 100;
+            // console.log(status, "Return");
             res.send(status);
         })
     });
