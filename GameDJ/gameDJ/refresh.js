@@ -20,8 +20,6 @@ class Refresh {
             if (curPrice === prePrice) {
                 return false;
             }
-            // console.log(curCoin['date'], ' RE');
-            // console.log(curPrice);
             // 시작하자마자 차트를 그리기 위한 배열 ----------------------- >>
             chartData.push(curCoin);
             if (chartData.length > 100) {
@@ -35,9 +33,6 @@ class Refresh {
             if (curPrice > prePrice) {
                 // askPrice가 curPrice보다 낮은지 확인
                 for (let askPrice in askList) {
-                    // console.log(askPrice, curPrice);
-                    // console.log(askPrice < curPrice);
-                    // console.log(Number(askPrice) < curPrice);
                     if (Number(askPrice) > curPrice) continue;
 
                     // 낮다면 거래를 체결한다.
@@ -56,7 +51,6 @@ class Refresh {
                         playerInfo['cash'] = cash;
                         playerInfo['actionRestTime'] = 5;
                         playerInfo['recentAction'] = 0;
-                        // console.log('매도 체결',askPrice, playerInfo['ask'][askPrice])
                         delete playerInfo['ask'][askPrice];
                         roomList[roomID][socketID] = playerInfo;
                         delete askList[askPrice][socketID];
@@ -93,9 +87,6 @@ class Refresh {
             else if (curPrice < prePrice) {
                 // bidPrice가 curPrice보다 높은지 확인
                 for (let bidPrice in bidList) {
-                    // console.log(bidPrice, curPrice);
-                    // console.log(bidPrice < curPrice);
-                    // console.log(Number(bidPrice) < curPrice);
                     if (Number(bidPrice) < curPrice) continue;
                     // 높다면 거래를 체결한다.
                     for (let socketID in bidList[bidPrice]) {
@@ -127,7 +118,6 @@ class Refresh {
                             bfrWallet
                         );
 
-                        // console.log('매수 체결', bidPrice, playerInfo['bid'][bidPrice])
                         delete playerInfo['bid'][bidPrice];
                         roomList[roomID][socketID] = playerInfo;
                         delete bidList[bidPrice][socketID];
@@ -339,8 +329,6 @@ class Refresh {
         try {
             const { io } = this;
             let bidObj = JSON.parse(await dbget('bidTable'));
-            // console.log(bidObj);
-            // console.log(bidObj['date'], ' TAB');
 
             let totalAsk = bidObj['total_ask_size'];
             let totalBid = bidObj['total_bid_size'];
@@ -357,7 +345,6 @@ class Refresh {
                 askPrice: askPrice,
                 bidPrice: bidPrice,
             };
-            // console.log(exList);
             io.emit('refreshExList', exList);
         } catch (err) {
             console.error(err);
