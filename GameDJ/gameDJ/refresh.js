@@ -370,14 +370,15 @@ class Refresh {
 
             let askPercent = (totalAsk / total) * 100;
             let bidPercent = 100 - askPercent;
+            let askPrice = bidObj['askPrice'];
+            let bidPrice = bidObj['bidPrice'];
 
             let exList = {
                 askPercent: askPercent,
                 bidPercent: bidPercent,
+                askPrice: askPrice,
+                bidPrice: bidPrice,
             };
-            console.log(bidObj);
-            console.log(typeof(bidObj));
-            console.log(exList);
 
             io.emit('refreshExList', exList);
         } catch (err) {
