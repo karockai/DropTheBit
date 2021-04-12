@@ -45,19 +45,20 @@ export default function MyCash(props) {
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
             }}
         >
-            <span>보유 현금</span>
-            <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw' }}>
+            <h6>보유 현금</h6>
+            <h5 style={{ fontWeight: 'bold', fontSize: '1.4vw' }}>
                 {ExpBySymbol(parseWonToStr(myCash))}
                 {' 원'}
             </h5>
-            <div
+            <h5
                 id="diffCash"
-                class="default"
+                class="default"s
                 style={{ fontWeight: 'bold', fontSize: '1vw' }}
+                align="right"
             >
                 {' '}
                 {showProfit('diffCash', diffCash, setDiffCash)}
-            </div>
+            </h5>
         </Paper>
     );
 }

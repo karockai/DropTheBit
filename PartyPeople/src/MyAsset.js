@@ -48,7 +48,7 @@ export default function MyAsset(props) {
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
             }}
         >
-            총 평가 자산
+            <h4>총 평가 자산</h4>
             <h2
                 style={{
                     fontWeight: 'bold',
@@ -66,6 +66,7 @@ export default function MyAsset(props) {
                     fontSize: '1.5vw',
                     color: color,
                 }}
+                align="right"
             >
                 {' '}
                 {showProfit('diffAsset', diffAsset, setDiffAsset)}
