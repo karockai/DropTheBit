@@ -50,7 +50,7 @@ export default function MyWallet(props) {
                     style={{
                         width: '60%',
                         height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        padding: '0.3vh 0.0vw 0.3vh 0.3vw',
                     }}
                     item
                 >

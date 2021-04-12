@@ -45,15 +45,15 @@ export default function MyCash(props) {
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
             }}
         >
-            <h6>보유 현금</h6>
-            <h5 style={{ fontWeight: 'bold', fontSize: '1.4vw' }}>
+            <h6 style={{ paddingLeft: '1px', paddingTop: "4px"}}>보유 현금</h6>
+            <h5 style={{ paddingRight: '1px', textAlign: 'right', fontWeight: 'bold', fontSize: '1.4vw' }}>
                 {ExpBySymbol(parseWonToStr(myCash))}
                 {' 원'}
             </h5>
             <h5
                 id="diffCash"
                 class="default"s
-                style={{ fontWeight: 'bold', fontSize: '1vw' }}
+                style={{ paddingRight: '1px', fontWeight: 'bold', fontSize: '1vw' }}
                 align="right"
             >
                 {' '}
