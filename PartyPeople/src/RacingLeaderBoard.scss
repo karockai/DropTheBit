@@ -92,7 +92,7 @@ body {
   transition: all 0.5;
   .driverLeft {
     display: flex;
-    width: 60%;
+    width: 100%;
     background: #0C151C;
   }
   .line {
@@ -114,7 +114,7 @@ body {
     margin: 2px;
   }
   .driverName {
-    width: 60%;
+    width: 100%;
     background: #0C151C;
     margin: 2px;
     font-size: 1vw;
@@ -122,9 +122,9 @@ body {
     text-align: left;
   }
   .driverRight {
-    width: 40%;
+    width: 100%;
     background: rgba(0, 0, 0, 0.5);
-    font-size: 0.7vw;
+    font-size: 1vw;
     padding: 3px;
     text-align: right;
   }

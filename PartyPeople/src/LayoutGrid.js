@@ -323,7 +323,7 @@ export default function LayoutGrid(props) {
                                 // margin: '1vh 0px 0px 0px',
                                 padding: '2vh',
                                 width: '100%',
-                                fontSize: '1.2vw',
+                                fontSize: '1vw',
                             }}
                         >
                             {/* <TabPanel

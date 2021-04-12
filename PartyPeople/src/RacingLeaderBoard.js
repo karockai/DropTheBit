@@ -229,7 +229,6 @@ const PlayerLeaderboard = (props) => {
                 <div id="detailtitle">CURRENT TYRES</div>
             ) : null}
             {props.activeDrivers.map((driver, driverIndex, allDrivers) => {
-                if (driverIndex > 15) return <></>;
                 const DriverInterval = (
                     <div class="driverInterval">
                         {ExpBySymbol(parseWonToStr(driver.asset))}

@@ -727,7 +727,8 @@ export default function TradeStock(props) {
                                 style={{
                                     width: '95%',
                                     height: '95%',
-                                    fontSize: '2.3vw',
+                                    fontSize: '2.0vw',
+                                    padding: '0 0 0 0'
                                 }}
                                 class="buy"
                                 onClick={(e) => {
@@ -757,7 +758,8 @@ export default function TradeStock(props) {
                                 style={{
                                     width: '95%',
                                     height: '95%',
-                                    fontSize: '2.3vw',
+                                    fontSize: '2.0vw',
+                                    padding: '0 0 0 0'
                                 }}
                                 class="sell"
                                 onClick={(e) => {
