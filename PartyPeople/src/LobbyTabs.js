@@ -48,18 +48,25 @@ function LobbyMusicOnOff(props) {
     };
 
     return (
+        <>
+        {/* <h6>음악 ON</h6> */}
         <FormControlLabel
-        style={{ margin: '0.5vw' }}
+        style={{ margin: '0.5vw', }}
+            align='right'
             control={
+                <>
+                <h5 style={{margin:'0'}}>{state===true ? '음악ON': '음악OFF'}</h5>
                 <PurpleSwitch
                     checked={state}
                     onChange={handleChange}
                     name="checkedA"
                      
                 />
+                </>
             }
             //   label="Custom color"
         />
+        </>
     );
 }
 
@@ -169,16 +176,17 @@ export default function LobbyTabs(props) {
                     style={{ padding: '1vh 1vw 1vh 1vw', margin:'0.5vw' }}
                     size="large"
                 >
-                    Tutorial
+                    {/* Tutorial */}
+                    튜토리얼
                 </button>
                 <button
-                    class="arrow"
+                    class="key_map"
                     id="key_map"
                     onClick={handleKeymap}
                     style={{ padding: '1vh 1vw 1vh 1vw', margin: '0.5vw' }}
                     size="large"
                 >
-                    KEY MAP
+                    단축키
                 </button>
                 {/* <button
                     class="arrow"

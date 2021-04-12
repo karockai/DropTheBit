@@ -13,6 +13,8 @@ import { withRouter } from 'react-router-dom';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Logo from './images/Logo.png';
 import { PurpleButton } from './PurpleComponent';
+import { SnackAlertBtn } from './SnackAlert';
+import { SnackbarProvider } from 'notistack';
 import './ShiningButton.css';
 import './index.css';
 
@@ -78,7 +80,7 @@ function SetPlayerName(props) {
         .substring(window.location.toString().indexOf('?'));
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
-
+    const [isEmpty, setIsEmpty] = React.useState(false);
     const onKeyPress = (e) => {
         if (e.key == 'Enter') {
             handleOnSave(e);
@@ -91,28 +93,29 @@ function SetPlayerName(props) {
 
     const handleOnSave = (event) => {
         if(tmp === '') {
-            //alert
         }
         if (tmp !== '') {
-            event.preventDefault();
+            // event.preventDefault();
             props.onSave(tmp, 0);
         }
     };
+    useEffect(()=> {
+        setIsEmpty(tmp === '');
+    }, [tmp]);
 
     const handleOnSave2 = (event) => {
         if (tmp === '') {
-            //alert
         }
         if (tmp !== '') {
-            event.preventDefault();
+            // event.preventDefault();
             props.onSave(tmp, 1);
         }
     };
-    let buttonMsg = 'Create Private Room';
-    let publicButton = 'Join Public Room';
+    let buttonMsg = '친구들과 즐기기';
+    let publicButton = '사람들과 즐기기';
     if (searchParams.has('id')) {
         // 초대링크 받아서 온 사람
-        buttonMsg = 'Join Room';
+        buttonMsg = '함께하기';
 
         return (
             <>
@@ -156,18 +159,28 @@ function SetPlayerName(props) {
                     </Grid>
 
                     <Grid item container direction="column" justify="center" alignItems="center">
-                        <button
+                    <SnackbarProvider maxSnack={1}>
+                        <SnackAlertBtn
+                            class="start"
+                            severity="success"
+                            message="닉네임을 입력해주세요."
+                            label={buttonMsg}
+                            onAlert={isEmpty}
+                            type="button"
                             onClick={handleOnSave}
-                            style={{ width: '50vh', height: '7vh' }}
-                        >
-                            {buttonMsg}
-                        </button>
+                            id="copy"
+                            // style={{ width: '50vh', height: '7vh' }}
+                            width="25vw"
+                            height="7vh"
+                        />
+                    </SnackbarProvider>
                     </Grid>
                 </Grid>
             </>
+
         );
     } else {
-        buttonMsg = 'Create Private Room';
+        buttonMsg = '친구들과 즐기기';
 
         return (
             <>
@@ -206,27 +219,45 @@ function SetPlayerName(props) {
                             autoFocus
                             onKeyPress={onKeyPress}
                             inputProps={{ maxLength: 10 }}
+
                         />
                     </Grid>
 
                     <Grid item container direction="column" justify="center" alignItems="center" style={{ padding:'5vh 0 0 0'}}>
-                        <button
-                            class="start"
-                            onClick={handleOnSave}
-                            style={{ width: '50vh', height: '7vh'}}
-                        >
-                            {buttonMsg}
-                        </button>
-                        <Grid style={{padding:"0.3vh"}}>    
+
+                        <Grid style={{padding:"0.3vh"}}>
+                            <SnackbarProvider maxSnack={1}>
+                            <SnackAlertBtn
+                                class="start"
+                                severity="success"
+                                message="닉네임을 입력해주세요."
+                                label={buttonMsg}
+                                onAlert={isEmpty}
+                                type="button"
+                                onClick={handleOnSave}
+                                id="copy"
+                                width="25vw"
+                            height="7vh"
+                            />
+                        </SnackbarProvider>    
                         </Grid>
 
-                        <button
+                        <SnackbarProvider maxSnack={1}>
+                        <SnackAlertBtn
                             class="start"
+                            severity="success"
+                            message="닉네임을 입력해주세요."
+                            label={publicButton}
+                            onAlert={isEmpty}
+                            type="button"
                             onClick={handleOnSave2}
-                            style={{ width: '50vh', height: '7vh' }}
-                        >
-                            {publicButton}
-                        </button>
+                            id="copy"
+                            width="25vw"
+                            height="7vh"
+                            margin="0.5vw"
+                            // padding="1vw"
+                        />
+                    </SnackbarProvider>
                     </Grid>
                 </Grid>
             </>
@@ -234,3 +265,12 @@ function SetPlayerName(props) {
     }
 }
 export default withRouter(SetPlayerName);
+
+
+{/* <button
+class="start"
+onClick={handleOnSave}
+style={{ width: '50vh', height: '7vh'}}
+>
+{buttonMsg}
+</button> */}

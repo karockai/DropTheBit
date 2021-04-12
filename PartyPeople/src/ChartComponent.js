@@ -24,8 +24,8 @@ class ChartComponent extends React.Component {
         this.bid = 0;
     }
     componentDidUpdate() {
-        console.log('props', this.props.bid);
-        console.log('props_', this.bid);
+        // console.log('props', this.props.bid);
+        // console.log('props_', this.bid);
     }
     componentWillMount() {
         if (this.props.socket === null) {
@@ -122,7 +122,7 @@ class ChartComponent extends React.Component {
                         this.currentSell = 0;
                     });
                     this.props.socket.on('chartMyPrice_Res', (data) => {
-                        console.log('props__', data);
+                        // console.log('props__', data);
                         this.bid = data;
                         this.setState({
                             data: this.state.data,

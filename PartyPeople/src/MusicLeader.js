@@ -133,7 +133,7 @@ export default function MusicLeader(props) {
                             style: { color: '#fff', },
                         }}
                     >
-                        Select Music
+                        음악 제목
                     </InputLabel>
                     <Select
                         className={classes.select}
@@ -217,7 +217,7 @@ export default function MusicLeader(props) {
                             style: { color: '#fff', },
                         }}
                         id="standard-read-only-input"
-                        label="Play Time"
+                        label="음악 시간"
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,

@@ -322,7 +322,7 @@ export default function TradeStock(props) {
         props.socket.emit('RefreshBid_Req');
         props.socket.emit('chartMyPrice_Req', -1);
         props.socket.once('RefreshBid_Res', (curPrice) => {
-            console.log('RefreshBid_Req');
+            // console.log('RefreshBid_Req');
             SetBid(curPrice);
         });
     }
@@ -407,7 +407,7 @@ export default function TradeStock(props) {
                 vol: bbid.vol,
             });
             setPrevStatus(null);
-            console.log('buyDone-Room socket .');
+            // console.log('buyDone-Room socket .');
         });
         SetBind(true);
         return status;

@@ -66,7 +66,7 @@ class StockChart extends React.Component {
 
     }
     componentDidUpdate() {
-        console.log('props', this.props.bid);
+        // console.log('props', this.props.bid);
     }
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize);

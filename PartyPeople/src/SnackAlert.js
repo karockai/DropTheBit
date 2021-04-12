@@ -36,13 +36,13 @@ export function SnackAlertBtn(props) {
             });
         }
     };
-
+    console.log(props.class);
     return (
         <>
             <button
-                class="link"
+                class={props.class}
                 // style={{padding:'1.2vh', margin:'0.5vw', width: '4vw'}} //height: '5vh'
-                style={{ margin:'0vw',padding: '1vh 1.5vw', }}
+                style={{ margin:'0vw',padding: '1vh 1.5vw', width:props.width, margin:props.margin, padding:props.padding}}
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}

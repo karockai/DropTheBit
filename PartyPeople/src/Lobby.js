@@ -62,9 +62,11 @@ const useStyles = makeStyles((theme) => ({
     input: {
         color: 'black',
         backgroundColor: 'white',
-        opacity: 0.6,
+        fontFamily:'NEXON Lv1 Gothic OTF',
+        // opacity: 0.8,
         // width: '4vw',
         // wordSpacing: '16px',
+        borderRadius: '10px',
         padding: '0 0 0 0.5vw',
         height: '5vh',
     },
@@ -266,7 +268,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid xs={4} align="left">
+                            <Grid style={{width:'33%'}} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -286,8 +288,8 @@ function Lobby(props) {
                                     </span>
                                 </IconButton>
                             </Grid>
-                                <Grid container xs={5} alignItems="center" justify='flex-start'>
-                                <Grid container style={{width: '80%'}} justify='space-between' alignItems='center'>
+                                <Grid container style={{width:'35%'}} alignItems="center" justify='space-between'>
+                                <Grid container style={{width: '90%'}} justify='space-between' alignItems='center'>
                                     <TextField
                                         type="text"
                                         id="gameLink"
@@ -303,7 +305,7 @@ function Lobby(props) {
                                     {'   '}
                                     <SnackbarProvider maxSnack={1}>
                                         <SnackAlertBtn
-                                            class="btn btn-warning"
+                                            class="link"
                                             severity="success"
                                             message="링크가 복사됐어요! 😚"
                                             label="초대 링크"
@@ -316,7 +318,7 @@ function Lobby(props) {
                                     </SnackbarProvider>
                                 </Grid>
                                 </Grid>
-                            <Grid xs={3} direction={'row'} contianer justify="flex-start" alignItems="flex-start" style={{ padding: '0 1vw 0 1vw', textAlign: 'right' }}>
+                            <Grid style={{width:'27%'}} direction={'row'} contianer justify="flex-start" alignItems="flex-start" style={{ padding: '0 1vw 0 1vw', textAlign: 'right' }}>
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
