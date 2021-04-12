@@ -785,7 +785,7 @@ export default function TradeStock(props) {
                                 }}
                                 id="z"
                             >
-                                [Z] 전량 매수
+                                전량 매수
                             </button>
                         </Grid>
                         <Grid
@@ -811,7 +811,7 @@ export default function TradeStock(props) {
                                 }}
                                 id="x"
                             >
-                                [X] 전량 매도
+                                전량 매도
                             </button>
                         </Grid>
                         {/* <Grid style={{ width: '100%',}}>
