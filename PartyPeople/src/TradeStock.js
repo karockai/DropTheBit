@@ -144,7 +144,7 @@ export default function TradeStock(props) {
     const buySellButton = () => {
         return (
             <>
-                <Grid style={{ width: '50%', height: '100%', paddingLeft: '8px', paddingBottom: '2px' }}>
+                <Grid style={{ width: '50%', height: '100%', paddingLeft: '4px', paddingBottom: '3px' }}>
                     <button
                         style={{
                             width: '95%',
@@ -170,7 +170,7 @@ export default function TradeStock(props) {
                         풀매수
                     </button>
                 </Grid>
-                <Grid style={{ width: '50%', height: '100%', paddingRight: '8px', paddingBottom: '2px'}} align="right">
+                <Grid style={{ width: '50%', height: '100%', paddingRight: '4px', paddingBottom: '3px'}} align="right">
                     <button
                         style={{
                             width: '95%',
@@ -754,7 +754,7 @@ export default function TradeStock(props) {
                     justify="space-between"
                     style={{ height: '20%' }}
                 >
-                    <span className={classes.small_text} style={{ height: '100%', paddingTop: '9px' }}>매매호가</span>
+                    <span className={classes.small_text} style={{ height: '100%', paddingTop: '7px', paddingLeft: '6px' }}>매매호가</span>
                     {/* <span className={classes.small_text}>[Space]:현재가</span> */}
                 </Grid>
                 <Grid
@@ -766,7 +766,7 @@ export default function TradeStock(props) {
                     alignItems="flex-end"
                     style={{ height: '30%', paddingBottom: '8px' }}
                 >
-                    <Grid style={{ width: '20%', paddingLeft: '6px' }}>
+                    <Grid style={{ width: '20%', paddingLeft: '4px' }}>
                         <Button
                             class="arrow"
                             className={classes.arrow}
@@ -792,7 +792,7 @@ export default function TradeStock(props) {
                             {SplitByThree(String(currentBid))}
                         </h5>
                     </Grid>
-                    <Grid style={{ width: '20%' , paddingRight: '6px'}} align="right">
+                    <Grid style={{ width: '20%' , paddingRight: '4px'}} align="right">
                         <Button
                             // style={{margin:'0 0 0 2%' }}
                             class="arrow"

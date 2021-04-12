@@ -61,7 +61,7 @@ export default function MyWallet(props) {
                     style={{
                         width: '40%',
                         height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        padding: '0.3vh 0.05vw 0.3vh 0.3vw',
                     }}
                 >
                     <MyCoin socket={props.socket} />
@@ -83,7 +83,7 @@ export default function MyWallet(props) {
                     style={{
                         width: '100%',
                         height: '100%',
-                        padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                        padding: '0.3vh 0.05vw 0.3vh 0.3vw',
                     }}
                 >
                     <MyAsset socket={props.socket} />

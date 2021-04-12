@@ -48,11 +48,11 @@ export default function MyAsset(props) {
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
             }}
         >
-            <h4 style={{ paddingLeft: '1px', paddingTop: "4px"}}>총 평가 자산</h4>
+            <h4 style={{ paddingLeft: '1px', paddingTop: "4px"}}>자산</h4>
             <h2
                 style={{
                     paddingRight: '1px',
-                    textAlign: 'right',
+                    textAlign: 'left',
                     fontWeight: 'bold',
                     fontSize: '2.2vw',
                     color: color,
