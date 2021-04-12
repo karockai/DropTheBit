@@ -43,7 +43,7 @@ export default function MyCoin(props) {
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
             }}
         >
-            <h3 style={{fontSize: '1vw' }}>보유 코인 수</h3>
+            <h6 >보유 코인 수</h6>
             <h5 style={{ fontWeight: 'bold', fontSize: '1.4vw' }}>
                 {SplitByThree(String(myCoin)) + ' 개'}
             </h5>
