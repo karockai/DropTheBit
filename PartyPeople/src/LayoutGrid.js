@@ -26,7 +26,7 @@ import Timer from './Timer';
 import RefreshGraph from './RefreshGraph';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import {red, blue, purple, grey} from '@material-ui/core/colors';
+import { red, blue, purple, grey } from '@material-ui/core/colors';
 import {
     BrowserRouter as Router,
     Switch,
@@ -35,6 +35,7 @@ import {
 } from 'react-router-dom';
 import TabPanel from './TabControl';
 import RacingLeaderBoard from './RacingLeaderBoard';
+import KeyMap from './images/KeyMap.png';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,13 +50,10 @@ const useStyles = makeStyles((theme) => ({
 
 const theme = createMuiTheme({
     palette: {
-        
         primary: blue,
         // secondary: red,
-
     },
-  });
-
+});
 
 export default function LayoutGrid(props) {
     const classes = useStyles();
@@ -92,7 +90,6 @@ export default function LayoutGrid(props) {
     let getCurrentAPIData = () => {
         return APIdata;
     };
-    
 
     return (
         <>
@@ -281,7 +278,7 @@ export default function LayoutGrid(props) {
                                         style={{ height: '100%' }}
                                         className={classes.paper}
                                     >
-                                     {/* <ThemeProvider theme={theme}> */}
+                                        {/* <ThemeProvider theme={theme}> */}
                                         <TradeStock
                                             // theme={theme}
                                             SetBid={SetBid}
@@ -364,13 +361,17 @@ export default function LayoutGrid(props) {
                             className={classes.paper}
                             style={{ height: '100%', width: '100%' }}
                         >
-                            <ChatRoom
+                            <img
+                                src={KeyMap}
+                                style={{ height: '100%', width: '100%' }}
+                            />
+                            {/* <ChatRoom
                                 SetInputCtrl={SetInputCtrl}
                                 roomInfo={props.roomInfo}
                                 roomID={props.roomID}
                                 socket={props.socket}
                                 chat={props.chat}
-                            />
+                            /> */}
                         </Paper>
                     </Grid>
                 </Grid>

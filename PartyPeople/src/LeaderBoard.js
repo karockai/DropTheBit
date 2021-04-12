@@ -21,6 +21,7 @@ import Paper from '@material-ui/core/Paper';
 import { Button, Grid, GridList, Popover } from '@material-ui/core';
 import { ExpBySymbol, parseWonToStr } from './parseMoney';
 import LobbyTutorial from './LobbyTutorial';
+import KeyMap from './images/KeyMap.png';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -120,88 +121,105 @@ export default function LeaderBoard(props) {
                 alignItems={'center'}
                 style={{ width: '100%', height: '100%' }}
             >
-                <TableContainer
-                    id="테이블 컨테이너"
-                    component={Paper}
-                    className={classes.container}
-                >
-                    <Table
-                        stickyHeader
-                        style={{ width: '100%' }}
-                        className={classes.table}
-                        aria-label="simple table"
+                {Array.isArray(board) ? (
+                    <TableContainer
+                        id="테이블 컨테이너"
+                        component={Paper}
+                        className={classes.container}
                     >
-                        <TableHead>
-                            <TableRow className={classes.tableHead}>
-                                <TableCell
-                                    className={classes.tableHead}
-                                    align="left"
-                                >
-                                    {Array.isArray(board)
-                                        ? '순위'
-                                        : '게임이 끝나면 순위가 표시됩니다.'}
-                                </TableCell>
-                                <TableCell
-                                    className={classes.tableHead}
-                                    align="right"
-                                >
-                                    {Array.isArray(board)
-                                        ? '플레이어 이름'
-                                        : ''}
-                                </TableCell>
-                                <TableCell
-                                    className={classes.tableHead}
-                                    align="right"
-                                >
-                                    {Array.isArray(board) ? '최종 수익' : ''}
-                                </TableCell>
-                                {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Array.isArray(board) ? (
-                                board.map((row, idx) => (
-                                    <TableRow
-                                        key={row.playerID}
-                                        id="테이블셀로우"
-                                        className={classes.tableBody}
-                                    >
-                                        <TableCell
-                                            component="th"
-                                            scope="row"
-                                            className={classes.tableBodyText}
-                                            style={{ width: '20%' }}
-                                            align="left"
-                                        >
-                                            {showScore(idx + 1)}
-                                        </TableCell>
-                                        <TableCell
-                                            className={classes.tableBodyText}
-                                            align="right"
-                                        >
-                                            {row.playerID}
-                                        </TableCell>
-                                        {showAsset(row.asset)}
-                                    </TableRow>
-                                ))
-                            ) :             <Popover
-                            open={tutoToggle}
-                            anchorEl={openTuto}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                                vertical: 'middle',
-                                horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                                vertical: 'middle',
-                                horizontal: 'center',
-                            }}
+                        <Table
+                            stickyHeader
+                            style={{ width: '100%' }}
+                            className={classes.table}
+                            aria-label="simple table"
                         >
-                            <LobbyTutorial onClose={handleClose}></LobbyTutorial>
-                        </Popover>}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            <TableHead>
+                                <TableRow className={classes.tableHead}>
+                                    <TableCell
+                                        className={classes.tableHead}
+                                        align="left"
+                                    >
+                                        {/* {Array.isArray(board)
+                                        ? '순위'
+                                        : '게임이 끝나면 순위가 표시됩니다.'} */}
+                                    </TableCell>
+                                    <TableCell
+                                        className={classes.tableHead}
+                                        align="right"
+                                    >
+                                        {Array.isArray(board)
+                                            ? '플레이어 이름'
+                                            : ''}
+                                    </TableCell>
+                                    <TableCell
+                                        className={classes.tableHead}
+                                        align="right"
+                                    >
+                                        {Array.isArray(board)
+                                            ? '최종 수익'
+                                            : ''}
+                                    </TableCell>
+                                    {/* <TableCell align="right">Fat&nbsp;(g)</TableCell> */}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {Array.isArray(board) ? (
+                                    board.map((row, idx) => (
+                                        <TableRow
+                                            key={row.playerID}
+                                            id="테이블셀로우"
+                                            className={classes.tableBody}
+                                        >
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                className={
+                                                    classes.tableBodyText
+                                                }
+                                                style={{ width: '20%' }}
+                                                align="left"
+                                            >
+                                                {showScore(idx + 1)}
+                                            </TableCell>
+                                            <TableCell
+                                                className={
+                                                    classes.tableBodyText
+                                                }
+                                                align="right"
+                                            >
+                                                {row.playerID}
+                                            </TableCell>
+                                            {showAsset(row.asset)}
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <Popover
+                                        open={tutoToggle}
+                                        anchorEl={openTuto}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                            vertical: 'middle',
+                                            horizontal: 'center',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'middle',
+                                            horizontal: 'center',
+                                        }}
+                                    >
+                                        <LobbyTutorial
+                                            onClose={handleClose}
+                                        ></LobbyTutorial>
+                                    </Popover>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                ) : (
+                    <img
+                        src={KeyMap}
+                        style={{ height: '100%', width: '100%' }}
+                    />
+                )}
             </Grid>
         </GridList>
     );

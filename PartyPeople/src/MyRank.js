@@ -41,6 +41,7 @@ export default function MyRank(props) {
 
     function ExpBySymbol(value) {
         let ret = value;
+        if (!ret) return;
         let length = ret.length;
         let isPlus = true;
         if (ret.charAt() === '-') {

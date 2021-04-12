@@ -1,5 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import { Router, Route, Switch, Redirect, useHistory,useLocation } from 'react-router-dom';
+import {
+    Router,
+    Route,
+    Switch,
+    Redirect,
+    useHistory,
+    useLocation,
+} from 'react-router-dom';
 import './App.css';
 import MenuIcon from '@material-ui/icons/Menu';
 import {
@@ -33,6 +40,7 @@ import './Lobby.css';
 import StartGame from './StartGame';
 import backgroundImg from './videos/LobbyVideo2.mp4';
 import LeaderBoard from './LeaderBoard';
+import clubWallpaper from './images/clubWallpaper.jpg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         color: '#CDD7E0',
         backgroundColor: '#0C151C',
-        boxShadow: ''
+        boxShadow: '',
     },
     button: {
         // color: theme.palette.getContrastText
@@ -55,10 +63,10 @@ const useStyles = makeStyles((theme) => ({
         color: 'black',
         backgroundColor: 'white',
         opacity: 0.6,
-        // width: '4vw', 
+        // width: '4vw',
         // wordSpacing: '16px',
         padding: '0 0 0 0.5vw',
-        height:'5vh',
+        height: '5vh',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -78,8 +86,6 @@ function Lobby(props) {
     const location = useLocation();
     const roomLeader = location.state.roomLeader;
     const gaming = location.state.gaming;
-
-
 
     const classes = useStyles();
 
@@ -148,7 +154,10 @@ function Lobby(props) {
     if (roomLeader != null && roomLeader != props.roomInfo['roomLeader']) {
         const tmp_roomInfo = props.roomInfo;
         tmp_roomInfo['roomLeader'] = roomLeader;
-        props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo : tmp_roomInfo});
+        props.SetRoomIdAndInfo({
+            roomID: props.roomID,
+            roomInfo: tmp_roomInfo,
+        });
     }
     const CheckLeader = () => {
         if (props.roomInfo['roomLeader'] === props.socket.id) {
@@ -198,7 +207,7 @@ function Lobby(props) {
             }
             // let wid = val + '%'
             return (
-                <>  
+                <>
                     {tmparr.map(([socketID, player]) => {
                         return (
                             <>
@@ -209,7 +218,6 @@ function Lobby(props) {
                                     playerCount={playerCount}
                                 />{' '}
                             </>
-                            
                         );
                     })}
                 </>
@@ -236,6 +244,11 @@ function Lobby(props) {
             <video className="videoTag" autoPlay loop muted>
                 <source src={backgroundImg} type="video/mp4" />
             </video>
+            {/* <img
+                src={clubWallpaper}
+                className="videoTag"
+                style={{ opacity: 0.6 }}
+            /> */}
             <Grid
                 className="전체그리드"
                 container
@@ -261,7 +274,12 @@ function Lobby(props) {
                                     aria-label="menu"
                               >
                                     {/* <MenuIcon /> */}
-                                    <span style={{ fontSize: '2vw', fontWeight:'bold' }}>
+                                    <span
+                                        style={{
+                                            fontSize: '2vw',
+                                            fontWeight: 'bold',
+                                        }}
+                                    >
                                         {props.roomInfo[
                                             props.roomInfo['roomLeader']
                                         ]['playerID'] + ' 님의 단타방 📊'}
@@ -312,7 +330,6 @@ function Lobby(props) {
                                     lobbyAudio={props.lobbyAudio}
                                 />
                             </Grid>
-
                         </Toolbar>
                     </AppBar>
                 </Grid>
@@ -353,11 +370,11 @@ function Lobby(props) {
                         >
                             <Grid
                                 contianer
-                                direction='row'
+                                direction="row"
                                 justify="center"
                                 alignItems="flex-end"
                                 // className="게임방메타데이터"
-                                className='음악선택창'
+                                className="음악선택창"
                                 item
                                 xs={6}
                                 style={{
@@ -367,42 +384,16 @@ function Lobby(props) {
                                 padding: '1vh 2vw',
                             }}
                             >
-                                <Paper 
-                                className={classes.paper}
-                                
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    padding: '1vw 1vw 1vw 1vw',
-                                    // margin: '0vw 2vw 2vw 2vw',
-                                }}
-                                >
-                                {/* <button
-                                    class="arrow"
-                                    id="select_music"
-                                    onClick={handleSelectMusic}
-                                    style={{ padding: '1vh 1vw 1vh 1vw' }}
-                                    size="large"
-                                >
-                                    SELECT MUSIC
-                                </button>
-                                 <Popover
-                                    open={openSelect}
-                                    anchorEl={selectMusic}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
+                                <Paper
+                                    className={classes.paper}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        padding: '1vw 1vw 1vw 1vw',
+                                        // margin: '0vw 2vw 2vw 2vw',
                                     }}
                                 >
-                                    <Typography className={classes.paper}> */}
-                                        <CheckLeader />
-                                    {/* </Typography>
-                                </Popover> */}
+                                    <CheckLeader />
                                 </Paper>
                             </Grid>
                             <Grid container className="스타트버튼" xs={6} justify='center' alignItems='flex-end' style={{height:'24vh', width:'100%'}}>
@@ -413,13 +404,17 @@ function Lobby(props) {
                                         socket={props.socket}
                                         history={props.history}
                                         lobbyAudio={props.lobbyAudio}
-                                        roomOnGame={gaming ? gaming : props.roomInfo['gaming']}
+                                        roomOnGame={
+                                            gaming
+                                                ? gaming
+                                                : props.roomInfo['gaming']
+                                        }
                                         gameMusic={props.roomInfo['music']}
                                         isLeader={
                                             props.roomInfo['roomLeader'] ===
                                             props.socket.id
                                         }
-                                        style={{padding: '1vw 1vw 1vw 1vw',}}
+                                        style={{ padding: '1vw 1vw 1vw 1vw' }}
                                     />
 
                             </Grid>
@@ -455,7 +450,7 @@ function Lobby(props) {
                                     padding: '1vw 1vw 1vw 1vw',
                                 }}
                             >
-                                <LeaderBoard socket={props.socket}/>
+                                <LeaderBoard socket={props.socket} />
                             </Paper>
                         </Grid>
                         <Grid
@@ -487,111 +482,6 @@ function Lobby(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            {/* <Grid style={{ height: '100vh' }} container justify="center">
-                <Grid
-                    className="playerListGrid"
-                    item
-                    xs={leftSm}
-                    container
-                    direction="column"
-                    justify="flex-start"
-                    alignItems="flex-start"
-                >
-                    <PutNewCard
-                        roomInfo={props.roomInfo}
-                        socket={props.socket}
-                    />
-                </Grid>
-                <Grid
-                    className="stockTradeGrid"
-                    container
-                    item
-                    direction={'column'}
-                    alignItems={'center'}
-                    justify={'space-around'}
-                    xs={middleSm}
-                >
-                    <Grid style={{ height: '25vh' }}></Grid>
-                    <StartGame
-                        roomID={props.roomID}
-                        music={props.roomInfo['music']}
-                        socket={props.socket}
-                        history={props.history}
-                        lobbyAudio={props.lobbyAudio}
-                        isLeader={
-                            props.roomInfo['roomLeader'] === props.socket.id
-                        }
-                        roomOnGame={props.roomInfo['gaming']}
-                        gameMusic={props.roomInfo['music']}
-                    />
-                </Grid>
-                <Grid
-                    className="bidChatGrid"
-                    item
-                    xs={rightSm}
-                    alignItems="stretch"
-                    container
-                    direction="column"
-                    justify="space-between"
-                    style={{ margin: '2vh 2vw 14vh 2vw' }}
-                >
-                    <LobbyTabs
-                        roomLeader={props.roomInfo['roomLeader']}
-                        socketId={props.socket.id}
-                        musicList={props.musicList}
-                        roomID={props.roomID}
-                        roomInfo={props.roomInfo}
-                        time={props.time}
-                        socket={props.socket}
-                        SetRoomIdAndInfo={props.SetRoomIdAndInfo}
-                        history={props.history}
-                        lobbyAudio={props.lobbyAudio}
-                    />
-                    <Grid container direction={'column'} justify={'flex-end'}>
-                        <Grid
-                            style={{ margin: '0 0 10px 0' }}
-                            container
-                            justify={'space-between'}
-                        >
-                            <TextField
-                                type="text"
-                                id="gameLink"
-                                className="form-control text-center fw-bold bg-transparent"
-                                value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                InputProps={{
-                                    className: classes.input,
-                                }}
-                                style={{ width: '80%' }}
-                                readOnly
-                            />
-                            <SnackbarProvider maxSnack={5}>
-                                <SnackAlertBtn
-                                    class="btn btn-warning"
-                                    severity="success"
-                                    message="링크가 복사됐어요! 😚"
-                                    label="LINK"
-                                    onAlert={true}
-                                    type="button"
-                                    onClick={CopyURL}
-                                    id="copy"
-                                />
-                            </SnackbarProvider>
-                        </Grid>
-                        <Paper
-                            style={{ height: '40vh' }}
-                            className={classes.paper}
-                        >
-                            <ChatRoom
-                                SetInputCtrl={SetInputCtrl}
-                                roomInfo={props.roomInfo}
-                                roomID={props.roomID}
-                                socket={props.socket}
-                                chat={props.chat}
-                            />
-                        </Paper>
-                    </Grid>
-                </Grid>
-            </Grid> */}
         </>
     );
 }
