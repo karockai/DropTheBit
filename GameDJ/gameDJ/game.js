@@ -129,7 +129,7 @@ class Game {
                     vol: reqVol,
                     price: curPrice,
                 };
-                io.to(roomID).emit('buyDone_Room', buyDone);
+                io.to(socketID).emit('buyDone_Room', buyDone);
 
                 // 7. 요청가 < 현재가 : 호가 등록 후 결과 송신(asset, buy_res("호가"))
             } else {
@@ -154,7 +154,7 @@ class Game {
                     vol: reqVol,
                     price: reqPrice,
                 };
-                io.to(roomID).emit('bidDone_Room', bidDone);
+                io.to(socketID).emit('bidDone_Room', bidDone);
                 // this.sendBidTable(reqJson);
             }
 
@@ -223,7 +223,7 @@ class Game {
                     price: curPrice,
                 };
 
-                io.to(roomID).emit('sellDone_Room', sellDone);
+                io.to(socketID).emit('sellDone_Room', sellDone);
                 // 7. 요청가 > 현재가 : 호가 등록 후 결과 송신(asset, sell_res("호가"))
             } else {
                 let reqVol = coinVol;
@@ -249,7 +249,7 @@ class Game {
                     price: reqPrice,
                 };
 
-                io.to(roomID).emit('askDone_Room', askDone);
+                io.to(socketID).emit('askDone_Room', askDone);
                 // this.sendAskTable(reqJson);
             }
 

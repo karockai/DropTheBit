@@ -27,20 +27,6 @@ export default function Timer(props) {
         });
     }, []);
 
-    // if (timerSet['timerSet'] && 0 <= timerSet['gameTime'] && timerSet['gameTime'] <= 5) {
-    //     timeAudio.play();
-    // }
-
-    // if (!gameOver && timerSet['timerSet'] && timerSet['gameTime'] <= 0) {
-    //     gameOver = true;
-    //     let gameOverTime = {
-    //         timerSet: true,
-    //         isPlaying: false,
-    //         initGameTime: 0,
-    //         gameTime: 0,
-    //     };
-    //     setTimerSet(gameOverTime);
-    // }
     useEffect(() => {
         props.socket.once('restGameTime', (curTimeData) => {
             setCurTime(curTimeData);
@@ -74,11 +60,15 @@ export default function Timer(props) {
                 >
                     남은 시간
                 </div>
-                <div className="value"                    style={{
+                <div
+                    className="value"
+                    style={{
                         fontWeight: 'bold',
                         fontSize: '2vw',
-                        color: 'white',
-                    }} >{remainingTime}</div>
+                    }}
+                >
+                    {remainingTime}
+                </div>
             </div>
         );
     };
@@ -86,7 +76,7 @@ export default function Timer(props) {
     const countdownTimer = (timerSet) => {
         return (
             <CountdownCircleTimer
-                size = {0.1 * window.innerWidth}
+                size={0.1 * window.innerWidth}
                 isPlaying={timerSet['isPlaying']}
                 duration={timerSet['initGameTime']}
                 initialRemainingTime={timerSet['gameTime']}
@@ -105,7 +95,10 @@ export default function Timer(props) {
 
     return (
         <div className="App">
-            <div className="timer-wrapper" style={{height:'100%', width:'100%'}}>
+            <div
+                className="timer-wrapper"
+                style={{ height: '100%', width: '100%' }}
+            >
                 {timerSet['timerSet'] ? countdownTimer(timerSet) : ''}
             </div>
         </div>
