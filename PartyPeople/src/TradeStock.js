@@ -778,7 +778,7 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid style={{ width: '56%', margin: '0' }} align="right">
+                    <Grid style={{ width: '56%', margin: '0' }} align="center">
                         <h5
                             id="bidInput"
                             style={{ fontSize: '2.5vw', fontWeight: 'bold' }} //'1.2vh 0px 0px 0px'
@@ -787,7 +787,7 @@ export default function TradeStock(props) {
                             {SplitByThree(String(currentBid))}
                         </h5>
                     </Grid>
-                    <Grid style={{ width: '24%' }} align="right">
+                    <Grid style={{ width: '20%' }} align="right">
                         <Button
                             // style={{margin:'0 0 0 2%' }}
                             class="arrow"
