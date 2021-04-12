@@ -211,7 +211,7 @@ const PlayerLeaderboard = (props) => {
         // ans += ret;
         let minus = isPlus ? '+' : '-';
         ans = minus + ans;
-        return <span style={{ color: ans === '+' ? 'grey' : color }}>{ans === '+' ? '0' : ans}</span>;
+        return <><span style={{ color: ans === '+' ? 'grey' : color }}>{ans === '+' ? '0' : ans}</span>{' '}원</>;
     }
 
     const parseWonToStr = (won) => {
@@ -250,8 +250,7 @@ const PlayerLeaderboard = (props) => {
                                 <div class="driverPosition">
                                     {driverIndex + 1}
                                 </div>
-                                {/* <span class={`line ${driver.color}`}></span> */}
-                                <span class="line williams"></span>
+                                <span class={`line ${driver.color}`}></span>
                                 <div class="driverName">{driver.playerID}</div>
                             </div>
                             <div class="driverRight">{DriverInterval}</div>
@@ -263,31 +262,6 @@ const PlayerLeaderboard = (props) => {
     );
 };
 
-const Inactive = (props) => {
-    return (
-        <section id="inactive">
-            {props.inActiveDrivers && props.inActiveDrivers.length ? (
-                <div>
-                    {props.inActiveDrivers.map((driver) => {
-                        return (
-                            <div
-                                class="driverContainer driverInactive"
-                                key={driver.abb}
-                            >
-                                <div class="driverLeft">
-                                    {/* <span class={`line ${driver.color}`}></span> */}
-                                    <span class="line williams"></span>
-                                    <div class="driverName">{driver.abb}</div>
-                                </div>
-                                <div class="driverRight">OUT</div>
-                            </div>
-                        );
-                    })}
-                </div>
-            ) : null}
-        </section>
-    );
-};
 
 export default function RacingLeaderBoard(props) {
     const [view, toggleView] = useState('interval');
@@ -298,9 +272,6 @@ export default function RacingLeaderBoard(props) {
             asset: 'asset',
         },
     ]);
-    const outDriverSet = new Set();
-    // rough estimation on who will be inactive from race
-    const dnf = () => Math.floor(Math.random() * 25000) === 415;
 
     useEffect(() => {
         if (props.socket == null) {
@@ -314,13 +285,7 @@ export default function RacingLeaderBoard(props) {
 
     return (
         <section id="container">
-            {/* <Lap lap={activeDrivers[0]}/> */}
-            {/* <Leaderboard players={players} activeDrivers={activeDrivers} view={view} selectDriver={selectDriver}/> */}
             <PlayerLeaderboard activeDrivers={players} view={view} />
-            {/* <div id='controls'> 
-        <button id='startRace' onClick={startRace}>Start Race!</button>
-      </div> */}
-            {/* <DetailCard driver={driver}/> */}
         </section>
     );
 }
