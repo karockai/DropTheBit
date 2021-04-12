@@ -35,7 +35,7 @@ import { SplitByThree } from './parseMoney';
 // import { createMuiTheme,ThemeProvider  } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import {red, blue, purple, grey} from '@material-ui/core/colors';
+import { red, blue, purple, grey } from '@material-ui/core/colors';
 import './blink.css';
 
 import MuiAlert from '@material-ui/lab/Alert';
@@ -98,8 +98,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.5vw',
         padding: '0.5vh 0.5vw 0.5vh 0.5vw',
     },
-
-
 }));
 
 export default function TradeStock(props) {
@@ -127,16 +125,14 @@ export default function TradeStock(props) {
     //     val: 0,
     //     vol: 0,
     // });
-    const [prevStatus, setPrevStatus] = useState({
-        status: '',
-        val: 0,
-        vol: 0,
-    });
+    const [prevStatus, setPrevStatus] = useState(null);
     const [myWallet, setWallet] = useState({
         myCash: 0,
         myAsset: 0,
         myCoin: 0,
     });
+    const [orderPrice, setPrice] = useState(null);
+
     const [isInit, setInit] = useState(false);
 
     if (!isBind) SetBind(true);
@@ -144,6 +140,114 @@ export default function TradeStock(props) {
     //@ 가정 => props에 socket이 전달되었어야함.
 
     const eventTime = 300;
+
+    const buySellButton = () => {
+        return (
+            <>
+                <Grid style={{ width: '50%', height: '100%' }}>
+                    <button
+                        style={{
+                            width: '95%',
+                            height: '95%',
+                            fontSize: '2.0vw',
+                            padding: '0 0 0 0',
+                        }}
+                        class="buy"
+                        onClick={(e) => {
+                            clickButton(e);
+                            let tmpAudio = new Audio(BuyConfirm);
+                            tmpAudio.play();
+                            tmpAudio.remove();
+                            setBuyStatus(
+                                Buy(
+                                    currentBid,
+                                    Math.floor(myWallet.myCash / currentBid)
+                                )
+                            );
+                        }}
+                        id="z"
+                    >
+                        [Z] 전량 매수
+                    </button>
+                </Grid>
+                <Grid style={{ width: '50%', height: '100%' }} align="right">
+                    <button
+                        style={{
+                            width: '95%',
+                            height: '95%',
+                            fontSize: '2.0vw',
+                            padding: '0 0 0 0',
+                        }}
+                        class="sell"
+                        onClick={(e) => {
+                            clickButton(e);
+                            let tmpAudio = new Audio(SellConfirm);
+                            tmpAudio.play();
+                            tmpAudio.remove();
+                            setSellStatus(Sell(currentBid, myWallet.myCoin));
+                        }}
+                        id="x"
+                    >
+                        [X] 전량 매도
+                    </button>
+                </Grid>
+            </>
+        );
+    };
+
+    const bidAskCancel = () => {
+        // 거래 취소
+        // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
+        // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
+        const reqJson = {
+            socketID: props.socket.id,
+            roomID: props.roomID,
+        };
+        if (prevStatus === 'buy_bid') {
+            // 직전거래 buy
+            props.socket.emit('cancelBid_Req', reqJson);
+            props.socket.once('cancelBid_Res', (data) => {
+                const tmp_buyStatus = { ...buyStatus };
+                tmp_buyStatus.status = 'cancel';
+                setBuyStatus(tmp_buyStatus);
+                setPrevStatus(null);
+            });
+        } else if (prevStatus === 'sell_bid') {
+            // 직전거래 sell
+            props.socket.emit('cancelAsk_Req', reqJson);
+            props.socket.once('cancelAsk_Res', (data) => {
+                const tmp_sellStatus = { ...sellStatus };
+                tmp_sellStatus.status = 'cancel';
+                setSellStatus(tmp_sellStatus);
+                setPrevStatus(null);
+            });
+        }
+    };
+
+    const bidAskCancelButton = () => {
+        return (
+            <>
+                <Grid style={{ width: '100%', height: '100%' }}>
+                    <button
+                        style={{
+                            width: '95%',
+                            height: '95%',
+                            fontSize: '2.0vw',
+                            padding: '0 0 0 0',
+                        }}
+                        class="cancel"
+                        onClick={(e) => {
+                            bidAskCancel();
+                        }}
+                        id="c"
+                    >
+                        {prevStatus === 'buy_bid' ? '매수' : '매도'}{' '}
+                        {'주문 대기 중 | 취소 : [C]'}
+                    </button>
+                </Grid>
+            </>
+        );
+    };
 
     useLayoutEffect(() => {
         if (props.socket == null) {
@@ -236,7 +340,8 @@ export default function TradeStock(props) {
         if (bid < 0) bid = 0;
         if (volume < 0) volume = 0;
         if (bid === 0 || volume === 0) {
-            return {                //* 돈이 모자람
+            return {
+                //* 돈이 모자람
                 // status: 'invalid',
                 status: 'lack',
                 val: bid,
@@ -281,9 +386,8 @@ export default function TradeStock(props) {
         props.socket.on('bidDone_Room', (data) => {
             // if(this.props.socket.id !== data.socketID) return;
             // console.log('bidDone_Room');
-            setPrevStatus({
-                status: 'buy_bid',
-            });
+            setPrevStatus('buy_bid');
+            setPrice(data.price);
         });
 
         SetBind(true);
@@ -310,7 +414,7 @@ export default function TradeStock(props) {
         let status = '';
         if (bid <= 0 || volume <= 0) {
             return {
-                status: 'lack',  //* 코인이 모자람
+                status: 'lack', //* 코인이 모자람
                 val: bid,
                 vol: volume,
             };
@@ -345,9 +449,8 @@ export default function TradeStock(props) {
         });
         //@ 중복 문제가 발생한다.
         props.socket.on('askDone_Room', (data) => {
-            setPrevStatus({
-                status: 'sell_bid',
-            });
+            setPrevStatus('sell_bid');
+            setPrice(data.price);
         });
 
         SetBind(true);
@@ -443,31 +546,7 @@ export default function TradeStock(props) {
             let tmpAudio = new Audio(SellConfirm);
             tmpAudio.play();
             tmpAudio.remove();
-
-            // 거래 취소
-            // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
-            // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
-            const reqJson = {
-                socketID: props.socket.id,
-                roomID: props.roomID,
-            };
-            if (prevStatus.status === 'buy_bid') {
-                // 직전거래 buy
-                props.socket.emit('cancelBid_Req', reqJson);
-                props.socket.once('cancelBid_Res', (data) => {
-                    const tmp_buyStatus = { ...buyStatus };
-                    tmp_buyStatus.status = 'cancel';
-                    setBuyStatus(tmp_buyStatus);
-                });
-            } else if (prevStatus.status === 'sell_bid') {
-                // 직전거래 sell
-                props.socket.emit('cancelAsk_Req', reqJson);
-                props.socket.once('cancelAsk_Res', (data) => {
-                    const tmp_sellStatus = { ...sellStatus };
-                    tmp_sellStatus.status = 'cancel';
-                    setSellStatus(tmp_sellStatus);
-                });
-            }
+            bidAskCancel();
         }
         const key = document.getElementById(e.key);
         if (key) key.classList.add('pressed');
@@ -589,11 +668,11 @@ export default function TradeStock(props) {
     return (
         <>
             <SnackbarProvider
-             maxSnack={5}
-            content={(key, message) => (
-                <AlertBlue id={key} message={message}/>
-            )}
-             >
+                maxSnack={5}
+                content={(key, message) => (
+                    <AlertBlue id={key} message={message} />
+                )}
+            >
                 {sellStatus && sellStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="info"
@@ -602,11 +681,11 @@ export default function TradeStock(props) {
                 )}
             </SnackbarProvider>
             <SnackbarProvider
-             maxSnack={5}
-            content={(key, message) => (
-                <AlertRed id={key} message={message}/>
-            )}
-             >
+                maxSnack={5}
+                content={(key, message) => (
+                    <AlertRed id={key} message={message} />
+                )}
+            >
                 {buyStatus && buyStatus.status === 'done' && (
                     <SnackAlertFunc
                         color="error"
@@ -615,10 +694,11 @@ export default function TradeStock(props) {
                 )}
             </SnackbarProvider>
             <SnackbarProvider
-             maxSnack={5}
-             content={(key, message) => (
-                    <AlertPurple id={key} message={message}/>)}
-             >
+                maxSnack={5}
+                content={(key, message) => (
+                    <AlertPurple id={key} message={message} />
+                )}
+            >
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="success"
@@ -645,10 +725,11 @@ export default function TradeStock(props) {
                 )}
             </SnackbarProvider>
             <SnackbarProvider
-             maxSnack={5}
-            content={(key, message) => (
-                <AlertYellow id={key} message={message}/>)}
-             >
+                maxSnack={5}
+                content={(key, message) => (
+                    <AlertYellow id={key} message={message} />
+                )}
+            >
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -722,7 +803,10 @@ export default function TradeStock(props) {
                     <Grid style={{ width: '60%' }} align="center">
                         <h5
                             id="bidInput"
-                            style={{ fontSize: '2.5vw', margin: '1.2vh 0px 0px 0px'}}
+                            style={{
+                                fontSize: '2.5vw',
+                                margin: '1.2vh 0px 0px 0px',
+                            }}
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
@@ -759,76 +843,7 @@ export default function TradeStock(props) {
                         justify="space-between"
                         style={{ width: '100%', height: '100%' }}
                     >
-                        <Grid style={{ width: '50%', height: '100%' }}>
-                            <button
-                                style={{
-                                    width: '95%',
-                                    height: '95%',
-                                    fontSize: '2.0vw',
-                                    padding: '0 0 0 0'
-                                }}
-                                class="buy"
-                                onClick={(e) => {
-                                    clickButton(e);
-                                    let tmpAudio = new Audio(BuyConfirm);
-                                    tmpAudio.play();
-                                    tmpAudio.remove();
-                                    setBuyStatus(
-                                        Buy(
-                                            currentBid,
-                                            Math.floor(
-                                                myWallet.myCash / currentBid
-                                            )
-                                        )
-                                    );
-                                }}
-                                id="z"
-                            >
-                                [Z] 전량 매수
-                            </button>
-                        </Grid>
-                        <Grid
-                            style={{ width: '50%', height: '100%' }}
-                            align="right"
-                        >
-                            <button
-                                style={{
-                                    width: '95%',
-                                    height: '95%',
-                                    fontSize: '2.0vw',
-                                    padding: '0 0 0 0'
-                                }}
-                                class="sell"
-                                onClick={(e) => {
-                                    clickButton(e);
-                                    let tmpAudio = new Audio(SellConfirm);
-                                    tmpAudio.play();
-                                    tmpAudio.remove();
-                                    setSellStatus(
-                                        Sell(currentBid, myWallet.myCoin)
-                                    );
-                                }}
-                                id="x"
-                            >
-                                [X] 전량 매도
-                            </button>
-                        </Grid>
-                        {/* <Grid style={{ width: '100%',}}>
-                            <button
-                                style={{ width: '100%',height:'20%',fontSize:'2.3vw'}}
-                                class="sell"
-                                onClick={(e) => {
-                                    clickButton(e);
-                                    let tmpAudio = new Audio(SellConfirm);
-                                    tmpAudio.play();
-                                    tmpAudio.remove();
-                                    setSellStatus(Sell(currentBid, myWallet.myCoin));
-                                }}
-                                id="x"
-                            >
-                                [SPACE]
-                            </button>
-                        </Grid> */}
+                        {prevStatus ? bidAskCancelButton() : buySellButton()}
                     </Grid>
                     {/* <Grid
                         container
