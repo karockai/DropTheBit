@@ -722,7 +722,7 @@ export default function TradeStock(props) {
                     <Grid style={{ width: '56%',margin:'0'}} align="right" >
                         <h5
                             id="bidInput"
-                            style={{ fontSize: '2.5vw', fontWeight:'bold' }}
+                            style={{ fontSize: '2.5vw', fontWeight:'bold' }} //'1.2vh 0px 0px 0px'
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
