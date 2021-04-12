@@ -130,8 +130,7 @@ export default function MyRank(props) {
                             </Grid>
                             <Grid alignItems="right" style={{ padding: '2%' }}>
                                 {ExpBySymbol(parseWonToStr(myRankPage.asset))}
-                                {/* {myRankPage.asset} */}
-                                {' 원'}
+                                {/* <span style {{color: myRankPage.asset > 100000000? 'red':'#009FFF'}}>{'원'}</span> */}
                             </Grid>
                         </Grid>
                     </Grid>

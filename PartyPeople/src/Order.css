@@ -1,4 +1,4 @@
-.blinking{
+.orderText{
     animation:blinkingText 6s infinite;
 }
 @keyframes blinkingText{

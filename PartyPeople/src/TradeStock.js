@@ -748,7 +748,6 @@ export default function TradeStock(props) {
                     style={{ height: '20%' }}
                 >
                     <span className={classes.small_text}>매매호가</span>
-                    <span className={classes.small_text}>[Space]:현재가</span>
                 </Grid>
                 <Grid
                     container
