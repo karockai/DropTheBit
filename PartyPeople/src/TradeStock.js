@@ -313,10 +313,10 @@ export default function TradeStock(props) {
 
     function RefreshBid_Req() {
         props.socket.emit('RefreshBid_Req');
+        props.socket.emit('chartMyPrice_Req', -1);
         props.socket.once('RefreshBid_Res', (curPrice) => {
-            // console.log('RefreshBid_Req');
+            console.log('RefreshBid_Req');
             SetBid(curPrice);
-            props.SetBid(curPrice);
         });
     }
 
