@@ -686,7 +686,7 @@ export default function TradeStock(props) {
                     className={classes.button_layer}
                     direction="row"
                     justify="space-between"
-                    // alignItems="flex-end"
+                    alignItems="flex-end"
                     style={{ height: '30%' }}
                 >
                     <Grid style={{ width: '20%' }}>
@@ -706,20 +706,25 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid style={{ width: '60%' }} align="center">
+                    <Grid style={{ width: '56%',margin:'0'}} align="right" >
                         <h5
                             id="bidInput"
+<<<<<<< HEAD
                             style={{
                                 fontSize: '2.5vw',
                                 margin: '1.2vh 0px 0px 0px',
                             }}
+=======
+                            style={{ fontSize: '2.5vw', fontWeight:'bold' }} //'1.2vh 0px 0px 0px'
+>>>>>>> c72919b619f91cd384912b3fcf77c1d9a71ded51
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
                         </h5>
                     </Grid>
-                    <Grid style={{ width: '20%' }} align="right">
+                    <Grid style={{ width: '24%'}} align="right" >
                         <Button
+                        // style={{margin:'0 0 0 2%' }}
                             class="arrow"
                             onClick={(e) => {
                                 clickButton(e);

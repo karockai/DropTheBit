@@ -56,7 +56,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'black',
         opacity: 0.6,
         // width: '4vw', 
-        height:'5vh'
+        // wordSpacing: '16px',
+        padding: '0 0 0 0.5vw',
+        height:'5vh',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -206,7 +208,6 @@ function Lobby(props) {
                                     socketID={socketID}
                                     playerCount={playerCount}
                                 />{' '}
-                                {/*//?*/}
                             </>
                             
                         );
@@ -329,21 +330,22 @@ function Lobby(props) {
                                 // className="게임방메타데이터"
                                 className='음악선택창'
                                 item
-                                xs={5}
+                                xs={6}
                                 style={{
                                 width: '100%',
                                 height: '19vh',
                                 opacity: '0.8',
-                                padding: '1vh 1vw',
+                                padding: '1vh 2vw',
                             }}
                             >
                                 <Paper 
                                 className={classes.paper}
+                                
                                 style={{
                                     width: '100%',
                                     height: '100%',
                                     padding: '1vw 1vw 1vw 1vw',
-                                    margin: '0vw 2vw 2vw 2vw',
+                                    // margin: '0vw 2vw 2vw 2vw',
                                 }}
                                 >
                                 {/* <button
@@ -374,47 +376,52 @@ function Lobby(props) {
                                 </Popover> */}
                                 </Paper>
                             </Grid>
-                            <Grid className="스타트버튼" item xs={7}>
+                            <Grid className="스타트버튼" item xs={6} align='center'>
                                 {' '}
-                                <Grid>
-                                <TextField
-                                    type="text"
-                                    id="gameLink"
-                                    className="form-control text-center fw-bold bg-transparent"
-                                    // className= {classes.input}
-                                    value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                    InputProps={{
-                                        className: classes.input,
-                                    }}
-                                    style={{ width: '47%',height:'10%'  }}
-                                    readOnly
-                                />
-                                <SnackbarProvider maxSnack={1}>
-                                    <SnackAlertBtn
-                                        class="btn btn-warning"
-                                        severity="success"
-                                        message="링크가 복사됐어요! 😚"
-                                        label="Invitation LINK"
-                                        onAlert={true}
-                                        type="button"
-                                        onClick={CopyURL}
-                                        id="copy"
+                                <Grid container style={{margin:'0 0 2% 0', width: '80%'}} justify='space-between'>
+                                    <TextField
+                                        type="text"
+                                        id="gameLink"
+                                        className="form-control text-center fw-bold bg-transparent"
+                                        // className= {classes.input}
+                                        value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        style={{ width: '55%',height:'10%'}}
+                                        readOnly
                                     />
-                                </SnackbarProvider>
+                                    {'   '}
+                                    <SnackbarProvider maxSnack={1}>
+                                        <SnackAlertBtn
+                                            class="btn btn-warning"
+                                            severity="success"
+                                            message="링크가 복사됐어요! 😚"
+                                            label="Invitation LINK"
+                                            onAlert={true}
+                                            type="button"
+                                            onClick={CopyURL}
+                                            id="copy"
+                                        />
+                                    </SnackbarProvider>
                                 </Grid>
-                                <StartGame
-                                    roomID={props.roomID}
-                                    music={props.roomInfo['music']}
-                                    socket={props.socket}
-                                    history={props.history}
-                                    lobbyAudio={props.lobbyAudio}
-                                    roomOnGame={gaming ? gaming : props.roomInfo['gaming']}
-                                    gameMusic={props.roomInfo['music']}
-                                    isLeader={
-                                        props.roomInfo['roomLeader'] ===
-                                        props.socket.id
-                                    }
-                                />
+                                <Grid>
+                                    <StartGame
+                                    
+                                        roomID={props.roomID}
+                                        music={props.roomInfo['music']}
+                                        socket={props.socket}
+                                        history={props.history}
+                                        lobbyAudio={props.lobbyAudio}
+                                        roomOnGame={gaming ? gaming : props.roomInfo['gaming']}
+                                        gameMusic={props.roomInfo['music']}
+                                        isLeader={
+                                            props.roomInfo['roomLeader'] ===
+                                            props.socket.id
+                                        }
+                                        style={{padding: '1vw 1vw 1vw 1vw',}}
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>

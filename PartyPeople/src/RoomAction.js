@@ -39,7 +39,7 @@ export default function RoomAction(props) {
     return (
         <>
             <span style={{ color: 'red' }}>{' ( 매수 / '}</span>
-            <span style={{ color: 'blue' }}>{'매도 / '}</span>
+            <span style={{ color: '#1e88e5' }}>{'매도 / '}</span>
             <span style={{ color: 'grey' }}>{'보류 )'}</span>
             <div className={classes.root}>
                 {peopleTrade.red > 0 &&
@@ -62,7 +62,7 @@ export default function RoomAction(props) {
                             <PersonSharpIcon
                                 className={classes.icon}
                                 style={{
-                                    color: 'blue',
+                                    color: '#1e88e5zxcz',
                                     margin:
                                         1 / ratio + 'vw ' + 1 / ratio + 'vw',
                                     fontSize: 2 / ratio + 'vw',

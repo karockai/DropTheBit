@@ -43,18 +43,19 @@ export default function MyCoin(props) {
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
             }}
         >
-            <span>보유 코인 수</span>
-            <h5 style={{ fontWeight: 'bold', fontSize: '1.2vw' }}>
+            <h3 style={{fontSize: '1vw' }}>보유 코인 수</h3>
+            <h5 style={{ fontWeight: 'bold', fontSize: '1.4vw' }}>
                 {SplitByThree(String(myCoin)) + ' 개'}
             </h5>
-            <h3
+            <h5
                 id="diffCoin"
                 class="default"
                 style={{ fontWeight: 'bold', fontSize: '1vw' }}
+                align='right'
             >
                 {' '}
                 {showProfit('diffCoin', diffCoin, setDiffCoin)}
-            </h3>
+            </h5>
         </Paper>
     );
 }
