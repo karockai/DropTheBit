@@ -41,6 +41,8 @@ export default function MyCoin(props) {
                 height: '100%',
                 fontSize: '1vw',
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                border: 'solid',
+                borderColor: '#2D4053',
             }}
         >
             <h6 style={{ paddingLeft: '1px', paddingTop: "4px"}} >코인</h6>
