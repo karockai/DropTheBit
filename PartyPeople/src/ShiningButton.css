@@ -72,8 +72,9 @@
 .arrow {
   /* --color: #635ee7; */
   /* 기존 theme color보다 명도 높 */
-  --color: #7974f2;
-  --hover: #b9b6ff;
+  --color: white;
+  --hover: #7974f2;
+  background: #7974f2;
     border-radius: 10px 10px;
     font-weight: bold;
     border: 3px solid;
