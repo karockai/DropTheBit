@@ -4,6 +4,7 @@ import redis, copy
 import coinName
 import dummyJuka_Hoka1
 import dummyJuka_Hoka2
+import dummyJuka_Hoka3
 from dotenv import load_dotenv
 import os
 

@@ -232,9 +232,9 @@ function Lobby(props) {
     }
     return (
         <>
-            {/* <video className="videoTag" autoPlay loop muted>
+            <video className="videoTag" autoPlay loop muted>
                 <source src={backgroundImg} type="video/mp4" />
-            </video> */}
+            </video>
             <Grid
                 className="전체그리드"
                 container

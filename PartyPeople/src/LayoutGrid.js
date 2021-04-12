@@ -335,7 +335,7 @@ export default function LayoutGrid(props) {
                             className={classes.paper}
                             style={{
                                 height: '50%',
-                                // margin: '1vh 0px 0px 0px',
+                                margin: '0.6vh 0px 0px 0px',
                                 padding: '2vh',
                                 width: '100%',
                                 fontSize: '1vw',
@@ -356,7 +356,7 @@ export default function LayoutGrid(props) {
                         style={{
                             height: '40%',
                             width: '100%',
-                            padding: '0.5vh 0.3vw 0.3vh 0.3vw',
+                            padding: '0.8vh 0.3vw 0vh 0.3vw',
                         }}
                         item
                     >

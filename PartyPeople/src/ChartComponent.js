@@ -7,6 +7,8 @@ import { getData } from './utils';
 import { tsvParse, csvParse } from 'd3-dsv';
 import { timeParse } from 'd3-time-format';
 import { CircularProgress, Grid } from '@material-ui/core';
+import testImg from './images/tutorial/legend.png'
+
 
 class ChartComponent extends React.Component {
     constructor(props) {
@@ -160,6 +162,7 @@ class ChartComponent extends React.Component {
                         isStart={this.props.isStart}
                         socket={this.props.socket}
                     />
+
                     {/* {this.props.isStart && <Timer socket={this.props.socket} />} */}
                     {/* <h2>출처</h2> */}
                 </Grid>
@@ -172,6 +175,8 @@ class ChartComponent extends React.Component {
                     currentBuy={this.currentBuy}
                     currentSell={this.currentSell}
                 />
+                <img src={testImg} style={{position: 'absolute', left:'25vw', top : '63vh', width:'40vw', height:'5vh'}}>
+                </img>
             </>
         );
     }
