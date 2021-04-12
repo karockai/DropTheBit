@@ -35,12 +35,6 @@ class Game {
                 });
             }
 
-            let message = '게임이 시작됩니다.';
-            io.to(roomID).emit('update', {
-                message: message,
-                author: '[SYSTEM]',
-            });
-
             function realStart() {
                 let roomID = socket.roomID;
                 let dataForStart = {};
@@ -80,7 +74,7 @@ class Game {
             this.refreshWallet(roomID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -106,6 +100,7 @@ class Game {
             // ! 음수 값 처리
             if (reqPrice <= 0 || cash < reqPrice) {
                 console.log('Buy 0이하의 요청이 감지되었다 :', reqJson);
+                console.log('cash :', cash, ' reqPrice : ', reqPrice);
                 return;
             }
 
@@ -173,7 +168,7 @@ class Game {
             this.refreshWallet(socketID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -267,7 +262,7 @@ class Game {
             this.refreshWallet(socketID, refreshWallet, bfrWallet);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -313,7 +308,7 @@ class Game {
             // this.sendBidTable(reqJson);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 
@@ -350,7 +345,7 @@ class Game {
             let refreshWallet = {};
             refreshWallet['result'] = 'success';
             refreshWallet['type'] = 'sell';
-            refreshWallet['coinVol'] = 0;
+            refreshWallet['coinVol'] = playerInfo['coinVol'];
             refreshWallet['cash'] = playerInfo['cash'];
             refreshWallet['asset'] = playerInfo['asset'];
 
@@ -359,7 +354,7 @@ class Game {
             // this.sendAskTable(reqJson);
         } catch (err) {
             console.error(err);
-            webhook.sendMessage(`에러 발생 : ${error}`);
+            webhook.sendMessage(`에러 발생 : ${err}`);
         }
     }
 

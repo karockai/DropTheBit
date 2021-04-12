@@ -45,13 +45,6 @@ import AlertRed from './AlertRed';
 import AlertYellow from './AlertYellow';
 import AlertBlue from './AlertBlue';
 
-const styles = {
-    success: { backgroundColor: purple },
-    error: { backgroundColor: 'blue' },
-    warning: { backgroundColor: 'green' },
-    info: { backgroundColor: 'yellow' },
-};
-
 const CssTextField = withStyles({
     root: {
         '& label.Mui-focused': {
@@ -80,9 +73,9 @@ const CssTextField = withStyles({
     },
 })(TextField);
 
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
+// function Alert(props) {
+//     return <MuiAlert elevation={6} variant="filled" {...props} />;
+//   }
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -243,8 +236,9 @@ export default function TradeStock(props) {
         if (bid < 0) bid = 0;
         if (volume < 0) volume = 0;
         if (bid === 0 || volume === 0) {
-            return {
-                status: 'invalid',
+            return {                //* 돈이 모자람
+                // status: 'invalid',
+                status: 'lack',
                 val: bid,
                 vol: volume,
             };
@@ -316,7 +310,7 @@ export default function TradeStock(props) {
         let status = '';
         if (bid <= 0 || volume <= 0) {
             return {
-                status: 'invalid',
+                status: 'lack',  //* 코인이 모자람
                 val: bid,
                 vol: volume,
             };
@@ -453,7 +447,6 @@ export default function TradeStock(props) {
             // 거래 취소
             // 직전 거래가 buy면 buydone 신호가 왔는지 확인, 안왔으면 취소
             // 직전 거래가 sell이면 selldone 신호가 왔는지 확인, 안왔으면 취소
-            console.log('prevStatus.status', prevStatus.status);
             const reqJson = {
                 socketID: props.socket.id,
                 roomID: props.roomID,
@@ -604,7 +597,7 @@ export default function TradeStock(props) {
                 {sellStatus && sellStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="info"
-                        message={'[매도] 주문 체결 💸'}
+                        message={'✔ [매도] 주문 체결 💸'}
                     />
                 )}
             </SnackbarProvider>
@@ -617,28 +610,25 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'done' && (
                     <SnackAlertFunc
                         color="error"
-                        message={'[매수] 주문 체결! 🎁'}
+                        message={'✔ [매수] 주문 체결! 🎁'}
                     />
                 )}
             </SnackbarProvider>
-
             <SnackbarProvider
              maxSnack={5}
-            content={(key, message) => (
-                <AlertPurple id={key} message={message}/>
-            )}
+             content={(key, message) => (
+                    <AlertPurple id={key} message={message}/>)}
              >
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="success"
                         message={'[매수] 주문! 📈'}
                     />
-
                 )}
-                {buyStatus && buyStatus.status === 'cancel' && (
+                {buyStatus && buyStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매수] 주문 취소!'}
+                        message={'매수 주문 취소'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
@@ -657,35 +647,33 @@ export default function TradeStock(props) {
             <SnackbarProvider
              maxSnack={5}
             content={(key, message) => (
-                <AlertYellow id={key} message={message}/>
-            )}
+                <AlertYellow id={key} message={message}/>)}
              >
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message={' 보유 금액이 부족해요 😨'}
+                        message={'⚠ 보유 금액이 부족해요 😨'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message={' 유효하지 않은 값입니다.'}
+                        message={'⚠ 유효하지 않은 값입니다.'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message={'코인이 없는걸요? 😨'}
+                        message={'⚠ 코인이 없는걸요? 😨'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
                         severity="warning"
-                        message={'유효하지 않은 값입니다.'}
+                        message={'⚠ 유효하지 않은 값입니다.'}
                     />
                 )}
             </SnackbarProvider>
-
             <Grid
                 wrap="wrap"
                 className={classes.paper}
@@ -731,7 +719,7 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid style={{ width: '60%' }} align="left">
+                    <Grid style={{ width: '60%' }} align="center">
                         <h5
                             id="bidInput"
                             style={{ fontSize: '2.5vw' }}
@@ -795,7 +783,7 @@ export default function TradeStock(props) {
                                 }}
                                 id="z"
                             >
-                                [Z] 매수
+                                [Z] 전량 매수
                             </button>
                         </Grid>
                         <Grid
@@ -820,7 +808,7 @@ export default function TradeStock(props) {
                                 }}
                                 id="x"
                             >
-                                [X] 매도
+                                [X] 전량 매도
                             </button>
                         </Grid>
                         {/* <Grid style={{ width: '100%',}}>

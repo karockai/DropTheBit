@@ -90,14 +90,20 @@ function SetPlayerName(props) {
     };
 
     const handleOnSave = (event) => {
-        if (tmp != '') {
+        if(tmp === '') {
+            //alert
+        }
+        if (tmp !== '') {
             event.preventDefault();
             props.onSave(tmp, 0);
         }
     };
 
     const handleOnSave2 = (event) => {
-        if (tmp != '') {
+        if (tmp === '') {
+            //alert
+        }
+        if (tmp !== '') {
             event.preventDefault();
             props.onSave(tmp, 1);
         }

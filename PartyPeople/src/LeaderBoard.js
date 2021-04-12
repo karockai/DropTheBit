@@ -18,8 +18,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, Grid, GridList } from '@material-ui/core';
+import { Button, Grid, GridList, Popover } from '@material-ui/core';
 import { ExpBySymbol, parseWonToStr } from './parseMoney';
+import LobbyTutorial from './LobbyTutorial';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tableBodyText: {
         fontFamily: 'NEXON Lv1 Gothic OTF',
+        background: '#212529',
         fontSize: '1vw',
         color: 'white',
     },
@@ -64,7 +66,7 @@ export default function LeaderBoard(props) {
     const classes = useStyles();
     const rows = props.leaderBoard;
     const [board, setBoard] = useState({});
-
+    const [tutoToggle, setTutoToggle] = React.useState(true);
     useEffect(() => {
         //Client
         props.socket.emit('lobbyBoard', 'lobbyBoard Request.');
@@ -82,9 +84,9 @@ export default function LeaderBoard(props) {
 
     const showScore = (score) => {
         let result = '';
-        if (score == 1) result += '🥇 ';
-        if (score == 2) result += '🥈 ';
-        if (score == 3) result += '🥉 ';
+        if (score === 1) result += '🥇 ';
+        if (score === 2) result += '🥈 ';
+        if (score === 3) result += '🥉 ';
         else result += '  ';
 
         result += String(score);
@@ -102,7 +104,14 @@ export default function LeaderBoard(props) {
             </TableCell>
         );
     };
-
+    const handleClose = () => {
+        // setSelectMusic(null);
+        setTutoToggle(null);
+    };
+    const openTuto = Boolean(tutoToggle);
+    const handleSelectTuto = (event) => {
+        setTutoToggle(true);
+    };
     return (
         <GridList style={{ height: '100%' }}>
             <Grid
@@ -111,9 +120,6 @@ export default function LeaderBoard(props) {
                 alignItems={'center'}
                 style={{ width: '100%', height: '100%' }}
             >
-                {console.log(board) && (
-                    <Paper>'게임이 진행되지 않았습니다.'</Paper>
-                )}
                 <TableContainer
                     id="테이블 컨테이너"
                     component={Paper}
@@ -153,7 +159,7 @@ export default function LeaderBoard(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Array.isArray(board) &&
+                            {Array.isArray(board) ? (
                                 board.map((row, idx) => (
                                     <TableRow
                                         key={row.playerID}
@@ -177,7 +183,22 @@ export default function LeaderBoard(props) {
                                         </TableCell>
                                         {showAsset(row.asset)}
                                     </TableRow>
-                                ))}
+                                ))
+                            ) :             <Popover
+                            open={tutoToggle}
+                            anchorEl={openTuto}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'middle',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'middle',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <LobbyTutorial onClose={handleClose}></LobbyTutorial>
+                        </Popover>}
                         </TableBody>
                     </Table>
                 </TableContainer>

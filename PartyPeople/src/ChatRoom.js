@@ -206,16 +206,12 @@ export default function ChatRoom(props) {
             wrap={'nowrap'}
             
         > */}
-            <GridList cellHeight='auto' className="채팅창그리드리스트" style={{ width: '100%', height: '90%' }} wrap={'wrap'}>
+            <GridList className="채팅창그리드리스트" style={{ width: '100%', height:'84%'}} wrap={'wrap'}>
                 <Grid
-                    container
-                    item
                     direction={'column'}
                     justify={'flex-start'}
-                    alignItems={'stretch'}
                     style={{
                         width: '100%',
-                        // height: '90vh',
                         padding: '1vw 1vw 1vw 1vw',
                     }}
                 >
@@ -230,7 +226,7 @@ export default function ChatRoom(props) {
                                     color: '#aaff00',
                                     shadow: '0.5vh 0.5vw 0.5vh 0.5vw',
                                     width: '100%',
-                                    // padding: '1vh 0 0 0 ',
+                                    padding: '1vh 0 0 0 ',
                                     fontSize: '1vw',
                                 }}
                             >
@@ -261,6 +257,7 @@ export default function ChatRoom(props) {
                                     color: 'white',
                                     width: '100%',
                                     padding: '1vh 0 0 0 ',
+                                    shadow: '0.5vh 0.5vw 0.5vh 0.5vw',
                                     fontSize: '1vw',
                                 }}
                             >
@@ -281,11 +278,11 @@ export default function ChatRoom(props) {
                 container
                 dirction="row"
                 // justify = "flex-start"
-                style={{ width: '100%', height: '10%' }}
+                style={{ width: '100%', height: '15%' }}
             >
                 <Grid item style={{ width: '80%', height: '100%', }} justify="center">
                     <CssTextField
-                        style={{ width: '100%', height: '100%',}}
+                        style={{ width: '100%', height: '100%'}}
                         id="standard-basic"
                         placeholder="메시지 보내기 (Enter)"
                         inputRef={textInput}
