@@ -90,6 +90,8 @@ body {
   height: 2.5vh;
   background: transparent;
   transition: all 0.5;
+  border: 'solid';
+  border-color: '#2D4053';
   .driverLeft {
     display: flex;
     width: 100%;
@@ -117,7 +119,7 @@ body {
     width: 100%;
     background: #0C151C;
     margin: 2px;
-    font-size: 1vw;
+    font-size: 0.8vw;
     font-weight: bold;
     text-align: left;
   }

@@ -208,7 +208,7 @@ const PlayerLeaderboard = (props) => {
             ans += ret.substring(0, ret.length - 5 + 1) + '만 '; // 9948만
             ret = ret.substring(ret.length - 5 + 1);
         }
-        ans += ret;
+        // ans += ret;
         let minus = isPlus ? '+' : '-';
         ans = minus + ans;
         return <span style={{ color: color }}>{ans}</span>;
