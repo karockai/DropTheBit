@@ -144,7 +144,7 @@ export default function TradeStock(props) {
     const buySellButton = () => {
         return (
             <>
-                <Grid style={{ width: '50%', height: '100%' }}>
+                <Grid style={{ width: '50%', height: '100%', paddingLeft: '4px', paddingBottom: '3px' }}>
                     <button
                         style={{
                             width: '95%',
@@ -170,7 +170,7 @@ export default function TradeStock(props) {
                         풀매수
                     </button>
                 </Grid>
-                <Grid style={{ width: '50%', height: '100%' }} align="right">
+                <Grid style={{ width: '50%', height: '100%', paddingRight: '4px', paddingBottom: '3px'}} align="right">
                     <button
                         style={{
                             width: '95%',
@@ -227,17 +227,22 @@ export default function TradeStock(props) {
     const bidAskCancelButton = () => {
         return (
             <>
-                <Grid style={{ width: '100%', height: '100%',padding: '0.5vw 0.5vw 0 0.5vw', }}>
+                <Grid
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        padding: '0.5vw 0.5vw 0 0.5vw',
+                    }}
+                >
                     <button
                         style={{
                             width: '100%',
                             height: '95%',
                             fontSize: '2.0vw',
                             padding: '0 0 0 0',
-                            margin:'0',
+                            margin: '0',
                         }}
                         class="cancel"
-                        
                         onClick={(e) => {
                             bidAskCancel();
                         }}
@@ -315,10 +320,10 @@ export default function TradeStock(props) {
 
     function RefreshBid_Req() {
         props.socket.emit('RefreshBid_Req');
+        props.socket.emit('chartMyPrice_Req', -1);
         props.socket.once('RefreshBid_Res', (curPrice) => {
             // console.log('RefreshBid_Req');
             SetBid(curPrice);
-            props.SetBid(curPrice);
         });
     }
 
@@ -402,7 +407,7 @@ export default function TradeStock(props) {
                 vol: bbid.vol,
             });
             setPrevStatus(null);
-            console.log('buyDone-Room socket .');
+            // console.log('buyDone-Room socket .');
         });
         SetBind(true);
         return status;
@@ -749,7 +754,7 @@ export default function TradeStock(props) {
                     justify="space-between"
                     style={{ height: '20%' }}
                 >
-                    <span className={classes.small_text}>매매호가</span>
+                    <span className={classes.small_text} style={{ height: '100%', paddingTop: '7px', paddingLeft: '6px' }}>매매호가</span>
                     {/* <span className={classes.small_text}>[Space]:현재가</span> */}
                 </Grid>
                 <Grid
@@ -759,9 +764,9 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    style={{ height: '30%' }}
+                    style={{ height: '30%', paddingBottom: '8px' }}
                 >
-                    <Grid style={{ width: '20%' }}>
+                    <Grid style={{ width: '20%', paddingLeft: '4px' }}>
                         <Button
                             class="arrow"
                             className={classes.arrow}
@@ -778,7 +783,7 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid style={{ width: '56%', margin: '0' }} align="right">
+                    <Grid style={{ width: '56%', margin: '0' }} align="center">
                         <h5
                             id="bidInput"
                             style={{ fontSize: '2.5vw', fontWeight: 'bold' }} //'1.2vh 0px 0px 0px'
@@ -787,7 +792,7 @@ export default function TradeStock(props) {
                             {SplitByThree(String(currentBid))}
                         </h5>
                     </Grid>
-                    <Grid style={{ width: '24%' }} align="right">
+                    <Grid style={{ width: '20%' , paddingRight: '4px'}} align="right">
                         <Button
                             // style={{margin:'0 0 0 2%' }}
                             class="arrow"

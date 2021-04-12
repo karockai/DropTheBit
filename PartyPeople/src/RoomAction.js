@@ -62,7 +62,7 @@ export default function RoomAction(props) {
                             <PersonSharpIcon
                                 className={classes.icon}
                                 style={{
-                                    color: '#1e88e5zxcz',
+                                    color: '#1e88e5',
                                     margin:
                                         1 / ratio + 'vw ' + 1 / ratio + 'vw',
                                     fontSize: 2 / ratio + 'vw',

@@ -243,7 +243,7 @@ function Lobby(props) {
     }
     return (
         <>
-            <video className="videoTag" autoPlay loop muted>
+            <video style={{opacity: 0.7}} className="videoTag" autoPlay loop muted>
                 <source src={backgroundImg} type="video/mp4" />
             </video>
             {/* <img

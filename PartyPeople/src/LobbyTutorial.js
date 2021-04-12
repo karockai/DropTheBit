@@ -52,14 +52,30 @@ function TutorialPage(props) {
                 item
                 className="tuto-title"
                 container
-                direction='row'
-                justify='space-between'
+                direction="row"
+                justify="space-between"
                 style={{ width: '100%', height: '10%' }}
             >
-                <h1 align="left" style={{ padding: '1vh 1vw', width:'50%', textAlign:'left', fontWeight:'bold' }}>
+                <h1
+                    align="left"
+                    style={{
+                        padding: '1vh 1vw',
+                        width: '50%',
+                        textAlign: 'left',
+                        fontWeight: 'bold',
+                    }}
+                >
                     {props.title}
                 </h1>
-                <div align="right" onClick={props.onClose} style={{ padding: '1vh 1vw' , fontSize:'2vw', cursor:'pointer'}}>
+                <div
+                    align="right"
+                    onClick={props.onClose}
+                    style={{
+                        padding: '1vh 1vw',
+                        fontSize: '2vw',
+                        cursor: 'pointer',
+                    }}
+                >
                     ❌
                 </div>
             </Grid>
@@ -67,29 +83,35 @@ function TutorialPage(props) {
             <Grid
                 item
                 className="tuto-image"
-                style={{ width: '100%', height: props.hasContent ? '65%' : '80%' }}
+                style={{
+                    width: '100%',
+                    height: props.hasContent ? '65%' : '80%',
+                }}
             >
                 <img
                     src={props.img}
                     style={{
                         height: '100%',
-                        width:  props.hasContent ? '60%' : '60%',
+                        width: props.hasContent ? '60%' : '60%',
                         padding: '0 0 5vh 0',
                     }}
                 />
             </Grid>
-            {props.hasContent ?       
-            <Grid
-                item
-                className="tuto-content"
-                style={{
-                    width: '100%',
-                    height: props.hasContent ? '15%' : '5%',
-                    padding: '5vh 10vw 1vh 10vw',
-                }}
-            > 
-                {props.content}
-            </Grid> : <></>}
+            {props.hasContent ? (
+                <Grid
+                    item
+                    className="tuto-content"
+                    style={{
+                        width: '100%',
+                        height: props.hasContent ? '15%' : '5%',
+                        padding: '5vh 10vw 1vh 10vw',
+                    }}
+                >
+                    {props.content}
+                </Grid>
+            ) : (
+                <></>
+            )}
         </>
     );
 }
@@ -110,12 +132,7 @@ export default function LobbyTutorial(props) {
         setPage(value);
     };
 
-    const indexMap = [
-        '게임 화면',
-        '자산 화면',
-        '매매 화면',
-        '내 주문 목록',
-    ];
+    const indexMap = ['게임 화면', '자산 화면', '매매 화면', '내 주문 목록'];
     const maxIndex = indexMap.length;
 
     let currentPage = (pageIndex) => {
@@ -131,17 +148,39 @@ export default function LobbyTutorial(props) {
         // } else
         if (indexMap[pageIndex] === '게임 화면') {
             return (
-                <TutorialPage title="게임 화면" img={GameWindow} content="게임 플레이 화면입니다." onClose={props.onClose} />
+                <TutorialPage
+                    title="게임 화면"
+                    img={GameWindow}
+                    content="게임 플레이 화면입니다."
+                    onClose={props.onClose}
+                />
             );
         } else if (indexMap[pageIndex] === '자산 화면') {
-            return <TutorialPage title="자산 화면" img={Wallet} content="" onClose={props.onClose} />;
+            return (
+                <TutorialPage
+                    title="자산 화면"
+                    img={Wallet}
+                    content=""
+                    onClose={props.onClose}
+                />
+            );
         } else if (indexMap[pageIndex] === '매매 화면') {
             return (
-                <TutorialPage title="매매 화면" img={TradeWindow} content="" onClose={props.onClose} />
+                <TutorialPage
+                    title="매매 화면"
+                    img={TradeWindow}
+                    content=""
+                    onClose={props.onClose}
+                />
             );
         } else if (indexMap[pageIndex] === '내 주문 목록') {
             return (
-                <TutorialPage title="내 주문 목록" img={MyList} content="" onClose={props.onClose} />
+                <TutorialPage
+                    title="내 주문 목록"
+                    img={MyList}
+                    content=""
+                    onClose={props.onClose}
+                />
             );
         } else {
             return <>무언가 문제가 생겼군요.</>;

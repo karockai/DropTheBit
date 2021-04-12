@@ -51,6 +51,7 @@ class StockChart extends React.Component {
         this.currentBuy = 0;
         this.currentSell = 0;
         this.current = 0;
+
     }
 
     handleResize = () => {
@@ -62,8 +63,11 @@ class StockChart extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.handleResize);
-    }
 
+    }
+    componentDidUpdate() {
+        // console.log('props', this.props.bid);
+    }
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize);
     }
@@ -159,6 +163,7 @@ class StockChart extends React.Component {
                         fill="green"
                         textFill="#fff"
                         lineStroke="green"
+                        fontSize={25}
                         strokeDasharray="ShortDash"
                         arrowWidth={3}
                         displayFormat={format('.2f')}

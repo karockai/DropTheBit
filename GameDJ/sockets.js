@@ -61,7 +61,7 @@ export default {
                 socket.emit(
                     'lobbyBoard',
                     roomList[socket.roomID]['leaderBoard']
-                );
+                ); 
             });
             socket.on('startGame_Req', (musicData) => {
                 if (!roomList.hasOwnProperty(socket.roomID)) return 0;
@@ -78,7 +78,13 @@ export default {
                 new Room(io, socket).sendChartData()
             );
             socket.on('chartMyPrice_Req', (price) => {
-                socket.emit('chartMyPrice_Res', price);
+                if (price === -1) 
+                {
+                    socket.emit('chartMyPrice_Res', prePrice);    
+                }
+                else{
+                    socket.emit('chartMyPrice_Res', price);
+                }
             });
             // room event << -----------------------------------------
 
@@ -130,7 +136,7 @@ export default {
             socket.on('RefreshBid_Req', () => {
                 if (!roomList[socket.roomID]) return 0;
                 // let curPrice = curCoin['curPrice'];
-                socket.emit('RefreshBid_Res', curPrice);
+                socket.emit('RefreshBid_Res', prePrice);
             });
             // In-game event << -----------------------------------------
             // Chat event ------------------------------------------ >>

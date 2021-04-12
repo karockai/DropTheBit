@@ -46,11 +46,15 @@ export default function MyAsset(props) {
                 height: '100%',
                 fontSize: '1.5vw',
                 padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                border: 'solid',
+                borderColor: '#2D4053',
             }}
         >
-            <h4>총 평가 자산</h4>
+            <h4 style={{ paddingLeft: '1px', paddingTop: "4px"}}>자산</h4>
             <h2
                 style={{
+                    paddingRight: '1px',
+                    textAlign: 'left',
                     fontWeight: 'bold',
                     fontSize: '2.2vw',
                     color: color,
@@ -62,6 +66,7 @@ export default function MyAsset(props) {
                 id="diffAsset"
                 class="default"
                 style={{
+                    paddingRight: '1px',
                     fontWeight: 'bold',
                     fontSize: '1.5vw',
                     color: color,

@@ -231,7 +231,7 @@ class Refresh {
                             parseInt(idx) + 1
                         );
                     }
-                    let rankList2 = rankList.slice(0, 15);
+                    let rankList2 = rankList.slice(0, 10);
                     io.to(roomID).emit('roomRank', rankList2);
 
                     let roomAction = {

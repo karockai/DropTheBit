@@ -208,10 +208,16 @@ const PlayerLeaderboard = (props) => {
             ans += ret.substring(0, ret.length - 5 + 1) + '만 '; // 9948만
             ret = ret.substring(ret.length - 5 + 1);
         }
-        // ans += ret;
+        ans += ret;
         let minus = isPlus ? '+' : '-';
         ans = minus + ans;
-        return <><span style={{ color: ans === '+' ? 'grey' : color }}>{ans === '+' ? '0' : ans}</span>{' '}원</>;
+        return (
+            <>
+                <span style={{ color: ans === '+' ? 'grey' : color }}>
+                    {ans === '+' ? '0 원' : ans +' 원'}
+                </span>
+            </>
+        );
     }
 
     const parseWonToStr = (won) => {
@@ -261,7 +267,6 @@ const PlayerLeaderboard = (props) => {
         </section>
     );
 };
-
 
 export default function RacingLeaderBoard(props) {
     const [view, toggleView] = useState('interval');
