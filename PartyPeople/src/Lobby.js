@@ -187,7 +187,6 @@ function Lobby(props) {
     };
 
     function PutNewCard(props) {
-        // console.log(props.roomInfo);
         if (props.roomInfo !== '') {
             let PlayerList = getPlayersList(props.roomInfo);
             const playerCount = Object.keys(PlayerList).length;
@@ -209,6 +208,7 @@ function Lobby(props) {
                                 />{' '}
                                 {/*//?*/}
                             </>
+                            
                         );
                     })}
                 </>
@@ -230,7 +230,6 @@ function Lobby(props) {
         }
         return playerList;
     }
-    console.log(gaming);
     return (
         <>
             {/* <video className="videoTag" autoPlay loop muted>
@@ -377,6 +376,7 @@ function Lobby(props) {
                             </Grid>
                             <Grid className="스타트버튼" item xs={7}>
                                 {' '}
+                                <Grid>
                                 <TextField
                                     type="text"
                                     id="gameLink"
@@ -386,7 +386,7 @@ function Lobby(props) {
                                     InputProps={{
                                         className: classes.input,
                                     }}
-                                    style={{ width: '30%',height:'10%'  }}
+                                    style={{ width: '47%',height:'10%'  }}
                                     readOnly
                                 />
                                 <SnackbarProvider maxSnack={1}>
@@ -401,6 +401,7 @@ function Lobby(props) {
                                         id="copy"
                                     />
                                 </SnackbarProvider>
+                                </Grid>
                                 <StartGame
                                     roomID={props.roomID}
                                     music={props.roomInfo['music']}

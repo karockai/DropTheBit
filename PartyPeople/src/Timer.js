@@ -74,7 +74,11 @@ export default function Timer(props) {
                 >
                     남은 시간
                 </div>
-                <div className="value" >{remainingTime}</div>
+                <div className="value"                    style={{
+                        fontWeight: 'bold',
+                        fontSize: '2vw',
+                        color: 'white',
+                    }} >{remainingTime}</div>
             </div>
         );
     };
@@ -82,6 +86,7 @@ export default function Timer(props) {
     const countdownTimer = (timerSet) => {
         return (
             <CountdownCircleTimer
+                size = {0.1 * window.innerWidth}
                 isPlaying={timerSet['isPlaying']}
                 duration={timerSet['initGameTime']}
                 initialRemainingTime={timerSet['gameTime']}

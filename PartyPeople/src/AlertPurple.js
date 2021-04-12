@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const SnackMessage = forwardRef((props, ref) => {
+const AlertPurple = forwardRef((props, ref) => {
     const classes = useStyles();
     const { closeSnackbar } = useSnackbar();
     const [expanded, setExpanded] = useState(false);
@@ -81,4 +81,4 @@ const SnackMessage = forwardRef((props, ref) => {
     );
 });
 
-export default SnackMessage;
+export default AlertPurple;

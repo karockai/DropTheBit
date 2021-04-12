@@ -294,5 +294,10 @@ coinList = {
 'KRW-DOGE' : '도지코인',
 'BTC-NEAR' : '니어프로토콜',
 'BTC-AUCTION' : '바운스토큰',
-'BTC-DAWN' : '던프로토콜'
+'BTC-DAWN' : '던프로토콜',
+'KRW-AXS' : '엑시인피니티',
+'KRW-STX' : '스택스',
+'KRW-FLOW' : '플로우',
+'KRW-DAWN' : '던프로토콜',
+'KRW-STRK' : '스트라이크',
 }
