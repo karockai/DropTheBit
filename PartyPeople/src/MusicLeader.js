@@ -252,7 +252,7 @@ export default function MusicLeader(props) {
     // }, []);
     return (
         <>
-            <h5>음악을 선택해주세요</h5>
+            <h5 style={{margin:'1vh 0 1.5vh 0'}}>음악을 선택해주세요</h5>
             <Grid container direction={'row'} justify={'space-between'}>
                 <ShowMusic />
                 <MusicInput />

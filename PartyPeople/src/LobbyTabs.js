@@ -49,11 +49,13 @@ function LobbyMusicOnOff(props) {
 
     return (
         <FormControlLabel
+        style={{ margin: '0.5vw' }}
             control={
                 <PurpleSwitch
                     checked={state}
                     onChange={handleChange}
                     name="checkedA"
+                     
                 />
             }
             //   label="Custom color"

@@ -320,6 +320,7 @@ export default function ChatRoom(props) {
                             sendMessage();
                         }}
                         label="전송"
+                        class='send'
                     >
                         전송
                     </button>
