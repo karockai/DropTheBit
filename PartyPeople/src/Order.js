@@ -48,7 +48,7 @@ export default function Order(props) {
         return (
             <>
                 <span
-                    class={'blinking'}
+                    class={'orderText'}
                     style={{ color: 'white', fontSize: '2vw' }}
                 >
                     {orderType +
