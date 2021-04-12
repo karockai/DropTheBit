@@ -74,6 +74,9 @@
   /* 기존 theme color보다 명도 높 */
   --color: #7974f2;
   --hover: #b9b6ff;
+    border-radius: 10px 10px;
+    font-weight: bold;
+    border: 3px solid;
 }
 .buy_max {
   /* --color: #635ee7; */
@@ -92,6 +95,8 @@
   --color: white;
   --hover: red;
   opacity: 0.9;
+  border-radius: 20px 20px;
+
 }
 .sell_max {
   /* --color: #635ee7; */
@@ -109,6 +114,17 @@
   --color: white;
   --hover: #0088ff;
   opacity: 0.9;
+  border-radius: 20px 20px;
+
+}
+.cancel {
+  /* --color: #635ee7; */
+  /* background: #0088ff; */
+  background:  rgb(63, 63, 63);
+  --color: white;
+  --hover: rgb(126, 126, 126);
+  opacity: 0.9;
+
 }
 .space {
   /* --color: #635ee7; */  
@@ -117,25 +133,31 @@
   --color: white;
   --hover: rgba(255, 255, 255, 0.522);
 }
+.send {
+  --color: white;
+  --hover: #7974f2;
+  border: 2px solid;
+}
 
 .start {
   /* --color: #635ee7; */
   --color: #ffffff;
   --hover: #7974f2;
+  
 }
 .link {
-  /* --color: #635ee7; */
-
-    /* --color: #635ee7; */
-    /* background: red; */
     --color: #fff073;
-    /* --color: white; */
     --hover: red;
+    border-radius: 10px 10px;
+    border: 3px solid;
 }
 
 .tutorial {
   --color: rgb(255, 8, 0);
   --hover: rgb(206, 206, 48);
+  border-radius: 10px 10px;
+  border: 3px solid;
+  font-weight: bold;
 }
 
 .tutorialMove {
@@ -149,11 +171,13 @@ button {
   color: var(--color);
   -webkit-transition: 0.25s;
   transition: 0.25s;
+
 }
 
 .start{
   background-color: #17181c;
   opacity: 0.6;
+  border-radius: 20px 20px;
 }
 
 
@@ -167,6 +191,7 @@ button:focus {
 /* button:hover, button:focus { */
 button:hover, button:focus, button.pressed {
   border-color: var(--hover);
+
   color: #fff;
   opacity: 1;
 }
@@ -177,6 +202,7 @@ body {
   /* background: #17181c; */
   background: #fff;
   font: 300 1em 'Fira Sans', sans-serif;
+
   /* // Center everything ever */
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -192,18 +218,22 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   /* display: flex; */
+
 }
 
 
 button {
   background: none;
-  border: 2px solid;
+  border: 4px solid;
   font: inherit;
   line-height: 1;
+
+  /* border: thick; */
   margin: 0.25rem;
   padding: 2vh 1.5vw;
   /* padding: 1em 2em; */
   font-size: 2.5vh;
+  /* stroke-width: 5px; */
   /* font-size: 1em; */
 }
 

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Fade from '@material-ui/core/Fade';
 import Snackbar from '@material-ui/core/Snackbar';
-import {
-    ExpBySymbol,
-    parseWonToStr,
-    SplitByThree,
-    showProfit,
-} from './parseMoney';
+import { SplitByThree } from './parseMoney';
 
 export default function Order(props) {
     const [orderReady, setReady] = useState(false);

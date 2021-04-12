@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#0069d9',
     },
     input: {
-        color: 'white',
-        backgroundColor: 'black',
+        color: 'black',
+        backgroundColor: 'white',
         opacity: 0.6,
         // width: '4vw', 
         // wordSpacing: '16px',
@@ -259,7 +259,7 @@ function Lobby(props) {
                                     className={classes.menuButton}
                                     color="inherit"
                                     aria-label="menu"
-                                >
+                              >
                                     {/* <MenuIcon /> */}
                                     <span style={{ fontSize: '2vw', fontWeight:'bold' }}>
                                         {props.roomInfo[
@@ -268,8 +268,37 @@ function Lobby(props) {
                                     </span>
                                 </IconButton>
                             </Grid>
-                            <Grid xs={8} direction={'row'} contianer justify="flex-start" alignItems="flex-start" style={{ padding: '0 1vw 0 1vw', textAlign: 'right' }}>
-
+                                <Grid container xs={5} alignItems="center" justify='flex-start'>
+                                <Grid container style={{width: '80%'}} justify='space-between' alignItems='center'>
+                                    <TextField
+                                        type="text"
+                                        id="gameLink"
+                                        className="form-control text-center fw-bold bg-transparent"
+                                        // className= {classes.input}
+                                        value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
+                                        InputProps={{
+                                            className: classes.input,
+                                        }}
+                                        style={{ width: '70%',height:'10%'}}
+                                        readOnly
+                                    />
+                                    {'   '}
+                                    <SnackbarProvider maxSnack={1}>
+                                        <SnackAlertBtn
+                                            class="btn btn-warning"
+                                            severity="success"
+                                            message="링크가 복사됐어요! 😚"
+                                            label="초대 링크"
+                                            onAlert={true}
+                                            type="button"
+                                            onClick={CopyURL}
+                                            id="copy"
+                                            
+                                        />
+                                    </SnackbarProvider>
+                                </Grid>
+                                </Grid>
+                            <Grid xs={3} direction={'row'} contianer justify="flex-start" alignItems="flex-start" style={{ padding: '0 1vw 0 1vw', textAlign: 'right' }}>
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
@@ -299,7 +328,7 @@ function Lobby(props) {
                         <Grid
                             className="플레이어리스트"
                             style={{
-                                height: '70vh',
+                                height: '65vh',
                                 padding: '1vw 1vw 1vw 1vw',
                             }}
                             container
@@ -316,7 +345,7 @@ function Lobby(props) {
                         </Grid>
                         <Grid
                             className="하단게임메뉴들"
-                            style={{ height: '20vh' }}
+                            style={{ height: '25vh' }}
                             item
                             container
                             direction={'row'}
@@ -333,7 +362,7 @@ function Lobby(props) {
                                 xs={6}
                                 style={{
                                 width: '100%',
-                                height: '19vh',
+                                height: '24vh',
                                 opacity: '0.8',
                                 padding: '1vh 2vw',
                             }}
@@ -376,38 +405,9 @@ function Lobby(props) {
                                 </Popover> */}
                                 </Paper>
                             </Grid>
-                            <Grid className="스타트버튼" item xs={6} align='center'>
-                                {' '}
-                                <Grid container style={{margin:'0 0 2% 0', width: '80%'}} justify='space-between'>
-                                    <TextField
-                                        type="text"
-                                        id="gameLink"
-                                        className="form-control text-center fw-bold bg-transparent"
-                                        // className= {classes.input}
-                                        value={`${window.location.protocol}//${window.location.host}/?id=${props.roomID}`}
-                                        InputProps={{
-                                            className: classes.input,
-                                        }}
-                                        style={{ width: '55%',height:'10%'}}
-                                        readOnly
-                                    />
-                                    {'   '}
-                                    <SnackbarProvider maxSnack={1}>
-                                        <SnackAlertBtn
-                                            class="btn btn-warning"
-                                            severity="success"
-                                            message="링크가 복사됐어요! 😚"
-                                            label="Invitation LINK"
-                                            onAlert={true}
-                                            type="button"
-                                            onClick={CopyURL}
-                                            id="copy"
-                                        />
-                                    </SnackbarProvider>
-                                </Grid>
-                                <Grid>
+                            <Grid container className="스타트버튼" xs={6} justify='center' alignItems='flex-end' style={{height:'24vh', width:'100%'}}>
+      
                                     <StartGame
-                                    
                                         roomID={props.roomID}
                                         music={props.roomInfo['music']}
                                         socket={props.socket}
@@ -421,7 +421,7 @@ function Lobby(props) {
                                         }
                                         style={{padding: '1vw 1vw 1vw 1vw',}}
                                     />
-                                </Grid>
+
                             </Grid>
                         </Grid>
                     </Grid>
