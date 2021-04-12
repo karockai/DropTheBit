@@ -26,19 +26,23 @@ const CssTextField = withStyles({
         '& .MuiInputLabel-root': {
             color: '#CDD7E0',
             fontSize: '0.8vw',
+            
         },
         '& .MuiInputBase-input': {
-            width: '15vw',
+            width: '23vw',
             opacity: 0.8,
             backgroundColor: '#000000',
             color: '#CDD7E0',
             fontSize: '0.9vw',
-            size:"large"
+            size:"large",
+            borderRadius: '10px'
         },
         '& .MuiInputBase-formControl': {
             color: '#CDD7E0',
             fontSize: '0.9vw',
             height: '100%',
+            borderRadius: '10px'
+            
         },
         //   '& .MuiInput-underline:after': {
         //     borderBottomColor: 'white',
@@ -155,6 +159,7 @@ function SetPlayerName(props) {
                             autoFocus
                             onKeyPress={onKeyPress}
                             inputProps={{ maxLength: 10 }}
+                            style={{borderRadius: '10px'}}
                         />
                     </Grid>
 
@@ -162,7 +167,7 @@ function SetPlayerName(props) {
                     <SnackbarProvider maxSnack={1}>
                         <SnackAlertBtn
                             class="start"
-                            severity="success"
+                            severity="error"
                             message="닉네임을 입력해주세요."
                             label={buttonMsg}
                             onAlert={isEmpty}
@@ -229,7 +234,7 @@ function SetPlayerName(props) {
                             <SnackbarProvider maxSnack={1}>
                             <SnackAlertBtn
                                 class="start"
-                                severity="success"
+                                severity="error"
                                 message="닉네임을 입력해주세요."
                                 label={buttonMsg}
                                 onAlert={isEmpty}
@@ -245,7 +250,7 @@ function SetPlayerName(props) {
                         <SnackbarProvider maxSnack={1}>
                         <SnackAlertBtn
                             class="start"
-                            severity="success"
+                            severity="error"
                             message="닉네임을 입력해주세요."
                             label={publicButton}
                             onAlert={isEmpty}
