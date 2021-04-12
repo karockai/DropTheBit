@@ -43,7 +43,7 @@ while True:
     bid_sum = 0
     for j in range(1):
         ask_sum += dummyJuka_Hoka2.hoka_list[i][f'ask_size{j}']
-        bid_sum += dummyJuka_Hoka2.hoka_list[i][f'ask_size{j}']
+        bid_sum += dummyJuka_Hoka2.hoka_list[i][f'bid_size{j}']
     # print(dummyJuka_Hoka2.hoka_list[i]['date'])
     hoka_result['date'] = dummyJuka_Hoka2.hoka_list[i]['date']
     hoka_result['total_ask_size'] = ask_sum

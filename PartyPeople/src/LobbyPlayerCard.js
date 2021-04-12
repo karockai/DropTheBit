@@ -72,20 +72,20 @@ export default function LobbyPlayerCard(props) {
     }
     let avatars = new Avatars(sprites, options);
     let svg = avatars.create(props.playerID);
-    let maxFontSize = 1.2
-    const compFontSize = 5 / ratio * (5 / (props.playerID.length >= 5 ? 5 : props.playerID.length));
-    maxFontSize = maxFontSize < compFontSize ? maxFontSize : compFontSize;
+    const compFontSize = 3 / ratio ;
     let playerInfo = null;
-    if(ratio > 8){
-      playerInfo = (<></>)
+    if(ratio > 4){
+      playerInfo = (<>        <Grid item style={{ fontSize: 2 * compFontSize + 'vw', height:'30%', padding: 2/ratio+'vh '+ 5/ratio + 'vw' }}>
+      {props.roomLeader === props.socketID ? '👑' : '🥋'}
+  </Grid></>)
     }
     else {
       playerInfo = (
         <>
-        <Grid item style={{ fontSize: maxFontSize + 'vw', height:'30%', padding:'2vh 1vw'}}>
+        <Grid item style={{ fontSize: compFontSize + 'vw', height:'30%', padding: 2/ratio+'vh '+ 2/ratio + 'vw' }}>
         {isLeader}
     </Grid>
-    <Grid item style={{ fontSize:  maxFontSize + 'vw', height:'70%' , padding:  '2vh 1vw', }}>
+    <Grid item style={{ fontSize:  compFontSize + 'vw', height:'70%' , padding: 3/ratio+'vh '+ 2/ratio + 'vw' }}>
         {props.playerID}
     </Grid>
     </>

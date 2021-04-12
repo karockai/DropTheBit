@@ -90,9 +90,11 @@ body {
   height: 2.5vh;
   background: transparent;
   transition: all 0.5;
+  border: 'solid';
+  border-color: '#2D4053';
   .driverLeft {
     display: flex;
-    width: 60%;
+    width: 100%;
     background: #0C151C;
   }
   .line {
@@ -114,17 +116,17 @@ body {
     margin: 2px;
   }
   .driverName {
-    width: 60%;
+    width: 100%;
     background: #0C151C;
     margin: 2px;
-    font-size: 1vw;
+    font-size: 0.8vw;
     font-weight: bold;
     text-align: left;
   }
   .driverRight {
-    width: 40%;
+    width: 100%;
     background: rgba(0, 0, 0, 0.5);
-    font-size: 0.7vw;
+    font-size: 1vw;
     padding: 3px;
     text-align: right;
   }
