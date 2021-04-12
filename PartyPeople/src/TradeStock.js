@@ -661,15 +661,12 @@ export default function TradeStock(props) {
                 )}
             >
                 {sellStatus && sellStatus.status === 'done' && (
-                    <SnackAlertFunc
-                        severity="info"
-                        message={'✔ [매도] 주문 체결 💸'}
-                    />
+                    <SnackAlertFunc severity="info" message={'매도 체결'} />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매도] 주문 📉'}
+                        message={'매도 주문 신청'}
                     />
                 )}
             </SnackbarProvider>
@@ -682,14 +679,11 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매수] 주문! 📈'}
+                        message={'매수 주문 신청'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'done' && (
-                    <SnackAlertFunc
-                        color="error"
-                        message={'✔ [매수] 주문 체결! 🎁'}
-                    />
+                    <SnackAlertFunc color="error" message={'매수 주문 체결'} />
                 )}
             </SnackbarProvider>
             <SnackbarProvider
@@ -701,14 +695,14 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매수] 주문 취소'}
+                        message={'매수주문 취소'}
                     />
                 )}
 
                 {sellStatus && sellStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'[매도] 주문 취소!'}
+                        message={'매도 주문 취소'}
                     />
                 )}
             </SnackbarProvider>
@@ -719,10 +713,7 @@ export default function TradeStock(props) {
                 )}
             >
                 {buyStatus && buyStatus.status === 'lack' && (
-                    <SnackAlertFunc
-                        severity="warning"
-                        message={'⚠ 보유 금액이 부족해요 😨'}
-                    />
+                    <SnackAlertFunc severity="warning" message={'현금 부족'} />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
@@ -731,10 +722,7 @@ export default function TradeStock(props) {
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
-                    <SnackAlertFunc
-                        severity="warning"
-                        message={'⚠ 코인이 없는걸요? 😨'}
-                    />
+                    <SnackAlertFunc severity="warning" message={'코인 부족'} />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
@@ -760,7 +748,7 @@ export default function TradeStock(props) {
                     style={{ height: '20%' }}
                 >
                     <span className={classes.small_text}>매매호가</span>
-                    <span className={classes.small_text}>[C]:취소</span>
+                    <span className={classes.small_text}>[Space]:현재가</span>
                 </Grid>
                 <Grid
                     container
