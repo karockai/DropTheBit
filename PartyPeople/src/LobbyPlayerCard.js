@@ -52,7 +52,7 @@ export default function LobbyPlayerCard(props) {
         if (comp >= playerCount) break;
     }
     const ratio = Math.pow(2, index); // playerCount ~2^1일때 1, ~16 2^3일때 2, ~64 2^5일때 4, ~256 2^7일때, 8
-    const isLeader = props.roomLeader === props.socketID ? '👑 방장' : '게스트';
+    const isLeader = props.roomLeader === props.socketID ? '👑 방장' : '손님';
     let options = null;
     if(ratio > 8) {
       options = 
@@ -85,7 +85,7 @@ export default function LobbyPlayerCard(props) {
         <Grid item style={{ fontSize: compFontSize + 'vw', height:'30%', padding: 2/ratio+'vh '+ 2/ratio + 'vw' }}>
         {isLeader}
     </Grid>
-    <Grid item style={{ fontSize:  compFontSize + 'vw', height:'70%' , padding: 3/ratio+'vh '+ 2/ratio + 'vw' }}>
+    <Grid item style={{ fontSize:  compFontSize + 'vw', height:'70%' , padding: 3/ratio+'vh '+ 2/ratio + 'vw', color:'white' }}>
         {props.playerID}
     </Grid>
     </>

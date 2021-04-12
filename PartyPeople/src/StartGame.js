@@ -154,12 +154,15 @@ export default function StartGame(props) {
                         onClick={StartGameReq}
                         style={{
                             width: '80%',
-                            height: '20vh',
+                            height: '23vh',
                             fontSize: '10vh',
+                            fontWeight: 'bold',
+                            border: '6px solid',
+                            backgroundColor: '#7673f2',
                         }}
                         text
                     >
-                        {'START'}
+                        {'시작'}
                     </Button>
                 )}
                 {!props.isLeader && (

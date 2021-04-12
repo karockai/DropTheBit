@@ -65,7 +65,7 @@ export default function MusicMember(props) {
                         InputLabelProps={{
                             style: { color: '#fff' },
                         }}
-                        label='Selected Music'
+                        label='음악 제목'
                         defaultValue={props.music}
                         InputProps={{
                             readOnly: true,
@@ -122,7 +122,7 @@ export default function MusicMember(props) {
                         InputLabelProps={{
                             style: { color: '#fff' },
                         }}
-                        label='Play Time'
+                        label='음악 시간'
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,

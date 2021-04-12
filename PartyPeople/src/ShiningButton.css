@@ -76,6 +76,15 @@
   --hover: #b9b6ff;
     border-radius: 10px 10px;
     font-weight: bold;
+    border: 4px solid;
+}
+.key_map {
+  /* --color: #635ee7; */
+  /* 기존 theme color보다 명도 높 */
+  background-color: #7974f2;
+  --color: white;
+    border-radius: 10px 10px;
+    font-weight: bold;
     border: 3px solid;
 }
 .buy_max {
@@ -124,6 +133,7 @@
   --color: white;
   --hover: rgb(126, 126, 126);
   opacity: 0.9;
+  border-radius: 20px 20px;
 
 }
 .space {
@@ -139,22 +149,21 @@
   border: 2px solid;
 }
 
-.start {
-  /* --color: #635ee7; */
-  --color: #ffffff;
-  --hover: #7974f2;
-  
-}
+
 .link {
-    --color: #fff073;
-    --hover: red;
+    /* --color: #fff073; */
+    --color:white;  
+    background-color: #018f43;
+    --hover:#018f43;
     border-radius: 10px 10px;
     border: 3px solid;
+    font-weight: bold;
 }
 
 .tutorial {
-  --color: rgb(255, 8, 0);
-  --hover: rgb(206, 206, 48);
+  color: white;
+  background-color: rgb(255, 8, 0);
+  --hover:rgb(255, 8, 0);
   border-radius: 10px 10px;
   border: 3px solid;
   font-weight: bold;
@@ -171,13 +180,13 @@ button {
   color: var(--color);
   -webkit-transition: 0.25s;
   transition: 0.25s;
-
 }
 
 .start{
   background-color: #17181c;
-  opacity: 0.6;
+  /* opacity: 0.6; */
   border-radius: 20px 20px;
+
 }
 
 
