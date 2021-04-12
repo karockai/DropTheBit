@@ -175,7 +175,7 @@ class ChartComponent extends React.Component {
                     currentBuy={this.currentBuy}
                     currentSell={this.currentSell}
                 />
-                <img src={testImg} style={{position: 'absolute', top : '60vh', width:'50vw', height:'7vh'}}>
+                <img src={testImg} style={{position: 'absolute', left:'25vw', top : '63vh', width:'40vw', height:'5vh'}}>
                 </img>
             </>
         );
