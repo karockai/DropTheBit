@@ -173,11 +173,12 @@ export default function LayoutGrid(props) {
                         style={{
                             width: '100%',
                             height: '70%',
-                            padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                            padding: '0.3vh 0vw 0.3vh 0.3vw',
                         }}
                     >
                         <Paper
-                            style={{ height: '100%' }}
+                            style={{ height: '100%',                        border: 'solid',
+                            borderColor: '#2D4053', }}
                             className={classes.paper}
                         >
                             <ChartComponent
@@ -255,7 +256,7 @@ export default function LayoutGrid(props) {
                             style={{
                                 height: '100%',
                                 width: '50%',
-                                padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                                padding: '0.3vh 0vw 0.3vh 0.3vw',
                             }}
                         >
                             <Grid
@@ -275,8 +276,10 @@ export default function LayoutGrid(props) {
                                     item
                                 >
                                     <Paper
-                                        style={{ height: '100%' }}
+                                        style={{ height: '100%',                         border: 'solid',
+                        borderColor: '#2D4053', }}
                                         className={classes.paper}
+
                                     >
                                         {/* <ThemeProvider theme={theme}> */}
                                         <TradeStock
@@ -324,6 +327,8 @@ export default function LayoutGrid(props) {
                                 height: '50%',
                                 padding: '2vh',
                                 width: '100%',
+                                border: 'solid',
+                                borderColor: '#2D4053',
                             }}
                         >
                             <RefreshGraph socket={props.socket} />
@@ -336,6 +341,8 @@ export default function LayoutGrid(props) {
                                 padding: '2vh',
                                 width: '100%',
                                 fontSize: '1vw',
+                                                        border: 'solid',
+                        borderColor: '#2D4053',
                             }}
                         >
                             {/* <TabPanel
@@ -354,12 +361,14 @@ export default function LayoutGrid(props) {
                             height: '40%',
                             width: '100%',
                             padding: '0.8vh 0.3vw 0vh 0.3vw',
+                            
                         }}
                         item
                     >
                         <Paper
                             className={classes.paper}
-                            style={{ height: '100%', width: '100%' }}
+                            style={{ height: '100%', width: '100%',                        border: 'solid',
+                            borderColor: '#2D4053', }}
                         >
                             <img
                                 src={KeyMap}
