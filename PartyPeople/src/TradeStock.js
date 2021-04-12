@@ -35,7 +35,7 @@ import { SplitByThree } from './parseMoney';
 // import { createMuiTheme,ThemeProvider  } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import {red, blue, purple, grey} from '@material-ui/core/colors';
+import { red, blue, purple, grey } from '@material-ui/core/colors';
 import './blink.css';
 
 import MuiAlert from '@material-ui/lab/Alert';
@@ -98,8 +98,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1.5vw',
         padding: '0.5vh 0.5vw 0.5vh 0.5vw',
     },
-
-
 }));
 
 export default function TradeStock(props) {
@@ -236,7 +234,8 @@ export default function TradeStock(props) {
         if (bid < 0) bid = 0;
         if (volume < 0) volume = 0;
         if (bid === 0 || volume === 0) {
-            return {                //* 돈이 모자람
+            return {
+                //* 돈이 모자람
                 // status: 'invalid',
                 status: 'lack',
                 val: bid,
@@ -257,6 +256,9 @@ export default function TradeStock(props) {
                         vol: volume,
                     };
                 }
+                const tmp_buyStatus = { ...buyStatus };
+                tmp_buyStatus.status = 'done';
+                setBuyStatus(tmp_buyStatus);
                 SetNewBid(bbid.price);
             });
             return {
@@ -285,32 +287,24 @@ export default function TradeStock(props) {
                 status: 'buy_bid',
             });
         });
-
+        props.socket.once('buyDone_Room', (bbid) => {
+            SetNewBid(bbid.price);
+            setBuyStatus({
+                status: 'done',
+                val: bbid.price,
+                vol: bbid.vol,
+            });
+            console.log('buyDone-Room socket .');
+        });
         SetBind(true);
         return status;
     }
-    // props.socket.off('buyDone_Room').once('buyDone_Room', (bbid) => {
-    //     console.log('buyDone_Room');
-    //     // if (bbid.type === '실패') {
-    //     //     return {
-    //     //         status: 'invalid',
-    //     //         val: bid,
-    //     //         vol: volume,
-    //     //     };
-    //     // }
-    //     SetNewBid(bbid.price);
-    //     setBuyStatus({
-    //         status: 'done',
-    //         val: bbid.price,
-    //         vol: bbid.vol,
-    //     });
-    // });
 
     function Sell(bid, volume) {
         let status = '';
         if (bid <= 0 || volume <= 0) {
             return {
-                status: 'lack',  //* 코인이 모자람
+                status: 'lack', //* 코인이 모자람
                 val: bid,
                 vol: volume,
             };
@@ -324,7 +318,6 @@ export default function TradeStock(props) {
                         vol: volume,
                     };
                 }
-                SetNewBid(bbid.price);
             });
             return {
                 status: 'lack',
@@ -337,6 +330,7 @@ export default function TradeStock(props) {
             val: bid,
             vol: volume,
         };
+
         props.socket.emit('sell_Req', {
             roomID: props.roomID,
             socketID: props.socket.id,
@@ -349,27 +343,17 @@ export default function TradeStock(props) {
                 status: 'sell_bid',
             });
         });
-
+        props.socket.once('sellDone_Room', (sbid) => {
+            SetNewBid(sbid.price);
+            setSellStatus({
+                status: 'done',
+                val: sbid.price,
+                vol: sbid.vol,
+            });
+        });
         SetBind(true);
         return status;
     }
-
-    // props.socket.off('sellDone_Room').once('sellDone_Room', (sbid) => {
-    //     console.log('sellDone_Room');
-    //     // if (sbid.type === '실패') {
-    //     //     return {
-    //     //         status: 'invalid',
-    //     //         val: bid,
-    //     //         vol: volume,
-    //     //     };
-    //     // }
-    //     SetNewBid(sbid.price);
-    //     setSellStatus({
-    //         status: 'done',
-    //         val: sbid.price,
-    //         vol: sbid.vol,
-    //     });
-    // });
 
     const changeEffect = (id) => {
         if (id === 'ArrowDown' || id === 'ArrowUp') {
@@ -589,46 +573,15 @@ export default function TradeStock(props) {
     return (
         <>
             <SnackbarProvider
-             maxSnack={5}
-            content={(key, message) => (
-                <AlertBlue id={key} message={message}/>
-            )}
-             >
+                maxSnack={2}
+                content={(key, message) => (
+                    <AlertBlue id={key} message={message} />
+                )}
+            >
                 {sellStatus && sellStatus.status === 'done' && (
                     <SnackAlertFunc
                         severity="info"
                         message={'✔ [매도] 주문 체결 💸'}
-                    />
-                )}
-            </SnackbarProvider>
-            <SnackbarProvider
-             maxSnack={5}
-            content={(key, message) => (
-                <AlertRed id={key} message={message}/>
-            )}
-             >
-                {buyStatus && buyStatus.status === 'done' && (
-                    <SnackAlertFunc
-                        color="error"
-                        message={'✔ [매수] 주문 체결! 🎁'}
-                    />
-                )}
-            </SnackbarProvider>
-            <SnackbarProvider
-             maxSnack={5}
-             content={(key, message) => (
-                    <AlertPurple id={key} message={message}/>)}
-             >
-                {buyStatus && buyStatus.status === 'request' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'[매수] 주문! 📈'}
-                    />
-                )}
-                {buyStatus && buyStatus.status === 'done' && (
-                    <SnackAlertFunc
-                        severity="success"
-                        message={'매수 주문 취소'}
                     />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
@@ -637,6 +590,39 @@ export default function TradeStock(props) {
                         message={'[매도] 주문 📉'}
                     />
                 )}
+            </SnackbarProvider>
+            <SnackbarProvider
+                maxSnack={2}
+                content={(key, message) => (
+                    <AlertRed id={key} message={message} />
+                )}
+            >
+                {buyStatus && buyStatus.status === 'request' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={'[매수] 주문! 📈'}
+                    />
+                )}
+                {buyStatus && buyStatus.status === 'done' && (
+                    <SnackAlertFunc
+                        color="error"
+                        message={'✔ [매수] 주문 체결! 🎁'}
+                    />
+                )}
+            </SnackbarProvider>
+            <SnackbarProvider
+                maxSnack={2}
+                content={(key, message) => (
+                    <AlertPurple id={key} message={message} />
+                )}
+            >
+                {buyStatus && buyStatus.status === 'cancel' && (
+                    <SnackAlertFunc
+                        severity="success"
+                        message={'[매수] 주문 취소'}
+                    />
+                )}
+
                 {sellStatus && sellStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
@@ -645,10 +631,11 @@ export default function TradeStock(props) {
                 )}
             </SnackbarProvider>
             <SnackbarProvider
-             maxSnack={5}
-            content={(key, message) => (
-                <AlertYellow id={key} message={message}/>)}
-             >
+                maxSnack={2}
+                content={(key, message) => (
+                    <AlertYellow id={key} message={message} />
+                )}
+            >
                 {buyStatus && buyStatus.status === 'lack' && (
                     <SnackAlertFunc
                         severity="warning"
@@ -722,7 +709,10 @@ export default function TradeStock(props) {
                     <Grid style={{ width: '60%' }} align="center">
                         <h5
                             id="bidInput"
-                            style={{ fontSize: '2.5vw', margin: '1.2vh 0px 0px 0px'}}
+                            style={{
+                                fontSize: '2.5vw',
+                                margin: '1.2vh 0px 0px 0px',
+                            }}
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
@@ -765,7 +755,7 @@ export default function TradeStock(props) {
                                     width: '95%',
                                     height: '95%',
                                     fontSize: '2.0vw',
-                                    padding: '0 0 0 0'
+                                    padding: '0 0 0 0',
                                 }}
                                 class="buy"
                                 onClick={(e) => {
@@ -796,7 +786,7 @@ export default function TradeStock(props) {
                                     width: '95%',
                                     height: '95%',
                                     fontSize: '2.0vw',
-                                    padding: '0 0 0 0'
+                                    padding: '0 0 0 0',
                                 }}
                                 class="sell"
                                 onClick={(e) => {
