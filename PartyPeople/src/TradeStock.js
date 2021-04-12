@@ -399,6 +399,7 @@ export default function TradeStock(props) {
                 val: bbid.price,
                 vol: bbid.vol,
             });
+            setPrevStatus(null);
             console.log('buyDone-Room socket .');
         });
         SetBind(true);
@@ -454,6 +455,7 @@ export default function TradeStock(props) {
                 val: sbid.price,
                 vol: sbid.vol,
             });
+            setPrevStatus(null);
         });
         SetBind(true);
         return status;
