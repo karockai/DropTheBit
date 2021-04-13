@@ -1,5 +1,5 @@
 .orderText{
-    animation:blinkingText 6s infinite;
+    animation:blinkingText 3s infinite;
 }
 @keyframes blinkingText{
     0%{     color: #FFFFFF;    }
