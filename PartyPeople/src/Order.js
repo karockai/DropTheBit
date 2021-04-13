@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { SplitByThree } from './parseMoney';
 import './Order.css';
-import { blue } from '@material-ui/core/colors';
+
+import Check from './audios/effect/Check.mp3';
+import BuyDone from './audios/effect/BuyDone.wav';
+import SellDone from './audios/effect/SellDone.wav';
+import ExEnroll from './audios/effect/ExEnroll.wav';
+
+const CancelAudio = new Audio(Check);
+const BuyDoneAudio = new Audio(BuyDone);
+const SellDoneAudio = new Audio(SellDone);
+const ExEnrollAudio = new Audio(ExEnroll);
+
 export default function Order(props) {
     const [orderReady, setReady] = useState(false);
     const [orderType, setType] = useState('');
@@ -16,32 +26,38 @@ export default function Order(props) {
             setType('매수');
             setPrice(data.price);
             setReady(true);
+            ExEnrollAudio.play();
         });
 
         props.socket.on('askDone_Room', (data) => {
             setType('매도');
             setPrice(data.price);
             setReady(true);
+            ExEnrollAudio.play();
         });
 
         props.socket.on('buyDone_Room', (data) => {
             setType('');
             setReady(false);
+            BuyDoneAudio.play();
         });
 
         props.socket.on('sellDone_Room', (data) => {
             setType('');
             setReady(false);
+            SellDoneAudio.play();
         });
 
         props.socket.on('cancelBid_Res', () => {
             setType('');
             setReady(false);
+            CancelAudio.play();
         });
 
         props.socket.on('cancelAsk_Res', () => {
             setType('');
             setReady(false);
+            CancelAudio.play();
         });
     }, []);
 

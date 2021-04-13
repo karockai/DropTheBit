@@ -163,7 +163,7 @@ class StockChart extends React.Component {
                         fill="green"
                         textFill="#fff"
                         lineStroke="green"
-                        fontSize={20}
+                        fontSize={18}
                         strokeDasharray="ShortDash"
                         arrowWidth={3}
                         displayFormat={format('.2f')}
@@ -177,7 +177,7 @@ class StockChart extends React.Component {
                         price={this.props.doneBuy*1.000001}
                         stroke="white"
                         strokeWidth={2}
-                        fontSize={20}
+                        fontSize={18}
                         fill="red"
                         lineStroke="red"
                         textFill="#fff"
@@ -190,7 +190,7 @@ class StockChart extends React.Component {
                         at="right"
                         orient="right"
                         opacity={1}
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.doneBuy*0.999999}
                         stroke="white"
                         strokeWidth={2}
@@ -208,7 +208,7 @@ class StockChart extends React.Component {
                         opacity={1}
                         price={this.props.doneBuy}
                         stroke="white"
-                        fontSize={20}
+                        fontSize={18}
                         strokeWidth={2}
                         fill="red"
                         lineStroke="red"
@@ -223,7 +223,7 @@ class StockChart extends React.Component {
                         orient="right"
                         price={this.props.doneSell*1.000001}
                         stroke="white"
-                        fontSize={20}
+                        fontSize={18}
                         strokeWidth={2}
                         opacity={1}
                         fill="#007bff"
@@ -239,7 +239,7 @@ class StockChart extends React.Component {
                         orient="right"
                         price={this.props.doneSell*0.999999}
                         stroke="white"
-                        fontSize={20}
+                        fontSize={18}
                         strokeWidth={2}
                         opacity={1}
                         fill="#007bff"
@@ -255,7 +255,7 @@ class StockChart extends React.Component {
                         orient="right"
                         price={this.props.doneSell}
                         stroke="white"
-                        fontSize={20}
+                        fontSize={18}
                         strokeWidth={2}
                         opacity={1}
                         fill="#007bff"
@@ -273,7 +273,7 @@ class StockChart extends React.Component {
                         price={this.props.currentBuy*1.000004}
                         stroke="red"
                         strokeWidth={2}
-                        fontSize={20}
+                        fontSize={18}
                         fill="transperent"
                         lineStroke="red"
                         opacity={1}
@@ -289,7 +289,7 @@ class StockChart extends React.Component {
                         price={this.props.currentBuy*1.000002}
                         stroke="red"
                         strokeWidth={2}
-                        fontSize={20}
+                        fontSize={18}
                         fill="transperent"
                         lineStroke="red"
                         opacity={1}
@@ -305,7 +305,7 @@ class StockChart extends React.Component {
                         price={this.props.currentBuy*0.999998}
                         stroke="red"
                         strokeWidth={2}
-                        fontSize={20}
+                        fontSize={18}
                         fill="transperent"
                         lineStroke="red"
                         opacity={1}
@@ -321,7 +321,7 @@ class StockChart extends React.Component {
                         price={this.props.currentBuy*0.999996}
                         stroke="red"
                         strokeWidth={2}
-                        fontSize={20}
+                        fontSize={18}
                         fill="transperent"
                         lineStroke="red"
                         opacity={1}
@@ -334,7 +334,7 @@ class StockChart extends React.Component {
                         className="매수주문"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.currentBuy}
                         stroke="red"
                         strokeWidth={2}
@@ -350,7 +350,7 @@ class StockChart extends React.Component {
                         className="매도주문"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.currentSell*1.000004}
                         stroke="#007bff"
                         strokeWidth={2}
@@ -366,7 +366,7 @@ class StockChart extends React.Component {
                         className="매도주문"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.currentSell*1.000002}
                         stroke="#007bff"
                         strokeWidth={2}
@@ -382,7 +382,7 @@ class StockChart extends React.Component {
                         className="매도주문"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.currentSell*0.999998}
                         stroke="#007bff"
                         strokeWidth={2}
@@ -398,7 +398,7 @@ class StockChart extends React.Component {
                         className="매도주문"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.currentSell*0.999996}
                         stroke="#007bff"
                         strokeWidth={2}
@@ -414,7 +414,7 @@ class StockChart extends React.Component {
                         className="매도주문"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.currentSell}
                         stroke="#007bff"
                         strokeWidth={2}
@@ -430,7 +430,7 @@ class StockChart extends React.Component {
                         className="나의호가"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.bid*1.000004}
                         stroke="white"
                         opacity={1}
@@ -446,7 +446,7 @@ class StockChart extends React.Component {
                         className="나의호가"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.bid*1.000002}
                         stroke="white"
                         opacity={1}
@@ -462,7 +462,7 @@ class StockChart extends React.Component {
                         className="나의호가"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.bid*0.999996}
                         stroke="white"
                         opacity={1}
@@ -478,7 +478,7 @@ class StockChart extends React.Component {
                         className="나의호가"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.bid*0.999998}
                         stroke="white"
                         opacity={1}
@@ -494,7 +494,7 @@ class StockChart extends React.Component {
                         className="나의호가"
                         at="right"
                         orient="right"
-                        fontSize={20}
+                        fontSize={18}
                         price={this.props.bid}
                         stroke="white"
                         opacity={1}
