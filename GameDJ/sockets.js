@@ -65,6 +65,7 @@ export default {
             });
             socket.on('startGame_Req', (musicData) => {
                 if (!roomList.hasOwnProperty(socket.roomID)) return 0;
+                // if (roomList[socket.roomID]['roomLeader'] !== socket.id) return 0;
                 new Game(io, socket).startGame(musicData);
             });
             socket.on('timerSet_Req', () => {

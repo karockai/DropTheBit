@@ -27,12 +27,16 @@ class Game {
                     musicName: roomList[roomID]['music'],
                 });
             }
-            // 방장이 아니면 자기만 시작함
-            else {
+            // 방장이 아니면, 게임 중인 방에 자기만 들어감
+            else if (roomList[roomID]['gaming'] === true) {
                 io.to(socket.id).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
+            }
+
+            else{
+                console.log('침입자다');
             }
 
             function realStart() {
