@@ -97,7 +97,6 @@ function Lobby(props) {
             });
         }
     });
-    const [selectMusic, setSelectMusic] = React.useState(null);
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
 
@@ -116,16 +115,6 @@ function Lobby(props) {
         setTime(time);
     };
 
-    const handleSelectMusic = (event) => {
-        // console.log(event.currentTarget);
-        setSelectMusic(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setSelectMusic(null);
-    };
-
-    const openSelect = Boolean(selectMusic);
 
     if (roomLeader != null && roomLeader != props.roomInfo['roomLeader']) {
         const tmp_roomInfo = props.roomInfo;
@@ -303,8 +292,14 @@ function Lobby(props) {
                                             type="button"
                                             onClick={CopyURL}
                                             id="copy"
+<<<<<<< HEAD
                                             height="5vh"
                                             padding="0.5vh 1vw"
+=======
+                                            height="10%"
+                                            width="27%"
+                                            padding='0.5vh 1vw'
+>>>>>>> 2770a80b3f977445d7771b39cc835b1e3b3b2bcb
                                         />
                                     </SnackbarProvider>
                                 </Grid>

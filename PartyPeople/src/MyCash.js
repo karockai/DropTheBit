@@ -1,10 +1,9 @@
-import React, { useEffect, useState, makeStyle, useLayoutEffect } from 'react';
+import React, { useEffect, useState,  } from 'react';
 import {
     Grid,
     Paper,
     makeStyles,
 } from '@material-ui/core';
-import { propTypes } from 'react-bootstrap/esm/Image';
 // import {SplitByThree, ExpBySymbol, parseWonToStr} from './parseMoney';
 import { ExpBySymbol, parseWonToStr, showProfit } from './parseMoney';
 

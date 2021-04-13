@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import PersonSharpIcon from '@material-ui/icons/PersonSharp';
-import SvgIcon from '@material-ui/core/SvgIcon';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

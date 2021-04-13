@@ -3,18 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import GameManager from './GameManager';
-import Test from './Test';
-import GameOverModal from './GameOverModal';
 import LoadingScreen from './LoadingScreen';
-import RacingLeaderBoard from './RacingLeaderBoard';
 
 ReactDOM.render(
     <div className='GameManager'>
         <div className='main'>
-            <GameManager/>
-        {/* <LoadingScreen justifyItems = 'center'/> */}
-        {/* <ShiningButton/> */}
-        {/* <Test/> */}
+             <GameManager/>
         </div>
     </div>,
     document.getElementById('root')

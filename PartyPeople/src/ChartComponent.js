@@ -1,11 +1,6 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { socket } from 'socket.io-client';
 import StockChart from './StockChart';
 import ChartTitle from './ChartTitle';
-import { getData } from './utils';
-import { tsvParse, csvParse } from 'd3-dsv';
-import { timeParse } from 'd3-time-format';
 import { CircularProgress, Grid } from '@material-ui/core';
 import testImg from './images/tutorial/legend.png'
 

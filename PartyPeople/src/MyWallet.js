@@ -29,8 +29,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 export default function MyWallet(props) {
-    let testXs = 12;
-    const classes = useStyles();
 
     return (
         <>
