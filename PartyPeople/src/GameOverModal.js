@@ -151,7 +151,7 @@ export default function GameOverModal(props) {
                         id="transition-modal-title"
                         style={{ textAlign: 'center', margin:'0 0 5vh 0', fontSize:'3vw' }}
                     >
-                        🌠 Game Finished 🌠
+                        게임 종료 🏆
                     </h2>
                     <Grid container direction={'column'} alignItems={'center'}>
                         <TableContainer id ="테이블 컨테이너" component={Paper} className={classes.container}>
@@ -163,7 +163,7 @@ export default function GameOverModal(props) {
                                     <TableRow className={classes.tableHead}>
                                         <TableCell className={classes.tableHead} style={{fontFamily:'NEXON Lv1 Gothic OTF'}}>순위</TableCell>
                                         <TableCell className={classes.tableHead} style={{fontFamily:'NEXON Lv1 Gothic OTF'}} align="right">
-                                            Player ID
+                                            플레이어 이름
                                         </TableCell>
                                         <TableCell className={classes.tableHead} style={{fontFamily:'NEXON Lv1 Gothic OTF'}} align="right">
                                             최종 수익
@@ -205,7 +205,7 @@ export default function GameOverModal(props) {
                         onClick={BackToLobby}
                     >
                         {' '}
-                        Back to Lobby{' 🚀'}
+                        로비로 돌아가기{' 🚀'}
                     </Button>
                 </div>
                 {/* </Fade> */}
