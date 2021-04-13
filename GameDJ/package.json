@@ -9,6 +9,7 @@
     "dependencies": {
         "@slack/webhook": "^6.0.0",
         "artillery": "^1.6.2",
+        "clinic": "^8.0.1",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
         "dotenv": "^8.2.0",

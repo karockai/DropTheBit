@@ -26,7 +26,7 @@ export default function Routes(props) {
         setWidth(window.innerWidth)
     };
     useEffect(() =>{
-        console.log('size', width, height)
+        // console.log('size', width, height)
         window.addEventListener('resize', handleResize);
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -41,7 +41,7 @@ export default function Routes(props) {
 
     return (
         <>
-        {height > width * 9/16? <LoadingScreen/> :
+        {height > width ? <LoadingScreen/> :
             <Router>
                 <Switch>
                     <Route

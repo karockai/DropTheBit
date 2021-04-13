@@ -60,11 +60,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Lobby(props) {
     const location = useLocation();
-    const roomLeader = location.state.roomLeader;
+    const [roomLeader,setRoomLeader] = useState(location.state.roomLeader);
     const gaming = location.state.gaming;
     const [isGaming, setIsGaming] = useState(props.roomInfo['gaming']);
     const classes = useStyles();
-
 
     function CopyURL() {
         var copyText = document.getElementById('gameLink');
@@ -80,10 +79,10 @@ function Lobby(props) {
         }
     }, []);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (soc) {
-            soc.on('disconnect', (roomInfo) => {
-                console.log(roomInfo);
+            soc.off('disconnection').once('disconnection', (roomInfo, roomLeader) => {
+                setRoomLeader(roomLeader);
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
                     roomInfo: roomInfo,
@@ -91,7 +90,9 @@ function Lobby(props) {
             });
         }
     });
+    useEffect(()=> {
 
+    });
 
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
@@ -124,13 +125,11 @@ function Lobby(props) {
     // useEffect(()=>{
     props.socket.once('gameOver', (leaderBoard) => {
         setIsGaming(false);
-        console.log('gameOver');
     });
     // },);
 
     useEffect(()=>{
         const tmp_roomInfo = props.roomInfo;
-        console.log('여기?');
         tmp_roomInfo['gaming'] =  isGaming;
 
         props.SetRoomIdAndInfo({
@@ -205,14 +204,10 @@ function Lobby(props) {
         }
     }
 
-    // const Card = () => {
-    //     return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
-    // };
-    console.log('props gaming', props.roomInfo['gaming']);
-    console.log('GameOver를 받을 때 셋 되는 isGaming',isGaming);
-    console.log('backToLobby에서 받아옴', gaming);
+    // console.log('props gaming', props.roomInfo['gaming']);
+    // console.log('GameOver를 받을 때 셋 되는 isGaming',isGaming);
+    // console.log('backToLobby에서 받아옴', gaming);
     function getPlayersList(roomInfo) {
-        // let keyList = Object.keys(roomInfo).filter((key) => key.length === 20);
         let playerList = [];
         for (const [key, value] of Object.entries(roomInfo)) {
             if (key.length === 20) {

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    BrowserRouter as Router,
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -158,62 +156,57 @@ export default function LeaderBoard(props) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {Array.isArray(board) ? (
-                                    board.map((row, idx) => (
-                                        <TableRow
-                                            key={row.playerID}
-                                            id="테이블셀로우"
-                                            className={classes.tableBody}
-                                        >
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                className={
-                                                    classes.tableBodyText
-                                                }
-                                                style={{ width: '20%' }}
-                                                align="left"
-                                            >
-                                                {showScore(idx + 1)}
-                                            </TableCell>
-                                            <TableCell
-                                                className={
-                                                    classes.tableBodyText
-                                                }
-                                                align="right"
-                                            >
-                                                {row.playerID}
-                                            </TableCell>
-                                            {showAsset(row.asset)}
-                                        </TableRow>
-                                    ))
-                                ) : (
-                                    <Popover
-                                        open={tutoToggle}
-                                        anchorEl={openTuto}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'middle',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'middle',
-                                            horizontal: 'center',
-                                        }}
+                                {board.map((row, idx) => (
+                                    <TableRow
+                                        key={row.playerID}
+                                        id="테이블셀로우"
+                                        className={classes.tableBody}
                                     >
-                                        <LobbyTutorial
-                                            onClose={handleClose}
-                                        ></LobbyTutorial>
-                                    </Popover>
-                                )}
+                                        <TableCell
+                                            component="th"
+                                            scope="row"
+                                            className={classes.tableBodyText}
+                                            style={{ width: '20%' }}
+                                            align="left"
+                                        >
+                                            {showScore(idx + 1)}
+                                        </TableCell>
+                                        <TableCell
+                                            className={classes.tableBodyText}
+                                            align="right"
+                                        >
+                                            {row.playerID}
+                                        </TableCell>
+                                        {showAsset(row.asset)}
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
                 ) : (
-                    <img
-                        src={KeyMap}
-                        style={{ height: '100%', width: '100%' }}
-                    />
+                    <>
+                        <img
+                            src={KeyMap}
+                            style={{ height: '100%', width: '100%' }}
+                        />
+                        <Popover
+                            open={tutoToggle}
+                            anchorEl={openTuto}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'middle',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'middle',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <LobbyTutorial
+                                onClose={handleClose}
+                            ></LobbyTutorial>
+                        </Popover>
+                    </>
                 )}
             </Grid>
         </GridList>

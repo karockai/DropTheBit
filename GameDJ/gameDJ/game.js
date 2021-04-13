@@ -13,6 +13,7 @@ class Game {
 
             // 방장만 노래를 바꿀 수 있도록 함
             if (roomList[roomID]['gaming'] === false) {
+                console.log('startGame1----- gaming==false');
                 roomList[roomID]['gaming'] = true;
                 roomList[roomID]['music'] = musicData['musicName'];
                 roomList[roomID]['gameTime'] = musicData['gameTime'];
@@ -22,17 +23,23 @@ class Game {
 
             // 방장이면 룸 전체를 시작하게 함
             if (roomList[roomID]['roomLeader'] === socket.id) {
+                console.log('startGame2----- 방장일때');
                 io.to(roomID).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
             }
-            // 방장이 아니면 자기만 시작함
-            else {
+            // 방장이 아니면, 게임 중인 방에 자기만 들어감
+            else if (roomList[roomID]['gaming'] === true) {
+                console.log('startGame1----- gaming==true, 방장아닐때');
                 io.to(socket.id).emit('startGame_Res', {
                     gameTime: roomList[roomID]['gameTime'],
                     musicName: roomList[roomID]['music'],
                 });
+            }
+
+            else{
+                console.log('침입자다');
             }
 
             function realStart() {
