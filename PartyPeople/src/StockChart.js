@@ -103,7 +103,7 @@ class StockChart extends React.Component {
                 height={this.state.height}
                 ratio={ratio}
                 width={width}
-                margin={{ left: 50, right: 100, top: 10, bottom: 50 }}
+                margin={{ left: 50, right: 100, top: 10, bottom: 60 }}
                 type={type}
                 seriesName="MACD"
                 data={data}
@@ -118,7 +118,7 @@ class StockChart extends React.Component {
                     // yExtents={[this.dataHigh * 1.0005, this.dataLow * 0.9995]}
                     yExtents={(d) => [d.high + 3 * d.priceUnit, d.low - 3 * d.priceUnit]}
                 >
-                    <XAxis axisAt="bottom" orient="bottom" tickStroke="#ffffff" stroke="#ffffff"/> 
+                    {/* <XAxis axisAt="bottom" orient="bottom" tickStroke="#ffffff" stroke="#ffffff"/>  */}
                     <YAxis axisAt="right" orient="right" ticks={5} tickStroke="#ffffff" stroke="#ffffff" fontSize={17}/>
                     {/* <MouseCoordinateY
                         at="right"

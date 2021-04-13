@@ -157,12 +157,13 @@ export default function LayoutGrid(props) {
                         item
                         style={{
                             width: '100%',
-                            height: '70%',
+                            height: '67%',
                             padding: '0.3vh 0vw 0.3vh 0.3vw',
                         }}
                     >
                         <Paper
-                            style={{ height: '100%',                        border: 'solid',
+                            style={{ height: '100%',
+                            border: 'solid',                        
                             borderColor: '#2D4053', }}
                             className={classes.paper}
                         >
@@ -180,7 +181,7 @@ export default function LayoutGrid(props) {
                     <Grid
                         className="지갑및호가거래"
                         container
-                        style={{ width: '100%', height: '30%' }}
+                        style={{ width: '100%', height: '33%' }}
                         item
                         wrap="wrap"
                         direction="row"

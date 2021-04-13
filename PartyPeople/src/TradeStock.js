@@ -18,18 +18,14 @@ import './ShiningButton.css';
 // 음악
 // Effect
 
-import BuyMax from './audios/effect/BuyMax.wav';
 import BuyConfirm from './audios/effect/BuyConfirm.wav';
 
-import Check from './audios/effect/Check.mp3';
 import CurPrice from './audios/effect/CurPrice.wav';
 
 import PriceDown from './audios/effect/PriceDown.wav';
 import PriceUp from './audios/effect/PriceUp.wav';
 import SellMax from './audios/effect/SellMax.wav';
 import SellConfirm from './audios/effect/SellConfirm.wav';
-import VolDown from './audios/effect/VolDown.wav';
-import VolUp from './audios/effect/VolUp.wav';
 import { SplitByThree } from './parseMoney';
 // import {CancelBid} from './BidTable';
 // import { createMuiTheme,ThemeProvider  } from '@material-ui/core/styles';
@@ -144,13 +140,21 @@ export default function TradeStock(props) {
     const buySellButton = () => {
         return (
             <>
-                <Grid style={{ width: '50%', height: '100%', paddingLeft: '4px', paddingBottom: '3px' }}>
+                <Grid
+                    style={{
+                        width: '50%',
+                        height: '100%',
+                        paddingLeft: '4px',
+                        paddingBottom: '3px',
+                    }}
+                >
                     <button
                         style={{
                             width: '95%',
                             height: '95%',
                             fontSize: '2.0vw',
                             padding: '0 0 0 0',
+                            fontWeight:'bold',
                         }}
                         class="buy"
                         onClick={(e) => {
@@ -170,13 +174,22 @@ export default function TradeStock(props) {
                         풀매수
                     </button>
                 </Grid>
-                <Grid style={{ width: '50%', height: '100%', paddingRight: '4px', paddingBottom: '3px'}} align="right">
+                <Grid
+                    style={{
+                        width: '50%',
+                        height: '100%',
+                        paddingRight: '4px',
+                        paddingBottom: '3px',
+                    }}
+                    align="right"
+                >
                     <button
                         style={{
                             width: '95%',
                             height: '95%',
                             fontSize: '2.0vw',
                             padding: '0 0 0 0',
+                            
                         }}
                         class="sell"
                         onClick={(e) => {
@@ -668,7 +681,10 @@ export default function TradeStock(props) {
                 )}
             >
                 {sellStatus && sellStatus.status === 'done' && (
-                    <SnackAlertFunc severity="info" message={'매도 주문 체결 💵'} />
+                    <SnackAlertFunc
+                        severity="info"
+                        message={'매도 주문 체결 💵'}
+                    />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
                     <SnackAlertFunc
@@ -690,7 +706,10 @@ export default function TradeStock(props) {
                     />
                 )}
                 {buyStatus && buyStatus.status === 'done' && (
-                    <SnackAlertFunc color="error" message={'매수 주문 체결 📦'} />
+                    <SnackAlertFunc
+                        color="error"
+                        message={'매수 주문 체결 📦'}
+                    />
                 )}
             </SnackbarProvider>
             <SnackbarProvider
@@ -720,7 +739,10 @@ export default function TradeStock(props) {
                 )}
             >
                 {buyStatus && buyStatus.status === 'lack' && (
-                    <SnackAlertFunc severity="warning" message={'현금이 부족해요. 😥'} />
+                    <SnackAlertFunc
+                        severity="warning"
+                        message={'현금이 부족해요. 😥'}
+                    />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
@@ -729,7 +751,10 @@ export default function TradeStock(props) {
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
-                    <SnackAlertFunc severity="warning" message={'코인이 부족해요. 😥'} />
+                    <SnackAlertFunc
+                        severity="warning"
+                        message={'코인이 부족해요. 😥'}
+                    />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
@@ -754,7 +779,16 @@ export default function TradeStock(props) {
                     justify="space-between"
                     style={{ height: '20%' }}
                 >
-                    <span className={classes.small_text} style={{ height: '100%', paddingTop: '7px', paddingLeft: '6px' }}>매매호가</span>
+                    <span
+                        className={classes.small_text}
+                        style={{
+                            height: '100%',
+                            paddingTop: '7px',
+                            paddingLeft: '6px',
+                        }}
+                    >
+                        매매호가
+                    </span>
                     {/* <span className={classes.small_text}>[Space]:현재가</span> */}
                 </Grid>
                 <Grid
@@ -783,16 +817,22 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid style={{ width: '56%', margin: '0' }} align="center">
+                    <Grid container style={{ width: '56%', margin: '0' }} justify='center' alignItems='center'>
                         <h5
                             id="bidInput"
-                            style={{ fontSize: '2.5vw', fontWeight: 'bold' }} //'1.2vh 0px 0px 0px'
+                            style={{ fontSize: '2.5vw', fontWeight: 'bold', color:'white' }} //'1.2vh 0px 0px 0px'
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
                         </h5>
+                        <h5 style={{ fontSize: '2.3vw', fontWeight: 'bold', }} >
+                             &nbsp;원
+                        </h5>
                     </Grid>
-                    <Grid style={{ width: '20%' , paddingRight: '4px'}} align="right">
+                    <Grid
+                        style={{ width: '20%', paddingRight: '4px' }}
+                        align="right"
+                    >
                         <Button
                             // style={{margin:'0 0 0 2%' }}
                             class="arrow"

@@ -29,9 +29,10 @@ code {
   color: white;
   font-size: 20vh;
   /* mix-blend-mode: normal; */
-  position: absolute;
-  top: 1vh;
-  left: 0;
+  /* position: absolute; */
+  /* opacity: 0.2; */
+  /* top: 1vh;
+  left: 0; */
 }
 
 .title_overlay2 {
@@ -39,12 +40,6 @@ code {
   z-index: 2;
   font-size: 20vh;
 }
-
-
-.img {
-  /* opacity: 0.8; */
-}
-
 @font-face {
   font-family: 'NEXON Lv1 Gothic OTF';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
