@@ -174,8 +174,12 @@ class ChartComponent extends React.Component {
                     currentBuy={this.currentBuy}
                     currentSell={this.currentSell}
                 />
-                <img src={testImg} style={{position: 'absolute', left:'25vw', top : '60vh', width:'37vw', height:'4.5vh'}}>
+                <Grid 
+                style={{width:'37vw', height:'4.5vh'}}
+                >
+                <img src={testImg} style={{position: 'relative',width:'100%', height:'100%', top: '-7vh', left:'10vw', minWidth:'30vw',  objectFit:'contain'}}>
                 </img>
+                </Grid>
             </>
         );
     }

@@ -23,14 +23,18 @@ class HorizontalBarChart extends React.Component {
 
     render() {
 
-        const { data, type, width, ratio,askPrice,bidPrice } = this.props;
+		const { data, type, width, ratio,askPrice,bidPrice } = this.props;
 		return (
 			<ChartCanvas ratio={ratio} width={this.state.width} height={this.state.height}
 					margin={{ left:100, right: 10, top: 20, bottom: 30 }} 
                     type={type}
 					xExtents={data => [0, 100]}
 					data={data}
-					xScale={scaleLinear()} 
+					xScale={scaleLinear()}
+					displayXAccessor={(d) => d.x}
+					seriesName="MACD"
+				// xAccessor={d => d.x}
+				// xScale={scalePoint()}
                     flipXScale={false}
 					useCrossHairStyleCursor={false}>
 				<Chart id={1}
@@ -40,8 +44,8 @@ class HorizontalBarChart extends React.Component {
                         >
 					{/* <XAxis axisAt="bottom" orient="bottom" /> */}
 					<YAxis axisAt="left" orient="left" fontSize={17} />
-					<BarSeries yAccessor={d => d.y === bidPrice && d.y} xAccessor={d =>  d.y === bidPrice && d.x} fill="red" swapScales/>
-					<BarSeries yAccessor={d => d.y === askPrice && d.y} xAccessor={d =>  d.y === askPrice && d.x} fill="#017de9" swapScales/>
+					<BarSeries yAccessor={d => d.y === bidPrice&& d.y != null && d.y} xAccessor={d =>  d.y === bidPrice && d.x} fill="red" swapScales/>
+					<BarSeries yAccessor={d => d.y === askPrice&& d.y != null && d.y} xAccessor={d =>  d.y === askPrice && d.x} fill="#017de9" swapScales/>
 				</Chart>
 			</ChartCanvas>
 		);
