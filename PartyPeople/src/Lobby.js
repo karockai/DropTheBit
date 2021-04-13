@@ -293,11 +293,7 @@ function Lobby(props) {
                                             id="copy"
                                             height="10%"
                                             width="27%"
-<<<<<<< HEAD
                                             padding="0.5vh 1vw"
-=======
-                                            padding='0.5vh 1vw'
->>>>>>> 4b52878d8be6f13698ebb929091cdff466020391
                                         />
                                     </SnackbarProvider>
                                 </Grid>
