@@ -74,7 +74,9 @@ class Disconnect {
                     io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
                     delete roomList[roomID][socket.id];
                 }
-
+                console.log('disconnect-----');
+                console.log('나간 놈: ', socket.id);
+                console.log(roomInfo);
                 io.to(roomID).emit('disconnect', roomInfo);
             }
         }

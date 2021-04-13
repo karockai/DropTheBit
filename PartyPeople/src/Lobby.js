@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect,useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './App.css';
 import {
@@ -62,8 +62,9 @@ function Lobby(props) {
     const location = useLocation();
     const roomLeader = location.state.roomLeader;
     const gaming = location.state.gaming;
-
+    const [isGaming, setIsGaming] = useState(props.roomInfo['gaming']);
     const classes = useStyles();
+
 
     function CopyURL() {
         var copyText = document.getElementById('gameLink');
@@ -74,11 +75,7 @@ function Lobby(props) {
     useLayoutEffect(() => {
         if (soc) {
             soc.on('joinRoom_Res', (room) => {
-                // 사람이 들어올 때마다 roomInfo 갱신
-                // setRoomInfo(room.roomInfo);
                 props.SetRoomIdAndInfo(room);
-                // setRoomLeader(room.roomInfo['roomLeader']);
-                // setSocketId(soc.id);
             });
         }
     }, []);
@@ -86,17 +83,16 @@ function Lobby(props) {
     useLayoutEffect(() => {
         if (soc) {
             soc.on('disconnect', (roomInfo) => {
-                // 사람이 나갈 때마다 roomInfo 갱신
-                // setRoomInfo(roomInfo);
+                console.log(roomInfo);
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
                     roomInfo: roomInfo,
                 });
-                // setRoomLeader(roomInfo['roomLeader']);
-                // setSocketId(soc.id);
             });
         }
     });
+
+
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
 
@@ -107,6 +103,7 @@ function Lobby(props) {
     const [music, setMusic] = React.useState(tmp_music);
     const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
     const [time, setTime] = React.useState(props.musicTime);
+    
     const setMusicTime = (music, time) => {
         setMusic(music);
         var minute = parseInt(time / 60);
@@ -114,7 +111,6 @@ function Lobby(props) {
         strSetTime(String(minute) + ' : ' + String(second));
         setTime(time);
     };
-
 
     if (roomLeader != null && roomLeader != props.roomInfo['roomLeader']) {
         const tmp_roomInfo = props.roomInfo;
@@ -124,6 +120,25 @@ function Lobby(props) {
             roomInfo: tmp_roomInfo,
         });
     }
+
+    // useEffect(()=>{
+    props.socket.once('gameOver', (leaderBoard) => {
+        setIsGaming(false);
+        console.log('gameOver');
+    });
+    // },);
+
+    useEffect(()=>{
+        const tmp_roomInfo = props.roomInfo;
+        console.log('여기?');
+        tmp_roomInfo['gaming'] =  isGaming;
+
+        props.SetRoomIdAndInfo({
+            roomID: props.roomID,
+            roomInfo: tmp_roomInfo,
+        });
+    }, isGaming);
+    
     const CheckLeader = () => {
         if (props.roomInfo['roomLeader'] === props.socket.id) {
             return (
@@ -193,7 +208,9 @@ function Lobby(props) {
     // const Card = () => {
     //     return <PutNewCard roomInfo={props.roomInfo} socket={props.socket} />;
     // };
-
+    console.log('props gaming', props.roomInfo['gaming']);
+    console.log('GameOver를 받을 때 셋 되는 isGaming',isGaming);
+    console.log('backToLobby에서 받아옴', gaming);
     function getPlayersList(roomInfo) {
         // let keyList = Object.keys(roomInfo).filter((key) => key.length === 20);
         let playerList = [];
@@ -294,7 +311,8 @@ function Lobby(props) {
                                             id="copy"
                                             height="10%"
                                             width="27%"
-                                            padding='0.5vh 1vw'
+                                            padding='1vh 1vw'
+
                                         />
                                     </SnackbarProvider>
                                 </Grid>
@@ -404,10 +422,17 @@ function Lobby(props) {
                                     history={props.history}
                                     lobbyAudio={props.lobbyAudio}
                                     roomOnGame={
-                                        gaming
-                                            ? gaming
-                                            : props.roomInfo['gaming']
+                                        gaming === false? gaming :
+                                        isGaming
                                     }
+                                    // roomOnGame={
+                                    //     props.roomInfo['gaming']
+                                    // }
+                                    // roomOnGame={
+                                    //     gaming
+                                    //         ? gaming
+                                    //         : props.roomInfo['gaming']
+                                    // }
                                     gameMusic={props.roomInfo['music']}
                                     isLeader={
                                         props.roomInfo['roomLeader'] ===

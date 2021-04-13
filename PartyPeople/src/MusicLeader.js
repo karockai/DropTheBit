@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         width: '90%',
+
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -127,10 +128,10 @@ export default function MusicLeader(props) {
             <Grid style={{ width: '70%' }}>
                 <FormControl className={classes.formControl}>
                     <InputLabel
-                        style={{ color: '#fff' }}
+                        style={{ color: '#fff', }}
                         id="demo-simple-select-label"
                         InputLabelProps={{
-                            style: { color: '#fff' },
+                            style: { color: '#fff',fontFamily: 'NEXON Lv1 Gothic OTF', },
                         }}
                     >
                         음악 제목
@@ -142,15 +143,16 @@ export default function MusicLeader(props) {
                                 select: classes.select,
                                 icon: classes.icon,
                             },
-                            style: { color: '#fff' },
+                            style: { color: '#fff', },
                         }}
-                        style={{ color: '#ffffff', fontSize: '1.5vw' }}
+                        style={{ color: '#ffffff', fontSize: '1.5vw',}}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={props.music}
                         onChange={handleChange}
                     >
-                        <MenuItem value={'Random_Music'}>Random_Music</MenuItem>
+                    
+                        <MenuItem value={'Random_Music'} style={{fontFamily: 'NEXON Lv1 Gothic OTF',}}>Random_Music</MenuItem>
                         <MenuItem value={'Dont_Stop_Me_Now'}>
                             Dont_Stop_Me_Now
                         </MenuItem>
@@ -198,21 +200,15 @@ export default function MusicLeader(props) {
             props.socket.once('settingsUpdate_Res', (data) => {
                 const musicName = data.musicName;
                 const musicTime = data.musicTime;
-                // var tmp_roomInfo = props.roomInfo;
-                // tmp_roomInfo['music'] = musicName;
-                // strSetTime(String(minute) + ' : ' + String(second));
-                // props.SetRoomIdAndInfo({roomID: props.roomID, roomInfo : tmp_roomInfo});
                 props.setMusicTime(musicName, musicTime);
             });
         }, []);
-        // }
+
         return (
-            // <form noValidate autoComplete="off">
             <>
                 <Grid style={{ width: '30%' }}>
                     <TextField
                         className={classes.formControl}
-                        // style={{width:'30%', }}
                         InputLabelProps={{
                             style: { color: '#fff' },
                         }}
@@ -226,7 +222,7 @@ export default function MusicLeader(props) {
                     />
                 </Grid>
             </>
-            // {/* </form> */}d
+
         );
     }
     // const StartGameReq = () => {
@@ -237,19 +233,6 @@ export default function MusicLeader(props) {
     //     }
     // };
 
-    // let isSetUp = false;
-    // useEffect(() => {
-    //     if (!isSetUp) {
-    //         props.socket.off('startGame_Res').once('startGame_Res', (gameTime) => {
-    //             props.MusicPause();
-    //             props.history.push({
-    //                 pathname: '/game',
-    //                 state: { gameTime: gameTime },
-    //             });
-    //         });
-    //         isSetUp = true;
-    //     }
-    // }, []);
     return (
         <>
             <h5 style={{ margin: '1vh 0 1.5vh 0' }}>음악을 선택해주세요</h5>
@@ -257,13 +240,6 @@ export default function MusicLeader(props) {
                 <ShowMusic />
                 <MusicInput />
             </Grid>
-            {/* <Grid>
-                <ShowMusic />
-            </Grid> */}
-            {/* <Button variant="contained" color="primary" onClick={StartGameReq}>
-                {' '}
-                StartGame{' '}
-            </Button> */}
         </>
     );
 }
