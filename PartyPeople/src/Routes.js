@@ -41,7 +41,7 @@ export default function Routes(props) {
 
     return (
         <>
-        {height > width ? <LoadingScreen/> :
+        {/* {height > width ? <LoadingScreen/> : */}
             <Router>
                 <Switch>
                     <Route

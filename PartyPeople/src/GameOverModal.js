@@ -65,12 +65,12 @@ export default function GameOverModal(props) {
         props.socket.on('backToLobby_Res', (roomInfo) => {    //roomInfo gaming flase => 지금처럼 true => 로비, 버튼이 join
             props.setLeaderBoard(false);
             let path = '/lobby';
-            
             history.push({
                 pathname: path,
                 state: {
                     roomLeader: roomInfo.roomLeader,
                     gaming : roomInfo.gaming,
+                    music : roomInfo.music,
                 },
             });
 
@@ -87,7 +87,7 @@ export default function GameOverModal(props) {
         setOpen(false);
     };
     const showScore = (score) => {
-        console.log(score);
+        // console.log(score);
         let result = ''
         if (score  == 1) result += '🥇 ';
         if (score  == 2) result += '🥈 ';
@@ -121,7 +121,7 @@ export default function GameOverModal(props) {
 
     };
 
-    console.log(props.leaderBoard);
+    // console.log(props.leaderBoard);
     return (
         <div>
             <Modal
