@@ -64,7 +64,7 @@ export default function MyRank(props) {
         ans += ret;
         let minus = isPlus ? '+' : '-';
         ans = minus + ans;
-        return <span style={{ color: color }}>{ans}</span>;
+        return <span style={{ color: color }}>{ans}&nbsp;원</span>;
     }
 
     const parseWonToStr = (won) => {

@@ -177,7 +177,8 @@ export default function LayoutGrid(props) {
                         }}
                     >
                         <Paper
-                            style={{ height: '100%',                        border: 'solid',
+                            style={{ height: '100%',
+                            border: 'solid',                        
                             borderColor: '#2D4053', }}
                             className={classes.paper}
                         >
