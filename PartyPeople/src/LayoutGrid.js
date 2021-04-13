@@ -373,7 +373,8 @@ export default function LayoutGrid(props) {
                         >
                             <img
                                 src={KeyMap}
-                                style={{ height: '100%', width: '100%' }}
+                                // style={{}}></img>
+                                style={{ height: '100%', width: '100%',objectFit:'contain' }}
                             />
                             {/* <ChatRoom
                                 SetInputCtrl={SetInputCtrl}

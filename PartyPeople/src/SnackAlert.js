@@ -22,7 +22,6 @@ export function SnackAlertBtn(props) {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleClickVariant = (variant) => () => {
-        // console.log('btn 수행한다.')
         props.onClick();
         // variant could be success, error, warning, info, or default
         if (props.onAlert) {
@@ -36,7 +35,6 @@ export function SnackAlertBtn(props) {
             });
         }
     };
-    console.log(props.severity);
     return (
         <>
             <button
@@ -63,7 +61,6 @@ export function SnackAlertFunc(props) {
     const { enqueueSnackbar } = useSnackbar();
     // variant could be success, error, warning, info, or default
     const parseMsg = props.message.split(')')[1];
-    // console.log('parse', parseMsg);
 
     if (props.severity === 'warning') {
         let tmpAudio = new Audio(Error_Sound);

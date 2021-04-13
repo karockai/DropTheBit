@@ -72,7 +72,7 @@ export default function Order(props) {
             <>
                 <span
                     class={classType}
-                    style={{fontSize: '2vw' }}
+                    style={{fontSize: '2vw',}}
                 >
                     {orderType +
                         ' 주문가 : ' +

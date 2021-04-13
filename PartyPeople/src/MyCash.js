@@ -52,7 +52,7 @@ export default function MyCash(props) {
                
             }}
         >
-            <h6 style={{ paddingLeft: '1%', paddingTop: "1%", marginBottom:'0'}}>현금</h6>
+            <h6 style={{ paddingLeft: '1%', paddingTop: "1%", marginBottom:'0.5vh'}}>현금</h6>
             <Grid container style={{margin: '0' }} justify='center' alignItems='center'>
                 <h5 style={{ paddingRight: '1%', textAlign: 'left', fontWeight: 'bold', fontSize: '1.4vw', color:'white', marginBottom:'0'}}>
                     {ExpBySymbol(parseWonToStr(myCash))}
@@ -63,7 +63,7 @@ export default function MyCash(props) {
             </Grid>
             <h5
                 id="diffCash"
-                class="default"s
+                class="default"
                 style={{ paddingRight: '1%', fontWeight: 'bold', fontSize: '1vw' }}
                 align="right"
             >

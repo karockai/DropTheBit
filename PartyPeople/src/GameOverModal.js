@@ -71,8 +71,6 @@ export default function GameOverModal(props) {
             props.setLeaderBoard(false);
             let path = '/lobby';
             
-            console.log(roomInfo);
-            console.log(typeof(roomInfo));
             history.push({
                 pathname: path,
                 state: {

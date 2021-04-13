@@ -53,8 +53,10 @@ export default function Timer(props) {
                 <div
                     className="text"
                     style={{
-                        fontWeight: 'bold',
-                        fontSize: '1.5vw',
+                        // fontWeight: 'bold',
+                        margin: '1vh 0 0 0',
+                        fontFamily: 'NEXON Lv1 Gothic OTF',
+                        fontSize: '1.4vw',
                         color: 'white',
                     }}
                 >
@@ -63,8 +65,10 @@ export default function Timer(props) {
                 <div
                     className="value"
                     style={{
+                        margin: '1vh 0',
                         fontWeight: 'bold',
-                        fontSize: '2vw',
+                        fontFamily: 'NEXON Lv1 Gothic OTF',
+                        fontSize: '2.7vw',
                     }}
                 >
                     {remainingTime}

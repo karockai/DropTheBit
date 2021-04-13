@@ -189,6 +189,7 @@ export default function TradeStock(props) {
                             height: '95%',
                             fontSize: '2.0vw',
                             padding: '0 0 0 0',
+                            fontWeight:'bold',
                             
                         }}
                         class="sell"
@@ -825,7 +826,7 @@ export default function TradeStock(props) {
                         >
                             {SplitByThree(String(currentBid))}
                         </h5>
-                        <h5 style={{ fontSize: '2.3vw', fontWeight: 'bold', }} >
+                        <h5 style={{ fontSize: '2.3vw', fontWeight: 'bold', color:'white' }} >
                              &nbsp;원
                         </h5>
                     </Grid>
