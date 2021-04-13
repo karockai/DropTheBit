@@ -318,6 +318,8 @@ class Refresh {
 
             roomInfo['leaderBoard'] = leaderBoard;
             roomList[roomID] = roomInfo;
+            console.log('gameOver----------');
+            console.log(roomList[roomID]);
         } catch (err) {
             console.error(err);
             webhook.sendMessage(`에러 발생 : ${err}`);

@@ -259,6 +259,8 @@ class Room {
             const { io, socket } = this;
             const socketID = socket.id;
             let roomInfo = roomList[roomID];
+            console.log('gaming == false----------------- PlayerReinit1');
+            console.log(roomList[roomID]);
             let playerID = roomInfo[socketID]['playerID'];
             let playerInfo = {
                 playerID: playerID,
@@ -273,7 +275,7 @@ class Room {
                 actionRestTime: 0,
                 recentAction: 0,
             };
-
+            
             // 게임오버 시, 방장은 정해주지 않고, back to lobby한 최초의 유저가 방장이 되도록 함.
             // 방장이 설정된 후부터 ready time이 줄어들도록 함
             if (roomInfo['roomLeader'] === 0) {
@@ -281,6 +283,8 @@ class Room {
             }
             roomInfo[socketID] = playerInfo;
             roomList[roomID] = roomInfo;
+            console.log('gaming == false----------------- PlayerReinit2');
+            console.log(roomList[roomID]);
 
             let message = playerID + '님이 들어오셨습니다.';
             io.to(roomID).emit('update', {
@@ -304,6 +308,8 @@ class Room {
             if (data.playerID) {
                 const roomID = data.roomID;
                 let roomInfo = roomList[roomID];
+                console.log('gaming == true----------------- backJoinRoom1');
+                console.log(roomList[roomID]);
                 let playerID = data.playerID;
                 let socketID = socket.id;
 
@@ -328,7 +334,8 @@ class Room {
 
                 roomInfo[socketID] = playerInfo;
                 roomList[roomID] = roomInfo;
-
+                console.log('gaming == true----------------- backJoinRoom2');
+                console.log(roomList[roomID]);
                 socket.roomID = roomID;
                 socket.join(roomID);
 
