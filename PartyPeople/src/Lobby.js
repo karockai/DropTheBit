@@ -292,14 +292,9 @@ function Lobby(props) {
                                             type="button"
                                             onClick={CopyURL}
                                             id="copy"
-<<<<<<< HEAD
-                                            height="5vh"
-                                            padding="0.5vh 1vw"
-=======
                                             height="10%"
                                             width="27%"
                                             padding='0.5vh 1vw'
->>>>>>> 2770a80b3f977445d7771b39cc835b1e3b3b2bcb
                                         />
                                     </SnackbarProvider>
                                 </Grid>
