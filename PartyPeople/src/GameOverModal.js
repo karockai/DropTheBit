@@ -71,8 +71,6 @@ export default function GameOverModal(props) {
             props.setLeaderBoard(false);
             let path = '/lobby';
             
-            console.log(roomInfo);
-            console.log(typeof(roomInfo));
             history.push({
                 pathname: path,
                 state: {
@@ -145,7 +143,7 @@ export default function GameOverModal(props) {
                 BackdropComponent={Backdrop}
             >
                 {/* <Fade in={open}> */}
-                <div container className={classes.paper}>
+                <div className={classes.paper}>
 
                     <h2
                         id="transition-modal-title"

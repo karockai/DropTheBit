@@ -1,31 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
-import { sizing } from '@material-ui/system';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import { Grid, Paper, makeStyles } from '@material-ui/core';
 import TradeStock from './TradeStock';
 import MyWallet from './MyWallet';
-import ChatRoom from './ChatRoom';
 import MyRank from './MyRank';
 import ChartComponent from './ChartComponent';
-import ChartTitle from './ChartTitle';
 import GameOverModal from './GameOverModal';
-import StockDoneList from './StockDoneList';
-import ThreeSecTimer from './';
-import GameMusicStart from './MusicStart';
-import { Howl, Howler } from 'howler';
 import Result from './audios/effect/Result.mp3';
 
-import HorizontalBarChart from './BidGraph';
-import { getData } from './utils';
-import { TypeChooser } from 'react-stockcharts/lib/helper';
 import RoomAction from './RoomAction';
 import Timer from './Timer';
 
 import RefreshGraph from './RefreshGraph';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { red, blue, purple, grey } from '@material-ui/core/colors';
 import {
     BrowserRouter as Router,
@@ -33,7 +19,6 @@ import {
     useLocation,
     useHistory,
 } from 'react-router-dom';
-import TabPanel from './TabControl';
 import RacingLeaderBoard from './RacingLeaderBoard';
 import KeyMap from './images/KeyMap.png';
 
@@ -172,12 +157,13 @@ export default function LayoutGrid(props) {
                         item
                         style={{
                             width: '100%',
-                            height: '70%',
+                            height: '67%',
                             padding: '0.3vh 0vw 0.3vh 0.3vw',
                         }}
                     >
                         <Paper
-                            style={{ height: '100%',                        border: 'solid',
+                            style={{ height: '100%',
+                            border: 'solid',                        
                             borderColor: '#2D4053', }}
                             className={classes.paper}
                         >
@@ -195,7 +181,7 @@ export default function LayoutGrid(props) {
                     <Grid
                         className="지갑및호가거래"
                         container
-                        style={{ width: '100%', height: '30%' }}
+                        style={{ width: '100%', height: '33%' }}
                         item
                         wrap="wrap"
                         direction="row"

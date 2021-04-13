@@ -16,7 +16,7 @@ export default function Order(props) {
     const [orderReady, setReady] = useState(false);
     const [orderType, setType] = useState('');
     const [orderPrice, setPrice] = useState(null);
-
+    const [classType,setClassType] = useState('buy_orderText');
     useEffect(() => {
         if (props.socket == null) {
             return;
@@ -61,12 +61,18 @@ export default function Order(props) {
         });
     }, []);
 
+    
+    useEffect(()=>{
+        let tmp = orderType === '매수' ? 'buy_orderText' : 'sell_orderText';
+        setClassType(tmp);
+    },[orderType]);
+    
     if (orderReady) {
         return (
             <>
                 <span
-                    class={'orderText'}
-                    style={{ color: 'white', fontSize: '2vw' }}
+                    class={classType}
+                    style={{fontSize: '2vw' }}
                 >
                     {orderType +
                         ' 주문가 : ' +

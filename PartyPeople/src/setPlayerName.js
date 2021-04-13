@@ -135,12 +135,12 @@ function SetPlayerName(props) {
                         <div class="title">
                         {title}
                         </div>
-                        <div class="title_overlay">
+                        {/* <div class="title_overlay">
                         {title}
                         </div>
                         <div class="title_overlay2">
                         {title}
-                        </div>
+                        </div> */}
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
                         <CssTextField
@@ -197,15 +197,15 @@ function SetPlayerName(props) {
                     style={{ width: '100vw', height: '100vh' }}
                 >
                     <Grid style={{ position: 'relative'}}>
-                        {/* <div class="title">
+                        <div class="title">
                         {title}
-                        </div> */}
+                        </div>
                         {/* <div class="title_overlay">
                         {title}
                         </div> */}
-                        <div class="title_overlay2">
+                        {/* <div class="title_overlay2">
                         {title}
-                        </div>
+                        </div> */}
                     </Grid>
                     <Grid style={{ margin: '4vh' }} item>
                         <CssTextField

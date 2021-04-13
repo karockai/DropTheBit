@@ -154,6 +154,7 @@ export default function TradeStock(props) {
                             height: '95%',
                             fontSize: '2.0vw',
                             padding: '0 0 0 0',
+                            fontWeight:'bold',
                         }}
                         class="buy"
                         onClick={(e) => {
@@ -188,6 +189,7 @@ export default function TradeStock(props) {
                             height: '95%',
                             fontSize: '2.0vw',
                             padding: '0 0 0 0',
+                            
                         }}
                         class="sell"
                         onClick={(e) => {
@@ -815,13 +817,16 @@ export default function TradeStock(props) {
                             ▼
                         </Button>
                     </Grid>
-                    <Grid style={{ width: '56%', margin: '0' }} align="center">
+                    <Grid container style={{ width: '56%', margin: '0' }} justify='center' alignItems='center'>
                         <h5
                             id="bidInput"
-                            style={{ fontSize: '2.5vw', fontWeight: 'bold' }} //'1.2vh 0px 0px 0px'
+                            style={{ fontSize: '2.5vw', fontWeight: 'bold', color:'white' }} //'1.2vh 0px 0px 0px'
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
+                        </h5>
+                        <h5 style={{ fontSize: '2.3vw', fontWeight: 'bold', }} >
+                             &nbsp;원
                         </h5>
                     </Grid>
                     <Grid
