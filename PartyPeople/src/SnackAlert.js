@@ -36,7 +36,6 @@ export function SnackAlertBtn(props) {
             });
         }
     };
-    console.log(props.severity);
     return (
         <>
             <button

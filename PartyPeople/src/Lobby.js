@@ -1,31 +1,17 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 import {
-    Router,
-    Route,
-    Switch,
-    Redirect,
-    useHistory,
     useLocation,
 } from 'react-router-dom';
 import './App.css';
-import MenuIcon from '@material-ui/icons/Menu';
 import {
+    Grid,
     AppBar,
     Toolbar,
     IconButton,
-    Button,
-    Grid,
-    GridList,
     Paper,
     makeStyles,
-    Typography,
-    Container,
     TextField,
-    Popover,
 } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
-import Fade from '@material-ui/core/Fade';
-import Zoom from '@material-ui/core/Zoom';
 import { withRouter } from 'react-router-dom';
 import LobbyPlayerCard from './LobbyPlayerCard';
 import MusicLeader from './MusicLeader';
@@ -34,13 +20,11 @@ import { SnackAlertBtn } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
 
 import ChatRoom from './ChatRoom';
-import { ChatFeed, Message } from 'react-chat-ui';
 import LobbyTabs from './LobbyTabs';
 import './Lobby.css';
 import StartGame from './StartGame';
 import backgroundImg from './videos/LobbyVideo2.mp4';
 import LeaderBoard from './LeaderBoard';
-import clubWallpaper from './images/clubWallpaper.jpg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,15 +60,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Lobby(props) {
-    // const his = useHistory();
-
-    let leftSm = 3;
-    let middleSm = 5;
-    let rightSm = 3;
-    // const [roomLeader, setRoomLeader] = useState(props.roomInfo['roomLeader']); //props.roomInfo['roomLeader']
-    // const [socketId, setSocketId] = useState(props.socket.id);
-    // console.log(props.socket.id);
-    // console.log(props);
     const location = useLocation();
     const roomLeader = location.state.roomLeader;
     const gaming = location.state.gaming;
