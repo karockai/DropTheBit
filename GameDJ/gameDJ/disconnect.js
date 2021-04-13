@@ -68,7 +68,7 @@ class Disconnect {
                     if (roomInfo['roomLeader'] == socket.id) {
                         for (const [key, value] of Object.entries(roomInfo)) {
                             if (key.length === 20 && key !== socket.id) {
-                                console.log('방장 바꿈', socket.id, '->', key);
+                                // console.log('방장 바꿈', socket.id, '->', key);
                                 roomInfo['roomLeader'] = key;
                                 message += ' ' + roomInfo[key]['playerID'] + '님으로 방장이 변경되었습니다.';
                                 break;
@@ -79,9 +79,9 @@ class Disconnect {
                     delete roomList[roomID][socket.id];
                 }
                 roomList[roomID] = roomInfo;
-                console.log('disconnect-----');
-                console.log('나간 놈: ', socket.id);
-                console.log(roomInfo);
+                // console.log('disconnect-----');
+                // console.log('나간 놈: ', socket.id);
+                // console.log(roomInfo);
                 io.to(roomID).emit('disconnection', roomInfo, roomInfo['roomLeader']);
             }
         }
