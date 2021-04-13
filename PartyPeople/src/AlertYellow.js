@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         fontFamily:'NEXON Lv1 Gothic OTF',
-        backgroundColor: '#fddc6c',
+        backgroundColor: '#F7B71F',
         width: '100%',
     },
     typography: {
