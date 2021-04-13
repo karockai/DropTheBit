@@ -85,8 +85,11 @@ function Lobby(props) {
         if (soc) {
             soc.off('disconnection').once('disconnection', (roomInfo, roomLeader) => {
                 setRoomLeader(roomLeader);
-                setRoomInfo(roomInfo);
-                console.log(roomInfo);
+                // setRoomInfo(roomInfo);
+                //* setRoomLeader 또는 setRoomInfo한 정보를 실제로 쓰지는 않는다.
+                //* 하지만 렌더링을 한번 더 하지 않으면 소켓에서 받아온 정보가 제대로 저장되지 않기 때문에 일단 렌더용으로 썼다.
+                //* 왜 그런지 이유는 잘 모르겠다..
+                // console.log(roomInfo);
 
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
@@ -143,9 +146,9 @@ function Lobby(props) {
         });
     }, isGaming);
 
-    useEffect(()=>{
-        setRoomInfo(props.roomInfo);
-    },[props.roomInfo]);
+    // useEffect(()=>{
+    //     setRoomInfo(props.roomInfo);
+    // },[props.roomInfo]);
     
     const CheckLeader = () => {
         if (props.roomInfo['roomLeader'] === props.socket.id) {
@@ -184,9 +187,9 @@ function Lobby(props) {
             );
         }
     };
-    console.log(props.roomInfo);
+
     function PutNewCard(props) {
-        console.log(props.roomInfo);
+
         if (props.roomInfo !== '') {
             let PlayerList = getPlayersList(props.roomInfo);
             const playerCount = Object.keys(PlayerList).length;
@@ -214,9 +217,6 @@ function Lobby(props) {
         }
     }
 
-    // console.log('props gaming', props.roomInfo['gaming']);
-    // console.log('GameOver를 받을 때 셋 되는 isGaming',isGaming);
-    // console.log('backToLobby에서 받아옴', gaming);
     function getPlayersList(roomInfo) {
         let playerList = [];
         for (const [key, value] of Object.entries(roomInfo)) {
@@ -373,7 +373,7 @@ function Lobby(props) {
                             {' '}
                             <PutNewCard
                                 // roomInfo={props.roomInfo}
-                                roomInfo={roomInfo}
+                                roomInfo={props.roomInfo}
                                 socket={props.socket}
                             />
                         </Grid>
