@@ -24,7 +24,10 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
     },
     typography: {
-        fontSize: '2vw',
+        textAlign:'center',
+        fontFamily: 'NEXON Lv1 Gothic OTF',
+        fontSize: '1.5vw',
+        color: '#ffffff'
     },
     actionRoot: {
         padding: '8px 8px 8px 16px',
