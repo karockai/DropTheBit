@@ -23,6 +23,8 @@ class Disconnect {
                 let playerCnt = 0;
                 let roomInfo = roomList[roomID];
                 let playerInfo = roomInfo[socket.id];
+                console.log('disconnect 시작부분-----------');
+                console.log(roomInfo);
                 //ask, bid 지우기
                 //성현 추가(210403) 서버 인원 감소시키기
                 await dbhincrby(process.env.SERVERNAME, 'player', -1);
@@ -54,6 +56,7 @@ class Disconnect {
                 console.log('player:-------------', playerCnt);
                 // 방에 사람이 0명이 되면 방을 지운다
                 if (playerCnt === 0) {
+                    console.log('유저 = 0. 방을 지워요');
                     delete roomList[roomID];
                     await dbdel(roomID);
                     // playerStress = 0;
@@ -65,6 +68,7 @@ class Disconnect {
                     if (roomInfo['roomLeader'] == socket.id) {
                         for (const [key, value] of Object.entries(roomInfo)) {
                             if (key.length === 20 && key !== socket.id) {
+                                console.log('방장 바꿈', socket.id, '->', key);
                                 roomInfo['roomLeader'] = key;
                                 message += ' ' + roomInfo[key]['playerID'] + '님으로 방장이 변경되었습니다.';
                                 break;
@@ -74,7 +78,8 @@ class Disconnect {
                     io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
                     delete roomList[roomID][socket.id];
                 }
-
+                console.log('disconnect 마지막부분-----------');
+                console.log(roomInfo);
                 io.to(roomID).emit('disconnect', roomInfo);
             }
         }
