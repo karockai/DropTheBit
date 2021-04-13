@@ -8,8 +8,6 @@ import {
     makeStyles,
     withStyles,
 } from '@material-ui/core';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { SnackAlertFunc } from './SnackAlert';
 import { SnackbarProvider } from 'notistack';
 // import {YellowShiningButton} from './ShiningButton';
@@ -24,18 +22,13 @@ import CurPrice from './audios/effect/CurPrice.wav';
 
 import PriceDown from './audios/effect/PriceDown.wav';
 import PriceUp from './audios/effect/PriceUp.wav';
-import SellMax from './audios/effect/SellMax.wav';
 import SellConfirm from './audios/effect/SellConfirm.wav';
 import { SplitByThree } from './parseMoney';
 // import {CancelBid} from './BidTable';
 // import { createMuiTheme,ThemeProvider  } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { red, blue, purple, grey } from '@material-ui/core/colors';
 import './blink.css';
 
-import MuiAlert from '@material-ui/lab/Alert';
-import { useSnackbar } from 'notistack';
 import AlertPurple from './AlertPurple';
 import AlertRed from './AlertRed';
 import AlertYellow from './AlertYellow';

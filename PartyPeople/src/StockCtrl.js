@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, Paper, makeStyles } from '@material-ui/core';
 import { sizing } from '@material-ui/system';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import TradeStock from './TradeStock';
-import MyAsset from './MyAsset';
-import ChatRoom from './ChatRoom';
-import PlayerList from './PlayerList';
-import ChartComponent from './ChartComponent';
-import ChartTitle from './ChartTitle';
-import GameOverModal from './GameOverModal';
 import StockDoneList from './StockDoneList';
 import { red } from '@material-ui/core/colors';
-import ThreeSecTimer from './';
-import GameMusicStart from './MusicStart';
-import { Howl, Howler } from 'howler';
-import Result from './audios/effect/Result.mp3';
 
 import {
     BrowserRouter as Router,

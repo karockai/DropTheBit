@@ -1,28 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import { timeFormat } from 'd3-time-format';
 
 import { ChartCanvas, Chart } from 'react-stockcharts';
 import { PriceCoordinate } from 'react-stockcharts/lib/coordinates';
 import {
-    BarSeries,
     CandlestickSeries,
     LineSeries,
     ScatterSeries,
-    CircleMarker,
     SquareMarker,
-    TriangleMarker,
 } from 'react-stockcharts/lib/series';
 import { XAxis, YAxis } from 'react-stockcharts/lib/axes';
 import {
     CrossHairCursor,
-    MouseCoordinateX,
-    MouseCoordinateY,
 } from 'react-stockcharts/lib/coordinates';
 
 import { discontinuousTimeScaleProvider } from 'react-stockcharts/lib/scale';
-import { OHLCTooltip } from 'react-stockcharts/lib/tooltip';
 import { fitWidth } from 'react-stockcharts/lib/helper';
 import { last } from 'react-stockcharts/lib/utils';
 import { blue, red } from '@material-ui/core/colors';
@@ -165,7 +158,7 @@ class StockChart extends React.Component {
                         lineStroke="green"
                         fontSize={18}
                         strokeDasharray="ShortDash"
-                        arrowWidth={3}
+                        arrowWidth={7}
                         displayFormat={format('.2f')}
                     />
 

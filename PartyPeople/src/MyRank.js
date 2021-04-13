@@ -1,18 +1,11 @@
-import React, { useState, makeStyle, useLayoutEffect, useEffect } from 'react';
+import React, { useState, } from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import green from '@material-ui/core/colors/green';
 import {
-    IconButton,
-    Button,
-    Box,
-    TextField,
-    GridList,
     Grid,
     Paper,
     makeStyles,
 } from '@material-ui/core';
-import { blue } from '@material-ui/core/colors';
-import Timer from './Timer';
 
 const greenTheme = createMuiTheme({
     palette: {

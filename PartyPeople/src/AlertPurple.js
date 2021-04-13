@@ -1,17 +1,9 @@
 import React, { useState, forwardRef, useCallback } from 'react';
-import classnames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar, SnackbarContent } from 'notistack';
-import Collapse from '@material-ui/core/Collapse';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles(theme => ({
     root: {
