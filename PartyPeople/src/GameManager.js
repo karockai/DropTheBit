@@ -89,15 +89,6 @@ class GameManager extends React.Component {
                         // 화면에 있는 6명에게 이 소켓이 부여되도록 하고싶어요 선생님 ㅠㅠ
                         // 이 자리에 들어가면 될거같아요
                         // room, start 버튼 도입하면 해결될 문제 !
-                        
-                // useEffect(() => {
-                    this.socket.on('gameOver', (leaderBoard) => {
-                        let tmp = this.state.roomInfo;
-                        tmp['gaming'] = false;
-                        this.setState({ roomInfo: tmp });
-                        console.log(tmp);
-                    });
-                // }, []);
                 });
         }
         else{
