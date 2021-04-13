@@ -14,7 +14,7 @@ import GrapMoneyPNG from './images/tutorial/0.png';
 import InGamePNG from './images/tutorial/인게임화면.png';
 
 // 튜토리얼 개선
-import GameWindow from './images/tutorial/게임화면.png';
+import GameWindow from './images/GameGoal.png';
 import Wallet from './images/tutorial/내자산.png';
 import TradeWindow from './images/tutorial/매매창.png';
 import MyList from './images/tutorial/호가창.png';
@@ -92,7 +92,7 @@ function TutorialPage(props) {
                     src={props.img}
                     style={{
                         height: '100%',
-                        width: props.hasContent ? '60%' : '60%',
+                        width: props.hasContent ? '60%' : '70%',
                         padding: '0 0 5vh 0',
                     }}
                 />
@@ -132,7 +132,7 @@ export default function LobbyTutorial(props) {
         setPage(value);
     };
 
-    const indexMap = ['게임 화면', '자산 화면', '매매 화면', '내 주문 목록'];
+    const indexMap = ['게임 화면',];
     const maxIndex = indexMap.length;
 
     let currentPage = (pageIndex) => {
@@ -149,7 +149,7 @@ export default function LobbyTutorial(props) {
         if (indexMap[pageIndex] === '게임 화면') {
             return (
                 <TutorialPage
-                    title="게임 화면"
+                    title="GOAL"
                     img={GameWindow}
                     content="게임 플레이 화면입니다."
                     onClose={props.onClose}
@@ -190,7 +190,7 @@ export default function LobbyTutorial(props) {
     return (
         <Paper
             className={classes.paper}
-            style={{ height: '95vh', width: '90vw', padding: '2vh 0 2vh 0' }}
+            style={{ height: '80vh', width: '70vw', padding: '2vh 0 2vh 0' }}
         >
             <Grid
                 container
@@ -217,42 +217,7 @@ export default function LobbyTutorial(props) {
                     alignItems="center"
                     justify="flex-end"
                 >
-                    <div className={classes.root}>
-                        <MobileStepper
-                            variant="progress"
-                            // variant="dots"
-                            steps={maxIndex}
-                            position="static"
-                            activeStep={activeStep}
-                            className={classes.root}
-                            nextButton={
-                                <button
-                                    className="tutorialMove"
-                                    size="small"
-                                    onClick={handleNext}
-                                    disabled={activeStep === maxIndex - 1}
-                                    fontColor="white"
-                                >
-                                    Next
-                                    {/* {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />} */}
-                                    <KeyboardArrowRight />
-                                </button>
-                            }
-                            backButton={
-                                <button
-                                    className="tutorialMove"
-                                    size="small"
-                                    onClick={handleBack}
-                                    disabled={activeStep === 0}
-                                    fontColor="white"
-                                >
-                                    {/* {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />} */}
-                                    <KeyboardArrowLeft />
-                                    Back
-                                </button>
-                            }
-                        />
-                    </div>
+                    
                 </Grid>
             </Grid>
         </Paper>

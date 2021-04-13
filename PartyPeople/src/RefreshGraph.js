@@ -25,17 +25,8 @@ export default function RefreshGraph(props) {
     return (
         <>
             <h5>매수/매도 비율</h5>
-            {/* <PieChart
-        data={[
-            { title: '매도', value: bidPercent, color: '#1e88e5' },
-            { title: '매수', value: askPercent, color: '#e53935' },
-        ]}
-        // label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
-        label={({ dataEntry }) => dataEntry.title}
-        /> */}
             {askPercent && (
                 <HorizontalBarChart
-                    // data={[{x:bidPercent, y: '매도'},{x:askPercent, y:'매수'}]}
                     data={[
                         { x: bidPercent, y: bidPrice },
                         { x: askPercent, y: askPrice },

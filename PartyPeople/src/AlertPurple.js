@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar, SnackbarContent } from 'notistack';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
+import CardActions from '@material-ui/core/CardActions'
 
 const useStyles = makeStyles(theme => ({
     root: {
