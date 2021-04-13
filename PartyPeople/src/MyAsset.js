@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, makeStyles } from '@material-ui/core';
+import {     Grid,Paper, makeStyles } from '@material-ui/core';
 import {
     showProfit,
     SplitByThree,
@@ -44,14 +44,14 @@ export default function MyAsset(props) {
             className={classes.paper}
             style={{
                 height: '100%',
-                fontSize: '1.5vw',
-                padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                // fontSize: '1vw',
+                padding: '2% 2% 0 2%',
                 border: 'solid',
                 borderColor: '#2D4053',
             }}
         >
-            <h4 style={{ paddingLeft: '1px', paddingTop: "4px"}}>자산</h4>
-            <h2
+            <h4 style={{ paddingLeft: '1px', paddingTop: "4px", marginBottom:'0'}}>자산</h4>
+            {/* <h2
                 style={{
                     paddingRight: '1px',
                     textAlign: 'left',
@@ -61,7 +61,15 @@ export default function MyAsset(props) {
                 }}
             >
                 {ExpBySymbol(parseWonToStr(myAsset)) + ' 원'}
-            </h2>
+            </h2> */}
+            <Grid container style={{margin: '0' }} justify='center' alignItems='center'>
+                <h5 style={{ paddingRight: '1%', paddingBottom: '0', textAlign: 'left', fontWeight: 'bold', fontSize: '2.2vw', color:'white', marginBottom:'0' }}>
+                {ExpBySymbol(parseWonToStr(myAsset))}
+                </h5>
+                <h5 style={{fontWeight: 'bold', fontSize: '2vw', color:'white', marginBottom:'0' }}>
+                    &nbsp;원
+                </h5>
+            </Grid>
             <h2
                 id="diffAsset"
                 class="default"

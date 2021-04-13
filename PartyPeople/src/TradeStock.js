@@ -171,7 +171,7 @@ export default function TradeStock(props) {
                         풀매수
                     </button>
                 </Grid>
-                <Grid style={{ width: '50%', height: '100%', paddingRight: '4px', paddingBottom: '3px'}} align="right">
+                <Grid style={{ width: '50%', height: '100%', paddingRight: '4px', paddingBottom: '3px',fontWeight:'bold',}} align="right">
                     <button
                         style={{
                             width: '95%',
@@ -670,12 +670,12 @@ export default function TradeStock(props) {
                 )}
             >
                 {sellStatus && sellStatus.status === 'done' && (
-                    <SnackAlertFunc severity="info" message={'매도 체결'} />
+                    <SnackAlertFunc severity="info" message={'매도 주문 체결 💵'} />
                 )}
                 {sellStatus && sellStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'매도 주문 신청'}
+                        message={'매도 주문 완료 📉'}
                     />
                 )}
             </SnackbarProvider>
@@ -688,11 +688,11 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'request' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'매수 주문 신청'}
+                        message={'매수 주문 완료 📈'}
                     />
                 )}
                 {buyStatus && buyStatus.status === 'done' && (
-                    <SnackAlertFunc color="error" message={'매수 주문 체결'} />
+                    <SnackAlertFunc color="error" message={'매수 주문 체결 📦'} />
                 )}
             </SnackbarProvider>
             <SnackbarProvider
@@ -704,14 +704,14 @@ export default function TradeStock(props) {
                 {buyStatus && buyStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'매수주문 취소'}
+                        message={'매수 주문 취소 ❌'}
                     />
                 )}
 
                 {sellStatus && sellStatus.status === 'cancel' && (
                     <SnackAlertFunc
                         severity="success"
-                        message={'매도 주문 취소'}
+                        message={'매도 주문 취소 ❌'}
                     />
                 )}
             </SnackbarProvider>
@@ -722,7 +722,7 @@ export default function TradeStock(props) {
                 )}
             >
                 {buyStatus && buyStatus.status === 'lack' && (
-                    <SnackAlertFunc severity="warning" message={'현금 부족'} />
+                    <SnackAlertFunc severity="warning" message={'현금이 부족해요. 😥'} />
                 )}
                 {buyStatus && buyStatus.status === 'invalid' && (
                     <SnackAlertFunc
@@ -731,7 +731,7 @@ export default function TradeStock(props) {
                     />
                 )}
                 {sellStatus && sellStatus.status === 'lack' && (
-                    <SnackAlertFunc severity="warning" message={'코인 부족'} />
+                    <SnackAlertFunc severity="warning" message={'코인이 부족해요. 😥'} />
                 )}
                 {sellStatus && sellStatus.status === 'invalid' && (
                     <SnackAlertFunc
@@ -788,12 +788,12 @@ export default function TradeStock(props) {
                     <Grid container style={{ width: '56%', margin: '0' }} justify='center' alignItems='center'>
                         <h5
                             id="bidInput"
-                            style={{ fontSize: '2.5vw', fontWeight: 'bold' }} //'1.2vh 0px 0px 0px'
+                            style={{ fontSize: '2.5vw', fontWeight: 'bold', color:'white' }} //'1.2vh 0px 0px 0px'
                             onChange={handleBidChange}
                         >
                             {SplitByThree(String(currentBid))}
                         </h5>
-                        <h5 style={{ fontSize: '2vw', fontWeight: 'bold' }} >
+                        <h5 style={{ fontSize: '2.3vw', fontWeight: 'bold', }} >
                              &nbsp;원
                         </h5>
                     </Grid>

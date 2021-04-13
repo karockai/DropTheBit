@@ -34,22 +34,11 @@ code {
   /* top: 1vh;
   left: 0; */
 }
-.title_overlay {
-  font-family: 'Fugaz One', cursive;
-  z-index: 1;
-  font-size: 20vh;
-  mix-blend-mode: overlay;
-  position: absolute;
-  top: -1vh;
-  left: 0;
-  /* mix-blend-mode: luminosity; */
-  /* opacity: 0; */
-}
+
 .title_overlay2 {
   font-family: 'Fugaz One', cursive;
   z-index: 2;
   font-size: 20vh;
-  mix-blend-mode: overlay;
 }
 @font-face {
   font-family: 'NEXON Lv1 Gothic OTF';

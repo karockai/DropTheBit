@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, makeStyles } from '@material-ui/core';
+import { Grid,Paper, makeStyles } from '@material-ui/core';
 import { showProfit, SplitByThree } from './parseMoney';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,16 +39,24 @@ export default function MyCoin(props) {
             className={classes.paper}
             style={{
                 height: '100%',
-                fontSize: '1vw',
-                padding: '0.3vh 0.3vw 0.3vh 0.3vw',
+                // fontSize: '1vw',
+                padding: '3% 3% 0 3%',
                 border: 'solid',
                 borderColor: '#2D4053',
             }}
         >
-            <h6 style={{ paddingLeft: '1px', paddingTop: "4px"}} >코인</h6>
-            <h5 style={{ paddingRight: '1px', textAlign: 'left', fontWeight: 'bold', fontSize: '1.4vw' }}>
+        <h6 style={{ paddingLeft: '1%', paddingTop: "1%", marginBottom:'0.5vh', marginBottom:'0'}}>코인</h6>
+            {/* <h5 style={{ paddingRight: '1px', textAlign: 'left', fontWeight: 'bold', fontSize: '1.4vw', color:'white' }}>
                 {SplitByThree(String(myCoin)) + ' 개'}
-            </h5>
+            </h5> */}
+            <Grid container style={{margin: '1%'}} justify='center' alignItems='center'>
+                <h5 style={{ paddingRight: '1%', textAlign: 'left', fontWeight: 'bold', fontSize: '1.4vw', color:'white', marginBottom:'0' }}>
+                {SplitByThree(String(myCoin))}
+                </h5>
+                <h5 style={{fontWeight: 'bold', fontSize: '1.3vw', color:'white', marginBottom:'0' }}>
+                    &nbsp;개
+                </h5>
+            </Grid>
             <h5
                 id="diffCoin"
                 class="default"

@@ -39,7 +39,7 @@ class HorizontalBarChart extends React.Component {
 						padding={.5}
                         >
 					{/* <XAxis axisAt="bottom" orient="bottom" /> */}
-					<YAxis axisAt="left" orient="left" />
+					<YAxis axisAt="left" orient="left" fontSize={17} />
 					<BarSeries yAccessor={d => d.y === bidPrice && d.y} xAccessor={d =>  d.y === bidPrice && d.x} fill="red" swapScales/>
 					<BarSeries yAccessor={d => d.y === askPrice && d.y} xAccessor={d =>  d.y === askPrice && d.x} fill="#017de9" swapScales/>
 				</Chart>
