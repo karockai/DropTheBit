@@ -115,7 +115,6 @@ function Lobby(props) {
         setTime(time);
     };
 
-
     if (roomLeader != null && roomLeader != props.roomInfo['roomLeader']) {
         const tmp_roomInfo = props.roomInfo;
         tmp_roomInfo['roomLeader'] = roomLeader;
@@ -294,7 +293,7 @@ function Lobby(props) {
                                             id="copy"
                                             height="10%"
                                             width="27%"
-                                            padding='0.5vh 1vw'
+                                            padding="0.5vh 1vw"
                                         />
                                     </SnackbarProvider>
                                 </Grid>

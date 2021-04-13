@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './ShiningButton.css';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
@@ -75,7 +75,6 @@ export default function LobbyTabs(props) {
     const [tutoToggle, setTutoToggle] = React.useState(null);
     // var tmp_music = props.roomInfo['music'];
     // var tmp_time = props.roomInfo['gameTime'];
-
     // var minute = parseInt(tmp_time / 60);
     // var second = tmp_time % 60;
     // minute = minute >= 10 ? String(minute) : '0' + String(minute);

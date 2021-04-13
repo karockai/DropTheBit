@@ -17,7 +17,7 @@ export default function LoadingScreen (props) {
   textAlign: 'center'}}>
                 <span style={{  display: 'inline-block',
   verticalAlign: 'middle',
-  lineHeight: 'normal'}}>{'[16 : 9] 가로 화면으로 플레이 가능해요 😤'}</span>
+  lineHeight: 'normal'}}>{'가로 화면으로 플레이 가능해요 😤'}</span>
             </div>
         </>
     );
