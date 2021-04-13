@@ -82,7 +82,7 @@ export default {
                 if (price === -1) {
                     socket.emit('chartMyPrice_Res', curPrice);
                 } else {
-                    socket.emit('chartMyPrice_Res', curPrice);
+                    socket.emit('chartMyPrice_Res', price);
                 }
             });
             // room event << -----------------------------------------
