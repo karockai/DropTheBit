@@ -13,8 +13,11 @@ const messages = [
 export default function LoadingScreen (props) {
     return (
         <>
-            <div verticalAlign='middle' style={{height:'100vh', fontSize:'5vh'}}>
-                {'가로 화면으로 플레이 가능해요 😤'}
+            <div verticalAlign='middle' style={{height:'100vh', fontSize:'5vh',  lineHeight: '50vh',
+  textAlign: 'center'}}>
+                <span style={{  display: 'inline-block',
+  verticalAlign: 'middle',
+  lineHeight: 'normal'}}>{'[16 : 9] 가로 화면으로 플레이 가능해요 😤'}</span>
             </div>
         </>
     );

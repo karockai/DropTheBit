@@ -21,15 +21,17 @@ export default function Routes(props) {
         return false;
     };
     const [lobbyAudio, setAudio] = React.useState(null);
-    const handleResize = () => {
+    let handleResize = () => {
         setHeight(window.innerHeight)
         setWidth(window.innerWidth)
     };
     useEffect(() =>{
         console.log('size', width, height)
         window.addEventListener('resize', handleResize);
-        return window.removeEventListener('resize', handleResize);
-    },[width, height]);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    },);
 
     const sendAudio = (audio) => {
         // console.log('sendAudio : ', audio);
@@ -39,7 +41,7 @@ export default function Routes(props) {
 
     return (
         <>
-        {height > width ? <LoadingScreen/> :
+        {height > width * 9/16? <LoadingScreen/> :
             <Router>
                 <Switch>
                     <Route
