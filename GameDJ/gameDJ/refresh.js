@@ -283,6 +283,22 @@ class Refresh {
                 temp['playerID'] = playerInfo['playerID'];
                 temp['asset'] = playerInfo['asset'];
                 leaderBoard.push(temp);
+
+                // ask, bid List에서 이 방의 player 정보 삭제
+                for (let bid in playerInfo['bid']){
+                for (let id  in bidList[bid]){
+                    if (socketID === id){
+                        delete bidList[bid][id]
+                    }
+                }
+                }
+                for (let ask in playerInfo['ask']){
+                    for (let id  in askList[ask]){
+                        if (socketID === id){
+                            delete askList[ask][id]
+                        }
+                    }
+                }
             }
 
             leaderBoard.sort(function (a, b) {
