@@ -1,25 +1,11 @@
-import React, { useState, useRef, useEffect, } from 'react';
+import React, { useState, useEffect, } from 'react';
 import './App.css';
-import {
-    Button,
-    Fab,
-    Grid,
-    Paper,
-    makeStyles,
-    TextField,
-} from '@material-ui/core';
-import { Router, Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import SetPlayerName from './setPlayerName';
-import Lobby from './Lobby';
-// import Sound from './Sound';
 import backgroundImg from './videos/LobbyVideo2.mp4';
-// import backgroundImg from './videos/LobbyImage3.gif';
 import LobbyMusic from './audios/music/Tetris99.mp3';
 export default function EnterRoom(props) {
-    // const history = useHistory();
     const [name, setName] = React.useState('');
-    const [player, setPlayer] = React.useState('');
-    const [roomID, setRoomID] = React.useState(props.roomID);
     const [lobbyAudio] = useState(new Audio(LobbyMusic));
     const [playing, setPlaying] = useState(true);
     const history = useHistory();

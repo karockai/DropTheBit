@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { render } from 'react-dom';
-import MuiThemeProvider from '@material-ui/styles/ThemeProvider';
-import { Tabs, Tab, Button, Grid, CircularProgress } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Grid, CircularProgress } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';

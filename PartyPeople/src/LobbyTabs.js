@@ -3,15 +3,11 @@ import './ShiningButton.css';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
     Grid,
-    Paper,
     Popover,
-    FormGroup,
     FormControlLabel,
 } from '@material-ui/core';
 import { Typography, Switch } from '@material-ui/core';
 import KeyMapTemp from './images/KeyMap.png';
-import MusicLeader from './MusicLeader';
-import MusicMember from './MusicMember';
 import LobbyTutorial from './LobbyTutorial';
 import { PurpleButton, PurpleSwitch } from './PurpleComponent';
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +51,7 @@ function LobbyMusicOnOff(props) {
             align='right'
             control={
                 <>
-                <h5 style={{margin:'0'}}>{state===true ? '음악ON': '음악OFF'}</h5>
+                <h5 style={{margin:'0', fontSize:'1vw'}}>{state===true ? '음악ON': '음악OFF'}</h5>
                 <PurpleSwitch
                     checked={state}
                     onChange={handleChange}
@@ -163,12 +159,12 @@ export default function LobbyTabs(props) {
     // console.log(selectMusic, openSelect);
     return (
         <>
-            {/* <Grid
+            <Grid
                 container
                 style={{ padding: '0 1vw 0 1vw' }}
                 justify={'space-around'}
                 alignItems={'center'}
-            > */}
+            >
             <button
                     class="tutorial"
                     id="tutorials"
@@ -198,7 +194,7 @@ export default function LobbyTabs(props) {
                     SELECT MUSIC
                 </button> */}
                 <LobbyMusicOnOff lobbyAudio={props.lobbyAudio} />
-            {/* </Grid> */}
+            </Grid>
             <Popover
                 open={openKey}
                 anchorEl={keymap}

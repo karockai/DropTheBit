@@ -1,10 +1,5 @@
 import React, { useEffect } from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Tetris99 from './audios/music/Tetris99.mp3';
-import KeyMapTemp from './images/KeyMap.png';
 import {
     Button,
     Fab,

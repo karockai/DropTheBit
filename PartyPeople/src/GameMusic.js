@@ -15,6 +15,7 @@ import Another_One_Bites_The_Dust from './audios/music/Another_One_Bites_The_Dus
 import Can_You_Dig_It from './audios/music/Can_You_Dig_It.mp3';
 import Csikos_Post from './audios/music/Csikos_Post.mp3';
 import Dont_Stop_Me from './audios/music/날_막지마.mp3';
+import Zapaguri from './audios/music/짜파구리.mp3';
 
 import TestMusic from './audios/music/TestMusic.mp3';
 
@@ -38,6 +39,7 @@ export default function GameMusic(props) {
         우편마차: Csikos_Post,
         날_막지마: Dont_Stop_Me,
         TestMusic: TestMusic,
+        짜파구리: Zapaguri,
     };
 
     useEffect(() => {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {
@@ -29,6 +28,7 @@ import Another_One_Bites_The_Dust from './audios/music/Another_One_Bites_The_Dus
 import Can_You_Dig_It from './audios/music/Can_You_Dig_It.mp3';
 import Csikos_Post from './audios/music/Csikos_Post.mp3';
 import Dont_Stop_Me from './audios/music/날_막지마.mp3';
+import Zapaguri from './audios/music/짜파구리.mp3';
 
 import TestMusic from './audios/music/TestMusic.mp3';
 
@@ -80,6 +80,7 @@ export default function MusicLeader(props) {
         Can_You_Dig_It: Can_You_Dig_It,
         우편마차: Csikos_Post,
         날_막지마: Dont_Stop_Me,
+        짜파구리: Zapaguri,
         TestMusic: TestMusic,
     };
 
@@ -108,7 +109,7 @@ export default function MusicLeader(props) {
 
         return (
             // <div>
-            // <TextField 
+            // <TextField
             // className={classes.formControl}
             //     style={{width:'5vw', }}
             //     InputLabelProps={{
@@ -123,14 +124,13 @@ export default function MusicLeader(props) {
             //     }}
             // />
 
-
-            <Grid style={{width: '70%'}}>
-                <FormControl className={classes.formControl} >
+            <Grid style={{ width: '70%' }}>
+                <FormControl className={classes.formControl}>
                     <InputLabel
                         style={{ color: '#fff' }}
                         id="demo-simple-select-label"
                         InputLabelProps={{
-                            style: { color: '#fff', },
+                            style: { color: '#fff' },
                         }}
                     >
                         음악 제목
@@ -144,7 +144,7 @@ export default function MusicLeader(props) {
                             },
                             style: { color: '#fff' },
                         }}
-                        style={{ color: '#ffffff', fontSize:'1.5vw' }}
+                        style={{ color: '#ffffff', fontSize: '1.5vw' }}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={props.music}
@@ -176,7 +176,7 @@ export default function MusicLeader(props) {
                         </MenuItem>
                         <MenuItem value={'우편마차'}>우편마차</MenuItem>
                         <MenuItem value={'날_막지마'}>날_막지마</MenuItem>
-
+                        <MenuItem value={'짜파구리'}>짜파구리</MenuItem>
                         <MenuItem value={'TestMusic'}>TestMusic</MenuItem>
                         {/* <>
               {props.musicList.map((music) => {
@@ -189,7 +189,7 @@ export default function MusicLeader(props) {
               </> */}
                     </Select>
                 </FormControl>
-                </Grid>
+            </Grid>
             // </div>
         );
     }
@@ -208,24 +208,24 @@ export default function MusicLeader(props) {
         // }
         return (
             // <form noValidate autoComplete="off">
-                <>
-                <Grid style={{width:"30%"}}> 
-                    <TextField 
-                    className={classes.formControl}
+            <>
+                <Grid style={{ width: '30%' }}>
+                    <TextField
+                        className={classes.formControl}
                         // style={{width:'30%', }}
                         InputLabelProps={{
-                            style: { color: '#fff', },
+                            style: { color: '#fff' },
                         }}
                         id="standard-read-only-input"
                         label="음악 시간"
                         defaultValue={props.strTime}
                         InputProps={{
                             readOnly: true,
-                            style: { color: '#fff',fontSize:'1.5vw' },
+                            style: { color: '#fff', fontSize: '1.5vw' },
                         }}
                     />
-                    </Grid>
-                    </>
+                </Grid>
+            </>
             // {/* </form> */}d
         );
     }
@@ -252,7 +252,7 @@ export default function MusicLeader(props) {
     // }, []);
     return (
         <>
-            <h5 style={{margin:'1vh 0 1.5vh 0'}}>음악을 선택해주세요</h5>
+            <h5 style={{ margin: '1vh 0 1.5vh 0' }}>음악을 선택해주세요</h5>
             <Grid container direction={'row'} justify={'space-between'}>
                 <ShowMusic />
                 <MusicInput />

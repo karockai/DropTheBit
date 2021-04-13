@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './ShiningButton.css';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { PurpleButton } from './PurpleComponent';
 import {
     Button,
     Fab,
@@ -30,6 +24,7 @@ import Another_One_Bites_The_Dust from './audios/music/Another_One_Bites_The_Dus
 import Can_You_Dig_It from './audios/music/Can_You_Dig_It.mp3';
 import Csikos_Post from './audios/music/Csikos_Post.mp3';
 import Dont_Stop_Me from './audios/music/날_막지마.mp3';
+import Zapaguri from './audios/music/짜파구리.mp3';
 
 import TestMusic from './audios/music/TestMusic.mp3';
 
@@ -78,6 +73,7 @@ export default function StartGame(props) {
             우편마차: Csikos_Post,
             날_막지마: Dont_Stop_Me,
             TestMusic: TestMusic,
+            짜파구리: Zapaguri,
         };
 
         let gameAudio;
@@ -98,6 +94,7 @@ export default function StartGame(props) {
                 'Another_One_Bites_The_Dust',
                 'Can_You_Dig_It',
                 'Csikos_Post',
+                '짜파구리',
                 '날_막지마',
             ];
 

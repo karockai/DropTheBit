@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './index.css';
 import {
     BrowserRouter as Router,
-    Route,
-    Switch,
-    history,
-    Redirect,
     useHistory,
 } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,7 +14,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Button, Grid, GridList} from '@material-ui/core';
+import { Button, Grid} from '@material-ui/core';
 import {ExpBySymbol, parseWonToStr} from './parseMoney';
 
 const useStyles = makeStyles((theme) => ({
@@ -143,7 +138,7 @@ export default function GameOverModal(props) {
                 BackdropComponent={Backdrop}
             >
                 {/* <Fade in={open}> */}
-                <div container className={classes.paper}>
+                <div className={classes.paper}>
 
                     <h2
                         id="transition-modal-title"

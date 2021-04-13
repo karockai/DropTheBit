@@ -8,16 +8,30 @@ import {
     useHistory,
 } from 'react-router-dom';
 import LayoutGridEffect from './LayoutGridEffect';
+import LoadingScreen from './LoadingScreen';
 import EnterRoom from './EnterRoom';
 import Lobby from './Lobby';
 
 export default function Routes(props) {
+    const [height, setHeight] = React.useState( window.innerHeight)
+    const [width, setWidth] = React.useState(window.innerWidth);
     const [time, setTime] = React.useState(0);
     const isValid = () => {
         if (props.socket) return true;
         return false;
     };
     const [lobbyAudio, setAudio] = React.useState(null);
+    let handleResize = () => {
+        setHeight(window.innerHeight)
+        setWidth(window.innerWidth)
+    };
+    useEffect(() =>{
+        console.log('size', width, height)
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
+    },);
 
     const sendAudio = (audio) => {
         // console.log('sendAudio : ', audio);
@@ -27,6 +41,7 @@ export default function Routes(props) {
 
     return (
         <>
+        {height > width * 9/16? <LoadingScreen/> :
             <Router>
                 <Switch>
                     <Route
@@ -88,7 +103,7 @@ export default function Routes(props) {
                         roomInfo={props.roomInfo}
                     />
                 </Switch>
-            </Router>
+            </Router>}
         </>
     );
 }

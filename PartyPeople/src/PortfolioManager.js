@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Card, Container, Col, Row } from 'react-bootstrap';
-import { Button, Fab, Grid, Paper, makeStyles } from '@material-ui/core';
+import { Fab, Grid, Paper, makeStyles } from '@material-ui/core';
 import './PortfolioManager.css';
 
 class PortfolioManager extends React.Component {

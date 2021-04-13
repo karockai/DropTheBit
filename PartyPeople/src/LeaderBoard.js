@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
     BrowserRouter as Router,
-    Route,
-    Switch,
-    history,
-    Redirect,
-    useHistory,
 } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';

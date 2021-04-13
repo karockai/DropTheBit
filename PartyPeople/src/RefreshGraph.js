@@ -16,6 +16,7 @@ export default function RefreshGraph(props) {
         if (exList.askPercent) {
             setAskPrice(SplitByThree(String(exList.askPrice)));
             setBidPrice(SplitByThree(String(exList.bidPrice)));
+            console.log(exList);
             setAskPercent(exList.askPercent);
             setBidPercent(exList.bidPercent);
         }

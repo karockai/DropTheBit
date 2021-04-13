@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import { useSnackbar } from 'notistack';
-import { RedButton, PurpleButton, PurpleSwitch } from './PurpleComponent';
 import './ShiningButton.css';
 //@ 5 params
 //? ------- props -----------------------------

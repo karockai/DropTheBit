@@ -4,7 +4,6 @@ import { React, useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import './blink.css';
 
-import Timer from './Timer';
 import Order from './Order';
 //@ won -> string (4자리 단위로 ',' 끊어주기)
 //@ isBullMarket에 따른 color 변경
