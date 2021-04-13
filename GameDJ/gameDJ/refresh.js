@@ -77,7 +77,7 @@ class Refresh {
                             vol: askVol,
                             price: askPrice,
                         };
-                        io.to(roomID).emit('sellDone_Room', sellDone);
+                        io.to(socketID).emit('sellDone_Room', sellDone);
                     }
                     delete askList[askPrice];
                 }
@@ -132,7 +132,7 @@ class Refresh {
                             price: bidPrice,
                         };
 
-                        io.to(roomID).emit('buyDone_Room', buyDone);
+                        io.to(socketID).emit('buyDone_Room', buyDone);
                     }
                     delete bidList[bidPrice];
                 }

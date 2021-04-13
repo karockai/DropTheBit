@@ -115,7 +115,6 @@ function Lobby(props) {
         setTime(time);
     };
 
-
     if (roomLeader != null && roomLeader != props.roomInfo['roomLeader']) {
         const tmp_roomInfo = props.roomInfo;
         tmp_roomInfo['roomLeader'] = roomLeader;
@@ -292,14 +291,9 @@ function Lobby(props) {
                                             type="button"
                                             onClick={CopyURL}
                                             id="copy"
-<<<<<<< HEAD
-                                            height="5vh"
-                                            padding="0.5vh 1vw"
-=======
                                             height="10%"
                                             width="27%"
-                                            padding='0.5vh 1vw'
->>>>>>> 2770a80b3f977445d7771b39cc835b1e3b3b2bcb
+                                            padding="0.5vh 1vw"
                                         />
                                     </SnackbarProvider>
                                 </Grid>
