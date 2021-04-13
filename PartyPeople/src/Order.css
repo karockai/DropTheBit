@@ -1,5 +1,5 @@
 .buy_orderText{
-    animation:buy_blinkingText 6s infinite;
+    animation:buy_blinkingText 3s infinite;
 }
 @keyframes buy_blinkingText{
     0%{     color: #FFFFFF;    }
@@ -10,7 +10,7 @@
 }
 
 .sell_orderText{
-    animation:sell_blinkingText 6s infinite;
+    animation:sell_blinkingText 3s infinite;
 }
 @keyframes sell_blinkingText{
     0%{     color: #FFFFFF;    }

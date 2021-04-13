@@ -1,7 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import {
-    useLocation,
-} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './App.css';
 import {
     Grid,
@@ -25,6 +23,7 @@ import './Lobby.css';
 import StartGame from './StartGame';
 import backgroundImg from './videos/LobbyVideo2.mp4';
 import LeaderBoard from './LeaderBoard';
+import GameGoal from './images/GameGoal.png';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     input: {
         color: 'black',
         backgroundColor: 'white',
-        fontFamily:'NEXON Lv1 Gothic OTF',
+        fontFamily: 'NEXON Lv1 Gothic OTF',
         // opacity: 0.8,
         // width: '4vw',
         // wordSpacing: '16px',
@@ -207,7 +206,13 @@ function Lobby(props) {
     }
     return (
         <>
-            <video style={{opacity: 0.7}} className="videoTag" autoPlay loop muted>
+            <video
+                style={{ opacity: 0.7 }}
+                className="videoTag"
+                autoPlay
+                loop
+                muted
+            >
                 <source src={backgroundImg} type="video/mp4" />
             </video>
             {/* <img
@@ -232,13 +237,13 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid style={{width:'33%'}} align="left">
+                            <Grid style={{ width: '33%' }} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
                                     color="inherit"
                                     aria-label="menu"
-                              >
+                                >
                                     {/* <MenuIcon /> */}
                                     <span
                                         style={{
@@ -252,8 +257,18 @@ function Lobby(props) {
                                     </span>
                                 </IconButton>
                             </Grid>
-                                <Grid container style={{width:'35%'}} alignItems="center" justify='space-between'>
-                                <Grid container style={{width: '90%'}} justify='space-between' alignItems='center'>
+                            <Grid
+                                container
+                                style={{ width: '35%' }}
+                                alignItems="center"
+                                justify="space-between"
+                            >
+                                <Grid
+                                    container
+                                    style={{ width: '90%' }}
+                                    justify="space-between"
+                                    alignItems="center"
+                                >
                                     <TextField
                                         type="text"
                                         id="gameLink"
@@ -263,7 +278,7 @@ function Lobby(props) {
                                         InputProps={{
                                             className: classes.input,
                                         }}
-                                        style={{ width: '70%',height:'10%'}}
+                                        style={{ width: '70%', height: '10%' }}
                                         readOnly
                                     />
                                     {'   '}
@@ -277,14 +292,29 @@ function Lobby(props) {
                                             type="button"
                                             onClick={CopyURL}
                                             id="copy"
+<<<<<<< HEAD
+                                            height="5vh"
+                                            padding="0.5vh 1vw"
+=======
                                             height="10%"
                                             width="27%"
                                             padding='0.5vh 1vw'
+>>>>>>> 2770a80b3f977445d7771b39cc835b1e3b3b2bcb
                                         />
                                     </SnackbarProvider>
                                 </Grid>
-                                </Grid>
-                            <Grid style={{width:'27%'}} direction={'row'} contianer justify="flex-start" alignItems="flex-start" style={{ padding: '0 1vw 0 1vw', textAlign: 'right' }}>
+                            </Grid>
+                            <Grid
+                                style={{ width: '27%' }}
+                                direction={'row'}
+                                contianer
+                                justify="flex-start"
+                                alignItems="flex-start"
+                                style={{
+                                    padding: '0 1vw 0 1vw',
+                                    textAlign: 'right',
+                                }}
+                            >
                                 <LobbyTabs
                                     roomLeader={props.roomInfo['roomLeader']}
                                     socketId={props.socket.id}
@@ -346,11 +376,11 @@ function Lobby(props) {
                                 item
                                 xs={6}
                                 style={{
-                                width: '100%',
-                                height: '24vh',
-                                opacity: '0.8',
-                                padding: '1vh 2vw',
-                            }}
+                                    width: '100%',
+                                    height: '24vh',
+                                    opacity: '0.8',
+                                    padding: '1vh 2vw',
+                                }}
                             >
                                 <Paper
                                     className={classes.paper}
@@ -364,27 +394,32 @@ function Lobby(props) {
                                     <CheckLeader />
                                 </Paper>
                             </Grid>
-                            <Grid container className="스타트버튼" xs={6} justify='center' alignItems='flex-end' style={{height:'24vh', width:'100%'}}>
-      
-                                    <StartGame
-                                        roomID={props.roomID}
-                                        music={props.roomInfo['music']}
-                                        socket={props.socket}
-                                        history={props.history}
-                                        lobbyAudio={props.lobbyAudio}
-                                        roomOnGame={
-                                            gaming
-                                                ? gaming
-                                                : props.roomInfo['gaming']
-                                        }
-                                        gameMusic={props.roomInfo['music']}
-                                        isLeader={
-                                            props.roomInfo['roomLeader'] ===
-                                            props.socket.id
-                                        }
-                                        style={{ padding: '1vw 1vw 1vw 1vw' }}
-                                    />
-
+                            <Grid
+                                container
+                                className="스타트버튼"
+                                xs={6}
+                                justify="center"
+                                alignItems="flex-end"
+                                style={{ height: '24vh', width: '100%' }}
+                            >
+                                <StartGame
+                                    roomID={props.roomID}
+                                    music={props.roomInfo['music']}
+                                    socket={props.socket}
+                                    history={props.history}
+                                    lobbyAudio={props.lobbyAudio}
+                                    roomOnGame={
+                                        gaming
+                                            ? gaming
+                                            : props.roomInfo['gaming']
+                                    }
+                                    gameMusic={props.roomInfo['music']}
+                                    isLeader={
+                                        props.roomInfo['roomLeader'] ===
+                                        props.socket.id
+                                    }
+                                    style={{ padding: '1vw 1vw 1vw 1vw' }}
+                                />
                             </Grid>
                         </Grid>
                     </Grid>
