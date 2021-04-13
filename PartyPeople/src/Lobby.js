@@ -61,8 +61,10 @@ const useStyles = makeStyles((theme) => ({
 function Lobby(props) {
     const location = useLocation();
     const [roomLeader,setRoomLeader] = useState(location.state.roomLeader);
+    // const []
     const gaming = location.state.gaming;
     const [isGaming, setIsGaming] = useState(props.roomInfo['gaming']);
+    const [roomInfo, setRoomInfo] = useState(props.roomInfo);
     const classes = useStyles();
 
     function CopyURL() {
@@ -83,6 +85,9 @@ function Lobby(props) {
         if (soc) {
             soc.off('disconnection').once('disconnection', (roomInfo, roomLeader) => {
                 setRoomLeader(roomLeader);
+                setRoomInfo(roomInfo);
+                console.log(roomInfo);
+
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
                     roomInfo: roomInfo,
@@ -90,10 +95,10 @@ function Lobby(props) {
             });
         }
     });
-    useEffect(()=> {
-
-    });
-
+    // useEffect(()=>{
+    //     if (roomInfo != props.roomInfo)
+    //     //setPlayerCard 다시하기
+    // }, [roomInfo]);
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
 
@@ -137,6 +142,10 @@ function Lobby(props) {
             roomInfo: tmp_roomInfo,
         });
     }, isGaming);
+
+    useEffect(()=>{
+        setRoomInfo(props.roomInfo);
+    },[props.roomInfo]);
     
     const CheckLeader = () => {
         if (props.roomInfo['roomLeader'] === props.socket.id) {
@@ -175,8 +184,9 @@ function Lobby(props) {
             );
         }
     };
-
+    console.log(props.roomInfo);
     function PutNewCard(props) {
+        console.log(props.roomInfo);
         if (props.roomInfo !== '') {
             let PlayerList = getPlayersList(props.roomInfo);
             const playerCount = Object.keys(PlayerList).length;
@@ -362,7 +372,8 @@ function Lobby(props) {
                         >
                             {' '}
                             <PutNewCard
-                                roomInfo={props.roomInfo}
+                                // roomInfo={props.roomInfo}
+                                roomInfo={roomInfo}
                                 socket={props.socket}
                             />
                         </Grid>

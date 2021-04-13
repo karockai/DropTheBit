@@ -91,12 +91,12 @@ class GameManager extends React.Component {
                         // room, start 버튼 도입하면 해결될 문제 !
                         
                 // useEffect(() => {
-                    this.socket.on('gameOver', (leaderBoard) => {
-                        let tmp = this.state.roomInfo;
-                        tmp['gaming'] = false;
-                        this.setState({ roomInfo: tmp });
-                        console.log(tmp);
-                    });
+                    // this.socket.on('gameOver', (leaderBoard) => {
+                    //     let tmp = this.state.roomInfo;
+                    //     tmp['gaming'] = false;
+                    //     this.setState({ roomInfo: tmp });
+                    //     console.log(tmp);
+                    // });
                 // }, []);
                 });
         }
