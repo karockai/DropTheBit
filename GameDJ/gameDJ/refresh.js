@@ -15,7 +15,7 @@ class Refresh {
             let updateCurCoin = JSON.parse(await dbget('curCoin'));
             if (!updateCurCoin) return false;
             curCoin = updateCurCoin;
-            // io.emit('chart', curCoin);
+            io.emit('chart', curCoin);
             curPrice = curCoin['curPrice'];
             if (curPrice === prePrice) {
                 return false;
@@ -218,7 +218,7 @@ class Refresh {
 
                         roomList[roomID][socketID] = playerInfo;
 
-                        let a_curCoin = io.to(socketID).emit('chart', curCoin);
+                        // io.to(socketID).emit('chart', curCoin);
                     }
                     rankList.sort(function (a, b) {
                         return b['asset'] - a['asset'];
