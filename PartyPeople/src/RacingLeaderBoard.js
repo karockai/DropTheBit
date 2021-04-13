@@ -189,6 +189,7 @@ const PlayerLeaderboard = (props) => {
     };
     function ExpBySymbol(value) {
         let ret = value;
+        if (!ret) return;
         let length = ret.length;
         let isPlus = true;
         if (ret.charAt() === '-') {
@@ -214,7 +215,7 @@ const PlayerLeaderboard = (props) => {
         return (
             <>
                 <span style={{ color: ans === '+' ? 'grey' : color }}>
-                    {ans === '+' ? '0 원' : ans +' 원'}
+                    {ans === '+' ? '0 원' : ans + ' 원'}
                 </span>
             </>
         );
