@@ -779,6 +779,7 @@ export default function TradeStock(props) {
                             height: '100%',
                             paddingTop: '7px',
                             paddingLeft: '6px',
+                            fontSize: '1.5vw',
                         }}
                     >
                         매매호가

@@ -167,7 +167,7 @@ export default function LobbyTabs(props) {
                     class="tutorial"
                     id="tutorials"
                     onClick={handleSelectTuto}
-                    style={{ padding: '1vh 1vw 1vh 1vw', margin:'0.5vw',fontSize: '1.2vw' }}
+                    style={{ padding: '1vh 1vw 1vh 1vw', margin:'0.5vw',fontSize: '1.2vw',border: '0.3vw solid' }}
                     size="large"
                 >
                     {/* Tutorial */}
@@ -177,7 +177,7 @@ export default function LobbyTabs(props) {
                     class="key_map"
                     id="key_map"
                     onClick={handleKeymap}
-                    style={{ padding: '1vh 1vw 1vh 1vw', margin: '0.5vw',fontSize: '1.2vw' }}
+                    style={{ padding: '1vh 1vw 1vh 1vw', margin: '0.5vw',fontSize: '1.2vw',  border: '0.3vw solid' }}
                     size="large"
                 >
                     단축키

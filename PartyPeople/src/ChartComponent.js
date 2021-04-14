@@ -175,9 +175,9 @@ class ChartComponent extends React.Component {
                     currentSell={this.currentSell}
                 />
                 <Grid 
-                style={{width:'37vw', height:'4.5vh'}}
+                style={{width:'37vw', height:'0'}}
                 >
-                <img src={testImg} style={{position: 'relative',width:'100%', height:'100%', top: '-7vh', left:'10vw', minWidth:'30vw',  objectFit:'contain'}}>
+                <img src={testImg} style={{position: 'relative',width:'100%', height:'4.5vh', top: '-7vh', left:'10vw', minWidth:'30vw',  objectFit:'contain'}}>
                 </img>
                 </Grid>
             </>

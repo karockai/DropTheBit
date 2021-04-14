@@ -124,8 +124,8 @@ function ChartTitle(props) {
                         <span>{/* {name} */}</span>
                     </Grid>
                     <Grid>
-                        <span style={{ color: 'gray' }}>{props.date}</span>
-                        <span> {props.coinName}</span>
+                        <span style={{ color: 'gray',fontSize: '1vw', }}>{props.date}</span>
+                        <span style={{fontSize: '1vw',}}> {props.coinName}</span>
                     </Grid>
                 </Grid>
                 {/* </span> */}

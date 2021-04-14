@@ -23,7 +23,7 @@ export default function RefreshGraph(props) {
 
     return (
         <>
-            <h5>매수/매도 비율</h5>
+            <h5 style={{fontSize: '1vw',}}>매수/매도 비율</h5>
             {askPercent && (
                 <HorizontalBarChart
                     data={[
