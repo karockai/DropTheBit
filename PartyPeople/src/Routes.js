@@ -103,7 +103,7 @@ export default function Routes(props) {
                         roomInfo={props.roomInfo}
                     />
                 </Switch>
-            </Router>}
+            </Router>
         </>
     );
 }

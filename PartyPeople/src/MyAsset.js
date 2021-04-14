@@ -78,6 +78,7 @@ export default function MyAsset(props) {
                     fontWeight: 'bold',
                     fontSize: '1.5vw',
                     color: color,
+                    margin:'0',
                 }}
                 align="right"
             >
