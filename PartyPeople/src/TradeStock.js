@@ -563,6 +563,7 @@ export default function TradeStock(props) {
             SetUnitVolume(data.volUnit);
             SetBid(data.curPrice);
         });
+        RefreshBid_Req();
     }, []);
 
     useEffect(() => {
@@ -783,7 +784,25 @@ export default function TradeStock(props) {
                         }}
                     >
                         매매호가
-                    </span>
+                    </span>                   
+                     <Grid item style={{ width: '19%', height:'100%', paddingRight: '0.5vw'}}>
+                        <button
+                            class="link"
+                            className={classes.arrow}
+                            style={{justify:'center',border: '0.1vw solid', opacity:0.8, width: '100%', height:'100%', fontWeight:'normal', padding:'1vh 0 1vh 0', margin: '0.2vh', fontSize:'1vw'}}
+                            onClick={(e) => {
+                                clickButton(e);
+                                changeEffect(e.target.id);
+                                let tmpAudio = new Audio(PriceDown);
+                                tmpAudio.play();
+                                tmpAudio.remove();
+                                RefreshBid_Req();
+                            }}
+                            id="ArrowDown"
+                        >
+                            현재가로
+                        </button>
+                    </Grid>
                     {/* <span className={classes.small_text}>[Space]:현재가</span> */}
                 </Grid>
                 <Grid
@@ -793,9 +812,9 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    style={{ height: '30%', paddingBottom: '8px' }}
+                    style={{ height: '30%', paddingBottom: '0.3vh' }}
                 >
-                    <Grid style={{ width: '20%', paddingLeft: '4px' }}>
+                    <Grid style={{ width: '20%', paddingLeft: '0.1vw' }}>
                         <Button
                             class="arrow"
                             className={classes.arrow}
@@ -825,7 +844,7 @@ export default function TradeStock(props) {
                         </h5>
                     </Grid>
                     <Grid
-                        style={{ width: '20%', paddingRight: '4px' }}
+                        style={{ width: '20%', paddingRight: '0.1vw' }}
                         align="right"
                     >
                         <Button

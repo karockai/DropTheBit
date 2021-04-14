@@ -258,7 +258,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid style={{ width: '33%' }} align="left">
+                            <Grid style={{ width: '35%', height:'100%' }} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -270,6 +270,9 @@ function Lobby(props) {
                                         style={{
                                             fontSize: '2vw',
                                             fontWeight: 'bold',
+                                            padding:'0',
+                                            height:'100%',
+                                            verticalAlign: 'center'
                                         }}
                                     >
                                         {props.roomInfo[
@@ -322,11 +325,11 @@ function Lobby(props) {
                                 </Grid>
                             </Grid>
                             <Grid
-                                style={{ width: '27%' }}
+                                style={{ width: '30%' }}
                                 direction={'row'}
                                 contianer
-                                justify="flex-start"
-                                alignItems="flex-start"
+                                justify="flex-end"
+                                alignItems="flex-end"
                                 style={{
                                     textAlign: 'right',
                                 }}

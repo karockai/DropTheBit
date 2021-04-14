@@ -96,7 +96,7 @@ class StockChart extends React.Component {
                 height={this.state.height}
                 ratio={ratio}
                 width={width}
-                margin={{ left: 50, right: 100, top: 10, bottom: 70 }}
+                margin={{ left: 50, right: 100, top: 10, bottom: 80 }}
                 type={type}
                 seriesName="MACD"
                 data={data}
