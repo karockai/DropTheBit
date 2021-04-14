@@ -85,7 +85,7 @@ function TutorialPage(props) {
                 className="tuto-image"
                 style={{
                     width: '100%',
-                    height: props.hasContent ? '65%' : '80%',
+                    height: props.hasContent ? '70%' : '80%',
                 }}
             >
                 <img
@@ -105,6 +105,8 @@ function TutorialPage(props) {
                         width: '100%',
                         height: props.hasContent ? '15%' : '5%',
                         padding: '5vh 10vw 1vh 10vw',
+                        fontFamily:  'NEXON Lv1 Gothic OTF',
+                        fontSize: '2vw'
                     }}
                 >
                     {props.content}
@@ -151,7 +153,8 @@ export default function LobbyTutorial(props) {
                 <TutorialPage
                     title="GOAL"
                     img={GameWindow}
-                    content="게임 플레이 화면입니다."
+                    hasContent
+                    content="최단 기간 안에 가장 많은 수익을 올리세요 !"
                     onClose={props.onClose}
                 />
             );
@@ -190,7 +193,7 @@ export default function LobbyTutorial(props) {
     return (
         <Paper
             className={classes.paper}
-            style={{ height: '80vh', width: '70vw', padding: '2vh 0 2vh 0' }}
+            style={{ height: '80vh', width: '70vw', padding: '2vh 0 2vh 0', border:'Solid #aaaaaa' }}
         >
             <Grid
                 container
