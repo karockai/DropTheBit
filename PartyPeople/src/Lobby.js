@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         padding: '0 0 0 0.5vw',
         height: '5vh',
+        fontSize: '1vw' 
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -298,7 +299,7 @@ function Lobby(props) {
                                         InputProps={{
                                             className: classes.input,
                                         }}
-                                        style={{ width: '70%', height: '10%' }}
+                                        style={{ width: '70%', height: '10%', }}
                                         readOnly
                                     />
                                     {'   '}
@@ -313,8 +314,8 @@ function Lobby(props) {
                                             onClick={CopyURL}
                                             id="copy"
                                             height="10%"
-                                            width="27%"
-                                            padding='1vh 1vw'
+                                            width="24%"
+                                            padding='1vh 0 1vh 0'
 
                                         />
                                     </SnackbarProvider>
@@ -327,7 +328,6 @@ function Lobby(props) {
                                 justify="flex-start"
                                 alignItems="flex-start"
                                 style={{
-                                    padding: '0 1vw 0 1vw',
                                     textAlign: 'right',
                                 }}
                             >

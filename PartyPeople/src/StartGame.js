@@ -154,12 +154,12 @@ export default function StartGame(props) {
                             height: '23vh',
                             fontSize: '10vh',
                             fontWeight: 'bold',
-                            border: '6px solid',
-                            backgroundColor: '#7673f2',
+                            border: '0.3vw solid',
+                            backgroundColor: 'rgba(118, 115, 242, 0.6)',
                         }}
                         text
                     >
-                        {'시작'}
+                        {'시 작'}
                     </Button>
                 )}
                 {!props.isLeader && (
