@@ -49,7 +49,7 @@ export default {
                 let connectionInfo = 0;
                 let numConnected = 0;
                 let ipAddress = 0;
-                
+                let name = '';
                 // 최소로 연결된 IP를 찾는다.
                 for(let idx =0; idx <serverList.length; idx++){
                     
@@ -61,6 +61,7 @@ export default {
                     if (numConnected < minConnected){
                         minConnected = numConnected;
                         ipAddress = connectionInfo['ip'];
+                        name = serverList[idx];
                     }
                 }
                 
@@ -68,6 +69,7 @@ export default {
                 if(ipAddress){
                     console.log("새로운 방 생성", ipAddress);
                     socket.emit('ipToConnect', ipAddress);
+                    await dbhincrby(name, 'player', 1);
                 }
                 else{
                     //이리로 들어올 일이 있으려나?

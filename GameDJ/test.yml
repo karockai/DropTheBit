@@ -3,7 +3,7 @@ config:
   # target: "http://localhost:5000"
   socketio:
     transports: ["websocket"]
-    query: "id=EnjoyPublicGame" # 매번 방 바꿔줘야함
+    query: "id=ISH9MVrUbJ3oXcF" # 매번 방 바꿔줘야함ISH9MVrUbJ3oXcF
   phases:
     - duration: 50
       arrivalRate: 2
@@ -15,13 +15,13 @@ scenarios:
           channel: "joinRoom_Req"
           data:
             "playerID": "{{$randomString()}}"
-            "roomID": "EnjoyPublicGame"
+            "roomID": "ISH9MVrUbJ3oXcF"
       - think: 60
       - loop:
         - emit:
             channel: "buy_Req"
             data:
-              "roomID": "EnjoyPublicGame"
+              "roomID": "ISH9MVrUbJ3oXcF"
               "socketID": 0
               "currentBid": 200000
               "currentVolume": 100
@@ -29,7 +29,7 @@ scenarios:
         - emit:
             channel: "sell_Req"
             data:
-                "roomID": "EnjoyPublicGame"
+                "roomID": "ISH9MVrUbJ3oXcF"
                 "socketID": 0
                 "currentBid": 10000
                 "currentVolume": 100

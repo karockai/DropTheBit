@@ -56,7 +56,7 @@ class Room {
                     'ip',
                     ipAddress
                 );
-                await dbhincrby(process.env.SERVERNAME, 'player', 1);
+                // await dbhincrby(process.env.SERVERNAME, 'player', 1);
             }
             let playerID = data.playerID;
             let playerInfo = {
