@@ -405,6 +405,7 @@ function Lobby(props) {
                                         width: '100%',
                                         height: '100%',
                                         padding: '1vw 1vw 1vw 1vw',
+                                        border: 'solid #000000',
                                         // margin: '0vw 2vw 2vw 2vw',
                                     }}
                                 >
@@ -475,6 +476,7 @@ function Lobby(props) {
                                     width: '100%',
                                     height: '100%',
                                     padding: '1vw 1vw 1vw 1vw',
+                                    border: 'solid #000000',
                                 }}
                             >
                                 <LeaderBoard socket={props.socket} />

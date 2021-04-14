@@ -22,6 +22,7 @@ const useStyles = makeStyles((cnt) => ({
         height: '100%',
         margin: '0 2vh 2vh 2vh',
         padding:'0.5vh 0.5vw 0.5vh 0.5vw',
+        border: 'solid #777777',
         color: '#CDD7E0',
         opacity: 1,
         backgroundColor: '#0C151C',
@@ -101,7 +102,7 @@ export default function LobbyPlayerCard(props) {
         >
             <Card className={classes.root}>
                 <CardContent
-                    style={{ padding: 1 / ratio + 'vh ' + 1 / ratio + 'vw' }}
+                    style={{ padding: 1 / ratio + 'vh ' + 1 / ratio + 'vw', }}
                 >
                     <Grid container item direction={'row'}>
                         <Grid container item xs={4}>
