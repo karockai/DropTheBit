@@ -59,6 +59,7 @@ class Disconnect {
                     console.log('유저 = 0. 방을 지워요');
                     delete roomList[roomID];
                     await dbdel(roomID);
+                    await dbhincrby(process.env.SERVERNAME, 'room', -1);
                     // playerStress = 0;
                 } 
                 else {
