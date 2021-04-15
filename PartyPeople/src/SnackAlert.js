@@ -38,7 +38,7 @@ export function SnackAlertBtn(props) {
             <button
                 class={props.class}
                 // style={{padding:'1.2vh', margin:'0.5vw', width: '4vw'}} //height: '5vh'
-                style={{ margin:'0vw',padding: '1vh 1.5vw', width:props.width,  height:props.height,  margin:props.margin, padding:props.padding}}
+                style={{ fontSize: '1.2vw', margin:'0vw',padding: '1vh 1.5vw', width:props.width,  height:props.height,  margin:props.margin, padding:props.padding, border: '0.3vw solid',}}
                 onClick={handleClickVariant(props.severity)}
             >
                 {props.label}

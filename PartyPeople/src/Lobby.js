@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         padding: '0 0 0 0.5vw',
         height: '5vh',
+        fontSize: '1vw' 
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -89,7 +90,6 @@ function Lobby(props) {
                 //* setRoomLeader 또는 setRoomInfo한 정보를 실제로 쓰지는 않는다.
                 //* 하지만 렌더링을 한번 더 하지 않으면 소켓에서 받아온 정보가 제대로 저장되지 않기 때문에 일단 렌더용으로 썼다.
                 //* 왜 그런지 이유는 잘 모르겠다..
-                // console.log(roomInfo);
 
                 props.SetRoomIdAndInfo({
                     roomID: props.roomID,
@@ -104,12 +104,11 @@ function Lobby(props) {
     // }, [roomInfo]);
     var tmp_music = props.roomInfo['music'];
     var tmp_time = props.roomInfo['gameTime'];
-
     var minute = parseInt(tmp_time / 60);
     var second = tmp_time % 60;
     minute = minute >= 10 ? String(minute) : '0' + String(minute);
     second = second >= 10 ? String(second) : '0' + String(second);
-    const [music, setMusic] = React.useState(tmp_music);
+    const [music, setMusic] = React.useState(location.state.music ? location.state.music : tmp_music);
     const [strTime, strSetTime] = React.useState(minute + ' : ' + second);
     const [time, setTime] = React.useState(props.musicTime);
     
@@ -130,26 +129,26 @@ function Lobby(props) {
         });
     }
 
-    // useEffect(()=>{
+    // if (music == null || music != props.roomInfo['music']) {
+    //     setMusic(props.roomInfo['music']);
+    // }
+
+
     props.socket.once('gameOver', (leaderBoard) => {
         setIsGaming(false);
     });
-    // },);
 
     useEffect(()=>{
         const tmp_roomInfo = props.roomInfo;
         tmp_roomInfo['gaming'] =  isGaming;
-
+        // setMusic(props.roomInfo['music']);
         props.SetRoomIdAndInfo({
             roomID: props.roomID,
             roomInfo: tmp_roomInfo,
         });
     }, isGaming);
 
-    // useEffect(()=>{
-    //     setRoomInfo(props.roomInfo);
-    // },[props.roomInfo]);
-    
+
     const CheckLeader = () => {
         if (props.roomInfo['roomLeader'] === props.socket.id) {
             return (
@@ -259,7 +258,7 @@ function Lobby(props) {
                         style={{ backgroundColor: '#0C151C' }}
                     >
                         <Toolbar variant="dense">
-                            <Grid style={{ width: '33%' }} align="left">
+                            <Grid style={{ width: '35%', height:'100%' }} align="left">
                                 <IconButton
                                     edge="start"
                                     className={classes.menuButton}
@@ -271,6 +270,9 @@ function Lobby(props) {
                                         style={{
                                             fontSize: '2vw',
                                             fontWeight: 'bold',
+                                            padding:'0',
+                                            height:'100%',
+                                            verticalAlign: 'center'
                                         }}
                                     >
                                         {props.roomInfo[
@@ -300,7 +302,7 @@ function Lobby(props) {
                                         InputProps={{
                                             className: classes.input,
                                         }}
-                                        style={{ width: '70%', height: '10%' }}
+                                        style={{ width: '70%', height: '10%', }}
                                         readOnly
                                     />
                                     {'   '}
@@ -315,21 +317,20 @@ function Lobby(props) {
                                             onClick={CopyURL}
                                             id="copy"
                                             height="10%"
-                                            width="27%"
-                                            padding='1vh 1vw'
+                                            width="24%"
+                                            padding='1vh 0 1vh 0'
 
                                         />
                                     </SnackbarProvider>
                                 </Grid>
                             </Grid>
                             <Grid
-                                style={{ width: '27%' }}
+                                style={{ width: '30%' }}
                                 direction={'row'}
                                 contianer
-                                justify="flex-start"
-                                alignItems="flex-start"
+                                justify="flex-end"
+                                alignItems="flex-end"
                                 style={{
-                                    padding: '0 1vw 0 1vw',
                                     textAlign: 'right',
                                 }}
                             >
@@ -407,6 +408,7 @@ function Lobby(props) {
                                         width: '100%',
                                         height: '100%',
                                         padding: '1vw 1vw 1vw 1vw',
+                                        border: 'solid #000000',
                                         // margin: '0vw 2vw 2vw 2vw',
                                     }}
                                 >
@@ -477,6 +479,7 @@ function Lobby(props) {
                                     width: '100%',
                                     height: '100%',
                                     padding: '1vw 1vw 1vw 1vw',
+                                    border: 'solid #000000',
                                 }}
                             >
                                 <LeaderBoard socket={props.socket} />

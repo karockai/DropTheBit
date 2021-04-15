@@ -476,7 +476,7 @@ export default function TradeStock(props) {
     }
 
     const changeEffect = (id) => {
-        if (id === 'ArrowDown' || id === 'ArrowUp') {
+        if (id === 'ArrowDown' || id === 'ArrowUp' || id === 'refresh') {
             const target_class = document.getElementById('bidInput');
             if (id === 'ArrowUp') target_class.classList.add('plus');
             else target_class.classList.add('minus');
@@ -487,7 +487,7 @@ export default function TradeStock(props) {
                 else target_class.classList.remove('minus');
                 target_class.classList.remove('font_blinking');
             }, 100);
-        } else if (id === 'ArrowLeft' || id === 'ArrowRight') {
+        } else if (id === 'ArrowLeft' || id === 'ArrowRight' || id === 'refresh') {
             const target_class = document.getElementById('countInput');
             if (id === 'ArrowRight') target_class.classList.add('plus');
             else target_class.classList.add('minus');
@@ -510,6 +510,7 @@ export default function TradeStock(props) {
             return;
         }
         if (e.keyCode === 32) {
+            changeEffect('refresh')
             let tmpAudio = new Audio(CurPrice);
             tmpAudio.play();
             tmpAudio.remove();
@@ -563,6 +564,7 @@ export default function TradeStock(props) {
             SetUnitVolume(data.volUnit);
             SetBid(data.curPrice);
         });
+        RefreshBid_Req();
     }, []);
 
     useEffect(() => {
@@ -779,10 +781,29 @@ export default function TradeStock(props) {
                             height: '100%',
                             paddingTop: '7px',
                             paddingLeft: '6px',
+                            fontSize: '1.5vw',
                         }}
                     >
                         매매호가
-                    </span>
+                    </span>                   
+                     <Grid item style={{ width: '30%', height:'80%', paddingRight: '0.5vw'}}>
+                        <button
+                            class="link"
+                            className={classes.arrow}
+                            style={{justify:'center',border: '0.2vw solid', width: '100%', height:'100%', fontWeight:'normal', padding:'1vh 0 1vh 0', fontSize:'1vw'}}
+                            onClick={(e) => {
+                                clickButton(e); 
+                                changeEffect(e.target.id);
+                                let tmpAudio = new Audio(PriceDown);
+                                tmpAudio.play();
+                                tmpAudio.remove();
+                                RefreshBid_Req();
+                            }}
+                            id="refresh"
+                        >
+                            현재가
+                        </button>
+                    </Grid>
                     {/* <span className={classes.small_text}>[Space]:현재가</span> */}
                 </Grid>
                 <Grid
@@ -792,9 +813,9 @@ export default function TradeStock(props) {
                     direction="row"
                     justify="space-between"
                     alignItems="flex-end"
-                    style={{ height: '30%', paddingBottom: '8px' }}
+                    style={{ height: '30%', paddingBottom: '0.3vh' }}
                 >
-                    <Grid style={{ width: '20%', paddingLeft: '4px' }}>
+                    <Grid style={{ width: '20%', paddingLeft: '0.1vw' }}>
                         <Button
                             class="arrow"
                             className={classes.arrow}
@@ -824,7 +845,7 @@ export default function TradeStock(props) {
                         </h5>
                     </Grid>
                     <Grid
-                        style={{ width: '20%', paddingRight: '4px' }}
+                        style={{ width: '20%', paddingRight: '0.1vw' }}
                         align="right"
                     >
                         <Button

@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
         // minWidth: 650,
     },
     tableHead: {
+        backgroundColor: '#2C353C',
+        color:'white',
         fontFamily: 'NEXON Lv1 Gothic OTF',
         fontSize: '1vw',
     },
@@ -46,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     tableBodyText: {
         fontFamily: 'NEXON Lv1 Gothic OTF',
         background: '#212529',
-        fontSize: '1vw',
+        fontSize: '0.8vw',
         color: 'white',
     },
     container: {
@@ -132,9 +134,9 @@ export default function LeaderBoard(props) {
                                         className={classes.tableHead}
                                         align="left"
                                     >
-                                        {/* {Array.isArray(board)
+                                        {Array.isArray(board)
                                         ? '순위'
-                                        : '게임이 끝나면 순위가 표시됩니다.'} */}
+                                        : '게임이 끝나면 순위가 표시됩니다.'}
                                     </TableCell>
                                     <TableCell
                                         className={classes.tableHead}
