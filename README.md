@@ -15,6 +15,8 @@ http://dropthebit.club/
 <br>
 
 # 소개
+![드랍더비트_움짤](https://user-images.githubusercontent.com/72585287/115986862-52357780-a5ed-11eb-85fc-019043ddfbbe.gif) <br>
+
 ![스크린샷 2021-04-20 오후 2 26 02](https://user-images.githubusercontent.com/72585287/115341910-5bd17080-a1e4-11eb-86e0-b33bad5eb354.png)
 
 <br>
