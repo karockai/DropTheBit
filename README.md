@@ -1,10 +1,16 @@
 # DropTheBit
 비트코인 단타 시뮬레이션 게임 'Drop The Bit' 입니다.<br>
+아래 링크에서 게임을 즐겨보세요! <br>
 http://dropthebit.club/
 
 비트코인에 대한 엄청난 관심만큼 변동성도 엄청나지고 있습니다.<br>
 변동성이 크다면 보는 재미는 있지만 자신의 돈을 직접 투자하기에는 무서울 것입니다.<br>
-그래서 자신의 돈을 들이지 않고도 변동성의 재미를 느낄 수 있는 시뮬레이션 게임을 만들었습니다.🤩
+그래서 자신의 돈을 들이지 않고도 변동성의 재미를 느낄 수 있는 시뮬레이션 게임을 만들었습니다.🤩<br>
+
+- 제작 기간 : 2021.03.11 ~ 2021.04.16 <br>
+- 사용 기술 <br>
+ 1. Frontend : **React, socket.io**
+ 2. Backend : **Node.JS, express, Socket.io, Redis, Python, AWS EC2, AWS S3**
 
 <br>
 
