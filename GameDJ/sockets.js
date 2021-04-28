@@ -37,7 +37,11 @@ export default {
             });
             // data : {roomID : roomID, playerID : name}
             socket.on('joinRoom_Req', (data) => {
-                if (!roomList.hasOwnProperty(data.roomID)) return 0;
+                if (!roomList.hasOwnProperty(data.roomID)) {
+                    // 21.04.29 추가 
+                    socket.emit('joinRoomFail');
+                    return 0;
+                }
                 new Room(io, socket).joinRoom(data);
             });
             // 클라에서 뮤직 셀렉트할때 socket.emit('settingsUpdate_Req')  발생함

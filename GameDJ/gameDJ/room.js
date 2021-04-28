@@ -16,6 +16,7 @@ class Room {
                 roomID: publicRoomID,
                 playerID: playerID.playerID,
             };
+            console.log('checkPublic--------\n', roomList);
             // 공방 존재 확인
             let roomExist = false;
             if (roomList[publicRoomID]) {
@@ -23,10 +24,12 @@ class Room {
             }
             // 공방 최초의 유저라면
             if (roomExist === false) {
+                console.log('roomExist === false');
                 this.createPublicRoom(data);
             }
             // 공방 최초의 유저가 아니라면
             else {
+                console.log('roomExist === true');
                 this.joinRoom(data);
             }
         } catch (err) {
@@ -144,6 +147,8 @@ class Room {
             socket.roomID = roomID;
             socket.join(roomID);
 
+            console.log('공방들어옴---------------');
+            console.log(roomInfo);
             socket.emit('createPublic_Res', {
                 roomInfo: roomInfo,
                 roomID: roomID,

@@ -16,7 +16,7 @@ class Disconnect {
 
             const { io, socket } = this;
             const { roomID } = socket;
-    
+            socket.leave(roomID);
             // roomID가 있으면 제대로된 소켓
             // disconnection 보내면 room에서 그 사람을 지우도록 함
             if (roomID && roomList[roomID]) {
@@ -24,6 +24,7 @@ class Disconnect {
                 let roomInfo = roomList[roomID];
                 let playerInfo = roomInfo[socket.id];
                 console.log('disconnect 시작부분-----------');
+                console.log('roomID----------', roomID);
                 console.log(roomInfo);
                 //ask, bid 지우기
                 //성현 추가(210403) 서버 인원 감소시키기
@@ -57,7 +58,9 @@ class Disconnect {
                 // 방에 사람이 0명이 되면 방을 지운다
                 if (playerCnt === 0) {
                     console.log('유저 = 0. 방을 지워요');
+                    console.log('roomID----------', roomID);
                     delete roomList[roomID];
+                    console.log(roomList);
                     await dbdel(roomID);
                     await dbhincrby(process.env.SERVERNAME, 'room', -1);
                     // playerStress = 0;
@@ -78,12 +81,14 @@ class Disconnect {
                     }
                     io.to(roomID).emit('update', {message : message, author : '[SERVER]'});
                     delete roomList[roomID][socket.id];
+
+                    // 21.04.29 bug fix 
+                    roomList[roomID] = roomInfo;
+                    // console.log('disconnect-----');
+                    // console.log('나간 놈: ', socket.id);
+                    // console.log(roomInfo);
+                    io.to(roomID).emit('disconnection', roomInfo, roomInfo['roomLeader']);
                 }
-                roomList[roomID] = roomInfo;
-                // console.log('disconnect-----');
-                // console.log('나간 놈: ', socket.id);
-                // console.log(roomInfo);
-                io.to(roomID).emit('disconnection', roomInfo, roomInfo['roomLeader']);
             }
         }
         catch(err){
