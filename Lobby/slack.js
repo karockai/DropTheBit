@@ -13,4 +13,5 @@ webhook.sendMessage = async function(msg){
   }
 };
 
+webhook.sendMessage(':o:')
 export default webhook;

@@ -109,7 +109,7 @@ function TutorialPage(props) {
                         fontSize: '2vw'
                     }}
                 >
-                    {props.content}
+                    <span style={{fontSize:'2.3vw', fontWeight:'bold', fontFamily: 'NEXON Lv1 Gothic OTF'}}>"1억"</span>{props.content}
                 </Grid>
             ) : (
                 <></>
@@ -154,7 +154,7 @@ export default function LobbyTutorial(props) {
                     title="GOAL"
                     img={GameWindow}
                     hasContent
-                    content="최단 기간 안에 가장 많은 수익을 올리세요 !"
+                    content='으로 최단 기간 안에 가장 많은 수익을 올리세요 !'
                     onClose={props.onClose}
                 />
             );
