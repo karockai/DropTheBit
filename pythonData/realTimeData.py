@@ -169,7 +169,7 @@ def on_open(ws):
     def run(*args):
         # request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-BCHA"]},{"format":"SIMPLE"}]'
         # request2 = '[{"ticket": "dantanamoo"}, {"type": "orderbook", "codes": ["KRW-MED.5"]}]'
-        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-STRK"]},{"type": "orderbook", "codes": ["KRW-STRK.2"]},{"format":"SIMPLE"}]'
+        request1 = '[{"ticket":"dantanamoo"},{"type":"ticker","codes":["KRW-ETC"]},{"type": "orderbook", "codes": ["KRW-ETC.2"]},{"format":"SIMPLE"}]'
 
 
         ws.send(request1)

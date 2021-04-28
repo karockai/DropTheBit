@@ -3,11 +3,7 @@ config:
   # target: "http://localhost:5000"
   socketio:
     transports: ["websocket"]
-<<<<<<< HEAD
     query: "id=kDXgh7nJwBvjsjn" # 매번 방 바꿔줘야함
-=======
-    query: "id=u4i3kvc2dukKOvu" # 매번 방 바꿔줘야함
->>>>>>> 8d0e28fe8ab1090682e3d2ea444fc5ceb3172565
   phases:
     - duration: 50
       arrivalRate: 2     
