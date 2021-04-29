@@ -8,6 +8,7 @@ export default function EnterRoom(props) {
     const [name, setName] = React.useState('');
     const [lobbyAudio] = useState(new Audio(LobbyMusic));
     const [playing, setPlaying] = useState(true);
+    const [existRoom, setRoom] = useState(true);
     const history = useHistory();
 
     const MusicStart = () => {
@@ -45,15 +46,19 @@ export default function EnterRoom(props) {
                 playerID: name,
                 roomID: searchParams.get('id'),
             });
+            props.socket.on('joinRoomFail', ()=> {
+                setRoom(false)
+            }) 
             props.socket.on('joinRoom_Res', (room) => {
                 props.SetRoomIdAndInfo(room);
             });
         } else if (flag === 0) {
             // Private Room 방장
+            console.log('flag==0')
             props.socket.emit('createPrivateRoom_Req', { playerID: name });
             props.socket.on('createPrivateRoom_Res', (data) => {
                 props.SetRoomIdAndInfo(data);
-                // console.log(data);
+                console.log(data);
             });
         } else {
             // flag === 1, joinPublic
@@ -85,6 +90,7 @@ export default function EnterRoom(props) {
             </video>
             <SetPlayerName
                 style={{position:'fixed'}}
+                roomState={existRoom}
                 onSave={handleOnSave}
                 name={name}
                 setName={setName}/>

@@ -93,12 +93,12 @@ class Room {
 
             socket.roomID = roomID;
             socket.join(roomID);
-
             socket.emit('createPrivateRoom_Res', {
                 roomInfo: roomInfo,
                 roomID: roomID,
             });
             let message = playerID + '님이 들어오셨습니다.';
+            console.log(message)
             io.to(roomID).emit('update', {
                 message: message,
                 author: '[SERVER]',

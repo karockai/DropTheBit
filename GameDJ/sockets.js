@@ -39,7 +39,7 @@ export default {
             socket.on('joinRoom_Req', (data) => {
                 if (!roomList.hasOwnProperty(data.roomID)) {
                     // 21.04.29 추가 
-                    socket.emit('joinRoomFail');
+                    socket.emit('joinRoomFail', '유효하지 않은 Room입니다.');
                     return 0;
                 }
                 new Room(io, socket).joinRoom(data);

@@ -85,8 +85,14 @@ function SetPlayerName(props) {
     const searchParams = new URLSearchParams(params);
     const [tmp, setTemp] = React.useState('');
     const [isEmpty, setIsEmpty] = React.useState(false);
+    const [enterCode, setCode] = React.useState(0);
+    const ENTER_ALERT = [
+        '정상적인 접속', // 출력될 일 없음
+        '닉네임을 입력해주세요 😤',
+        '유효하지 않은 게임방이예요 😨'
+    ];
     const onKeyPress = (e) => {
-        if (e.key == 'Enter') {
+        if (e.key === 'Enter') {
             handleOnSave(e);
         }
     };
@@ -103,8 +109,10 @@ function SetPlayerName(props) {
             props.onSave(tmp, 0);
         }
     };
+
     useEffect(()=> {
         setIsEmpty(tmp === '');
+        setCode(tmp === '' ? 1 : 0)
     }, [tmp]);
 
     const handleOnSave2 = (event) => {
@@ -120,7 +128,7 @@ function SetPlayerName(props) {
     if (searchParams.has('id')) {
         // 초대링크 받아서 온 사람
         buttonMsg = '함께하기';
-
+        if (!props.roomState && enterCode === 0) setCode(2) 
         return (
             <>
                 <Grid
@@ -168,9 +176,9 @@ function SetPlayerName(props) {
                         <SnackAlertBtn
                             class="start"
                             severity="error"
-                            message="닉네임을 입력해주세요."
+                            message={ENTER_ALERT[enterCode]}
                             label={buttonMsg}
-                            onAlert={isEmpty}
+                            onAlert={enterCode > 0}
                             type="button"
                             onClick={handleOnSave}
                             id="copy"
