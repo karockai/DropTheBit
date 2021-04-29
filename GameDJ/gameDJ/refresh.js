@@ -146,7 +146,6 @@ class Refresh {
     renewalInfo() {
         try {
             const { io } = this;
-            console.log('refresh-------\n', roomList);
             for (let roomID in roomList) {
                 let roomInfo = roomList[roomID];
                 let rankList = [];
