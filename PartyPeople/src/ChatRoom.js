@@ -19,6 +19,10 @@ import {
 import Message from './Message';
 import StockDoneList from './StockDoneList';
 import Enter from './audios/effect/Enter.wav';
+import { createStore } from 'redux';
+import provider from 'react-redux'
+import { reducer } from './reducers/index';
+import { ADD_MESSAGE } from './actions';
 
 const CssTextField = withStyles({
     root: {
@@ -90,6 +94,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const initialState = {
+    messages : []
+};
+
+const store = createStore(reducer, initialState);
 export default function ChatRoom(props) {
     // console.log(props.socket);
     let testXs = 12;
@@ -112,13 +121,15 @@ export default function ChatRoom(props) {
         setMessages([...messages, resMsg]);
         scrollToBottom();
     }, [resMsg]);
-
+    
     useEffect(() => {
         props.socket.on('update', (data) => {
+            store.dispatch({type:ADD_MESSAGE, payload:data})
             if (data) {
                 setResMsg(data);
             }
         });
+        store.subscribe(()=>{ console.log(store.getState())})
     }, []);
 
     useEffect(() => {
@@ -195,9 +206,10 @@ export default function ChatRoom(props) {
     function PrintMessage() {
         return <></>;
     }
-
+    const messagess = store.getState().messages
+    console.log(messagess)
     return (
-        <>
+        <provider store={store}>
             {/* <Grid
             container
             className={classes.button}
@@ -213,8 +225,7 @@ export default function ChatRoom(props) {
                         padding: '1vw 1vw 1vw 1vw',
                     }}
                 >
-                    {messages.map((message) => {
-                        // console.log(messages);
+                    {store.getState().messages.map((message) => {
                         if (message === '') return;
                         else if (message.author === '[SERVER]') {
                             return (
@@ -324,7 +335,7 @@ export default function ChatRoom(props) {
                     </button>
                 </Grid>
             </Grid>
-        </>
+        </provider>
     );
 }
 

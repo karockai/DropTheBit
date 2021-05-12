@@ -1,13 +1,16 @@
 // reducers/index.js
-import {ADD, SUB} from '../actions'
-import {combineReducers} from 'redux'
+import {ADD, SUB, ADD_MESSAGE} from '../actions/index';
 
 const initState = {
-    number: 0,
+    messages: []
 };
 
-const data = (state = initState, action) => {
+export const reducer = (state = initState, action) => {
     switch (action.type) {
+        case ADD_MESSAGE :
+            return {
+                messages: [...state.messages, action.payload]
+            }
         case ADD:
             return Object.assign({}, state, {
                 number: state.number + 1
@@ -20,9 +23,3 @@ const data = (state = initState, action) => {
             return state;
     }
 };
-
-const App = combineReducers({
-    data
-});
-
-export default App;
